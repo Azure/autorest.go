@@ -216,7 +216,8 @@ namespace AutoRest.Go.Model
 
         public bool ShouldValidate()
         {
-            return AutoRest.Core.Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result ?? false;
+            return true == AutoRest.Core.Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result
+                && !ParameterValidations.IsNullOrEmpty();
         }
 
         public string NextMethodName => $"{Name}NextResults";
