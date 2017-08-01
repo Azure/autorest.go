@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AutoRest.Go.Properties;
@@ -214,8 +214,9 @@ namespace AutoRest.Go.Model
             return $"{retVal}, {errVal}";
         }
 
-        public bool ShouldValidate() {
-            return !ParameterValidations.IsNullOrEmpty();
+        public bool ShouldValidate()
+        {
+            return AutoRest.Core.Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result ?? false;
         }
 
         public string NextMethodName => $"{Name}NextResults";
