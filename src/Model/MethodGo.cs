@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AutoRest.Go.Properties;
@@ -400,14 +400,7 @@ namespace AutoRest.Go.Model
 
                 if (HasReturnValue() && !ReturnValue().Body.IsStreamType())
                 {
-                    if (((CompositeTypeGo)ReturnValue().Body).IsWrapperType)
-                    {
-                        decorators.Add("autorest.ByUnmarshallingJSON(&result.Value)");
-                    }
-                    else
-                    {
-                        decorators.Add("autorest.ByUnmarshallingJSON(&result)");
-                    }
+                    decorators.Add("autorest.ByUnmarshallingJSON(&result)");
                 }
 
                 if (!HasReturnValue() || !ReturnValue().Body.IsStreamType())
