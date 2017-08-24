@@ -20,6 +20,7 @@ namespace AutoRest.Go
             switch (name)
             {
                 case "Go": return new AutoRest.Go.PluginGo();
+                case "Go.TestGen": return new AutoRest.Go.TestGen.PluginGotg();
             }
             throw new Exception("Unknown plugin: " + name);
         }
