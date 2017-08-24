@@ -28,10 +28,10 @@ func main() {
 
 func startServer() (*os.Process, error) {
 	fmt.Println("Go Tests.......")
-	testServerPath := "../../../../dev/TestServer/server"
+	testServerPath := "../../node_modules/@microsoft.azure/autorest.testserver"
 	install := exec.Command("npm", "install")
 	install.Dir = testServerPath
-	server := exec.Command("node", "startup/www")
+	server := exec.Command("npm", "start")
 	server.Dir = testServerPath
 
 	if err := install.Run(); err != nil {
