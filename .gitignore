@@ -288,6 +288,6 @@ __pycache__/
 *.xsd.cs
 
 package-lock.json
-test/generated/*
-test/vendor/*
+test/src/tests/generated/*
+test/src/tests/vendor/*
 glide.lock

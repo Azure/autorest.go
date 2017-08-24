@@ -87,10 +87,10 @@ swaggerDir = "node_modules/@microsoft.azure/autorest.testserver/swagger"
 
 task 'regenerate-go', '', (done) ->
   regenExpected {
-    'outputBaseDir': 'test',
+    'outputBaseDir': 'test/src/tests',
     'inputBaseDir': swaggerDir,
     'mappings': goMappings,
-    'outputDir': 'src/tests/generated',
+    'outputDir': 'generated',
     'nsPrefix': ' ',
     'language': 'go'
   },done
