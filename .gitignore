@@ -286,3 +286,8 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+package-lock.json
+test/src/tests/generated/*
+test/src/tests/vendor/*
+glide.lock
