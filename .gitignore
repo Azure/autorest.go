@@ -290,4 +290,5 @@ __pycache__/
 package-lock.json
 test/src/tests/generated/*
 test/src/tests/vendor/*
-glide.lock
+test/pkg
+test/bin

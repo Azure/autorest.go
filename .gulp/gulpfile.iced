@@ -22,7 +22,7 @@ task 'init', "" ,(done)->
 # Run language-specific tests:
 task 'test', "", ['regenerate'], (done) ->
   process.env.GOPATH = "#{basefolder}/test"
-  await execute "glide install",               { cwd: './test/src/tests' }, defer code, stderr, stdout
+  await execute "glide install",          { cwd: './test/src/tests' }, defer code, stderr, stdout
   await execute "go fmt ./generated/...", { cwd: './test/src/tests' }, defer code, stderr, stdout
   await execute "go run ./runner.go",     { cwd: './test/src/tests' }, defer code, stderr, stdout
   done();
