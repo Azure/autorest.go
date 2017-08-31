@@ -77,7 +77,6 @@ namespace AutoRest.Go.Model
             imports.UnionWith(CodeNamerGo.Instance.AutorestImports);
             imports.UnionWith(CodeNamerGo.Instance.StandardImports);
 
-            bool validationImports = false;
             cmg.Methods.Where(m => m.Group.Value == Name)
                 .ForEach(m =>
                 {
@@ -87,11 +86,9 @@ namespace AutoRest.Go.Model
                     {
                         mg.ReturnType.Body.AddImports(imports);
                     }
-                    if (mg.ShouldValidate())
-                        validationImports = true;
                 });
 
-            if (validationImports)
+            if ((CodeModel as CodeModelGo).ShouldValidate)
             {
                 imports.UnionWith(CodeNamerGo.Instance.ValidationImport);
             }

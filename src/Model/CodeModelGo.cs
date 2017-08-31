@@ -9,6 +9,7 @@ using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
 using AutoRest.Extensions;
+using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
 {
@@ -107,6 +108,8 @@ namespace AutoRest.Go.Model
         }
 
         public virtual IEnumerable<MethodGroupGo> MethodGroups => Operations.Cast<MethodGroupGo>();
+
+        public bool ShouldValidate => (bool)AutoRest.Core.Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result;
 
         public string GlobalParameters
         {

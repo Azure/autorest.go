@@ -235,10 +235,6 @@ namespace AutoRest.Go.Model
 
         public static string Validate(this IEnumerable<ParameterGo> parameters, HttpMethod method)
         {   
-            if (true != AutoRest.Core.Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result)
-            {
-                return null;
-            }
             List<string> v = new List<string>();
             HashSet<string> ancestors = new HashSet<string>();
 
