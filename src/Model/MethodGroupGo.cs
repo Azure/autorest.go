@@ -8,7 +8,6 @@ using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
 using AutoRest.Go;
 using AutoRest.Extensions;
-using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
 {
