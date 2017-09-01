@@ -13,12 +13,6 @@ using IAnyPlugin = AutoRest.Core.Extensibility.IPlugin<AutoRest.Core.Extensibili
 
 namespace AutoRest.Go
 {
-    public static class ExtensionsLoader
-    {
-        public static IAnyPlugin GetPlugin(bool testGen = false)
-            => testGen ? new AutoRest.Go.TestGen.PluginGotg() : new AutoRest.Go.PluginGo();
-    }
-
     public class Program : NewPlugin
     {
         public static int Main(string[] args )
@@ -92,7 +86,9 @@ namespace AutoRest.Go
             Settings.Instance.PackageVersion = await GetValue("package-version");
 
             // process
-            var plugin = ExtensionsLoader.GetPlugin(await GetValue<bool?>("testgen") ?? false);
+            var plugin = await GetValue<bool?>("testgen") == true
+                ? (IAnyPlugin)new AutoRest.Go.TestGen.PluginGotg()
+                : (IAnyPlugin)new AutoRest.Go.PluginGo();
             Settings.PopulateSettings(plugin.Settings, Settings.Instance.CustomSettings);
             
             using (plugin.Activate())
