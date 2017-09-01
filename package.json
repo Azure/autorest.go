@@ -1,6 +1,6 @@
 {
   "name": "@microsoft.azure/autorest.go",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "The Go extension for classic generators in AutoRest.",
   "scripts": {
     "start": "dotnet src/bin/netcoreapp2.0/autorest.go.dll --server",
