@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -76,7 +76,6 @@ namespace AutoRest.Go.Model
             imports.UnionWith(CodeNamerGo.Instance.AutorestImports);
             imports.UnionWith(CodeNamerGo.Instance.StandardImports);
 
-            bool validationImports = false;
             cmg.Methods.Where(m => m.Group.Value == Name)
                 .ForEach(m =>
                 {
@@ -86,11 +85,9 @@ namespace AutoRest.Go.Model
                     {
                         mg.ReturnType.Body.AddImports(imports);
                     }
-                    if (!string.IsNullOrEmpty(mg.ParameterValidations))
-                        validationImports = true;
                 });
 
-            if (validationImports)
+            if ((CodeModel as CodeModelGo).ShouldValidate)
             {
                 imports.UnionWith(CodeNamerGo.Instance.ValidationImport);
             }
