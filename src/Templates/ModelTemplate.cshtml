@@ -17,9 +17,9 @@
 @:}
 
 @:@EmptyLine
-@:func unmarshal@(Model.Name)(b []byte) (@(Model.Name), error){
+@:func unmarshal@(Model.Name)(body []byte) (@(Model.Name), error){
     @:var m map[string]interface{}
-	@:err := json.Unmarshal(b, &m)
+	@:err := json.Unmarshal(body, &m)
 	@:if err != nil {
 		@:return nil, err
 	@:}
@@ -29,7 +29,7 @@
     {
     @:case string(@((dt as CompositeTypeGo).DiscriminatorEnumValue)):
         @:var @(dt.Name.FixedValue.ToIdiomaticShortName()) @(dt.Name)
-        @:err := json.Unmarshal(b, &@(dt.Name.FixedValue.ToIdiomaticShortName()))
+        @:err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToIdiomaticShortName()))
         @:return @(dt.Name.FixedValue.ToIdiomaticShortName()), err
     }
     @:default:
@@ -37,9 +37,9 @@
     @:}
 @:}
 
-@:func unmarshal@(Model.Name)Array(b []byte) ([]@(Model.Name), error){
+@:func unmarshal@(Model.Name)Array(body []byte) ([]@(Model.Name), error){
     @:var rawMessages []*json.RawMessage
-	@:err := json.Unmarshal(b, &rawMessages)
+	@:err := json.Unmarshal(body, &rawMessages)
 	@:if err != nil {
 		@:return nil, err
 	@:}
@@ -105,10 +105,10 @@ foreach (var st in Model.SiblingTypes)
 @if (Model.HasPolymorphicFields && !Model.IsPolymorphic)
 {
 @:// UnmarshalJSON is the custom unmarshaler for @(Model.Name) struct.
-@:func (@(Model.Name.FixedValue.ToIdiomaticShortName()) *@(Model.Name)) UnmarshalJSON(b []byte) error {
+@:func (@(Model.Name.FixedValue.ToIdiomaticShortName()) *@(Model.Name)) UnmarshalJSON(body []byte) error {
     @if (Model.IsWrapperType)
     {
-    @:@(Model.BaseType.Name.FixedValue.ToIdiomaticShortName()), err := unmarshal@(Model.BaseType.Name)(b)
+    @:@(Model.BaseType.Name.FixedValue.ToIdiomaticShortName()), err := unmarshal@(Model.BaseType.Name)(body)
 	@:if err != nil {
 		@:return err
 	@:}
@@ -117,7 +117,7 @@ foreach (var st in Model.SiblingTypes)
     else
     {
 	@:var m map[string]*json.RawMessage
-	@:err := json.Unmarshal(b, &m)
+	@:err := json.Unmarshal(body, &m)
 	@:if err != nil {
 		@:return err
 	@:}

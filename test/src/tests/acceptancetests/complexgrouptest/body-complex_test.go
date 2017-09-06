@@ -423,6 +423,10 @@ func (s *ComplexGroupSuite) TestGetComplexPolymorphicValid(c *chk.C) {
 	resp, err := complexPolymorphicClient.GetValid()
 	c.Assert(err, chk.IsNil)
 
+	salmon, b := resp.Value.AsSalmon()
+	c.Assert(*salmon, chk.FitsTypeOf, f)
+	c.Assert(b, chk.Equals, true)
+
 	c.Assert(resp.Value, chk.FitsTypeOf, f)
 	c.Assert(*resp.Value.(Salmon).Iswild, chk.Equals, *f.Iswild)
 	c.Assert(*resp.Value.(Salmon).Location, chk.Equals, *f.Location)
