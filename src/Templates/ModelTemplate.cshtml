@@ -130,7 +130,7 @@ foreach (var st in Model.SiblingTypes)
     @:if v != nil {
         @if (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic)
         {
-        @:@(p.SerializedName), err := unmarshal@(p.ModelType.Name)(*m["@(p.SerializedName)"])
+        @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(p.ModelType.Name)(*m["@(p.SerializedName)"])
         }
         else if (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType && ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic)
         {
