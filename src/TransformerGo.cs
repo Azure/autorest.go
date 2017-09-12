@@ -116,7 +116,6 @@ namespace AutoRest.Go
                             Values = values,
                     })); 
                     }
-                    (mt as CompositeTypeGo).DiscriminatorEnumExists = alreadyExists;
                 }
             }
 

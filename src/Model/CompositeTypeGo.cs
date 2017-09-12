@@ -45,8 +45,6 @@ namespace AutoRest.Go.Model
         public bool HasPolymorphicFields => AllProperties.Any(p => (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) 
             || (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType && ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
 
-        public bool DiscriminatorEnumExists;
-
         public EnumType DiscriminatorEnum;
 
         public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Constants.FirstOrDefault(c => c.Value.Equals(SerializedName)).Key;
@@ -141,6 +139,22 @@ namespace AutoRest.Go.Model
                     ModelType = DiscriminatorEnum,
                 }));
             }            
+        }
+
+        public string PolymorphicProperty
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(PolymorphicDiscriminator))
+                {
+                    return CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator);
+                }
+                if (BaseModelType != null)
+                {
+                    return (BaseModelType as CompositeTypeGo).PolymorphicProperty;
+                }
+                return null;
+            }
         }
 
         public IEnumerable<PropertyGo> AllProperties
