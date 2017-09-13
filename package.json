@@ -3,8 +3,10 @@
   "version": "1.9.2",
   "description": "The Go extension for classic generators in AutoRest.",
   "scripts": {
+    "autorest": "autorest",
     "start": "dotnet src/bin/netcoreapp2.0/autorest.go.dll --server",
     "test": "gulp test",
+    "testci": "gulp test",
     "build": "gulp build",
     "prepare": "gulp build",
     "clean": "gulp clean",
@@ -27,6 +29,7 @@
   },
   "homepage": "https://github.com/Azure/autorest.go/blob/master/README.md",
   "devDependencies": {
+    "autorest": "^1.9.1",
     "coffee-script": "^1.11.1",
     "dotnet-sdk-2.0.0": "^1.1.1",
     "gulp": "^3.9.1",
