@@ -113,9 +113,12 @@ namespace AutoRest.Go
             return WordSplitPattern.Split(value).Where(s => !string.IsNullOrEmpty(s)).ToArray();
         }
 
-        public static string ToIdiomaticShortName(this string value)
+        public static string ToShortName(this string longName)
         {
-            return CodeNamerGo.Instance.GetVariableName(string.Concat(value.ToPhrase().Split(new char[]{' '}).Select(w => w[0])));
+            var initials = from word in longName.ToWords()
+                           select word[0];
+            var acronym = string.Concat(initials).ToLowerInvariant();
+            return CodeNamerGo.Instance.GetVariableName(acronym);
         }
 
         /// <summary>

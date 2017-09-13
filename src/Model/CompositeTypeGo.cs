@@ -42,8 +42,18 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public bool HasPolymorphicFields => AllProperties.Any(p => (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) 
-            || (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType && ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
+        public bool HasPolymorphicFields
+        {
+            get
+            {
+                return AllProperties.Any(p => 
+                        // polymorphic composite
+                        (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
+                        // polymorphic array
+                        (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType &&
+                            ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
+            }
+        }
 
         public EnumType DiscriminatorEnum;
 
@@ -132,7 +142,7 @@ namespace AutoRest.Go.Model
         {
             if (!string.IsNullOrEmpty(PolymorphicDiscriminator) && Properties.All(p => p.SerializedName != PolymorphicDiscriminator))
             {
-                var newProp = base.Add(New<Property>(new
+                base.Add(New<Property>(new
                 {
                     Name = CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator),
                     SerializedName = PolymorphicDiscriminator,

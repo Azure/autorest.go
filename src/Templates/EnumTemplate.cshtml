@@ -13,7 +13,7 @@
 type @Model.Name string
 
 @EmptyLine
-@if (constants.Count() > 0)
+@if (constants.Any())
 {
 @:const (
 @foreach (var c in constants)
