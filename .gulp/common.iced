@@ -368,7 +368,7 @@ module.exports =
 
   autorest: (args,done,ignoreexitcode) ->
     echo info "Queuing up: AutoRest #{args.join(' ')}"
-    execute "autorest #{args.map((a) -> "\"#{a}\"").join(' ')}" , {silent:true, ignoreexitcode: ignoreexitcode || false}, (code,stdout,stderr) ->
+    execute "#{basefolder}/node_modules/.bin/autorest #{args.map((a) -> "\"#{a}\"").join(' ')}" , {silent:true, ignoreexitcode: ignoreexitcode || false}, (code,stdout,stderr) ->
       return done(code,stdout,stderr)
 
 # build task for global build
