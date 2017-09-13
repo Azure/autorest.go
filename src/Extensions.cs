@@ -113,6 +113,14 @@ namespace AutoRest.Go
             return WordSplitPattern.Split(value).Where(s => !string.IsNullOrEmpty(s)).ToArray();
         }
 
+        public static string ToShortName(this string longName)
+        {
+            var initials = from word in longName.ToWords()
+                           select word[0];
+            var acronym = string.Concat(initials).ToLowerInvariant();
+            return CodeNamerGo.Instance.GetVariableName(acronym);
+        }
+
         /// <summary>
         /// This method checks if MethodGroupName is plural of package name. 
         /// It returns false for packages not listed in dictionary 'plural'.
@@ -355,8 +363,23 @@ namespace AutoRest.Go
         }
 
         public static bool ShouldBeSyntheticType(this IModelType type)
+        {            
+            return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType || 
+                (type is CompositeTypeGo && (type as CompositeTypeGo).IsPolymorphicResponse()));
+        }
+
+        /// <summary>
+        /// Determines whether one composite type derives directly or indirectly from another.
+        /// </summary>
+        /// <param name="type">Type to test.</param>
+        /// <param name="possibleAncestorType">Type that may be an ancestor of this type.</param>
+        /// <returns>true if the type is an ancestor, false otherwise.</returns>
+        public static bool DerivesFrom(this CompositeType type, CompositeType possibleAncestorType)
         {
-            return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType);
+            return
+                type.BaseModelType != null &&
+                (type.BaseModelType.Equals(possibleAncestorType) ||
+                 type.BaseModelType.DerivesFrom(possibleAncestorType));
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////
