@@ -19,8 +19,8 @@ var _ = chk.Suite(&DateGroupSuite{})
 
 var dateClient = getDateClient()
 
-func getDateClient() Client {
-	c := NewClient()
+func getDateClient() GroupClient {
+	c := NewGroupClient()
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
