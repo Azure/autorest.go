@@ -233,12 +233,7 @@ namespace AutoRest.Go.Model
         }
 
         public static string Validate(this IEnumerable<ParameterGo> parameters, HttpMethod method)
-        {
-            if (!parameters.Any())
-            {
-                return null;
-            }
-            
+        {            
             List<string> v = new List<string>();
             HashSet<string> ancestors = new HashSet<string>();
 
