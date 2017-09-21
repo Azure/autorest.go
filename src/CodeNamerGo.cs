@@ -145,14 +145,14 @@ namespace AutoRest.Go
                 HttpStatusCode.UnsupportedMediaType,
                 HttpStatusCode.RequestedRangeNotSatisfiable,
                 HttpStatusCode.ExpectationFailed,
+                (HttpStatusCode)429,
 
                 HttpStatusCode.InternalServerError,
                 HttpStatusCode.NotImplemented,
                 HttpStatusCode.BadGateway,
                 HttpStatusCode.ServiceUnavailable,
                 HttpStatusCode.GatewayTimeout,
-                HttpStatusCode.HttpVersionNotSupported,
-                (HttpStatusCode)429
+                HttpStatusCode.HttpVersionNotSupported
             })
             {
                 statusCodeMap.Add(sc, string.Format("http.Status{0}", sc));
@@ -163,8 +163,8 @@ namespace AutoRest.Go
             statusCodeMap[HttpStatusCode.NonAuthoritativeInformation] = "http.StatusNonAuthoritativeInfo";
             statusCodeMap[HttpStatusCode.ProxyAuthenticationRequired] = "http.StatusProxyAuthRequired";
             statusCodeMap[HttpStatusCode.RequestUriTooLong] = "http.StatusRequestURITooLong";
-            statusCodeMap[HttpStatusCode.HttpVersionNotSupported] = "http.StatusHTTPVersionNotSupported";
             statusCodeMap[(HttpStatusCode)429] = "http.StatusTooManyRequests";
+            statusCodeMap[HttpStatusCode.HttpVersionNotSupported] = "http.StatusHTTPVersionNotSupported";
 
             StatusCodeToGoString = statusCodeMap;
 
