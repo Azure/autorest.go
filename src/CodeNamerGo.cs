@@ -151,7 +151,8 @@ namespace AutoRest.Go
                 HttpStatusCode.BadGateway,
                 HttpStatusCode.ServiceUnavailable,
                 HttpStatusCode.GatewayTimeout,
-                HttpStatusCode.HttpVersionNotSupported
+                HttpStatusCode.HttpVersionNotSupported,
+                (HttpStatusCode)429
             })
             {
                 statusCodeMap.Add(sc, string.Format("http.Status{0}", sc));
@@ -163,6 +164,7 @@ namespace AutoRest.Go
             statusCodeMap[HttpStatusCode.ProxyAuthenticationRequired] = "http.StatusProxyAuthRequired";
             statusCodeMap[HttpStatusCode.RequestUriTooLong] = "http.StatusRequestURITooLong";
             statusCodeMap[HttpStatusCode.HttpVersionNotSupported] = "http.StatusHTTPVersionNotSupported";
+            statusCodeMap[(HttpStatusCode)429] = "http.StatusTooManyRequests";
 
             StatusCodeToGoString = statusCodeMap;
 
