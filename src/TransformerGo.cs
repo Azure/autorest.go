@@ -123,7 +123,7 @@ namespace AutoRest.Go
             // NOTE: this must be done after all enum types have been accounted for
             foreach (var enumType in cmg.EnumTypes)
             {
-                enumType.SetName(CodeNamer.Instance.GetTypeName(enumType.Name.FixedValue));
+                enumType.SetName(CodeNamer.Instance.GetTypeName(enumType.Name.Value));
                 foreach (var v in enumType.Values)
                 {
                     v.Name = CodeNamer.Instance.GetEnumMemberName(v.Name);
@@ -163,7 +163,7 @@ namespace AutoRest.Go
                 {
                     if (string.IsNullOrEmpty(em.Documentation))
                     {
-                        em.Documentation = string.Format("{0} enumerates the values for {1}.", em.Name, em.Name.FixedValue.ToPhrase());
+                        em.Documentation = string.Format("{0} enumerates the values for {1}.", em.Name, em.Name.Value.ToPhrase());
                     }
                 });
         }
@@ -172,7 +172,7 @@ namespace AutoRest.Go
         {
             foreach (var ctg in cmg.ModelTypes.Cast<CompositeTypeGo>())
             {
-                var name = ctg.Name.FixedValue.TrimPackageName(cmg.Namespace);
+                var name = ctg.Name.Value.TrimPackageName(cmg.Namespace);
 
                 // ensure that the candidate name isn't already in use
                 if (name != ctg.Name && cmg.ModelTypes.Any(mt => mt.Name == name))
@@ -280,8 +280,8 @@ namespace AutoRest.Go
 
             var stutteringTypes = exportedTypes
                                     .Where(exported =>
-                                        (exported is IModelType && (exported as IModelType).Name.FixedValue.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)) ||
-                                        (exported is Method && (exported as Method).Name.FixedValue.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)));
+                                        (exported is IModelType && (exported as IModelType).Name.Value.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)) ||
+                                        (exported is Method && (exported as Method).Name.Value.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)));
 
             if (stutteringTypes.Any())
             {
@@ -294,17 +294,17 @@ namespace AutoRest.Go
 
                         Logger.Instance.Log(Category.Warning, string.Format(CultureInfo.InvariantCulture, Resources.StutteringName, name));
 
-                        name = name.FixedValue.TrimPackageName(cmg.Namespace);
+                        name = name.Value.TrimPackageName(cmg.Namespace);
 
                         var nameInUse = exportedTypes
                                             .Any(et => (et is IModelType && (et as IModelType).Name.Equals(name)) || (et is Method && (et as Method).Name.Equals(name)));
                         if (exported is EnumType)
                         {
-                            (exported as EnumType).Name.FixedValue = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Enum");
+                            (exported as EnumType).Name.Value = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Enum");
                         }
                         else if (exported is CompositeType)
                         {
-                            (exported as CompositeType).Name.FixedValue = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Type");
+                            (exported as CompositeType).Name.Value = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Type");
                         }
                         else if (exported is Method)
                         {
