@@ -106,6 +106,7 @@ namespace AutoRest.Go
         {
             // Create a map from HttpStatusCode to the appropriate Go http.StatusXxxxx string.
             // -- Go does not have constants for the full HttpStatusCode enumeration; this set taken from http://golang.org/pkg/net/http/
+            const HttpStatusCode tooManyRequests = (HttpStatusCode)429;
             var statusCodeMap = new Dictionary<HttpStatusCode, string>();
             foreach (var sc in new HttpStatusCode[]{
                 HttpStatusCode.Continue,
@@ -145,7 +146,7 @@ namespace AutoRest.Go
                 HttpStatusCode.UnsupportedMediaType,
                 HttpStatusCode.RequestedRangeNotSatisfiable,
                 HttpStatusCode.ExpectationFailed,
-                (HttpStatusCode)429,
+                tooManyRequests,
 
                 HttpStatusCode.InternalServerError,
                 HttpStatusCode.NotImplemented,
@@ -163,7 +164,7 @@ namespace AutoRest.Go
             statusCodeMap[HttpStatusCode.NonAuthoritativeInformation] = "http.StatusNonAuthoritativeInfo";
             statusCodeMap[HttpStatusCode.ProxyAuthenticationRequired] = "http.StatusProxyAuthRequired";
             statusCodeMap[HttpStatusCode.RequestUriTooLong] = "http.StatusRequestURITooLong";
-            statusCodeMap[(HttpStatusCode)429] = "http.StatusTooManyRequests";
+            statusCodeMap[tooManyRequests] = "http.StatusTooManyRequests";
             statusCodeMap[HttpStatusCode.HttpVersionNotSupported] = "http.StatusHTTPVersionNotSupported";
 
             StatusCodeToGoString = statusCodeMap;
