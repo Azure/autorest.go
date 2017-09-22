@@ -293,3 +293,17 @@ test/src/tests/generated/*
 test/src/tests/vendor/*
 test/pkg
 test/bin
+
+*.class
+test/*/target/
+.settings/
+.project
+.classpath
+
+yarn.lock
+
+package/
+*.tar
+*.tgz
+src/obj/
+*.log
