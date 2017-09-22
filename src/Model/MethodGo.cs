@@ -568,12 +568,7 @@ namespace AutoRest.Go.Model
                         var nextLink = (string)pageableExtension["nextLinkName"];
                         if (!string.IsNullOrEmpty(nextLink))
                         {
-                            var nextLinkProperty = CodeNamerGo.Instance.GetPropertyName(CodeNamerGo.PascalCaseWithoutChar(nextLink, '.'));
-                            if ((ReturnType.Body as CompositeTypeGo).Properties.Any(p => p.Name.EqualsIgnoreCase(nextLinkProperty)))
-                            {
-                                (ReturnType.Body as CompositeTypeGo).Properties.First(p => p.Name.EqualsIgnoreCase(nextLinkProperty)).Name = nextLinkProperty;
-                            }
-                            return nextLinkProperty;
+                            return CodeNamerGo.Instance.GetPropertyName(CodeNamerGo.PascalCaseWithoutChar(nextLink, '.'));
                         }
                     }
                 }

@@ -260,6 +260,10 @@ namespace AutoRest.Go.Model
                 }
                 else
                 {
+                    if (property.Name.EqualsIgnoreCase(NextLink))
+                    {
+                        property.Name = NextLink;
+                    }
                     indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
                 }
             }
