@@ -1,4 +1,11 @@
 
+# Issues
+If you're reading this, you've likely noticed that this repository hasn't enabled issues. That isn't because we don't want your feedback! **Please file issues for the repository in one of the following repositories** as appropriate:
+
+    - [Azure/azure-sdk-for-go](https://github.com/Azure/azure-sdk-for-go/issues)
+    - [Azure/autorest](https://github.com/Azure/autorest)
+    - [Azure/azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs)
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
