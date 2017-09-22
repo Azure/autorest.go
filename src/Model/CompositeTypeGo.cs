@@ -260,6 +260,7 @@ namespace AutoRest.Go.Model
                 }
                 else
                 {
+                    // NextLinks might have differences in casing, but they need to be consistent
                     if (property.Name.EqualsIgnoreCase(NextLink))
                     {
                         property.Name = NextLink;
