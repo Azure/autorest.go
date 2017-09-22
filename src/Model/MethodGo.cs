@@ -557,27 +557,28 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                string nextLink = "";
-
                 // Note:
-                // -- The CSharp generator applies a default link name if the extension is present but the link name is not.
-                //    Yet, the MSDN for methods whose nextLink is missing are not paged methods. It appears the CSharp code is
-                //    outdated vis a vis the specification.
-                // TODO (gosdk): Ensure obtaining the nextLink is correct.
+                // Methods can be paged, even if "nextLinkName" is null
+                // Paged method just means a method returns an array
                 if (Extensions.ContainsKey(AzureExtensions.PageableExtension))
                 {
                     var pageableExtension = Extensions[AzureExtensions.PageableExtension] as Newtonsoft.Json.Linq.JContainer;
                     if (pageableExtension != null)
                     {
-                        var nextLinkName = (string)pageableExtension["nextLinkName"];
-                        if (!string.IsNullOrEmpty(nextLinkName))
+                        var nextLink = (string)pageableExtension["nextLinkName"];
+                        if (!string.IsNullOrEmpty(nextLink))
                         {
-                            nextLink = CodeNamerGo.PascalCaseWithoutChar(nextLinkName, '.');
+                            var nextLinkProperty =  CodeNamerGo.Instance.GetPropertyName(nextLink);
+                            var exists = (ReturnType.Body as CompositeTypeGo).Properties.Any(p => p.Name.EqualsIgnoreCase(nextLinkProperty));
+                            if (exists)
+                            {
+                                return (ReturnType.Body as CompositeTypeGo).Properties.First(p => p.Name.EqualsIgnoreCase(nextLinkProperty)).Name;
+                            }
+                            return nextLinkProperty;
                         }
                     }
                 }
-
-                return nextLink;
+                return null;
             }
         }
     }

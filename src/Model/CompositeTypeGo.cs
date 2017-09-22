@@ -226,35 +226,6 @@ namespace AutoRest.Go.Model
                 indented.Append(((CompositeTypeGo)BaseModelType).Fields());
             }
 
-            // If the type is a paged model type, ensure the nextLink field exists
-            // Note: Inject the field into a copy of the property list so as to not pollute the original list
-            if (!string.IsNullOrEmpty(NextLink))
-            {
-                var nextLinkField = NextLink;
-                foreach (Property p in properties)
-                {
-                    p.Name = CodeNamerGo.PascalCaseWithoutChar(p.Name, '.');
-                    if (p.Name.EqualsIgnoreCase(nextLinkField))
-                    {
-                        p.Name = nextLinkField;
-                    }
-                }
-
-                var baseHasNextLink = false;
-                if (BaseModelType != null)
-                {
-                    baseHasNextLink = BaseModelType.Properties.Any(p => p.Name.EqualsIgnoreCase(nextLinkField));
-                }
-
-                if (!baseHasNextLink && !properties.Any(p => p.Name.EqualsIgnoreCase(nextLinkField)))
-                {
-                    var property = new PropertyGo();
-                    property.Name = nextLinkField;
-                    property.ModelType = new PrimaryTypeGo(KnownPrimaryType.String);
-                    properties.Add(property);
-                }
-            }
-
             // Emit each property, except for named Enumerated types, as a pointer to the type
             foreach (var property in properties)
             {
