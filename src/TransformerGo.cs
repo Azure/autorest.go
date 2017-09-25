@@ -294,7 +294,7 @@ namespace AutoRest.Go
 
                         Logger.Instance.Log(Category.Warning, string.Format(CultureInfo.InvariantCulture, Resources.StutteringName, name));
 
-                        name = name.FixedValue.TrimPackageName(cmg.Namespace);
+                        name = name.Value.TrimPackageName(cmg.Namespace);
 
                         var nameInUse = exportedTypes
                                             .Any(et => (et is IModelType && (et as IModelType).Name.Equals(name)) || (et is Method && (et as Method).Name.Equals(name)));
