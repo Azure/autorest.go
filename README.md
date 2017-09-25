@@ -1,4 +1,12 @@
 
+# Issues
+If you're reading this, you've likely noticed that this repository hasn't enabled issues. That isn't because we don't want your feedback! **Please file issues for the repository in one of the following repositories** as appropriate:
+
+  - [Azure/azure-sdk-for-go](https://github.com/Azure/azure-sdk-for-go/issues) : When you're experiencing trouble with the Go SDK, but not with other languages, this is the repository to report bugs to. i.e. What we generate for Long Running Operations doesn't make sense or there's something hard coded that shouldn't be.
+  - [Azure/go-autorest](https://github.com/Azure/go-autorest) : File bugs here when your troubles aren't related to a particular operation, or even the pattern of generation, but the core infrastructure that we use to build HTTP request or authenticate. i.e. Retry or Authentication aren't working the way you wanted.
+  - [Azure/autorest](https://github.com/Azure/autorest) : Should you run into duplicated types, or fundamentally flawed enums, and it seems consistent across languages, but doesn't seem like the problems lies with the actual Azure Service, the problem could lie with how we're modeling the problem as we see it in the Open API Spec. File bugs matching this description to our parent project, "Autorest".
+  - [Azure/azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) : If you're getting an error message from the service, saying that it requires a different set of parameters, or you're targeting the wrong endpoint, the problem is likely with the Azure OpenAPI Specs repository. i.e. It seems like the service isn't acurately described.
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
