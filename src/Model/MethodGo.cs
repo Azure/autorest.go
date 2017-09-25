@@ -121,7 +121,7 @@ namespace AutoRest.Go.Model
                     {
                         sb.Append(parameter.Name);
                         sb.Append(" is ");
-                        sb.Append(parameter.Documentation.Value.ToSentence());
+                        sb.Append(parameter.Documentation.FixedValue.ToSentence());
                         sb.Append(" ");
                     }
                     if (parameter.ModelType.PrimaryType(KnownPrimaryType.Stream))

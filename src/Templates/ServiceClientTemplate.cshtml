@@ -80,7 +80,7 @@ func New(@(Model.GlobalParameters))@(Model.BaseClient) {
             {
                 if (!p.SerializedName.IsApiVersion())
                 {
-                    if (p.DefaultValue.Value.IsNullOrEmpty())
+                    if (p.DefaultValue.FixedValue.IsNullOrEmpty())
                     {
                         @:@(string.Format("{0}: {1},", p.Name, p.Name.Value.ToSentence()))
                     }
