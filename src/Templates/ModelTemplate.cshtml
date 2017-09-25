@@ -28,9 +28,9 @@
     foreach (var dt in Model.DerivedTypes)
     {
     @:case string(@((dt as CompositeTypeGo).DiscriminatorEnumValue)):
-        @:var @(dt.Name.Value.ToShortName()) @(dt.Name)
-        @:err := json.Unmarshal(body, &@(dt.Name.Value.ToShortName()))
-        @:return @(dt.Name.Value.ToShortName()), err
+        @:var @(dt.Name.FixedValue.ToShortName()) @(dt.Name)
+        @:err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToShortName()))
+        @:return @(dt.Name.FixedValue.ToShortName()), err
     }
     @:default:
         @:return nil, errors.New("Unsupported type")
@@ -44,16 +44,16 @@
 		@:return nil, err
 	@:}
     @:@EmptyLine
-    @:@(Model.Name.Value.ToShortName())Array := make([]@(Model.Name), len(rawMessages))
+    @:@(Model.Name.FixedValue.ToShortName())Array := make([]@(Model.Name), len(rawMessages))
     @:@EmptyLine
     @:for index, rawMessage := range rawMessages {
-        @:@(Model.Name.Value.ToShortName()), err := unmarshal@(Model.Name)(*rawMessage)
+        @:@(Model.Name.FixedValue.ToShortName()), err := unmarshal@(Model.Name)(*rawMessage)
 	    @:if err != nil {
 		    @:return nil, err
 	    @:}
-        @:@(Model.Name.Value.ToShortName())Array[index] = @(Model.Name.Value.ToShortName())
+        @:@(Model.Name.FixedValue.ToShortName())Array[index] = @(Model.Name.FixedValue.ToShortName())
     @:}
-    @:return @(Model.Name.Value.ToShortName())Array, nil
+    @:return @(Model.Name.FixedValue.ToShortName())Array, nil
 @:}
 }
 else
@@ -68,13 +68,13 @@ else
 {
 @:@EmptyLine
 @:// MarshalJSON is the custom marshaler for @(Model.Name).
-@:func (@(Model.Name.Value.ToShortName()) @(Model.Name))MarshalJSON() ([]byte, error){
-    @:@(Model.Name.Value.ToShortName()).@(Model.PolymorphicProperty) = @(Model.DiscriminatorEnumValue)
+@:func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name))MarshalJSON() ([]byte, error){
+    @:@(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(Model.DiscriminatorEnumValue)
     @:type Alias @(Model.Name)
     @:return json.Marshal(&struct {
         @:Alias
     @:}{
-        @:Alias: (Alias)(@(Model.Name.Value.ToShortName())),
+        @:Alias: (Alias)(@(Model.Name.FixedValue.ToShortName())),
     @:})
 @:}
 
@@ -82,10 +82,10 @@ foreach (var st in Model.SiblingTypes)
 {
 @:@EmptyLine
 @:// As@(st.Name) is the @(Model.BaseModelType.Name) implementation for @(Model.Name).
-@:func (@(Model.Name.Value.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
+@:func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
     if (st.Equals(Model))
     {
-    @:return &@(Model.Name.Value.ToShortName()), true
+    @:return &@(Model.Name.FixedValue.ToShortName()), true
     }
     else
     {
@@ -98,14 +98,14 @@ foreach (var st in Model.SiblingTypes)
 @if (Model.HasPolymorphicFields && !Model.IsPolymorphic)
 {
 @:// UnmarshalJSON is the custom unmarshaler for @(Model.Name) struct.
-@:func (@(Model.Name.Value.ToShortName()) *@(Model.Name)) UnmarshalJSON(body []byte) error {
+@:func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body []byte) error {
     @if (Model.IsWrapperType)
     {
-    @:@(Model.BaseType.Name.Value.ToShortName()), err := unmarshal@(Model.BaseType.Name)(body)
+    @:@(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.Name)(body)
 	@:if err != nil {
 		@:return err
 	@:}
-    @:@(Model.Name.Value.ToShortName()).Value = @(Model.BaseType.Name.Value.ToShortName())
+    @:@(Model.Name.FixedValue.ToShortName()).Value = @(Model.BaseType.Name.FixedValue.ToShortName())
     }
     else
     {
@@ -139,11 +139,11 @@ foreach (var st in Model.SiblingTypes)
         @:}
         @if ((p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) || (p.ModelType is EnumType))
         {
-        @:@(Model.Name.Value.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
+        @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
         }
         else
         {
-        @:@(Model.Name.Value.ToShortName()).@(p.Name) = &@(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
+        @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = &@(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
         }
     @:}
     }

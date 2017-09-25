@@ -12,10 +12,10 @@
 @{
     var imports = Model.ModelImports;
     var enums = Model.EnumTypes.Cast<EnumTypeGo>().ToList();
-    enums.Sort(delegate(EnumTypeGo lhs, EnumTypeGo rhs) { return lhs.Name.Value.CompareTo(rhs.Name); });
+    enums.Sort(delegate(EnumTypeGo lhs, EnumTypeGo rhs) { return lhs.Name.FixedValue.CompareTo(rhs.Name); });
 
     var modelTypes = Model.ModelTypes.Cast<CompositeTypeGo>().ToList();
-    modelTypes.Sort(delegate (CompositeTypeGo x, CompositeTypeGo y) { return x.Name.Value.CompareTo(y.Name.Value); });
+    modelTypes.Sort(delegate (CompositeTypeGo x, CompositeTypeGo y) { return x.Name.FixedValue.CompareTo(y.Name.FixedValue); });
 }
 package @Model.Namespace
 @EmptyLine
