@@ -6,7 +6,7 @@
 @{
     var constants = Model.Constants.Keys.OrderBy(v => v);
     var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
-    var modelPhrase = Model.Name.Value.ToPhrase();
+    var modelPhrase = Model.Name.FixedValue.ToPhrase();
 }
 
 @WrapComment("// ", Model.Documentation)

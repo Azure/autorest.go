@@ -18,8 +18,8 @@ var _ = chk.Suite(&ByteGroupSuite{})
 
 var byteClient = getByteClient()
 
-func getByteClient() GroupClient {
-	c := NewGroupClient()
+func getByteClient() Client {
+	c := NewClient()
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

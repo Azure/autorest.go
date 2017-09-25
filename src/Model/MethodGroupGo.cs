@@ -39,7 +39,7 @@ namespace AutoRest.Go.Model
         internal void Transform(CodeModelGo cmg)
         {
             var originalName = Name.Value;
-            Name = Name.Value.TrimPackageName(cmg.Namespace);
+            Name = Name.FixedValue.TrimPackageName(cmg.Namespace);
             if (Name != originalName)
             {
                 // fix up the method group names
@@ -80,16 +80,17 @@ namespace AutoRest.Go.Model
                 .ForEach(m =>
                 {
                     var mg = m as MethodGo;
-                    if ((CodeModel as CodeModelGo).ShouldValidate && !mg.ParameterValidations.IsNullOrEmpty())
-                    {
-                        imports.UnionWith(CodeNamerGo.Instance.ValidationImport);
-                    }
                     mg.ParametersGo.ForEach(p => p.AddImports(imports));
                     if (mg.HasReturnValue() && !mg.ReturnValue().Body.PrimaryType(KnownPrimaryType.Stream))
                     {
                         mg.ReturnType.Body.AddImports(imports);
                     }
                 });
+
+            if ((CodeModel as CodeModelGo).ShouldValidate)
+            {
+                imports.UnionWith(CodeNamerGo.Instance.ValidationImport);
+            }
 
             foreach (var p in cmg.Properties)
             {
