@@ -10,30 +10,29 @@ package dictionarygroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 const (
-        // DefaultBaseURI is the default URI used for the service Dictionarygroup
-        DefaultBaseURI = "http://localhost"
+	// DefaultBaseURI is the default URI used for the service Dictionarygroup
+	DefaultBaseURI = "http://localhost"
 )
 
 // ManagementClient is the base client for Dictionarygroup.
 type ManagementClient struct {
-    autorest.Client
-        BaseURI string
-    }
-
-// New creates an instance of the ManagementClient client.
-func New()ManagementClient {
-        return NewWithBaseURI(DefaultBaseURI, )
+	autorest.Client
+	BaseURI string
 }
 
-    // NewWithBaseURI creates an instance of the ManagementClient client.
-    func NewWithBaseURI(baseURI string, ) ManagementClient {
-        return ManagementClient{
-            Client: autorest.NewClientWithUserAgent(UserAgent()),
-            BaseURI: baseURI,
-        }
-    }
+// New creates an instance of the ManagementClient client.
+func New() ManagementClient {
+	return NewWithBaseURI(DefaultBaseURI)
+}
 
+// NewWithBaseURI creates an instance of the ManagementClient client.
+func NewWithBaseURI(baseURI string) ManagementClient {
+	return ManagementClient{
+		Client:  autorest.NewClientWithUserAgent(UserAgent()),
+		BaseURI: baseURI,
+	}
+}

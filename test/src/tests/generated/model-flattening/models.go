@@ -7,136 +7,135 @@ package modelflatteninggroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // ProvisioningStateValues enumerates the values for provisioning state values.
 type ProvisioningStateValues string
 
 const (
-// Accepted specifies the accepted state for provisioning state values.
-Accepted ProvisioningStateValues = "Accepted"
-// Canceled specifies the canceled state for provisioning state values.
-Canceled ProvisioningStateValues = "canceled"
-// Created specifies the created state for provisioning state values.
-Created ProvisioningStateValues = "Created"
-// Creating specifies the creating state for provisioning state values.
-Creating ProvisioningStateValues = "Creating"
-// Deleted specifies the deleted state for provisioning state values.
-Deleted ProvisioningStateValues = "Deleted"
-// Deleting specifies the deleting state for provisioning state values.
-Deleting ProvisioningStateValues = "Deleting"
-// Failed specifies the failed state for provisioning state values.
-Failed ProvisioningStateValues = "Failed"
-// OK specifies the ok state for provisioning state values.
-OK ProvisioningStateValues = "OK"
-// Succeeded specifies the succeeded state for provisioning state values.
-Succeeded ProvisioningStateValues = "Succeeded"
-// Updated specifies the updated state for provisioning state values.
-Updated ProvisioningStateValues = "Updated"
-// Updating specifies the updating state for provisioning state values.
-Updating ProvisioningStateValues = "Updating"
+	// Accepted specifies the accepted state for provisioning state values.
+	Accepted ProvisioningStateValues = "Accepted"
+	// Canceled specifies the canceled state for provisioning state values.
+	Canceled ProvisioningStateValues = "canceled"
+	// Created specifies the created state for provisioning state values.
+	Created ProvisioningStateValues = "Created"
+	// Creating specifies the creating state for provisioning state values.
+	Creating ProvisioningStateValues = "Creating"
+	// Deleted specifies the deleted state for provisioning state values.
+	Deleted ProvisioningStateValues = "Deleted"
+	// Deleting specifies the deleting state for provisioning state values.
+	Deleting ProvisioningStateValues = "Deleting"
+	// Failed specifies the failed state for provisioning state values.
+	Failed ProvisioningStateValues = "Failed"
+	// OK specifies the ok state for provisioning state values.
+	OK ProvisioningStateValues = "OK"
+	// Succeeded specifies the succeeded state for provisioning state values.
+	Succeeded ProvisioningStateValues = "Succeeded"
+	// Updated specifies the updated state for provisioning state values.
+	Updated ProvisioningStateValues = "Updated"
+	// Updating specifies the updating state for provisioning state values.
+	Updating ProvisioningStateValues = "Updating"
 )
 
 // BaseProduct is the product documentation.
 type BaseProduct struct {
-ProductID *string `json:"base_product_id,omitempty"`
-Description *string `json:"base_product_description,omitempty"`
+	ProductID   *string `json:"base_product_id,omitempty"`
+	Description *string `json:"base_product_description,omitempty"`
 }
 
 // Error is
 type Error struct {
-Status *int32 `json:"status,omitempty"`
-Message *string `json:"message,omitempty"`
-*Error `json:"parentError,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+	Message *string `json:"message,omitempty"`
+	*Error  `json:"parentError,omitempty"`
 }
 
 // FlattenedProduct is flattened product.
 type FlattenedProduct struct {
-ID *string `json:"id,omitempty"`
-Type *string `json:"type,omitempty"`
-Tags *map[string]*string `json:"tags,omitempty"`
-Location *string `json:"location,omitempty"`
-Name *string `json:"name,omitempty"`
-*FlattenedProductProperties `json:"properties,omitempty"`
+	ID                          *string             `json:"id,omitempty"`
+	Type                        *string             `json:"type,omitempty"`
+	Tags                        *map[string]*string `json:"tags,omitempty"`
+	Location                    *string             `json:"location,omitempty"`
+	Name                        *string             `json:"name,omitempty"`
+	*FlattenedProductProperties `json:"properties,omitempty"`
 }
 
 // FlattenedProductProperties is
 type FlattenedProductProperties struct {
-Pname *string `json:"p.name,omitempty"`
-Type *string `json:"type,omitempty"`
-ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
-ProvisioningState *string `json:"provisioningState,omitempty"`
+	Pname                   *string                 `json:"p.name,omitempty"`
+	Type                    *string                 `json:"type,omitempty"`
+	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
+	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
 }
 
 // GenericURL is the Generic URL.
 type GenericURL struct {
-GenericValue *string `json:"generic_value,omitempty"`
+	GenericValue *string `json:"generic_value,omitempty"`
 }
 
 // ListFlattenedProduct is
 type ListFlattenedProduct struct {
-autorest.Response `json:"-"`
-Value *[]FlattenedProduct `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *[]FlattenedProduct `json:"value,omitempty"`
 }
 
 // ListProductWrapper is
 type ListProductWrapper struct {
-autorest.Response `json:"-"`
-Value *[]ProductWrapper `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *[]ProductWrapper `json:"value,omitempty"`
 }
 
 // ProductURL is the product URL.
 type ProductURL struct {
-GenericValue *string `json:"generic_value,omitempty"`
-Odatavalue *string `json:"@odata.value,omitempty"`
+	GenericValue *string `json:"generic_value,omitempty"`
+	Odatavalue   *string `json:"@odata.value,omitempty"`
 }
 
 // ProductWrapper is the wrapped produc.
 type ProductWrapper struct {
-*WrappedProduct `json:"property,omitempty"`
+	*WrappedProduct `json:"property,omitempty"`
 }
 
 // Resource is
 type Resource struct {
-ID *string `json:"id,omitempty"`
-Type *string `json:"type,omitempty"`
-Tags *map[string]*string `json:"tags,omitempty"`
-Location *string `json:"location,omitempty"`
-Name *string `json:"name,omitempty"`
+	ID       *string             `json:"id,omitempty"`
+	Type     *string             `json:"type,omitempty"`
+	Tags     *map[string]*string `json:"tags,omitempty"`
+	Location *string             `json:"location,omitempty"`
+	Name     *string             `json:"name,omitempty"`
 }
 
 // ResourceCollection is
 type ResourceCollection struct {
-autorest.Response `json:"-"`
-Productresource *FlattenedProduct `json:"productresource,omitempty"`
-Arrayofresources *[]FlattenedProduct `json:"arrayofresources,omitempty"`
-Dictionaryofresources *map[string]*FlattenedProduct `json:"dictionaryofresources,omitempty"`
+	autorest.Response     `json:"-"`
+	Productresource       *FlattenedProduct             `json:"productresource,omitempty"`
+	Arrayofresources      *[]FlattenedProduct           `json:"arrayofresources,omitempty"`
+	Dictionaryofresources *map[string]*FlattenedProduct `json:"dictionaryofresources,omitempty"`
 }
 
 // SetFlattenedProduct is
 type SetFlattenedProduct struct {
-autorest.Response `json:"-"`
-Value *map[string]*FlattenedProduct `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *map[string]*FlattenedProduct `json:"value,omitempty"`
 }
 
 // SimpleProduct is the product documentation.
 type SimpleProduct struct {
-autorest.Response `json:"-"`
-ProductID *string `json:"base_product_id,omitempty"`
-Description *string `json:"base_product_description,omitempty"`
-*SimpleProductProperties `json:"details,omitempty"`
+	autorest.Response        `json:"-"`
+	ProductID                *string `json:"base_product_id,omitempty"`
+	Description              *string `json:"base_product_description,omitempty"`
+	*SimpleProductProperties `json:"details,omitempty"`
 }
 
 // SimpleProductProperties is the product documentation.
 type SimpleProductProperties struct {
-MaxProductDisplayName *string `json:"max_product_display_name,omitempty"`
-Capacity *string `json:"max_product_capacity,omitempty"`
-*ProductURL `json:"max_product_image,omitempty"`
+	MaxProductDisplayName *string `json:"max_product_display_name,omitempty"`
+	Capacity              *string `json:"max_product_capacity,omitempty"`
+	*ProductURL           `json:"max_product_image,omitempty"`
 }
 
 // WrappedProduct is the wrapped produc.
 type WrappedProduct struct {
-Value *string `json:"value,omitempty"`
+	Value *string `json:"value,omitempty"`
 }
-

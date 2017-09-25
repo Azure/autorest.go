@@ -7,75 +7,76 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
-    "github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/validation"
+	"net/http"
 )
 
 // PolymorphismClient is the test Infrastructure for AutoRest
 type PolymorphismClient struct {
-    ManagementClient
+	ManagementClient
 }
+
 // NewPolymorphismClient creates an instance of the PolymorphismClient client.
 func NewPolymorphismClient() PolymorphismClient {
-        return NewPolymorphismClientWithBaseURI(DefaultBaseURI, )
-        }
+	return NewPolymorphismClientWithBaseURI(DefaultBaseURI)
+}
 
 // NewPolymorphismClientWithBaseURI creates an instance of the PolymorphismClient client.
-    func NewPolymorphismClientWithBaseURI(baseURI string, ) PolymorphismClient {
-        return PolymorphismClient{ NewWithBaseURI(baseURI, )}
-    }
+func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
+	return PolymorphismClient{NewWithBaseURI(baseURI)}
+}
 
 // GetValid get complex types that are polymorphic
 func (client PolymorphismClient) GetValid() (result FishModel, err error) {
-    req, err := client.GetValidPreparer()
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.GetValidPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.GetValidSender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.GetValidSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.GetValidResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure responding to request")
-    }
+	result, err = client.GetValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // GetValidPreparer prepares the GetValid request.
 func (client PolymorphismClient) GetValidPreparer() (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsGet(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/complex/polymorphism/valid"))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/valid"))
+	return preparer.Prepare(&http.Request{})
 }
 
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) GetValidSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
 // closes the http.Response Body.
 func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result FishModel, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByUnmarshallingJSON(&result),
-            autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // PutValid put complex types that are polymorphic
@@ -114,60 +115,60 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 // ]
 // };
 func (client PolymorphismClient) PutValid(complexBody Fish) (result autorest.Response, err error) {
-    if err := validation.Validate([]validation.Validation{
-    { TargetValue: complexBody,
-     Constraints: []validation.Constraint{	{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
-    return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient","PutValid")
-}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: complexBody,
+			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValid")
+	}
 
-    req, err := client.PutValidPreparer(complexBody)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.PutValidPreparer(complexBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.PutValidSender(req)
-    if err != nil {
-        result.Response = resp
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.PutValidSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.PutValidResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure responding to request")
-    }
+	result, err = client.PutValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // PutValidPreparer prepares the PutValid request.
 func (client PolymorphismClient) PutValidPreparer(complexBody Fish) (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsJSON(),
-                        autorest.AsPut(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/complex/polymorphism/valid"),
-                        autorest.WithJSON(complexBody))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/valid"),
+		autorest.WithJSON(complexBody))
+	return preparer.Prepare(&http.Request{})
 }
 
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutValidSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always
 // closes the http.Response Body.
 func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByClosing())
-    result.Response = resp
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
 }
 
 // PutValidMissingRequired put complex types that are polymorphic, attempting to omit required 'birthday' field - the
@@ -200,59 +201,58 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 // ]
 // }
 func (client PolymorphismClient) PutValidMissingRequired(complexBody Fish) (result autorest.Response, err error) {
-    if err := validation.Validate([]validation.Validation{
-    { TargetValue: complexBody,
-     Constraints: []validation.Constraint{	{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
-    return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient","PutValidMissingRequired")
-}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: complexBody,
+			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired")
+	}
 
-    req, err := client.PutValidMissingRequiredPreparer(complexBody)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.PutValidMissingRequiredPreparer(complexBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.PutValidMissingRequiredSender(req)
-    if err != nil {
-        result.Response = resp
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.PutValidMissingRequiredSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.PutValidMissingRequiredResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure responding to request")
-    }
+	result, err = client.PutValidMissingRequiredResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // PutValidMissingRequiredPreparer prepares the PutValidMissingRequired request.
 func (client PolymorphismClient) PutValidMissingRequiredPreparer(complexBody Fish) (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsJSON(),
-                        autorest.AsPut(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/complex/polymorphism/missingrequired/invalid"),
-                        autorest.WithJSON(complexBody))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/missingrequired/invalid"),
+		autorest.WithJSON(complexBody))
+	return preparer.Prepare(&http.Request{})
 }
 
 // PutValidMissingRequiredSender sends the PutValidMissingRequired request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutValidMissingRequiredSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // PutValidMissingRequiredResponder handles the response to the PutValidMissingRequired request. The method always
 // closes the http.Response Body.
 func (client PolymorphismClient) PutValidMissingRequiredResponder(resp *http.Response) (result autorest.Response, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByClosing())
-    result.Response = resp
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
 }
-

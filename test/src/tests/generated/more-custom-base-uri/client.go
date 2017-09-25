@@ -10,32 +10,31 @@ package morecustombaseurigroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 const (
-        // DefaultDNSSuffix is the default value for dns suffix
-        DefaultDNSSuffix = "host"
+	// DefaultDNSSuffix is the default value for dns suffix
+	DefaultDNSSuffix = "host"
 )
 
 // ManagementClient is the base client for Morecustombaseurigroup.
 type ManagementClient struct {
-    autorest.Client
-                SubscriptionID string
-            DNSSuffix string
+	autorest.Client
+	SubscriptionID string
+	DNSSuffix      string
 }
 
 // New creates an instance of the ManagementClient client.
-func New(subscriptionID string)ManagementClient {
-        return NewWithoutDefaults(subscriptionID, DefaultDNSSuffix)
+func New(subscriptionID string) ManagementClient {
+	return NewWithoutDefaults(subscriptionID, DefaultDNSSuffix)
 }
 
-    // NewWithoutDefaults creates an instance of the ManagementClient client.
-    func NewWithoutDefaults(subscriptionID string, dNSSuffix string) ManagementClient {
-        return ManagementClient{
-            Client: autorest.NewClientWithUserAgent(UserAgent()),
-                    SubscriptionID: subscriptionID,
-                    DNSSuffix: dNSSuffix,
-        }
-    }
-
+// NewWithoutDefaults creates an instance of the ManagementClient client.
+func NewWithoutDefaults(subscriptionID string, dNSSuffix string) ManagementClient {
+	return ManagementClient{
+		Client:         autorest.NewClientWithUserAgent(UserAgent()),
+		SubscriptionID: subscriptionID,
+		DNSSuffix:      dNSSuffix,
+	}
+}

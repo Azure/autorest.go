@@ -7,74 +7,75 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"net/http"
 )
 
 // InheritanceClient is the test Infrastructure for AutoRest
 type InheritanceClient struct {
-    ManagementClient
+	ManagementClient
 }
+
 // NewInheritanceClient creates an instance of the InheritanceClient client.
 func NewInheritanceClient() InheritanceClient {
-        return NewInheritanceClientWithBaseURI(DefaultBaseURI, )
-        }
+	return NewInheritanceClientWithBaseURI(DefaultBaseURI)
+}
 
 // NewInheritanceClientWithBaseURI creates an instance of the InheritanceClient client.
-    func NewInheritanceClientWithBaseURI(baseURI string, ) InheritanceClient {
-        return InheritanceClient{ NewWithBaseURI(baseURI, )}
-    }
+func NewInheritanceClientWithBaseURI(baseURI string) InheritanceClient {
+	return InheritanceClient{NewWithBaseURI(baseURI)}
+}
 
 // GetValid get complex types that extend others
 func (client InheritanceClient) GetValid() (result Siamese, err error) {
-    req, err := client.GetValidPreparer()
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.GetValidPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.GetValidSender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.GetValidSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.GetValidResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", resp, "Failure responding to request")
-    }
+	result, err = client.GetValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // GetValidPreparer prepares the GetValid request.
 func (client InheritanceClient) GetValidPreparer() (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsGet(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/complex/inheritance/valid"))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/inheritance/valid"))
+	return preparer.Prepare(&http.Request{})
 }
 
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client InheritanceClient) GetValidSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
 // closes the http.Response Body.
 func (client InheritanceClient) GetValidResponder(resp *http.Response) (result Siamese, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByUnmarshallingJSON(&result),
-            autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // PutValid put complex types that extend others
@@ -83,53 +84,52 @@ func (client InheritanceClient) GetValidResponder(resp *http.Response) (result S
 // 1st one named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and food="french
 // fries".
 func (client InheritanceClient) PutValid(complexBody Siamese) (result autorest.Response, err error) {
-    req, err := client.PutValidPreparer(complexBody)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.PutValidPreparer(complexBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.PutValidSender(req)
-    if err != nil {
-        result.Response = resp
-        err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.PutValidSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.PutValidResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", resp, "Failure responding to request")
-    }
+	result, err = client.PutValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // PutValidPreparer prepares the PutValid request.
 func (client InheritanceClient) PutValidPreparer(complexBody Siamese) (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsJSON(),
-                        autorest.AsPut(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/complex/inheritance/valid"),
-                        autorest.WithJSON(complexBody))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/inheritance/valid"),
+		autorest.WithJSON(complexBody))
+	return preparer.Prepare(&http.Request{})
 }
 
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client InheritanceClient) PutValidSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always
 // closes the http.Response Body.
 func (client InheritanceClient) PutValidResponder(resp *http.Response) (result autorest.Response, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByClosing())
-    result.Response = resp
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
 }
-

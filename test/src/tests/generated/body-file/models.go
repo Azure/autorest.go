@@ -7,19 +7,18 @@ package filegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "io"
+	"github.com/Azure/go-autorest/autorest"
+	"io"
 )
 
 // Error is
 type Error struct {
-Status *int32 `json:"status,omitempty"`
-Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+	Message *string `json:"message,omitempty"`
 }
 
 // ReadCloser is
 type ReadCloser struct {
-autorest.Response `json:"-"`
-Value *io.ReadCloser `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *io.ReadCloser `json:"value,omitempty"`
 }
-

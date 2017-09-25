@@ -7,46 +7,45 @@ package validationgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // EnumConst enumerates the values for enum const.
 type EnumConst string
 
 const (
-// ConstantStringAsEnum specifies the constant string as enum state for enum const.
-ConstantStringAsEnum EnumConst = "constant_string_as_enum"
+	// ConstantStringAsEnum specifies the constant string as enum state for enum const.
+	ConstantStringAsEnum EnumConst = "constant_string_as_enum"
 )
 
 // ChildProduct is the product documentation.
 type ChildProduct struct {
-ConstProperty *string `json:"constProperty,omitempty"`
-Count *int32 `json:"count,omitempty"`
+	ConstProperty *string `json:"constProperty,omitempty"`
+	Count         *int32  `json:"count,omitempty"`
 }
 
 // ConstantProduct is the product documentation.
 type ConstantProduct struct {
-ConstProperty *string `json:"constProperty,omitempty"`
-ConstProperty2 *string `json:"constProperty2,omitempty"`
+	ConstProperty  *string `json:"constProperty,omitempty"`
+	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
 // Error is
 type Error struct {
-Code *int32 `json:"code,omitempty"`
-Message *string `json:"message,omitempty"`
-Fields *string `json:"fields,omitempty"`
+	Code    *int32  `json:"code,omitempty"`
+	Message *string `json:"message,omitempty"`
+	Fields  *string `json:"fields,omitempty"`
 }
 
 // Product is the product documentation.
 type Product struct {
-autorest.Response `json:"-"`
-DisplayNames *[]string `json:"display_names,omitempty"`
-Capacity *int32 `json:"capacity,omitempty"`
-Image *string `json:"image,omitempty"`
-Child *ChildProduct `json:"child,omitempty"`
-ConstChild *ConstantProduct `json:"constChild,omitempty"`
-ConstInt *int32 `json:"constInt,omitempty"`
-ConstString *string `json:"constString,omitempty"`
-ConstStringAsEnum EnumConst `json:"constStringAsEnum,omitempty"`
+	autorest.Response `json:"-"`
+	DisplayNames      *[]string        `json:"display_names,omitempty"`
+	Capacity          *int32           `json:"capacity,omitempty"`
+	Image             *string          `json:"image,omitempty"`
+	Child             *ChildProduct    `json:"child,omitempty"`
+	ConstChild        *ConstantProduct `json:"constChild,omitempty"`
+	ConstInt          *int32           `json:"constInt,omitempty"`
+	ConstString       *string          `json:"constString,omitempty"`
+	ConstStringAsEnum EnumConst        `json:"constStringAsEnum,omitempty"`
 }
-

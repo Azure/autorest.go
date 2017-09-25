@@ -10,17 +10,16 @@ package urlgroup
 type URIColor string
 
 const (
-// Bluecolor specifies the bluecolor state for uri color.
-Bluecolor URIColor = "blue color"
-// Greencolor specifies the greencolor state for uri color.
-Greencolor URIColor = "green color"
-// Redcolor specifies the redcolor state for uri color.
-Redcolor URIColor = "red color"
+	// Bluecolor specifies the bluecolor state for uri color.
+	Bluecolor URIColor = "blue color"
+	// Greencolor specifies the greencolor state for uri color.
+	Greencolor URIColor = "green color"
+	// Redcolor specifies the redcolor state for uri color.
+	Redcolor URIColor = "red color"
 )
 
 // Error is
 type Error struct {
-Status *int32 `json:"status,omitempty"`
-Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+	Message *string `json:"message,omitempty"`
 }
-

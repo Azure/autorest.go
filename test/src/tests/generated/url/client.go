@@ -10,34 +10,33 @@ package urlgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 const (
-        // DefaultBaseURI is the default URI used for the service Urlgroup
-        DefaultBaseURI = "http://localhost"
+	// DefaultBaseURI is the default URI used for the service Urlgroup
+	DefaultBaseURI = "http://localhost"
 )
 
 // ManagementClient is the base client for Urlgroup.
 type ManagementClient struct {
-    autorest.Client
-        BaseURI string
-                GlobalStringPath string
-            GlobalStringQuery string
+	autorest.Client
+	BaseURI           string
+	GlobalStringPath  string
+	GlobalStringQuery string
 }
 
 // New creates an instance of the ManagementClient client.
-func New(globalStringPath string, globalStringQuery string)ManagementClient {
-        return NewWithBaseURI(DefaultBaseURI, globalStringPath, globalStringQuery)
+func New(globalStringPath string, globalStringQuery string) ManagementClient {
+	return NewWithBaseURI(DefaultBaseURI, globalStringPath, globalStringQuery)
 }
 
-    // NewWithBaseURI creates an instance of the ManagementClient client.
-    func NewWithBaseURI(baseURI string, globalStringPath string, globalStringQuery string) ManagementClient {
-        return ManagementClient{
-            Client: autorest.NewClientWithUserAgent(UserAgent()),
-            BaseURI: baseURI,
-                        GlobalStringPath: globalStringPath,
-                        GlobalStringQuery: globalStringQuery,
-        }
-    }
-
+// NewWithBaseURI creates an instance of the ManagementClient client.
+func NewWithBaseURI(baseURI string, globalStringPath string, globalStringQuery string) ManagementClient {
+	return ManagementClient{
+		Client:            autorest.NewClientWithUserAgent(UserAgent()),
+		BaseURI:           baseURI,
+		GlobalStringPath:  globalStringPath,
+		GlobalStringQuery: globalStringQuery,
+	}
+}

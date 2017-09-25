@@ -7,53 +7,52 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // A is
 type A struct {
-autorest.Response `json:"-"`
-StatusCode *string `json:"statusCode,omitempty"`
+	autorest.Response `json:"-"`
+	StatusCode        *string `json:"statusCode,omitempty"`
 }
 
 // B is
 type B struct {
-StatusCode *string `json:"statusCode,omitempty"`
-TextStatusCode *string `json:"textStatusCode,omitempty"`
+	StatusCode     *string `json:"statusCode,omitempty"`
+	TextStatusCode *string `json:"textStatusCode,omitempty"`
 }
 
 // Bool is
 type Bool struct {
-autorest.Response `json:"-"`
-Value *bool `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *bool `json:"value,omitempty"`
 }
 
 // C is
 type C struct {
-HTTPCode *string `json:"httpCode,omitempty"`
+	HTTPCode *string `json:"httpCode,omitempty"`
 }
 
 // D is
 type D struct {
-HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
+	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
 }
 
 // Error is
 type Error struct {
-autorest.Response `json:"-"`
-Status *int32 `json:"status,omitempty"`
-Message *string `json:"message,omitempty"`
+	autorest.Response `json:"-"`
+	Status            *int32  `json:"status,omitempty"`
+	Message           *string `json:"message,omitempty"`
 }
 
 // ListString is
 type ListString struct {
-autorest.Response `json:"-"`
-Value *[]string `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *[]string `json:"value,omitempty"`
 }
 
 // SetObject is
 type SetObject struct {
-autorest.Response `json:"-"`
-Value *map[string]interface{} `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *map[string]interface{} `json:"value,omitempty"`
 }
-

@@ -7,287 +7,287 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
-    "github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/validation"
+	"net/http"
 )
 
 // GroupClient is the test Infrastructure for AutoRest Swagger BAT
 type GroupClient struct {
-    ManagementClient
+	ManagementClient
 }
+
 // NewGroupClient creates an instance of the GroupClient client.
 func NewGroupClient() GroupClient {
-        return NewGroupClientWithBaseURI(DefaultBaseURI, )
-        }
+	return NewGroupClientWithBaseURI(DefaultBaseURI)
+}
 
 // NewGroupClientWithBaseURI creates an instance of the GroupClient client.
-    func NewGroupClientWithBaseURI(baseURI string, ) GroupClient {
-        return GroupClient{ NewWithBaseURI(baseURI, )}
-    }
+func NewGroupClientWithBaseURI(baseURI string) GroupClient {
+	return GroupClient{NewWithBaseURI(baseURI)}
+}
 
 // GetEmpty get empty byte value ''
 func (client GroupClient) GetEmpty() (result ByteArray, err error) {
-    req, err := client.GetEmptyPreparer()
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.GetEmptyPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.GetEmptySender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.GetEmptySender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.GetEmptyResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", resp, "Failure responding to request")
-    }
+	result, err = client.GetEmptyResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
 func (client GroupClient) GetEmptyPreparer() (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsGet(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/byte/empty"))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/byte/empty"))
+	return preparer.Prepare(&http.Request{})
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client GroupClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // GetEmptyResponder handles the response to the GetEmpty request. The method always
 // closes the http.Response Body.
 func (client GroupClient) GetEmptyResponder(resp *http.Response) (result ByteArray, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByUnmarshallingJSON(&result.Value),
-            autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // GetInvalid get invalid byte value ':::SWAGGER::::'
 func (client GroupClient) GetInvalid() (result ByteArray, err error) {
-    req, err := client.GetInvalidPreparer()
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.GetInvalidPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.GetInvalidSender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.GetInvalidSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.GetInvalidResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", resp, "Failure responding to request")
-    }
+	result, err = client.GetInvalidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
 func (client GroupClient) GetInvalidPreparer() (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsGet(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/byte/invalid"))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/byte/invalid"))
+	return preparer.Prepare(&http.Request{})
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client GroupClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
 // closes the http.Response Body.
 func (client GroupClient) GetInvalidResponder(resp *http.Response) (result ByteArray, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByUnmarshallingJSON(&result.Value),
-            autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client GroupClient) GetNonASCII() (result ByteArray, err error) {
-    req, err := client.GetNonASCIIPreparer()
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.GetNonASCIIPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.GetNonASCIISender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.GetNonASCIISender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.GetNonASCIIResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", resp, "Failure responding to request")
-    }
+	result, err = client.GetNonASCIIResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // GetNonASCIIPreparer prepares the GetNonASCII request.
 func (client GroupClient) GetNonASCIIPreparer() (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsGet(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/byte/nonAscii"))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/byte/nonAscii"))
+	return preparer.Prepare(&http.Request{})
 }
 
 // GetNonASCIISender sends the GetNonASCII request. The method will close the
 // http.Response Body if it receives an error.
 func (client GroupClient) GetNonASCIISender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // GetNonASCIIResponder handles the response to the GetNonASCII request. The method always
 // closes the http.Response Body.
 func (client GroupClient) GetNonASCIIResponder(resp *http.Response) (result ByteArray, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByUnmarshallingJSON(&result.Value),
-            autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // GetNull get null byte value
 func (client GroupClient) GetNull() (result ByteArray, err error) {
-    req, err := client.GetNullPreparer()
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.GetNullPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.GetNullSender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.GetNullSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.GetNullResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", resp, "Failure responding to request")
-    }
+	result, err = client.GetNullResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // GetNullPreparer prepares the GetNull request.
 func (client GroupClient) GetNullPreparer() (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsGet(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/byte/null"))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/byte/null"))
+	return preparer.Prepare(&http.Request{})
 }
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client GroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
 // closes the http.Response Body.
 func (client GroupClient) GetNullResponder(resp *http.Response) (result ByteArray, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByUnmarshallingJSON(&result.Value),
-            autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // PutNonASCII put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 //
 // byteBody is base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client GroupClient) PutNonASCII(byteBody []byte) (result autorest.Response, err error) {
-    if err := validation.Validate([]validation.Validation{
-    { TargetValue: byteBody,
-     Constraints: []validation.Constraint{	{Target: "byteBody", Name: validation.Null, Rule: true, Chain: nil }}}}); err != nil {
-    return result, validation.NewErrorWithValidationError(err, "bytegroup.GroupClient","PutNonASCII")
-}
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: byteBody,
+			Constraints: []validation.Constraint{{Target: "byteBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+		return result, validation.NewErrorWithValidationError(err, "bytegroup.GroupClient", "PutNonASCII")
+	}
 
-    req, err := client.PutNonASCIIPreparer(byteBody)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.PutNonASCIIPreparer(byteBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.PutNonASCIISender(req)
-    if err != nil {
-        result.Response = resp
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.PutNonASCIISender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.PutNonASCIIResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", resp, "Failure responding to request")
-    }
+	result, err = client.PutNonASCIIResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // PutNonASCIIPreparer prepares the PutNonASCII request.
 func (client GroupClient) PutNonASCIIPreparer(byteBody []byte) (*http.Request, error) {
-    preparer := autorest.CreatePreparer(
-                        autorest.AsJSON(),
-                        autorest.AsPut(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/byte/nonAscii"),
-                        autorest.WithJSON(byteBody))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/byte/nonAscii"),
+		autorest.WithJSON(byteBody))
+	return preparer.Prepare(&http.Request{})
 }
 
 // PutNonASCIISender sends the PutNonASCII request. The method will close the
 // http.Response Body if it receives an error.
 func (client GroupClient) PutNonASCIISender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // PutNonASCIIResponder handles the response to the PutNonASCII request. The method always
 // closes the http.Response Body.
 func (client GroupClient) PutNonASCIIResponder(resp *http.Response) (result autorest.Response, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByClosing())
-    result.Response = resp
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
 }
-

@@ -7,43 +7,42 @@ package stringgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 // Colors enumerates the values for colors.
 type Colors string
 
 const (
-// BlueColor specifies the blue color state for colors.
-BlueColor Colors = "blue_color"
-// GreenColor specifies the green color state for colors.
-GreenColor Colors = "green-color"
-// Redcolor specifies the redcolor state for colors.
-Redcolor Colors = "red color"
+	// BlueColor specifies the blue color state for colors.
+	BlueColor Colors = "blue_color"
+	// GreenColor specifies the green color state for colors.
+	GreenColor Colors = "green-color"
+	// Redcolor specifies the redcolor state for colors.
+	Redcolor Colors = "red color"
 )
 
 // Base64URL is
 type Base64URL struct {
-autorest.Response `json:"-"`
-Value *string `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *string `json:"value,omitempty"`
 }
 
 // Error is
 type Error struct {
-Status *int32 `json:"status,omitempty"`
-Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+	Message *string `json:"message,omitempty"`
 }
 
 // RefColorConstant is
 type RefColorConstant struct {
-autorest.Response `json:"-"`
-ColorConstant *string `json:"ColorConstant,omitempty"`
-Field1 *string `json:"field1,omitempty"`
+	autorest.Response `json:"-"`
+	ColorConstant     *string `json:"ColorConstant,omitempty"`
+	Field1            *string `json:"field1,omitempty"`
 }
 
 // String is
 type String struct {
-autorest.Response `json:"-"`
-Value *string `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *string `json:"value,omitempty"`
 }
-

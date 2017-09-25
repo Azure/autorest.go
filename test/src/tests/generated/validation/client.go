@@ -10,364 +10,359 @@ package validationgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "github.com/Azure/go-autorest/autorest/validation"
-    "net/http"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/validation"
+	"net/http"
 )
 
 const (
-        // DefaultBaseURI is the default URI used for the service Validationgroup
-        DefaultBaseURI = "http://localhost"
+	// DefaultBaseURI is the default URI used for the service Validationgroup
+	DefaultBaseURI = "http://localhost"
 )
 
 // ManagementClient is the base client for Validationgroup.
 type ManagementClient struct {
-    autorest.Client
-        BaseURI string
-                SubscriptionID string
+	autorest.Client
+	BaseURI        string
+	SubscriptionID string
 }
 
 // New creates an instance of the ManagementClient client.
-func New(subscriptionID string)ManagementClient {
-        return NewWithBaseURI(DefaultBaseURI, subscriptionID)
+func New(subscriptionID string) ManagementClient {
+	return NewWithBaseURI(DefaultBaseURI, subscriptionID)
 }
 
-    // NewWithBaseURI creates an instance of the ManagementClient client.
-    func NewWithBaseURI(baseURI string, subscriptionID string) ManagementClient {
-        return ManagementClient{
-            Client: autorest.NewClientWithUserAgent(UserAgent()),
-            BaseURI: baseURI,
-                        SubscriptionID: subscriptionID,
-        }
-    }
+// NewWithBaseURI creates an instance of the ManagementClient client.
+func NewWithBaseURI(baseURI string, subscriptionID string) ManagementClient {
+	return ManagementClient{
+		Client:         autorest.NewClientWithUserAgent(UserAgent()),
+		BaseURI:        baseURI,
+		SubscriptionID: subscriptionID,
+	}
+}
 
-    // GetWithConstantInPath sends the get with constant in path request.
-    //
-    func (client ManagementClient) GetWithConstantInPath(constantParam string) (result autorest.Response, err error) {
-        req, err := client.GetWithConstantInPathPreparer(constantParam)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "GetWithConstantInPath", nil , "Failure preparing request")
-            return
-        }
+// GetWithConstantInPath sends the get with constant in path request.
+//
+func (client ManagementClient) GetWithConstantInPath(constantParam string) (result autorest.Response, err error) {
+	req, err := client.GetWithConstantInPathPreparer(constantParam)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "GetWithConstantInPath", nil, "Failure preparing request")
+		return
+	}
 
-        resp, err := client.GetWithConstantInPathSender(req)
-        if err != nil {
-            result.Response = resp
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "GetWithConstantInPath", resp, "Failure sending request")
-            return
-        }
+	resp, err := client.GetWithConstantInPathSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "GetWithConstantInPath", resp, "Failure sending request")
+		return
+	}
 
-        result, err = client.GetWithConstantInPathResponder(resp)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "GetWithConstantInPath", resp, "Failure responding to request")
-        }
+	result, err = client.GetWithConstantInPathResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "GetWithConstantInPath", resp, "Failure responding to request")
+	}
 
-        return
-    }
+	return
+}
 
-    // GetWithConstantInPathPreparer prepares the GetWithConstantInPath request.
-    func (client ManagementClient) GetWithConstantInPathPreparer(constantParam string) (*http.Request, error) {
-        pathParameters := map[string]interface{} {
-        "constantParam": autorest.Encode("path",constantParam),
-        }
+// GetWithConstantInPathPreparer prepares the GetWithConstantInPath request.
+func (client ManagementClient) GetWithConstantInPathPreparer(constantParam string) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"constantParam": autorest.Encode("path", constantParam),
+	}
 
-        preparer := autorest.CreatePreparer(
-                            autorest.AsGet(),
-                            autorest.WithBaseURL(client.BaseURI),
-                            autorest.WithPathParameters("/validation/constantsInPath/{constantParam}/value",pathParameters))
-        return preparer.Prepare(&http.Request{})
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/validation/constantsInPath/{constantParam}/value", pathParameters))
+	return preparer.Prepare(&http.Request{})
+}
 
-    // GetWithConstantInPathSender sends the GetWithConstantInPath request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client ManagementClient) GetWithConstantInPathSender(req *http.Request) (*http.Response, error) {
-        return autorest.SendWithSender(client, req)
-    }
+// GetWithConstantInPathSender sends the GetWithConstantInPath request. The method will close the
+// http.Response Body if it receives an error.
+func (client ManagementClient) GetWithConstantInPathSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req)
+}
 
-    // GetWithConstantInPathResponder handles the response to the GetWithConstantInPath request. The method always
-    // closes the http.Response Body.
-    func (client ManagementClient) GetWithConstantInPathResponder(resp *http.Response) (result autorest.Response, err error) {
-        err = autorest.Respond(
-                resp,
-                client.ByInspecting(),
-                azure.WithErrorUnlessStatusCode(http.StatusOK),
-                autorest.ByClosing())
-        result.Response = resp
-        return
-    }
+// GetWithConstantInPathResponder handles the response to the GetWithConstantInPath request. The method always
+// closes the http.Response Body.
+func (client ManagementClient) GetWithConstantInPathResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
 
-    // PostWithConstantInBody sends the post with constant in body request.
-    //
-    func (client ManagementClient) PostWithConstantInBody(constantParam string, body *Product) (result Product, err error) {
-        if err := validation.Validate([]validation.Validation{
-        { TargetValue: body,
-         Constraints: []validation.Constraint{	{Target: "body", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.DisplayNames", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.DisplayNames", Name: validation.MaxItems, Rule: 6, Chain: nil },
-        	{Target: "body.DisplayNames", Name: validation.MinItems, Rule: 0, Chain: nil },
-        	{Target: "body.DisplayNames", Name: validation.UniqueItems, Rule: true, Chain: nil },
-        }},
-        	{Target: "body.Capacity", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.Capacity", Name: validation.ExclusiveMaximum, Rule: 100, Chain: nil },
-        	{Target: "body.Capacity", Name: validation.ExclusiveMinimum, Rule: 0, Chain: nil },
-        }},
-        	{Target: "body.Image", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.Image", Name: validation.Pattern, Rule: `http://\w+`, Chain: nil },
-        }},
-        	{Target: "body.Child", Name: validation.Null, Rule: true ,
-        Chain: []validation.Constraint{	{Target: "body.Child.ConstProperty", Name: validation.Null, Rule: true, Chain: nil },
-        }},
-        	{Target: "body.ConstChild", Name: validation.Null, Rule: true ,
-        Chain: []validation.Constraint{	{Target: "body.ConstChild.ConstProperty", Name: validation.Null, Rule: true, Chain: nil },
-        	{Target: "body.ConstChild.ConstProperty2", Name: validation.Null, Rule: true, Chain: nil },
-        }},
-        	{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil },
-        	{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil },
-        }}}}}); err != nil {
-        return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient","PostWithConstantInBody")
-    }
+// PostWithConstantInBody sends the post with constant in body request.
+//
+func (client ManagementClient) PostWithConstantInBody(constantParam string, body *Product) (result Product, err error) {
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: body,
+			Constraints: []validation.Constraint{{Target: "body", Name: validation.Null, Rule: false,
+				Chain: []validation.Constraint{{Target: "body.DisplayNames", Name: validation.Null, Rule: false,
+					Chain: []validation.Constraint{{Target: "body.DisplayNames", Name: validation.MaxItems, Rule: 6, Chain: nil},
+						{Target: "body.DisplayNames", Name: validation.MinItems, Rule: 0, Chain: nil},
+						{Target: "body.DisplayNames", Name: validation.UniqueItems, Rule: true, Chain: nil},
+					}},
+					{Target: "body.Capacity", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "body.Capacity", Name: validation.ExclusiveMaximum, Rule: 100, Chain: nil},
+							{Target: "body.Capacity", Name: validation.ExclusiveMinimum, Rule: 0, Chain: nil},
+						}},
+					{Target: "body.Image", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "body.Image", Name: validation.Pattern, Rule: `http://\w+`, Chain: nil}}},
+					{Target: "body.Child", Name: validation.Null, Rule: true,
+						Chain: []validation.Constraint{{Target: "body.Child.ConstProperty", Name: validation.Null, Rule: true, Chain: nil}}},
+					{Target: "body.ConstChild", Name: validation.Null, Rule: true,
+						Chain: []validation.Constraint{{Target: "body.ConstChild.ConstProperty", Name: validation.Null, Rule: true, Chain: nil},
+							{Target: "body.ConstChild.ConstProperty2", Name: validation.Null, Rule: true, Chain: nil},
+						}},
+					{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil},
+				}}}}}); err != nil {
+		return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient", "PostWithConstantInBody")
+	}
 
-        req, err := client.PostWithConstantInBodyPreparer(constantParam, body)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "PostWithConstantInBody", nil , "Failure preparing request")
-            return
-        }
+	req, err := client.PostWithConstantInBodyPreparer(constantParam, body)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "PostWithConstantInBody", nil, "Failure preparing request")
+		return
+	}
 
-        resp, err := client.PostWithConstantInBodySender(req)
-        if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "PostWithConstantInBody", resp, "Failure sending request")
-            return
-        }
+	resp, err := client.PostWithConstantInBodySender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "PostWithConstantInBody", resp, "Failure sending request")
+		return
+	}
 
-        result, err = client.PostWithConstantInBodyResponder(resp)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "PostWithConstantInBody", resp, "Failure responding to request")
-        }
+	result, err = client.PostWithConstantInBodyResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "PostWithConstantInBody", resp, "Failure responding to request")
+	}
 
-        return
-    }
+	return
+}
 
-    // PostWithConstantInBodyPreparer prepares the PostWithConstantInBody request.
-    func (client ManagementClient) PostWithConstantInBodyPreparer(constantParam string, body *Product) (*http.Request, error) {
-        pathParameters := map[string]interface{} {
-        "constantParam": autorest.Encode("path",constantParam),
-        }
+// PostWithConstantInBodyPreparer prepares the PostWithConstantInBody request.
+func (client ManagementClient) PostWithConstantInBodyPreparer(constantParam string, body *Product) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"constantParam": autorest.Encode("path", constantParam),
+	}
 
-        preparer := autorest.CreatePreparer(
-                            autorest.AsJSON(),
-                            autorest.AsPost(),
-                            autorest.WithBaseURL(client.BaseURI),
-                            autorest.WithPathParameters("/validation/constantsInPath/{constantParam}/value",pathParameters))
-        if body != nil {
-            preparer = autorest.DecoratePreparer(preparer,
-                                autorest.WithJSON(body))
-        }
-        return preparer.Prepare(&http.Request{})
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/validation/constantsInPath/{constantParam}/value", pathParameters))
+	if body != nil {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithJSON(body))
+	}
+	return preparer.Prepare(&http.Request{})
+}
 
-    // PostWithConstantInBodySender sends the PostWithConstantInBody request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client ManagementClient) PostWithConstantInBodySender(req *http.Request) (*http.Response, error) {
-        return autorest.SendWithSender(client, req)
-    }
+// PostWithConstantInBodySender sends the PostWithConstantInBody request. The method will close the
+// http.Response Body if it receives an error.
+func (client ManagementClient) PostWithConstantInBodySender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req)
+}
 
-    // PostWithConstantInBodyResponder handles the response to the PostWithConstantInBody request. The method always
-    // closes the http.Response Body.
-    func (client ManagementClient) PostWithConstantInBodyResponder(resp *http.Response) (result Product, err error) {
-        err = autorest.Respond(
-                resp,
-                client.ByInspecting(),
-                azure.WithErrorUnlessStatusCode(http.StatusOK),
-                autorest.ByUnmarshallingJSON(&result),
-                autorest.ByClosing())
-        result.Response = autorest.Response{Response: resp}
-        return
-    }
+// PostWithConstantInBodyResponder handles the response to the PostWithConstantInBody request. The method always
+// closes the http.Response Body.
+func (client ManagementClient) PostWithConstantInBodyResponder(resp *http.Response) (result Product, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
 
-    // ValidationOfBody validates body parameters on the method. See swagger for details.
-    //
-    // resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
-    // of 10 from 100 to 1000.
-    func (client ManagementClient) ValidationOfBody(resourceGroupName string, ID int32, body *Product) (result Product, err error) {
-        if err := validation.Validate([]validation.Validation{
-        { TargetValue: resourceGroupName,
-         Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil },
-        	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 3, Chain: nil },
-        	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `[a-zA-Z0-9]+`, Chain: nil }}},
-        { TargetValue: ID,
-         Constraints: []validation.Constraint{	{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil },
-        	{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil },
-        	{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil }}},
-        { TargetValue: body,
-         Constraints: []validation.Constraint{	{Target: "body", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.DisplayNames", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.DisplayNames", Name: validation.MaxItems, Rule: 6, Chain: nil },
-        	{Target: "body.DisplayNames", Name: validation.MinItems, Rule: 0, Chain: nil },
-        	{Target: "body.DisplayNames", Name: validation.UniqueItems, Rule: true, Chain: nil },
-        }},
-        	{Target: "body.Capacity", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.Capacity", Name: validation.ExclusiveMaximum, Rule: 100, Chain: nil },
-        	{Target: "body.Capacity", Name: validation.ExclusiveMinimum, Rule: 0, Chain: nil },
-        }},
-        	{Target: "body.Image", Name: validation.Null, Rule: false ,
-        Chain: []validation.Constraint{	{Target: "body.Image", Name: validation.Pattern, Rule: `http://\w+`, Chain: nil },
-        }},
-        	{Target: "body.Child", Name: validation.Null, Rule: true ,
-        Chain: []validation.Constraint{	{Target: "body.Child.ConstProperty", Name: validation.Null, Rule: true, Chain: nil },
-        }},
-        	{Target: "body.ConstChild", Name: validation.Null, Rule: true ,
-        Chain: []validation.Constraint{	{Target: "body.ConstChild.ConstProperty", Name: validation.Null, Rule: true, Chain: nil },
-        	{Target: "body.ConstChild.ConstProperty2", Name: validation.Null, Rule: true, Chain: nil },
-        }},
-        	{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil },
-        	{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil },
-        }}}}}); err != nil {
-        return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient","ValidationOfBody")
-    }
+// ValidationOfBody validates body parameters on the method. See swagger for details.
+//
+// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
+// of 10 from 100 to 1000.
+func (client ManagementClient) ValidationOfBody(resourceGroupName string, ID int32, body *Product) (result Product, err error) {
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: resourceGroupName,
+			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 3, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `[a-zA-Z0-9]+`, Chain: nil}}},
+		{TargetValue: ID,
+			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil},
+				{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil},
+				{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil}}},
+		{TargetValue: body,
+			Constraints: []validation.Constraint{{Target: "body", Name: validation.Null, Rule: false,
+				Chain: []validation.Constraint{{Target: "body.DisplayNames", Name: validation.Null, Rule: false,
+					Chain: []validation.Constraint{{Target: "body.DisplayNames", Name: validation.MaxItems, Rule: 6, Chain: nil},
+						{Target: "body.DisplayNames", Name: validation.MinItems, Rule: 0, Chain: nil},
+						{Target: "body.DisplayNames", Name: validation.UniqueItems, Rule: true, Chain: nil},
+					}},
+					{Target: "body.Capacity", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "body.Capacity", Name: validation.ExclusiveMaximum, Rule: 100, Chain: nil},
+							{Target: "body.Capacity", Name: validation.ExclusiveMinimum, Rule: 0, Chain: nil},
+						}},
+					{Target: "body.Image", Name: validation.Null, Rule: false,
+						Chain: []validation.Constraint{{Target: "body.Image", Name: validation.Pattern, Rule: `http://\w+`, Chain: nil}}},
+					{Target: "body.Child", Name: validation.Null, Rule: true,
+						Chain: []validation.Constraint{{Target: "body.Child.ConstProperty", Name: validation.Null, Rule: true, Chain: nil}}},
+					{Target: "body.ConstChild", Name: validation.Null, Rule: true,
+						Chain: []validation.Constraint{{Target: "body.ConstChild.ConstProperty", Name: validation.Null, Rule: true, Chain: nil},
+							{Target: "body.ConstChild.ConstProperty2", Name: validation.Null, Rule: true, Chain: nil},
+						}},
+					{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil},
+					{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil},
+				}}}}}); err != nil {
+		return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient", "ValidationOfBody")
+	}
 
-        req, err := client.ValidationOfBodyPreparer(resourceGroupName, ID, body)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfBody", nil , "Failure preparing request")
-            return
-        }
+	req, err := client.ValidationOfBodyPreparer(resourceGroupName, ID, body)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfBody", nil, "Failure preparing request")
+		return
+	}
 
-        resp, err := client.ValidationOfBodySender(req)
-        if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfBody", resp, "Failure sending request")
-            return
-        }
+	resp, err := client.ValidationOfBodySender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfBody", resp, "Failure sending request")
+		return
+	}
 
-        result, err = client.ValidationOfBodyResponder(resp)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfBody", resp, "Failure responding to request")
-        }
+	result, err = client.ValidationOfBodyResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfBody", resp, "Failure responding to request")
+	}
 
-        return
-    }
+	return
+}
 
-    // ValidationOfBodyPreparer prepares the ValidationOfBody request.
-    func (client ManagementClient) ValidationOfBodyPreparer(resourceGroupName string, ID int32, body *Product) (*http.Request, error) {
-        pathParameters := map[string]interface{} {
-        "id": autorest.Encode("path",ID),
-        "resourceGroupName": autorest.Encode("path",resourceGroupName),
-        "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-        }
+// ValidationOfBodyPreparer prepares the ValidationOfBody request.
+func (client ManagementClient) ValidationOfBodyPreparer(resourceGroupName string, ID int32, body *Product) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"id":                autorest.Encode("path", ID),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
 
-            const APIVersion = "1.0.0"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
+	const APIVersion = "1.0.0"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-        preparer := autorest.CreatePreparer(
-                            autorest.AsJSON(),
-                            autorest.AsPut(),
-                            autorest.WithBaseURL(client.BaseURI),
-                            autorest.WithPathParameters("/fakepath/{subscriptionId}/{resourceGroupName}/{id}",pathParameters),
-                            autorest.WithQueryParameters(queryParameters))
-        if body != nil {
-            preparer = autorest.DecoratePreparer(preparer,
-                                autorest.WithJSON(body))
-        }
-        return preparer.Prepare(&http.Request{})
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/fakepath/{subscriptionId}/{resourceGroupName}/{id}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	if body != nil {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithJSON(body))
+	}
+	return preparer.Prepare(&http.Request{})
+}
 
-    // ValidationOfBodySender sends the ValidationOfBody request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client ManagementClient) ValidationOfBodySender(req *http.Request) (*http.Response, error) {
-        return autorest.SendWithSender(client, req)
-    }
+// ValidationOfBodySender sends the ValidationOfBody request. The method will close the
+// http.Response Body if it receives an error.
+func (client ManagementClient) ValidationOfBodySender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req)
+}
 
-    // ValidationOfBodyResponder handles the response to the ValidationOfBody request. The method always
-    // closes the http.Response Body.
-    func (client ManagementClient) ValidationOfBodyResponder(resp *http.Response) (result Product, err error) {
-        err = autorest.Respond(
-                resp,
-                client.ByInspecting(),
-                azure.WithErrorUnlessStatusCode(http.StatusOK),
-                autorest.ByUnmarshallingJSON(&result),
-                autorest.ByClosing())
-        result.Response = autorest.Response{Response: resp}
-        return
-    }
+// ValidationOfBodyResponder handles the response to the ValidationOfBody request. The method always
+// closes the http.Response Body.
+func (client ManagementClient) ValidationOfBodyResponder(resp *http.Response) (result Product, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
 
-    // ValidationOfMethodParameters validates input parameters on the method. See swagger for details.
-    //
-    // resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
-    // of 10 from 100 to 1000.
-    func (client ManagementClient) ValidationOfMethodParameters(resourceGroupName string, ID int32) (result Product, err error) {
-        if err := validation.Validate([]validation.Validation{
-        { TargetValue: resourceGroupName,
-         Constraints: []validation.Constraint{	{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil },
-        	{Target: "resourceGroupName", Name: validation.MinLength, Rule: 3, Chain: nil },
-        	{Target: "resourceGroupName", Name: validation.Pattern, Rule: `[a-zA-Z0-9]+`, Chain: nil }}},
-        { TargetValue: ID,
-         Constraints: []validation.Constraint{	{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil },
-        	{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil },
-        	{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil }}}}); err != nil {
-        return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient","ValidationOfMethodParameters")
-    }
+// ValidationOfMethodParameters validates input parameters on the method. See swagger for details.
+//
+// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
+// of 10 from 100 to 1000.
+func (client ManagementClient) ValidationOfMethodParameters(resourceGroupName string, ID int32) (result Product, err error) {
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: resourceGroupName,
+			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 3, Chain: nil},
+				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `[a-zA-Z0-9]+`, Chain: nil}}},
+		{TargetValue: ID,
+			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil},
+				{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil},
+				{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil}}}}); err != nil {
+		return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters")
+	}
 
-        req, err := client.ValidationOfMethodParametersPreparer(resourceGroupName, ID)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters", nil , "Failure preparing request")
-            return
-        }
+	req, err := client.ValidationOfMethodParametersPreparer(resourceGroupName, ID)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters", nil, "Failure preparing request")
+		return
+	}
 
-        resp, err := client.ValidationOfMethodParametersSender(req)
-        if err != nil {
-            result.Response = autorest.Response{Response: resp}
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters", resp, "Failure sending request")
-            return
-        }
+	resp, err := client.ValidationOfMethodParametersSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters", resp, "Failure sending request")
+		return
+	}
 
-        result, err = client.ValidationOfMethodParametersResponder(resp)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters", resp, "Failure responding to request")
-        }
+	result, err = client.ValidationOfMethodParametersResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters", resp, "Failure responding to request")
+	}
 
-        return
-    }
+	return
+}
 
-    // ValidationOfMethodParametersPreparer prepares the ValidationOfMethodParameters request.
-    func (client ManagementClient) ValidationOfMethodParametersPreparer(resourceGroupName string, ID int32) (*http.Request, error) {
-        pathParameters := map[string]interface{} {
-        "id": autorest.Encode("path",ID),
-        "resourceGroupName": autorest.Encode("path",resourceGroupName),
-        "subscriptionId": autorest.Encode("path",client.SubscriptionID),
-        }
+// ValidationOfMethodParametersPreparer prepares the ValidationOfMethodParameters request.
+func (client ManagementClient) ValidationOfMethodParametersPreparer(resourceGroupName string, ID int32) (*http.Request, error) {
+	pathParameters := map[string]interface{}{
+		"id":                autorest.Encode("path", ID),
+		"resourceGroupName": autorest.Encode("path", resourceGroupName),
+		"subscriptionId":    autorest.Encode("path", client.SubscriptionID),
+	}
 
-            const APIVersion = "1.0.0"
-        queryParameters := map[string]interface{} {
-        "api-version": APIVersion,
-        }
+	const APIVersion = "1.0.0"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-        preparer := autorest.CreatePreparer(
-                            autorest.AsGet(),
-                            autorest.WithBaseURL(client.BaseURI),
-                            autorest.WithPathParameters("/fakepath/{subscriptionId}/{resourceGroupName}/{id}",pathParameters),
-                            autorest.WithQueryParameters(queryParameters))
-        return preparer.Prepare(&http.Request{})
-    }
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPathParameters("/fakepath/{subscriptionId}/{resourceGroupName}/{id}", pathParameters),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare(&http.Request{})
+}
 
-    // ValidationOfMethodParametersSender sends the ValidationOfMethodParameters request. The method will close the
-    // http.Response Body if it receives an error.
-    func (client ManagementClient) ValidationOfMethodParametersSender(req *http.Request) (*http.Response, error) {
-        return autorest.SendWithSender(client, req)
-    }
+// ValidationOfMethodParametersSender sends the ValidationOfMethodParameters request. The method will close the
+// http.Response Body if it receives an error.
+func (client ManagementClient) ValidationOfMethodParametersSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req)
+}
 
-    // ValidationOfMethodParametersResponder handles the response to the ValidationOfMethodParameters request. The method always
-    // closes the http.Response Body.
-    func (client ManagementClient) ValidationOfMethodParametersResponder(resp *http.Response) (result Product, err error) {
-        err = autorest.Respond(
-                resp,
-                client.ByInspecting(),
-                azure.WithErrorUnlessStatusCode(http.StatusOK),
-                autorest.ByUnmarshallingJSON(&result),
-                autorest.ByClosing())
-        result.Response = autorest.Response{Response: resp}
-        return
-    }
-
+// ValidationOfMethodParametersResponder handles the response to the ValidationOfMethodParameters request. The method always
+// closes the http.Response Body.
+func (client ManagementClient) ValidationOfMethodParametersResponder(resp *http.Response) (result Product, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}

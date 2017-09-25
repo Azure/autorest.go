@@ -10,30 +10,29 @@ package custombaseurlgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 const (
-        // DefaultHost is the default value for host
-        DefaultHost = "host"
+	// DefaultHost is the default value for host
+	DefaultHost = "host"
 )
 
 // ManagementClient is the base client for Custombaseurlgroup.
 type ManagementClient struct {
-    autorest.Client
-                Host string
+	autorest.Client
+	Host string
 }
 
 // New creates an instance of the ManagementClient client.
-func New()ManagementClient {
-        return NewWithoutDefaults(DefaultHost)
+func New() ManagementClient {
+	return NewWithoutDefaults(DefaultHost)
 }
 
-    // NewWithoutDefaults creates an instance of the ManagementClient client.
-    func NewWithoutDefaults(host string) ManagementClient {
-        return ManagementClient{
-            Client: autorest.NewClientWithUserAgent(UserAgent()),
-                    Host: host,
-        }
-    }
-
+// NewWithoutDefaults creates an instance of the ManagementClient client.
+func NewWithoutDefaults(host string) ManagementClient {
+	return ManagementClient{
+		Client: autorest.NewClientWithUserAgent(UserAgent()),
+		Host:   host,
+	}
+}

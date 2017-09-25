@@ -7,19 +7,18 @@ package datetimegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/date"
 )
 
 // DateTime is
 type DateTime struct {
-autorest.Response `json:"-"`
-Value *date.Time `json:"value,omitempty"`
+	autorest.Response `json:"-"`
+	Value             *date.Time `json:"value,omitempty"`
 }
 
 // Error is
 type Error struct {
-Status *int32 `json:"status,omitempty"`
-Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+	Message *string `json:"message,omitempty"`
 }
-

@@ -10,36 +10,35 @@ package optionalgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest"
 )
 
 const (
-        // DefaultBaseURI is the default URI used for the service Optionalgroup
-        DefaultBaseURI = "http://localhost"
+	// DefaultBaseURI is the default URI used for the service Optionalgroup
+	DefaultBaseURI = "http://localhost"
 )
 
 // ManagementClient is the base client for Optionalgroup.
 type ManagementClient struct {
-    autorest.Client
-        BaseURI string
-                RequiredGlobalPath string
-            RequiredGlobalQuery string
-            OptionalGlobalQuery *int32
+	autorest.Client
+	BaseURI             string
+	RequiredGlobalPath  string
+	RequiredGlobalQuery string
+	OptionalGlobalQuery *int32
 }
 
 // New creates an instance of the ManagementClient client.
-func New(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32)ManagementClient {
-        return NewWithBaseURI(DefaultBaseURI, requiredGlobalPath, requiredGlobalQuery, optionalGlobalQuery)
+func New(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ManagementClient {
+	return NewWithBaseURI(DefaultBaseURI, requiredGlobalPath, requiredGlobalQuery, optionalGlobalQuery)
 }
 
-    // NewWithBaseURI creates an instance of the ManagementClient client.
-    func NewWithBaseURI(baseURI string, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ManagementClient {
-        return ManagementClient{
-            Client: autorest.NewClientWithUserAgent(UserAgent()),
-            BaseURI: baseURI,
-                        RequiredGlobalPath: requiredGlobalPath,
-                        RequiredGlobalQuery: requiredGlobalQuery,
-                        OptionalGlobalQuery: optionalGlobalQuery,
-        }
-    }
-
+// NewWithBaseURI creates an instance of the ManagementClient client.
+func NewWithBaseURI(baseURI string, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ManagementClient {
+	return ManagementClient{
+		Client:              autorest.NewClientWithUserAgent(UserAgent()),
+		BaseURI:             baseURI,
+		RequiredGlobalPath:  requiredGlobalPath,
+		RequiredGlobalQuery: requiredGlobalQuery,
+		OptionalGlobalQuery: optionalGlobalQuery,
+	}
+}
