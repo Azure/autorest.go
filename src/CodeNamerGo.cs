@@ -269,7 +269,7 @@ namespace AutoRest.Go
         /// <param name="name"></param>
         /// <param name="splitter"></param>
         /// <returns>The formatted string</returns>
-        public static string PascalCaseWithoutChar(string name, char splitter)
+        public override string PascalCase(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -277,7 +277,7 @@ namespace AutoRest.Go
             }
 
             return
-                name.Split(splitter)
+                name.Split(new Char[]{'.', '_', '@', '-', ' '})
                     .Where(s => !string.IsNullOrEmpty(s))
                     .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
                     .DefaultIfEmpty("")

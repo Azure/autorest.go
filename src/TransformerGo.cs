@@ -87,7 +87,8 @@ namespace AutoRest.Go
                     foreach (var dt in (mt as CompositeTypeGo).DerivedTypes)
                     {
                         var ev = new EnumValue();
-                        ev.Name =  string.Format("{0}{1}", mt.PolymorphicDiscriminator, CodeNamerGo.Instance.PascalCase(dt.SerializedName));
+                        ev.Name =  string.Format("{0}{1}", CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator),
+                            CodeNamerGo.Instance.GetTypeName(dt.SerializedName));
                         ev.SerializedName = dt.SerializedName;
                         values.Add(ev);
                     }
@@ -216,7 +217,7 @@ namespace AutoRest.Go
                     mtm.IsResponseType = true;
                     if (cmg.PagedTypes.ContainsKey(mtm))
                     {
-                        mtm.NextLink = CodeNamerGo.PascalCaseWithoutChar(cmg.PagedTypes[mtm], '.');
+                        mtm.NextLink = CodeNamerGo.Instance.GetPropertyName(cmg.PagedTypes[mtm]);
                         mtm.PreparerNeeded = cmg.NextMethodUndefined.Contains(mtm);
                     }
                 });
