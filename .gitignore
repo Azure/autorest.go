@@ -289,7 +289,6 @@ __pycache__/
 
 package-lock.json
 *.tgz
-test/src/tests/generated/*
 test/src/tests/vendor/*
 test/pkg
 test/bin
