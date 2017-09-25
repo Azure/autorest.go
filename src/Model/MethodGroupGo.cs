@@ -39,7 +39,7 @@ namespace AutoRest.Go.Model
         internal void Transform(CodeModelGo cmg)
         {
             var originalName = Name.Value;
-            Name = Name.FixedValue.TrimPackageName(cmg.Namespace);
+            Name = Name.Value.TrimPackageName(cmg.Namespace);
             if (Name != originalName)
             {
                 // fix up the method group names
