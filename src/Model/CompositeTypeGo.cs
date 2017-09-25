@@ -122,7 +122,7 @@ namespace AutoRest.Go.Model
             else
             {
                 Name += elementType.Name;
-                Name += "Wrapper";
+                // Name += "Wrapper";
             }
 
             // add the wrapped type as a property named Value
