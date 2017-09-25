@@ -6,7 +6,7 @@
     "autorest": "autorest",
     "start": "dotnet src/bin/netcoreapp2.0/autorest.go.dll --server",
     "test": "gulp test",
-    "testci": "gulp test",
+    "testci": "gulp testci",
     "build": "gulp build",
     "prepare": "gulp build",
     "publish-preview": "gulp publish-preview",
