@@ -269,7 +269,7 @@ namespace AutoRest.Go
         /// <param name="name"></param>
         /// <param name="splitter"></param>
         /// <returns>The formatted string</returns>
-        public static string PascalCaseWithoutChar(string name, char splitter)
+        public override string PascalCase(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -277,7 +277,7 @@ namespace AutoRest.Go
             }
 
             return
-                name.Split(splitter)
+                name.Split(new Char[]{'.', '_', '@', '-', ' ', '$'})
                     .Where(s => !string.IsNullOrEmpty(s))
                     .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
                     .DefaultIfEmpty("")
@@ -295,7 +295,7 @@ namespace AutoRest.Go
             {
                 return name;
             }
-            return EnsureNameCase(PascalCase(RemoveInvalidCharacters(GetEscapedReservedName(name, "Field"))));
+            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(GetEscapedReservedName(name, "Field"))));
         }
 
         public override string GetInterfaceName(string name)
@@ -304,7 +304,7 @@ namespace AutoRest.Go
             {
                 return name;
             }
-            return EnsureNameCase(PascalCase(RemoveInvalidCharacters(name)));
+            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace AutoRest.Go
             {
                 return name;
             }
-            return EnsureNameCase(GetEscapedReservedName(PascalCase(RemoveInvalidCharacters(name)), "Method"));
+            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Method"));
         }
 
         public override string GetMethodGroupName(string name)
@@ -330,7 +330,7 @@ namespace AutoRest.Go
 
             // we use the base implementation here as it uses a case-insensitive comparison.
             // this is a bit of a hacky work-around for some naming changes introduced in core...
-            return EnsureNameCase(PascalCase(RemoveInvalidCharacters(base.GetEscapedReservedName(name, "Group"))));
+            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(base.GetEscapedReservedName(name, "Group"))));
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace AutoRest.Go
             {
                 return name;
             }
-            return EnsureNameCase(GetEscapedReservedName(PascalCase(RemoveInvalidCharacters(name)), "Property"));
+            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Property"));
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace AutoRest.Go
             {
                 return name;
             }
-            return EnsureNameCase(GetEscapedReservedName(PascalCase(RemoveInvalidCharacters(name)), "Type"));
+            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));
         }
 
         /// <summary>
