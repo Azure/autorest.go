@@ -308,7 +308,7 @@ namespace AutoRest.Go
                         }
                         else if (exported is Method)
                         {
-                            (exported as Method).Name.Value = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Method");
+                            (exported as Method).Name.FixedValue = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Method");
                         }
                     });
             }
