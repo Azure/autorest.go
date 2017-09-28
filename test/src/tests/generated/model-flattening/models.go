@@ -63,7 +63,7 @@ type FlattenedProduct struct {
 
 // FlattenedProductProperties is
 type FlattenedProductProperties struct {
-	Pname                   *string                 `json:"p.name,omitempty"`
+	PName                   *string                 `json:"p.name,omitempty"`
 	Type                    *string                 `json:"type,omitempty"`
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
@@ -89,7 +89,7 @@ type ListProductWrapper struct {
 // ProductURL is the product URL.
 type ProductURL struct {
 	GenericValue *string `json:"generic_value,omitempty"`
-	Odatavalue   *string `json:"@odata.value,omitempty"`
+	OdataValue   *string `json:"@odata.value,omitempty"`
 }
 
 // ProductWrapper is the wrapped produc.
