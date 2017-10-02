@@ -568,7 +568,7 @@ namespace AutoRest.Go.Model
                         var nextLink = (string)pageableExtension["nextLinkName"];
                         if (!string.IsNullOrEmpty(nextLink))
                         {
-                            return CodeNamerGo.Instance.GetPropertyName(CodeNamerGo.PascalCaseWithoutChar(nextLink, '.'));
+                            return CodeNamerGo.Instance.GetPropertyName(nextLink);
                         }
                     }
                 }

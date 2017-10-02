@@ -45,7 +45,7 @@ func (s *ModelFlatteningSuite) TestGetArray(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState,
 				ProvisioningStateValues: "OK",
-				Pname: &pname,
+				PName: &pname,
 				Type:  &propty,
 			},
 		},
@@ -82,7 +82,7 @@ func (s *ModelFlatteningSuite) TestGetDictionary(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState,
 				ProvisioningStateValues: "OK",
-				Pname: &pname,
+				PName: &pname,
 				Type:  &propty,
 			},
 		},
@@ -119,7 +119,7 @@ func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState,
 				ProvisioningStateValues: "OK",
-				Pname: &pname,
+				PName: &pname,
 				Type:  &propty,
 			},
 		},
@@ -151,7 +151,7 @@ func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState4,
 				ProvisioningStateValues: "OK",
-				Pname: &pname4,
+				PName: &pname4,
 				Type:  &propty4,
 			},
 		},
@@ -188,7 +188,7 @@ func (s *ModelFlatteningSuite) TestPostFlattenedSimpleProduct(c *chk.C) {
 			MaxProductDisplayName: &displayName,
 			Capacity:              &capacity,
 			ProductURL: &ProductURL{
-				Odatavalue: &odata,
+				OdataValue: &odata,
 			},
 		},
 	}
@@ -247,7 +247,7 @@ func (s *ModelFlatteningSuite) TestPutSimpleProduct(c *chk.C) {
 			MaxProductDisplayName: &displayName,
 			Capacity:              &capacity,
 			ProductURL: &ProductURL{
-				Odatavalue:   &odata,
+				OdataValue:   &odata,
 				GenericValue: &genericValue,
 			},
 		},
@@ -269,7 +269,7 @@ func (s *ModelFlatteningSuite) TestPutSimpleProductWithGrouping(c *chk.C) {
 			MaxProductDisplayName: &displayName,
 			Capacity:              &capacity,
 			ProductURL: &ProductURL{
-				Odatavalue: &odata,
+				OdataValue: &odata,
 			},
 		},
 	}
