@@ -72,6 +72,10 @@ namespace AutoRest.Go.Model
                 {
                     imports.UnionWith(clientMg.Imports);
                 }
+                if (AddCredentials)
+                {
+                    imports.UnionWith(CodeNamerGo.Instance.AuthImports);
+                }
                 return imports.OrderBy(i => i);
             }
         }
@@ -111,20 +115,22 @@ namespace AutoRest.Go.Model
 
         public bool ShouldValidate => (bool)AutoRest.Core.Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result;
 
+        public bool AddCredentials => Settings.Instance.AddCredentials;
+
+        public IEnumerable<Property> NonDefaultProperties => Properties.Where(p => !p.SerializedName.IsApiVersion() && p.DefaultValue.FixedValue.IsNullOrEmpty());
+
+        public IEnumerable<Property> DefaultProperties => Properties.Where(p => !p.SerializedName.IsApiVersion() && !p.DefaultValue.FixedValue.IsNullOrEmpty());
+
         public string GlobalParameters
         {
             get
             {
                 var declarations = new List<string>();
-                foreach (var p in Properties)
+                foreach (var p in NonDefaultProperties)
                 {
-                    if (!p.SerializedName.IsApiVersion() && p.DefaultValue.FixedValue.IsNullOrEmpty())
-                    {
-                        declarations.Add(
-                                string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeEmpty() ? "{0} {1}" : "{0} *{1}"),
-                                         p.Name.Value.ToSentence(), p.ModelType.Name));
-                    }
+                    declarations.Add(string.Format(
+                        (p.IsRequired || p.ModelType.CanBeEmpty() ? "{0} {1}" : "{0} *{1}"),
+                            p.Name.Value.ToSentence(), p.ModelType.Name));
                 }
                 return string.Join(", ", declarations);
             }
@@ -135,12 +141,9 @@ namespace AutoRest.Go.Model
             get
             {
                 var invocationParams = new List<string>();
-                foreach (var p in Properties)
+                foreach (var p in NonDefaultProperties)
                 {
-                    if (!p.SerializedName.IsApiVersion() && p.DefaultValue.FixedValue.IsNullOrEmpty())
-                    {
-                        invocationParams.Add(p.Name.Value.ToSentence());
-                    }
+                    invocationParams.Add(p.Name.Value.ToSentence());
                 }
                 return string.Join(", ", invocationParams);
             }
@@ -150,15 +153,11 @@ namespace AutoRest.Go.Model
             get
             {
                 var declarations = new List<string>();
-                foreach (var p in Properties)
+                foreach (var p in DefaultProperties)
                 {
-                    if (!p.SerializedName.IsApiVersion() && !p.DefaultValue.FixedValue.IsNullOrEmpty())
-                    {
-                        declarations.Add(
-                                string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeEmpty() ? "{0} {1}" : "{0} *{1}"),
-                                         p.Name.Value.ToSentence(), p.ModelType.Name.Value.ToSentence()));
-                    }
+                    declarations.Add(string.Format(
+                        (p.IsRequired || p.ModelType.CanBeEmpty() ? "{0} {1}" : "{0} *{1}"),
+                            p.Name.Value.ToSentence(), p.ModelType.Name.Value.ToSentence()));
                 }
                 return string.Join(", ", declarations);
             }
@@ -169,12 +168,9 @@ namespace AutoRest.Go.Model
             get
             {
                 var invocationParams = new List<string>();
-                foreach (var p in Properties)
+                foreach (var p in DefaultProperties)
                 {
-                    if (!p.SerializedName.IsApiVersion() && !p.DefaultValue.FixedValue.IsNullOrEmpty())
-                    {
-                        invocationParams.Add("Default" + p.Name.Value);
-                    }
+                    invocationParams.Add("Default" + p.Name.Value);
                 }
                 return string.Join(", ", invocationParams);
             }
@@ -185,15 +181,12 @@ namespace AutoRest.Go.Model
             get
             {
                 var constDeclaration = new List<string>();
-                foreach (var p in Properties)
+                foreach (var p in DefaultProperties)
                 {
-                    if (!p.SerializedName.IsApiVersion() && !p.DefaultValue.FixedValue.IsNullOrEmpty())
-                    {
-                        constDeclaration.Add(string.Format("// Default{0} is the default value for {1}\nDefault{0} = {2}",
-                            p.Name.Value,
-                            p.Name.Value.ToPhrase(),
-                            p.DefaultValue.Value));
-                    }
+                    constDeclaration.Add(string.Format("// Default{0} is the default value for {1}\nDefault{0} = {2}",
+                        p.Name.Value,
+                        p.Name.Value.ToPhrase(),
+                        p.DefaultValue.Value));
                 }
                 return string.Join("\n", constDeclaration);
             }
@@ -229,6 +222,33 @@ namespace AutoRest.Go.Model
                     return HelperGlobalParameters;
                 }
                 return string.Join(", ", new string[] { HelperGlobalParameters, HelperGlobalDefaultParameters });
+            }
+        }
+
+        public string AuthParameters
+        {
+            get
+            {
+                if (AddCredentials)
+                {
+                    var parameters = new List<string>();
+                    parameters.Add("auth.BaseURI");
+                    foreach (var p in NonDefaultProperties)
+                    {
+                        var name = p.Name;
+                        switch (name.ToLower())
+                        {
+                            case "subscriptionid":
+                                parameters.Add("auth.File[\"subscriptionId\"]");
+                                break;
+                            case "tenantid":
+                                parameters.Add("auth.File[\"tenantId\"]");
+                                break;
+                        }
+                    }
+                    return string.Join(", ", parameters);
+                }
+                return null;
             }
         }
 

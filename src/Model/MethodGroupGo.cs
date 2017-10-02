@@ -27,6 +27,7 @@ namespace AutoRest.Go.Model
         public string HelperGlobalDefaultParameters;
         public string ConstGlobalDefaultParameters;
         public IEnumerable<string> Imports { get; private set; }
+        public bool AddCredentials;
 
         public MethodGroupGo(string name) : base(name)
         {
@@ -68,7 +69,7 @@ namespace AutoRest.Go.Model
             GlobalDefaultParameters = cmg.GlobalDefaultParameters;
             HelperGlobalDefaultParameters = cmg.HelperGlobalDefaultParameters;
             ConstGlobalDefaultParameters = cmg.ConstGlobalDefaultParameters;
-
+            AddCredentials = cmg.AddCredentials;
 
 
             //Imports
