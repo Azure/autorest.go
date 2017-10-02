@@ -72,7 +72,7 @@ namespace AutoRest.Go.Model
                 {
                     imports.UnionWith(clientMg.Imports);
                 }
-                if (AddCredentials)
+                if (AddCredentials && !IsCustomBaseUri)
                 {
                     imports.UnionWith(CodeNamerGo.Instance.AuthImports);
                 }
