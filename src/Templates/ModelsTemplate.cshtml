@@ -15,7 +15,7 @@
     enums.Sort(delegate(EnumTypeGo lhs, EnumTypeGo rhs) { return lhs.Name.FixedValue.CompareTo(rhs.Name); });
 
     var modelTypes = Model.ModelTypes.Cast<CompositeTypeGo>().ToList();
-    modelTypes.Sort(delegate (CompositeTypeGo x, CompositeTypeGo y) { return x.Name.FixedValue.CompareTo(y.Name.FixedValue); });
+    modelTypes.Sort(delegate (CompositeTypeGo x, CompositeTypeGo y) { return x.Name.Value.CompareTo(y.Name.Value); });
 }
 package @Model.Namespace
 @EmptyLine
