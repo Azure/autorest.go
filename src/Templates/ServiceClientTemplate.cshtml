@@ -98,12 +98,12 @@ func New(@(Model.GlobalParameters))@(Model.BaseClient) {
     {
     @WrapComment("// ", string.Format("NewWithAuthFile creates an instance of the {0} client.", Model.BaseClient))
     <text>
-    func NewWithAuthFile() (c @(Model.BaseClient), err error) {
+    func NewWithAuthFile(@(Model.AuthParameters)) (c @(Model.BaseClient), err error) {
         auth, err := utils.GetTokenFromAuthFile(DefaultBaseURI)
         if err != nil {
             return
         }
-        c = NewWithBaseURI(@(Model.AuthParameters))
+        c = NewWithBaseURI(@(Model.HelperAuthParameters))
         c.Authorizer = auth.Authorizer
         return
     }

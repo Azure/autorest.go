@@ -225,7 +225,7 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string AuthParameters
+        public string HelperAuthParameters
         {
             get
             {
@@ -244,6 +244,51 @@ namespace AutoRest.Go.Model
                             case "tenantid":
                                 parameters.Add("auth.File[\"tenantId\"]");
                                 break;
+                            default:
+                                parameters.Add(p.Name.Value.ToSentence());
+                                break;
+                        }
+                    }
+                    return string.Join(", ", parameters);
+                }
+                return null;
+            }
+        }
+
+        public string AuthParameters
+        {
+            get
+            {
+                if (AddCredentials)
+                {
+                    var parameters = new List<string>();
+                    foreach (var p in NonDefaultProperties)
+                    {
+                        if (!(p.Name.EqualsIgnoreCase("subscriptionid") || p.Name.EqualsIgnoreCase("tenantid")))
+                        {
+                            parameters.Add(string.Format(
+                                (p.IsRequired || p.ModelType.CanBeEmpty() ? "{0} {1}" : "{0} *{1}"),
+                                p.Name.Value.ToSentence(), p.ModelType.Name));
+                        }
+                    }
+                    return string.Join(", ", parameters);
+                }
+                return null;
+            }
+        }
+
+        public string ClientHelperAuthParameters
+        {
+            get
+            {
+                if (AddCredentials)
+                {
+                    var parameters = new List<string>();
+                    foreach (var p in NonDefaultProperties)
+                    {
+                        if (!(p.Name.EqualsIgnoreCase("subscriptionid") || p.Name.EqualsIgnoreCase("tenantid")))
+                        {
+                            parameters.Add(p.Name.Value.ToSentence());
                         }
                     }
                     return string.Join(", ", parameters);
