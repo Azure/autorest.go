@@ -8,6 +8,7 @@ using AutoRest.Go.Templates;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AutoRest.Go
 {
@@ -64,8 +65,20 @@ namespace AutoRest.Go
 
             // by convention the methods in the method group with an empty
             // name go into the client template so skip them here.
+            HashSet<string> ReservedFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "models",
+                "client",
+                "version",
+            };
+
             foreach (var methodGroup in codeModel.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name)))
             {
+                if (ReservedFiles.Contains(methodGroup.Name.Value))
+                {
+                    methodGroup.Name += "group";
+                }
+                ReservedFiles.Add(methodGroup.Name);
                 var methodGroupTemplate = new MethodGroupTemplate
                 {
                     Model = methodGroup
