@@ -65,7 +65,8 @@ namespace AutoRest.Go
 
             // by convention the methods in the method group with an empty
             // name go into the client template so skip them here.
-            HashSet<string> ReservedFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase){
+            HashSet<string> ReservedFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
                 "models",
                 "client",
                 "version",
