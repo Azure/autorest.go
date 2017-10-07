@@ -232,17 +232,17 @@ namespace AutoRest.Go.Model
                 if (AddCredentials)
                 {
                     var parameters = new List<string>();
-                    parameters.Add("auth.BaseURI");
+                    parameters.Add("authentication.BaseURI");
                     foreach (var p in NonDefaultProperties)
                     {
                         var name = p.Name;
                         switch (name.ToLower())
                         {
                             case "subscriptionid":
-                                parameters.Add("auth.File[\"subscriptionId\"]");
+                                parameters.Add("authentication.File[\"subscriptionId\"]");
                                 break;
                             case "tenantid":
-                                parameters.Add("auth.File[\"tenantId\"]");
+                                parameters.Add("authentication.File[\"tenantId\"]");
                                 break;
                             default:
                                 parameters.Add(p.Name.Value.ToSentence());
