@@ -93,6 +93,23 @@ func New(@(Model.GlobalParameters))@(Model.BaseClient) {
         }
     }
     </text>
+
+    @if (Model.AddCredentials)
+    {
+    @WrapComment("// ", string.Format("NewWithAuthFile creates an instance of the {0} client.", Model.BaseClient))
+    <text>
+    func NewWithAuthFile(@(Model.AuthParameters)) (c @(Model.BaseClient), err error) {
+        authentication, err := auth.GetClientSetup(DefaultBaseURI)
+        if err != nil {
+            return
+        }
+        c = NewWithBaseURI(@(Model.HelperAuthParameters))
+        c.Authorizer = authentication
+        return
+    }
+    </text>
+    @EmptyLine
+    }
 }
 else
 {

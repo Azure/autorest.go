@@ -58,6 +58,18 @@ func New@(Model.ClientName)(@(Model.GlobalParameters)) @(Model.ClientName) {
     }
     </text>
     @EmptyLine
+
+    @if (Model.AddCredentials)
+    {
+    @WrapComment("// ", string.Format("New{0}WithAuthFile creates an instance of the {0} client.", Model.ClientName))
+    <text>
+    func New@(Model.ClientName)WithAuthFile(@(Model.AuthParameters)) (@(Model.ClientName), error) {
+        c, err := NewWithAuthFile(@(Model.HelperAuthParameters))
+        return @(Model.ClientName){c}, err
+    }
+    </text>
+    @EmptyLine
+    }
 }
 
 @foreach (var method in methods)

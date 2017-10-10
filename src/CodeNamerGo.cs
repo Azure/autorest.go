@@ -28,6 +28,8 @@ namespace AutoRest.Go
 
         public virtual IEnumerable<string> AutorestImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
 
+        public virtual IEnumerable<string> AuthImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure/auth") };
+
         public virtual IEnumerable<string> StandardImports => new string[] 
         { 
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"), 
