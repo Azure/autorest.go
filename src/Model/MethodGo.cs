@@ -33,6 +33,8 @@ namespace AutoRest.Go.Model
         public bool IsCustomBaseUri
             => CodeModel.Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
+        public bool RegisterRP;
+
         public MethodGo()
         {
             NextAlreadyDefined = true;
@@ -76,6 +78,8 @@ namespace AutoRest.Go.Model
             {
                 Description += lroDescription;
             }
+
+            RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
         }
 
         public string MethodSignature => $"{Name}({MethodParametersSignature})";
@@ -390,11 +394,32 @@ namespace AutoRest.Go.Model
             }
         }
 
+        public List<string> SendDecorators
+        {
+            get
+            {
+                var decorators = new List<string>();
+                decorators.Add("req");
+                if (RegisterRP)
+                {
+                    decorators.Add("azure.DoRetryWithRegistration(client.Client)");
+                } else {
+                    decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
+                }
+                if (IsLongRunningOperation())
+                {
+                    decorators.Add("azure.DoPollForAsynchronous(client.PollingDelay)");
+                }
+                return decorators;
+            }
+        }
+
         public List<string> RespondDecorators
         {
             get
             {
                 var decorators = new List<string>();
+                decorators.Add("resp");
                 decorators.Add("client.ByInspecting()");
                 decorators.Add(string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray())));
 

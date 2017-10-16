@@ -9,12 +9,6 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.MethodGo>
 
-@{
-    List<string> pd = Model.PrepareDecorators;
-    List<string> rd = Model.RespondDecorators;
-    rd.Insert(0, "resp");
-}
-
 @WrapComment("// ", Model.Name + " " + Model.Description.ToSentence())
 @if (Model.LocalParameters.Count() > 0)
 {
@@ -145,7 +139,7 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 }
 
     preparer := autorest.CreatePreparer(
-                        @(pd.EmitAsArguments()))
+        @(Model.PrepareDecorators.EmitAsArguments()))
 
 @if (Model.BodyParameter != null && !Model.BodyParameter.IsRequired)
 {
@@ -178,12 +172,13 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
 // http.Response Body if it receives an error.
 func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (*http.Response, error) {
-@if (Model.IsLongRunningOperation())
-{
-    @:return autorest.SendWithSender(client, req, azure.DoPollForAsynchronous(client.PollingDelay))
-}
-else
-{
+    @if (Model.SendDecorators.Any())
+    {
+        @:return autorest.SendWithSender(client,
+            @:@(Model.SendDecorators.EmitAsArguments()))
+    }
+    else
+    {
     @:return autorest.SendWithSender(client, req)
 }
 }
@@ -197,7 +192,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     @:result.Value = &resp.Body
     }
     err = autorest.Respond(
-            @(rd.EmitAsArguments()))
+        @(Model.RespondDecorators.EmitAsArguments()))
 
     @(Model.Response)
     return
