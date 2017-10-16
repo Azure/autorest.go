@@ -172,15 +172,8 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
 // http.Response Body if it receives an error.
 func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (*http.Response, error) {
-    @if (Model.SendDecorators.Any())
-    {
-        @:return autorest.SendWithSender(client,
-            @:@(Model.SendDecorators.EmitAsArguments()))
-    }
-    else
-    {
-    @:return autorest.SendWithSender(client, req)
-}
+    @:return autorest.SendWithSender(client,
+        @:@(Model.SendDecorators.EmitAsArguments()))
 }
 
 @EmptyLine
