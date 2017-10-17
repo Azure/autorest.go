@@ -28,6 +28,7 @@ namespace AutoRest.Go
                   new Factory<SequenceType, SequenceTypeGo>(),
                   new Factory<MethodGroup, MethodGroupGo>(),
                   new Factory<EnumType, EnumTypeGo>(),
+                  new Factory<EnumValue, EnumValueGo>(),
                   new Factory<PrimaryType, PrimaryTypeGo>()
                 };
         }

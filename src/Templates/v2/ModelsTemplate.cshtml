@@ -1,0 +1,120 @@
+﻿@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+
+@using AutoRest.Go
+@using AutoRest.Core.Model
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using AutoRest.Core.Utilities
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
+@{
+    var imports = Model.ModelImports;
+}
+package @Model.Namespace
+@EmptyLine
+@Header("// ")
+
+@EmptyLine
+
+@if (!imports.IsNullOrEmpty())
+{
+@:import (
+foreach (var import in imports)
+{
+    @:@(import)
+}
+@:)    
+@EmptyLine
+}
+
+@if (Model.UsesETags)
+{
+<text>
+// @CodeNamerGo.Instance.ETagTypeName is an entity tag.
+type @CodeNamerGo.Instance.ETagTypeName string
+
+const (
+    // ETagNone represents an empty entity tag.
+    ETagNone @CodeNamerGo.Instance.ETagTypeName = ""
+@EmptyLine
+    // ETagAny matches any entity tag.
+    ETagAny @CodeNamerGo.Instance.ETagTypeName = "*"
+)
+</text>
+}
+@if (Model.UsesMetadataType)
+{
+<text>
+// Metadata contains metadata key/value pairs.
+type Metadata map[string]string
+@EmptyLine
+const mdPrefix = "x-ms-meta-"
+@EmptyLine
+const mdPrefixLen = len(mdPrefix)
+@EmptyLine
+// UnmarshalXML implements the xml.Unmarshaler interface for Metadata.
+func (md *Metadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+    tokName := ""
+
+    for t, err := d.Token(); err == nil; t, err = d.Token() {
+        switch tt := t.(type) {
+		case xml.StartElement:
+			tokName = strings.ToLower(tt.Name.Local)
+
+            break
+		case xml.CharData:
+			if *md == nil {
+                *md = Metadata{}
+            }
+            (*md)[tokName] = string(tt)
+
+            break
+
+        }
+    }
+    return nil
+}
+</text>
+}
+@if (Model.PagedTypes.Any())
+{
+<text>
+// Marker represents an opaque value used in paged responses.
+type Marker struct {
+	val *string
+}
+
+// NotDone returns true if the list enumeration should be started or is not yet complete. Specifically, NotDone returns true
+// for a just-initialized (zero value) Marker indicating that you should make an initial request to get a result portion from
+// the service. NotDone also returns true whenever the service returns an interim result portion. NotDone returns false only
+// after the service has returned the final result portion.
+func (m Marker) NotDone() bool {
+	return m.val == nil || *m.val != ""
+}
+
+// UnmarshalXML implements the xml.Unmarshaler interface for Marker.
+func (m *Marker) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	var out string
+	err := d.DecodeElement(&out, &start)
+	m.val = &out
+	return err
+}
+</text>
+}
+@foreach (var e in Model.Enums)
+{
+<text>
+@(Include(new EnumTemplate(), e))
+@EmptyLine
+</text>
+}
+
+@foreach (var mt in Model.Models)
+{
+<text>
+@(Include(new ModelTemplate(), mt))
+@EmptyLine
+</text>
+}

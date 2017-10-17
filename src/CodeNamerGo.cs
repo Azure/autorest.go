@@ -26,17 +26,41 @@ namespace AutoRest.Go
             }
         }
 
-        public virtual IEnumerable<string> AutorestImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
+        public virtual IEnumerable<string> AutorestImports
+        {
+            get
+            {
+                if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+                {
+                    return new string[] { PrimaryTypeGo.GetImportLine(package: PipelineImportPath) };
+                }
+                return new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
+            }
+        }
 
-        public virtual IEnumerable<string> StandardImports => new string[] 
-        { 
-            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"), 
-            PrimaryTypeGo.GetImportLine(package: "net/http") 
-        };
+        public virtual IEnumerable<string> StandardImports
+        {
+            get
+            {
+                var imports = new List<string>();
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
+                if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "context"));
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "fmt"));
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "net/url"));
+                }
+                else
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"));
+                }
+                return imports;
+            }
+        }
 
         public virtual IEnumerable<string> PageableImports => new string[] 
-        { 
-            PrimaryTypeGo.GetImportLine(package: "net/http"), 
+        {
+            PrimaryTypeGo.GetImportLine(package: "net/http"),
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to") 
         };
 
@@ -328,9 +352,14 @@ namespace AutoRest.Go
                 return name;
             }
 
-            // we use the base implementation here as it uses a case-insensitive comparison.
-            // this is a bit of a hacky work-around for some naming changes introduced in core...
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(base.GetEscapedReservedName(name, "Group"))));
+            var tempName = name;
+            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
+            {
+                // we use the base implementation here as it uses a case-insensitive comparison.
+                // this is a bit of a hacky work-around for some naming changes introduced in core...
+                tempName = base.GetEscapedReservedName(name, "Group");
+            }
+            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(tempName)));
         }
 
         /// <summary>
@@ -494,5 +523,43 @@ namespace AutoRest.Go
             }
             return defaultValue;
         }
+
+        /// <summary>
+        /// Returns true if client types should be exported.
+        /// </summary>
+        public bool ExportClientTypes
+        {
+            get
+            {
+                var setting = Settings.Instance.Host?.GetValue<string>("go-export-clients").Result;
+                if (string.IsNullOrWhiteSpace(setting))
+                {
+                    // by default export client types
+                    return true;
+                }
+                return bool.Parse(setting);
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of the go-pipeline-import parameter or the empty string if it wasn't provided.
+        /// </summary>
+        public string PipelineImportPath
+        {
+            get
+            {
+                var path = Settings.Instance.Host?.GetValue<string>("go-pipeline-import").Result;
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    return string.Empty;
+                }
+                return path;
+            }
+        }
+
+        /// <summary>
+        /// Gets the type name for the etag type.
+        /// </summary>
+        public string ETagTypeName => "ETag";
     }
 }

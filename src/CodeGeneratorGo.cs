@@ -4,7 +4,6 @@
 using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Go.Model;
-using AutoRest.Go.Templates;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +35,6 @@ namespace AutoRest.Go
         /// <returns></returns>
         public override async Task Generate(CodeModel cm)
         {
-
             var codeModel = cm as CodeModelGo;
             if (codeModel == null)
             {
@@ -49,18 +47,11 @@ namespace AutoRest.Go
             // the correct code, so we need to generate models before clients.
 
             // Models
-            var modelsTemplate = new ModelsTemplate
-            {
-                Model = codeModel
-            };
+            var modelsTemplate = TemplateFactory.Instance.GetModelsTemplate(codeModel);
             await Write(modelsTemplate, FormatFileName("models"));
 
             // Service client
-            var serviceClientTemplate = new ServiceClientTemplate
-            {
-                Model = codeModel
-            };
-
+            var serviceClientTemplate = TemplateFactory.Instance.GetServiceClientTemplate(codeModel);
             await Write(serviceClientTemplate, FormatFileName("client"));
 
             // by convention the methods in the method group with an empty
@@ -79,21 +70,39 @@ namespace AutoRest.Go
                     methodGroup.Name += "group";
                 }
                 ReservedFiles.Add(methodGroup.Name);
-                var methodGroupTemplate = new MethodGroupTemplate
-                {
-                    Model = methodGroup
-                };
-                await Write(methodGroupTemplate, FormatFileName(methodGroup.Name).ToLowerInvariant());
+                var methodGroupTemplate = TemplateFactory.Instance.GetMethodGroupTemplate(methodGroup);
+                await Write(methodGroupTemplate, FormatFileName(methodGroup.Name));
             }
 
             // Version
-            var versionTemplate = new VersionTemplate { Model = codeModel };
+            var versionTemplate = TemplateFactory.Instance.GetVersionTemplate(codeModel);
             await Write(versionTemplate, FormatFileName("version"));
+
+            var fixedTemplates = TemplateFactory.Instance.GetFixedTemplates(codeModel);
+            foreach (var template in fixedTemplates)
+            {
+                await Write(template.Item1, FormatFileName(template.Item2));
+            }
+
+            var marshallingTemplate = TemplateFactory.Instance.GetMarshallingTemplate(codeModel);
+            if (marshallingTemplate != null)
+            {
+                await Write(marshallingTemplate, FormatFileName("marshalling"));
+            }
         }
 
         private string FormatFileName(string fileName)
         {
-            return $"{fileName}{ImplementationFileExtension}";
+            var prefix = Settings.Instance.Host?.GetValue<string>("file-prefix").Result;
+            // if the prefix is already snaked don't double-snake it
+            var prefixSnake = string.Empty;
+            if (!string.IsNullOrWhiteSpace(prefix) && prefix[prefix.Length - 1] != '_')
+            {
+                prefixSnake = "_";
+            }
+            // convert fileName to snake-case, i.e. "FooBar" becomes "foo_bar"
+            fileName = string.Join('_', fileName.ToWords()).ToLowerInvariant();
+            return $"{prefix}{prefixSnake}{fileName}{ImplementationFileExtension}";
         }
     }
 }

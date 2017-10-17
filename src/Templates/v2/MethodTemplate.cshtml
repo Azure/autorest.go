@@ -1,0 +1,150 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using System.Text;
+@using System;
+@using AutoRest.Core.Model
+@using AutoRest.Core.Utilities
+@using AutoRest.Go
+@using AutoRest.Go.Model
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.MethodGo>
+
+@{
+    var opIdCamelCase = Model.Name.ToCamelCase();
+    var reqOps = "nil";
+    if (Model.BodyParameter != null && Model.BodyParameter.ReplaceStreamWithReadSeeker)
+    {
+        reqOps = "body";
+    }
+}
+
+@WrapComment("// ", Model.Name + " " + Model.Description.ToSentence())
+@if (Model.LocalParameters.Count() > 0)
+{
+@://
+@WrapComment("// ", Model.ParametersDocumentation)
+}
+
+func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature(true)) (@Model.MethodReturnSignature(false)) {
+@if ((Model.CodeModel as CodeModelGo).ShouldValidate)
+{
+<text>
+    if err := validate([]validation{
+    @(Model.ParameterValidations)}); err != nil {
+        return nil, err
+    }
+</text>
+}
+	req, err := client.@(opIdCamelCase)Preparer(@(Model.HelperInvocationParameters(false, false)))
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.@(opIdCamelCase)Responder}, req)
+    if err != nil {
+        return nil, err
+    }
+	return resp.(*@(Model.MethodReturnType)), err
+}
+
+@EmptyLine
+// @(opIdCamelCase)Preparer prepares the @(Model.Name) request.
+func (client @(Model.Owner)) @(opIdCamelCase)Preparer(@(Model.MethodParametersSignature(false))) (pipeline.Request, error) {
+	req, err := pipeline.NewRequest("@(Model.HttpMethod.ToString().ToUpperInvariant())", client.url, @reqOps)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+    params := req.URL.Query()
+@foreach(var qp in Model.QueryParameters)
+{
+    var val = qp.GetStringFormat(qp.ValueForMap(false));
+    if (qp.IsRequired)
+    {
+    @:params.Set("@(qp.NameForMap())", @(qp.IsConstant ? qp.DefaultValue.ToString() : val))
+    }
+    else
+    {
+    <text>
+    if @qp.Name != @qp.GetOptionalComparand() {
+        params.Set("@(qp.NameForMap())", @(val))
+    }
+    </text>
+    }
+}
+    req.URL.RawQuery = params.Encode()
+@foreach (var hp in Model.HeaderParameters)
+{
+    var val = hp.GetStringFormat(hp.ValueForMap(false));
+    if (hp.IsRequired)
+    {
+        if (hp.IsAPIHeader)
+        {
+            val = "ServiceVersion";
+        }
+    @:req.Header.Set("@(hp.SerializedName)", @val)
+    }
+    else
+    {
+    @:if @hp.Name != @hp.GetOptionalComparand() {
+        if (!hp.IsCustomMetadata)
+        {
+        @:req.Header.Set("@(hp.SerializedName)", @val)
+        }
+        else
+        {
+        <text>
+        for k, v := range @hp.Name {
+            req.Header.Set("@hp.HeaderCollectionPrefix"+k, v)
+        }
+        </text>
+        }
+    @:}
+    }
+}
+@if (Model.BodyParamNeedsMarshalling())
+{
+<text>
+    b, err := @(Model.CodeModel.Cast().Encoding).Marshal(@Model.BodyParamNameForMarshalling)
+    if err != nil {
+        return req, pipeline.NewError(err, "failed to marshal request body")
+    }
+    req.Header.Set("Content-Type", "application/@(Model.CodeModel.Cast().Encoding)")
+    err = req.SetBody(bytes.NewReader(b))
+    if err != nil {
+        return req, pipeline.NewError(err, "failed to set request body")
+    }
+</text>
+}
+	return req, nil
+}
+
+@EmptyLine
+// @(opIdCamelCase)Responder handles the response to the @(Model.Name) request.
+func (client @(Model.Owner)) @(opIdCamelCase)Responder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, @(string.Join(",", Model.ResponseCodes.ToArray())))
+	if resp == nil {
+		return nil, err
+	}
+@if (Model.ReturnValueRequiresUnmarshalling())
+{
+<text>
+    result:= &@(Model.MethodReturnType){rawResponse: resp.Response()}
+    if err != nil {
+        return result, err
+    }
+    defer resp.Response().Body.Close()
+    b, err:= ioutil.ReadAll(resp.Response().Body)
+    if err != nil {
+        return result, NewResponseError(err, resp.Response(), "failed to read response body")
+    }
+    err = @(Model.CodeModel.Cast().Encoding).Unmarshal(b, result)
+	if err != nil {
+        return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
+    }
+    return result, nil
+</text>
+}
+else
+{
+    @:return &@(Model.MethodReturnType){rawResponse: resp.Response()}, err
+}
+}

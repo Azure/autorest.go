@@ -1,0 +1,53 @@
+﻿@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using AutoRest.Core.Utilities;
+@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.MethodGroupGo>
+
+@{
+    var ctorPrefix = "New";
+    var ctorSuffix = Model.ClientName;
+    var baseCtorSuffix = Model.BaseClient;
+    if (!CodeNamerGo.Instance.ExportClientTypes)
+    {
+        ctorPrefix = "new";
+        ctorSuffix = Model.ClientName.ToPascalCase();
+        baseCtorSuffix = baseCtorSuffix.ToPascalCase();
+    }
+}
+package @Model.PackageName
+@EmptyLine
+@Header("// ")
+
+@EmptyLine
+
+import (
+@foreach (var import in Model.Imports)
+{
+    @:@(import)
+}
+)
+@EmptyLine
+
+@WrapComment("// ", Model.Documentation)
+type @(Model.ClientName) struct {
+    @(Model.BaseClient)
+}
+
+@WrapComment("// ", string.Format("{0}{1} creates an instance of the {2} client.", ctorPrefix, ctorSuffix, Model.ClientName))
+func @(ctorPrefix)@(ctorSuffix)(url url.URL, p pipeline.Pipeline) @(Model.ClientName) {
+    return @(Model.ClientName){@(ctorPrefix)@(baseCtorSuffix)(url, p)}
+}
+@EmptyLine
+
+@foreach (var method in Model.MethodsGo)
+{
+<text>
+@(Include(new MethodTemplate(), method))
+@EmptyLine
+</text>
+}

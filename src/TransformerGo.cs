@@ -33,6 +33,7 @@ namespace AutoRest.Go
             var cmg = cm as CodeModelGo;
 
             SwaggerExtensions.ProcessGlobalParameters(cmg);
+            ParameterGroupExtensionHelper.AddParameterGroups(cmg);
             // Add the current package name as a reserved keyword
             CodeNamerGo.Instance.ReserveNamespace(cm.Namespace);
             FixStutteringTypeNames(cmg);
@@ -62,6 +63,19 @@ namespace AutoRest.Go
                             enumType.SetName(property.Name);
                         }
                     }
+                }
+            }
+
+            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+            {
+                // create a "none" enum value for all enum types
+                foreach (var et in cmg.EnumTypes)
+                {
+                    var e = et as EnumTypeGo;
+                    var ev = new EnumValueGo();
+                    ev.Name = "None";
+                    ev.Description = $"{EnumValueGo.FormatName(e, ev)} represents an empty {e.Name}.";
+                    e.Values.Add(ev);
                 }
             }
 
@@ -142,21 +156,24 @@ namespace AutoRest.Go
             cmg.ModelTypes
                 .ForEach(mt => topLevelNames.Add(mt.Name));
 
-            // Then, note each enumerated type with one or more conflicting values and collect the values from
-            // those enumerated types without conflicts.  do this on a sorted list to ensure consistent naming
-            cmg.EnumTypes.Cast<EnumTypeGo>().OrderBy(etg => etg.Name.Value)
-                .ForEach(em =>
-                {
-                    if (em.Values.Where(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)).Count() > 0)
+            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
+            {
+                // Then, note each enumerated type with one or more conflicting values and collect the values from
+                // those enumerated types without conflicts.  do this on a sorted list to ensure consistent naming
+                cmg.EnumTypes.Cast<EnumTypeGo>().OrderBy(etg => etg.Name.Value)
+                    .ForEach(em =>
                     {
-                        em.HasUniqueNames = false;
-                    }
-                    else
-                    {
-                        em.HasUniqueNames = true;
-                        topLevelNames.UnionWith(em.Values.Select(ev => ev.Name).ToList());
-                    }
-                });
+                        if (em.Values.Where(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)).Count() > 0)
+                        {
+                            em.HasUniqueNames = false;
+                        }
+                        else
+                        {
+                            em.HasUniqueNames = true;
+                            topLevelNames.UnionWith(em.Values.Select(ev => ev.Name).ToList());
+                        }
+                    });
+            }
 
             // add documentation comment if there aren't any
             cmg.EnumTypes.Cast<EnumTypeGo>()
@@ -243,9 +260,9 @@ namespace AutoRest.Go
             }
 
             var wrapperTypes = new Dictionary<string, CompositeTypeGo>();
-            foreach (var method in cmg.Methods)
+            foreach (var method in cmg.Methods.Cast<MethodGo>())
             {
-                ((MethodGo)method).Transform(cmg);
+                method.Transform(cmg);
 
                 var scope = new VariableScopeProvider();
                 foreach (var parameter in method.Parameters)
@@ -256,7 +273,9 @@ namespace AutoRest.Go
                 // fix up method return types
                 if (method.ReturnType.Body.ShouldBeSyntheticType())
                 {
-                    var ctg = new CompositeTypeGo(method.ReturnType.Body);
+                    // method returns a primitive type, wrap it in a composite type
+                    var ctg = new CompositeTypeGo(method);
+                    ctg.IsResponseType = true;
                     if (wrapperTypes.ContainsKey(ctg.Name))
                     {
                         method.ReturnType = new Response(wrapperTypes[ctg.Name], method.ReturnType.Headers);
@@ -267,6 +286,15 @@ namespace AutoRest.Go
                         cmg.Add(ctg);
                         method.ReturnType = new Response(ctg, method.ReturnType.Headers);
                     }
+                }
+                else if (!method.HasReturnValue() && method.ReturnType.Headers != null)
+                {
+                    // method has no return body but does return values via headers.  generate a
+                    // wrapper type for it so we'll get convenience methods for the header values
+                    var ctg = new CompositeTypeGo($"{method.MethodGroup.Name}{method.Name}Response");
+                    ctg.IsResponseType = true;
+                    cmg.Add(ctg);
+                    method.ReturnType = new Response(ctg, method.ReturnType.Headers);
                 }
             }
         }
