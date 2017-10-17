@@ -9,8 +9,6 @@
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.MethodGroupGo>
 @{
     var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
-    var methods = new List<MethodGo>();
-    Model.Methods.Cast<MethodGo>().OrderBy(m => m.Name.Value).ForEach(m => methods.Add(m));
 }
 
 package @Model.PackageName
@@ -60,7 +58,7 @@ func New@(Model.ClientName)(@(Model.GlobalParameters)) @(Model.ClientName) {
     @EmptyLine
 }
 
-@foreach (var method in methods)
+@foreach (var method in Model.MethodsGo)
 {
 @:@(Include(new MethodTemplate(), method))
 @:@EmptyLine

@@ -11,6 +11,11 @@ namespace AutoRest.Go.Model
 {
     public class PrimaryTypeGo : PrimaryType
     {
+        /// <summary>
+        /// Format name for ETags.
+        /// </summary>
+        public const string FormatETag = "etag";
+
         public PrimaryTypeGo() : base()
         {
             Name.OnGet += v =>
@@ -44,11 +49,14 @@ namespace AutoRest.Go.Model
                 switch (KnownPrimaryType)
                 {
                     case KnownPrimaryType.Date:
-                        return GetImportLine(package: "github.com/Azure/go-autorest/autorest/date");
                     case KnownPrimaryType.DateTimeRfc1123:
-                        return GetImportLine(package: "github.com/Azure/go-autorest/autorest/date");
                     case KnownPrimaryType.DateTime:
-                        return GetImportLine(package: "github.com/Azure/go-autorest/autorest/date");
+                        var pkg = "github.com/Azure/go-autorest/autorest/date";
+                        if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+                        {
+                            pkg = "time";
+                        }
+                        return GetImportLine(package: pkg);
                     case KnownPrimaryType.Decimal:
                         return GetImportLine(package: "github.com/shopspring/decimal");
                     case KnownPrimaryType.Stream:
@@ -80,13 +88,34 @@ namespace AutoRest.Go.Model
                         return "bool";
 
                     case KnownPrimaryType.Date:
-                        return "date.Date";
+                        {
+                            var name = "date.Date";
+                            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+                            {
+                                name = "time.Time";
+                            }
+                            return name;
+                        }
 
                     case KnownPrimaryType.DateTime:
-                        return "date.Time";
+                        {
+                            var name = "date.Time";
+                            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+                            {
+                                name = "time.Time";
+                            }
+                            return name;
+                        }
 
                     case KnownPrimaryType.DateTimeRfc1123:
-                        return "date.TimeRFC1123";
+                        {
+                            var name = "date.TimeRFC1123";
+                            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+                            {
+                                name = "time.Time";
+                            }
+                            return name;
+                        }
 
                     case KnownPrimaryType.Double:
                         return "float64";
@@ -104,6 +133,10 @@ namespace AutoRest.Go.Model
                         return "io.ReadCloser";
 
                     case KnownPrimaryType.String:
+                        if (string.Compare(Format, FormatETag, StringComparison.OrdinalIgnoreCase) == 0)
+                        {
+                            return CodeNamerGo.Instance.ETagTypeName;
+                        }
                         return "string";
 
                     case KnownPrimaryType.TimeSpan:
@@ -124,31 +157,40 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string GetEmptyCheck(string valueReference, bool asEmpty)
+        /// <summary>
+        /// Returns an empty check expression.
+        /// </summary>
+        /// <param name="valueReference">The LHS of the expression.</param>
+        /// <param name="required">Indicates if this parameter is required (optional parameters might need to be dereferenced depending on their type).</param>
+        /// <param name="asEmpty">Indicates if the expression returns true if valueReference is nil or empty.</param>
+        /// <returns>A string containing the expression.</returns>
+        public string GetEmptyCheck(string valueReference, bool required, bool asEmpty)
         {
+            // valueReference (== | !=) nil (|| | &&) len(valueReference) (== | !=) 0
+
+            var comp = asEmpty ? "==" : "!=";
+            var logiclOp = asEmpty ? "||" : "&&";
+            var deref = required ? string.Empty : "*";
+
             if (this.PrimaryType(KnownPrimaryType.ByteArray))
             {
-                return string.Format(asEmpty
-                                        ? "{0} == nil || len({0}) == 0"
-                                        : "{0} != nil && len({0}) > 0", valueReference);
+                return string.Format("{0} {1} nil {2} len({0}) {1} 0", valueReference, comp, logiclOp);
             }
             else if (this.PrimaryType(KnownPrimaryType.String))
             {
-                return string.Format(asEmpty
-                                        ? "len({0}) == 0"
-                                        : "len({0}) > 0", valueReference);
+                return string.Format("{0} {1} nil {2} len({3}{0}) {1} 0", valueReference, comp, logiclOp, deref);
             }
             else
             {
-                return string.Format(asEmpty
-                                        ? "{0} == nil"
-                                        : "{0} != nil", valueReference);
+                return string.Format("{0} {1} nil", valueReference, comp);
             }
         }
 
-        public static string GetImportLine(string package, string alias = default(string)) {
+        public static string GetImportLine(string package, string alias = default(string))
+        {
             var builder = new StringBuilder();
-            if(!string.IsNullOrEmpty(alias)){
+            if(!string.IsNullOrEmpty(alias))
+            {
                 builder.Append(alias);
                 builder.Append(' ');
             }

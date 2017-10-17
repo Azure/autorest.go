@@ -57,7 +57,7 @@ namespace AutoRest.Go.Model
             return $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(Documentation ?? string.Empty).UnwrapAnchorTags()}";
         }
 
-        public string BaseClient => "ManagementClient";
+        public string BaseClient => CodeNamerGo.Instance.ExportClientTypes ? "ManagementClient" : "managementClient";
 
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
@@ -88,21 +88,64 @@ namespace AutoRest.Go.Model
         {
             get
             {
+                var addIoImport = false;
+                var addStrConvImport = false;
+                var addStringsImport = false;
                 // Create an ordered union of the imports each model requires
                 var imports = new HashSet<string>();
-                if (ModelTypes != null && ModelTypes.Cast<CompositeTypeGo>().Any(mtm => mtm.IsResponseType || mtm.IsWrapperType))
+                var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
+                if (!isV1Template)
                 {
-                    imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest"));
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
                 }
+                else
+                {
+                    if (ModelTypes != null && ModelTypes.Cast<CompositeTypeGo>().Any(mtm => mtm.IsResponseType || mtm.IsWrapperType))
+                    {
+                        imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest"));
+                    }
+                }
+
                 ModelTypes.Cast<CompositeTypeGo>()
                     .ForEach(mt =>
                     {
                         mt.AddImports(imports);
-                        if (NextMethodUndefined.Any())
+                        if (NextMethodUndefined.Any() && isV1Template)
                         {
                             imports.UnionWith(CodeNamerGo.Instance.PageableImports);
                         }
+                        if (!isV1Template && mt.IsResponseType)
+                        {
+                            foreach (var p in mt.Properties)
+                            {
+                                if (p.ModelType.IsPrimaryType(KnownPrimaryType.Int) || p.ModelType.IsPrimaryType(KnownPrimaryType.Long))
+                                {
+                                    addStrConvImport = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (mt.ResponseIncludesMetadata)
+                        {
+                            addStringsImport = true;
+                        }
+                        if (!isV1Template && mt.IsResponseType && mt.IsStreamType())
+                        {
+                            addIoImport = true;
+                        }
                     });
+                if (addIoImport)
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "io"));
+                }
+                if (addStrConvImport)
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "strconv"));
+                }
+                if (addStringsImport)
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "strings"));
+                }
                 return imports.OrderBy(i => i);
             }
         }
@@ -122,7 +165,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeEmpty() ? "{0} {1}" : "{0} *{1}"),
+                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name));
                     }
                 }
@@ -156,7 +199,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeEmpty() ? "{0} {1}" : "{0} *{1}"),
+                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name.Value.ToSentence()));
                     }
                 }
@@ -198,7 +241,6 @@ namespace AutoRest.Go.Model
                 return string.Join("\n", constDeclaration);
             }
         }
-
 
         public string AllGlobalParameters
         {
@@ -271,6 +313,67 @@ namespace AutoRest.Go.Model
             }
 
             return version;
+        }
+
+        /// <summary>
+        /// Returns true if any model types contain a metadata property.
+        /// </summary>
+        public bool UsesMetadataType
+        {
+            get
+            {
+                return ModelTypes.Where(m => m.Properties.Cast<PropertyGo>().Where(p => p.IsMetadata).Any()).Any();
+            }
+        }
+
+        /// <summary>
+        /// Returns true if any model types contain an Etag property.
+        /// </summary>
+        public bool UsesETags
+        {
+            get
+            {
+                return ModelTypes.Where(m => m.Properties.Where(p => p.ModelType.IsETagType()).Any()).Any();
+            }
+        }
+
+        /// <summary>
+        /// Returns a collection of composite types that require custom marshalling and/or
+        /// unmarshalling. Can be empty if there are no types requriring marshallers.
+        /// </summary>
+        public IEnumerable<CompositeTypeGo> RequiresMarshallers
+        {
+            get
+            {
+                return ModelTypes.Cast<CompositeTypeGo>().Where(m => m.Properties.Where(p => p.ModelType.IsDateTimeType()).Any());
+            }
+        }
+
+        /// <summary>
+        /// Returns the encoding type used for serialization (e.g. xml or json).
+        /// </summary>
+        public string Encoding => ShouldGenerateXmlSerialization ? "xml" : "json";
+
+        /// <summary>
+        /// Gets the collection of enum types sorted by name.
+        /// </summary>
+        public IEnumerable<EnumTypeGo> Enums
+        {
+            get
+            {
+                return EnumTypes.Cast<EnumTypeGo>().OrderBy(e => e.Name.FixedValue);
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of model types sorted by name.
+        /// </summary>
+        public IEnumerable<CompositeTypeGo> Models
+        {
+            get
+            {
+                return ModelTypes.Cast<CompositeTypeGo>().OrderBy(m => m.Name.Value);
+            }
         }
     }
 }

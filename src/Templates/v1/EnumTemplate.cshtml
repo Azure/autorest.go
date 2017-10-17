@@ -1,0 +1,25 @@
+﻿@using System.Linq;
+
+@using AutoRest.Go;
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
+@{
+    var constants = Model.Constants.Keys.OrderBy(v => v);
+}
+
+@WrapComment("// ", Model.Documentation)
+type @Model.Name string
+
+@EmptyLine
+@if (constants.Any())
+{
+@:const (
+    @foreach (var c in constants)
+    {
+    <text>
+        @WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(c), c.ToPhrase(), Model.Phrase))
+        @(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(Model.Constants[c])"
+    </text>
+    }
+@:)
+}

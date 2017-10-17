@@ -16,10 +16,6 @@ namespace AutoRest.Go
 {
     public static class Extensions
     {
-        public const string NullConstraint = "Null";
-
-        public const string ReadOnlyConstraint = "ReadOnly";
-
         private static readonly Regex IsApiVersionPattern = new Regex(@"^api[^a-zA-Z0-9_]?version", RegexOptions.IgnoreCase);
 
         private static readonly Regex UnwrapAnchorTagsPattern = new Regex("([^<>]*)<a\\s*.*\\shref\\s*=\\s*[\'\"]([^\'\"]*)[\'\"][^>]*>(.*)</a>");
@@ -37,6 +33,14 @@ namespace AutoRest.Go
         // General Extensions
         //
         /////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Casts CodeModel to CodeModelGo.
+        /// </summary>
+        public static CodeModelGo Cast(this CodeModel cm)
+        {
+            return (CodeModelGo)cm;
+        }
 
         /// <summary>
         /// This method changes string to sentence where is make the first word 
@@ -257,6 +261,15 @@ namespace AutoRest.Go
             return IsApiVersionPattern.IsMatch(name);
         }
 
+        /// <summary>
+        /// Returns true if the string is the API version header.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsApiHeader(this string name)
+        {
+            return string.Compare(name, "x-ms-version", StringComparison.OrdinalIgnoreCase) == 0;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////
         //
         // Type Extensions
@@ -280,22 +293,6 @@ namespace AutoRest.Go
             return primaryType != null && primaryType.KnownPrimaryType == typeToMatch;
         }
 
-        public static bool CanBeEmpty(this IModelType type)
-        {
-            var dictionaryType = type as DictionaryType;
-            var primaryType = type as PrimaryType;
-            var sequenceType = type as SequenceType;
-            var enumType = type as EnumType;
-
-            return dictionaryType != null
-                || (primaryType != null
-                 && (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray
-                        || primaryType.KnownPrimaryType == KnownPrimaryType.Stream
-                        || primaryType.KnownPrimaryType == KnownPrimaryType.String))
-                || sequenceType != null
-                || enumType != null;
-        }
-
         /// <summary>
         /// Returns true if the specified type can be implicitly null.
         /// E.g. things like maps, arrays, interfaces etc can all be null.
@@ -315,11 +312,11 @@ namespace AutoRest.Go
                 || sequenceType != null;
         }
 
-        public static string GetEmptyCheck(this IModelType type, string valueReference, bool asEmpty = true)
+        public static string GetEmptyCheck(this IModelType type, string valueReference, bool required, bool asEmpty)
         {
             if (type is PrimaryTypeGo)
             {
-                return (type as PrimaryTypeGo).GetEmptyCheck(valueReference, asEmpty);
+                return (type as PrimaryTypeGo).GetEmptyCheck(valueReference, required, asEmpty);
             }
             else if (type is SequenceTypeGo)
             {
@@ -331,7 +328,7 @@ namespace AutoRest.Go
             }
             else if (type is EnumTypeGo)
             {
-                return (type as EnumTypeGo).GetEmptyCheck(valueReference, asEmpty);
+                return (type as EnumTypeGo).GetEmptyCheck(valueReference, required, asEmpty);
             }
             else
             {
@@ -382,6 +379,32 @@ namespace AutoRest.Go
                  type.BaseModelType.DerivesFrom(possibleAncestorType));
         }
 
+        /// <summary>
+        /// Returns true if the specified type is one of the known date/time primary types.
+        /// </summary>
+        public static bool IsDateTimeType(this IModelType type)
+        {
+            return type.IsPrimaryType(KnownPrimaryType.Date) ||
+                   type.IsPrimaryType(KnownPrimaryType.DateTime) ||
+                   type.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123);
+        }
+
+        /// <summary>
+        /// Returns true if the specified type is the etag type.
+        /// </summary>
+        public static bool IsETagType(this IModelType type)
+        {
+            return type is PrimaryTypeGo && type.Cast<PrimaryTypeGo>().Format.EqualsIgnoreCase(PrimaryTypeGo.FormatETag);
+        }
+
+        /// <summary>
+        /// Casts the IModelType to the specified type or throws if the type cannot be cast.
+        /// </summary>
+        public static T Cast<T>(this IModelType type)
+        {
+            return (T)type;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////
         // Validate code
         //
@@ -400,22 +423,21 @@ namespace AutoRest.Go
         /// <param name="p"></param>
         /// <param name="name"></param>
         /// <param name="method"></param>
-        /// <param name="isCompositeProperties"></param>
         /// <returns></returns>
         public static List<string> ValidateType(this IVariable p, string name, HttpMethod method,
-            bool isCompositeProperties = false)
+            bool isCompositeProperties)
         {
             List<string> x = new List<string>();
             if (method != HttpMethod.Patch || !p.IsBodyParameter() || isCompositeProperties)
             {
-                x.AddRange(p.Constraints.Select(c => GetConstraint(name, c.Key.ToString(), c.Value)).ToList());
+                x.AddRange(p.Constraints.Select(c => GetConstraint(name, c.Key.ToString(), c.Value, false)).ToList());
             }
 
             List<string> y = new List<string>();
             if (x.Count > 0)
             {
                 if (p.CheckNull() || isCompositeProperties)
-                    y.AddRange(x.AddChain(name, NullConstraint, p.IsRequired));
+                    y.AddRange(x.AddChain(name, ValidationHelper.NullConstraint, p.IsRequired));
                 else
                     y.AddRange(x);
             }
@@ -437,7 +459,7 @@ namespace AutoRest.Go
         /// <param name="isCompositeProperties"></param>
         /// <returns></returns>
         public static List<string> ValidateCompositeType(this IVariable p, string name, HttpMethod method, HashSet<string> ancestors,
-            bool isCompositeProperties = false)
+            bool isCompositeProperties)
         {
             List<string> x = new List<string>();
             if (method != HttpMethod.Patch || !p.IsBodyParameter() || isCompositeProperties)
@@ -479,7 +501,7 @@ namespace AutoRest.Go
             if (x.Count > 0)
             {
                 if (p.CheckNull() || isCompositeProperties)
-                    y.AddRange(x.AddChain(name, NullConstraint, p.IsRequired));
+                    y.AddRange(x.AddChain(name, ValidationHelper.NullConstraint, p.IsRequired));
                 else
                     y.AddRange(x);
             }
@@ -499,7 +521,7 @@ namespace AutoRest.Go
         /// <param name="isRequired"></param>
         public static void AddNullValidation(this List<string> v, string name, bool isRequired = false)
         {
-            v.Add(GetConstraint(name, NullConstraint, $"{isRequired}".ToLower()));
+            v.Add(GetConstraint(name, ValidationHelper.NullConstraint, $"{isRequired}".ToLower(), false));
         }
 
         /// <summary>
@@ -512,15 +534,17 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static List<string> AddChain(this List<string> x, string name, string constraint, bool isRequired)
         {
+            var chainField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Chain);
             List<string> a = new List<string>
             {
                 GetConstraint(name, constraint, $"{isRequired}".ToLower(), true),
-                $"Chain: []validation.Constraint{{{x[0]}"
+                $"{chainField}: []{ValidationHelper.ConstraintTypeName}{{{x[0]}"
             };
             a.AddRange(x.GetRange(1, x.Count - 1));
             a.Add("}}");
             return a;
         }
+
         /// <summary>
         /// CheckNull 
         /// </summary>
@@ -529,24 +553,8 @@ namespace AutoRest.Go
         // Check if type is not a null or pointer type.
         public static bool CheckNull(this IVariable p)
         {
-            return p is Parameter && (p.ModelType.IsNullValueType() || !(p.IsRequired || p.ModelType.CanBeEmpty()));
-        }
-
-        /// <summary>
-        /// Check whether a type is nullable type.
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public static bool IsNullValueType(this IModelType t)
-        {
-            var dictionaryType = t as DictionaryType;
-            var primaryType = t as PrimaryType;
-            var sequenceType = t as SequenceType;
-
-            return dictionaryType != null
-                || (primaryType != null
-                   && primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray)
-                || sequenceType != null;
+            // if the parameter isn't required and its type can't be implicitly nil (e.g. an int)
+            return p is Parameter && (p.ModelType.CanBeNull() || !(p.IsRequired || p.ModelType.CanBeNull()));
         }
 
         /// <summary>
@@ -567,15 +575,23 @@ namespace AutoRest.Go
         /// <param name="constraintValue"></param>
         /// <param name="chain"></param>
         /// <returns></returns>
-        public static string GetConstraint(string name, string constraintName, string constraintValue, bool chain = false)
+        public static string GetConstraint(string name, string constraintName, string constraintValue, bool chain)
         {
             var value = constraintName == Constraint.Pattern.ToString()
                                           ? $"`{constraintValue}`"
                                           : constraintValue;
-            return string.Format(chain
-                                    ? "\t{{Target: \"{0}\", Name: validation.{1}, Rule: {2} "
-                                    : "\t{{Target: \"{0}\", Name: validation.{1}, Rule: {2}, Chain: nil }}",
-                                    name, constraintName, value);
+
+            var targetField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Target);
+            var nameField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Name);
+            var ruleField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Rule);
+
+            var chained = " ";
+            if (!chain)
+            {
+                var chainField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Chain);
+                chained = $", {chainField}: nil }}";
+            }
+            return $"\t{{{targetField}: \"{name}\", {nameField}: {constraintName.ConstraintCasing()}, {ruleField}: {value}{chained}";
         }
     }
 }

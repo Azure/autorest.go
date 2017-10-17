@@ -1,0 +1,139 @@
+﻿@using AutoRest.Go
+@using AutoRest.Core.Model
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using AutoRest.Core.Utilities
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CompositeTypeGo>
+@{
+    var shortName = Model.Name.ToString().ToShortName();
+    var desc = $"{Model.Name} ...";
+    if (!string.IsNullOrEmpty(Model.Documentation))
+    {
+        desc = $"{Model.Name} - {Model.Documentation}";
+    }
+}
+
+@WrapComment("// ", desc)
+type @Model.Name struct {
+@if (Model.IsResponseType)
+{
+    @:rawResponse *http.Response
+}
+    @(Model.Fields(false))
+}
+@EmptyLine
+@if (Model.IsResponseType)
+{
+<text>
+// Response returns the raw HTTP response object.
+func (@shortName @Model.Name) Response() *http.Response {
+    return @(shortName).rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (@shortName @Model.Name) StatusCode() int {
+	return @(shortName).rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (@shortName @Model.Name) Status() string {
+	return @(shortName).rawResponse.Status
+}
+</text>
+    if (Model.IsStreamType())
+    {
+<text>
+
+// Body returns the raw HTTP response object's Body.
+func (@shortName @Model.Name) Body() io.ReadCloser {
+	return @(shortName).rawResponse.Body
+}
+</text>
+    }
+}
+@EmptyLine
+@foreach (var headerResp in Model.ResponseHeaders())
+{
+    var retSig = "string";
+    var retExpr = $"{shortName}.rawResponse.Header.Get(\"{headerResp.Type.SerializedName}\")";
+    if (headerResp.Type.ModelType.IsDateTimeType())
+    {
+        retSig = "time.Time";
+    }
+    else if (headerResp.Type.ModelType is EnumTypeGo)
+    {
+        retSig = headerResp.Type.ModelTypeName;
+        retExpr = $"{headerResp.Type.ModelType.Name}({retExpr})";
+    }
+    else if (headerResp.Type.ModelType.IsETagType())
+    {
+        retSig = CodeNamerGo.Instance.ETagTypeName;
+        retExpr = $"{CodeNamerGo.Instance.ETagTypeName}({retExpr})";
+    }
+    else if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) || headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Long))
+    {
+        retSig = headerResp.Type.ModelTypeName;
+    }
+<text>
+// @headerResp.Name returns the value for header @(headerResp.Type.SerializedName).
+func (@shortName @Model.Name) @(headerResp.Name)() @retSig {
+</text>
+    if (headerResp.Type.ModelType.IsDateTimeType())
+    {
+        var formatAs = "rfc3339Format";
+        if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
+        {
+            formatAs = "time.RFC1123";
+        }
+<text>
+    s := @retExpr
+    if s == "" {
+        return time.Time{}
+    }
+    t, err := time.Parse(@formatAs, s)
+    if err != nil {
+        panic(err)
+    }
+    return t
+</text>
+    }
+    else if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) || headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Long))
+    {
+        var bitSize = headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) ? "32" : "64";
+<text>
+    s := @retExpr
+    if s == "" {
+        return -1
+    }
+    i, err := strconv.ParseInt(s, 10, @bitSize)
+    if err != nil {
+        panic(err)
+    }
+    return @(headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) ? "int32(i)" : "i")
+</text>
+    }
+    else
+    {
+    @:return @retExpr
+    }
+@:}
+}
+
+@if (Model.ResponseIncludesMetadata)
+{
+<text>
+// NewMetadata returns user-defined key/value pairs.
+func(@shortName @Model.Name) NewMetadata() Metadata {
+    md := Metadata{}
+    for k, v := range @(shortName).rawResponse.Header {
+        if len(k) > mdPrefixLen {
+            if prefix := k[0:mdPrefixLen]; strings.EqualFold(prefix, mdPrefix) {
+                md[strings.ToLower(k[mdPrefixLen:])] = v[0]
+            }
+        }
+    }
+    return md
+}
+</text>
+}

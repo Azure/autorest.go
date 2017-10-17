@@ -14,15 +14,28 @@ namespace AutoRest.Go.Model
     /// </summary>
     public class DictionaryTypeGo : DictionaryType
     {
+        bool _reqValues;
+
         // if value type can be implicitly null
         // then don't emit it as a pointer type.
-        private string FieldNameFormat => ValueType.CanBeNull()
+        // only do this for newer templates.
+        private string FieldNameFormat => (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1) &&
+            (ValueType.CanBeNull() || _reqValues)
                                 ? "map[string]{0}"
                                 : "map[string]*{0}";
 
         public DictionaryTypeGo()
         {
             Name.OnGet += value => string.Format(CultureInfo.InvariantCulture, FieldNameFormat, ValueType.Name);
+        }
+
+        public DictionaryTypeGo(bool reqValues) : this()
+        {
+            // for the v1 template always leave _reqValues as false
+            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+            {
+                _reqValues = reqValues;
+            }
         }
 
         /// <summary>

@@ -1,0 +1,29 @@
+﻿@using AutoRest.Go.Model;
+@using System.Linq;
+
+@using AutoRest.Go;
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
+@{
+    var values = Model.Values.Cast<EnumValueGo>().OrderBy(v => v.Name);
+}
+
+@WrapComment("// ", Model.Documentation)
+type @Model.Name string
+
+@EmptyLine
+const (
+@foreach (var v in values)
+{
+    var valName = EnumValueGo.FormatName(Model, v);
+    var desc = v.Description;
+    if (string.IsNullOrWhiteSpace(desc))
+    {
+        desc = string.Format("{0} ...", valName);
+    }
+<text>
+    @WrapComment("// ", desc)
+    @(valName) @(Model.Name) = "@(v.SerializedName)"
+</text>
+}
+)

@@ -1,0 +1,66 @@
+﻿@using AutoRest.Go
+@using AutoRest.Core.Model
+@using AutoRest.Go.Templates
+@using AutoRest.Go.Model
+@using AutoRest.Core.Utilities
+@using System.Linq
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
+
+@{
+    var ctorPrefix = "New";
+    var ctorSuffix = Model.BaseClient;
+    if (!CodeNamerGo.Instance.ExportClientTypes)
+    {
+        ctorPrefix = "new";
+        ctorSuffix = Model.BaseClient.ToPascalCase();
+    }
+}
+
+@if (CodeNamerGo.Instance.ExportClientTypes)
+{
+    WrapComment("// ", Model.GetDocumentation());
+}
+package @Model.Namespace
+@EmptyLine
+@Header("// ")
+
+@EmptyLine
+import (
+    "net/url"
+    "@CodeNamerGo.Instance.PipelineImportPath"
+)
+
+@EmptyLine
+const (
+    // ServiceVersion specifies the version of the operations used in this package.
+    ServiceVersion = "@(Model.ApiVersion)"
+)
+
+@EmptyLine
+@WrapComment("// ", Model.ClientDocumentation)
+type @(Model.BaseClient) struct {
+    url url.URL
+    p pipeline.Pipeline
+}
+
+@EmptyLine
+@WrapComment("// ", string.Format("{0}{1} creates an instance of the {2} client.", ctorPrefix, ctorSuffix, Model.BaseClient))
+func @(ctorPrefix)@(ctorSuffix)(url url.URL, p pipeline.Pipeline) @(Model.BaseClient) {
+    return @(Model.BaseClient){
+        url: url,
+        p: p,
+    }
+}
+
+@EmptyLine
+@WrapComment("// ", "URL returns a copy of the URL for this client.")
+func (@(Model.BaseClient.ToShortName()) @(Model.BaseClient)) URL() url.URL {
+    return mc.url
+}
+
+@EmptyLine
+@WrapComment("// ", "Pipeline returns the policy manager for this client.")
+func (@(Model.BaseClient.ToShortName()) @(Model.BaseClient)) Pipeline() pipeline.Pipeline {
+    return mc.p
+}
