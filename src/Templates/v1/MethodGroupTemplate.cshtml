@@ -1,10 +1,10 @@
-﻿@using System;
-@using System.Collections.Generic;
-@using System.Linq;
-@using AutoRest.Core.Utilities;
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using AutoRest.Core.Utilities
 @using AutoRest.Go
 @using AutoRest.Go.Model
-@using AutoRest.Go.Templates
+@using AutoRest.Go.Templates.v1
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.MethodGroupGo>
 @{
@@ -34,34 +34,36 @@ type @(Model.ClientName) struct {
 
 @WrapComment("// ", string.Format("New{0} creates an instance of the {0} client.", Model.ClientName))
 func New@(Model.ClientName)(@(Model.GlobalParameters)) @(Model.ClientName) {
-    @if (!Model.IsCustomBaseUri)
-    {
-        <text>
-        return New@(Model.ClientName)WithBaseURI(DefaultBaseURI, @(Model.HelperGlobalParameters))
-        </text>
-    }
-    else
-    {
-        <text>
-        return @(Model.ClientName){ New(@(Model.HelperGlobalParameters))}
-        </text>
-    }
+@if (!Model.IsCustomBaseUri)
+{
+<text>
+    return New@(Model.ClientName)WithBaseURI(DefaultBaseURI, @(Model.HelperGlobalParameters))
+</text>
+}
+else
+{
+<text>
+    return @(Model.ClientName){ New(@(Model.HelperGlobalParameters))}
+</text>
+}
 }
 @EmptyLine
 
 @if (!Model.IsCustomBaseUri)
 {
     @WrapComment("// ", string.Format("New{0}WithBaseURI creates an instance of the {0} client.", Model.ClientName))
-    <text>
+<text>
     func New@(Model.ClientName)WithBaseURI(baseURI string, @(Model.GlobalParameters)) @(Model.ClientName) {
         return @(Model.ClientName){ NewWithBaseURI(baseURI, @(Model.HelperGlobalParameters))}
     }
-    </text>
+</text>
     @EmptyLine
 }
 
 @foreach (var method in methods)
 {
-@:@(Include(new MethodTemplate(), method))
-@:@EmptyLine
+<text>
+@(Include(new MethodTemplate(), method))
+@EmptyLine
+</text>
 }

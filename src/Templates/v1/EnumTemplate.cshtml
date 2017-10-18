@@ -1,6 +1,5 @@
-﻿@using System.Linq;
-
-@using AutoRest.Go;
+﻿@using System.Linq
+@using AutoRest.Go
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
 @{
@@ -15,11 +14,15 @@ type @Model.Name string
 @EmptyLine
 @if (constants.Any())
 {
-@:const (
+<text>
+const (
 @foreach (var c in constants)
 {
-@:@WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(c), c.ToPhrase(), modelPhrase))
-@:@(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(Model.Constants[c])"
+    <text>
+@WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(c), c.ToPhrase(), modelPhrase))
+@(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(Model.Constants[c])"
+    </text>
 }
-@:)
+)
+</text>
 }
