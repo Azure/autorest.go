@@ -18,6 +18,7 @@ var custombaseuriClient = getMoreCustomBaseURIClient()
 
 func getMoreCustomBaseURIClient() PathsClient {
 	c := NewWithoutDefaults("test12", "host:3000")
+	c.RetryDuration = 1
 	return PathsClient{ManagementClient: c}
 }
 

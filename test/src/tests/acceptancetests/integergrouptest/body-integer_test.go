@@ -22,6 +22,7 @@ var intClient = getIntegerClient()
 
 func getIntegerClient() IntGroupClient {
 	c := NewIntGroupClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

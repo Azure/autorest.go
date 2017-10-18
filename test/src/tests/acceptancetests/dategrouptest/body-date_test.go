@@ -21,6 +21,7 @@ var dateClient = getDateClient()
 
 func getDateClient() GroupClient {
 	c := NewGroupClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

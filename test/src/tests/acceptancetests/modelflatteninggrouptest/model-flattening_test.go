@@ -20,6 +20,7 @@ var modelflatteningClient = getmodelflatteningClient()
 
 func getmodelflatteningClient() ManagementClient {
 	c := New()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

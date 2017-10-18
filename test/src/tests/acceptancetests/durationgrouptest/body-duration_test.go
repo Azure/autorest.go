@@ -20,6 +20,7 @@ var durationClient = getDurationClient()
 
 func getDurationClient() DurationClient {
 	c := NewDurationClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

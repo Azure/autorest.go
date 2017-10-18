@@ -28,6 +28,7 @@ var seven, eight, nine = "seven", "eight", "nine"
 
 func getDictionaryClient() DictionaryClient {
 	c := NewDictionaryClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

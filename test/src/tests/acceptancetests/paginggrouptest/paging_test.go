@@ -21,6 +21,7 @@ var clientID = "client-id"
 
 func getPagingClient() PagingClient {
 	c := NewPagingClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

@@ -22,12 +22,14 @@ var implicitClient = getRequiredImplicitTestClient()
 
 func getRequiredExplicitTestClient() ExplicitClient {
 	c := NewExplicitClient("", "", nil)
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getRequiredImplicitTestClient() ImplicitClient {
 	c := NewImplicitClient("", "", nil)
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

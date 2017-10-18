@@ -32,24 +32,28 @@ var httpMultipleResponsesClient = getHTTPMultipleResponsesClient()
 
 func getHTTPSuccessClient() HTTPSuccessClient {
 	c := NewHTTPSuccessClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getHTTPFailureClient() HTTPFailureClient {
 	c := NewHTTPFailureClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getHTTPClientFailureClient() HTTPClientFailureClient {
 	c := NewHTTPClientFailureClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getHTTPRetryClient() HTTPRetryClient {
 	c := NewHTTPRetryClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	c.RetryDuration = 3 * time.Second
 	return c
@@ -57,18 +61,21 @@ func getHTTPRetryClient() HTTPRetryClient {
 
 func getHTTPRedirectClient() HTTPRedirectsClient {
 	c := NewHTTPRedirectsClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getHTTPServerFailureClient() HTTPServerFailureClient {
 	c := NewHTTPServerFailureClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getHTTPMultipleResponsesClient() MultipleResponsesClient {
 	c := NewMultipleResponsesClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

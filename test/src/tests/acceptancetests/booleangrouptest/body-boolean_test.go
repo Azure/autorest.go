@@ -19,6 +19,7 @@ var boolClient = getBooleanClient()
 
 func getBooleanClient() BoolGroupClient {
 	c := NewBoolGroupClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
