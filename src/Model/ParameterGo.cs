@@ -110,6 +110,39 @@ namespace AutoRest.Go.Model
                     : $"{s}",
                 value);
         }
+
+        public string GetEmptyCheck(string valueReference, bool asEmpty = true)
+        {
+            if (ModelType is PrimaryTypeGo)
+            {
+                return (ModelType as PrimaryTypeGo).GetEmptyCheck(valueReference, asEmpty);
+            }
+            else if (ModelType is SequenceTypeGo)
+            {
+                return (ModelType as SequenceTypeGo).GetEmptyCheck(valueReference, asEmpty);
+            }
+            else if (ModelType is DictionaryTypeGo)
+            {
+                return (ModelType as DictionaryTypeGo).GetEmptyCheck(valueReference, asEmpty);
+            }
+            else if (ModelType is EnumTypeGo)
+            {
+                return GetEnumEmptyCheck(valueReference, asEmpty);
+            }
+            else
+            {
+                return string.Format(asEmpty
+                                        ? "{0} == nil"
+                                        : "{0} != nil", valueReference);
+            }
+        }
+
+        private string GetEnumEmptyCheck(string valueReference, bool asEmpty)
+        {
+            return string.Format(asEmpty
+                                    ? "len(string({0})) == 0"
+                                    : "len(string({0})) > 0", valueReference);
+        }
     }
 
     public static class ParameterGoExtensions

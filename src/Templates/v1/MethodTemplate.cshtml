@@ -129,7 +129,7 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
     @:@(Model.QueryMap)
     foreach (var p in Model.OptionalQueryParameters)
     {
-    @:if @(p.ModelType.GetEmptyCheck(p.GetParameterName(),false)) {
+    @:if @(p.GetEmptyCheck(p.GetParameterName(),false)) {
         @:@(p.AddToMap("queryParameters"))
     @:}
     }
@@ -150,7 +150,7 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 @if (Model.BodyParameter != null && !Model.BodyParameter.IsRequired)
 {
 <text>
-    if @(Model.BodyParameter.ModelType.GetEmptyCheck(Model.BodyParameter.Name, false)) {
+    if @(Model.BodyParameter.GetEmptyCheck(Model.BodyParameter.Name, false)) {
         preparer = autorest.DecoratePreparer(preparer,
                             @(string.Format("autorest.WithJSON({0})", Model.BodyParameter.Name)))
     }
@@ -160,7 +160,7 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 @foreach (var p in Model.OptionalHeaderParameters)
 {
 <text>
-    if @(p.ModelType.GetEmptyCheck(p.GetParameterName(), false)) {
+    if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
         preparer = autorest.DecoratePreparer(preparer,
                             @(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
                             p.SerializedName, p.GetParameterName())))

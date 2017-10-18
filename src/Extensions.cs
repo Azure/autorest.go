@@ -315,32 +315,6 @@ namespace AutoRest.Go
                 || sequenceType != null;
         }
 
-        public static string GetEmptyCheck(this IModelType type, string valueReference, bool asEmpty = true)
-        {
-            if (type is PrimaryTypeGo)
-            {
-                return (type as PrimaryTypeGo).GetEmptyCheck(valueReference, asEmpty);
-            }
-            else if (type is SequenceTypeGo)
-            {
-                return (type as SequenceTypeGo).GetEmptyCheck(valueReference, asEmpty);
-            }
-            else if (type is DictionaryTypeGo)
-            {
-                return (type as DictionaryTypeGo).GetEmptyCheck(valueReference, asEmpty);
-            }
-            else if (type is EnumTypeGo)
-            {
-                return (type as EnumTypeGo).GetEmptyCheck(valueReference, asEmpty);
-            }
-            else
-            {
-                return string.Format(asEmpty
-                                        ? "{0} == nil"
-                                        : "{0} != nil", valueReference);
-            }
-        }
-
         /// <summary>
         /// Add imports for a type.
         /// </summary>

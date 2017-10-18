@@ -130,43 +130,6 @@ namespace AutoRest.Go
                     v.Name = CodeNamer.Instance.GetEnumMemberName(v.Name);
                 }
             }
-
-            // Ensure all enumerated type values have the simplest possible unique names
-            // -- The code assumes that all public type names are unique within the client and that the values
-            //    of an enumerated type are unique within that type. To safely promote the enumerated value name
-            //    to the top-level, it must not conflict with other existing types. If it does, prepending the
-            //    value name with the (assumed to be unique) enumerated type name will make it unique.
-
-            // First, collect all type names (since these cannot change)
-            var topLevelNames = new HashSet<string>();
-            cmg.ModelTypes
-                .ForEach(mt => topLevelNames.Add(mt.Name));
-
-            // Then, note each enumerated type with one or more conflicting values and collect the values from
-            // those enumerated types without conflicts.  do this on a sorted list to ensure consistent naming
-            cmg.EnumTypes.Cast<EnumTypeGo>().OrderBy(etg => etg.Name.Value)
-                .ForEach(em =>
-                {
-                    if (em.Values.Where(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)).Count() > 0)
-                    {
-                        em.HasUniqueNames = false;
-                    }
-                    else
-                    {
-                        em.HasUniqueNames = true;
-                        topLevelNames.UnionWith(em.Values.Select(ev => ev.Name).ToList());
-                    }
-                });
-
-            // add documentation comment if there aren't any
-            cmg.EnumTypes.Cast<EnumTypeGo>()
-                .ForEach(em =>
-                {
-                    if (string.IsNullOrEmpty(em.Documentation))
-                    {
-                        em.Documentation = string.Format("{0} enumerates the values for {1}.", em.Name, em.Name.FixedValue.ToPhrase());
-                    }
-                });
         }
 
         private void TransformModelTypes(CodeModelGo cmg)
