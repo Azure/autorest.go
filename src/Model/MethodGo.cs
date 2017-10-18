@@ -59,7 +59,7 @@ namespace AutoRest.Go.Model
                 APIVersion = cmg.ApiVersion;
             }
 
-            var parameter = Parameters.ToList().Find(p => p.ModelType.PrimaryType(KnownPrimaryType.Stream)
+            var parameter = Parameters.ToList().Find(p => p.ModelType.IsPrimaryType(KnownPrimaryType.Stream)
                                                 && !(p.Location == ParameterLocation.Body || p.Location == ParameterLocation.FormData));
 
             if (parameter != null)
@@ -124,7 +124,7 @@ namespace AutoRest.Go.Model
                         sb.Append(parameter.Documentation.FixedValue.ToSentence());
                         sb.Append(" ");
                     }
-                    if (parameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                    if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream))
                     {
                         sb.Append(parameter.Name);
                         sb.Append(" will be closed upon successful return. Callers should ensure closure when receiving an error.");
@@ -203,7 +203,7 @@ namespace AutoRest.Go.Model
                 {
                     return rv.Body.Name.ToString();
                 }
-                else if (rv.Headers != null)
+                else if (rv.Headers != null && TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
                 {
                     return rv.Headers.Name.ToString();
                 }
@@ -347,7 +347,7 @@ namespace AutoRest.Go.Model
             {
                 var decorators = new List<string>();
 
-                if (BodyParameter != null && !BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                if (BodyParameter != null && !BodyParameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream))
                 {
                     decorators.Add("autorest.AsJSON()");
                 }
@@ -369,7 +369,7 @@ namespace AutoRest.Go.Model
 
                 if (BodyParameter != null && BodyParameter.IsRequired)
                 {
-                    decorators.Add(string.Format(BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream) && BodyParameter.Location == ParameterLocation.Body
+                    decorators.Add(string.Format(BodyParameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream) && BodyParameter.Location == ParameterLocation.Body
                                         ? "autorest.WithFile({0})"
                                         : "autorest.WithJSON({0})",
                                 BodyParameter.Name));
@@ -383,7 +383,7 @@ namespace AutoRest.Go.Model
                 if (FormDataParameters.Any())
                 {
                     decorators.Add(
-                        FormDataParameters.Any(p => p.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                        FormDataParameters.Any(p => p.ModelType.IsPrimaryType(KnownPrimaryType.Stream))
                             ? "autorest.WithMultiPartFormData(formDataParameters)"
                             : "autorest.WithFormData(autorest.MapToValues(formDataParameters))"
                         );
@@ -512,7 +512,7 @@ namespace AutoRest.Go.Model
         /// <returns></returns>
         public bool BodyParamNeedsMarshalling()
         {
-            return BodyParameter != null && !BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream);
+            return BodyParameter != null && !BodyParameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream);
         }
 
         /// <summary>

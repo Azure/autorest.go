@@ -18,9 +18,7 @@ namespace AutoRest.Go.Model
 
         // if value type can be implicitly null
         // then don't emit it as a pointer type.
-        // only do this for newer templates.
-        private string FieldNameFormat => (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1) &&
-            (ValueType.CanBeNull() || _reqValues)
+        private string FieldNameFormat => (ValueType.CanBeNull(false) || _reqValues)
                                 ? "map[string]{0}"
                                 : "map[string]*{0}";
 

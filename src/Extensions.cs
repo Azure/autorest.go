@@ -279,18 +279,7 @@ namespace AutoRest.Go
         public static bool IsStreamType(this IModelType body)
         {
             var r = body as CompositeTypeGo;
-            return r != null && (r.BaseType.PrimaryType(KnownPrimaryType.Stream));
-        }
-
-        public static bool PrimaryType(this IModelType type, KnownPrimaryType typeToMatch)
-        {
-            if (type == null)
-            {
-                return false;
-            }
-
-            PrimaryType primaryType = type as PrimaryType;
-            return primaryType != null && primaryType.KnownPrimaryType == typeToMatch;
+            return r != null && (r.BaseType.IsPrimaryType(KnownPrimaryType.Stream));
         }
 
         /// <summary>
@@ -298,18 +287,25 @@ namespace AutoRest.Go
         /// E.g. things like maps, arrays, interfaces etc can all be null.
         /// </summary>
         /// <param name="type">The type to inspect.</param>
+        /// <param name="emulateCanBeEmpty">
+        /// Pass true to emulate the old CanBeEmpty() behavior.
+        /// NOTE: This is to avoid breaking changes in v1 templates.  Newer templates should always pass false!
+        /// </param>
         /// <returns>True if the specified type can be null.</returns>
-        public static bool CanBeNull(this IModelType type)
+        public static bool CanBeNull(this IModelType type, bool emulateCanBeEmpty)
         {
             var dictionaryType = type as DictionaryType;
             var primaryType = type as PrimaryType;
             var sequenceType = type as SequenceType;
+            var enumType = type as EnumType;
 
             return dictionaryType != null
                 || (primaryType != null
                    && (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray
-                      || primaryType.KnownPrimaryType == KnownPrimaryType.Stream))
-                || sequenceType != null;
+                      || primaryType.KnownPrimaryType == KnownPrimaryType.Stream
+                      || (emulateCanBeEmpty && primaryType.KnownPrimaryType == KnownPrimaryType.String)))
+                || sequenceType != null
+                || (emulateCanBeEmpty && enumType != null);
         }
 
         public static string GetEmptyCheck(this IModelType type, string valueReference, bool required, bool asEmpty)
@@ -553,8 +549,9 @@ namespace AutoRest.Go
         // Check if type is not a null or pointer type.
         public static bool CheckNull(this IVariable p)
         {
+            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
             // if the parameter isn't required and its type can't be implicitly nil (e.g. an int)
-            return p is Parameter && (p.ModelType.CanBeNull() || !(p.IsRequired || p.ModelType.CanBeNull()));
+            return p is Parameter && (p.ModelType.CanBeNull(false) || !(p.IsRequired || p.ModelType.CanBeNull(isV1Template)));
         }
 
         /// <summary>

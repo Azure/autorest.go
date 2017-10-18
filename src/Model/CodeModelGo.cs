@@ -15,7 +15,7 @@ namespace AutoRest.Go.Model
 {
     public class CodeModelGo : CodeModel
     {
-
+        private bool _isV1Template;
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
         public string Version { get; }
         public string UserAgent
@@ -31,6 +31,7 @@ namespace AutoRest.Go.Model
             NextMethodUndefined = new List<IModelType>();
             PagedTypes = new Dictionary<IModelType, string>();
             Version = FormatVersion(Settings.Instance.PackageVersion);
+            _isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
         }
 
         public override string Namespace
@@ -93,8 +94,7 @@ namespace AutoRest.Go.Model
                 var addStringsImport = false;
                 // Create an ordered union of the imports each model requires
                 var imports = new HashSet<string>();
-                var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
-                if (!isV1Template)
+                if (!_isV1Template)
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
                 }
@@ -110,11 +110,11 @@ namespace AutoRest.Go.Model
                     .ForEach(mt =>
                     {
                         mt.AddImports(imports);
-                        if (NextMethodUndefined.Any() && isV1Template)
+                        if (NextMethodUndefined.Any() && _isV1Template)
                         {
                             imports.UnionWith(CodeNamerGo.Instance.PageableImports);
                         }
-                        if (!isV1Template && mt.IsResponseType)
+                        if (!_isV1Template && mt.IsResponseType)
                         {
                             foreach (var p in mt.Properties)
                             {
@@ -129,7 +129,7 @@ namespace AutoRest.Go.Model
                         {
                             addStringsImport = true;
                         }
-                        if (!isV1Template && mt.IsResponseType && mt.IsStreamType())
+                        if (!_isV1Template && mt.IsResponseType && mt.IsStreamType())
                         {
                             addIoImport = true;
                         }
@@ -165,7 +165,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
+                                        (p.IsRequired || p.ModelType.CanBeNull(_isV1Template) ? "{0} {1}" : "{0} *{1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name));
                     }
                 }
@@ -199,7 +199,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
+                                        (p.IsRequired || p.ModelType.CanBeNull(_isV1Template) ? "{0} {1}" : "{0} *{1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name.Value.ToSentence()));
                     }
                 }

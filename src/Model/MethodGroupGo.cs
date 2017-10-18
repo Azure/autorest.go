@@ -96,7 +96,7 @@ namespace AutoRest.Go.Model
                     {
                         param.AddImports(imports);
                     }
-                    if (mg.HasReturnValue() && !mg.ReturnValue().Body.PrimaryType(KnownPrimaryType.Stream))
+                    if (mg.HasReturnValue() && !mg.ReturnValue().Body.IsPrimaryType(KnownPrimaryType.Stream))
                     {
                         mg.ReturnType.Body.AddImports(imports);
                     }

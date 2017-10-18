@@ -290,7 +290,7 @@ namespace AutoRest.Go.TestGen.Builders
             foreach (var param in paramsList)
             {
                 TypeModifier typeMod = TypeModifier.ByReference;
-                if (param.IsRequired || param.ModelType.CanBeNull())
+                if (param.IsRequired || param.ModelType.CanBeNull(false))
                 {
                     typeMod = TypeModifier.ByValue;
                 }

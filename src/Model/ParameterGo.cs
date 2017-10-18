@@ -164,7 +164,10 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool IsPassedByValue()
         {
-            return IsRequired || ModelType.CanBeNull() || (ModelType is EnumTypeGo && ((EnumTypeGo)ModelType).UseNone);
+            // the original implementation had a bug that incorrectly passed optional
+            // enum parameters by value.  we need to implement that here for compat.
+            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
+            return IsRequired || ModelType.CanBeNull(isV1Template) || (ModelType is EnumTypeGo && (((EnumTypeGo)ModelType).UseNone || isV1Template));
         }
 
         /// <summary>
@@ -259,7 +262,12 @@ namespace AutoRest.Go.Model
                 {
                     if (mapVariable == "queryParameters" && p.IsConstant)
                     {
-                        indented.AppendLine("\"{0}\": {1},", p.NameForMap(), p.EncodedString(p.Format(), p.DefaultValue));
+                        var val = p.DefaultValue.ToString();
+                        if ((p.ModelType.IsPrimaryType(KnownPrimaryType.String) || p.ModelType.IsDateTimeType()) && val[0] != '"')
+                        {
+                            val = $"\"{val}\"";
+                        }
+                        indented.AppendLine("\"{0}\": {1},", p.NameForMap(), p.EncodedString(p.Format(), val));
                     }
                     else
                     {

@@ -26,13 +26,27 @@ namespace AutoRest.Go.Model
             this.LoadFrom(source);
         }
 
+        /// <summary>
+        /// Returns an empty paramater check operation.
+        /// </summary>
+        /// <param name="valueReference">The parameter to be checked if it's empty.</param>
+        /// <param name="required">Indicates if this parameter is optional; optional enum parameters are passed by reference.</param>
+        /// <param name="asEmpty">Indicates if we want to check that valueReference is empty or not empty.</param>
+        /// <returns></returns>
         public string GetEmptyCheck(string valueReference, bool required, bool asEmpty)
         {
             var comp = asEmpty ? "==" : "!=";
-            var logiclOp = asEmpty ? "||" : "&&";
-            var deref = required ? string.Empty : "*";
 
-            return string.Format("{0} {1} nil {2} len({3}{0}) {1} 0", valueReference, comp, logiclOp, deref);
+            // the original implementation had a bug that treated non-required enums as
+            // pass-by-value.  we need to mimic that behavior for the v1 templates.
+            if (required || TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
+            {
+                return $"len({valueReference}) {comp} 0";
+            }
+            
+            var logiclOp = asEmpty ? "||" : "&&";
+
+            return string.Format("{0} {1} nil {2} len(*{0}) {1} 0", valueReference, comp, logiclOp);
         }
 
         public bool IsNamed => Name != "string" && Values.Any();

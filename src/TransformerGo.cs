@@ -33,7 +33,6 @@ namespace AutoRest.Go
             var cmg = cm as CodeModelGo;
 
             SwaggerExtensions.ProcessGlobalParameters(cmg);
-            ParameterGroupExtensionHelper.AddParameterGroups(cmg);
             // Add the current package name as a reserved keyword
             CodeNamerGo.Instance.ReserveNamespace(cm.Namespace);
             FixStutteringTypeNames(cmg);
@@ -259,6 +258,7 @@ namespace AutoRest.Go
                 mg.Transform(cmg);
             }
 
+            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
             var wrapperTypes = new Dictionary<string, CompositeTypeGo>();
             foreach (var method in cmg.Methods.Cast<MethodGo>())
             {
@@ -287,7 +287,7 @@ namespace AutoRest.Go
                         method.ReturnType = new Response(ctg, method.ReturnType.Headers);
                     }
                 }
-                else if (!method.HasReturnValue() && method.ReturnType.Headers != null)
+                else if (!method.HasReturnValue() && method.ReturnType.Headers != null && !isV1Template)
                 {
                     // method has no return body but does return values via headers.  generate a
                     // wrapper type for it so we'll get convenience methods for the header values

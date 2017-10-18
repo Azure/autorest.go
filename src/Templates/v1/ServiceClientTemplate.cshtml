@@ -48,7 +48,7 @@ type @(Model.BaseClient) struct {
 {
     if (!p.SerializedName.IsApiVersion())
     {
-        @:@(string.Format((p.IsRequired || p.ModelType.CanBeNull()
+        @:@(string.Format((p.IsRequired || p.ModelType.CanBeNull(true)
                                           ? "{0} {1}" : "{0} *{1}"),
                                           p.Name, p.ModelType.Name))
     }

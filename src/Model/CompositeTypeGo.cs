@@ -145,7 +145,7 @@ namespace AutoRest.Go.Model
             // don't add the Value field for streams as it just duplicates
             // the response.Body field and doesn't provide any value.  only
             // do this for the newer templates.
-            if (!isV1Template && !wrappedType.IsPrimaryType(KnownPrimaryType.Stream))
+            if (isV1Template || !wrappedType.IsPrimaryType(KnownPrimaryType.Stream))
             {
                 // add the wrapped type as a property named Value
                 var p = new PropertyGo();
@@ -306,7 +306,7 @@ namespace AutoRest.Go.Model
                     }
                     indented.AppendFormat("{0} {1}{2} {3}\n", property.Name, deref, typeName, property.Tag());
                 }
-                else if (property.ModelType.PrimaryType(KnownPrimaryType.Object))
+                else if (property.ModelType.IsPrimaryType(KnownPrimaryType.Object))
                 {
                     // TODO: I don't think this is the best way to handle object types
                     indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.Tag());
@@ -336,7 +336,7 @@ namespace AutoRest.Go.Model
                     }
 
                     // to avoid any breaking changes in the v1 template always emit as a pointer type
-                    var deref = !isV1Template && (property.ModelType.CanBeNull() || property.IsRequired) ? string.Empty : "*";
+                    var deref = !isV1Template && (property.ModelType.CanBeNull(false) || property.IsRequired) ? string.Empty : "*";
                     var typeName = property.ModelType.Name.ToString();
                     if (!isV1Template && forMarshaller && property.ModelType.IsDateTimeType())
                     {

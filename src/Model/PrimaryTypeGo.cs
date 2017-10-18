@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AutoRest.Core.Model;
+using AutoRest.Core.Utilities;
 using AutoRest.Go;
 using System;
 using System.Collections.Generic;
@@ -166,18 +167,22 @@ namespace AutoRest.Go.Model
         /// <returns>A string containing the expression.</returns>
         public string GetEmptyCheck(string valueReference, bool required, bool asEmpty)
         {
-            // valueReference (== | !=) nil (|| | &&) len(valueReference) (== | !=) 0
-
             var comp = asEmpty ? "==" : "!=";
             var logiclOp = asEmpty ? "||" : "&&";
             var deref = required ? string.Empty : "*";
 
-            if (this.PrimaryType(KnownPrimaryType.ByteArray))
+            if (this.IsPrimaryType(KnownPrimaryType.ByteArray))
             {
                 return string.Format("{0} {1} nil {2} len({0}) {1} 0", valueReference, comp, logiclOp);
             }
-            else if (this.PrimaryType(KnownPrimaryType.String))
+            else if (this.IsPrimaryType(KnownPrimaryType.String))
             {
+                // the original implementation had a bug that treated non-required strings
+                // as pass-by-value.  we need to mimic that behavior for the v1 templates.
+                if (required || TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
+                {
+                    return $"len({valueReference}) {comp} 0";
+                }
                 return string.Format("{0} {1} nil {2} len({3}{0}) {1} 0", valueReference, comp, logiclOp, deref);
             }
             else
