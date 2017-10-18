@@ -30,18 +30,21 @@ var pathItemClient = getPathItemsClient()
 
 func getPathItemsClient() PathItemsClient {
 	c := NewPathItemsClient("globalStringPath", "globalStringQuery")
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getQueryClient() QueriesClient {
 	c := NewQueriesClient("globalStringPath", "globalStringQuery")
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getPathClient() PathsClient {
 	c := NewPathsClient("globalStringPath", "globalStringQuery")
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

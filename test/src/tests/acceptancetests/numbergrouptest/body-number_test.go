@@ -22,6 +22,7 @@ var numberClient = getNumberClient()
 
 func getNumberClient() NumberClient {
 	c := NewNumberClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

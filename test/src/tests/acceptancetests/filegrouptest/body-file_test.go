@@ -22,6 +22,7 @@ var filesClient = getFileClient()
 
 func getFileClient() FilesClient {
 	c := NewFilesClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

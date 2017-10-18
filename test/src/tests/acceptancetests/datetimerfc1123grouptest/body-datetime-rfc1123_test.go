@@ -21,6 +21,7 @@ var datetimerfc1123Client = getDateTimeRFC1123Client()
 
 func getDateTimeRFC1123Client() Datetimerfc1123Client {
 	c := NewDatetimerfc1123Client()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

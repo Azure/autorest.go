@@ -29,6 +29,7 @@ var seven, eight, nine = "seven", "eight", "nine"
 
 func getArrayClient() ArrayClient {
 	c := NewArrayClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

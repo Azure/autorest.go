@@ -20,6 +20,7 @@ var byteClient = getByteClient()
 
 func getByteClient() GroupClient {
 	c := NewGroupClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

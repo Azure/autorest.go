@@ -19,6 +19,7 @@ var datetimeClient = getDateTimeClient()
 
 func getDateTimeClient() DatetimeClient {
 	c := NewDatetimeClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

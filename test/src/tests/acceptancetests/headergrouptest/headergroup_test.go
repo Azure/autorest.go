@@ -24,6 +24,7 @@ var headerClient = getHeaderClient()
 
 func getHeaderClient() HeaderClient {
 	c := NewHeaderClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

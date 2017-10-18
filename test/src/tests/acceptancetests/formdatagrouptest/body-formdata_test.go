@@ -20,6 +20,7 @@ var formdataClient = getFormdataClient()
 
 func getFormdataClient() FormdataClient {
 	c := NewFormdataClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

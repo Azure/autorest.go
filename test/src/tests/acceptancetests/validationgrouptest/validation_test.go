@@ -19,6 +19,7 @@ var validationClient = getValidationClient()
 
 func getValidationClient() ManagementClient {
 	c := New("abc123")
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

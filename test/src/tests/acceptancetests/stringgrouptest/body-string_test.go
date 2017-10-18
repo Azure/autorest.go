@@ -27,12 +27,14 @@ var enumClient = getEnumClient()
 
 func getStringClient() GroupClient {
 	c := NewGroupClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getEnumClient() EnumClient {
 	c := NewEnumClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }

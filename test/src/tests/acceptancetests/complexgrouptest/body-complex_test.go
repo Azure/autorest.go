@@ -31,48 +31,56 @@ var complexPolymorphicRecursiveClient = getPolymorphismRecursiveClient()
 
 func getArrayComplexClient() ArrayClient {
 	c := NewArrayClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getBasicOperationsClient() BasicClient {
 	c := NewBasicClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getDictionaryComplexClient() DictionaryClient {
 	c := NewDictionaryClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getPrimitiveClient() PrimitiveClient {
 	c := NewPrimitiveClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getInheritanceClient() InheritanceClient {
 	c := NewInheritanceClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getPolymorphismClient() PolymorphismClient {
 	c := NewPolymorphismClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getReadOnlyClient() ReadonlypropertyClient {
 	c := NewReadonlypropertyClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
 
 func getPolymorphismRecursiveClient() PolymorphicrecursiveClient {
 	c := NewPolymorphicrecursiveClient()
+	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
 }
