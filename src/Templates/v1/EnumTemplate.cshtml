@@ -1,9 +1,15 @@
-﻿@using System.Linq
-@using AutoRest.Go
+﻿@using AutoRest.Go
+@using System.Collections.Generic
+@using System.Linq
 
-@inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
+@inherits AutoRest.Core.Template<AutoRest.Go.Decorators.v1.EnumTypeGoDecorator>
 @{
-    var constants = Model.Constants.Keys.OrderBy(v => v);
+    var constants = new Dictionary<string, string>();
+    foreach (var val in Model.Values)
+    {
+        constants.Add(Model.HasUniqueNames ? val.Name : Model.Name + val.Name, val.SerializedName);
+    }
+
     var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
     var modelPhrase = Model.Name.FixedValue.ToPhrase();
 }
@@ -16,11 +22,11 @@ type @Model.Name string
 {
 <text>
 const (
-@foreach (var c in constants)
+@foreach (var c in constants.Keys.OrderBy(v => v))
 {
     <text>
 @WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(c), c.ToPhrase(), modelPhrase))
-@(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(Model.Constants[c])"
+@(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(constants[c])"
     </text>
 }
 )
