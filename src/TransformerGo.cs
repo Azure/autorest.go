@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-// 
 
 using AutoRest.Core;
 using AutoRest.Core.Logging;
@@ -11,7 +10,6 @@ using AutoRest.Go.Model;
 using AutoRest.Go.Properties;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using AutoRest.Extensions.Azure;

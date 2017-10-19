@@ -505,22 +505,6 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public Method NextOperation
-        {
-            get
-            {
-                if (Extensions.ContainsKey(AzureExtensions.PageableExtension))
-                {
-                    var pageableExtension = JsonConvert.DeserializeObject<PageableExtension>(Extensions[AzureExtensions.PageableExtension].ToString());
-                    if (pageableExtension != null && !string.IsNullOrWhiteSpace(pageableExtension.OperationName))
-                    {
-                        return CodeModel.Methods.First(m => m.SerializedName.EqualsIgnoreCase(pageableExtension.OperationName));
-                    }
-                }
-                return null;
-            }
-        }
-
         /// <summary>
         /// Check if method has long running extension (x-ms-long-running-operation) enabled. 
         /// </summary>
