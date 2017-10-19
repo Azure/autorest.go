@@ -9,10 +9,15 @@ namespace AutoRest.Go.Model
 {
     public class EnumTypeGo : EnumType
     {
+        public bool HasUniqueNames { get; set; }
+
         public EnumTypeGo()
         {
             // the default value for unnamed enums is "enum"
             Name.OnGet += v => v == "enum" ? "string" : v;
+
+            // Assume members have unique names		
+            HasUniqueNames = true;
         }
 
         public EnumTypeGo(EnumType source) : this()

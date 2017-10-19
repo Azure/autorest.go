@@ -4,7 +4,7 @@
 using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Go.Model;
-using AutoRest.Go.Templates.v1;
+using AutoRest.Go.Templates;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
