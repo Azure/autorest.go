@@ -124,28 +124,6 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string GetEmptyCheck(string valueReference, bool asEmpty)
-        {
-            if (this.PrimaryType(KnownPrimaryType.ByteArray))
-            {
-                return string.Format(asEmpty
-                                        ? "{0} == nil || len({0}) == 0"
-                                        : "{0} != nil && len({0}) > 0", valueReference);
-            }
-            else if (this.PrimaryType(KnownPrimaryType.String))
-            {
-                return string.Format(asEmpty
-                                        ? "len({0}) == 0"
-                                        : "len({0}) > 0", valueReference);
-            }
-            else
-            {
-                return string.Format(asEmpty
-                                        ? "{0} == nil"
-                                        : "{0} != nil", valueReference);
-            }
-        }
-
         public static string GetImportLine(string package, string alias = default(string)) {
             var builder = new StringBuilder();
             if(!string.IsNullOrEmpty(alias)){

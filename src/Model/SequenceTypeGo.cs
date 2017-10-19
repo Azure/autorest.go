@@ -22,13 +22,9 @@ namespace AutoRest.Go.Model
             ElementType.AddImports(imports);
         }
 
+        /// <summary>
+        /// Returns the type name of the element (shorthand for ElementType.Name).
+        /// </summary>
         public string GetElement => $"{ElementType.Name}";
-
-        public string GetEmptyCheck(string valueReference, bool asEmpty)
-        {
-            return string.Format(asEmpty
-                                   ? "{0} == nil || len({0}) == 0"
-                                   : "{0} != nil && len({0}) > 0", valueReference);
-        }
     }
 }

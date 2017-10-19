@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
+using AutoRest.Core;
+using AutoRest.Core.Model;
+using AutoRest.Core.Utilities;
+using AutoRest.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using AutoRest.Core;
-using AutoRest.Core.Model;
-using AutoRest.Core.Utilities;
-using AutoRest.Extensions;
 using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
@@ -17,7 +18,9 @@ namespace AutoRest.Go.Model
     {
 
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
+
         public string Version { get; }
+
         public string UserAgent
         {
             get
@@ -145,6 +148,7 @@ namespace AutoRest.Go.Model
                 return string.Join(", ", invocationParams);
             }
         }
+
         public string GlobalDefaultParameters
         {
             get
@@ -198,7 +202,6 @@ namespace AutoRest.Go.Model
                 return string.Join("\n", constDeclaration);
             }
         }
-
 
         public string AllGlobalParameters
         {

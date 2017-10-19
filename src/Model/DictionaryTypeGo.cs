@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using AutoRest.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using AutoRest.Core.Model;
-
 
 namespace AutoRest.Go.Model
 {
@@ -32,13 +31,6 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             ValueType.AddImports(imports);
-        }
-
-        public string GetEmptyCheck(string valueReference, bool asEmpty)
-        {
-            return string.Format(asEmpty
-                                    ? "{0} == nil || len({0}) == 0"
-                                    : "{0} != nil && len({0}) > 0", valueReference);
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ namespace AutoRest.Go.Model
     public class ParameterGo : Parameter
     {
         public const string APIVersionName = "APIVersion";
+
         public ParameterGo()
         {
 
@@ -115,15 +116,15 @@ namespace AutoRest.Go.Model
         {
             if (ModelType is PrimaryTypeGo)
             {
-                return (ModelType as PrimaryTypeGo).GetEmptyCheck(valueReference, asEmpty);
+                return GetPrimaryTypeEmptyCheck(ModelType as PrimaryTypeGo, valueReference, asEmpty);
             }
             else if (ModelType is SequenceTypeGo)
             {
-                return (ModelType as SequenceTypeGo).GetEmptyCheck(valueReference, asEmpty);
+                return GetSequenceTypeEmptyCheck(valueReference, asEmpty);
             }
             else if (ModelType is DictionaryTypeGo)
             {
-                return (ModelType as DictionaryTypeGo).GetEmptyCheck(valueReference, asEmpty);
+                return GetDictionaryEmptyCheck(valueReference, asEmpty);
             }
             else if (ModelType is EnumTypeGo)
             {
@@ -137,11 +138,47 @@ namespace AutoRest.Go.Model
             }
         }
 
+        private string GetDictionaryEmptyCheck(string valueReference, bool asEmpty)
+        {
+            return string.Format(asEmpty
+                                    ? "{0} == nil || len({0}) == 0"
+                                    : "{0} != nil && len({0}) > 0", valueReference);
+        }
+
         private string GetEnumEmptyCheck(string valueReference, bool asEmpty)
         {
             return string.Format(asEmpty
                                     ? "len(string({0})) == 0"
                                     : "len(string({0})) > 0", valueReference);
+        }
+
+        private string GetPrimaryTypeEmptyCheck(PrimaryTypeGo pt, string valueReference, bool asEmpty)
+        {
+            if (pt.PrimaryType(KnownPrimaryType.ByteArray))
+            {
+                return string.Format(asEmpty
+                                        ? "{0} == nil || len({0}) == 0"
+                                        : "{0} != nil && len({0}) > 0", valueReference);
+            }
+            else if (pt.PrimaryType(KnownPrimaryType.String))
+            {
+                return string.Format(asEmpty
+                                        ? "len({0}) == 0"
+                                        : "len({0}) > 0", valueReference);
+            }
+            else
+            {
+                return string.Format(asEmpty
+                                        ? "{0} == nil"
+                                        : "{0} != nil", valueReference);
+            }
+        }
+
+        private string GetSequenceTypeEmptyCheck(string valueReference, bool asEmpty)
+        {
+            return string.Format(asEmpty
+                                   ? "{0} == nil || len({0}) == 0"
+                                   : "{0} != nil && len({0}) > 0", valueReference);
         }
     }
 
