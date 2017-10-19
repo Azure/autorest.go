@@ -574,7 +574,7 @@ namespace AutoRest.Go
             {
                 chained = $", chain: nil }}";
             }
-            return $"\t{{targetValue: \"{name}\", name: {constraintName.ToCamelCase()}, rule: {value}{chained}";
+            return $"\t{{target: \"{name}\", name: {constraintName.ToCamelCase()}, rule: {value}{chained}";
         }
     }
 }
