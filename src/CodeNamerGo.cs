@@ -26,15 +26,11 @@ namespace AutoRest.Go
             }
         }
 
-        public virtual IEnumerable<string> AutorestImports
+        public virtual IEnumerable<string> PipelineImports
         {
             get
             {
-                if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
-                {
-                    return new string[] { PrimaryTypeGo.GetImportLine(package: PipelineImportPath) };
-                }
-                return new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
+                return new string[] { PrimaryTypeGo.GetImportLine(package: PipelineImportPath) };
             }
         }
 
@@ -44,27 +40,17 @@ namespace AutoRest.Go
             {
                 var imports = new List<string>();
                 imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
-                if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
-                {
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "context"));
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "fmt"));
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "net/url"));
-                }
-                else
-                {
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"));
-                }
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "context"));
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "fmt"));
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "net/url"));
                 return imports;
             }
         }
 
         public virtual IEnumerable<string> PageableImports => new string[] 
         {
-            PrimaryTypeGo.GetImportLine(package: "net/http"),
-            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to") 
+            PrimaryTypeGo.GetImportLine(package: "net/http")
         };
-
-        public virtual IEnumerable<string> ValidationImport => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
 
         // CommonInitialisms are those "words" within a name that Golint expects to be uppercase.
         // See https://github.com/golang/lint/blob/master/lint.go for detail.
@@ -352,14 +338,7 @@ namespace AutoRest.Go
                 return name;
             }
 
-            var tempName = name;
-            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
-            {
-                // we use the base implementation here as it uses a case-insensitive comparison.
-                // this is a bit of a hacky work-around for some naming changes introduced in core...
-                tempName = base.GetEscapedReservedName(name, "Group");
-            }
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(tempName)));
+            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
         }
 
         /// <summary>

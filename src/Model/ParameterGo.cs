@@ -122,12 +122,12 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1 || base.ModelType == null || !IsHeaderCollection)
+                if (base.ModelType == null || !IsHeaderCollection)
                 {
                     return base.ModelType;
                 }
                 // this is a header collection so emit it as a map[string]string
-                return new DictionaryTypeGo(true) { ValueType = base.ModelType, CodeModel = base.ModelType.CodeModel, SupportsAdditionalProperties = false };
+                return new DictionaryTypeGo() { ValueType = base.ModelType, CodeModel = base.ModelType.CodeModel, SupportsAdditionalProperties = false };
             }
             set
             {
@@ -146,7 +146,7 @@ namespace AutoRest.Go.Model
                 throw new Exception($"GetOptionalComparand called on required paramater {Name}");
             }
 
-            if (ModelType is EnumTypeGo && ((EnumTypeGo)ModelType).UseNone)
+            if (ModelType is EnumTypeGo)
             {
                 var et = ModelType as EnumTypeGo;
                 var typeName = et.Name.ToString();
@@ -164,17 +164,13 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool IsPassedByValue()
         {
-            // the original implementation had a bug that incorrectly passed optional
-            // enum parameters by value.  we need to implement that here for compat.
-            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
-            return IsRequired || ModelType.CanBeNull(isV1Template) || (ModelType is EnumTypeGo && (((EnumTypeGo)ModelType).UseNone || isV1Template));
+            return IsRequired || ModelType.CanBeNull() || ModelType is EnumTypeGo;
         }
 
         /// <summary>
         /// Returns true if the paramater is a stream that should be replaced by an io.ReadSeeker.
         /// </summary>
-        public bool ReplaceStreamWithReadSeeker => ModelType.IsPrimaryType(KnownPrimaryType.Stream) &&
-            TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1;
+        public bool ReplaceStreamWithReadSeeker => ModelType.IsPrimaryType(KnownPrimaryType.Stream);
     }
 
     public static class ParameterGoExtensions
@@ -402,11 +398,7 @@ namespace AutoRest.Go.Model
 
                 if (x.Count != 0)
                 {
-                    var targetValue = ValidationHelper.GetValidationFieldName(ValidationFields.TargetValue);
-                    var constraints = ValidationHelper.GetValidationFieldName(ValidationFields.Constraints);
-                    var constraintType = ValidationHelper.ConstraintTypeName;
-
-                    v.Add($"{{ {targetValue}: {name},\n {constraints}: []{constraintType}{{{string.Join(",\n", x)}}}}}");
+                    v.Add($"{{ targetValue: {name},\n constraints: []constraint{{{string.Join(",\n", x)}}}}}");
                 }
             }
             return string.Join(",\n", v);

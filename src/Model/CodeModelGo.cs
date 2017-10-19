@@ -15,7 +15,6 @@ namespace AutoRest.Go.Model
 {
     public class CodeModelGo : CodeModel
     {
-        private bool _isV1Template;
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
         public string Version { get; }
         public string UserAgent
@@ -31,7 +30,6 @@ namespace AutoRest.Go.Model
             NextMethodUndefined = new List<IModelType>();
             PagedTypes = new Dictionary<IModelType, string>();
             Version = FormatVersion(Settings.Instance.PackageVersion);
-            _isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
         }
 
         public override string Namespace
@@ -67,7 +65,7 @@ namespace AutoRest.Go.Model
             get
             {
                 var imports = new HashSet<string>();
-                imports.UnionWith(CodeNamerGo.Instance.AutorestImports);
+                imports.UnionWith(CodeNamerGo.Instance.PipelineImports);
                 var clientMg = MethodGroups.Where(mg => string.IsNullOrEmpty(mg.Name)).FirstOrDefault();
                 if (clientMg != null)
                 {
@@ -94,27 +92,13 @@ namespace AutoRest.Go.Model
                 var addStringsImport = false;
                 // Create an ordered union of the imports each model requires
                 var imports = new HashSet<string>();
-                if (!_isV1Template)
-                {
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
-                }
-                else
-                {
-                    if (ModelTypes != null && ModelTypes.Cast<CompositeTypeGo>().Any(mtm => mtm.IsResponseType || mtm.IsWrapperType))
-                    {
-                        imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest"));
-                    }
-                }
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
 
                 ModelTypes.Cast<CompositeTypeGo>()
                     .ForEach(mt =>
                     {
                         mt.AddImports(imports);
-                        if (NextMethodUndefined.Any() && _isV1Template)
-                        {
-                            imports.UnionWith(CodeNamerGo.Instance.PageableImports);
-                        }
-                        if (!_isV1Template && mt.IsResponseType)
+                        if (mt.IsResponseType)
                         {
                             foreach (var p in mt.Properties)
                             {
@@ -129,7 +113,7 @@ namespace AutoRest.Go.Model
                         {
                             addStringsImport = true;
                         }
-                        if (!_isV1Template && mt.IsResponseType && mt.IsStreamType())
+                        if (mt.IsResponseType && mt.IsStreamType())
                         {
                             addIoImport = true;
                         }
@@ -165,7 +149,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull(_isV1Template) ? "{0} {1}" : "{0} *{1}"),
+                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name));
                     }
                 }
@@ -199,7 +183,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull(_isV1Template) ? "{0} {1}" : "{0} *{1}"),
+                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name.Value.ToSentence()));
                     }
                 }

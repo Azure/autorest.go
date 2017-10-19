@@ -287,25 +287,18 @@ namespace AutoRest.Go
         /// E.g. things like maps, arrays, interfaces etc can all be null.
         /// </summary>
         /// <param name="type">The type to inspect.</param>
-        /// <param name="emulateCanBeEmpty">
-        /// Pass true to emulate the old CanBeEmpty() behavior.
-        /// NOTE: This is to avoid breaking changes in v1 templates.  Newer templates should always pass false!
-        /// </param>
         /// <returns>True if the specified type can be null.</returns>
-        public static bool CanBeNull(this IModelType type, bool emulateCanBeEmpty)
+        public static bool CanBeNull(this IModelType type)
         {
             var dictionaryType = type as DictionaryType;
             var primaryType = type as PrimaryType;
             var sequenceType = type as SequenceType;
-            var enumType = type as EnumType;
 
             return dictionaryType != null
                 || (primaryType != null
                    && (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray
-                      || primaryType.KnownPrimaryType == KnownPrimaryType.Stream
-                      || (emulateCanBeEmpty && primaryType.KnownPrimaryType == KnownPrimaryType.String)))
-                || sequenceType != null
-                || (emulateCanBeEmpty && enumType != null);
+                      || primaryType.KnownPrimaryType == KnownPrimaryType.Stream))
+                || sequenceType != null;
         }
 
         public static string GetEmptyCheck(this IModelType type, string valueReference, bool required, bool asEmpty)
@@ -433,7 +426,7 @@ namespace AutoRest.Go
             if (x.Count > 0)
             {
                 if (p.CheckNull() || isCompositeProperties)
-                    y.AddRange(x.AddChain(name, ValidationHelper.NullConstraint, p.IsRequired));
+                    y.AddRange(x.AddChain(name, "null", p.IsRequired));
                 else
                     y.AddRange(x);
             }
@@ -497,7 +490,7 @@ namespace AutoRest.Go
             if (x.Count > 0)
             {
                 if (p.CheckNull() || isCompositeProperties)
-                    y.AddRange(x.AddChain(name, ValidationHelper.NullConstraint, p.IsRequired));
+                    y.AddRange(x.AddChain(name, "null", p.IsRequired));
                 else
                     y.AddRange(x);
             }
@@ -517,7 +510,7 @@ namespace AutoRest.Go
         /// <param name="isRequired"></param>
         public static void AddNullValidation(this List<string> v, string name, bool isRequired = false)
         {
-            v.Add(GetConstraint(name, ValidationHelper.NullConstraint, $"{isRequired}".ToLower(), false));
+            v.Add(GetConstraint(name, "null", $"{isRequired}".ToLower(), false));
         }
 
         /// <summary>
@@ -530,11 +523,10 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static List<string> AddChain(this List<string> x, string name, string constraint, bool isRequired)
         {
-            var chainField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Chain);
             List<string> a = new List<string>
             {
                 GetConstraint(name, constraint, $"{isRequired}".ToLower(), true),
-                $"{chainField}: []{ValidationHelper.ConstraintTypeName}{{{x[0]}"
+                $"chain: []constraint{{{x[0]}"
             };
             a.AddRange(x.GetRange(1, x.Count - 1));
             a.Add("}}");
@@ -549,9 +541,8 @@ namespace AutoRest.Go
         // Check if type is not a null or pointer type.
         public static bool CheckNull(this IVariable p)
         {
-            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
             // if the parameter isn't required and its type can't be implicitly nil (e.g. an int)
-            return p is Parameter && (p.ModelType.CanBeNull(false) || !(p.IsRequired || p.ModelType.CanBeNull(isV1Template)));
+            return p is Parameter && (p.ModelType.CanBeNull() || !(p.IsRequired || p.ModelType.CanBeNull()));
         }
 
         /// <summary>
@@ -578,17 +569,12 @@ namespace AutoRest.Go
                                           ? $"`{constraintValue}`"
                                           : constraintValue;
 
-            var targetField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Target);
-            var nameField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Name);
-            var ruleField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Rule);
-
             var chained = " ";
             if (!chain)
             {
-                var chainField = ValidationHelper.GetConstraintFieldName(ConstraintFields.Chain);
-                chained = $", {chainField}: nil }}";
+                chained = $", chain: nil }}";
             }
-            return $"\t{{{targetField}: \"{name}\", {nameField}: {constraintName.ConstraintCasing()}, {ruleField}: {value}{chained}";
+            return $"\t{{targetValue: \"{name}\", name: {constraintName.ToCamelCase()}, rule: {value}{chained}";
         }
     }
 }

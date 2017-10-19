@@ -77,8 +77,6 @@ namespace AutoRest.Go.Model
                 throw new ArgumentException("{0} is not a valid type for SyntheticType", wrappedType.ToString());
             }
 
-            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
-
             // gosdk: Ensure the generated name does not collide with existing type names
             BaseType = wrappedType;
 
@@ -89,63 +87,12 @@ namespace AutoRest.Go.Model
             }
             else
             {
-                if (!isV1Template)
-                {
-                    Name = $"{responseToWrap.Name}Response";
-                }
-                else
-                {
-                    IModelType elementType = GetElementType(wrappedType);
-
-                    if (elementType is PrimaryType)
-                    {
-                        var type = (elementType as PrimaryType).KnownPrimaryType;
-                        switch (type)
-                        {
-                            case KnownPrimaryType.Object:
-                                Name += "SetObject";
-                                break;
-
-                            case KnownPrimaryType.Boolean:
-                                Name += "Bool";
-                                break;
-
-                            case KnownPrimaryType.Double:
-                                Name += "Float64";
-                                break;
-
-                            case KnownPrimaryType.Int:
-                                Name += "Int32";
-                                break;
-
-                            case KnownPrimaryType.Long:
-                                Name += "Int64";
-                                break;
-
-                            case KnownPrimaryType.Stream:
-                                Name += "ReadCloser";
-                                break;
-
-                            default:
-                                Name += type.ToString();
-                                break;
-                        }
-                    }
-                    else if (elementType is EnumType)
-                    {
-                        Name += "String";
-                    }
-                    else
-                    {
-                        Name += elementType.Name;
-                    }
-                }
+                Name = $"{responseToWrap.Name}Response";
             }
 
             // don't add the Value field for streams as it just duplicates
-            // the response.Body field and doesn't provide any value.  only
-            // do this for the newer templates.
-            if (isV1Template || !wrappedType.IsPrimaryType(KnownPrimaryType.Stream))
+            // the response.Body field and doesn't provide any value.
+            if (!wrappedType.IsPrimaryType(KnownPrimaryType.Stream))
             {
                 // add the wrapped type as a property named Value
                 var p = new PropertyGo();
@@ -275,7 +222,6 @@ namespace AutoRest.Go.Model
             }
 
             // Emit each property, except for named Enumerated types, as a pointer to the type
-            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
             foreach (var property in properties)
             {
                 if (!forMarshaller && !string.IsNullOrEmpty(property.Documentation))
@@ -294,17 +240,12 @@ namespace AutoRest.Go.Model
                 else if (property.ModelType is DictionaryType)
                 {
                     var typeName = (property.ModelType as DictionaryTypeGo).Name;
-                    var deref = "*";
-                    if (!isV1Template)
+                    if (property.IsMetadata)
                     {
-                        deref = string.Empty;
-                        if (property.IsMetadata)
-                        {
-                            // use custom type instead of a map[string]string
-                            typeName = "Metadata";
-                        }
+                        // use custom type instead of a map[string]string
+                        typeName = "Metadata";
                     }
-                    indented.AppendFormat("{0} {1}{2} {3}\n", property.Name, deref, typeName, property.Tag());
+                    indented.AppendFormat("{0} {1} {2}\n", property.Name, typeName, property.Tag());
                 }
                 else if (property.ModelType.IsPrimaryType(KnownPrimaryType.Object))
                 {
@@ -318,7 +259,7 @@ namespace AutoRest.Go.Model
                     indented.AppendFormat("*{0} {1}\n", property.ModelType.Name, property.Tag());
                     property.Extensions[SwaggerExtensions.FlattenOriginalTypeName] = Name;
                 }
-                else if (!isV1Template && !string.IsNullOrEmpty(NextLink) && property.Name.EqualsIgnoreCase(NextLink))
+                else if (!string.IsNullOrEmpty(NextLink) && property.Name.EqualsIgnoreCase(NextLink))
                 {
                     // use custom type instead of *string
                     indented.Append($"{NextLink} Marker `xml:\"{NextLink}\"`");
@@ -336,9 +277,9 @@ namespace AutoRest.Go.Model
                     }
 
                     // to avoid any breaking changes in the v1 template always emit as a pointer type
-                    var deref = !isV1Template && (property.ModelType.CanBeNull(false) || property.IsRequired) ? string.Empty : "*";
+                    var deref = property.ModelType.CanBeNull() || property.IsRequired ? string.Empty : "*";
                     var typeName = property.ModelType.Name.ToString();
-                    if (!isV1Template && forMarshaller && property.ModelType.IsDateTimeType())
+                    if (forMarshaller && property.ModelType.IsDateTimeType())
                     {
                         typeName = "timeRFC3339";
                         if (property.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))

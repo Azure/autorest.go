@@ -171,24 +171,7 @@ namespace AutoRest.Go.Model
                                                         : "{0} *{1}", localParam.Name, localParam.ModelType.Name));
             }
 
-            //for Cancelation channel option for long-running operations
-            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1 && IsLongRunningOperation())
-            {
-                declarations.Add("cancel <-chan struct{}");
-            }
             return string.Join(", ", declarations);
-        }
-
-        /// <summary>
-        /// Returns true if this method should return its results via channels.
-        /// </summary>
-        public bool ReturnViaChannel
-        {
-            get
-            {
-                // pageable operations will be handled separately
-                return IsLongRunningOperation() && !IsPageable;
-            }
         }
 
         /// <summary>
@@ -203,11 +186,12 @@ namespace AutoRest.Go.Model
                 {
                     return rv.Body.Name.ToString();
                 }
-                else if (rv.Headers != null && TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
+                else if (rv.Headers != null)
                 {
                     return rv.Headers.Name.ToString();
                 }
-                return "autorest.Response";
+                // TODO: not sure about this
+                return "*http.Response";
             }
         }
 
@@ -218,36 +202,10 @@ namespace AutoRest.Go.Model
         /// <returns>The method signature for this method.</returns>
         public string MethodReturnSignature(bool helper)
         {
-            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
-            {
-                var retValType = MethodReturnType;
-                var retVal = $"result {retValType}";
-                var errVal = "err error";
-
-                // for LROs return the response types via a channel.
-                // only do this for the "real" API; for "helper" methods
-                // i.e. preparer/sender/responder don't use a channel.
-                if (!helper && ReturnViaChannel)
-                {
-                    retVal = $"<-chan {retValType}";
-                    errVal = "<-chan error";
-                }
-
-                return $"{retVal}, {errVal}";
-            }
-            else
-            {
-                return $"*{MethodReturnType}, error";
-            }
+            return $"*{MethodReturnType}, error";
         }
 
         public string NextMethodName => $"{Name}NextResults";
-
-        public string PreparerMethodName => $"{Name}Preparer";
-
-        public string SenderMethodName => $"{Name}Sender";
-
-        public string ResponderMethodName => $"{Name}Responder";
 
         public string HelperInvocationParameters(bool complete, bool includeCtx)
         {
@@ -270,10 +228,6 @@ namespace AutoRest.Go.Model
                 {
                     invocationParams.Add(p.Name);
                 }
-            }
-            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1 && IsLongRunningOperation())
-            {
-                invocationParams.Add("cancel");
             }
             return string.Join(", ", invocationParams);
         }

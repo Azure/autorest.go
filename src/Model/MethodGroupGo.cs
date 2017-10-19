@@ -78,20 +78,15 @@ namespace AutoRest.Go.Model
 
             //Imports
             var imports = new HashSet<string>();
-            imports.UnionWith(CodeNamerGo.Instance.AutorestImports);
+            imports.UnionWith(CodeNamerGo.Instance.PipelineImports);
             imports.UnionWith(CodeNamerGo.Instance.StandardImports);
 
             bool marshalImports = false;
             bool unmarshalImports = false;
-            var isV1Template = TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1;
             cmg.Methods.Where(m => m.Group.Value == Name)
                 .ForEach(m =>
                 {
                     var mg = m as MethodGo;
-                    if (isV1Template && (CodeModel as CodeModelGo).ShouldValidate && !mg.ParameterValidations.IsNullOrEmpty())
-                    {
-                        imports.UnionWith(CodeNamerGo.Instance.ValidationImport);
-                    }
                     foreach (var param in mg.ParametersGo)
                     {
                         param.AddImports(imports);
@@ -110,19 +105,16 @@ namespace AutoRest.Go.Model
                     }
                 });
 
-            if (!isV1Template)
+            if (unmarshalImports)
             {
-                if (unmarshalImports)
-                {
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "io/ioutil"));
-                    var encoding = CodeModel.ShouldGenerateXmlSerialization ? "xml" : "json";
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: $"encoding/{encoding}"));
-                }
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "io/ioutil"));
+                var encoding = CodeModel.ShouldGenerateXmlSerialization ? "xml" : "json";
+                imports.Add(PrimaryTypeGo.GetImportLine(package: $"encoding/{encoding}"));
+            }
 
-                if (marshalImports)
-                {
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "bytes"));
-                }
+            if (marshalImports)
+            {
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "bytes"));
             }
 
             foreach (var p in cmg.Properties)

@@ -52,12 +52,7 @@ namespace AutoRest.Go.Model
                     case KnownPrimaryType.Date:
                     case KnownPrimaryType.DateTimeRfc1123:
                     case KnownPrimaryType.DateTime:
-                        var pkg = "github.com/Azure/go-autorest/autorest/date";
-                        if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
-                        {
-                            pkg = "time";
-                        }
-                        return GetImportLine(package: pkg);
+                        return GetImportLine(package: "time");
                     case KnownPrimaryType.Decimal:
                         return GetImportLine(package: "github.com/shopspring/decimal");
                     case KnownPrimaryType.Stream:
@@ -89,34 +84,9 @@ namespace AutoRest.Go.Model
                         return "bool";
 
                     case KnownPrimaryType.Date:
-                        {
-                            var name = "date.Date";
-                            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
-                            {
-                                name = "time.Time";
-                            }
-                            return name;
-                        }
-
                     case KnownPrimaryType.DateTime:
-                        {
-                            var name = "date.Time";
-                            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
-                            {
-                                name = "time.Time";
-                            }
-                            return name;
-                        }
-
                     case KnownPrimaryType.DateTimeRfc1123:
-                        {
-                            var name = "date.TimeRFC1123";
-                            if (TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1)
-                            {
-                                name = "time.Time";
-                            }
-                            return name;
-                        }
+                        return "time.Time";
 
                     case KnownPrimaryType.Double:
                         return "float64";
@@ -177,9 +147,7 @@ namespace AutoRest.Go.Model
             }
             else if (this.IsPrimaryType(KnownPrimaryType.String))
             {
-                // the original implementation had a bug that treated non-required strings
-                // as pass-by-value.  we need to mimic that behavior for the v1 templates.
-                if (required || TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
+                if (required)
                 {
                     return $"len({valueReference}) {comp} 0";
                 }

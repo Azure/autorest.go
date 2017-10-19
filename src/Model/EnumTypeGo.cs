@@ -10,15 +10,10 @@ namespace AutoRest.Go.Model
 {
     public class EnumTypeGo : EnumType
     {
-        public bool HasUniqueNames { get; set; }
-
         public EnumTypeGo()
         {
             // the default value for unnamed enums is "enum"
             Name.OnGet += v => v == "enum" ? "string" : FormatName(v);
-
-            // Assume members have unique names
-            HasUniqueNames = true;
         }
 
         public EnumTypeGo(EnumType source) : this()
@@ -37,9 +32,7 @@ namespace AutoRest.Go.Model
         {
             var comp = asEmpty ? "==" : "!=";
 
-            // the original implementation had a bug that treated non-required enums as
-            // pass-by-value.  we need to mimic that behavior for the v1 templates.
-            if (required || TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
+            if (required)
             {
                 return $"len({valueReference}) {comp} 0";
             }
@@ -50,17 +43,6 @@ namespace AutoRest.Go.Model
         }
 
         public bool IsNamed => Name != "string" && Values.Any();
-
-        /// <summary>
-        /// Returns true if enums use a "none" value instead of nil.
-        /// </summary>
-        public bool UseNone
-        {
-            get
-            {
-                return TemplateFactory.Instance.TemplateVersion != TemplateFactory.Version.v1;
-            }
-        }
 
         public IDictionary<string, string> Constants
         {
@@ -81,10 +63,6 @@ namespace AutoRest.Go.Model
 
         private string FormatName(string rawName)
         {
-            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
-            {
-                return rawName;
-            }
             // append "Type" to the type name
             if (!rawName.EndsWith("Type"))
             {
@@ -95,10 +73,6 @@ namespace AutoRest.Go.Model
 
         private string FormatValue(string rawValue)
         {
-            if (TemplateFactory.Instance.TemplateVersion == TemplateFactory.Version.v1)
-            {
-                return rawValue;
-            }
             // remove "Type" from the end of the name
             // then append the value name to this string
             var nameAsString = Name.ToString();

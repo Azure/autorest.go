@@ -4,6 +4,7 @@
 using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Go.Model;
+using AutoRest.Go.Templates;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,11 +48,11 @@ namespace AutoRest.Go
             // the correct code, so we need to generate models before clients.
 
             // Models
-            var modelsTemplate = TemplateFactory.Instance.GetModelsTemplate(codeModel);
+            var modelsTemplate = new ModelsTemplate { Model = codeModel };
             await Write(modelsTemplate, FormatFileName("models"));
 
             // Service client
-            var serviceClientTemplate = TemplateFactory.Instance.GetServiceClientTemplate(codeModel);
+            var serviceClientTemplate = new ServiceClientTemplate { Model = codeModel };
             await Write(serviceClientTemplate, FormatFileName("client"));
 
             // by convention the methods in the method group with an empty
@@ -70,25 +71,41 @@ namespace AutoRest.Go
                     methodGroup.Name += "group";
                 }
                 ReservedFiles.Add(methodGroup.Name);
-                var methodGroupTemplate = TemplateFactory.Instance.GetMethodGroupTemplate(methodGroup);
+                var methodGroupTemplate = new MethodGroupTemplate { Model = methodGroup };
                 await Write(methodGroupTemplate, FormatFileName(methodGroup.Name));
             }
 
             // Version
-            var versionTemplate = TemplateFactory.Instance.GetVersionTemplate(codeModel);
+            var versionTemplate = new VersionTemplate { Model = codeModel };
             await Write(versionTemplate, FormatFileName("version"));
 
-            var fixedTemplates = TemplateFactory.Instance.GetFixedTemplates(codeModel);
+            var fixedTemplates = GetFixedTemplates(codeModel);
             foreach (var template in fixedTemplates)
             {
                 await Write(template.Item1, FormatFileName(template.Item2));
             }
 
-            var marshallingTemplate = TemplateFactory.Instance.GetMarshallingTemplate(codeModel);
-            if (marshallingTemplate != null)
+            if (codeModel.RequiresMarshallers.Any())
             {
+                var marshallingTemplate = new Marshalling { Model = codeModel };
                 await Write(marshallingTemplate, FormatFileName("marshalling"));
             }
+        }
+
+        /// <summary>
+        /// Returns a collection of templates to emit.
+        /// </summary>
+        /// <param name="codeModel">The code moel that the template will consume.</param>
+        /// <returns>A collection of templates, may be empty.</returns>
+        private IEnumerable<Tuple<ITemplate, string>> GetFixedTemplates(CodeModelGo codeModel)
+        {
+            var list = new List<Tuple<ITemplate, string>>
+            {
+                new Tuple<ITemplate, string>(new ResponderPolicy() { Model = codeModel }, "responder_policy"),
+                new Tuple<ITemplate, string>(new ResponseError() { Model = codeModel }, "response_error"),
+                new Tuple<ITemplate, string>(new Validation() { Model = codeModel }, "validation")
+            };
+            return list;
         }
 
         private string FormatFileName(string fileName)
