@@ -82,7 +82,9 @@ func (client ManagementClient) GetWithConstantInPathPreparer(constantParam strin
 // GetWithConstantInPathSender sends the GetWithConstantInPath request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) GetWithConstantInPathSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetWithConstantInPathResponder handles the response to the GetWithConstantInPath request. The method always
@@ -168,7 +170,9 @@ func (client ManagementClient) PostWithConstantInBodyPreparer(constantParam stri
 // PostWithConstantInBodySender sends the PostWithConstantInBody request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PostWithConstantInBodySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PostWithConstantInBodyResponder handles the response to the PostWithConstantInBody request. The method always
@@ -273,7 +277,9 @@ func (client ManagementClient) ValidationOfBodyPreparer(resourceGroupName string
 // ValidationOfBodySender sends the ValidationOfBody request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) ValidationOfBodySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ValidationOfBodyResponder handles the response to the ValidationOfBody request. The method always
@@ -351,7 +357,9 @@ func (client ManagementClient) ValidationOfMethodParametersPreparer(resourceGrou
 // ValidationOfMethodParametersSender sends the ValidationOfMethodParameters request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) ValidationOfMethodParametersSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ValidationOfMethodParametersResponder handles the response to the ValidationOfMethodParameters request. The method always

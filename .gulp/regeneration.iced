@@ -54,7 +54,9 @@ regenExpected = (opts,done) ->
 
     autorest args,() =>
       instances--
-      return done() if instances is 0 
+      if instances is 0 
+        await execute "go fmt ./generated/...", { cwd: './test/src/tests' }, defer code, stderr, stdout
+        return done()
 
 goMappings = {
   'body-array':['body-array.json','arraygroup'],

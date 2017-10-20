@@ -86,7 +86,9 @@ func (client PathItemsClient) GetAllWithValuesPreparer(localStringPath string, p
 // GetAllWithValuesSender sends the GetAllWithValues request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetAllWithValuesSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetAllWithValuesResponder handles the response to the GetAllWithValues request. The method always
@@ -160,7 +162,9 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullPreparer(localStringPath
 // GetGlobalAndLocalQueryNullSender sends the GetGlobalAndLocalQueryNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetGlobalAndLocalQueryNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetGlobalAndLocalQueryNullResponder handles the response to the GetGlobalAndLocalQueryNull request. The method always
@@ -234,7 +238,9 @@ func (client PathItemsClient) GetGlobalQueryNullPreparer(localStringPath string,
 // GetGlobalQueryNullSender sends the GetGlobalQueryNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetGlobalQueryNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetGlobalQueryNullResponder handles the response to the GetGlobalQueryNull request. The method always
@@ -308,7 +314,9 @@ func (client PathItemsClient) GetLocalPathItemQueryNullPreparer(localStringPath 
 // GetLocalPathItemQueryNullSender sends the GetLocalPathItemQueryNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetLocalPathItemQueryNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLocalPathItemQueryNullResponder handles the response to the GetLocalPathItemQueryNull request. The method always
