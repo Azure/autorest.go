@@ -187,21 +187,9 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="arguments"></param>
         /// <returns></returns>
-        public static string EmitAsArguments(this IList<string> arguments)
+        public static string EmitAsArguments(this IEnumerable<string> arguments)
         {
-            var sb = new StringBuilder();
-
-            if (arguments.Count() > 0)
-            {
-                sb.Append(arguments[0]);
-
-                for (var i = 1; i < arguments.Count(); i++)
-                {
-                    sb.AppendLine(",");
-                    sb.Append(arguments[i]);
-                }
-            }
-            return sb.ToString();
+            return String.Join(",\n", arguments);
         }
 
 
