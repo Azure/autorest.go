@@ -64,6 +64,8 @@ namespace AutoRest.Go.Model
 
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
+        public string APIType => (string)Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
+
         public IEnumerable<string> ClientImports
         {
             get

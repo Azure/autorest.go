@@ -33,6 +33,10 @@ namespace AutoRest.Go.Model
         public bool IsCustomBaseUri
             => CodeModel.Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
+        // RegisterRP determines if a DoRetryWithRegistration send decorator will be added to the operation
+        // DoRetryWithRegistration retries. Default is generating DoRetryForStatusCodes decorator instead.
+        public bool RegisterRP;
+
         public MethodGo()
         {
             NextAlreadyDefined = true;
@@ -76,6 +80,13 @@ namespace AutoRest.Go.Model
             {
                 Description += lroDescription;
             }
+
+            // Registering Azure resource providers should only happen with Azure resource manager REST APIs
+            // This depends on go-autorest here:
+            // https://github.com/Azure/go-autorest/blob/c0eb859387e57a164bf64171da307e2ef8168b58/autorest/azure/rp.go#L30
+            // As registering needs the Azure subscription ID, we take it from the operation path, on the
+            // assumption that ARM APIs should include the subscription ID right after `subscriptions`
+            RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
         }
 
         public string MethodSignature => $"{Name}({MethodParametersSignature})";
@@ -304,7 +315,7 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public List<string> PrepareDecorators
+        public IEnumerable<string> PrepareDecorators
         {
             get
             {
@@ -390,11 +401,32 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public List<string> RespondDecorators
+        public IEnumerable<string> SendDecorators
         {
             get
             {
                 var decorators = new List<string>();
+                decorators.Add("req");
+                if (RegisterRP)
+                {
+                    decorators.Add("azure.DoRetryWithRegistration(client.Client)");
+                } else {
+                    decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
+                }
+                if (IsLongRunningOperation())
+                {
+                    decorators.Add("azure.DoPollForAsynchronous(client.PollingDelay)");
+                }
+                return decorators;
+            }
+        }
+
+        public IEnumerable<string> RespondDecorators
+        {
+            get
+            {
+                var decorators = new List<string>();
+                decorators.Add("resp");
                 decorators.Add("client.ByInspecting()");
                 decorators.Add(string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray())));
 

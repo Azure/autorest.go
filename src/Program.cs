@@ -82,6 +82,7 @@ namespace AutoRest.Go
             Settings.Instance.CustomSettings.Add("SyncMethods", GetXmsCodeGenSetting<string>(codeModelT, "syncMethods") ?? await GetValue("sync-methods") ?? "essential");
             Settings.Instance.CustomSettings.Add("UseDateTimeOffset", GetXmsCodeGenSetting<bool?>(codeModelT, "useDateTimeOffset") ?? await GetValue<bool?>("use-datetimeoffset") ?? false);
             Settings.Instance.CustomSettings["ClientSideValidation"] = await GetValue<bool?>("client-side-validation") ?? false;
+            Settings.Instance.CustomSettings["OpenAPIType"] = await GetValue<string>("openapi-type") ?? "default";
             Settings.Instance.MaximumCommentColumns = await GetValue<int?>("max-comment-columns") ?? 120;
             Settings.Instance.OutputFileName = await GetValue<string>("output-file");
             Settings.Instance.PackageVersion = await GetValue("package-version");

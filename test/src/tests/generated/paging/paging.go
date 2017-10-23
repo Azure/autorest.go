@@ -77,7 +77,9 @@ func (client PagingClient) GetMultiplePagesPreparer(clientRequestID string, maxr
 // GetMultiplePagesSender sends the GetMultiplePages request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesResponder handles the response to the GetMultiplePages request. The method always
@@ -197,7 +199,9 @@ func (client PagingClient) GetMultiplePagesFailurePreparer() (*http.Request, err
 // GetMultiplePagesFailureSender sends the GetMultiplePagesFailure request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesFailureSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesFailureResponder handles the response to the GetMultiplePagesFailure request. The method always
@@ -317,7 +321,9 @@ func (client PagingClient) GetMultiplePagesFailureURIPreparer() (*http.Request, 
 // GetMultiplePagesFailureURISender sends the GetMultiplePagesFailureURI request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesFailureURISender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesFailureURIResponder handles the response to the GetMultiplePagesFailureURI request. The method always
@@ -448,7 +454,9 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkPreparer(APIVersion s
 // GetMultiplePagesFragmentNextLinkSender sends the GetMultiplePagesFragmentNextLink request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesFragmentNextLinkSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesFragmentNextLinkResponder handles the response to the GetMultiplePagesFragmentNextLink request. The method always
@@ -556,7 +564,9 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkPreparer(
 // GetMultiplePagesFragmentWithGroupingNextLinkSender sends the GetMultiplePagesFragmentWithGroupingNextLink request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLinkResponder handles the response to the GetMultiplePagesFragmentWithGroupingNextLink request. The method always
@@ -653,7 +663,9 @@ func (client PagingClient) GetMultiplePagesRetryFirstPreparer() (*http.Request, 
 // GetMultiplePagesRetryFirstSender sends the GetMultiplePagesRetryFirst request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesRetryFirstSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesRetryFirstResponder handles the response to the GetMultiplePagesRetryFirst request. The method always
@@ -774,7 +786,9 @@ func (client PagingClient) GetMultiplePagesRetrySecondPreparer() (*http.Request,
 // GetMultiplePagesRetrySecondSender sends the GetMultiplePagesRetrySecond request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesRetrySecondSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesRetrySecondResponder handles the response to the GetMultiplePagesRetrySecond request. The method always
@@ -913,7 +927,9 @@ func (client PagingClient) GetMultiplePagesWithOffsetPreparer(offset int32, clie
 // GetMultiplePagesWithOffsetSender sends the GetMultiplePagesWithOffset request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesWithOffsetSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMultiplePagesWithOffsetResponder handles the response to the GetMultiplePagesWithOffset request. The method always
@@ -1048,7 +1064,9 @@ func (client PagingClient) GetOdataMultiplePagesPreparer(clientRequestID string,
 // GetOdataMultiplePagesSender sends the GetOdataMultiplePages request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetOdataMultiplePagesSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetOdataMultiplePagesResponder handles the response to the GetOdataMultiplePages request. The method always
@@ -1168,7 +1186,9 @@ func (client PagingClient) GetSinglePagesPreparer() (*http.Request, error) {
 // GetSinglePagesSender sends the GetSinglePages request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetSinglePagesSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetSinglePagesResponder handles the response to the GetSinglePages request. The method always
@@ -1288,7 +1308,9 @@ func (client PagingClient) GetSinglePagesFailurePreparer() (*http.Request, error
 // GetSinglePagesFailureSender sends the GetSinglePagesFailure request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) GetSinglePagesFailureSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetSinglePagesFailureResponder handles the response to the GetSinglePagesFailure request. The method always
@@ -1421,7 +1443,9 @@ func (client PagingClient) NextFragmentPreparer(APIVersion string, tenant string
 // NextFragmentSender sends the NextFragment request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) NextFragmentSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // NextFragmentResponder handles the response to the NextFragment request. The method always
@@ -1485,7 +1509,9 @@ func (client PagingClient) NextFragmentWithGroupingPreparer(APIVersion string, t
 // NextFragmentWithGroupingSender sends the NextFragmentWithGrouping request. The method will close the
 // http.Response Body if it receives an error.
 func (client PagingClient) NextFragmentWithGroupingSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // NextFragmentWithGroupingResponder handles the response to the NextFragmentWithGrouping request. The method always
