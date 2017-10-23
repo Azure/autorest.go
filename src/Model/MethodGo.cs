@@ -82,6 +82,8 @@ namespace AutoRest.Go.Model
             // Registering Azure resource providers should only happen with Azure resource manager REST APIs
             // This depends on go-autorest here:
             // https://github.com/Azure/go-autorest/blob/c0eb859387e57a164bf64171da307e2ef8168b58/autorest/azure/rp.go#L30
+            // As registering needs the Azure subscription ID, we take it from the operation path, on the
+            // assumption that ARM APIs should include the subsriptin ID right after `subscriptions`
             RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
         }
 
