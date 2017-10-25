@@ -55,15 +55,17 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public EnumType DiscriminatorEnum;
+        public EnumTypeGo DiscriminatorEnum;
 
         public string DiscriminatorEnumValue
         {
             get
             {
-                var val = (DiscriminatorEnum as EnumTypeGo).Values.FirstOrDefault(c => c.SerializedName.Equals(SerializedName)).SerializedName;
-                string name = PolymorphicProperty;
-                name += val;
+                var name = (DiscriminatorEnum as EnumTypeGo).Values.FirstOrDefault(c => c.SerializedName.Equals(SerializedName)).Name;
+                if (!DiscriminatorEnum.HasUniqueNames)
+                {
+                    name = DiscriminatorEnum.Name + name;
+                }
                 return name;
             }
         }

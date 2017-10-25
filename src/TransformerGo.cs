@@ -94,7 +94,7 @@ namespace AutoRest.Go
                     bool alreadyExists = nameAlreadyExists;
                     if (nameAlreadyExists)
                     {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));                        
+                        (mt as CompositeTypeGo).DiscriminatorEnum = (cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator)) as EnumTypeGo);
                         var existingValues = new List<string>();
                         foreach (var v in cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator)).Values)
                         {
@@ -110,10 +110,10 @@ namespace AutoRest.Go
                     }
                     if (!alreadyExists)
                     {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.Add(New<EnumType>(new{
+                        (mt as CompositeTypeGo).DiscriminatorEnum = (cmg.Add(New<EnumType>(new{
                             Name = nameAlreadyExists ? string.Format("{0}{1}", mt.PolymorphicDiscriminator, mt.Name) :  mt.PolymorphicDiscriminator,
                             Values = values,
-                    })); 
+                    })) as EnumTypeGo);
                     }
                 }
             }
