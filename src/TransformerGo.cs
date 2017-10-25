@@ -113,7 +113,7 @@ namespace AutoRest.Go
                         (mt as CompositeTypeGo).DiscriminatorEnum = (cmg.Add(New<EnumType>(new{
                             Name = nameAlreadyExists ? string.Format("{0}{1}", mt.PolymorphicDiscriminator, mt.Name) :  mt.PolymorphicDiscriminator,
                             Values = values,
-                    })) as EnumTypeGo);
+                        })) as EnumTypeGo);
                     }
                 }
             }
