@@ -4,12 +4,7 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
 @{
-    var constants = new Dictionary<string, string>();
-    foreach (var val in Model.Values)
-    {
-        constants.Add(Model.HasUniqueNames ? val.Name : Model.Name + val.Name, val.SerializedName);
-    }
-
+    var constants = Model.Constants.Keys.OrderBy(v => v);
     var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
     var modelPhrase = Model.Name.FixedValue.ToPhrase();
 }
@@ -22,11 +17,11 @@ type @Model.Name string
 {
 <text>
 const (
-@foreach (var c in constants.Keys.OrderBy(v => v))
+@foreach (var c in constants)
 {
     <text>
 @WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(c), c.ToPhrase(), modelPhrase))
-@(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(constants[c])"
+@(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(Model.Constants[c])"
     </text>
 }
 )

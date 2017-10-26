@@ -29,7 +29,7 @@ func unmarshal@(Model.Name)(body []byte) (@(Model.Name), error){
     @foreach (var dt in Model.DerivedTypes)
     {
     <text>
-    case string(@((dt as CompositeTypeGo).DiscriminatorEnumValue)):
+    case string(@(CodeNamerGo.Instance.GetEnumMemberName((dt as CompositeTypeGo).DiscriminatorEnumValue))):
         var @(dt.Name.FixedValue.ToShortName()) @(dt.Name)
         err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToShortName()))
         return @(dt.Name.FixedValue.ToShortName()), err
@@ -76,7 +76,7 @@ type @(Model.Name) struct {
 @EmptyLine
 // MarshalJSON is the custom marshaler for @(Model.Name).
 func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name))MarshalJSON() ([]byte, error){
-    @(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(Model.DiscriminatorEnumValue)
+    @(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(CodeNamerGo.Instance.GetEnumMemberName(Model.DiscriminatorEnumValue))
     type Alias @(Model.Name)
     return json.Marshal(&struct {
         Alias
