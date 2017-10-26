@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AutoRest.Core.Model;
+using AutoRest.Core.Utilities;
 using AutoRest.Go;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,11 @@ namespace AutoRest.Go.Model
 {
     public class PrimaryTypeGo : PrimaryType
     {
+        /// <summary>
+        /// Format name for ETags.
+        /// </summary>
+        public const string FormatETag = "etag";
+
         public PrimaryTypeGo() : base()
         {
             Name.OnGet += v =>
@@ -44,11 +50,9 @@ namespace AutoRest.Go.Model
                 switch (KnownPrimaryType)
                 {
                     case KnownPrimaryType.Date:
-                        return GetImportLine(package: "github.com/Azure/go-autorest/autorest/date");
                     case KnownPrimaryType.DateTimeRfc1123:
-                        return GetImportLine(package: "github.com/Azure/go-autorest/autorest/date");
                     case KnownPrimaryType.DateTime:
-                        return GetImportLine(package: "github.com/Azure/go-autorest/autorest/date");
+                        return GetImportLine(package: "time");
                     case KnownPrimaryType.Decimal:
                         return GetImportLine(package: "github.com/shopspring/decimal");
                     case KnownPrimaryType.Stream:
@@ -80,13 +84,9 @@ namespace AutoRest.Go.Model
                         return "bool";
 
                     case KnownPrimaryType.Date:
-                        return "date.Date";
-
                     case KnownPrimaryType.DateTime:
-                        return "date.Time";
-
                     case KnownPrimaryType.DateTimeRfc1123:
-                        return "date.TimeRFC1123";
+                        return "time.Time";
 
                     case KnownPrimaryType.Double:
                         return "float64";
@@ -104,6 +104,10 @@ namespace AutoRest.Go.Model
                         return "io.ReadCloser";
 
                     case KnownPrimaryType.String:
+                        if (string.Compare(Format, FormatETag, StringComparison.OrdinalIgnoreCase) == 0)
+                        {
+                            return CodeNamerGo.Instance.ETagTypeName;
+                        }
                         return "string";
 
                     case KnownPrimaryType.TimeSpan:
@@ -124,9 +128,11 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public static string GetImportLine(string package, string alias = default(string)) {
+        public static string GetImportLine(string package, string alias = default(string))
+        {
             var builder = new StringBuilder();
-            if(!string.IsNullOrEmpty(alias)){
+            if(!string.IsNullOrEmpty(alias))
+            {
                 builder.Append(alias);
                 builder.Append(' ');
             }

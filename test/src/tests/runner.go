@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
@@ -46,29 +47,29 @@ func startServer() (*os.Process, error) {
 func runTests(allPass *bool) {
 	fmt.Println("Run tests")
 	testSuites := []string{
-		"arraygroup",
+		//"arraygroup",
 		"booleangroup",
 		"bytegroup",
-		"complexgroup",
-		"dategroup",
-		"datetimegroup",
-		"datetimerfc1123group",
-		"dictionarygroup",
-		"durationgroup",
-		"headergroup",
+		//"complexgroup",
+		//"dategroup",
+		//"datetimegroup",
+		//"datetimerfc1123group",
+		//"dictionarygroup",
+		//"durationgroup",
+		//"headergroup",
 		"httpInfrastructuregroup",
 		"integergroup",
-		"modelflatteninggroup",
-		"numbergroup",
-		"requiredoptionalgroup",
+		//"modelflatteninggroup",
+		//"numbergroup",
+		//"requiredoptionalgroup",
 		"stringgroup",
-		"urlgroup",
-		"validationgroup",
-		"custombaseurlgroup",
-		"filegroup",
-		// "formdatagroup",
-		"paginggroup",
-		"morecustombaseurigroup",
+		//"urlgroup",
+		//"validationgroup",
+		//"custombaseurlgroup",
+		//"filegroup",
+		//"formdatagroup",
+		//"paginggroup",
+		//"morecustombaseurigroup",
 	}
 
 	for _, suite := range testSuites {
@@ -90,8 +91,8 @@ func runTests(allPass *bool) {
 }
 
 func getReport() {
-	var reportClient = report.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport()
+	var reportClient = report.NewManagementClientWithURL(utils.GetBaseURI(report.DefaultBaseURL), utils.NewPipeline())
+	res, err := reportClient.GetReport(context.Background())
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
@@ -99,24 +100,23 @@ func getReport() {
 }
 
 func getAzureReport() {
-	var reportClient = azurereport.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport()
+	var reportClient = azurereport.NewManagementClientWithURL(utils.GetBaseURI(report.DefaultBaseURL), utils.NewPipeline())
+	res, err := reportClient.GetReport(context.Background())
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
 	printReport(res.Value, "Azure")
 }
 
-func printReport(res *map[string]*int32, report string) {
+func printReport(res map[string]int32, report string) {
 	count := 0
-	for key, val := range *res {
-		if *val <= 0 {
-			fmt.Println(key, *val)
+	for key, val := range res {
+		if val <= 0 {
+			fmt.Println(key, val)
 			count++
 		}
 	}
-	total := len(*res)
+	total := len(res)
 	fmt.Printf("\nReport:	Passed(%v)  Not Run(%v)\n", total-count, count)
 	fmt.Printf("Go %s Done.......\n\n", report)
-
 }

@@ -1,12 +1,19 @@
-﻿@using AutoRest.Go
-@using AutoRest.Core.Model
+﻿@using AutoRest.Core.Model
+@using AutoRest.Core.Utilities
+@using AutoRest.Go
 @using AutoRest.Go.Model
 @using AutoRest.Go.Templates
-@using AutoRest.Core.Utilities
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CompositeTypeGo>
+@{
+    var shortName = Model.Name.ToString().ToShortName();
+    var desc = $"{Model.Name} ...";
+    if (!string.IsNullOrEmpty(Model.Documentation))
+    {
+        desc = $"{Model.Name} - {Model.Documentation}";
+    }
+}
 
-@WrapComment("// ", string.Format("{0} is {1}", Model.Name, Model.Documentation.ToSentence()))
 @if (Model.IsPolymorphic)
 {
 <text>
@@ -20,11 +27,11 @@ type @(Model.Name) interface {
 @EmptyLine
 func unmarshal@(Model.Name)(body []byte) (@(Model.Name), error){
     var m map[string]interface{}
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-	    return nil, err
-	}
-    @EmptyLine
+    err := json.Unmarshal(body, &m)
+    if err != nil {
+        return nil, err
+    }
+@EmptyLine
     switch m["@(Model.PolymorphicDiscriminator)"] {
     @foreach (var dt in Model.DerivedTypes)
     {
@@ -42,18 +49,18 @@ func unmarshal@(Model.Name)(body []byte) (@(Model.Name), error){
 
 func unmarshal@(Model.Name)Array(body []byte) ([]@(Model.Name), error){
     var rawMessages []*json.RawMessage
-	err := json.Unmarshal(body, &rawMessages)
-	if err != nil {
+    err := json.Unmarshal(body, &rawMessages)
+    if err != nil {
         return nil, err
-	}
-    @EmptyLine
+    }
+@EmptyLine
     @(Model.Name.FixedValue.ToShortName())Array := make([]@(Model.Name), len(rawMessages))
-    @EmptyLine
+@EmptyLine
     for index, rawMessage := range rawMessages {
         @(Model.Name.FixedValue.ToShortName()), err := unmarshal@(Model.Name)(*rawMessage)
-	    if err != nil {
-		    return nil, err
-	    }
+        if err != nil {
+            return nil, err
+        }
         @(Model.Name.FixedValue.ToShortName())Array[index] = @(Model.Name.FixedValue.ToShortName())
     }
     return @(Model.Name.FixedValue.ToShortName())Array, nil
@@ -63,9 +70,13 @@ func unmarshal@(Model.Name)Array(body []byte) ([]@(Model.Name), error){
 else
 {
 <text>
-type @(Model.Name) struct {
-    @(Model.AddHTTPResponse())
-    @(Model.Fields())
+@WrapComment("// ", desc)
+type @Model.Name struct {
+    @if (Model.IsResponseType)
+    {
+    @:rawResponse *http.Response
+    }
+@(Model.Fields(false))
 }
 </text>
 }
@@ -114,26 +125,26 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
     {
     <text>
     @(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.Name)(body)
-	if err != nil {
-		return err
-	}
+    if err != nil {
+        return err
+    }
     @(Model.Name.FixedValue.ToShortName()).Value = @(Model.BaseType.Name.FixedValue.ToShortName())
     </text>
     }
     else
     {
     <text>
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-    
+    var m map[string]*json.RawMessage
+    err := json.Unmarshal(body, &m)
+    if err != nil {
+        return err
+    }
+
     var v *json.RawMessage
         @foreach (var p in Model.AllProperties)
         {
         <text>
-    @EmptyLine
+            @EmptyLine
     v = m["@(p.SerializedName)"]
     if v != nil {
             @if (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic)
@@ -167,26 +178,124 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
         }
     </text>
     }
-    @EmptyLine
+@EmptyLine
     return nil
 }
 </text>
 }
 
-@if (!string.IsNullOrEmpty(Model.NextLink) && Model.PreparerNeeded)
+@EmptyLine
+@if (Model.IsResponseType)
 {
 <text>
-@EmptyLine
-// @(Model.PreparerMethodName) prepares a request to retrieve the next set of results. It returns
-// nil if no more results exist.
-func (client @(Model.Name)) @(Model.PreparerMethodName)() (*http.Request, error) {
-    if client.@(Model.NextLink) == nil || len(to.String(client.@(Model.NextLink))) <= 0 {
-        return nil, nil
+// Response returns the raw HTTP response object.
+func (@shortName @Model.Name) Response() *http.Response {
+    return @(shortName).rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (@shortName @Model.Name) HTTPStatusCode() int {
+    return @(shortName).rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (@shortName @Model.Name) HTTPStatus() string {
+    return @(shortName).rawResponse.Status
+}
+</text>
+    if (Model.IsStreamType())
+    {
+    <text>
+
+// Body returns the raw HTTP response object's Body.
+func (@shortName @Model.Name) Body() io.ReadCloser {
+    return @(shortName).rawResponse.Body
+}
+    </text>
     }
-    return autorest.Prepare(&http.Request{},
-        autorest.AsJSON(),
-        autorest.AsGet(),
-        autorest.WithBaseURL(to.String(client.@(Model.NextLink))));
+}
+@EmptyLine
+@foreach (var headerResp in Model.ResponseHeaders())
+{
+    var retSig = "string";
+    var retExpr = $"{shortName}.rawResponse.Header.Get(\"{headerResp.Type.SerializedName}\")";
+    if (headerResp.Type.ModelType.IsDateTimeType())
+    {
+        retSig = "time.Time";
+    }
+    else if (headerResp.Type.ModelType is EnumTypeGo)
+    {
+        retSig = headerResp.Type.ModelTypeName;
+        retExpr = $"{headerResp.Type.ModelType.Name}({retExpr})";
+    }
+    else if (headerResp.Type.ModelType.IsETagType())
+    {
+        retSig = CodeNamerGo.Instance.ETagTypeName;
+        retExpr = $"{CodeNamerGo.Instance.ETagTypeName}({retExpr})";
+    }
+    else if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) || headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Long))
+    {
+        retSig = headerResp.Type.ModelTypeName;
+    }
+<text>
+// @headerResp.Name returns the value for header @(headerResp.Type.SerializedName).
+func (@shortName @Model.Name) @(headerResp.Name)() @retSig {
+</text>
+    if (headerResp.Type.ModelType.IsDateTimeType())
+    {
+        var formatAs = "rfc3339Format";
+        if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
+        {
+            formatAs = "time.RFC1123";
+        }
+        <text>
+    s := @retExpr
+    if s == "" {
+        return time.Time{}
+    }
+    t, err := time.Parse(@formatAs, s)
+    if err != nil {
+        panic(err)
+    }
+    return t
+        </text>
+    }
+    else if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) || headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Long))
+    {
+        var bitSize = headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) ? "32" : "64";
+    <text>
+    s := @retExpr
+    if s == "" {
+        return -1
+    }
+    i, err := strconv.ParseInt(s, 10, @bitSize)
+    if err != nil {
+        panic(err)
+    }
+    return @(headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) ? "int32(i)" : "i")
+    </text>
+    }
+    else
+    {
+    @:return @retExpr
+    }
+@:}
+}
+
+@if (Model.ResponseIncludesMetadata)
+{
+<text>
+// NewMetadata returns user-defined key/value pairs.
+func(@shortName @Model.Name) NewMetadata() Metadata {
+    md := Metadata{}
+    for k, v := range @(shortName).rawResponse.Header {
+        if len(k) > mdPrefixLen {
+            if prefix := k[0:mdPrefixLen]; strings.EqualFold(prefix, mdPrefix) {
+                md[strings.ToLower(k[mdPrefixLen:])] = v[0]
+            }
+        }
+    }
+    return md
 }
 </text>
 }

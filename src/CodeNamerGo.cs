@@ -24,21 +24,29 @@ namespace AutoRest.Go
             }
         }
 
-        public virtual IEnumerable<string> AutorestImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
+        public virtual IEnumerable<string> PipelineImports
+        {
+            get
+            {
+                return new string[] { PrimaryTypeGo.GetImportLine(package: PipelineImportPath) };
+            }
+        }
 
-        public virtual IEnumerable<string> StandardImports => new string[] 
-        { 
-            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"), 
-            PrimaryTypeGo.GetImportLine(package: "net/http") 
-        };
+        public virtual IEnumerable<string> StandardImports
+        {
+            get
+            {
+                var imports = new List<string>();
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "context"));
+                return imports;
+            }
+        }
 
         public virtual IEnumerable<string> PageableImports => new string[] 
-        { 
-            PrimaryTypeGo.GetImportLine(package: "net/http"), 
-            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to") 
+        {
+            PrimaryTypeGo.GetImportLine(package: "net/http")
         };
-
-        public virtual IEnumerable<string> ValidationImport => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
 
         // CommonInitialisms are those "words" within a name that Golint expects to be uppercase.
         // See https://github.com/golang/lint/blob/master/lint.go for detail.
@@ -326,9 +334,7 @@ namespace AutoRest.Go
                 return name;
             }
 
-            // we use the base implementation here as it uses a case-insensitive comparison.
-            // this is a bit of a hacky work-around for some naming changes introduced in core...
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(base.GetEscapedReservedName(name, "Group"))));
+            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
         }
 
         /// <summary>
@@ -472,7 +478,8 @@ namespace AutoRest.Go
                 {
                     if (primaryType.KnownPrimaryType == KnownPrimaryType.String
                         || primaryType.KnownPrimaryType == KnownPrimaryType.Uuid
-                        || primaryType.KnownPrimaryType == KnownPrimaryType.TimeSpan)
+                        || primaryType.KnownPrimaryType == KnownPrimaryType.TimeSpan
+                        || primaryType.IsDateTimeType())
                     {
                         return CodeNamer.Instance.QuoteValue(defaultValue);
                     }
@@ -492,5 +499,43 @@ namespace AutoRest.Go
             }
             return defaultValue;
         }
+
+        /// <summary>
+        /// Returns true if client types should be exported.
+        /// </summary>
+        public bool ExportClientTypes
+        {
+            get
+            {
+                var setting = Settings.Instance.Host?.GetValue<string>("go-export-clients").Result;
+                if (string.IsNullOrWhiteSpace(setting))
+                {
+                    // by default export client types
+                    return true;
+                }
+                return bool.Parse(setting);
+            }
+        }
+
+        /// <summary>
+        /// Returns the value of the go-pipeline-import parameter or the empty string if it wasn't provided.
+        /// </summary>
+        public string PipelineImportPath
+        {
+            get
+            {
+                var path = Settings.Instance.Host?.GetValue<string>("go-pipeline-import").Result;
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    return string.Empty;
+                }
+                return path;
+            }
+        }
+
+        /// <summary>
+        /// Gets the type name for the etag type.
+        /// </summary>
+        public string ETagTypeName => "ETag";
     }
 }

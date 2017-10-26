@@ -1,6 +1,3 @@
-// Package bytegroup implements the Azure ARM Bytegroup service API version 1.0.0.
-//
-// Test Infrastructure for AutoRest Swagger BAT
 package bytegroup
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
@@ -10,29 +7,46 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+	"net/url"
+	"tests/pipeline"
 )
 
 const (
-	// DefaultBaseURI is the default URI used for the service Bytegroup
-	DefaultBaseURI = "http://localhost"
+	// ServiceVersion specifies the version of the operations used in this package.
+	ServiceVersion = "1.0.0"
+	// DefaultBaseURL is the default URL used for the service Bytegroup
+	DefaultBaseURL = "http://localhost"
 )
 
 // ManagementClient is the base client for Bytegroup.
 type ManagementClient struct {
-	autorest.Client
-	BaseURI string
+	url url.URL
+	p   pipeline.Pipeline
 }
 
-// New creates an instance of the ManagementClient client.
-func New() ManagementClient {
-	return NewWithBaseURI(DefaultBaseURI)
-}
-
-// NewWithBaseURI creates an instance of the ManagementClient client.
-func NewWithBaseURI(baseURI string) ManagementClient {
-	return ManagementClient{
-		Client:  autorest.NewClientWithUserAgent(UserAgent()),
-		BaseURI: baseURI,
+// NewManagementClient creates an instance of the ManagementClient client.
+func NewManagementClient(p pipeline.Pipeline) ManagementClient {
+	u, err := url.Parse(DefaultBaseURL)
+	if err != nil {
+		panic(err)
 	}
+	return NewManagementClientWithURL(*u, p)
+}
+
+// NewManagementClientWithURL creates an instance of the ManagementClient client.
+func NewManagementClientWithURL(url url.URL, p pipeline.Pipeline) ManagementClient {
+	return ManagementClient{
+		url: url,
+		p:   p,
+	}
+}
+
+// URL returns a copy of the URL for this client.
+func (mc ManagementClient) URL() url.URL {
+	return mc.url
+}
+
+// Pipeline returns the pipeline for this client.
+func (mc ManagementClient) Pipeline() pipeline.Pipeline {
+	return mc.p
 }

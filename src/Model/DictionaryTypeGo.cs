@@ -13,15 +13,9 @@ namespace AutoRest.Go.Model
     /// </summary>
     public class DictionaryTypeGo : DictionaryType
     {
-        // if value type can be implicitly null
-        // then don't emit it as a pointer type.
-        private string FieldNameFormat => ValueType.CanBeNull()
-                                ? "map[string]{0}"
-                                : "map[string]*{0}";
-
         public DictionaryTypeGo()
         {
-            Name.OnGet += value => string.Format(CultureInfo.InvariantCulture, FieldNameFormat, ValueType.Name);
+            Name.OnGet += value => $"map[string]{ValueType.Name}";
         }
 
         /// <summary>

@@ -1,0 +1,95 @@
+﻿@using AutoRest.Core.Model
+@using AutoRest.Core.Utilities
+@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using System.Collections.Generic
+@using System.Linq
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
+package @Model.Namespace
+@EmptyLine
+@Header("// ")
+
+@EmptyLine
+
+import (
+	"encoding/xml"
+	"reflect"
+	"time"
+	"unsafe"
+)
+
+const (
+	rfc3339Format = "2006-01-02T15:04:05.0000000Z07:00"
+)
+
+// used to convert times from UTC to GMT before sending across the wire
+var gmt = time.FixedZone("GMT", 0)
+
+// internal type used for marshalling time in RFC1123 format
+type timeRFC1123 struct {
+	time.Time
+}
+
+// MarshalText implements the encoding.TextMarshaler interface for timeRFC1123.
+func (t timeRFC1123) MarshalText() ([]byte, error) {
+	return []byte(t.Format(time.RFC1123)), nil
+}
+
+// UnmarshalText implements the encoding.TextUnmarshaler interface for timeRFC1123.
+func (t *timeRFC1123) UnmarshalText(data []byte) (err error) {
+	t.Time, err = time.Parse(time.RFC1123, string(data))
+	return
+}
+
+// internal type used for marshalling time in RFC3339 format
+type timeRFC3339 struct {
+	time.Time
+}
+
+// MarshalText implements the encoding.TextMarshaler interface for timeRFC3339.
+func (t timeRFC3339) MarshalText() ([]byte, error) {
+	return []byte(t.Format(rfc3339Format)), nil
+}
+
+// UnmarshalText implements the encoding.TextUnmarshaler interface for timeRFC3339.
+func (t *timeRFC3339) UnmarshalText(data []byte) (err error) {
+	t.Time, err = time.Parse(rfc3339Format, string(data))
+	return
+}
+
+@foreach (var ct in Model.RequiresMarshallers)
+{
+    var internalName = ct.Name.ToCamelCase();
+    var rec = ct.Name.ToString().ToShortName();
+    var local = $"{rec}2";
+<text>
+// internal type used for marshalling
+type @internalName struct {
+	@ct.Fields(true)
+}
+
+// MarshalXML implements the xml.Marshaler interface for @ct.Name.
+func (@rec @ct.Name) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if reflect.TypeOf((*@ct.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
+		panic("size mismatch between @ct.Name and @internalName")
+	}
+	@local := (*@internalName)(unsafe.Pointer(&@rec))
+	return e.EncodeElement(*@local, start)
+}
+
+// UnmarshalXML implements the xml.Unmarshaler interface for @ct.Name.
+func (@rec *@ct.Name) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	if reflect.TypeOf((*@ct.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
+		panic("size mismatch between @ct.Name and @internalName")
+	}
+	@local := (*@internalName)(unsafe.Pointer(@rec))
+	err := d.DecodeElement(@local, &start)
+	if err != nil {
+		@rec = (*@ct.Name)(unsafe.Pointer(@local))
+	}
+	return err
+}
+</text>
+}

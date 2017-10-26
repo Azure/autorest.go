@@ -69,8 +69,9 @@ namespace AutoRest.Go.Model
 
         }
 
-        public CompositeTypeGo(IModelType wrappedType)
+        public CompositeTypeGo(MethodGo responseToWrap)
         {
+            var wrappedType = responseToWrap.ReturnType.Body;
             if (!wrappedType.ShouldBeSyntheticType())
             {
                 throw new ArgumentException("{0} is not a valid type for SyntheticType", wrappedType.ToString());
@@ -79,60 +80,35 @@ namespace AutoRest.Go.Model
             // gosdk: Ensure the generated name does not collide with existing type names
             BaseType = wrappedType;
 
-            IModelType elementType = GetElementType(wrappedType);
-
-            if (elementType is PrimaryType)
+            if (wrappedType.XmlIsWrapped)
             {
-                var type = (elementType as PrimaryType).KnownPrimaryType;
-                switch (type)
-                {
-                    case KnownPrimaryType.Object:
-                        Name += "SetObject";
-                        break;
-
-                    case KnownPrimaryType.Boolean:
-                        Name += "Bool";
-                        break;
-
-                    case KnownPrimaryType.Double:
-                        Name += "Float64";
-                        break;
-
-                    case KnownPrimaryType.Int:
-                        Name += "Int32";
-                        break;
-
-                    case KnownPrimaryType.Long:
-                        Name += "Int64";
-                        break;
-
-                    case KnownPrimaryType.Stream:
-                        Name += "ReadCloser";
-                        break;
-
-                    default:
-                        Name += type.ToString();
-                        break;
-                }
-            }
-            else if (elementType is EnumType)
-            {
-                Name += "String";
+                Name = wrappedType.XmlName;
+                XmlProperties = wrappedType.XmlProperties;
             }
             else
             {
-                Name += elementType.Name;
+                Name = $"{responseToWrap.Name}Response";
             }
 
-            // add the wrapped type as a property named Value
-            var p = new PropertyGo();
-            p.Name = "Value";
-            p.SerializedName = "value";
-            p.ModelType = wrappedType;
-            Add(p);
+            // don't add the Value field for streams as it just duplicates
+            // the response.Body field and doesn't provide any value.
+            if (!wrappedType.IsPrimaryType(KnownPrimaryType.Stream))
+            {
+                // add the wrapped type as a property named Value
+                var p = new PropertyGo();
+                p.Name = "Value";
+                p.SerializedName = "value";
+                p.ModelType = wrappedType;
+                Add(p);
+            }
 
             _wrapper = true;
         }
+
+        /// <summary>
+        /// Returns true if XML serialization is enabled and the type name doesn't match the specified XML name.
+        /// </summary>
+        private bool NeedsXmlNameField => CodeModel.ShouldGenerateXmlSerialization && string.CompareOrdinal(Name, XmlName) != 0;
 
         /// <summary>
         /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
@@ -192,6 +168,12 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
+
+            if (NeedsXmlNameField)
+            {
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "encoding/xml"));
+            }
+
             if (BaseIsPolymorphic && !IsPolymorphic)
             {
                 imports.Add("\"encoding/json\"");
@@ -206,7 +188,8 @@ namespace AutoRest.Go.Model
                 null;
         }
 
-        public bool IsPolymorphicResponse() {
+        public bool IsPolymorphicResponse()
+        {
             if (BaseIsPolymorphic && BaseModelType != null)
             {
                 return (BaseModelType as CompositeTypeGo).IsPolymorphicResponse();
@@ -214,48 +197,75 @@ namespace AutoRest.Go.Model
             return IsPolymorphic && IsResponseType;
         }
 
-        public string Fields()
+        /// <summary>
+        /// Returns the fields defined in this type.
+        /// </summary>
+        /// <param name="forMarshaller">Indicates if this type is an internal marshaller (usually false).</param>
+        public string Fields(bool forMarshaller)
         {
             AddPolymorphicPropertyIfNecessary();
             var indented = new IndentedStringBuilder("    ");
+
+            // check if the XML name matches tyhe type name.
+            // if it doesn't then add an XMLName field.
+            if (NeedsXmlNameField)
+            {
+                indented.AppendLine("// XMLName is used for marshalling and is subject to removal in a future release.");
+                indented.AppendLine($"XMLName xml.Name `xml:\"{XmlName}\"`");
+            }
+
             var properties = Properties.Cast<PropertyGo>().ToList();
 
             if (BaseModelType != null)
             {
-                indented.Append(((CompositeTypeGo)BaseModelType).Fields());
+                indented.Append(((CompositeTypeGo)BaseModelType).Fields(forMarshaller));
             }
 
             // Emit each property, except for named Enumerated types, as a pointer to the type
             foreach (var property in properties)
             {
+                if (!forMarshaller && !string.IsNullOrEmpty(property.Documentation))
+                {
+                    indented.AppendFormat("// {0} - {1}\n", property.Name, property.Documentation);
+                }
                 var enumType = property.ModelType as EnumTypeGo;
                 if (enumType != null && enumType.IsNamed)
                 {
                     indented.AppendFormat("{0} {1} {2}\n",
                                     property.Name,
                                     enumType.Name,
-                                    property.JsonTag());
+                                    property.Tag());
 
                 }
                 else if (property.ModelType is DictionaryType)
                 {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, (property.ModelType as DictionaryTypeGo).Name, property.JsonTag());
+                    var typeName = (property.ModelType as DictionaryTypeGo).Name;
+                    if (property.IsMetadata)
+                    {
+                        // use custom type instead of a map[string]string
+                        typeName = "Metadata";
+                    }
+                    indented.AppendFormat("{0} {1} {2}\n", property.Name, typeName, property.Tag());
                 }
-                else if (property.ModelType.PrimaryType(KnownPrimaryType.Object))
+                else if (property.ModelType.IsPrimaryType(KnownPrimaryType.Object))
                 {
-                    // TODO: I don't think this is the best way to handle object types
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
+                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.Name, property.Tag());
                 }
                 else if (property.ShouldBeFlattened())
                 {
                     // embed as an anonymous struct.  note that the ordering of this clause is
                     // important, i.e. we don't want to flatten primary types like dictionaries.
-                    indented.AppendFormat("*{0} {1}\n", property.ModelType.Name, property.JsonTag());
+                    indented.AppendFormat("*{0} {1}\n", property.ModelType.Name, property.Tag());
                     property.Extensions[SwaggerExtensions.FlattenOriginalTypeName] = Name;
+                }
+                else if (!string.IsNullOrEmpty(NextLink) && property.Name.EqualsIgnoreCase(NextLink))
+                {
+                    // use custom type instead of *string
+                    indented.Append($"{NextLink} Marker `{CodeModel.ToCodeModelGo().Encoding}:\"{NextLink}\"`");
                 }
                 else if (property.ModelType is CompositeType && (property.ModelType as CompositeTypeGo).IsPolymorphic)
                 {
-                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
+                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.Name, property.Tag());
                 }
                 else
                 {
@@ -264,7 +274,18 @@ namespace AutoRest.Go.Model
                     {
                         property.Name = NextLink;
                     }
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
+
+                    var deref = property.ModelType.CanBeNull() || property.IsRequired ? string.Empty : "*";
+                    var typeName = property.ModelType.Name.ToString();
+                    if (forMarshaller && property.ModelType.IsDateTimeType())
+                    {
+                        typeName = "timeRFC3339";
+                        if (property.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
+                        {
+                            typeName = "timeRFC1123";
+                        }
+                    }
+                    indented.AppendFormat("{0} {3}{1} {2}\n", property.Name, typeName, property.Tag(), deref);
                 }
             }
 
@@ -298,6 +319,88 @@ namespace AutoRest.Go.Model
         public void SetName(string name)
         {
             Name = name;
+        }
+
+        /// <summary>
+        /// Represents a response value that comes from an HTTP header.
+        /// </summary>
+        public class HeaderResponse
+        {
+            /// <summary>
+            /// Gets the name of the response method.
+            /// </summary>
+            public string Name { get; }
+
+            /// <summary>
+            /// Gets type information of the response.
+            /// </summary>
+            public PropertyGo Type { get; }
+
+            public HeaderResponse(PropertyGo pg)
+            {
+                Name = CodeNamerGo.Instance.GetMethodName(pg.GetClientName());
+                Type = pg;
+            }
+        }
+
+        /// <summary>
+        /// Returns the list of values returned via response headers ordered by Name.  Can be empty.
+        /// </summary>
+        public IEnumerable<HeaderResponse> ResponseHeaders()
+        {
+            var respHeaders = new List<HeaderResponse>();
+            if (IsResponseType)
+            {
+                // look up the response types
+                var methods = CodeModel.Methods.Cast<MethodGo>().Where(m => m.HasReturnValue() && m.ReturnType.Body.Equals(this));
+                foreach (var method in methods)
+                {
+                    if (method.ReturnType.Headers != null)
+                    {
+                        var headersType = method.ReturnType.Headers as CompositeTypeGo;
+                        foreach (var property in headersType.Properties.Cast<PropertyGo>())
+                        {
+                            if (property.SerializedName.ToString().StartsWith("x-ms-meta", StringComparison.OrdinalIgnoreCase))
+                            {
+                                // skip the metadata header as it's handled separately
+                                continue;
+                            }
+                            respHeaders.Add(new HeaderResponse(property));
+                        }
+                    }
+                }
+            }
+            respHeaders.Sort((lhs, rhs) => { return string.Compare(lhs.Name, rhs.Name, StringComparison.OrdinalIgnoreCase); });
+            return respHeaders;
+        }
+
+        /// <summary>
+        /// Returns true if this response type contains a metadata response header.
+        /// </summary>
+        public bool ResponseIncludesMetadata
+        {
+            get
+            {
+                if (!IsResponseType)
+                    return false;
+
+                var methods = CodeModel.Methods.Cast<MethodGo>().Where(m => m.HasReturnValue() && m.ReturnType.Body.Equals(this));
+                foreach (var method in methods)
+                {
+                    if (method.ReturnType.Headers != null)
+                    {
+                        var headersType = method.ReturnType.Headers as CompositeTypeGo;
+                        foreach (var property in headersType.Properties.Cast<PropertyGo>())
+                        {
+                            if (property.SerializedName.ToString().StartsWith("x-ms-meta", StringComparison.OrdinalIgnoreCase))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
         }
     }
 }

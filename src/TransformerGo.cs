@@ -63,6 +63,16 @@ namespace AutoRest.Go
                 }
             }
 
+            // create a "none" enum value for all enum types
+            foreach (var et in cmg.EnumTypes)
+            {
+                var e = et as EnumTypeGo;
+                var ev = new EnumValueGo();
+                ev.Name = "None";
+                ev.Description = $"{EnumValueGo.FormatName(e, ev)} represents an empty {e.Name}.";
+                e.Values.Add(ev);
+            }
+
             // And add any others with a defined name and value list (but not already located)
             foreach (var mt in cmg.ModelTypes)
             {
@@ -84,7 +94,7 @@ namespace AutoRest.Go
                     var values  = new List<EnumValue>();
                     foreach (var dt in (mt as CompositeTypeGo).DerivedTypes)
                     {
-                        var ev = new EnumValue();
+                        var ev = new EnumValueGo();
                         ev.Name =  string.Format("{0}{1}", CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator),
                             CodeNamerGo.Instance.GetTypeName(dt.SerializedName));
                         ev.SerializedName = dt.SerializedName;
@@ -110,7 +120,7 @@ namespace AutoRest.Go
                     }
                     if (!alreadyExists)
                     {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.Add(New<EnumType>(new{
+                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.Add(New<EnumTypeGo>(new{
                             Name = nameAlreadyExists ? string.Format("{0}{1}", mt.PolymorphicDiscriminator, mt.Name) :  mt.PolymorphicDiscriminator,
                             Values = values,
                     })); 
@@ -126,33 +136,6 @@ namespace AutoRest.Go
                 foreach (var v in enumType.Values)
                 {
                     v.Name = CodeNamer.Instance.GetEnumMemberName(v.Name);
-                }
-            }
-
-            // Ensure all enumerated type values have the simplest possible unique names
-            // -- The code assumes that all public type names are unique within the client and that the values
-            //    of an enumerated type are unique within that type. To safely promote the enumerated value name
-            //    to the top-level, it must not conflict with other existing types. If it does, prepending the
-            //    value name with the (assumed to be unique) enumerated type name will make it unique.
-
-            // First, collect all type names (since these cannot change)
-            var topLevelNames = new HashSet<string>();
-            foreach (var mt in cmg.ModelTypes)
-            {
-                topLevelNames.Add(mt.Name);
-            }
-
-            // Then, note each enumerated type with one or more conflicting values and collect the values from
-            // those enumerated types without conflicts.  do this on a sorted list to ensure consistent naming
-            foreach (var em in cmg.EnumTypes.Cast<EnumTypeGo>().OrderBy(etg => etg.Name.Value))
-            {
-                if (em.Values.Where(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)).Any())
-                {
-                    em.HasUniqueNames = false;
-                }
-                else
-                {
-                    topLevelNames.UnionWith(em.Values.Select(ev => ev.Name));
                 }
             }
         }
@@ -225,15 +208,10 @@ namespace AutoRest.Go
 
         private void TransformMethods(CodeModelGo cmg)
         {
-            foreach (var mg in cmg.MethodGroups)
-            {
-                mg.Transform(cmg);
-            }
-
             var wrapperTypes = new Dictionary<string, CompositeTypeGo>();
-            foreach (var method in cmg.Methods)
+            foreach (var method in cmg.Methods.Cast<MethodGo>())
             {
-                ((MethodGo)method).Transform(cmg);
+                method.Transform(cmg);
 
                 var scope = new VariableScopeProvider();
                 foreach (var parameter in method.Parameters)
@@ -244,7 +222,9 @@ namespace AutoRest.Go
                 // fix up method return types
                 if (method.ReturnType.Body.ShouldBeSyntheticType())
                 {
-                    var ctg = new CompositeTypeGo(method.ReturnType.Body);
+                    // method returns a primitive type, wrap it in a composite type
+                    var ctg = new CompositeTypeGo(method);
+                    ctg.IsResponseType = true;
                     if (wrapperTypes.ContainsKey(ctg.Name))
                     {
                         method.ReturnType = new Response(wrapperTypes[ctg.Name], method.ReturnType.Headers);
@@ -256,6 +236,22 @@ namespace AutoRest.Go
                         method.ReturnType = new Response(ctg, method.ReturnType.Headers);
                     }
                 }
+                else if (!method.HasReturnValue() && method.ReturnType.Headers != null)
+                {
+                    // method has no return body but does return values via headers.  generate a
+                    // wrapper type for it so we'll get convenience methods for the header values
+                    var ctg = new CompositeTypeGo($"{method.MethodGroup.Name}{method.Name}Response");
+                    ctg.IsResponseType = true;
+                    cmg.Add(ctg);
+                    method.ReturnType = new Response(ctg, method.ReturnType.Headers);
+                }
+            }
+
+            // do this after transforming methods as the creation of synthetic
+            // types can have an impact on the group transformations.
+            foreach (var mg in cmg.MethodGroups)
+            {
+                mg.Transform(cmg);
             }
         }
 

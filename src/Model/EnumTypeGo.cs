@@ -9,15 +9,10 @@ namespace AutoRest.Go.Model
 {
     public class EnumTypeGo : EnumType
     {
-        public bool HasUniqueNames { get; set; }
-
         public EnumTypeGo()
         {
             // the default value for unnamed enums is "enum"
-            Name.OnGet += v => v == "enum" ? "string" : v;
-
-            // Assume members have unique names		
-            HasUniqueNames = true;
+            Name.OnGet += v => v == "enum" ? "string" : FormatName(v);
         }
 
         public EnumTypeGo(EnumType source) : this()
@@ -35,5 +30,15 @@ namespace AutoRest.Go.Model
         /// Since swagger doesn't let you define a description for enums we make one up.
         /// </summary>
         public string Documentation => $"{Name} enumerates the values for {Name.FixedValue.ToPhrase()}.";
+
+        private string FormatName(string rawName)
+        {
+            // append "Type" to the type name
+            if (!rawName.EndsWith("Type"))
+            {
+                return $"{rawName}Type";
+            }
+            return rawName;
+        }
     }
 }

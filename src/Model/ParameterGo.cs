@@ -5,6 +5,7 @@ using AutoRest.Core.Utilities;
 using AutoRest.Core.Model;
 using AutoRest.Extensions;
 using AutoRest.Extensions.Azure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,12 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             ModelType.AddImports(imports);
+            // we use fmt.Sprintf to format certain header and/or query params, see GetStringFormat in this file
+            if ((Location == Core.Model.ParameterLocation.Header || Location == Core.Model.ParameterLocation.Query) &&
+                !ModelType.IsPrimaryType(KnownPrimaryType.String) && !ModelType.IsDateTimeType())
+            {
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "fmt"));
+            }
         }
 
         /// <summary>
@@ -38,7 +45,7 @@ namespace AutoRest.Go.Model
         /// <returns></returns>
         public string AddToMap(string mapVariable)
         {
-            return string.Format("{0}[\"{1}\"] = {2}", mapVariable, NameForMap(), ValueForMap());
+            return string.Format("{0}[\"{1}\"] = {2}", mapVariable, NameForMap(), ValueForMap(true));
         }
 
         public string GetParameterName()
@@ -63,7 +70,15 @@ namespace AutoRest.Go.Model
 
         public virtual bool IsAPIVersion => SerializedName.IsApiVersion();
 
+        public virtual bool IsAPIHeader => SerializedName.IsApiHeader();
+
         public virtual bool IsMethodArgument => !IsClientProperty && !IsAPIVersion;
+
+        public string HeaderCollectionPrefix => Extensions.GetValue<string>(SwaggerExtensions.HeaderCollectionPrefix);
+
+        public bool IsHeaderCollection => !string.IsNullOrEmpty(HeaderCollectionPrefix);
+
+        public bool IsCustomMetadata => SerializedName.StartsWith("x-ms-meta", StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// Get Name for parameter for Go map. 
@@ -86,7 +101,7 @@ namespace AutoRest.Go.Model
         /// Return formatted value string for the parameter.
         /// </summary>
         /// <returns></returns>
-        public string ValueForMap()
+        public string ValueForMap(bool emitEncoding)
         {
             if (IsAPIVersion)
             {
@@ -97,19 +112,17 @@ namespace AutoRest.Go.Model
                 ? "client." + CodeNamerGo.Instance.GetPropertyName(Name.Value)
                 : Name.Value;
 
-            var format = IsRequired || ModelType.CanBeEmpty()
-                                          ? "{0}"
-                                          : "*{0}";
+            var format = this.Format();
 
             var s = CollectionFormat != CollectionFormat.None
                                   ? $"{format},\"{CollectionFormat.GetSeparator()}\""
                                   : $"{format}";
 
-            return string.Format(
-                RequiresUrlEncoding()
-                    ? $"autorest.Encode(\"{Location.ToString().ToLower()}\",{s})"
-                    : $"{s}",
-                value);
+            if (emitEncoding)
+            {
+                return this.EncodedString(s, value);
+            }
+            return string.Format(s, value);
         }
 
         public string GetEmptyCheck(string valueReference, bool asEmpty = true)
@@ -154,13 +167,13 @@ namespace AutoRest.Go.Model
 
         private string GetPrimaryTypeEmptyCheck(PrimaryTypeGo pt, string valueReference, bool asEmpty)
         {
-            if (pt.PrimaryType(KnownPrimaryType.ByteArray))
+            if (pt.IsPrimaryType(KnownPrimaryType.ByteArray))
             {
                 return string.Format(asEmpty
                                         ? "{0} == nil || len({0}) == 0"
                                         : "{0} != nil && len({0}) > 0", valueReference);
             }
-            else if (pt.PrimaryType(KnownPrimaryType.String))
+            else if (pt.IsPrimaryType(KnownPrimaryType.String))
             {
                 return string.Format(asEmpty
                                         ? "len({0}) == 0"
@@ -180,10 +193,121 @@ namespace AutoRest.Go.Model
                                    ? "{0} == nil || len({0}) == 0"
                                    : "{0} != nil && len({0}) > 0", valueReference);
         }
+
+        public override IModelType ModelType
+        {
+            get
+            {
+                if (base.ModelType == null || !IsHeaderCollection)
+                {
+                    return base.ModelType;
+                }
+                // this is a header collection so emit it as a map[string]string
+                return new DictionaryTypeGo() { ValueType = base.ModelType, CodeModel = base.ModelType.CodeModel, SupportsAdditionalProperties = false };
+            }
+            set
+            {
+                base.ModelType = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns the RHS in an optional parameter value check.
+        /// This is usually nil but is not in some cases.
+        /// </summary>
+        public string GetOptionalComparand()
+        {
+            if (IsRequired)
+            {
+                throw new Exception($"GetOptionalComparand called on required paramater {Name}");
+            }
+
+            if (ModelType is EnumTypeGo)
+            {
+                var et = ModelType as EnumTypeGo;
+                var typeName = et.Name.ToString();
+                if (typeName.EndsWith("Type"))
+                {
+                    typeName = typeName.Substring(0, typeName.Length - 4);
+                }
+                return $"{typeName}None";
+            }
+            return "nil";
+        }
+
+        /// <summary>
+        /// Returns trus if the parameter should be passed by value.
+        /// </summary>
+        public bool IsPassedByValue()
+        {
+            return IsRequired || ModelType.CanBeNull() || ModelType is EnumTypeGo;
+        }
+
+        /// <summary>
+        /// Returns true if the paramater is a stream that should be replaced by an io.ReadSeeker.
+        /// </summary>
+        public bool ReplaceStreamWithReadSeeker => ModelType.IsPrimaryType(KnownPrimaryType.Stream);
     }
 
     public static class ParameterGoExtensions
     {
+        /// <summary>
+        /// Returns the appropriate format string depending on if the paramater is passed by value.
+        /// If the parameter is passed by reference then the parameter will need to be dereferenced.
+        /// </summary>
+        public static string Format(this ParameterGo parameter)
+        {
+            return  parameter.IsPassedByValue() ? "{0}" : "*{0}";
+        }
+
+        /// <summary>
+        /// Wraps the parameter in a call to autorest.Encode() if the parameter requires URL encoding.
+        /// </summary>
+        public static string EncodedString(this ParameterGo parameter, string format, string value)
+        {
+            return string.Format(
+                    parameter.RequiresUrlEncoding()
+                        ? $"autorest.Encode(\"{parameter.Location.ToString().ToLower()}\",{format})"
+                        : $"{format}",
+                    value);
+        }
+
+        /// <summary>
+        /// Wraps the parameter in a call to one of the string formatting functions (e.g. fmt.Sprintf) depending on the parameter's type.
+        /// </summary>
+        public static string GetStringFormat(this ParameterGo parameter, string defaultFormat)
+        {
+            if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.String))
+            {
+                if (parameter.ModelType.IsETagType())
+                {
+                    // the etag is a format of the string primary type
+                    return $"string({defaultFormat})";
+                }
+                return defaultFormat;
+            }
+            else if (parameter.ModelType.IsDateTimeType())
+            {
+                if (!parameter.IsRequired)
+                {
+                    // optional parameters are passed by reference, so defaultFormat
+                    // will be dereferenced requiring us to surround it in parens.
+                    // e.g. (*fooparam).Format(rfc339Format)
+                    defaultFormat = $"({defaultFormat})";
+                }
+                
+                if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
+                {
+                    return $"{defaultFormat}.In(gmt).Format(time.RFC1123)";
+                }
+                return $"{defaultFormat}.Format(rfc3339Format)";
+            }
+            else
+            {
+                return $"fmt.Sprintf(\"%v\", {defaultFormat})";
+            }
+        }
+
         /// <summary>
         /// Return a Go map of required parameters.
         // Refactor -> Generator
@@ -202,12 +326,30 @@ namespace AutoRest.Go.Model
             {
                 builder.AppendLine();
                 var indented = new IndentedStringBuilder("  ");
-                parameters
+                var paramsList = parameters
                     .Where(p => p.IsRequired)
-                    .OrderBy(p => p.SerializedName.ToString())
-                    .ForEach(p => indented.AppendLine("\"{0}\": {1},", p.NameForMap(), p.ValueForMap()));
+                    .OrderBy(p => p.SerializedName.ToString());
+
+                foreach (var p in paramsList)
+                {
+                    if (mapVariable == "queryParameters" && p.IsConstant)
+                    {
+                        var val = p.DefaultValue.ToString();
+                        if ((p.ModelType.IsPrimaryType(KnownPrimaryType.String) || p.ModelType.IsDateTimeType()) && val[0] != '"')
+                        {
+                            val = $"\"{val}\"";
+                        }
+                        indented.AppendLine("\"{0}\": {1},", p.NameForMap(), p.EncodedString(p.Format(), val));
+                    }
+                    else
+                    {
+                        indented.AppendLine("\"{0}\": {1},", p.NameForMap(), p.ValueForMap(true));
+                    }
+                }
+
                 builder.Append(indented);
             }
+
             builder.AppendLine("}");
             return builder.ToString();
         }
@@ -322,14 +464,18 @@ namespace AutoRest.Go.Model
                 if (p.ModelType is CompositeType)
                 {
                     ancestors.Add(p.ModelType.Name);
-                    x.AddRange(p.ValidateCompositeType(name, method, ancestors));
+                    x.AddRange(p.ValidateCompositeType(name, method, ancestors, false));
                     ancestors.Remove(p.ModelType.Name);
                 }
                 else
-                    x.AddRange(p.ValidateType(name, method));
+                {
+                    x.AddRange(p.ValidateType(name, method, false));
+                }
 
                 if (x.Count != 0)
-                    v.Add($"{{ TargetValue: {name},\n Constraints: []validation.Constraint{{{string.Join(",\n", x)}}}}}");
+                {
+                    v.Add($"{{ targetValue: {name},\n constraints: []constraint{{{string.Join(",\n", x)}}}}}");
+                }
             }
             return string.Join(",\n", v);
         }

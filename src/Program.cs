@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Core.Parsing;
 using Microsoft.Perks.JsonRPC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 using IAnyPlugin = AutoRest.Core.Extensibility.IPlugin<AutoRest.Core.Extensibility.IGeneratorSettings, AutoRest.Core.IModelSerializer<AutoRest.Core.Model.CodeModel>, AutoRest.Core.ITransformer<AutoRest.Core.Model.CodeModel>, AutoRest.Core.CodeGenerator, AutoRest.Core.CodeNamer, AutoRest.Core.Model.CodeModel>;
 
@@ -88,9 +88,7 @@ namespace AutoRest.Go
             Settings.Instance.PackageVersion = await GetValue("package-version");
 
             // process
-            var plugin = await GetValue<bool?>("testgen") == true
-                ? (IAnyPlugin)new AutoRest.Go.TestGen.PluginGotg()
-                : (IAnyPlugin)new AutoRest.Go.PluginGo();
+            var plugin = (IAnyPlugin)new AutoRest.Go.PluginGo();
             Settings.PopulateSettings(plugin.Settings, Settings.Instance.CustomSettings);
             
             using (plugin.Activate())

@@ -7,10 +7,12 @@ package stringgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/Azure/go-autorest/autorest/validation"
+	"bytes"
+	"context"
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
+	"tests/pipeline"
 )
 
 // EnumClient is the test Infrastructure for AutoRest Swagger BAT
@@ -19,343 +21,298 @@ type EnumClient struct {
 }
 
 // NewEnumClient creates an instance of the EnumClient client.
-func NewEnumClient() EnumClient {
-	return NewEnumClientWithBaseURI(DefaultBaseURI)
-}
-
-// NewEnumClientWithBaseURI creates an instance of the EnumClient client.
-func NewEnumClientWithBaseURI(baseURI string) EnumClient {
-	return EnumClient{NewWithBaseURI(baseURI)}
+func NewEnumClient(p pipeline.Pipeline) EnumClient {
+	return EnumClient{NewManagementClient(p)}
 }
 
 // GetNotExpandable get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetNotExpandable() (result String, err error) {
-	req, err := client.GetNotExpandablePreparer()
+func (client EnumClient) GetNotExpandable(ctx context.Context) (*GetNotExpandableResponse, error) {
+	req, err := client.getNotExpandablePreparer()
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", nil, "Failure preparing request")
-		return
+		return nil, err
 	}
-
-	resp, err := client.GetNotExpandableSender(req)
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.getNotExpandableResponder}, req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", resp, "Failure sending request")
-		return
+		return nil, err
 	}
-
-	result, err = client.GetNotExpandableResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", resp, "Failure responding to request")
-	}
-
-	return
+	return resp.(*GetNotExpandableResponse), err
 }
 
-// GetNotExpandablePreparer prepares the GetNotExpandable request.
-func (client EnumClient) GetNotExpandablePreparer() (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/string/enum/notExpandable"))
-	return preparer.Prepare(&http.Request{})
+// getNotExpandablePreparer prepares the GetNotExpandable request.
+func (client EnumClient) getNotExpandablePreparer() (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/string/enum/notExpandable"
+	req, err := pipeline.NewRequest("GET", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	return req, nil
 }
 
-// GetNotExpandableSender sends the GetNotExpandable request. The method will close the
-// http.Response Body if it receives an error.
-func (client EnumClient) GetNotExpandableSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
-
-// GetNotExpandableResponder handles the response to the GetNotExpandable request. The method always
-// closes the http.Response Body.
-func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result String, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
+// getNotExpandableResponder handles the response to the GetNotExpandable request.
+func (client EnumClient) getNotExpandableResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	result := &GetNotExpandableResponse{rawResponse: resp.Response()}
+	if err != nil {
+		return result, err
+	}
+	defer resp.Response().Body.Close()
+	b, err := ioutil.ReadAll(resp.Response().Body)
+	if err != nil {
+		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+	}
+	if len(b) > 0 {
+		err = json.Unmarshal(b, &result.Value)
+		if err != nil {
+			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
+		}
+	}
+	return result, nil
 }
 
 // GetReferenced get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetReferenced() (result String, err error) {
-	req, err := client.GetReferencedPreparer()
+func (client EnumClient) GetReferenced(ctx context.Context) (*GetReferencedResponse, error) {
+	req, err := client.getReferencedPreparer()
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", nil, "Failure preparing request")
-		return
+		return nil, err
 	}
-
-	resp, err := client.GetReferencedSender(req)
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.getReferencedResponder}, req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", resp, "Failure sending request")
-		return
+		return nil, err
 	}
-
-	result, err = client.GetReferencedResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", resp, "Failure responding to request")
-	}
-
-	return
+	return resp.(*GetReferencedResponse), err
 }
 
-// GetReferencedPreparer prepares the GetReferenced request.
-func (client EnumClient) GetReferencedPreparer() (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/string/enum/Referenced"))
-	return preparer.Prepare(&http.Request{})
+// getReferencedPreparer prepares the GetReferenced request.
+func (client EnumClient) getReferencedPreparer() (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/string/enum/Referenced"
+	req, err := pipeline.NewRequest("GET", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	return req, nil
 }
 
-// GetReferencedSender sends the GetReferenced request. The method will close the
-// http.Response Body if it receives an error.
-func (client EnumClient) GetReferencedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
-
-// GetReferencedResponder handles the response to the GetReferenced request. The method always
-// closes the http.Response Body.
-func (client EnumClient) GetReferencedResponder(resp *http.Response) (result String, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
+// getReferencedResponder handles the response to the GetReferenced request.
+func (client EnumClient) getReferencedResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	result := &GetReferencedResponse{rawResponse: resp.Response()}
+	if err != nil {
+		return result, err
+	}
+	defer resp.Response().Body.Close()
+	b, err := ioutil.ReadAll(resp.Response().Body)
+	if err != nil {
+		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+	}
+	if len(b) > 0 {
+		err = json.Unmarshal(b, &result.Value)
+		if err != nil {
+			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
+		}
+	}
+	return result, nil
 }
 
 // GetReferencedConstant get value 'green-color' from the constant.
-func (client EnumClient) GetReferencedConstant() (result RefColorConstant, err error) {
-	req, err := client.GetReferencedConstantPreparer()
+func (client EnumClient) GetReferencedConstant(ctx context.Context) (*RefColorConstant, error) {
+	req, err := client.getReferencedConstantPreparer()
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferencedConstant", nil, "Failure preparing request")
-		return
+		return nil, err
 	}
-
-	resp, err := client.GetReferencedConstantSender(req)
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.getReferencedConstantResponder}, req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferencedConstant", resp, "Failure sending request")
-		return
+		return nil, err
 	}
-
-	result, err = client.GetReferencedConstantResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferencedConstant", resp, "Failure responding to request")
-	}
-
-	return
+	return resp.(*RefColorConstant), err
 }
 
-// GetReferencedConstantPreparer prepares the GetReferencedConstant request.
-func (client EnumClient) GetReferencedConstantPreparer() (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/string/enum/ReferencedConstant"))
-	return preparer.Prepare(&http.Request{})
+// getReferencedConstantPreparer prepares the GetReferencedConstant request.
+func (client EnumClient) getReferencedConstantPreparer() (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/string/enum/ReferencedConstant"
+	req, err := pipeline.NewRequest("GET", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	return req, nil
 }
 
-// GetReferencedConstantSender sends the GetReferencedConstant request. The method will close the
-// http.Response Body if it receives an error.
-func (client EnumClient) GetReferencedConstantSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
-
-// GetReferencedConstantResponder handles the response to the GetReferencedConstant request. The method always
-// closes the http.Response Body.
-func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (result RefColorConstant, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
-		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
-	return
+// getReferencedConstantResponder handles the response to the GetReferencedConstant request.
+func (client EnumClient) getReferencedConstantResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	result := &RefColorConstant{rawResponse: resp.Response()}
+	if err != nil {
+		return result, err
+	}
+	defer resp.Response().Body.Close()
+	b, err := ioutil.ReadAll(resp.Response().Body)
+	if err != nil {
+		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+	}
+	if len(b) > 0 {
+		err = json.Unmarshal(b, result)
+		if err != nil {
+			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
+		}
+	}
+	return result, nil
 }
 
 // PutNotExpandable sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 //
 // stringBody is
-func (client EnumClient) PutNotExpandable(stringBody Colors) (result autorest.Response, err error) {
-	req, err := client.PutNotExpandablePreparer(stringBody)
+func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody ColorsType) (*http.Response, error) {
+	req, err := client.putNotExpandablePreparer(stringBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutNotExpandable", nil, "Failure preparing request")
-		return
+		return nil, err
 	}
-
-	resp, err := client.PutNotExpandableSender(req)
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.putNotExpandableResponder}, req)
 	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutNotExpandable", resp, "Failure sending request")
-		return
+		return nil, err
 	}
-
-	result, err = client.PutNotExpandableResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutNotExpandable", resp, "Failure responding to request")
-	}
-
-	return
+	return resp.Response(), err
 }
 
-// PutNotExpandablePreparer prepares the PutNotExpandable request.
-func (client EnumClient) PutNotExpandablePreparer(stringBody Colors) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/string/enum/notExpandable"),
-		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+// putNotExpandablePreparer prepares the PutNotExpandable request.
+func (client EnumClient) putNotExpandablePreparer(stringBody ColorsType) (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/string/enum/notExpandable"
+	req, err := pipeline.NewRequest("PUT", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	b, err := json.Marshal(stringBody)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to marshal request body")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	err = req.SetBody(bytes.NewReader(b))
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to set request body")
+	}
+	return req, nil
 }
 
-// PutNotExpandableSender sends the PutNotExpandable request. The method will close the
-// http.Response Body if it receives an error.
-func (client EnumClient) PutNotExpandableSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
-
-// PutNotExpandableResponder handles the response to the PutNotExpandable request. The method always
-// closes the http.Response Body.
-func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
+// putNotExpandableResponder handles the response to the PutNotExpandable request.
+func (client EnumClient) putNotExpandableResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	return resp, err
 }
 
 // PutReferenced sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 //
 // enumStringBody is
-func (client EnumClient) PutReferenced(enumStringBody Colors) (result autorest.Response, err error) {
-	req, err := client.PutReferencedPreparer(enumStringBody)
+func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody ColorsType) (*http.Response, error) {
+	req, err := client.putReferencedPreparer(enumStringBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferenced", nil, "Failure preparing request")
-		return
+		return nil, err
 	}
-
-	resp, err := client.PutReferencedSender(req)
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.putReferencedResponder}, req)
 	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferenced", resp, "Failure sending request")
-		return
+		return nil, err
 	}
-
-	result, err = client.PutReferencedResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferenced", resp, "Failure responding to request")
-	}
-
-	return
+	return resp.Response(), err
 }
 
-// PutReferencedPreparer prepares the PutReferenced request.
-func (client EnumClient) PutReferencedPreparer(enumStringBody Colors) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/string/enum/Referenced"),
-		autorest.WithJSON(enumStringBody))
-	return preparer.Prepare(&http.Request{})
+// putReferencedPreparer prepares the PutReferenced request.
+func (client EnumClient) putReferencedPreparer(enumStringBody ColorsType) (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/string/enum/Referenced"
+	req, err := pipeline.NewRequest("PUT", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	b, err := json.Marshal(enumStringBody)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to marshal request body")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	err = req.SetBody(bytes.NewReader(b))
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to set request body")
+	}
+	return req, nil
 }
 
-// PutReferencedSender sends the PutReferenced request. The method will close the
-// http.Response Body if it receives an error.
-func (client EnumClient) PutReferencedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
-
-// PutReferencedResponder handles the response to the PutReferenced request. The method always
-// closes the http.Response Body.
-func (client EnumClient) PutReferencedResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
+// putReferencedResponder handles the response to the PutReferenced request.
+func (client EnumClient) putReferencedResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	return resp, err
 }
 
 // PutReferencedConstant sends value 'green-color' from a constant
 //
-func (client EnumClient) PutReferencedConstant(enumStringBody RefColorConstant) (result autorest.Response, err error) {
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: enumStringBody,
-			Constraints: []validation.Constraint{{Target: "enumStringBody.ColorConstant", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "stringgroup.EnumClient", "PutReferencedConstant")
+func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*http.Response, error) {
+	if err := validate([]validation{
+		{targetValue: enumStringBody,
+			constraints: []constraint{{target: "enumStringBody.ColorConstant", name: null, rule: true, chain: nil}}}}); err != nil {
+		return nil, err
 	}
-
-	req, err := client.PutReferencedConstantPreparer(enumStringBody)
+	req, err := client.putReferencedConstantPreparer(enumStringBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferencedConstant", nil, "Failure preparing request")
-		return
+		return nil, err
 	}
-
-	resp, err := client.PutReferencedConstantSender(req)
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.putReferencedConstantResponder}, req)
 	if err != nil {
-		result.Response = resp
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferencedConstant", resp, "Failure sending request")
-		return
+		return nil, err
 	}
-
-	result, err = client.PutReferencedConstantResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferencedConstant", resp, "Failure responding to request")
-	}
-
-	return
+	return resp.Response(), err
 }
 
-// PutReferencedConstantPreparer prepares the PutReferencedConstant request.
-func (client EnumClient) PutReferencedConstantPreparer(enumStringBody RefColorConstant) (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
-		autorest.AsPut(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/string/enum/ReferencedConstant"),
-		autorest.WithJSON(enumStringBody))
-	return preparer.Prepare(&http.Request{})
+// putReferencedConstantPreparer prepares the PutReferencedConstant request.
+func (client EnumClient) putReferencedConstantPreparer(enumStringBody RefColorConstant) (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/string/enum/ReferencedConstant"
+	req, err := pipeline.NewRequest("PUT", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	b, err := json.Marshal(enumStringBody)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to marshal request body")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	err = req.SetBody(bytes.NewReader(b))
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to set request body")
+	}
+	return req, nil
 }
 
-// PutReferencedConstantSender sends the PutReferencedConstant request. The method will close the
-// http.Response Body if it receives an error.
-func (client EnumClient) PutReferencedConstantSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-}
-
-// PutReferencedConstantResponder handles the response to the PutReferencedConstant request. The method always
-// closes the http.Response Body.
-func (client EnumClient) PutReferencedConstantResponder(resp *http.Response) (result autorest.Response, err error) {
-	err = autorest.Respond(
-		resp,
-		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByClosing())
-	result.Response = resp
-	return
+// putReferencedConstantResponder handles the response to the PutReferencedConstant request.
+func (client EnumClient) putReferencedConstantResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	return resp, err
 }
