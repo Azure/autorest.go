@@ -7,7 +7,6 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
 @{
-    var imports = Model.ClientImports;
     var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
     var methods = Model.ClientMethods.OrderBy(m => m.Name.Value);
 }
@@ -18,7 +17,7 @@ package @Model.Namespace
 
 @EmptyLine
 import (
-@foreach (var import in imports)
+@foreach (var import in Model.ClientImports)
 {
     @:@(import)
 }

@@ -77,6 +77,10 @@ namespace AutoRest.Go.Model
                 {
                     imports.UnionWith(clientMg.Imports);
                 }
+                foreach (var p in Properties)
+                {
+                    p.ModelType.AddImports(imports);
+                }
                 return imports.OrderBy(i => i);
             }
         }
