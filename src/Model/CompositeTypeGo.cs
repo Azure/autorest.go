@@ -34,7 +34,7 @@ namespace AutoRest.Go.Model
             get
             {
                 var st = (BaseModelType as CompositeTypeGo).DerivedTypes;
-                if (BaseModelType.BaseModelType != null && BaseModelType.BaseModelType.IsPolymorphic)
+                if (BaseModelType.BaseModelType != null && BaseModelType.BaseIsPolymorphic)
                 {
                     st = st.Union((BaseModelType as CompositeTypeGo).SiblingTypes);
                 }
@@ -250,7 +250,10 @@ namespace AutoRest.Go.Model
                 {
                     // embed as an anonymous struct.  note that the ordering of this clause is
                     // important, i.e. we don't want to flatten primary types like dictionaries.
-                    indented.AppendFormat("*{0} {1}\n", property.ModelType.Name, property.JsonTag());
+                    indented.AppendFormat((property.ModelType as CompositeTypeGo).IsPolymorphic ?
+                        "{0} {1}\n" :
+                        "*{0} {1}\n",
+                            property.ModelType.Name, property.JsonTag());
                     property.Extensions[SwaggerExtensions.FlattenOriginalTypeName] = Name;
                 }
                 else if (property.ModelType is CompositeType && (property.ModelType as CompositeTypeGo).IsPolymorphic)
