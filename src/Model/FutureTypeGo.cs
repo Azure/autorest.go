@@ -15,8 +15,13 @@ namespace AutoRest.Go.Model
         /// Creates a new future type for the specified method.
         /// </summary>
         /// <param name="method">The method that will return a future.</param>
-        public FutureTypeGo(MethodGo method) : base($"{method.Name}ResponseFuture")
+        public FutureTypeGo(MethodGo method) : base(CodeNamerGo.Instance.GetFutureTypeName(method))
         {
+            if (!method.IsLongRunningOperation())
+            {
+                throw new InvalidOperationException($"method {method.Owner}.{method.Name} is not a long-running operation");
+            }
+
             CodeModel = method.CodeModel;
             Documentation = "An abstraction for monitoring and retrieving the results of a long-running operation.";
             ClientTypeName = method.Owner;

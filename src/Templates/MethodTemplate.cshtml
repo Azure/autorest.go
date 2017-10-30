@@ -148,10 +148,14 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetType, error) {
 @if (Model.IsLongRunningOperation())
 {
+    var sender = "client";
+    if (Model.RegisterRP)
+    {
+        sender = "autorest.DecorateSender(client, azure.DoRetryWithRegistration(client.Client))";
+    }
 <text>
-    sender := autorest.DecorateSender(client, azure.DoRetryWithRegistration(client.Client))
     future := azure.NewFuture(req)
-    _, err := future.Done(sender)
+    _, err := future.Done(@sender)
     f := @(senderRetType){Future: future}
     return f, err
 </text>
