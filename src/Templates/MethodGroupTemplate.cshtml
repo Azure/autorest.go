@@ -28,6 +28,10 @@ package @Model.PackageName
 import (
 @foreach (var import in Model.Imports)
 {
+    if (Model.CodeModel.ToCodeModelGo().IsCustomBaseUri)
+    {
+        @:"net/url"
+    }
     @:@(import)
 }
 )
