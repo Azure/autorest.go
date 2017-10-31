@@ -63,8 +63,7 @@ func (client PolymorphicrecursiveClient) GetValidPreparer() (*http.Request, erro
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphicrecursiveClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -178,8 +177,7 @@ func (client PolymorphicrecursiveClient) PutValidPreparer(complexBody Fish) (*ht
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphicrecursiveClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

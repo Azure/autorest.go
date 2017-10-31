@@ -76,6 +76,7 @@ goMappings = {
   'custom-baseurl':['custom-baseUrl.json', 'custombaseurlgroup'],
   'header':['header.json','headergroup'],
   'httpinfrastructure':['httpInfrastructure.json','httpinfrastructuregroup'],
+  'lro':['lro.json', 'lrogroup'],
   'model-flattening':['model-flattening.json', 'modelflatteninggroup'],
   'report':['report.json','report'],
   'required-optional':['required-optional.json','optionalgroup'],

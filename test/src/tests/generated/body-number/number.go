@@ -63,8 +63,7 @@ func (client NumberClient) GetBigDecimalPreparer() (*http.Request, error) {
 // GetBigDecimalSender sends the GetBigDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetBigDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -116,8 +115,7 @@ func (client NumberClient) GetBigDecimalNegativeDecimalPreparer() (*http.Request
 // GetBigDecimalNegativeDecimalSender sends the GetBigDecimalNegativeDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetBigDecimalNegativeDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -169,8 +167,7 @@ func (client NumberClient) GetBigDecimalPositiveDecimalPreparer() (*http.Request
 // GetBigDecimalPositiveDecimalSender sends the GetBigDecimalPositiveDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetBigDecimalPositiveDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -222,8 +219,7 @@ func (client NumberClient) GetBigDoublePreparer() (*http.Request, error) {
 // GetBigDoubleSender sends the GetBigDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetBigDoubleSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -275,8 +271,7 @@ func (client NumberClient) GetBigDoubleNegativeDecimalPreparer() (*http.Request,
 // GetBigDoubleNegativeDecimalSender sends the GetBigDoubleNegativeDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetBigDoubleNegativeDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -328,8 +323,7 @@ func (client NumberClient) GetBigDoublePositiveDecimalPreparer() (*http.Request,
 // GetBigDoublePositiveDecimalSender sends the GetBigDoublePositiveDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetBigDoublePositiveDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -381,8 +375,7 @@ func (client NumberClient) GetBigFloatPreparer() (*http.Request, error) {
 // GetBigFloatSender sends the GetBigFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetBigFloatSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -434,8 +427,7 @@ func (client NumberClient) GetInvalidDecimalPreparer() (*http.Request, error) {
 // GetInvalidDecimalSender sends the GetInvalidDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetInvalidDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -487,8 +479,7 @@ func (client NumberClient) GetInvalidDoublePreparer() (*http.Request, error) {
 // GetInvalidDoubleSender sends the GetInvalidDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetInvalidDoubleSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -540,8 +531,7 @@ func (client NumberClient) GetInvalidFloatPreparer() (*http.Request, error) {
 // GetInvalidFloatSender sends the GetInvalidFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetInvalidFloatSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -593,8 +583,7 @@ func (client NumberClient) GetNullPreparer() (*http.Request, error) {
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -646,8 +635,7 @@ func (client NumberClient) GetSmallDecimalPreparer() (*http.Request, error) {
 // GetSmallDecimalSender sends the GetSmallDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetSmallDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -699,8 +687,7 @@ func (client NumberClient) GetSmallDoublePreparer() (*http.Request, error) {
 // GetSmallDoubleSender sends the GetSmallDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetSmallDoubleSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -752,8 +739,7 @@ func (client NumberClient) GetSmallFloatPreparer() (*http.Request, error) {
 // GetSmallFloatSender sends the GetSmallFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) GetSmallFloatSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -808,8 +794,7 @@ func (client NumberClient) PutBigDecimalPreparer(numberBody decimal.Decimal) (*h
 // PutBigDecimalSender sends the PutBigDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutBigDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -863,8 +848,7 @@ func (client NumberClient) PutBigDecimalNegativeDecimalPreparer(numberBody decim
 // PutBigDecimalNegativeDecimalSender sends the PutBigDecimalNegativeDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutBigDecimalNegativeDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -918,8 +902,7 @@ func (client NumberClient) PutBigDecimalPositiveDecimalPreparer(numberBody decim
 // PutBigDecimalPositiveDecimalSender sends the PutBigDecimalPositiveDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutBigDecimalPositiveDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -973,8 +956,7 @@ func (client NumberClient) PutBigDoublePreparer(numberBody float64) (*http.Reque
 // PutBigDoubleSender sends the PutBigDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutBigDoubleSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1028,8 +1010,7 @@ func (client NumberClient) PutBigDoubleNegativeDecimalPreparer(numberBody float6
 // PutBigDoubleNegativeDecimalSender sends the PutBigDoubleNegativeDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutBigDoubleNegativeDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1083,8 +1064,7 @@ func (client NumberClient) PutBigDoublePositiveDecimalPreparer(numberBody float6
 // PutBigDoublePositiveDecimalSender sends the PutBigDoublePositiveDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutBigDoublePositiveDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1138,8 +1118,7 @@ func (client NumberClient) PutBigFloatPreparer(numberBody float64) (*http.Reques
 // PutBigFloatSender sends the PutBigFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutBigFloatSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1193,8 +1172,7 @@ func (client NumberClient) PutSmallDecimalPreparer(numberBody decimal.Decimal) (
 // PutSmallDecimalSender sends the PutSmallDecimal request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutSmallDecimalSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1248,8 +1226,7 @@ func (client NumberClient) PutSmallDoublePreparer(numberBody float64) (*http.Req
 // PutSmallDoubleSender sends the PutSmallDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutSmallDoubleSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1303,8 +1280,7 @@ func (client NumberClient) PutSmallFloatPreparer(numberBody float64) (*http.Requ
 // PutSmallFloatSender sends the PutSmallFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client NumberClient) PutSmallFloatSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

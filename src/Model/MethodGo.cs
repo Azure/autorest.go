@@ -19,14 +19,13 @@ namespace AutoRest.Go.Model
 {
     public class MethodGo : Method
     {
+        private const string DefaultReturnType = "autorest.Response";
+
         public string Owner { get; private set; }
 
         public string PackageName { get; private set; }
 
         public string APIVersion { get; private set; }
-
-        private readonly string lroDescription = " This method may poll for completion. Polling can be canceled by passing the cancel channel argument. " +
-                                                 "The channel will be used to cancel polling and any outstanding HTTP requests.";
 
         public bool NextAlreadyDefined { get; private set; }
 
@@ -74,11 +73,6 @@ namespace AutoRest.Go.Model
             if (string.IsNullOrEmpty(Description))
             {
                 Description = string.Format("sends the {0} request.", Name.ToString().ToPhrase());
-            }
-
-            if (IsLongRunningOperation())
-            {
-                Description += lroDescription;
             }
 
             // Registering Azure resource providers should only happen with Azure resource manager REST APIs
@@ -169,24 +163,8 @@ namespace AutoRest.Go.Model
                                                         p.IsRequired || p.ModelType.CanBeEmpty()
                                                             ? "{0} {1}"
                                                             : "{0} *{1}", p.Name, p.ModelType.Name)));
-                //for Cancelation channel option for long-running operations
-                if (IsLongRunningOperation())
-                {
-                    declarations.Add("cancel <-chan struct{}");
-                }
-                return string.Join(", ", declarations);
-            }
-        }
 
-        /// <summary>
-        /// Returns true if this method should return its results via channels.
-        /// </summary>
-        public bool ReturnViaChannel
-        {
-            get
-            {
-                // pageable operations will be handled separately
-                return IsLongRunningOperation() && !IsPageable;
+                return string.Join(", ", declarations);
             }
         }
 
@@ -197,31 +175,36 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                return HasReturnValue() ? ReturnValue().Body.Name.ToString() : "autorest.Response";
+                return HasReturnValue() ? ReturnValue().Body.Name.ToString() : DefaultReturnType;
             }
+        }
+
+        private string MethodReturnSig(string resultTypeName)
+        {
+            return $"result {resultTypeName}, err error";
         }
 
         /// <summary>
         /// Returns the method return signature for this method (e.g. "foo, bar").
+        /// For responder methods use ResponderReturnSignature() instead.
         /// </summary>
-        /// <param name="helper">Indicates if this method is a helper method (i.e. preparer/sender/responder).</param>
         /// <returns>The method signature for this method.</returns>
-        public string MethodReturnSignature(bool helper)
+        public string MethodReturnSignature()
         {
-            var retValType = MethodReturnType;
-            var retVal = $"result {retValType}";
-            var errVal = "err error";
+            return MethodReturnSig(MethodReturnType);
+        }
 
-            // for LROs return the response types via a channel.
-            // only do this for the "real" API; for "helper" methods
-            // i.e. preparer/sender/responder don't use a channel.
-            if (!helper && ReturnViaChannel)
+        /// <summary>
+        /// Returns the method return signature for the responder method (e.g. "foo, bar").
+        /// </summary>
+        /// <returns>The method signature for the responder method.</returns>
+        public string ResponderReturnSignature()
+        {
+            if (IsLongRunningOperation())
             {
-                retVal = $"<-chan {retValType}";
-                errVal = "<-chan error";
+                return MethodReturnSig(ReturnType.Body.Cast<FutureTypeGo>().ResultTypeName);
             }
-
-            return $"{retVal}, {errVal}";
+            return MethodReturnSignature();
         }
 
         public string NextMethodName => $"{Name}NextResults";
@@ -245,10 +228,6 @@ namespace AutoRest.Go.Model
                 {
                     invocationParams.Add(p.Name);
                 }
-            }
-            if (IsLongRunningOperation())
-            {
-                invocationParams.Add("cancel");
             }
             return string.Join(", ", invocationParams);
         }
@@ -406,16 +385,12 @@ namespace AutoRest.Go.Model
             get
             {
                 var decorators = new List<string>();
-                decorators.Add("req");
                 if (RegisterRP)
                 {
                     decorators.Add("azure.DoRetryWithRegistration(client.Client)");
-                } else {
-                    decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
-                }
-                if (IsLongRunningOperation())
+                } else
                 {
-                    decorators.Add("azure.DoPollForAsynchronous(client.PollingDelay)");
+                    decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
                 }
                 return decorators;
             }
@@ -430,7 +405,7 @@ namespace AutoRest.Go.Model
                 decorators.Add("client.ByInspecting()");
                 decorators.Add(string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray())));
 
-                if (HasReturnValue() && !ReturnValue().Body.IsStreamType())
+                if (HasReturnValue() && !ReturnValue().Body.IsStreamType() && !LroWrapsDefaultResp())
                 {
                     if (((CompositeTypeGo)ReturnValue().Body).IsWrapperType && !((CompositeTypeGo)ReturnValue().Body).HasPolymorphicFields)
                     {
@@ -450,14 +425,40 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string Response
+        /// <summary>
+        /// Returns true if the future response wraps a default response type.
+        /// We need to make this distinction because the default response doesn't
+        /// need to be unmarshalled.
+        /// </summary>
+        /// <returns>True if the return type is a future that wraps the default response type.</returns>
+        private bool LroWrapsDefaultResp()
         {
-            get
+            if (!IsLongRunningOperation())
             {
-                return HasReturnValue()
-                    ? "result.Response = autorest.Response{Response: resp}"
-                    : "result.Response = resp";
+                return false;
             }
+
+            if (!HasReturnValue())
+            {
+                return false;
+            }
+
+            var retType = ReturnValue().Body as FutureTypeGo;
+            return string.CompareOrdinal(retType.ResultTypeName, DefaultReturnType) == 0;
+        }
+
+        /// <summary>
+        /// Gets the appropriate response assignment expression; it can be different depending on the method.
+        /// </summary>
+        /// <param name="forResponder">Specify true if this expression is inside the responder method.</param>
+        /// <returns>The response assignment expression.</returns>
+        public string Response(bool forResponder)
+        {
+            if (!HasReturnValue() || (forResponder && LroWrapsDefaultResp()))
+            {
+                return "result.Response = resp";
+            }
+            return "result.Response = autorest.Response{Response: resp}";
         }
 
         public string AutorestError(string phase, string response = null, string parameter = null)

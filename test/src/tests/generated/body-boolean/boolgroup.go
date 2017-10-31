@@ -62,8 +62,7 @@ func (client BoolGroupClient) GetFalsePreparer() (*http.Request, error) {
 // GetFalseSender sends the GetFalse request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolGroupClient) GetFalseSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -115,8 +114,7 @@ func (client BoolGroupClient) GetInvalidPreparer() (*http.Request, error) {
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolGroupClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -168,8 +166,7 @@ func (client BoolGroupClient) GetNullPreparer() (*http.Request, error) {
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolGroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -221,8 +218,7 @@ func (client BoolGroupClient) GetTruePreparer() (*http.Request, error) {
 // GetTrueSender sends the GetTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolGroupClient) GetTrueSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -277,8 +273,7 @@ func (client BoolGroupClient) PutFalsePreparer(boolBody bool) (*http.Request, er
 // PutFalseSender sends the PutFalse request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolGroupClient) PutFalseSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -332,8 +327,7 @@ func (client BoolGroupClient) PutTruePreparer(boolBody bool) (*http.Request, err
 // PutTrueSender sends the PutTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolGroupClient) PutTrueSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

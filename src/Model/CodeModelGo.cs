@@ -16,6 +16,7 @@ namespace AutoRest.Go.Model
 {
     public class CodeModelGo : CodeModel
     {
+        private Dictionary<FutureTypeGo, FutureTypeGo> _futureTypes;
 
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
 
@@ -34,6 +35,7 @@ namespace AutoRest.Go.Model
             NextMethodUndefined = new List<IModelType>();
             PagedTypes = new Dictionary<IModelType, string>();
             Version = FormatVersion(Settings.Instance.PackageVersion);
+            _futureTypes = new Dictionary<FutureTypeGo, FutureTypeGo>();
         }
 
         public override string Namespace
@@ -89,6 +91,11 @@ namespace AutoRest.Go.Model
 
         public Dictionary<IModelType, string> PagedTypes { get; }
 
+        /// <summary>
+        /// Returns an enumerator to the collection of future types; may be empty.
+        /// </summary>
+        internal IEnumerable<FutureTypeGo> FutureTypes { get { return _futureTypes.Keys; } }
+
         // NextMethodUndefined is used to keep track of those models which are returned by paged methods,
         // but the next method is not defined in the service client, so these models need a preparer.
         public List<IModelType> NextMethodUndefined { get; }
@@ -102,6 +109,10 @@ namespace AutoRest.Go.Model
                 if (ModelTypes != null && ModelTypes.Cast<CompositeTypeGo>().Any(mtm => mtm.IsResponseType || mtm.IsWrapperType))
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest"));
+                }
+                if (_futureTypes.Any())
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest/azure"));
                 }
                 ModelTypes.Cast<CompositeTypeGo>()
                     .ForEach(mt =>
@@ -248,6 +259,31 @@ namespace AutoRest.Go.Model
                 // client methods are the ones with no method group
                 return Methods.Cast<MethodGo>().Where(m => string.IsNullOrEmpty(m.MethodGroup.Name));
             }
+        }
+
+        /// <summary>
+        /// Creates a future for the specified method and updates its return type.
+        /// </summary>
+        /// <param name="method">The method to be modified.</param>
+        internal void CreateFutureTypeForMethod(MethodGo method)
+        {
+            if (!method.IsLongRunningOperation())
+            {
+                throw new InvalidOperationException("CreateFutureTypeForMethod requires method to be a long-running operation");
+            }
+
+            // don't create duplicate future types
+            var future = new FutureTypeGo(method);
+            if (_futureTypes.ContainsKey(future))
+            {
+                future = _futureTypes[future];
+            }
+            else
+            {
+                _futureTypes.Add(future, future);
+            }
+
+            method.ReturnType = new Response(future, method.ReturnType.Headers);
         }
 
         /// FormatVersion normalizes a version string into a SemVer if it resembles one. Otherwise,
