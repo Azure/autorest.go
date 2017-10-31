@@ -326,8 +326,6 @@ namespace AutoRest.Go
                 return name;
             }
 
-            // we use the base implementation here as it uses a case-insensitive comparison.
-            // this is a bit of a hacky work-around for some naming changes introduced in core...
             return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
         }
 
