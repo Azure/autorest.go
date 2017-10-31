@@ -77,8 +77,7 @@ func (client PathsClient) ArrayCsvInPathPreparer(arrayPath []string) (*http.Requ
 // ArrayCsvInPathSender sends the ArrayCsvInPath request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ArrayCsvInPathSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -135,8 +134,7 @@ func (client PathsClient) Base64URLPreparer(base64URLPath string) (*http.Request
 // Base64URLSender sends the Base64URL request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) Base64URLSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -199,8 +197,7 @@ func (client PathsClient) ByteEmptyPreparer(bytePath []byte) (*http.Request, err
 // ByteEmptySender sends the ByteEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ByteEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -263,8 +260,7 @@ func (client PathsClient) ByteMultiBytePreparer(bytePath []byte) (*http.Request,
 // ByteMultiByteSender sends the ByteMultiByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ByteMultiByteSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -327,8 +323,7 @@ func (client PathsClient) ByteNullPreparer(bytePath []byte) (*http.Request, erro
 // ByteNullSender sends the ByteNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ByteNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -385,8 +380,7 @@ func (client PathsClient) DateNullPreparer(datePath date.Date) (*http.Request, e
 // DateNullSender sends the DateNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -443,8 +437,7 @@ func (client PathsClient) DateTimeNullPreparer(dateTimePath date.Time) (*http.Re
 // DateTimeNullSender sends the DateTimeNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateTimeNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -501,8 +494,7 @@ func (client PathsClient) DateTimeValidPreparer(dateTimePath date.Time) (*http.R
 // DateTimeValidSender sends the DateTimeValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateTimeValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -559,8 +551,7 @@ func (client PathsClient) DateValidPreparer(datePath date.Date) (*http.Request, 
 // DateValidSender sends the DateValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -617,8 +608,7 @@ func (client PathsClient) DoubleDecimalNegativePreparer(doublePath float64) (*ht
 // DoubleDecimalNegativeSender sends the DoubleDecimalNegative request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DoubleDecimalNegativeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -675,8 +665,7 @@ func (client PathsClient) DoubleDecimalPositivePreparer(doublePath float64) (*ht
 // DoubleDecimalPositiveSender sends the DoubleDecimalPositive request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DoubleDecimalPositiveSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -733,8 +722,7 @@ func (client PathsClient) EnumNullPreparer(enumPath URIColor) (*http.Request, er
 // EnumNullSender sends the EnumNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) EnumNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -791,8 +779,7 @@ func (client PathsClient) EnumValidPreparer(enumPath URIColor) (*http.Request, e
 // EnumValidSender sends the EnumValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) EnumValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -849,8 +836,7 @@ func (client PathsClient) FloatScientificNegativePreparer(floatPath float64) (*h
 // FloatScientificNegativeSender sends the FloatScientificNegative request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) FloatScientificNegativeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -907,8 +893,7 @@ func (client PathsClient) FloatScientificPositivePreparer(floatPath float64) (*h
 // FloatScientificPositiveSender sends the FloatScientificPositive request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) FloatScientificPositiveSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -965,8 +950,7 @@ func (client PathsClient) GetBooleanFalsePreparer(boolPath bool) (*http.Request,
 // GetBooleanFalseSender sends the GetBooleanFalse request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetBooleanFalseSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1023,8 +1007,7 @@ func (client PathsClient) GetBooleanTruePreparer(boolPath bool) (*http.Request, 
 // GetBooleanTrueSender sends the GetBooleanTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetBooleanTrueSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1081,8 +1064,7 @@ func (client PathsClient) GetIntNegativeOneMillionPreparer(intPath int32) (*http
 // GetIntNegativeOneMillionSender sends the GetIntNegativeOneMillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetIntNegativeOneMillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1139,8 +1121,7 @@ func (client PathsClient) GetIntOneMillionPreparer(intPath int32) (*http.Request
 // GetIntOneMillionSender sends the GetIntOneMillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetIntOneMillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1197,8 +1178,7 @@ func (client PathsClient) GetNegativeTenBillionPreparer(longPath int64) (*http.R
 // GetNegativeTenBillionSender sends the GetNegativeTenBillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetNegativeTenBillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1255,8 +1235,7 @@ func (client PathsClient) GetTenBillionPreparer(longPath int64) (*http.Request, 
 // GetTenBillionSender sends the GetTenBillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetTenBillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1313,8 +1292,7 @@ func (client PathsClient) StringEmptyPreparer(stringPath string) (*http.Request,
 // StringEmptySender sends the StringEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1371,8 +1349,7 @@ func (client PathsClient) StringNullPreparer(stringPath string) (*http.Request, 
 // StringNullSender sends the StringNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1429,8 +1406,7 @@ func (client PathsClient) StringUnicodePreparer(stringPath string) (*http.Reques
 // StringUnicodeSender sends the StringUnicode request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringUnicodeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1487,8 +1463,7 @@ func (client PathsClient) StringURLEncodedPreparer(stringPath string) (*http.Req
 // StringURLEncodedSender sends the StringURLEncoded request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringURLEncodedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1545,8 +1520,7 @@ func (client PathsClient) UnixTimeURLPreparer(unixTimeURLPath date.UnixTime) (*h
 // UnixTimeURLSender sends the UnixTimeURL request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) UnixTimeURLSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

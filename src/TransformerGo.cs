@@ -238,9 +238,9 @@ namespace AutoRest.Go
             }
 
             var wrapperTypes = new Dictionary<string, CompositeTypeGo>();
-            foreach (var method in cmg.Methods)
+            foreach (var method in cmg.Methods.Cast<MethodGo>())
             {
-                ((MethodGo)method).Transform(cmg);
+                method.Transform(cmg);
 
                 var scope = new VariableScopeProvider();
                 foreach (var parameter in method.Parameters)
@@ -262,6 +262,13 @@ namespace AutoRest.Go
                         cmg.Add(ctg);
                         method.ReturnType = new Response(ctg, method.ReturnType.Headers);
                     }
+                }
+
+                if (method.IsLongRunningOperation())
+                {
+                    // for LROs we replace the return type with a future that
+                    // knows how to poll for the operation's status and result
+                    cmg.CreateFutureTypeForMethod(method);
                 }
             }
         }

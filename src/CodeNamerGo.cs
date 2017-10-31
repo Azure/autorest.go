@@ -492,5 +492,17 @@ namespace AutoRest.Go
             }
             return defaultValue;
         }
+
+        /// <summary>
+        /// Returns the future type name for the specified method, which is the type to
+        /// be returned from the method (this is applicable to long-running operations).
+        /// </summary>
+        /// <param name="method">The long-running operation.</param>
+        /// <returns>The name of the type to be returned from the specified method.</returns>
+        public string GetFutureTypeName(MethodGo method)
+        {
+            // operation group + method name is guaranteed to be unique
+            return $"{method.Group}{method.Name}Future";
+        }
     }
 }

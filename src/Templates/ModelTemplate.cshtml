@@ -191,3 +191,25 @@ func (client @(Model.Name)) @(Model.PreparerMethodName)() (*http.Request, error)
 }
 </text>
 }
+
+@if (Model is FutureTypeGo)
+{
+    var ftg = Model as FutureTypeGo;
+<text>
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future @Model.Name) Result(client @ftg.ClientTypeName) (@ftg.ResultTypeName, error) {
+    done, err := future.Done(client)
+    if err != nil {
+        return @ftg.ResultTypeName{}, err
+    }
+    if !done {
+        return @ftg.ResultTypeName{}, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "asynchronous operation has not completed")
+    }
+    if future.Response().Body == nil {
+        return @ftg.ResultTypeName{}, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "response does not contain a result")
+    }
+    return client.@(ftg.ResponderMethodName)(future.Response())
+}
+</text>
+}
