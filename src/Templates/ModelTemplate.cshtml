@@ -157,14 +157,7 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
         }
             @if ((p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) || (p.ModelType is EnumType))
             {
-                @if (p.ShouldBeFlattened())
-                {
-        @:@(Model.Name.FixedValue.ToShortName()).@(p.ModelType.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
-                }
-                else
-                {
         @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
-                }
             }
             else
             {

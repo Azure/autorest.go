@@ -250,6 +250,8 @@ namespace AutoRest.Go.Model
                 {
                     // embed as an anonymous struct.  note that the ordering of this clause is
                     // important, i.e. we don't want to flatten primary types like dictionaries.
+                    // Polymorphic fields are implemented as go interfaces and a pointer to an
+                    // interface is not implementing the interface.
                     indented.AppendFormat((property.ModelType as CompositeTypeGo).IsPolymorphic ?
                         "{0} {1}\n" :
                         "*{0} {1}\n",
