@@ -84,25 +84,6 @@ namespace AutoRest.Go.Model
         }
 
         public string MethodSignature => $"{Name}({MethodParametersSignature})";
-        
-        public string MethodParametersSignatureComplete
-        {
-            get
-            {     
-                var signature = new StringBuilder("(");
-                signature.Append(MethodParametersSignature);
-                if (!IsLongRunningOperation())
-                {
-                    if (MethodParametersSignature.Length > 0)
-                    {
-                        signature.Append( ", ");
-                    }
-                    signature.Append("cancel <-chan struct{}");
-                }
-                signature.Append(")");
-                return signature.ToString();
-            }
-        }
 
         public string MethodReturnSignatureComplete
         {
@@ -158,12 +139,12 @@ namespace AutoRest.Go.Model
             get
             {
                 List<string> declarations = new List<string>();
+                declarations.Add("ctx context.Context");
                 LocalParameters
                     .ForEach(p => declarations.Add(string.Format(
                                                         p.IsRequired || p.ModelType.CanBeEmpty()
                                                             ? "{0} {1}"
                                                             : "{0} *{1}", p.Name, p.ModelType.Name)));
-
                 return string.Join(", ", declarations);
             }
         }
@@ -218,6 +199,8 @@ namespace AutoRest.Go.Model
         public string HelperInvocationParameters(bool complete)
         {
             List<string> invocationParams = new List<string>();
+            invocationParams.Add("ctx");
+
             foreach (ParameterGo p in LocalParameters)
             {
                 if (p.Name.EqualsIgnoreCase("nextlink") && complete)
@@ -491,7 +474,7 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Checks if method has pageable extension (x-ms-pageable) enabled.  
+        /// Checks if method has pageable extension (x-ms-pageable) enabled.
         /// </summary>
         /// <returns></returns>
 
@@ -509,7 +492,7 @@ namespace AutoRest.Go.Model
             string next = NextOperationName;
             if (string.IsNullOrEmpty(next))
             {
-                return false; 
+                return false;
             }
             return methods.Any(m => m.Name.Value.EqualsIgnoreCase(next));
         }
@@ -539,7 +522,7 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Check if method has long running extension (x-ms-long-running-operation) enabled. 
+        /// Check if method has long running extension (x-ms-long-running-operation) enabled.
         /// </summary>
         /// <returns></returns>
         public bool IsLongRunningOperation()

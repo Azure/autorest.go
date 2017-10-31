@@ -30,7 +30,7 @@ func (client @(Model.Owner)) @(Model.MethodSignature) (@Model.MethodReturnSignat
 </text>
 }
 
-    req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters(false)))
+    req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters(complete: false)))
     if err != nil {
         err = @(Model.AutorestError("Failure preparing request"))
         return
@@ -86,7 +86,7 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 @if (Model.QueryParameters.Any())
 {
     @if (Model.QueryParameters.Any(p => p.GetParameterName().IsApiVersion())
-        && !Model.LocalParameters.Any(p => p.GetParameterName().IsApiVersion())) 
+        && !Model.LocalParameters.Any(p => p.GetParameterName().IsApiVersion()))
     {
         @:@(string.Format("const APIVersion = \"{0}\"", Model.APIVersion))
     }
@@ -107,7 +107,6 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
     @EmptyLine
 </text>
 }
-
     preparer := autorest.CreatePreparer(
         @(Model.PrepareDecorators.EmitAsArguments()))
 
@@ -131,10 +130,11 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
     }
 </text>
 }
-    return preparer.Prepare(&http.Request{})
+
+    return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
-@{ 
+@{
     var senderRetType = "*http.Response";
     if (Model.IsLongRunningOperation())
     {
@@ -168,7 +168,7 @@ else
 @EmptyLine
 // @(Model.ResponderMethodName) handles the response to the @(Model.Name) request. The method always
 // closes the http.Response Body.
-func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) { 
+func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) {
     @if (Model.ReturnValue().Body.IsStreamType())
     {
     @:result.Value = &resp.Body
@@ -218,7 +218,7 @@ func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @(Model.ReturnV
 <text>
 @EmptyLine
 // @(Model.ListCompleteMethodName) gets all elements from the list without paging.
-func (client @(Model.Owner)) @(Model.ListCompleteMethodName) @(Model.MethodParametersSignatureComplete) @(Model.MethodReturnSignatureComplete) {
+func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) @(Model.MethodReturnSignatureComplete) {
     resultChan := make(chan @((Model.ListElement.ModelType as SequenceTypeGo).GetElement))
     errChan := make(chan error, 1)
     go func() {
@@ -226,7 +226,7 @@ func (client @(Model.Owner)) @(Model.ListCompleteMethodName) @(Model.MethodParam
 			close(resultChan)
 			close(errChan)
 		}()
-        list, err := client.@(Model.Name)(@(Model.HelperInvocationParameters(false)))
+        list, err := client.@(Model.Name)(@(Model.HelperInvocationParameters(complete: false)))
         if err != nil {
             errChan @("<-") err
             return
@@ -234,7 +234,8 @@ func (client @(Model.Owner)) @(Model.ListCompleteMethodName) @(Model.MethodParam
         if list.@(Model.ListElement.Name) != nil {
             for _, item := range *list.@(Model.ListElement.Name) {
                 select {
-                case @("<-") cancel:
+                case @("<-") ctx.Done():
+                    errChan @("<-") ctx.Err()
                     return
                 case resultChan @("<-") item:
                     // Intentionally left blank
@@ -244,7 +245,7 @@ func (client @(Model.Owner)) @(Model.ListCompleteMethodName) @(Model.MethodParam
         for list.@(Model.NextLink) != nil {
     @if (Model.NextAlreadyDefined)
     {
-          @:list, err = client.@(Model.NextOperationName)(@(Model.NextMethod.HelperInvocationParameters(true)))
+          @:list, err = client.@(Model.NextOperationName)(@(Model.NextMethod.HelperInvocationParameters(complete: true)))
     }
     else
     {
@@ -253,11 +254,12 @@ func (client @(Model.Owner)) @(Model.ListCompleteMethodName) @(Model.MethodParam
             if err != nil {
                 errChan @("<-") err
                 return
-            }            
+            }
             if list.@(Model.ListElement.Name) != nil {
                 for _, item := range *list.@(Model.ListElement.Name) {
                     select {
-                        case @("<-") cancel:
+                        case @("<-") ctx.Done():
+                            errChan @("<-") ctx.Err()
                             return
                         case resultChan @("<-") item:
                             // Intentionally left blank
