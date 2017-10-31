@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AutoRest.Go.Properties;
@@ -19,7 +19,9 @@ namespace AutoRest.Go.Model
 {
     public class MethodGo : Method
     {
-        public string Owner { get; private set; }
+        private const string DefaultResponseType = "http.Response";
+
+        public new MethodGroupGo MethodGroup { get { return (MethodGroupGo)base.MethodGroup; } }
 
         public string PackageName { get; private set; }
 
@@ -33,6 +35,10 @@ namespace AutoRest.Go.Model
         public bool IsCustomBaseUri
             => CodeModel.Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
+        // RegisterRP determines if a DoRetryWithRegistration send decorator will be added to the operation
+        // DoRetryWithRegistration retries. Default is generating DoRetryForStatusCodes decorator instead.
+        public bool RegisterRP;
+
         public MethodGo()
         {
             NextAlreadyDefined = true;
@@ -40,7 +46,6 @@ namespace AutoRest.Go.Model
 
         internal void Transform(CodeModelGo cmg)
         {
-            Owner = (MethodGroup as MethodGroupGo).ClientName;
             PackageName = cmg.Namespace;
             NextAlreadyDefined = NextMethodExists(cmg.Methods.Cast<MethodGo>());
 
@@ -59,7 +64,7 @@ namespace AutoRest.Go.Model
                 APIVersion = cmg.ApiVersion;
             }
 
-            var parameter = Parameters.ToList().Find(p => p.ModelType.PrimaryType(KnownPrimaryType.Stream)
+            var parameter = Parameters.ToList().Find(p => p.ModelType.IsPrimaryType(KnownPrimaryType.Stream)
                                                 && !(p.Location == ParameterLocation.Body || p.Location == ParameterLocation.FormData));
 
             if (parameter != null)
@@ -76,19 +81,26 @@ namespace AutoRest.Go.Model
             {
                 Description += lroDescription;
             }
+
+            // Registering Azure resource providers should only happen with Azure resource manager REST APIs
+            // This depends on go-autorest here:
+            // https://github.com/Azure/go-autorest/blob/c0eb859387e57a164bf64171da307e2ef8168b58/autorest/azure/rp.go#L30
+            // As registering needs the Azure subscription ID, we take it from the operation path, on the
+            // assumption that ARM APIs should include the subscription ID right after `subscriptions`
+            RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
         }
 
-        public string MethodSignature => $"{Name}({MethodParametersSignature})";
+        public string MethodSignature => $"{Name}({MethodParametersSignature(false)})";
         
         public string MethodParametersSignatureComplete
         {
             get
             {     
                 var signature = new StringBuilder("(");
-                signature.Append(MethodParametersSignature);
+                signature.Append(MethodParametersSignature(false));
                 if (!IsLongRunningOperation())
                 {
-                    if (MethodParametersSignature.Length > 0)
+                    if (MethodParametersSignature(false).Length > 0)
                     {
                         signature.Append( ", ");
                     }
@@ -124,7 +136,7 @@ namespace AutoRest.Go.Model
                         sb.Append(parameter.Documentation.FixedValue.ToSentence());
                         sb.Append(" ");
                     }
-                    if (parameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                    if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream))
                     {
                         sb.Append(parameter.Name);
                         sb.Append(" will be closed upon successful return. Callers should ensure closure when receiving an error.");
@@ -148,35 +160,30 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Generate the method parameter declaration.
         /// </summary>
-        public string MethodParametersSignature
+        public string MethodParametersSignature(bool includeCtx)
         {
-            get
-            {
-                List<string> declarations = new List<string>();
-                LocalParameters
-                    .ForEach(p => declarations.Add(string.Format(
-                                                        p.IsRequired || p.ModelType.CanBeEmpty()
-                                                            ? "{0} {1}"
-                                                            : "{0} *{1}", p.Name, p.ModelType.Name)));
-                //for Cancelation channel option for long-running operations
-                if (IsLongRunningOperation())
-                {
-                    declarations.Add("cancel <-chan struct{}");
-                }
-                return string.Join(", ", declarations);
-            }
-        }
+            List<string> declarations = new List<string>();
 
-        /// <summary>
-        /// Returns true if this method should return its results via channels.
-        /// </summary>
-        public bool ReturnViaChannel
-        {
-            get
+            if (includeCtx)
             {
-                // pageable operations will be handled separately
-                return IsLongRunningOperation() && !IsPageable;
+                // add context as first param
+                declarations.Add("ctx context.Context");
             }
+
+            foreach (var localParam in LocalParameters)
+            {
+                if (localParam.ReplaceStreamWithReadSeeker)
+                {
+                    // body parameters are passed as read seekers
+                    declarations.Add("body io.ReadSeeker");
+                    continue;
+                }
+                declarations.Add(string.Format(localParam.IsPassedByValue()
+                                                        ? "{0} {1}"
+                                                        : "{0} *{1}", localParam.Name, localParam.ModelType.Name));
+            }
+
+            return string.Join(", ", declarations);
         }
 
         /// <summary>
@@ -186,7 +193,27 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                return HasReturnValue() ? ReturnValue().Body.Name.ToString() : "autorest.Response";
+                var rv = ReturnValue();
+                if (rv.Body != null)
+                {
+                    return rv.Body.Name.ToString();
+                }
+                else if (rv.Headers != null)
+                {
+                    return rv.Headers.Name.ToString();
+                }
+                return DefaultResponseType;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the method return type is the default response.
+        /// </summary>
+        public bool IsDefaultResponseType
+        {
+            get
+            {
+                return MethodReturnType == DefaultResponseType;
             }
         }
 
@@ -197,36 +224,25 @@ namespace AutoRest.Go.Model
         /// <returns>The method signature for this method.</returns>
         public string MethodReturnSignature(bool helper)
         {
-            var retValType = MethodReturnType;
-            var retVal = $"result {retValType}";
-            var errVal = "err error";
-
-            // for LROs return the response types via a channel.
-            // only do this for the "real" API; for "helper" methods
-            // i.e. preparer/sender/responder don't use a channel.
-            if (!helper && ReturnViaChannel)
-            {
-                retVal = $"<-chan {retValType}";
-                errVal = "<-chan error";
-            }
-
-            return $"{retVal}, {errVal}";
+            return $"*{MethodReturnType}, error";
         }
 
         public string NextMethodName => $"{Name}NextResults";
 
-        public string PreparerMethodName => $"{Name}Preparer";
-
-        public string SenderMethodName => $"{Name}Sender";
-
-        public string ResponderMethodName => $"{Name}Responder";
-
-        public string HelperInvocationParameters(bool complete)
+        public string HelperInvocationParameters(bool complete, bool includeCtx)
         {
             List<string> invocationParams = new List<string>();
+            if (includeCtx)
+            {
+                invocationParams.Add("ctx");
+            }
             foreach (ParameterGo p in LocalParameters)
             {
-                if (p.Name.EqualsIgnoreCase("nextlink") && complete)
+                if (p.ReplaceStreamWithReadSeeker)
+                {
+                    invocationParams.Add("body");
+                }
+                else if (p.Name.EqualsIgnoreCase("nextlink") && complete)
                 {
                     invocationParams.Add(string.Format("*list.{0}", NextLink));
                 }
@@ -234,10 +250,6 @@ namespace AutoRest.Go.Model
                 {
                     invocationParams.Add(p.Name);
                 }
-            }
-            if (IsLongRunningOperation())
-            {
-                invocationParams.Add("cancel");
             }
             return string.Join(", ", invocationParams);
         }
@@ -251,7 +263,8 @@ namespace AutoRest.Go.Model
             {
                 return
                     Parameters.Cast<ParameterGo>().Where(
-                        p => p != null && p.IsMethodArgument && !string.IsNullOrWhiteSpace(p.Name))
+                        p => p != null && p.IsMethodArgument && !string.IsNullOrWhiteSpace(p.Name) &&
+                        !(p.Location == ParameterLocation.Query && p.IsConstant))
                                 .OrderBy(item => !item.IsRequired);
             }
         }
@@ -304,13 +317,13 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public List<string> PrepareDecorators
+        public IEnumerable<string> PrepareDecorators
         {
             get
             {
                 var decorators = new List<string>();
 
-                if (BodyParameter != null && !BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                if (BodyParameter != null && !BodyParameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream))
                 {
                     decorators.Add("autorest.AsJSON()");
                 }
@@ -332,7 +345,7 @@ namespace AutoRest.Go.Model
 
                 if (BodyParameter != null && BodyParameter.IsRequired)
                 {
-                    decorators.Add(string.Format(BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream) && BodyParameter.Location == ParameterLocation.Body
+                    decorators.Add(string.Format(BodyParameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream) && BodyParameter.Location == ParameterLocation.Body
                                         ? "autorest.WithFile({0})"
                                         : "autorest.WithJSON({0})",
                                 BodyParameter.Name));
@@ -346,7 +359,7 @@ namespace AutoRest.Go.Model
                 if (FormDataParameters.Any())
                 {
                     decorators.Add(
-                        FormDataParameters.Any(p => p.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                        FormDataParameters.Any(p => p.ModelType.IsPrimaryType(KnownPrimaryType.Stream))
                             ? "autorest.WithMultiPartFormData(formDataParameters)"
                             : "autorest.WithFormData(autorest.MapToValues(formDataParameters))"
                         );
@@ -390,27 +403,50 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public List<string> RespondDecorators
+        public IEnumerable<string> SendDecorators
         {
             get
             {
                 var decorators = new List<string>();
+                decorators.Add("req");
+                if (RegisterRP)
+                {
+                    decorators.Add("azure.DoRetryWithRegistration(client.Client)");
+                } else {
+                    decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
+                }
+                if (IsLongRunningOperation())
+                {
+                    decorators.Add("azure.DoPollForAsynchronous(client.PollingDelay)");
+                }
+                return decorators;
+            }
+        }
+
+        public IEnumerable<string> RespondDecorators
+        {
+            get
+            {
+                var decorators = new List<string>();
+                decorators.Add("resp");
                 decorators.Add("client.ByInspecting()");
                 decorators.Add(string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray())));
 
-                if (HasReturnValue() && !ReturnValue().Body.IsStreamType())
+                var rvNeedsUnmarshalling = ReturnValueRequiresUnmarshalling();
+                if (rvNeedsUnmarshalling && !ReturnValue().Body.IsStreamType())
                 {
-                    if (((CompositeTypeGo)ReturnValue().Body).IsWrapperType && !((CompositeTypeGo)ReturnValue().Body).HasPolymorphicFields)
+                    var rv = ReturnValue().Body as CompositeTypeGo;
+                    if (rv.IsWrapperType && !rv.HasPolymorphicFields && !rv.XmlIsWrapped)
                     {
-                        decorators.Add("autorest.ByUnmarshallingJSON(&result.Value)");
+                        decorators.Add($"autorest.ByUnmarshallingJSON(&result.Value)");
                     }
                     else
                     {
-                        decorators.Add("autorest.ByUnmarshallingJSON(&result)");
+                        decorators.Add($"autorest.ByUnmarshallingJSON(&result)");
                     }
                 }
 
-                if (!HasReturnValue() || !ReturnValue().Body.IsStreamType())
+                if (!rvNeedsUnmarshalling || !ReturnValue().Body.IsStreamType())
                 {
                     decorators.Add("autorest.ByClosing()");
                 }
@@ -428,33 +464,67 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string AutorestError(string phase, string response = null, string parameter = null)
-        {
-            return !string.IsNullOrEmpty(parameter)
-                        ? string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", nil , \"{3}\'{4}\'\")", PackageName, Owner, Name, phase, parameter)
-                        : string.IsNullOrEmpty(response)
-                                 ? string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", nil , \"{3}\")", PackageName, Owner, Name, phase)
-                                 : string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", {3}, \"{4}\")", PackageName, Owner, Name, response, phase);
-        }
-
-        public string ValidationError => $"validation.NewErrorWithValidationError(err, \"{PackageName}.{Owner}\",\"{Name}\")";
-
         /// <summary>
         /// Check if method has a return response.
         /// </summary>
-        /// <returns></returns>
         public bool HasReturnValue()
         {
             return ReturnValue()?.Body != null;
         }
 
         /// <summary>
+        /// Returns true if the return type requires unmarshalling.
+        /// </summary>
+        public bool ReturnValueRequiresUnmarshalling()
+        {
+            return HasReturnValue() && ReturnValue().Body is CompositeTypeGo && ((CompositeTypeGo)ReturnValue().Body).Properties.Any();
+        }
+
+        /// <summary>
+        /// Returns true if the return type is a wrapper type (i.e. "synthetic" type).
+        /// </summary>
+        public bool ReturnValueIsWrapperType()
+        {
+            return HasReturnValue() && ReturnValue().Body is CompositeTypeGo && ReturnValue().Body.Cast<CompositeTypeGo>().IsWrapperType;
+        }
+
+        /// <summary>
+        /// Returns true if the return type is XML-wrapped.
+        /// </summary>
+        public bool ReturnValueIsXmlWrapped()
+        {
+            if (!HasReturnValue())
+            {
+                return false;
+            }
+
+            var ctg = ReturnValue().Body as CompositeTypeGo;
+            if (ctg == null)
+            {
+                return false;
+            }
+
+            if (ctg.XmlProperties == null)
+            {
+                return false;
+            }
+            return ctg.XmlProperties.Wrapped;
+        }
+
+        /// <summary>
         /// Return response object for the method.
         /// </summary>
-        /// <returns></returns>
         public Response ReturnValue()
         {
             return ReturnType ?? DefaultResponse;
+        }
+
+        /// <summary>
+        /// Returns true if this method's body parameter requires marshalling.
+        /// </summary>
+        public bool BodyParamNeedsMarshalling()
+        {
+            return BodyParameter != null && !BodyParameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream);
         }
 
         /// <summary>
@@ -557,6 +627,24 @@ namespace AutoRest.Go.Model
                     }
                 }
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the body parameter to be passed to the marshaller (might be XML wrapped).
+        /// </summary>
+        public string BodyParamNameForMarshalling
+        {
+            get
+            {
+                if (BodyParameter.ModelType.XmlIsWrapped)
+                {
+                    return $"{BodyParameter.ModelType.XmlName}{{Value: {BodyParameter.Name}}}";
+                }
+                else
+                {
+                    return BodyParameter.Name;
+                }
             }
         }
     }

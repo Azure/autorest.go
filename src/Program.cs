@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Core.Parsing;
 using Microsoft.Perks.JsonRPC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 using IAnyPlugin = AutoRest.Core.Extensibility.IPlugin<AutoRest.Core.Extensibility.IGeneratorSettings, AutoRest.Core.IModelSerializer<AutoRest.Core.Model.CodeModel>, AutoRest.Core.ITransformer<AutoRest.Core.Model.CodeModel>, AutoRest.Core.CodeGenerator, AutoRest.Core.CodeNamer, AutoRest.Core.Model.CodeModel>;
 
@@ -82,14 +82,13 @@ namespace AutoRest.Go
             Settings.Instance.CustomSettings.Add("SyncMethods", GetXmsCodeGenSetting<string>(codeModelT, "syncMethods") ?? await GetValue("sync-methods") ?? "essential");
             Settings.Instance.CustomSettings.Add("UseDateTimeOffset", GetXmsCodeGenSetting<bool?>(codeModelT, "useDateTimeOffset") ?? await GetValue<bool?>("use-datetimeoffset") ?? false);
             Settings.Instance.CustomSettings["ClientSideValidation"] = await GetValue<bool?>("client-side-validation") ?? false;
+            Settings.Instance.CustomSettings["OpenAPIType"] = await GetValue<string>("openapi-type") ?? "default";
             Settings.Instance.MaximumCommentColumns = await GetValue<int?>("max-comment-columns") ?? 120;
             Settings.Instance.OutputFileName = await GetValue<string>("output-file");
             Settings.Instance.PackageVersion = await GetValue("package-version");
 
             // process
-            var plugin = await GetValue<bool?>("testgen") == true
-                ? (IAnyPlugin)new AutoRest.Go.TestGen.PluginGotg()
-                : (IAnyPlugin)new AutoRest.Go.PluginGo();
+            var plugin = (IAnyPlugin)new AutoRest.Go.PluginGo();
             Settings.PopulateSettings(plugin.Settings, Settings.Instance.CustomSettings);
             
             using (plugin.Activate())

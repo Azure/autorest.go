@@ -7,17 +7,95 @@ package booleangroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+	"net/http"
 )
 
-// Bool is
-type Bool struct {
-	autorest.Response `json:"-"`
-	Value             *bool `json:"value,omitempty"`
-}
-
-// Error is
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
+}
+
+// GetFalseResponse ...
+type GetFalseResponse struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gfr GetFalseResponse) Response() *http.Response {
+	return gfr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gfr GetFalseResponse) HTTPStatusCode() int {
+	return gfr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gfr GetFalseResponse) HTTPStatus() string {
+	return gfr.rawResponse.Status
+}
+
+// GetInvalidResponse ...
+type GetInvalidResponse struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gir GetInvalidResponse) Response() *http.Response {
+	return gir.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gir GetInvalidResponse) HTTPStatusCode() int {
+	return gir.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gir GetInvalidResponse) HTTPStatus() string {
+	return gir.rawResponse.Status
+}
+
+// GetNullResponse ...
+type GetNullResponse struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnr GetNullResponse) Response() *http.Response {
+	return gnr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) HTTPStatusCode() int {
+	return gnr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) HTTPStatus() string {
+	return gnr.rawResponse.Status
+}
+
+// GetTrueResponse ...
+type GetTrueResponse struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gtr GetTrueResponse) Response() *http.Response {
+	return gtr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gtr GetTrueResponse) HTTPStatusCode() int {
+	return gtr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gtr GetTrueResponse) HTTPStatus() string {
+	return gtr.rawResponse.Status
 }

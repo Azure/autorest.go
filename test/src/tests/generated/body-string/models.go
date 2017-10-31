@@ -7,42 +7,265 @@ package stringgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+	"net/http"
 )
 
-// Colors enumerates the values for colors.
-type Colors string
+// ColorsType enumerates the values for colors.
+type ColorsType string
 
 const (
-	// BlueColor specifies the blue color state for colors.
-	BlueColor Colors = "blue_color"
-	// GreenColor specifies the green color state for colors.
-	GreenColor Colors = "green-color"
-	// Redcolor specifies the redcolor state for colors.
-	Redcolor Colors = "red color"
+	// ColorsBlueColor ...
+	ColorsBlueColor ColorsType = "blue_color"
+	// ColorsGreenColor ...
+	ColorsGreenColor ColorsType = "green-color"
+	// ColorsNone represents an empty ColorsType.
+	ColorsNone ColorsType = ""
+	// ColorsRedcolor ...
+	ColorsRedcolor ColorsType = "red color"
 )
 
-// Base64URL is
-type Base64URL struct {
-	autorest.Response `json:"-"`
-	Value             *string `json:"value,omitempty"`
-}
-
-// Error is
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// RefColorConstant is
-type RefColorConstant struct {
-	autorest.Response `json:"-"`
-	ColorConstant     *string `json:"ColorConstant,omitempty"`
-	Field1            *string `json:"field1,omitempty"`
+// GetBase64EncodedResponse ...
+type GetBase64EncodedResponse struct {
+	rawResponse *http.Response
+	Value       *string `json:"value,omitempty"`
 }
 
-// String is
-type String struct {
-	autorest.Response `json:"-"`
-	Value             *string `json:"value,omitempty"`
+// Response returns the raw HTTP response object.
+func (gb6er GetBase64EncodedResponse) Response() *http.Response {
+	return gb6er.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gb6er GetBase64EncodedResponse) HTTPStatusCode() int {
+	return gb6er.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gb6er GetBase64EncodedResponse) HTTPStatus() string {
+	return gb6er.rawResponse.Status
+}
+
+// GetBase64URLEncodedResponse ...
+type GetBase64URLEncodedResponse struct {
+	rawResponse *http.Response
+	Value       *string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gb6er GetBase64URLEncodedResponse) Response() *http.Response {
+	return gb6er.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gb6er GetBase64URLEncodedResponse) HTTPStatusCode() int {
+	return gb6er.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gb6er GetBase64URLEncodedResponse) HTTPStatus() string {
+	return gb6er.rawResponse.Status
+}
+
+// GetEmptyResponse ...
+type GetEmptyResponse struct {
+	rawResponse *http.Response
+	// Value - Possible values include: ''
+	Value *string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (ger GetEmptyResponse) Response() *http.Response {
+	return ger.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (ger GetEmptyResponse) HTTPStatusCode() int {
+	return ger.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (ger GetEmptyResponse) HTTPStatus() string {
+	return ger.rawResponse.Status
+}
+
+// GetMbcsResponse ...
+type GetMbcsResponse struct {
+	rawResponse *http.Response
+	// Value - Possible values include: '啊齄丂狛狜隣郎隣兀﨩ˊ▇█〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€ '
+	Value *string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gmr GetMbcsResponse) Response() *http.Response {
+	return gmr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gmr GetMbcsResponse) HTTPStatusCode() int {
+	return gmr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gmr GetMbcsResponse) HTTPStatus() string {
+	return gmr.rawResponse.Status
+}
+
+// GetNotExpandableResponse ...
+type GetNotExpandableResponse struct {
+	rawResponse *http.Response
+	// Value - Possible values include: 'Redcolor', 'GreenColor', 'BlueColor', 'None'
+	Value ColorsType `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gner GetNotExpandableResponse) Response() *http.Response {
+	return gner.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gner GetNotExpandableResponse) HTTPStatusCode() int {
+	return gner.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gner GetNotExpandableResponse) HTTPStatus() string {
+	return gner.rawResponse.Status
+}
+
+// GetNotProvidedResponse ...
+type GetNotProvidedResponse struct {
+	rawResponse *http.Response
+	Value       *string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnpr GetNotProvidedResponse) Response() *http.Response {
+	return gnpr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnpr GetNotProvidedResponse) HTTPStatusCode() int {
+	return gnpr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnpr GetNotProvidedResponse) HTTPStatus() string {
+	return gnpr.rawResponse.Status
+}
+
+// GetNullBase64URLEncodedResponse ...
+type GetNullBase64URLEncodedResponse struct {
+	rawResponse *http.Response
+	Value       *string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnb6er GetNullBase64URLEncodedResponse) Response() *http.Response {
+	return gnb6er.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnb6er GetNullBase64URLEncodedResponse) HTTPStatusCode() int {
+	return gnb6er.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnb6er GetNullBase64URLEncodedResponse) HTTPStatus() string {
+	return gnb6er.rawResponse.Status
+}
+
+// GetNullResponse ...
+type GetNullResponse struct {
+	rawResponse *http.Response
+	// Value - Possible values include: ''
+	Value *string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnr GetNullResponse) Response() *http.Response {
+	return gnr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) HTTPStatusCode() int {
+	return gnr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) HTTPStatus() string {
+	return gnr.rawResponse.Status
+}
+
+// GetReferencedResponse ...
+type GetReferencedResponse struct {
+	rawResponse *http.Response
+	// Value - Possible values include: 'Redcolor', 'GreenColor', 'BlueColor', 'None'
+	Value ColorsType `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (grr GetReferencedResponse) Response() *http.Response {
+	return grr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (grr GetReferencedResponse) HTTPStatusCode() int {
+	return grr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (grr GetReferencedResponse) HTTPStatus() string {
+	return grr.rawResponse.Status
+}
+
+// GetWhitespaceResponse ...
+type GetWhitespaceResponse struct {
+	rawResponse *http.Response
+	// Value - Possible values include: '    Now is the time for all good men to come to the aid of their country    '
+	Value *string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gwr GetWhitespaceResponse) Response() *http.Response {
+	return gwr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gwr GetWhitespaceResponse) HTTPStatusCode() int {
+	return gwr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gwr GetWhitespaceResponse) HTTPStatus() string {
+	return gwr.rawResponse.Status
+}
+
+// RefColorConstant ...
+type RefColorConstant struct {
+	rawResponse *http.Response
+	// ColorConstant - Referenced Color Constant Description.
+	ColorConstant string `json:"ColorConstant,omitempty"`
+	// Field1 - Sample string.
+	Field1 *string `json:"field1,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (rcc RefColorConstant) Response() *http.Response {
+	return rcc.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (rcc RefColorConstant) HTTPStatusCode() int {
+	return rcc.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (rcc RefColorConstant) HTTPStatus() string {
+	return rcc.rawResponse.Status
 }

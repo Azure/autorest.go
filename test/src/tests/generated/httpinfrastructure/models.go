@@ -7,52 +7,608 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+	"net/http"
 )
 
-// A is
+// A ...
 type A struct {
-	autorest.Response `json:"-"`
-	StatusCode        *string `json:"statusCode,omitempty"`
+	rawResponse *http.Response
+	StatusCode  *string `json:"statusCode,omitempty"`
 }
 
-// B is
+// Response returns the raw HTTP response object.
+func (a A) Response() *http.Response {
+	return a.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (a A) HTTPStatusCode() int {
+	return a.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (a A) HTTPStatus() string {
+	return a.rawResponse.Status
+}
+
+// B ...
 type B struct {
 	StatusCode     *string `json:"statusCode,omitempty"`
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
 }
 
-// Bool is
-type Bool struct {
-	autorest.Response `json:"-"`
-	Value             *bool `json:"value,omitempty"`
-}
-
-// C is
+// C ...
 type C struct {
 	HTTPCode *string `json:"httpCode,omitempty"`
 }
 
-// D is
+// D ...
 type D struct {
 	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
 }
 
-// Error is
+// Error ...
 type Error struct {
-	autorest.Response `json:"-"`
-	Status            *int32  `json:"status,omitempty"`
-	Message           *string `json:"message,omitempty"`
+	rawResponse *http.Response
+	Status      *int32  `json:"status,omitempty"`
+	Message     *string `json:"message,omitempty"`
 }
 
-// ListString is
-type ListString struct {
-	autorest.Response `json:"-"`
-	Value             *[]string `json:"value,omitempty"`
+// Response returns the raw HTTP response object.
+func (e Error) Response() *http.Response {
+	return e.rawResponse
 }
 
-// SetObject is
-type SetObject struct {
-	autorest.Response `json:"-"`
-	Value             *map[string]interface{} `json:"value,omitempty"`
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (e Error) HTTPStatusCode() int {
+	return e.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (e Error) HTTPStatus() string {
+	return e.rawResponse.Status
+}
+
+// Get200ModelA201ModelC404ModelDDefaultError200ValidResponse ...
+type Get200ModelA201ModelC404ModelDDefaultError200ValidResponse struct {
+	rawResponse *http.Response
+	Value       map[string]interface{} `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) Response() *http.Response {
+	return g2mamcmdde2vr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) HTTPStatusCode() int {
+	return g2mamcmdde2vr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) HTTPStatus() string {
+	return g2mamcmdde2vr.rawResponse.Status
+}
+
+// Get200ModelA201ModelC404ModelDDefaultError201ValidResponse ...
+type Get200ModelA201ModelC404ModelDDefaultError201ValidResponse struct {
+	rawResponse *http.Response
+	Value       map[string]interface{} `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) Response() *http.Response {
+	return g2mamcmdde2vr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) HTTPStatusCode() int {
+	return g2mamcmdde2vr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) HTTPStatus() string {
+	return g2mamcmdde2vr.rawResponse.Status
+}
+
+// Get200ModelA201ModelC404ModelDDefaultError400ValidResponse ...
+type Get200ModelA201ModelC404ModelDDefaultError400ValidResponse struct {
+	rawResponse *http.Response
+	Value       map[string]interface{} `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) Response() *http.Response {
+	return g2mamcmdde4vr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) HTTPStatusCode() int {
+	return g2mamcmdde4vr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) HTTPStatus() string {
+	return g2mamcmdde4vr.rawResponse.Status
+}
+
+// Get200ModelA201ModelC404ModelDDefaultError404ValidResponse ...
+type Get200ModelA201ModelC404ModelDDefaultError404ValidResponse struct {
+	rawResponse *http.Response
+	Value       map[string]interface{} `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) Response() *http.Response {
+	return g2mamcmdde4vr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) HTTPStatusCode() int {
+	return g2mamcmdde4vr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) HTTPStatus() string {
+	return g2mamcmdde4vr.rawResponse.Status
+}
+
+// Get200Response ...
+type Get200Response struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (g2r Get200Response) Response() *http.Response {
+	return g2r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2r Get200Response) HTTPStatusCode() int {
+	return g2r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (g2r Get200Response) HTTPStatus() string {
+	return g2r.rawResponse.Status
+}
+
+// Get300Response ...
+type Get300Response struct {
+	rawResponse *http.Response
+	Value       []string `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (g3r Get300Response) Response() *http.Response {
+	return g3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (g3r Get300Response) HTTPStatusCode() int {
+	return g3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (g3r Get300Response) HTTPStatus() string {
+	return g3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (g3r Get300Response) Location() string {
+	return string(g3r.rawResponse.Header.Get("Location"))
+}
+
+// GetEmptyErrorResponse ...
+type GetEmptyErrorResponse struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (geer GetEmptyErrorResponse) Response() *http.Response {
+	return geer.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (geer GetEmptyErrorResponse) HTTPStatusCode() int {
+	return geer.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (geer GetEmptyErrorResponse) HTTPStatus() string {
+	return geer.rawResponse.Status
+}
+
+// GetNoModelEmptyResponse ...
+type GetNoModelEmptyResponse struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnmer GetNoModelEmptyResponse) Response() *http.Response {
+	return gnmer.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnmer GetNoModelEmptyResponse) HTTPStatusCode() int {
+	return gnmer.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnmer GetNoModelEmptyResponse) HTTPStatus() string {
+	return gnmer.rawResponse.Status
+}
+
+// GetNoModelErrorResponse ...
+type GetNoModelErrorResponse struct {
+	rawResponse *http.Response
+	Value       *bool `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnmer GetNoModelErrorResponse) Response() *http.Response {
+	return gnmer.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnmer GetNoModelErrorResponse) HTTPStatusCode() int {
+	return gnmer.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnmer GetNoModelErrorResponse) HTTPStatus() string {
+	return gnmer.rawResponse.Status
+}
+
+// HTTPRedirectsDelete307Response ...
+type HTTPRedirectsDelete307Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrd3r HTTPRedirectsDelete307Response) Response() *http.Response {
+	return hrd3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrd3r HTTPRedirectsDelete307Response) HTTPStatusCode() int {
+	return hrd3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrd3r HTTPRedirectsDelete307Response) HTTPStatus() string {
+	return hrd3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrd3r HTTPRedirectsDelete307Response) Location() string {
+	return string(hrd3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsGet301Response ...
+type HTTPRedirectsGet301Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrg3r HTTPRedirectsGet301Response) Response() *http.Response {
+	return hrg3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrg3r HTTPRedirectsGet301Response) HTTPStatusCode() int {
+	return hrg3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrg3r HTTPRedirectsGet301Response) HTTPStatus() string {
+	return hrg3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrg3r HTTPRedirectsGet301Response) Location() string {
+	return string(hrg3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsGet302Response ...
+type HTTPRedirectsGet302Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrg3r HTTPRedirectsGet302Response) Response() *http.Response {
+	return hrg3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrg3r HTTPRedirectsGet302Response) HTTPStatusCode() int {
+	return hrg3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrg3r HTTPRedirectsGet302Response) HTTPStatus() string {
+	return hrg3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrg3r HTTPRedirectsGet302Response) Location() string {
+	return string(hrg3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsGet307Response ...
+type HTTPRedirectsGet307Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrg3r HTTPRedirectsGet307Response) Response() *http.Response {
+	return hrg3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrg3r HTTPRedirectsGet307Response) HTTPStatusCode() int {
+	return hrg3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrg3r HTTPRedirectsGet307Response) HTTPStatus() string {
+	return hrg3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrg3r HTTPRedirectsGet307Response) Location() string {
+	return string(hrg3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsHead300Response ...
+type HTTPRedirectsHead300Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrh3r HTTPRedirectsHead300Response) Response() *http.Response {
+	return hrh3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead300Response) HTTPStatusCode() int {
+	return hrh3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead300Response) HTTPStatus() string {
+	return hrh3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrh3r HTTPRedirectsHead300Response) Location() string {
+	return string(hrh3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsHead301Response ...
+type HTTPRedirectsHead301Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrh3r HTTPRedirectsHead301Response) Response() *http.Response {
+	return hrh3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead301Response) HTTPStatusCode() int {
+	return hrh3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead301Response) HTTPStatus() string {
+	return hrh3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrh3r HTTPRedirectsHead301Response) Location() string {
+	return string(hrh3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsHead302Response ...
+type HTTPRedirectsHead302Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrh3r HTTPRedirectsHead302Response) Response() *http.Response {
+	return hrh3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead302Response) HTTPStatusCode() int {
+	return hrh3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead302Response) HTTPStatus() string {
+	return hrh3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrh3r HTTPRedirectsHead302Response) Location() string {
+	return string(hrh3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsHead307Response ...
+type HTTPRedirectsHead307Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrh3r HTTPRedirectsHead307Response) Response() *http.Response {
+	return hrh3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead307Response) HTTPStatusCode() int {
+	return hrh3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead307Response) HTTPStatus() string {
+	return hrh3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrh3r HTTPRedirectsHead307Response) Location() string {
+	return string(hrh3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsPatch302Response ...
+type HTTPRedirectsPatch302Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrp3r HTTPRedirectsPatch302Response) Response() *http.Response {
+	return hrp3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPatch302Response) HTTPStatusCode() int {
+	return hrp3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPatch302Response) HTTPStatus() string {
+	return hrp3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrp3r HTTPRedirectsPatch302Response) Location() string {
+	return string(hrp3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsPatch307Response ...
+type HTTPRedirectsPatch307Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrp3r HTTPRedirectsPatch307Response) Response() *http.Response {
+	return hrp3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPatch307Response) HTTPStatusCode() int {
+	return hrp3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPatch307Response) HTTPStatus() string {
+	return hrp3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrp3r HTTPRedirectsPatch307Response) Location() string {
+	return string(hrp3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsPost303Response ...
+type HTTPRedirectsPost303Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrp3r HTTPRedirectsPost303Response) Response() *http.Response {
+	return hrp3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPost303Response) HTTPStatusCode() int {
+	return hrp3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPost303Response) HTTPStatus() string {
+	return hrp3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrp3r HTTPRedirectsPost303Response) Location() string {
+	return string(hrp3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsPost307Response ...
+type HTTPRedirectsPost307Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrp3r HTTPRedirectsPost307Response) Response() *http.Response {
+	return hrp3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPost307Response) HTTPStatusCode() int {
+	return hrp3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPost307Response) HTTPStatus() string {
+	return hrp3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrp3r HTTPRedirectsPost307Response) Location() string {
+	return string(hrp3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsPut301Response ...
+type HTTPRedirectsPut301Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrp3r HTTPRedirectsPut301Response) Response() *http.Response {
+	return hrp3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPut301Response) HTTPStatusCode() int {
+	return hrp3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPut301Response) HTTPStatus() string {
+	return hrp3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrp3r HTTPRedirectsPut301Response) Location() string {
+	return string(hrp3r.rawResponse.Header.Get("Location"))
+}
+
+// HTTPRedirectsPut307Response ...
+type HTTPRedirectsPut307Response struct {
+	rawResponse *http.Response
+}
+
+// Response returns the raw HTTP response object.
+func (hrp3r HTTPRedirectsPut307Response) Response() *http.Response {
+	return hrp3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPut307Response) HTTPStatusCode() int {
+	return hrp3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPut307Response) HTTPStatus() string {
+	return hrp3r.rawResponse.Status
+}
+
+// Location returns the value for header Location.
+func (hrp3r HTTPRedirectsPut307Response) Location() string {
+	return string(hrp3r.rawResponse.Header.Get("Location"))
 }

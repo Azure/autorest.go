@@ -7,17 +7,32 @@ package azurereport
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+	"net/http"
 )
 
-// Error is
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// SetInt32 is
-type SetInt32 struct {
-	autorest.Response `json:"-"`
-	Value             *map[string]*int32 `json:"value,omitempty"`
+// GetReportResponse ...
+type GetReportResponse struct {
+	rawResponse *http.Response
+	Value       map[string]int32 `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (grr GetReportResponse) Response() *http.Response {
+	return grr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (grr GetReportResponse) HTTPStatusCode() int {
+	return grr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (grr GetReportResponse) HTTPStatus() string {
+	return grr.rawResponse.Status
 }

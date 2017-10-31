@@ -18,7 +18,8 @@ regenExpected = (opts,done) ->
       "--#{opts.language}",
       "--output-folder=#{outputDir}/#{key}",
       "--license-header=#{if !!opts.header then opts.header else 'MICROSOFT_MIT_NO_VERSION'}",
-      "--enable-xml"
+      "--enable-xml",
+      "--go-pipeline-import=tests/pipeline"
     ]
 
     for swaggerFile in swaggerFiles
@@ -54,33 +55,35 @@ regenExpected = (opts,done) ->
 
     autorest args,() =>
       instances--
-      return done() if instances is 0 
+      if instances is 0 
+        await execute "go fmt ./generated/...", { cwd: './test/src/tests' }, defer code, stderr, stdout
+        return done()
 
 goMappings = {
-  'body-array':['body-array.json','arraygroup'],
+  #'body-array':['body-array.json','arraygroup'],
   'body-boolean':['body-boolean.json', 'booleangroup'],
   'body-byte':['body-byte.json','bytegroup'],
-  'body-complex':['body-complex.json','complexgroup'],
-  'body-date':['body-date.json','dategroup'],
-  'body-datetime-rfc1123':['body-datetime-rfc1123.json','datetimerfc1123group'],
-  'body-datetime':['body-datetime.json','datetimegroup'],
-  'body-dictionary':['body-dictionary.json','dictionarygroup'],
-  'body-duration':['body-duration.json','durationgroup'],
-  'body-file':['body-file.json', 'filegroup'],
-  'body-formdata':['body-formdata.json', 'formdatagroup'],
+  #'body-complex':['body-complex.json','complexgroup'],
+  #'body-date':['body-date.json','dategroup'],
+  #'body-datetime-rfc1123':['body-datetime-rfc1123.json','datetimerfc1123group'],
+  #'body-datetime':['body-datetime.json','datetimegroup'],
+  #'body-dictionary':['body-dictionary.json','dictionarygroup'],
+  #'body-duration':['body-duration.json','durationgroup'],
+  #'body-file':['body-file.json', 'filegroup'],
+  #'body-formdata':['body-formdata.json', 'formdatagroup'],
   'body-integer':['body-integer.json','integergroup'],
-  'body-number':['body-number.json','numbergroup'],
+  #'body-number':['body-number.json','numbergroup'],
   'body-string':['body-string.json','stringgroup'],
-  'custom-baseurl':['custom-baseUrl.json', 'custombaseurlgroup'],
-  'header':['header.json','headergroup'],
+  #'custom-baseurl':['custom-baseUrl.json', 'custombaseurlgroup'],
+  #'header':['header.json','headergroup'],
   'httpinfrastructure':['httpInfrastructure.json','httpinfrastructuregroup'],
-  'model-flattening':['model-flattening.json', 'modelflatteninggroup'],
+  #'model-flattening':['model-flattening.json', 'modelflatteninggroup'],
   'report':['report.json','report'],
-  'required-optional':['required-optional.json','optionalgroup'],
-  'url':['url.json','urlgroup'],
-  'validation':['validation.json', 'validationgroup'],
-  'paging':['paging.json', 'paginggroup'],
-  'more-custom-base-uri':['custom-baseUrl-more-options.json', 'morecustombaseurigroup'],
+  #'required-optional':['required-optional.json','optionalgroup'],
+  #'url':['url.json','urlgroup'],
+  #'validation':['validation.json', 'validationgroup'],
+  #'paging':['paging.json', 'paginggroup'],
+  #'more-custom-base-uri':['custom-baseUrl-more-options.json', 'morecustombaseurigroup'],
   'azurereport':['azure-report.json', 'azurereport']
 }
 

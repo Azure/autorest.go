@@ -7,30 +7,201 @@ package integergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/date"
+	"net/http"
 )
 
-// Error is
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// Int32 is
-type Int32 struct {
-	autorest.Response `json:"-"`
-	Value             *int32 `json:"value,omitempty"`
+// GetInvalidResponse ...
+type GetInvalidResponse struct {
+	rawResponse *http.Response
+	Value       *int32 `json:"value,omitempty"`
 }
 
-// Int64 is
-type Int64 struct {
-	autorest.Response `json:"-"`
-	Value             *int64 `json:"value,omitempty"`
+// Response returns the raw HTTP response object.
+func (gir GetInvalidResponse) Response() *http.Response {
+	return gir.rawResponse
 }
 
-// UnixTime is
-type UnixTime struct {
-	autorest.Response `json:"-"`
-	Value             *date.UnixTime `json:"value,omitempty"`
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gir GetInvalidResponse) HTTPStatusCode() int {
+	return gir.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gir GetInvalidResponse) HTTPStatus() string {
+	return gir.rawResponse.Status
+}
+
+// GetInvalidUnixTimeResponse ...
+type GetInvalidUnixTimeResponse struct {
+	rawResponse *http.Response
+	Value       *date.UnixTime `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (giutr GetInvalidUnixTimeResponse) Response() *http.Response {
+	return giutr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (giutr GetInvalidUnixTimeResponse) HTTPStatusCode() int {
+	return giutr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (giutr GetInvalidUnixTimeResponse) HTTPStatus() string {
+	return giutr.rawResponse.Status
+}
+
+// GetNullResponse ...
+type GetNullResponse struct {
+	rawResponse *http.Response
+	Value       *int32 `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnr GetNullResponse) Response() *http.Response {
+	return gnr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) HTTPStatusCode() int {
+	return gnr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) HTTPStatus() string {
+	return gnr.rawResponse.Status
+}
+
+// GetNullUnixTimeResponse ...
+type GetNullUnixTimeResponse struct {
+	rawResponse *http.Response
+	Value       *date.UnixTime `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnutr GetNullUnixTimeResponse) Response() *http.Response {
+	return gnutr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnutr GetNullUnixTimeResponse) HTTPStatusCode() int {
+	return gnutr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnutr GetNullUnixTimeResponse) HTTPStatus() string {
+	return gnutr.rawResponse.Status
+}
+
+// GetOverflowInt32Response ...
+type GetOverflowInt32Response struct {
+	rawResponse *http.Response
+	Value       *int32 `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (goi3r GetOverflowInt32Response) Response() *http.Response {
+	return goi3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (goi3r GetOverflowInt32Response) HTTPStatusCode() int {
+	return goi3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (goi3r GetOverflowInt32Response) HTTPStatus() string {
+	return goi3r.rawResponse.Status
+}
+
+// GetOverflowInt64Response ...
+type GetOverflowInt64Response struct {
+	rawResponse *http.Response
+	Value       *int64 `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (goi6r GetOverflowInt64Response) Response() *http.Response {
+	return goi6r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (goi6r GetOverflowInt64Response) HTTPStatusCode() int {
+	return goi6r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (goi6r GetOverflowInt64Response) HTTPStatus() string {
+	return goi6r.rawResponse.Status
+}
+
+// GetUnderflowInt32Response ...
+type GetUnderflowInt32Response struct {
+	rawResponse *http.Response
+	Value       *int32 `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gui3r GetUnderflowInt32Response) Response() *http.Response {
+	return gui3r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gui3r GetUnderflowInt32Response) HTTPStatusCode() int {
+	return gui3r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gui3r GetUnderflowInt32Response) HTTPStatus() string {
+	return gui3r.rawResponse.Status
+}
+
+// GetUnderflowInt64Response ...
+type GetUnderflowInt64Response struct {
+	rawResponse *http.Response
+	Value       *int64 `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gui6r GetUnderflowInt64Response) Response() *http.Response {
+	return gui6r.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gui6r GetUnderflowInt64Response) HTTPStatusCode() int {
+	return gui6r.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gui6r GetUnderflowInt64Response) HTTPStatus() string {
+	return gui6r.rawResponse.Status
+}
+
+// GetUnixTimeResponse ...
+type GetUnixTimeResponse struct {
+	rawResponse *http.Response
+	Value       *date.UnixTime `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gutr GetUnixTimeResponse) Response() *http.Response {
+	return gutr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gutr GetUnixTimeResponse) HTTPStatusCode() int {
+	return gutr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gutr GetUnixTimeResponse) HTTPStatus() string {
+	return gutr.rawResponse.Status
 }

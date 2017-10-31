@@ -7,17 +7,95 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
+	"net/http"
 )
 
-// ByteArray is
-type ByteArray struct {
-	autorest.Response `json:"-"`
-	Value             *[]byte `json:"value,omitempty"`
-}
-
-// Error is
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
+}
+
+// GetEmptyResponse ...
+type GetEmptyResponse struct {
+	rawResponse *http.Response
+	Value       []byte `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (ger GetEmptyResponse) Response() *http.Response {
+	return ger.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (ger GetEmptyResponse) HTTPStatusCode() int {
+	return ger.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (ger GetEmptyResponse) HTTPStatus() string {
+	return ger.rawResponse.Status
+}
+
+// GetInvalidResponse ...
+type GetInvalidResponse struct {
+	rawResponse *http.Response
+	Value       []byte `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gir GetInvalidResponse) Response() *http.Response {
+	return gir.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gir GetInvalidResponse) HTTPStatusCode() int {
+	return gir.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gir GetInvalidResponse) HTTPStatus() string {
+	return gir.rawResponse.Status
+}
+
+// GetNonASCIIResponse ...
+type GetNonASCIIResponse struct {
+	rawResponse *http.Response
+	Value       []byte `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnar GetNonASCIIResponse) Response() *http.Response {
+	return gnar.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnar GetNonASCIIResponse) HTTPStatusCode() int {
+	return gnar.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnar GetNonASCIIResponse) HTTPStatus() string {
+	return gnar.rawResponse.Status
+}
+
+// GetNullResponse ...
+type GetNullResponse struct {
+	rawResponse *http.Response
+	Value       []byte `json:"value,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnr GetNullResponse) Response() *http.Response {
+	return gnr.rawResponse
+}
+
+// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) HTTPStatusCode() int {
+	return gnr.rawResponse.StatusCode
+}
+
+// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) HTTPStatus() string {
+	return gnr.rawResponse.Status
 }
