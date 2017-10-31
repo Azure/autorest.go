@@ -385,11 +385,11 @@ namespace AutoRest.Go.Model
             get
             {
                 var decorators = new List<string>();
-                decorators.Add("req");
                 if (RegisterRP)
                 {
                     decorators.Add("azure.DoRetryWithRegistration(client.Client)");
-                } else {
+                } else
+                {
                     decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
                 }
                 return decorators;
