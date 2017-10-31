@@ -25,9 +25,20 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+                _userAgent.Value();
             }
         }
+        private Lazy<string> _userAgent = new Lazy<string>(() => {
+            var specifiedUserAgent = Settings.Instance.Host?.GetValue<string>("user-agent");
+
+            string retval;
+            if null == specifiedUserAgent {
+                retval = $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+            } else {
+                retval = specifiedUserAgent;
+            }
+            return retval;
+        });
 
         public CodeModelGo()
         {
