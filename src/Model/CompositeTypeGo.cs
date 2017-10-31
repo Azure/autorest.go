@@ -251,14 +251,14 @@ namespace AutoRest.Go.Model
                 }
                 else if (property.ModelType is CompositeTypeGo && property.ShouldBeFlattened())
                 {
-                        // embed as an anonymous struct.  note that the ordering of this clause is
-                        // important, i.e. we don't want to flatten primary types like dictionaries.
-                        // Polymorphic fields are implemented as go interfaces and a pointer to an
-                        // interface is not implementing the interface.
-                        indented.AppendFormat((property.ModelType as CompositeTypeGo).IsPolymorphic ?
-                            "{0} {1}\n" :
-                            "*{0} {1}\n",
-                                property.Name, property.JsonTag());
+                    // embed as an anonymous struct.  note that the ordering of this clause is
+                    // important, i.e. we don't want to flatten primary types like dictionaries.
+                    // Polymorphic fields are implemented as go interfaces and a pointer to an
+                    // interface is not implementing the interface.
+                    indented.AppendFormat((property.ModelType as CompositeTypeGo).IsPolymorphic ?
+                        "{0} {1}\n" :
+                        "*{0} {1}\n",
+                            property.ModelType.Name, property.JsonTag());
                 }
                 else if (property.ModelType is CompositeTypeGo && (property.ModelType as CompositeTypeGo).IsPolymorphic)
                 {
