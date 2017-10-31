@@ -7,6 +7,7 @@ package dategroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -29,8 +30,8 @@ func NewGroupClientWithBaseURI(baseURI string) GroupClient {
 }
 
 // GetInvalidDate get invalid date value
-func (client GroupClient) GetInvalidDate() (result Date, err error) {
-	req, err := client.GetInvalidDatePreparer()
+func (client GroupClient) GetInvalidDate(ctx context.Context) (result Date, err error) {
+	req, err := client.GetInvalidDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetInvalidDate", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client GroupClient) GetInvalidDate() (result Date, err error) {
 }
 
 // GetInvalidDatePreparer prepares the GetInvalidDate request.
-func (client GroupClient) GetInvalidDatePreparer() (*http.Request, error) {
+func (client GroupClient) GetInvalidDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/invaliddate"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidDateSender sends the GetInvalidDate request. The method will close the
@@ -81,8 +82,8 @@ func (client GroupClient) GetInvalidDateResponder(resp *http.Response) (result D
 }
 
 // GetMaxDate get max date value 9999-12-31
-func (client GroupClient) GetMaxDate() (result Date, err error) {
-	req, err := client.GetMaxDatePreparer()
+func (client GroupClient) GetMaxDate(ctx context.Context) (result Date, err error) {
+	req, err := client.GetMaxDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMaxDate", nil, "Failure preparing request")
 		return
@@ -104,12 +105,12 @@ func (client GroupClient) GetMaxDate() (result Date, err error) {
 }
 
 // GetMaxDatePreparer prepares the GetMaxDate request.
-func (client GroupClient) GetMaxDatePreparer() (*http.Request, error) {
+func (client GroupClient) GetMaxDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/max"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMaxDateSender sends the GetMaxDate request. The method will close the
@@ -133,8 +134,8 @@ func (client GroupClient) GetMaxDateResponder(resp *http.Response) (result Date,
 }
 
 // GetMinDate get min date value 0000-01-01
-func (client GroupClient) GetMinDate() (result Date, err error) {
-	req, err := client.GetMinDatePreparer()
+func (client GroupClient) GetMinDate(ctx context.Context) (result Date, err error) {
+	req, err := client.GetMinDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMinDate", nil, "Failure preparing request")
 		return
@@ -156,12 +157,12 @@ func (client GroupClient) GetMinDate() (result Date, err error) {
 }
 
 // GetMinDatePreparer prepares the GetMinDate request.
-func (client GroupClient) GetMinDatePreparer() (*http.Request, error) {
+func (client GroupClient) GetMinDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/min"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMinDateSender sends the GetMinDate request. The method will close the
@@ -185,8 +186,8 @@ func (client GroupClient) GetMinDateResponder(resp *http.Response) (result Date,
 }
 
 // GetNull get null date value
-func (client GroupClient) GetNull() (result Date, err error) {
-	req, err := client.GetNullPreparer()
+func (client GroupClient) GetNull(ctx context.Context) (result Date, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -208,12 +209,12 @@ func (client GroupClient) GetNull() (result Date, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client GroupClient) GetNullPreparer() (*http.Request, error) {
+func (client GroupClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -237,8 +238,8 @@ func (client GroupClient) GetNullResponder(resp *http.Response) (result Date, er
 }
 
 // GetOverflowDate get overflow date value
-func (client GroupClient) GetOverflowDate() (result Date, err error) {
-	req, err := client.GetOverflowDatePreparer()
+func (client GroupClient) GetOverflowDate(ctx context.Context) (result Date, err error) {
+	req, err := client.GetOverflowDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetOverflowDate", nil, "Failure preparing request")
 		return
@@ -260,12 +261,12 @@ func (client GroupClient) GetOverflowDate() (result Date, err error) {
 }
 
 // GetOverflowDatePreparer prepares the GetOverflowDate request.
-func (client GroupClient) GetOverflowDatePreparer() (*http.Request, error) {
+func (client GroupClient) GetOverflowDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/overflowdate"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowDateSender sends the GetOverflowDate request. The method will close the
@@ -289,8 +290,8 @@ func (client GroupClient) GetOverflowDateResponder(resp *http.Response) (result 
 }
 
 // GetUnderflowDate get underflow date value
-func (client GroupClient) GetUnderflowDate() (result Date, err error) {
-	req, err := client.GetUnderflowDatePreparer()
+func (client GroupClient) GetUnderflowDate(ctx context.Context) (result Date, err error) {
+	req, err := client.GetUnderflowDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetUnderflowDate", nil, "Failure preparing request")
 		return
@@ -312,12 +313,12 @@ func (client GroupClient) GetUnderflowDate() (result Date, err error) {
 }
 
 // GetUnderflowDatePreparer prepares the GetUnderflowDate request.
-func (client GroupClient) GetUnderflowDatePreparer() (*http.Request, error) {
+func (client GroupClient) GetUnderflowDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/underflowdate"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowDateSender sends the GetUnderflowDate request. The method will close the
@@ -342,8 +343,8 @@ func (client GroupClient) GetUnderflowDateResponder(resp *http.Response) (result
 
 // PutMaxDate put max date value 9999-12-31
 //
-func (client GroupClient) PutMaxDate(dateBody date.Date) (result autorest.Response, err error) {
-	req, err := client.PutMaxDatePreparer(dateBody)
+func (client GroupClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+	req, err := client.PutMaxDatePreparer(ctx, dateBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMaxDate", nil, "Failure preparing request")
 		return
@@ -365,14 +366,14 @@ func (client GroupClient) PutMaxDate(dateBody date.Date) (result autorest.Respon
 }
 
 // PutMaxDatePreparer prepares the PutMaxDate request.
-func (client GroupClient) PutMaxDatePreparer(dateBody date.Date) (*http.Request, error) {
+func (client GroupClient) PutMaxDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/max"),
 		autorest.WithJSON(dateBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMaxDateSender sends the PutMaxDate request. The method will close the
@@ -396,8 +397,8 @@ func (client GroupClient) PutMaxDateResponder(resp *http.Response) (result autor
 
 // PutMinDate put min date value 0000-01-01
 //
-func (client GroupClient) PutMinDate(dateBody date.Date) (result autorest.Response, err error) {
-	req, err := client.PutMinDatePreparer(dateBody)
+func (client GroupClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+	req, err := client.PutMinDatePreparer(ctx, dateBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMinDate", nil, "Failure preparing request")
 		return
@@ -419,14 +420,14 @@ func (client GroupClient) PutMinDate(dateBody date.Date) (result autorest.Respon
 }
 
 // PutMinDatePreparer prepares the PutMinDate request.
-func (client GroupClient) PutMinDatePreparer(dateBody date.Date) (*http.Request, error) {
+func (client GroupClient) PutMinDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/min"),
 		autorest.WithJSON(dateBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMinDateSender sends the PutMinDate request. The method will close the

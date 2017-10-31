@@ -1,6 +1,7 @@
 package durationgrouptest
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -26,7 +27,7 @@ func getDurationClient() DurationClient {
 }
 
 func (s *DurationSuite) TestGetInvalidDuration(c *chk.C) {
-	res, err := durationClient.GetInvalid()
+	res, err := durationClient.GetInvalid(context.Background())
 	if err != nil {
 		c.SucceedNow()
 	}
@@ -35,18 +36,18 @@ func (s *DurationSuite) TestGetInvalidDuration(c *chk.C) {
 }
 
 func (s *DurationSuite) TestGetNullDuration(c *chk.C) {
-	res, err := durationClient.GetNull()
+	res, err := durationClient.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Value, chk.IsNil)
 }
 
 func (s *DurationSuite) TestGetPositiveDuration(c *chk.C) {
-	res, err := durationClient.GetPositiveDuration()
+	res, err := durationClient.GetPositiveDuration(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.Equals, "P3Y6M4DT12H30M5S")
 }
 
 func (s *DurationSuite) TestPutPositiveDuration(c *chk.C) {
-	_, err := durationClient.PutPositiveDuration("P123DT22H14M12.011S")
+	_, err := durationClient.PutPositiveDuration(context.Background(), "P123DT22H14M12.011S")
 	c.Assert(err, chk.IsNil)
 }

@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -30,8 +31,8 @@ func NewHTTPRetryClientWithBaseURI(baseURI string) HTTPRetryClient {
 // Delete503 return 503 status code, then 200 after retry
 //
 // booleanValue is simple boolean value true
-func (client HTTPRetryClient) Delete503(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Delete503Preparer(booleanValue)
+func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Delete503Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Delete503", nil, "Failure preparing request")
 		return
@@ -53,7 +54,7 @@ func (client HTTPRetryClient) Delete503(booleanValue *bool) (result autorest.Res
 }
 
 // Delete503Preparer prepares the Delete503 request.
-func (client HTTPRetryClient) Delete503Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRetryClient) Delete503Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -63,7 +64,7 @@ func (client HTTPRetryClient) Delete503Preparer(booleanValue *bool) (*http.Reque
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete503Sender sends the Delete503 request. The method will close the
@@ -86,8 +87,8 @@ func (client HTTPRetryClient) Delete503Responder(resp *http.Response) (result au
 }
 
 // Get502 return 502 status code, then 200 after retry
-func (client HTTPRetryClient) Get502() (result autorest.Response, err error) {
-	req, err := client.Get502Preparer()
+func (client HTTPRetryClient) Get502(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get502Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Get502", nil, "Failure preparing request")
 		return
@@ -109,12 +110,12 @@ func (client HTTPRetryClient) Get502() (result autorest.Response, err error) {
 }
 
 // Get502Preparer prepares the Get502 request.
-func (client HTTPRetryClient) Get502Preparer() (*http.Request, error) {
+func (client HTTPRetryClient) Get502Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/502"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get502Sender sends the Get502 request. The method will close the
@@ -137,8 +138,8 @@ func (client HTTPRetryClient) Get502Responder(resp *http.Response) (result autor
 }
 
 // Head408 return 408 status code, then 200 after retry
-func (client HTTPRetryClient) Head408() (result autorest.Response, err error) {
-	req, err := client.Head408Preparer()
+func (client HTTPRetryClient) Head408(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head408Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Head408", nil, "Failure preparing request")
 		return
@@ -160,12 +161,12 @@ func (client HTTPRetryClient) Head408() (result autorest.Response, err error) {
 }
 
 // Head408Preparer prepares the Head408 request.
-func (client HTTPRetryClient) Head408Preparer() (*http.Request, error) {
+func (client HTTPRetryClient) Head408Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/408"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head408Sender sends the Head408 request. The method will close the
@@ -190,8 +191,8 @@ func (client HTTPRetryClient) Head408Responder(resp *http.Response) (result auto
 // Patch500 return 500 status code, then 200 after retry
 //
 // booleanValue is simple boolean value true
-func (client HTTPRetryClient) Patch500(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Patch500Preparer(booleanValue)
+func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Patch500Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Patch500", nil, "Failure preparing request")
 		return
@@ -213,7 +214,7 @@ func (client HTTPRetryClient) Patch500(booleanValue *bool) (result autorest.Resp
 }
 
 // Patch500Preparer prepares the Patch500 request.
-func (client HTTPRetryClient) Patch500Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRetryClient) Patch500Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -223,7 +224,7 @@ func (client HTTPRetryClient) Patch500Preparer(booleanValue *bool) (*http.Reques
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch500Sender sends the Patch500 request. The method will close the
@@ -248,8 +249,8 @@ func (client HTTPRetryClient) Patch500Responder(resp *http.Response) (result aut
 // Patch504 return 504 status code, then 200 after retry
 //
 // booleanValue is simple boolean value true
-func (client HTTPRetryClient) Patch504(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Patch504Preparer(booleanValue)
+func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Patch504Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Patch504", nil, "Failure preparing request")
 		return
@@ -271,7 +272,7 @@ func (client HTTPRetryClient) Patch504(booleanValue *bool) (result autorest.Resp
 }
 
 // Patch504Preparer prepares the Patch504 request.
-func (client HTTPRetryClient) Patch504Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRetryClient) Patch504Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -281,7 +282,7 @@ func (client HTTPRetryClient) Patch504Preparer(booleanValue *bool) (*http.Reques
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch504Sender sends the Patch504 request. The method will close the
@@ -306,8 +307,8 @@ func (client HTTPRetryClient) Patch504Responder(resp *http.Response) (result aut
 // Post503 return 503 status code, then 200 after retry
 //
 // booleanValue is simple boolean value true
-func (client HTTPRetryClient) Post503(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Post503Preparer(booleanValue)
+func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Post503Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Post503", nil, "Failure preparing request")
 		return
@@ -329,7 +330,7 @@ func (client HTTPRetryClient) Post503(booleanValue *bool) (result autorest.Respo
 }
 
 // Post503Preparer prepares the Post503 request.
-func (client HTTPRetryClient) Post503Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRetryClient) Post503Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -339,7 +340,7 @@ func (client HTTPRetryClient) Post503Preparer(booleanValue *bool) (*http.Request
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post503Sender sends the Post503 request. The method will close the
@@ -364,8 +365,8 @@ func (client HTTPRetryClient) Post503Responder(resp *http.Response) (result auto
 // Put500 return 500 status code, then 200 after retry
 //
 // booleanValue is simple boolean value true
-func (client HTTPRetryClient) Put500(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put500Preparer(booleanValue)
+func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put500Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Put500", nil, "Failure preparing request")
 		return
@@ -387,7 +388,7 @@ func (client HTTPRetryClient) Put500(booleanValue *bool) (result autorest.Respon
 }
 
 // Put500Preparer prepares the Put500 request.
-func (client HTTPRetryClient) Put500Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRetryClient) Put500Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -397,7 +398,7 @@ func (client HTTPRetryClient) Put500Preparer(booleanValue *bool) (*http.Request,
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put500Sender sends the Put500 request. The method will close the
@@ -422,8 +423,8 @@ func (client HTTPRetryClient) Put500Responder(resp *http.Response) (result autor
 // Put504 return 504 status code, then 200 after retry
 //
 // booleanValue is simple boolean value true
-func (client HTTPRetryClient) Put504(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put504Preparer(booleanValue)
+func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put504Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Put504", nil, "Failure preparing request")
 		return
@@ -445,7 +446,7 @@ func (client HTTPRetryClient) Put504(booleanValue *bool) (result autorest.Respon
 }
 
 // Put504Preparer prepares the Put504 request.
-func (client HTTPRetryClient) Put504Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRetryClient) Put504Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -455,7 +456,7 @@ func (client HTTPRetryClient) Put504Preparer(booleanValue *bool) (*http.Request,
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put504Sender sends the Put504 request. The method will close the

@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -30,8 +31,8 @@ func NewHTTPRedirectsClientWithBaseURI(baseURI string) HTTPRedirectsClient {
 // Delete307 delete redirected with 307, resulting in a 200 after redirect
 //
 // booleanValue is simple boolean value true
-func (client HTTPRedirectsClient) Delete307(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Delete307Preparer(booleanValue)
+func (client HTTPRedirectsClient) Delete307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Delete307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Delete307", nil, "Failure preparing request")
 		return
@@ -53,7 +54,7 @@ func (client HTTPRedirectsClient) Delete307(booleanValue *bool) (result autorest
 }
 
 // Delete307Preparer prepares the Delete307 request.
-func (client HTTPRedirectsClient) Delete307Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRedirectsClient) Delete307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -63,7 +64,7 @@ func (client HTTPRedirectsClient) Delete307Preparer(booleanValue *bool) (*http.R
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete307Sender sends the Delete307 request. The method will close the
@@ -86,8 +87,8 @@ func (client HTTPRedirectsClient) Delete307Responder(resp *http.Response) (resul
 }
 
 // Get300 return 300 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Get300() (result ListString, err error) {
-	req, err := client.Get300Preparer()
+func (client HTTPRedirectsClient) Get300(ctx context.Context) (result ListString, err error) {
+	req, err := client.Get300Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get300", nil, "Failure preparing request")
 		return
@@ -109,12 +110,12 @@ func (client HTTPRedirectsClient) Get300() (result ListString, err error) {
 }
 
 // Get300Preparer prepares the Get300 request.
-func (client HTTPRedirectsClient) Get300Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Get300Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/300"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get300Sender sends the Get300 request. The method will close the
@@ -138,8 +139,8 @@ func (client HTTPRedirectsClient) Get300Responder(resp *http.Response) (result L
 }
 
 // Get301 return 301 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Get301() (result autorest.Response, err error) {
-	req, err := client.Get301Preparer()
+func (client HTTPRedirectsClient) Get301(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get301Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get301", nil, "Failure preparing request")
 		return
@@ -161,12 +162,12 @@ func (client HTTPRedirectsClient) Get301() (result autorest.Response, err error)
 }
 
 // Get301Preparer prepares the Get301 request.
-func (client HTTPRedirectsClient) Get301Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Get301Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/301"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get301Sender sends the Get301 request. The method will close the
@@ -189,8 +190,8 @@ func (client HTTPRedirectsClient) Get301Responder(resp *http.Response) (result a
 }
 
 // Get302 return 302 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Get302() (result autorest.Response, err error) {
-	req, err := client.Get302Preparer()
+func (client HTTPRedirectsClient) Get302(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get302Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get302", nil, "Failure preparing request")
 		return
@@ -212,12 +213,12 @@ func (client HTTPRedirectsClient) Get302() (result autorest.Response, err error)
 }
 
 // Get302Preparer prepares the Get302 request.
-func (client HTTPRedirectsClient) Get302Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Get302Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/302"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get302Sender sends the Get302 request. The method will close the
@@ -240,8 +241,8 @@ func (client HTTPRedirectsClient) Get302Responder(resp *http.Response) (result a
 }
 
 // Get307 redirect get with 307, resulting in a 200 success
-func (client HTTPRedirectsClient) Get307() (result autorest.Response, err error) {
-	req, err := client.Get307Preparer()
+func (client HTTPRedirectsClient) Get307(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get307Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get307", nil, "Failure preparing request")
 		return
@@ -263,12 +264,12 @@ func (client HTTPRedirectsClient) Get307() (result autorest.Response, err error)
 }
 
 // Get307Preparer prepares the Get307 request.
-func (client HTTPRedirectsClient) Get307Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Get307Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/307"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get307Sender sends the Get307 request. The method will close the
@@ -291,8 +292,8 @@ func (client HTTPRedirectsClient) Get307Responder(resp *http.Response) (result a
 }
 
 // Head300 return 300 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head300() (result autorest.Response, err error) {
-	req, err := client.Head300Preparer()
+func (client HTTPRedirectsClient) Head300(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head300Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head300", nil, "Failure preparing request")
 		return
@@ -314,12 +315,12 @@ func (client HTTPRedirectsClient) Head300() (result autorest.Response, err error
 }
 
 // Head300Preparer prepares the Head300 request.
-func (client HTTPRedirectsClient) Head300Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Head300Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/300"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head300Sender sends the Head300 request. The method will close the
@@ -342,8 +343,8 @@ func (client HTTPRedirectsClient) Head300Responder(resp *http.Response) (result 
 }
 
 // Head301 return 301 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head301() (result autorest.Response, err error) {
-	req, err := client.Head301Preparer()
+func (client HTTPRedirectsClient) Head301(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head301Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head301", nil, "Failure preparing request")
 		return
@@ -365,12 +366,12 @@ func (client HTTPRedirectsClient) Head301() (result autorest.Response, err error
 }
 
 // Head301Preparer prepares the Head301 request.
-func (client HTTPRedirectsClient) Head301Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Head301Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/301"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head301Sender sends the Head301 request. The method will close the
@@ -393,8 +394,8 @@ func (client HTTPRedirectsClient) Head301Responder(resp *http.Response) (result 
 }
 
 // Head302 return 302 status code and redirect to /http/success/200
-func (client HTTPRedirectsClient) Head302() (result autorest.Response, err error) {
-	req, err := client.Head302Preparer()
+func (client HTTPRedirectsClient) Head302(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head302Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head302", nil, "Failure preparing request")
 		return
@@ -416,12 +417,12 @@ func (client HTTPRedirectsClient) Head302() (result autorest.Response, err error
 }
 
 // Head302Preparer prepares the Head302 request.
-func (client HTTPRedirectsClient) Head302Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Head302Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/302"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head302Sender sends the Head302 request. The method will close the
@@ -444,8 +445,8 @@ func (client HTTPRedirectsClient) Head302Responder(resp *http.Response) (result 
 }
 
 // Head307 redirect with 307, resulting in a 200 success
-func (client HTTPRedirectsClient) Head307() (result autorest.Response, err error) {
-	req, err := client.Head307Preparer()
+func (client HTTPRedirectsClient) Head307(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head307Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head307", nil, "Failure preparing request")
 		return
@@ -467,12 +468,12 @@ func (client HTTPRedirectsClient) Head307() (result autorest.Response, err error
 }
 
 // Head307Preparer prepares the Head307 request.
-func (client HTTPRedirectsClient) Head307Preparer() (*http.Request, error) {
+func (client HTTPRedirectsClient) Head307Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/307"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head307Sender sends the Head307 request. The method will close the
@@ -498,8 +499,8 @@ func (client HTTPRedirectsClient) Head307Responder(resp *http.Response) (result 
 // should return the received 302 to the caller for evaluation
 //
 // booleanValue is simple boolean value true
-func (client HTTPRedirectsClient) Patch302(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Patch302Preparer(booleanValue)
+func (client HTTPRedirectsClient) Patch302(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Patch302Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Patch302", nil, "Failure preparing request")
 		return
@@ -521,7 +522,7 @@ func (client HTTPRedirectsClient) Patch302(booleanValue *bool) (result autorest.
 }
 
 // Patch302Preparer prepares the Patch302 request.
-func (client HTTPRedirectsClient) Patch302Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRedirectsClient) Patch302Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -531,7 +532,7 @@ func (client HTTPRedirectsClient) Patch302Preparer(booleanValue *bool) (*http.Re
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch302Sender sends the Patch302 request. The method will close the
@@ -556,8 +557,8 @@ func (client HTTPRedirectsClient) Patch302Responder(resp *http.Response) (result
 // Patch307 patch redirected with 307, resulting in a 200 after redirect
 //
 // booleanValue is simple boolean value true
-func (client HTTPRedirectsClient) Patch307(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Patch307Preparer(booleanValue)
+func (client HTTPRedirectsClient) Patch307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Patch307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Patch307", nil, "Failure preparing request")
 		return
@@ -579,7 +580,7 @@ func (client HTTPRedirectsClient) Patch307(booleanValue *bool) (result autorest.
 }
 
 // Patch307Preparer prepares the Patch307 request.
-func (client HTTPRedirectsClient) Patch307Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRedirectsClient) Patch307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -589,7 +590,7 @@ func (client HTTPRedirectsClient) Patch307Preparer(booleanValue *bool) (*http.Re
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch307Sender sends the Patch307 request. The method will close the
@@ -615,8 +616,8 @@ func (client HTTPRedirectsClient) Patch307Responder(resp *http.Response) (result
 // get, ultimately returning a 200 status code
 //
 // booleanValue is simple boolean value true
-func (client HTTPRedirectsClient) Post303(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Post303Preparer(booleanValue)
+func (client HTTPRedirectsClient) Post303(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Post303Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Post303", nil, "Failure preparing request")
 		return
@@ -638,7 +639,7 @@ func (client HTTPRedirectsClient) Post303(booleanValue *bool) (result autorest.R
 }
 
 // Post303Preparer prepares the Post303 request.
-func (client HTTPRedirectsClient) Post303Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRedirectsClient) Post303Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -648,7 +649,7 @@ func (client HTTPRedirectsClient) Post303Preparer(booleanValue *bool) (*http.Req
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post303Sender sends the Post303 request. The method will close the
@@ -673,8 +674,8 @@ func (client HTTPRedirectsClient) Post303Responder(resp *http.Response) (result 
 // Post307 post redirected with 307, resulting in a 200 after redirect
 //
 // booleanValue is simple boolean value true
-func (client HTTPRedirectsClient) Post307(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Post307Preparer(booleanValue)
+func (client HTTPRedirectsClient) Post307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Post307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Post307", nil, "Failure preparing request")
 		return
@@ -696,7 +697,7 @@ func (client HTTPRedirectsClient) Post307(booleanValue *bool) (result autorest.R
 }
 
 // Post307Preparer prepares the Post307 request.
-func (client HTTPRedirectsClient) Post307Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRedirectsClient) Post307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -706,7 +707,7 @@ func (client HTTPRedirectsClient) Post307Preparer(booleanValue *bool) (*http.Req
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post307Sender sends the Post307 request. The method will close the
@@ -732,8 +733,8 @@ func (client HTTPRedirectsClient) Post307Responder(resp *http.Response) (result 
 // should return the received 301 to the caller for evaluation
 //
 // booleanValue is simple boolean value true
-func (client HTTPRedirectsClient) Put301(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put301Preparer(booleanValue)
+func (client HTTPRedirectsClient) Put301(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put301Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Put301", nil, "Failure preparing request")
 		return
@@ -755,7 +756,7 @@ func (client HTTPRedirectsClient) Put301(booleanValue *bool) (result autorest.Re
 }
 
 // Put301Preparer prepares the Put301 request.
-func (client HTTPRedirectsClient) Put301Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRedirectsClient) Put301Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -765,7 +766,7 @@ func (client HTTPRedirectsClient) Put301Preparer(booleanValue *bool) (*http.Requ
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put301Sender sends the Put301 request. The method will close the
@@ -790,8 +791,8 @@ func (client HTTPRedirectsClient) Put301Responder(resp *http.Response) (result a
 // Put307 put redirected with 307, resulting in a 200 after redirect
 //
 // booleanValue is simple boolean value true
-func (client HTTPRedirectsClient) Put307(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put307Preparer(booleanValue)
+func (client HTTPRedirectsClient) Put307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Put307", nil, "Failure preparing request")
 		return
@@ -813,7 +814,7 @@ func (client HTTPRedirectsClient) Put307(booleanValue *bool) (result autorest.Re
 }
 
 // Put307Preparer prepares the Put307 request.
-func (client HTTPRedirectsClient) Put307Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPRedirectsClient) Put307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -823,7 +824,7 @@ func (client HTTPRedirectsClient) Put307Preparer(booleanValue *bool) (*http.Requ
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put307Sender sends the Put307 request. The method will close the

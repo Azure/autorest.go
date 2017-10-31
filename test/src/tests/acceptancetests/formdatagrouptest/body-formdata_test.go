@@ -2,6 +2,7 @@ package formdatagrouptest
 
 import (
 	"bytes"
+	"context"
 	"io/ioutil"
 	"testing"
 
@@ -28,7 +29,7 @@ func getFormdataClient() FormdataClient {
 func (s *FormdataSuite) TestUploadFileViaBody(c *chk.C) {
 	f, err := ioutil.ReadFile("../sample.png")
 	c.Assert(err, chk.IsNil)
-	res, err := formdataClient.UploadFileViaBody(ioutil.NopCloser(bytes.NewReader(f)))
+	res, err := formdataClient.UploadFileViaBody(context.Background(), ioutil.NopCloser(bytes.NewReader(f)))
 	c.Assert(err, chk.IsNil)
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(*res.Value)
@@ -41,7 +42,7 @@ func (s *FormdataSuite) TestUploadFileViaBody(c *chk.C) {
 func (s *FormdataSuite) TestUploadFile(c *chk.C) {
 	f, err := ioutil.ReadFile("../sample.png")
 	c.Assert(err, chk.IsNil)
-	res, err := formdataClient.UploadFile(ioutil.NopCloser(bytes.NewReader(f)), "samplefile")
+	res, err := formdataClient.UploadFile(context.Background(), ioutil.NopCloser(bytes.NewReader(f)), "samplefile")
 	c.Assert(err, chk.IsNil)
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(*res.Value)

@@ -7,6 +7,7 @@ package stringgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewGroupClientWithBaseURI(baseURI string) GroupClient {
 }
 
 // GetBase64Encoded get value that is base64 encoded
-func (client GroupClient) GetBase64Encoded() (result Base64URL, err error) {
-	req, err := client.GetBase64EncodedPreparer()
+func (client GroupClient) GetBase64Encoded(ctx context.Context) (result Base64URL, err error) {
+	req, err := client.GetBase64EncodedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetBase64Encoded", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client GroupClient) GetBase64Encoded() (result Base64URL, err error) {
 }
 
 // GetBase64EncodedPreparer prepares the GetBase64Encoded request.
-func (client GroupClient) GetBase64EncodedPreparer() (*http.Request, error) {
+func (client GroupClient) GetBase64EncodedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/base64Encoding"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBase64EncodedSender sends the GetBase64Encoded request. The method will close the
@@ -80,8 +81,8 @@ func (client GroupClient) GetBase64EncodedResponder(resp *http.Response) (result
 }
 
 // GetBase64URLEncoded get value that is base64url encoded
-func (client GroupClient) GetBase64URLEncoded() (result Base64URL, err error) {
-	req, err := client.GetBase64URLEncodedPreparer()
+func (client GroupClient) GetBase64URLEncoded(ctx context.Context) (result Base64URL, err error) {
+	req, err := client.GetBase64URLEncodedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetBase64URLEncoded", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client GroupClient) GetBase64URLEncoded() (result Base64URL, err error) {
 }
 
 // GetBase64URLEncodedPreparer prepares the GetBase64URLEncoded request.
-func (client GroupClient) GetBase64URLEncodedPreparer() (*http.Request, error) {
+func (client GroupClient) GetBase64URLEncodedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/base64UrlEncoding"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBase64URLEncodedSender sends the GetBase64URLEncoded request. The method will close the
@@ -132,8 +133,8 @@ func (client GroupClient) GetBase64URLEncodedResponder(resp *http.Response) (res
 }
 
 // GetEmpty get empty string value value ''
-func (client GroupClient) GetEmpty() (result String, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client GroupClient) GetEmpty(ctx context.Context) (result String, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client GroupClient) GetEmpty() (result String, err error) {
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client GroupClient) GetEmptyPreparer() (*http.Request, error) {
+func (client GroupClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -184,8 +185,8 @@ func (client GroupClient) GetEmptyResponder(resp *http.Response) (result String,
 }
 
 // GetMbcs get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ▇█〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€ '
-func (client GroupClient) GetMbcs() (result String, err error) {
-	req, err := client.GetMbcsPreparer()
+func (client GroupClient) GetMbcs(ctx context.Context) (result String, err error) {
+	req, err := client.GetMbcsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetMbcs", nil, "Failure preparing request")
 		return
@@ -207,12 +208,12 @@ func (client GroupClient) GetMbcs() (result String, err error) {
 }
 
 // GetMbcsPreparer prepares the GetMbcs request.
-func (client GroupClient) GetMbcsPreparer() (*http.Request, error) {
+func (client GroupClient) GetMbcsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/mbcs"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMbcsSender sends the GetMbcs request. The method will close the
@@ -236,8 +237,8 @@ func (client GroupClient) GetMbcsResponder(resp *http.Response) (result String, 
 }
 
 // GetNotProvided get String value when no string value is sent in response payload
-func (client GroupClient) GetNotProvided() (result String, err error) {
-	req, err := client.GetNotProvidedPreparer()
+func (client GroupClient) GetNotProvided(ctx context.Context) (result String, err error) {
+	req, err := client.GetNotProvidedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetNotProvided", nil, "Failure preparing request")
 		return
@@ -259,12 +260,12 @@ func (client GroupClient) GetNotProvided() (result String, err error) {
 }
 
 // GetNotProvidedPreparer prepares the GetNotProvided request.
-func (client GroupClient) GetNotProvidedPreparer() (*http.Request, error) {
+func (client GroupClient) GetNotProvidedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/notProvided"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
@@ -288,8 +289,8 @@ func (client GroupClient) GetNotProvidedResponder(resp *http.Response) (result S
 }
 
 // GetNull get null string value value
-func (client GroupClient) GetNull() (result String, err error) {
-	req, err := client.GetNullPreparer()
+func (client GroupClient) GetNull(ctx context.Context) (result String, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -311,12 +312,12 @@ func (client GroupClient) GetNull() (result String, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client GroupClient) GetNullPreparer() (*http.Request, error) {
+func (client GroupClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -340,8 +341,8 @@ func (client GroupClient) GetNullResponder(resp *http.Response) (result String, 
 }
 
 // GetNullBase64URLEncoded get null value that is expected to be base64url encoded
-func (client GroupClient) GetNullBase64URLEncoded() (result Base64URL, err error) {
-	req, err := client.GetNullBase64URLEncodedPreparer()
+func (client GroupClient) GetNullBase64URLEncoded(ctx context.Context) (result Base64URL, err error) {
+	req, err := client.GetNullBase64URLEncodedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetNullBase64URLEncoded", nil, "Failure preparing request")
 		return
@@ -363,12 +364,12 @@ func (client GroupClient) GetNullBase64URLEncoded() (result Base64URL, err error
 }
 
 // GetNullBase64URLEncodedPreparer prepares the GetNullBase64URLEncoded request.
-func (client GroupClient) GetNullBase64URLEncodedPreparer() (*http.Request, error) {
+func (client GroupClient) GetNullBase64URLEncodedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/nullBase64UrlEncoding"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullBase64URLEncodedSender sends the GetNullBase64URLEncoded request. The method will close the
@@ -393,8 +394,8 @@ func (client GroupClient) GetNullBase64URLEncodedResponder(resp *http.Response) 
 
 // GetWhitespace get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good
 // men to come to the aid of their country<tab><space><space>'
-func (client GroupClient) GetWhitespace() (result String, err error) {
-	req, err := client.GetWhitespacePreparer()
+func (client GroupClient) GetWhitespace(ctx context.Context) (result String, err error) {
+	req, err := client.GetWhitespacePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "GetWhitespace", nil, "Failure preparing request")
 		return
@@ -416,12 +417,12 @@ func (client GroupClient) GetWhitespace() (result String, err error) {
 }
 
 // GetWhitespacePreparer prepares the GetWhitespace request.
-func (client GroupClient) GetWhitespacePreparer() (*http.Request, error) {
+func (client GroupClient) GetWhitespacePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/whitespace"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetWhitespaceSender sends the GetWhitespace request. The method will close the
@@ -446,8 +447,8 @@ func (client GroupClient) GetWhitespaceResponder(resp *http.Response) (result St
 
 // PutBase64URLEncoded put value that is base64url encoded
 //
-func (client GroupClient) PutBase64URLEncoded(stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutBase64URLEncodedPreparer(stringBody)
+func (client GroupClient) PutBase64URLEncoded(ctx context.Context, stringBody string) (result autorest.Response, err error) {
+	req, err := client.PutBase64URLEncodedPreparer(ctx, stringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "PutBase64URLEncoded", nil, "Failure preparing request")
 		return
@@ -469,14 +470,14 @@ func (client GroupClient) PutBase64URLEncoded(stringBody string) (result autores
 }
 
 // PutBase64URLEncodedPreparer prepares the PutBase64URLEncoded request.
-func (client GroupClient) PutBase64URLEncodedPreparer(stringBody string) (*http.Request, error) {
+func (client GroupClient) PutBase64URLEncodedPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/base64UrlEncoding"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBase64URLEncodedSender sends the PutBase64URLEncoded request. The method will close the
@@ -501,8 +502,8 @@ func (client GroupClient) PutBase64URLEncodedResponder(resp *http.Response) (res
 // PutEmpty set string value empty ''
 //
 // stringBody is
-func (client GroupClient) PutEmpty(stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutEmptyPreparer(stringBody)
+func (client GroupClient) PutEmpty(ctx context.Context, stringBody string) (result autorest.Response, err error) {
+	req, err := client.PutEmptyPreparer(ctx, stringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "PutEmpty", nil, "Failure preparing request")
 		return
@@ -524,14 +525,14 @@ func (client GroupClient) PutEmpty(stringBody string) (result autorest.Response,
 }
 
 // PutEmptyPreparer prepares the PutEmpty request.
-func (client GroupClient) PutEmptyPreparer(stringBody string) (*http.Request, error) {
+func (client GroupClient) PutEmptyPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/empty"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutEmptySender sends the PutEmpty request. The method will close the
@@ -556,8 +557,8 @@ func (client GroupClient) PutEmptyResponder(resp *http.Response) (result autores
 // PutMbcs set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ▇█〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€ '
 //
 // stringBody is
-func (client GroupClient) PutMbcs(stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutMbcsPreparer(stringBody)
+func (client GroupClient) PutMbcs(ctx context.Context, stringBody string) (result autorest.Response, err error) {
+	req, err := client.PutMbcsPreparer(ctx, stringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "PutMbcs", nil, "Failure preparing request")
 		return
@@ -579,14 +580,14 @@ func (client GroupClient) PutMbcs(stringBody string) (result autorest.Response, 
 }
 
 // PutMbcsPreparer prepares the PutMbcs request.
-func (client GroupClient) PutMbcsPreparer(stringBody string) (*http.Request, error) {
+func (client GroupClient) PutMbcsPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/mbcs"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMbcsSender sends the PutMbcs request. The method will close the
@@ -611,8 +612,8 @@ func (client GroupClient) PutMbcsResponder(resp *http.Response) (result autorest
 // PutNull set string value null
 //
 // stringBody is
-func (client GroupClient) PutNull(stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutNullPreparer(stringBody)
+func (client GroupClient) PutNull(ctx context.Context, stringBody string) (result autorest.Response, err error) {
+	req, err := client.PutNullPreparer(ctx, stringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "PutNull", nil, "Failure preparing request")
 		return
@@ -634,7 +635,7 @@ func (client GroupClient) PutNull(stringBody string) (result autorest.Response, 
 }
 
 // PutNullPreparer prepares the PutNull request.
-func (client GroupClient) PutNullPreparer(stringBody string) (*http.Request, error) {
+func (client GroupClient) PutNullPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -644,7 +645,7 @@ func (client GroupClient) PutNullPreparer(stringBody string) (*http.Request, err
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(stringBody))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNullSender sends the PutNull request. The method will close the
@@ -670,8 +671,8 @@ func (client GroupClient) PutNullResponder(resp *http.Response) (result autorest
 // men to come to the aid of their country<tab><space><space>'
 //
 // stringBody is
-func (client GroupClient) PutWhitespace(stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutWhitespacePreparer(stringBody)
+func (client GroupClient) PutWhitespace(ctx context.Context, stringBody string) (result autorest.Response, err error) {
+	req, err := client.PutWhitespacePreparer(ctx, stringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.GroupClient", "PutWhitespace", nil, "Failure preparing request")
 		return
@@ -693,14 +694,14 @@ func (client GroupClient) PutWhitespace(stringBody string) (result autorest.Resp
 }
 
 // PutWhitespacePreparer prepares the PutWhitespace request.
-func (client GroupClient) PutWhitespacePreparer(stringBody string) (*http.Request, error) {
+func (client GroupClient) PutWhitespacePreparer(ctx context.Context, stringBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/whitespace"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutWhitespaceSender sends the PutWhitespace request. The method will close the

@@ -7,6 +7,7 @@ package lrogroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -32,8 +33,8 @@ func NewLROsCustomHeaderClientWithBaseURI(baseURI string) LROsCustomHeaderClient
 // headers, Polls return a 200 with a response body after success
 //
 // product is product to put
-func (client LROsCustomHeaderClient) Post202Retry200(product *Product) (result LROsCustomHeaderPost202Retry200Future, err error) {
-	req, err := client.Post202Retry200Preparer(product)
+func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, product *Product) (result LROsCustomHeaderPost202Retry200Future, err error) {
+	req, err := client.Post202Retry200Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Post202Retry200", nil, "Failure preparing request")
 		return
@@ -49,7 +50,7 @@ func (client LROsCustomHeaderClient) Post202Retry200(product *Product) (result L
 }
 
 // Post202Retry200Preparer prepares the Post202Retry200 request.
-func (client LROsCustomHeaderClient) Post202Retry200Preparer(product *Product) (*http.Request, error) {
+func (client LROsCustomHeaderClient) Post202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -59,7 +60,7 @@ func (client LROsCustomHeaderClient) Post202Retry200Preparer(product *Product) (
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post202Retry200Sender sends the Post202Retry200 request. The method will close the
@@ -89,8 +90,8 @@ func (client LROsCustomHeaderClient) Post202Retry200Responder(resp *http.Respons
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 //
 // product is product to put
-func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(product *Product) (result LROsCustomHeaderPostAsyncRetrySucceededFuture, err error) {
-	req, err := client.PostAsyncRetrySucceededPreparer(product)
+func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPostAsyncRetrySucceededFuture, err error) {
+	req, err := client.PostAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PostAsyncRetrySucceeded", nil, "Failure preparing request")
 		return
@@ -106,7 +107,7 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(product *Product) (
 }
 
 // PostAsyncRetrySucceededPreparer prepares the PostAsyncRetrySucceeded request.
-func (client LROsCustomHeaderClient) PostAsyncRetrySucceededPreparer(product *Product) (*http.Request, error) {
+func (client LROsCustomHeaderClient) PostAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -116,7 +117,7 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededPreparer(product *Pr
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostAsyncRetrySucceededSender sends the PostAsyncRetrySucceeded request. The method will close the
@@ -147,8 +148,8 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededResponder(resp *http
 // ProvisioningState=’Succeeded’
 //
 // product is product to put
-func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(product *Product) (result LROsCustomHeaderPut201CreatingSucceeded200Future, err error) {
-	req, err := client.Put201CreatingSucceeded200Preparer(product)
+func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LROsCustomHeaderPut201CreatingSucceeded200Future, err error) {
+	req, err := client.Put201CreatingSucceeded200Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Put201CreatingSucceeded200", nil, "Failure preparing request")
 		return
@@ -164,7 +165,7 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(product *Product
 }
 
 // Put201CreatingSucceeded200Preparer prepares the Put201CreatingSucceeded200 request.
-func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Preparer(product *Product) (*http.Request, error) {
+func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -174,7 +175,7 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Preparer(product 
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put201CreatingSucceeded200Sender sends the Put201CreatingSucceeded200 request. The method will close the
@@ -205,8 +206,8 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Responder(resp *h
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 //
 // product is product to put
-func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(product *Product) (result LROsCustomHeaderPutAsyncRetrySucceededFuture, err error) {
-	req, err := client.PutAsyncRetrySucceededPreparer(product)
+func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPutAsyncRetrySucceededFuture, err error) {
+	req, err := client.PutAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PutAsyncRetrySucceeded", nil, "Failure preparing request")
 		return
@@ -222,7 +223,7 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(product *Product) (r
 }
 
 // PutAsyncRetrySucceededPreparer prepares the PutAsyncRetrySucceeded request.
-func (client LROsCustomHeaderClient) PutAsyncRetrySucceededPreparer(product *Product) (*http.Request, error) {
+func (client LROsCustomHeaderClient) PutAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -232,7 +233,7 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceededPreparer(product *Pro
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutAsyncRetrySucceededSender sends the PutAsyncRetrySucceeded request. The method will close the

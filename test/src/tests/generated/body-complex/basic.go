@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewBasicClientWithBaseURI(baseURI string) BasicClient {
 }
 
 // GetEmpty get a basic complex type that is empty
-func (client BasicClient) GetEmpty() (result Basic, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client BasicClient) GetEmpty(ctx context.Context) (result Basic, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client BasicClient) GetEmpty() (result Basic, err error) {
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client BasicClient) GetEmptyPreparer() (*http.Request, error) {
+func (client BasicClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/basic/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -80,8 +81,8 @@ func (client BasicClient) GetEmptyResponder(resp *http.Response) (result Basic, 
 }
 
 // GetInvalid get a basic complex type that is invalid for the local strong type
-func (client BasicClient) GetInvalid() (result Basic, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client BasicClient) GetInvalid(ctx context.Context) (result Basic, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client BasicClient) GetInvalid() (result Basic, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client BasicClient) GetInvalidPreparer() (*http.Request, error) {
+func (client BasicClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/basic/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -132,8 +133,8 @@ func (client BasicClient) GetInvalidResponder(resp *http.Response) (result Basic
 }
 
 // GetNotProvided get a basic complex type while the server doesn't provide a response payload
-func (client BasicClient) GetNotProvided() (result Basic, err error) {
-	req, err := client.GetNotProvidedPreparer()
+func (client BasicClient) GetNotProvided(ctx context.Context) (result Basic, err error) {
+	req, err := client.GetNotProvidedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetNotProvided", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client BasicClient) GetNotProvided() (result Basic, err error) {
 }
 
 // GetNotProvidedPreparer prepares the GetNotProvided request.
-func (client BasicClient) GetNotProvidedPreparer() (*http.Request, error) {
+func (client BasicClient) GetNotProvidedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/basic/notprovided"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
@@ -184,8 +185,8 @@ func (client BasicClient) GetNotProvidedResponder(resp *http.Response) (result B
 }
 
 // GetNull get a basic complex type whose properties are null
-func (client BasicClient) GetNull() (result Basic, err error) {
-	req, err := client.GetNullPreparer()
+func (client BasicClient) GetNull(ctx context.Context) (result Basic, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -207,12 +208,12 @@ func (client BasicClient) GetNull() (result Basic, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client BasicClient) GetNullPreparer() (*http.Request, error) {
+func (client BasicClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/basic/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -236,8 +237,8 @@ func (client BasicClient) GetNullResponder(resp *http.Response) (result Basic, e
 }
 
 // GetValid get complex type {id: 2, name: 'abc', color: 'YELLOW'}
-func (client BasicClient) GetValid() (result Basic, err error) {
-	req, err := client.GetValidPreparer()
+func (client BasicClient) GetValid(ctx context.Context) (result Basic, err error) {
+	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetValid", nil, "Failure preparing request")
 		return
@@ -259,12 +260,12 @@ func (client BasicClient) GetValid() (result Basic, err error) {
 }
 
 // GetValidPreparer prepares the GetValid request.
-func (client BasicClient) GetValidPreparer() (*http.Request, error) {
+func (client BasicClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/basic/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetValidSender sends the GetValid request. The method will close the
@@ -290,8 +291,8 @@ func (client BasicClient) GetValidResponder(resp *http.Response) (result Basic, 
 // PutValid please put {id: 2, name: 'abc', color: 'Magenta'}
 //
 // complexBody is please put {id: 2, name: 'abc', color: 'Magenta'}
-func (client BasicClient) PutValid(complexBody Basic) (result autorest.Response, err error) {
-	req, err := client.PutValidPreparer(complexBody)
+func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (result autorest.Response, err error) {
+	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "PutValid", nil, "Failure preparing request")
 		return
@@ -313,7 +314,7 @@ func (client BasicClient) PutValid(complexBody Basic) (result autorest.Response,
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client BasicClient) PutValidPreparer(complexBody Basic) (*http.Request, error) {
+func (client BasicClient) PutValidPreparer(ctx context.Context, complexBody Basic) (*http.Request, error) {
 	const APIVersion = "2014-04-01-preview"
 	queryParameters := map[string]interface{}{
 		"api-version": APIVersion,
@@ -326,7 +327,7 @@ func (client BasicClient) PutValidPreparer(complexBody Basic) (*http.Request, er
 		autorest.WithPath("/complex/basic/valid"),
 		autorest.WithJSON(complexBody),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidSender sends the PutValid request. The method will close the

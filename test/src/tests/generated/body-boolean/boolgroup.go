@@ -7,6 +7,7 @@ package booleangroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewBoolGroupClientWithBaseURI(baseURI string) BoolGroupClient {
 }
 
 // GetFalse get false Boolean value
-func (client BoolGroupClient) GetFalse() (result Bool, err error) {
-	req, err := client.GetFalsePreparer()
+func (client BoolGroupClient) GetFalse(ctx context.Context) (result Bool, err error) {
+	req, err := client.GetFalsePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetFalse", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client BoolGroupClient) GetFalse() (result Bool, err error) {
 }
 
 // GetFalsePreparer prepares the GetFalse request.
-func (client BoolGroupClient) GetFalsePreparer() (*http.Request, error) {
+func (client BoolGroupClient) GetFalsePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/false"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFalseSender sends the GetFalse request. The method will close the
@@ -80,8 +81,8 @@ func (client BoolGroupClient) GetFalseResponder(resp *http.Response) (result Boo
 }
 
 // GetInvalid get invalid Boolean value
-func (client BoolGroupClient) GetInvalid() (result Bool, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client BoolGroupClient) GetInvalid(ctx context.Context) (result Bool, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client BoolGroupClient) GetInvalid() (result Bool, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client BoolGroupClient) GetInvalidPreparer() (*http.Request, error) {
+func (client BoolGroupClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -132,8 +133,8 @@ func (client BoolGroupClient) GetInvalidResponder(resp *http.Response) (result B
 }
 
 // GetNull get null Boolean value
-func (client BoolGroupClient) GetNull() (result Bool, err error) {
-	req, err := client.GetNullPreparer()
+func (client BoolGroupClient) GetNull(ctx context.Context) (result Bool, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client BoolGroupClient) GetNull() (result Bool, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client BoolGroupClient) GetNullPreparer() (*http.Request, error) {
+func (client BoolGroupClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -184,8 +185,8 @@ func (client BoolGroupClient) GetNullResponder(resp *http.Response) (result Bool
 }
 
 // GetTrue get true Boolean value
-func (client BoolGroupClient) GetTrue() (result Bool, err error) {
-	req, err := client.GetTruePreparer()
+func (client BoolGroupClient) GetTrue(ctx context.Context) (result Bool, err error) {
+	req, err := client.GetTruePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetTrue", nil, "Failure preparing request")
 		return
@@ -207,12 +208,12 @@ func (client BoolGroupClient) GetTrue() (result Bool, err error) {
 }
 
 // GetTruePreparer prepares the GetTrue request.
-func (client BoolGroupClient) GetTruePreparer() (*http.Request, error) {
+func (client BoolGroupClient) GetTruePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/true"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetTrueSender sends the GetTrue request. The method will close the
@@ -237,8 +238,8 @@ func (client BoolGroupClient) GetTrueResponder(resp *http.Response) (result Bool
 
 // PutFalse set Boolean value false
 //
-func (client BoolGroupClient) PutFalse(boolBody bool) (result autorest.Response, err error) {
-	req, err := client.PutFalsePreparer(boolBody)
+func (client BoolGroupClient) PutFalse(ctx context.Context, boolBody bool) (result autorest.Response, err error) {
+	req, err := client.PutFalsePreparer(ctx, boolBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutFalse", nil, "Failure preparing request")
 		return
@@ -260,14 +261,14 @@ func (client BoolGroupClient) PutFalse(boolBody bool) (result autorest.Response,
 }
 
 // PutFalsePreparer prepares the PutFalse request.
-func (client BoolGroupClient) PutFalsePreparer(boolBody bool) (*http.Request, error) {
+func (client BoolGroupClient) PutFalsePreparer(ctx context.Context, boolBody bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/false"),
 		autorest.WithJSON(boolBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutFalseSender sends the PutFalse request. The method will close the
@@ -291,8 +292,8 @@ func (client BoolGroupClient) PutFalseResponder(resp *http.Response) (result aut
 
 // PutTrue set Boolean value true
 //
-func (client BoolGroupClient) PutTrue(boolBody bool) (result autorest.Response, err error) {
-	req, err := client.PutTruePreparer(boolBody)
+func (client BoolGroupClient) PutTrue(ctx context.Context, boolBody bool) (result autorest.Response, err error) {
+	req, err := client.PutTruePreparer(ctx, boolBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutTrue", nil, "Failure preparing request")
 		return
@@ -314,14 +315,14 @@ func (client BoolGroupClient) PutTrue(boolBody bool) (result autorest.Response, 
 }
 
 // PutTruePreparer prepares the PutTrue request.
-func (client BoolGroupClient) PutTruePreparer(boolBody bool) (*http.Request, error) {
+func (client BoolGroupClient) PutTruePreparer(ctx context.Context, boolBody bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/true"),
 		autorest.WithJSON(boolBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutTrueSender sends the PutTrue request. The method will close the

@@ -7,6 +7,7 @@ package urlgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -34,8 +35,8 @@ func NewPathItemsClientWithBaseURI(baseURI string, globalStringPath string, glob
 // localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value 'pathItemStringPath'
 // that appears in the path localStringQuery is should contain value 'localStringQuery' pathItemStringQuery is a string
 // value 'pathItemStringQuery' that appears as a query parameter
-func (client PathItemsClient) GetAllWithValues(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	req, err := client.GetAllWithValuesPreparer(localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
+func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	req, err := client.GetAllWithValuesPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetAllWithValues", nil, "Failure preparing request")
 		return
@@ -57,7 +58,7 @@ func (client PathItemsClient) GetAllWithValues(localStringPath string, pathItemS
 }
 
 // GetAllWithValuesPreparer prepares the GetAllWithValues request.
-func (client PathItemsClient) GetAllWithValuesPreparer(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
+func (client PathItemsClient) GetAllWithValuesPreparer(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"globalStringPath":   autorest.Encode("path", client.GlobalStringPath),
 		"localStringPath":    autorest.Encode("path", localStringPath),
@@ -80,7 +81,7 @@ func (client PathItemsClient) GetAllWithValuesPreparer(localStringPath string, p
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/pathItemStringQuery/localStringQuery", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetAllWithValuesSender sends the GetAllWithValues request. The method will close the
@@ -109,8 +110,8 @@ func (client PathItemsClient) GetAllWithValuesResponder(resp *http.Response) (re
 // localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value 'pathItemStringPath'
 // that appears in the path localStringQuery is should contain null value pathItemStringQuery is a string value
 // 'pathItemStringQuery' that appears as a query parameter
-func (client PathItemsClient) GetGlobalAndLocalQueryNull(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	req, err := client.GetGlobalAndLocalQueryNullPreparer(localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
+func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	req, err := client.GetGlobalAndLocalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetGlobalAndLocalQueryNull", nil, "Failure preparing request")
 		return
@@ -132,7 +133,7 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNull(localStringPath string,
 }
 
 // GetGlobalAndLocalQueryNullPreparer prepares the GetGlobalAndLocalQueryNull request.
-func (client PathItemsClient) GetGlobalAndLocalQueryNullPreparer(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
+func (client PathItemsClient) GetGlobalAndLocalQueryNullPreparer(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"globalStringPath":   autorest.Encode("path", client.GlobalStringPath),
 		"localStringPath":    autorest.Encode("path", localStringPath),
@@ -155,7 +156,7 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullPreparer(localStringPath
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/null", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetGlobalAndLocalQueryNullSender sends the GetGlobalAndLocalQueryNull request. The method will close the
@@ -184,8 +185,8 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullResponder(resp *http.Res
 // localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value 'pathItemStringPath'
 // that appears in the path localStringQuery is should contain value 'localStringQuery' pathItemStringQuery is a string
 // value 'pathItemStringQuery' that appears as a query parameter
-func (client PathItemsClient) GetGlobalQueryNull(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	req, err := client.GetGlobalQueryNullPreparer(localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
+func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	req, err := client.GetGlobalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetGlobalQueryNull", nil, "Failure preparing request")
 		return
@@ -207,7 +208,7 @@ func (client PathItemsClient) GetGlobalQueryNull(localStringPath string, pathIte
 }
 
 // GetGlobalQueryNullPreparer prepares the GetGlobalQueryNull request.
-func (client PathItemsClient) GetGlobalQueryNullPreparer(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
+func (client PathItemsClient) GetGlobalQueryNullPreparer(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"globalStringPath":   autorest.Encode("path", client.GlobalStringPath),
 		"localStringPath":    autorest.Encode("path", localStringPath),
@@ -230,7 +231,7 @@ func (client PathItemsClient) GetGlobalQueryNullPreparer(localStringPath string,
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/localStringQuery", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetGlobalQueryNullSender sends the GetGlobalQueryNull request. The method will close the
@@ -259,8 +260,8 @@ func (client PathItemsClient) GetGlobalQueryNullResponder(resp *http.Response) (
 // localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value 'pathItemStringPath'
 // that appears in the path localStringQuery is should contain value null pathItemStringQuery is should contain value
 // null
-func (client PathItemsClient) GetLocalPathItemQueryNull(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	req, err := client.GetLocalPathItemQueryNullPreparer(localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
+func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	req, err := client.GetLocalPathItemQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetLocalPathItemQueryNull", nil, "Failure preparing request")
 		return
@@ -282,7 +283,7 @@ func (client PathItemsClient) GetLocalPathItemQueryNull(localStringPath string, 
 }
 
 // GetLocalPathItemQueryNullPreparer prepares the GetLocalPathItemQueryNull request.
-func (client PathItemsClient) GetLocalPathItemQueryNullPreparer(localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
+func (client PathItemsClient) GetLocalPathItemQueryNullPreparer(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"globalStringPath":   autorest.Encode("path", client.GlobalStringPath),
 		"localStringPath":    autorest.Encode("path", localStringPath),
@@ -305,7 +306,7 @@ func (client PathItemsClient) GetLocalPathItemQueryNullPreparer(localStringPath 
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/null/null", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLocalPathItemQueryNullSender sends the GetLocalPathItemQueryNull request. The method will close the

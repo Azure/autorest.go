@@ -10,6 +10,7 @@ package validationgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -44,8 +45,8 @@ func NewWithBaseURI(baseURI string, subscriptionID string) ManagementClient {
 
 // GetWithConstantInPath sends the get with constant in path request.
 //
-func (client ManagementClient) GetWithConstantInPath(constantParam string) (result autorest.Response, err error) {
-	req, err := client.GetWithConstantInPathPreparer(constantParam)
+func (client ManagementClient) GetWithConstantInPath(ctx context.Context, constantParam string) (result autorest.Response, err error) {
+	req, err := client.GetWithConstantInPathPreparer(ctx, constantParam)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "GetWithConstantInPath", nil, "Failure preparing request")
 		return
@@ -67,7 +68,7 @@ func (client ManagementClient) GetWithConstantInPath(constantParam string) (resu
 }
 
 // GetWithConstantInPathPreparer prepares the GetWithConstantInPath request.
-func (client ManagementClient) GetWithConstantInPathPreparer(constantParam string) (*http.Request, error) {
+func (client ManagementClient) GetWithConstantInPathPreparer(ctx context.Context, constantParam string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"constantParam": autorest.Encode("path", constantParam),
 	}
@@ -76,7 +77,7 @@ func (client ManagementClient) GetWithConstantInPathPreparer(constantParam strin
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/validation/constantsInPath/{constantParam}/value", pathParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetWithConstantInPathSender sends the GetWithConstantInPath request. The method will close the
@@ -100,7 +101,7 @@ func (client ManagementClient) GetWithConstantInPathResponder(resp *http.Respons
 
 // PostWithConstantInBody sends the post with constant in body request.
 //
-func (client ManagementClient) PostWithConstantInBody(constantParam string, body *Product) (result Product, err error) {
+func (client ManagementClient) PostWithConstantInBody(ctx context.Context, constantParam string, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: body,
 			Constraints: []validation.Constraint{{Target: "body", Name: validation.Null, Rule: false,
@@ -127,7 +128,7 @@ func (client ManagementClient) PostWithConstantInBody(constantParam string, body
 		return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient", "PostWithConstantInBody")
 	}
 
-	req, err := client.PostWithConstantInBodyPreparer(constantParam, body)
+	req, err := client.PostWithConstantInBodyPreparer(ctx, constantParam, body)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "PostWithConstantInBody", nil, "Failure preparing request")
 		return
@@ -149,7 +150,7 @@ func (client ManagementClient) PostWithConstantInBody(constantParam string, body
 }
 
 // PostWithConstantInBodyPreparer prepares the PostWithConstantInBody request.
-func (client ManagementClient) PostWithConstantInBodyPreparer(constantParam string, body *Product) (*http.Request, error) {
+func (client ManagementClient) PostWithConstantInBodyPreparer(ctx context.Context, constantParam string, body *Product) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"constantParam": autorest.Encode("path", constantParam),
 	}
@@ -163,7 +164,7 @@ func (client ManagementClient) PostWithConstantInBodyPreparer(constantParam stri
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(body))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostWithConstantInBodySender sends the PostWithConstantInBody request. The method will close the
@@ -190,7 +191,7 @@ func (client ManagementClient) PostWithConstantInBodyResponder(resp *http.Respon
 //
 // resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
 // of 10 from 100 to 1000.
-func (client ManagementClient) ValidationOfBody(resourceGroupName string, ID int32, body *Product) (result Product, err error) {
+func (client ManagementClient) ValidationOfBody(ctx context.Context, resourceGroupName string, ID int32, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil},
@@ -225,7 +226,7 @@ func (client ManagementClient) ValidationOfBody(resourceGroupName string, ID int
 		return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient", "ValidationOfBody")
 	}
 
-	req, err := client.ValidationOfBodyPreparer(resourceGroupName, ID, body)
+	req, err := client.ValidationOfBodyPreparer(ctx, resourceGroupName, ID, body)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfBody", nil, "Failure preparing request")
 		return
@@ -247,7 +248,7 @@ func (client ManagementClient) ValidationOfBody(resourceGroupName string, ID int
 }
 
 // ValidationOfBodyPreparer prepares the ValidationOfBody request.
-func (client ManagementClient) ValidationOfBodyPreparer(resourceGroupName string, ID int32, body *Product) (*http.Request, error) {
+func (client ManagementClient) ValidationOfBodyPreparer(ctx context.Context, resourceGroupName string, ID int32, body *Product) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"id":                autorest.Encode("path", ID),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -269,7 +270,7 @@ func (client ManagementClient) ValidationOfBodyPreparer(resourceGroupName string
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(body))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ValidationOfBodySender sends the ValidationOfBody request. The method will close the
@@ -296,7 +297,7 @@ func (client ManagementClient) ValidationOfBodyResponder(resp *http.Response) (r
 //
 // resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
 // of 10 from 100 to 1000.
-func (client ManagementClient) ValidationOfMethodParameters(resourceGroupName string, ID int32) (result Product, err error) {
+func (client ManagementClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, ID int32) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil},
@@ -309,7 +310,7 @@ func (client ManagementClient) ValidationOfMethodParameters(resourceGroupName st
 		return result, validation.NewErrorWithValidationError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters")
 	}
 
-	req, err := client.ValidationOfMethodParametersPreparer(resourceGroupName, ID)
+	req, err := client.ValidationOfMethodParametersPreparer(ctx, resourceGroupName, ID)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.ManagementClient", "ValidationOfMethodParameters", nil, "Failure preparing request")
 		return
@@ -331,7 +332,7 @@ func (client ManagementClient) ValidationOfMethodParameters(resourceGroupName st
 }
 
 // ValidationOfMethodParametersPreparer prepares the ValidationOfMethodParameters request.
-func (client ManagementClient) ValidationOfMethodParametersPreparer(resourceGroupName string, ID int32) (*http.Request, error) {
+func (client ManagementClient) ValidationOfMethodParametersPreparer(ctx context.Context, resourceGroupName string, ID int32) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"id":                autorest.Encode("path", ID),
 		"resourceGroupName": autorest.Encode("path", resourceGroupName),
@@ -348,7 +349,7 @@ func (client ManagementClient) ValidationOfMethodParametersPreparer(resourceGrou
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/fakepath/{subscriptionId}/{resourceGroupName}/{id}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ValidationOfMethodParametersSender sends the ValidationOfMethodParameters request. The method will close the

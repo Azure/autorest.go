@@ -1,6 +1,7 @@
 package morecustombaseurigrouptest
 
 import (
+	"context"
 	"testing"
 
 	chk "gopkg.in/check.v1"
@@ -23,6 +24,6 @@ func getMoreCustomBaseURIClient() PathsClient {
 }
 
 func (s *MoreCustomBaseURIGroupSuite) TestCustomBaseUriMoreOptions(c *chk.C) {
-	_, err := custombaseuriClient.GetEmpty("http://lo", "cal", "key1", "v1")
+	_, err := custombaseuriClient.GetEmpty(context.Background(), "http://lo", "cal", "key1", "v1")
 	c.Assert(err, chk.IsNil)
 }

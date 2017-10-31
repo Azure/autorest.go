@@ -1,6 +1,7 @@
 package datetimerfc1123grouptest
 
 import (
+	"context"
 	"strings"
 	"testing"
 	"time"
@@ -27,43 +28,43 @@ func getDateTimeRFC1123Client() Datetimerfc1123Client {
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestGetInvalidDateTimeRFC1123(c *chk.C) {
-	_, err := datetimerfc1123Client.GetInvalid()
+	_, err := datetimerfc1123Client.GetInvalid(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestGetNullDateTimeRFC1123(c *chk.C) {
-	res, err := datetimerfc1123Client.GetNull()
+	res, err := datetimerfc1123Client.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Value, chk.IsNil)
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestGetUnderflowDateTimeRFC1123(c *chk.C) {
-	_, err := datetimerfc1123Client.GetUnderflow()
+	_, err := datetimerfc1123Client.GetUnderflow(context.Background())
 	c.Assert(err, chk.NotNil)
 	c.Assert(err, chk.ErrorMatches, ".*day out of range.*")
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestGetOverflowDateTimeRFC1123(c *chk.C) {
-	_, err := datetimerfc1123Client.GetOverflow()
+	_, err := datetimerfc1123Client.GetOverflow(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestGetUtcLowercaseMaxDateTimeRFC1123(c *chk.C) {
-	res, err := datetimerfc1123Client.GetUtcLowercaseMaxDateTime()
+	res, err := datetimerfc1123Client.GetUtcLowercaseMaxDateTime(context.Background())
 	c.Assert(err, chk.IsNil)
 	t1, _ := time.Parse(time.RFC1123, "Fri, 31 Dec 9999 23:59:59 GMT")
 	c.Assert((*res.Value).Time, chk.DeepEquals, t1)
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestGetUtcMinDateTimeRFC1123(c *chk.C) {
-	res, err := datetimerfc1123Client.GetUtcMinDateTime()
+	res, err := datetimerfc1123Client.GetUtcMinDateTime(context.Background())
 	c.Assert(err, chk.IsNil)
 	t1, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
 	c.Assert((*res.Value).Time, chk.DeepEquals, t1)
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestGetUtcUppercaseMaxDateTimeRFC1123(c *chk.C) {
-	res, err := datetimerfc1123Client.GetUtcUppercaseMaxDateTime()
+	res, err := datetimerfc1123Client.GetUtcUppercaseMaxDateTime(context.Background())
 	c.Assert(err, chk.IsNil)
 	t1, _ := time.Parse(time.RFC1123, "Fri, 31 Dec 9999 23:59:59 GMT")
 	c.Assert((*res.Value).Time, chk.DeepEquals, t1)
@@ -71,13 +72,13 @@ func (s *DateTimeRfc1123GroupSuite) TestGetUtcUppercaseMaxDateTimeRFC1123(c *chk
 
 func (s *DateTimeRfc1123GroupSuite) TestPutUtcMaxDateTimeRFC1123(c *chk.C) {
 	t1, _ := time.Parse(time.RFC1123, "Fri, 31 Dec 9999 23:59:59 GMT")
-	_, err := datetimerfc1123Client.PutUtcMaxDateTime(date.TimeRFC1123{Time: t1})
+	_, err := datetimerfc1123Client.PutUtcMaxDateTime(context.Background(), date.TimeRFC1123{Time: t1})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *DateTimeRfc1123GroupSuite) TestPutUtcMinDateTimeRFC1123(c *chk.C) {
 	t1, _ := time.Parse(time.RFC1123, "Mon, 1 Jan 0001 00:00:00 GMT")
-	_, err := datetimerfc1123Client.PutUtcMinDateTime(date.TimeRFC1123{t1})
+	_, err := datetimerfc1123Client.PutUtcMinDateTime(context.Background(), date.TimeRFC1123{t1})
 	c.Assert(err, chk.IsNil)
 }
 
