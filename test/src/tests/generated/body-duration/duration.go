@@ -62,8 +62,7 @@ func (client DurationClient) GetInvalidPreparer() (*http.Request, error) {
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -115,8 +114,7 @@ func (client DurationClient) GetNullPreparer() (*http.Request, error) {
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -168,8 +166,7 @@ func (client DurationClient) GetPositiveDurationPreparer() (*http.Request, error
 // GetPositiveDurationSender sends the GetPositiveDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) GetPositiveDurationSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -224,8 +221,7 @@ func (client DurationClient) PutPositiveDurationPreparer(durationBody string) (*
 // PutPositiveDurationSender sends the PutPositiveDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) PutPositiveDurationSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

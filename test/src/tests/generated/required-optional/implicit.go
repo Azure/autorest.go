@@ -68,8 +68,7 @@ func (client ImplicitClient) GetOptionalGlobalQueryPreparer() (*http.Request, er
 // GetOptionalGlobalQuerySender sends the GetOptionalGlobalQuery request. The method will close the
 // http.Response Body if it receives an error.
 func (client ImplicitClient) GetOptionalGlobalQuerySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -125,8 +124,7 @@ func (client ImplicitClient) GetRequiredGlobalPathPreparer() (*http.Request, err
 // GetRequiredGlobalPathSender sends the GetRequiredGlobalPath request. The method will close the
 // http.Response Body if it receives an error.
 func (client ImplicitClient) GetRequiredGlobalPathSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -183,8 +181,7 @@ func (client ImplicitClient) GetRequiredGlobalQueryPreparer() (*http.Request, er
 // GetRequiredGlobalQuerySender sends the GetRequiredGlobalQuery request. The method will close the
 // http.Response Body if it receives an error.
 func (client ImplicitClient) GetRequiredGlobalQuerySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -241,8 +238,7 @@ func (client ImplicitClient) GetRequiredPathPreparer(pathParameter string) (*htt
 // GetRequiredPathSender sends the GetRequiredPath request. The method will close the
 // http.Response Body if it receives an error.
 func (client ImplicitClient) GetRequiredPathSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -300,8 +296,7 @@ func (client ImplicitClient) PutOptionalBodyPreparer(bodyParameter string) (*htt
 // PutOptionalBodySender sends the PutOptionalBody request. The method will close the
 // http.Response Body if it receives an error.
 func (client ImplicitClient) PutOptionalBodySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -357,8 +352,7 @@ func (client ImplicitClient) PutOptionalHeaderPreparer(queryParameter string) (*
 // PutOptionalHeaderSender sends the PutOptionalHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ImplicitClient) PutOptionalHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -416,8 +410,7 @@ func (client ImplicitClient) PutOptionalQueryPreparer(queryParameter string) (*h
 // PutOptionalQuerySender sends the PutOptionalQuery request. The method will close the
 // http.Response Body if it receives an error.
 func (client ImplicitClient) PutOptionalQuerySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
