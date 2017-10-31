@@ -72,7 +72,8 @@ func (client FormdataClient) UploadFilePreparer(fileContent io.ReadCloser, fileN
 // UploadFileSender sends the UploadFile request. The method will close the
 // http.Response Body if it receives an error.
 func (client FormdataClient) UploadFileSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -127,7 +128,8 @@ func (client FormdataClient) UploadFileViaBodyPreparer(fileContent io.ReadCloser
 // UploadFileViaBodySender sends the UploadFileViaBody request. The method will close the
 // http.Response Body if it receives an error.
 func (client FormdataClient) UploadFileViaBodySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

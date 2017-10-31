@@ -64,7 +64,8 @@ func (client HeaderClient) CustomRequestIDPreparer() (*http.Request, error) {
 // CustomRequestIDSender sends the CustomRequestID request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) CustomRequestIDSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -121,7 +122,8 @@ func (client HeaderClient) ParamBoolPreparer(scenario string, value bool) (*http
 // ParamBoolSender sends the ParamBool request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamBoolSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -183,7 +185,8 @@ func (client HeaderClient) ParamBytePreparer(scenario string, value []byte) (*ht
 // ParamByteSender sends the ParamByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamByteSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -240,7 +243,8 @@ func (client HeaderClient) ParamDatePreparer(scenario string, value date.Date) (
 // ParamDateSender sends the ParamDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -297,7 +301,8 @@ func (client HeaderClient) ParamDatetimePreparer(scenario string, value date.Tim
 // ParamDatetimeSender sends the ParamDatetime request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDatetimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -357,7 +362,8 @@ func (client HeaderClient) ParamDatetimeRfc1123Preparer(scenario string, value *
 // ParamDatetimeRfc1123Sender sends the ParamDatetimeRfc1123 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDatetimeRfc1123Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -414,7 +420,8 @@ func (client HeaderClient) ParamDoublePreparer(scenario string, value float64) (
 // ParamDoubleSender sends the ParamDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDoubleSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -470,7 +477,8 @@ func (client HeaderClient) ParamDurationPreparer(scenario string, value string) 
 // ParamDurationSender sends the ParamDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDurationSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -530,7 +538,8 @@ func (client HeaderClient) ParamEnumPreparer(scenario string, value GreyscaleCol
 // ParamEnumSender sends the ParamEnum request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamEnumSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -584,7 +593,8 @@ func (client HeaderClient) ParamExistingKeyPreparer(userAgent string) (*http.Req
 // ParamExistingKeySender sends the ParamExistingKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamExistingKeySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -641,7 +651,8 @@ func (client HeaderClient) ParamFloatPreparer(scenario string, value float64) (*
 // ParamFloatSender sends the ParamFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamFloatSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -698,7 +709,8 @@ func (client HeaderClient) ParamIntegerPreparer(scenario string, value int32) (*
 // ParamIntegerSender sends the ParamInteger request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamIntegerSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -755,7 +767,8 @@ func (client HeaderClient) ParamLongPreparer(scenario string, value int64) (*htt
 // ParamLongSender sends the ParamLong request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamLongSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -809,7 +822,8 @@ func (client HeaderClient) ParamProtectedKeyPreparer(contentType string) (*http.
 // ParamProtectedKeySender sends the ParamProtectedKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamProtectedKeySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -869,7 +883,8 @@ func (client HeaderClient) ParamStringPreparer(scenario string, value string) (*
 // ParamStringSender sends the ParamString request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamStringSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -923,7 +938,8 @@ func (client HeaderClient) ResponseBoolPreparer(scenario string) (*http.Request,
 // ResponseBoolSender sends the ResponseBool request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseBoolSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -977,7 +993,8 @@ func (client HeaderClient) ResponseBytePreparer(scenario string) (*http.Request,
 // ResponseByteSender sends the ResponseByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseByteSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1031,7 +1048,8 @@ func (client HeaderClient) ResponseDatePreparer(scenario string) (*http.Request,
 // ResponseDateSender sends the ResponseDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1085,7 +1103,8 @@ func (client HeaderClient) ResponseDatetimePreparer(scenario string) (*http.Requ
 // ResponseDatetimeSender sends the ResponseDatetime request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDatetimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1140,7 +1159,8 @@ func (client HeaderClient) ResponseDatetimeRfc1123Preparer(scenario string) (*ht
 // ResponseDatetimeRfc1123Sender sends the ResponseDatetimeRfc1123 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDatetimeRfc1123Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1194,7 +1214,8 @@ func (client HeaderClient) ResponseDoublePreparer(scenario string) (*http.Reques
 // ResponseDoubleSender sends the ResponseDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDoubleSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1248,7 +1269,8 @@ func (client HeaderClient) ResponseDurationPreparer(scenario string) (*http.Requ
 // ResponseDurationSender sends the ResponseDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDurationSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1302,7 +1324,8 @@ func (client HeaderClient) ResponseEnumPreparer(scenario string) (*http.Request,
 // ResponseEnumSender sends the ResponseEnum request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseEnumSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1353,7 +1376,8 @@ func (client HeaderClient) ResponseExistingKeyPreparer() (*http.Request, error) 
 // ResponseExistingKeySender sends the ResponseExistingKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseExistingKeySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1407,7 +1431,8 @@ func (client HeaderClient) ResponseFloatPreparer(scenario string) (*http.Request
 // ResponseFloatSender sends the ResponseFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseFloatSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1461,7 +1486,8 @@ func (client HeaderClient) ResponseIntegerPreparer(scenario string) (*http.Reque
 // ResponseIntegerSender sends the ResponseInteger request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseIntegerSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1515,7 +1541,8 @@ func (client HeaderClient) ResponseLongPreparer(scenario string) (*http.Request,
 // ResponseLongSender sends the ResponseLong request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseLongSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1566,7 +1593,8 @@ func (client HeaderClient) ResponseProtectedKeyPreparer() (*http.Request, error)
 // ResponseProtectedKeySender sends the ResponseProtectedKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseProtectedKeySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1620,7 +1648,8 @@ func (client HeaderClient) ResponseStringPreparer(scenario string) (*http.Reques
 // ResponseStringSender sends the ResponseString request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseStringSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

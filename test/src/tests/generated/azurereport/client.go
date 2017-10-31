@@ -74,7 +74,8 @@ func (client ManagementClient) GetReportPreparer() (*http.Request, error) {
 // GetReportSender sends the GetReport request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) GetReportSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

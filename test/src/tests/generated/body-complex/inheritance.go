@@ -62,7 +62,8 @@ func (client InheritanceClient) GetValidPreparer() (*http.Request, error) {
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client InheritanceClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -120,7 +121,8 @@ func (client InheritanceClient) PutValidPreparer(complexBody Siamese) (*http.Req
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client InheritanceClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

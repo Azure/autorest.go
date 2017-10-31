@@ -69,7 +69,8 @@ func (client HTTPClientFailureClient) Delete400Preparer(booleanValue *bool) (*ht
 // Delete400Sender sends the Delete400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Delete400Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -128,7 +129,8 @@ func (client HTTPClientFailureClient) Delete407Preparer(booleanValue *bool) (*ht
 // Delete407Sender sends the Delete407 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Delete407Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -187,7 +189,8 @@ func (client HTTPClientFailureClient) Delete417Preparer(booleanValue *bool) (*ht
 // Delete417Sender sends the Delete417 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Delete417Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -239,7 +242,8 @@ func (client HTTPClientFailureClient) Get400Preparer() (*http.Request, error) {
 // Get400Sender sends the Get400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Get400Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -291,7 +295,8 @@ func (client HTTPClientFailureClient) Get402Preparer() (*http.Request, error) {
 // Get402Sender sends the Get402 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Get402Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -343,7 +348,8 @@ func (client HTTPClientFailureClient) Get403Preparer() (*http.Request, error) {
 // Get403Sender sends the Get403 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Get403Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -395,7 +401,8 @@ func (client HTTPClientFailureClient) Get411Preparer() (*http.Request, error) {
 // Get411Sender sends the Get411 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Get411Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -447,7 +454,8 @@ func (client HTTPClientFailureClient) Get412Preparer() (*http.Request, error) {
 // Get412Sender sends the Get412 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Get412Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -499,7 +507,8 @@ func (client HTTPClientFailureClient) Get416Preparer() (*http.Request, error) {
 // Get416Sender sends the Get416 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Get416Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -551,7 +560,8 @@ func (client HTTPClientFailureClient) Head400Preparer() (*http.Request, error) {
 // Head400Sender sends the Head400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Head400Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -603,7 +613,8 @@ func (client HTTPClientFailureClient) Head401Preparer() (*http.Request, error) {
 // Head401Sender sends the Head401 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Head401Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -655,7 +666,8 @@ func (client HTTPClientFailureClient) Head410Preparer() (*http.Request, error) {
 // Head410Sender sends the Head410 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Head410Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -707,7 +719,8 @@ func (client HTTPClientFailureClient) Head429Preparer() (*http.Request, error) {
 // Head429Sender sends the Head429 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Head429Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -766,7 +779,8 @@ func (client HTTPClientFailureClient) Patch400Preparer(booleanValue *bool) (*htt
 // Patch400Sender sends the Patch400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Patch400Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -825,7 +839,8 @@ func (client HTTPClientFailureClient) Patch405Preparer(booleanValue *bool) (*htt
 // Patch405Sender sends the Patch405 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Patch405Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -884,7 +899,8 @@ func (client HTTPClientFailureClient) Patch414Preparer(booleanValue *bool) (*htt
 // Patch414Sender sends the Patch414 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Patch414Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -943,7 +959,8 @@ func (client HTTPClientFailureClient) Post400Preparer(booleanValue *bool) (*http
 // Post400Sender sends the Post400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Post400Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1002,7 +1019,8 @@ func (client HTTPClientFailureClient) Post406Preparer(booleanValue *bool) (*http
 // Post406Sender sends the Post406 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Post406Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1061,7 +1079,8 @@ func (client HTTPClientFailureClient) Post415Preparer(booleanValue *bool) (*http
 // Post415Sender sends the Post415 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Post415Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1120,7 +1139,8 @@ func (client HTTPClientFailureClient) Put400Preparer(booleanValue *bool) (*http.
 // Put400Sender sends the Put400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Put400Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1179,7 +1199,8 @@ func (client HTTPClientFailureClient) Put404Preparer(booleanValue *bool) (*http.
 // Put404Sender sends the Put404 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Put404Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1238,7 +1259,8 @@ func (client HTTPClientFailureClient) Put409Preparer(booleanValue *bool) (*http.
 // Put409Sender sends the Put409 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Put409Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1297,7 +1319,8 @@ func (client HTTPClientFailureClient) Put413Preparer(booleanValue *bool) (*http.
 // Put413Sender sends the Put413 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPClientFailureClient) Put413Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

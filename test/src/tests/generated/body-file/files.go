@@ -62,7 +62,8 @@ func (client FilesClient) GetEmptyFilePreparer() (*http.Request, error) {
 // GetEmptyFileSender sends the GetEmptyFile request. The method will close the
 // http.Response Body if it receives an error.
 func (client FilesClient) GetEmptyFileSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -113,7 +114,8 @@ func (client FilesClient) GetFilePreparer() (*http.Request, error) {
 // GetFileSender sends the GetFile request. The method will close the
 // http.Response Body if it receives an error.
 func (client FilesClient) GetFileSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -164,7 +166,8 @@ func (client FilesClient) GetFileLargePreparer() (*http.Request, error) {
 // GetFileLargeSender sends the GetFileLarge request. The method will close the
 // http.Response Body if it receives an error.
 func (client FilesClient) GetFileLargeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

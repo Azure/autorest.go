@@ -62,7 +62,8 @@ func (client HTTPFailureClient) GetEmptyErrorPreparer() (*http.Request, error) {
 // GetEmptyErrorSender sends the GetEmptyError request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPFailureClient) GetEmptyErrorSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -114,7 +115,8 @@ func (client HTTPFailureClient) GetNoModelEmptyPreparer() (*http.Request, error)
 // GetNoModelEmptySender sends the GetNoModelEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPFailureClient) GetNoModelEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -166,7 +168,8 @@ func (client HTTPFailureClient) GetNoModelErrorPreparer() (*http.Request, error)
 // GetNoModelErrorSender sends the GetNoModelError request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPFailureClient) GetNoModelErrorSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

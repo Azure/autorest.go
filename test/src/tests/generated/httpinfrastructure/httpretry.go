@@ -69,7 +69,8 @@ func (client HTTPRetryClient) Delete503Preparer(booleanValue *bool) (*http.Reque
 // Delete503Sender sends the Delete503 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Delete503Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -120,7 +121,8 @@ func (client HTTPRetryClient) Get502Preparer() (*http.Request, error) {
 // Get502Sender sends the Get502 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Get502Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -171,7 +173,8 @@ func (client HTTPRetryClient) Head408Preparer() (*http.Request, error) {
 // Head408Sender sends the Head408 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Head408Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -229,7 +232,8 @@ func (client HTTPRetryClient) Patch500Preparer(booleanValue *bool) (*http.Reques
 // Patch500Sender sends the Patch500 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Patch500Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -287,7 +291,8 @@ func (client HTTPRetryClient) Patch504Preparer(booleanValue *bool) (*http.Reques
 // Patch504Sender sends the Patch504 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Patch504Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -345,7 +350,8 @@ func (client HTTPRetryClient) Post503Preparer(booleanValue *bool) (*http.Request
 // Post503Sender sends the Post503 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Post503Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -403,7 +409,8 @@ func (client HTTPRetryClient) Put500Preparer(booleanValue *bool) (*http.Request,
 // Put500Sender sends the Put500 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Put500Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -461,7 +468,8 @@ func (client HTTPRetryClient) Put504Preparer(booleanValue *bool) (*http.Request,
 // Put504Sender sends the Put504 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Put504Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
