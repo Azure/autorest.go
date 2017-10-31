@@ -12,46 +12,46 @@ import (
 	"net/http"
 )
 
-// BoolGroupClient is the test Infrastructure for AutoRest
-type BoolGroupClient struct {
+// BoolClient is the test Infrastructure for AutoRest
+type BoolClient struct {
 	ManagementClient
 }
 
-// NewBoolGroupClient creates an instance of the BoolGroupClient client.
-func NewBoolGroupClient() BoolGroupClient {
-	return NewBoolGroupClientWithBaseURI(DefaultBaseURI)
+// NewBoolClient creates an instance of the BoolClient client.
+func NewBoolClient() BoolClient {
+	return NewBoolClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewBoolGroupClientWithBaseURI creates an instance of the BoolGroupClient client.
-func NewBoolGroupClientWithBaseURI(baseURI string) BoolGroupClient {
-	return BoolGroupClient{NewWithBaseURI(baseURI)}
+// NewBoolClientWithBaseURI creates an instance of the BoolClient client.
+func NewBoolClientWithBaseURI(baseURI string) BoolClient {
+	return BoolClient{NewWithBaseURI(baseURI)}
 }
 
 // GetFalse get false Boolean value
-func (client BoolGroupClient) GetFalse() (result Bool, err error) {
+func (client BoolClient) GetFalse() (result BoolModel, err error) {
 	req, err := client.GetFalsePreparer()
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetFalse", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetFalse", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetFalseSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetFalse", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetFalse", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetFalseResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetFalse", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetFalse", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetFalsePreparer prepares the GetFalse request.
-func (client BoolGroupClient) GetFalsePreparer() (*http.Request, error) {
+func (client BoolClient) GetFalsePreparer() (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -61,7 +61,7 @@ func (client BoolGroupClient) GetFalsePreparer() (*http.Request, error) {
 
 // GetFalseSender sends the GetFalse request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetFalseSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetFalseSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client,
 		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
@@ -69,7 +69,7 @@ func (client BoolGroupClient) GetFalseSender(req *http.Request) (*http.Response,
 
 // GetFalseResponder handles the response to the GetFalse request. The method always
 // closes the http.Response Body.
-func (client BoolGroupClient) GetFalseResponder(resp *http.Response) (result Bool, err error) {
+func (client BoolClient) GetFalseResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -81,30 +81,30 @@ func (client BoolGroupClient) GetFalseResponder(resp *http.Response) (result Boo
 }
 
 // GetInvalid get invalid Boolean value
-func (client BoolGroupClient) GetInvalid() (result Bool, err error) {
+func (client BoolClient) GetInvalid() (result BoolModel, err error) {
 	req, err := client.GetInvalidPreparer()
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetInvalid", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetInvalid", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetInvalidSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetInvalid", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetInvalid", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetInvalid", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetInvalid", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client BoolGroupClient) GetInvalidPreparer() (*http.Request, error) {
+func (client BoolClient) GetInvalidPreparer() (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -114,7 +114,7 @@ func (client BoolGroupClient) GetInvalidPreparer() (*http.Request, error) {
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client,
 		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
@@ -122,7 +122,7 @@ func (client BoolGroupClient) GetInvalidSender(req *http.Request) (*http.Respons
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
 // closes the http.Response Body.
-func (client BoolGroupClient) GetInvalidResponder(resp *http.Response) (result Bool, err error) {
+func (client BoolClient) GetInvalidResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -134,30 +134,30 @@ func (client BoolGroupClient) GetInvalidResponder(resp *http.Response) (result B
 }
 
 // GetNull get null Boolean value
-func (client BoolGroupClient) GetNull() (result Bool, err error) {
+func (client BoolClient) GetNull() (result BoolModel, err error) {
 	req, err := client.GetNullPreparer()
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetNull", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetNull", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetNullSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetNull", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetNull", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetNull", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetNull", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client BoolGroupClient) GetNullPreparer() (*http.Request, error) {
+func (client BoolClient) GetNullPreparer() (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -167,7 +167,7 @@ func (client BoolGroupClient) GetNullPreparer() (*http.Request, error) {
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetNullSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client,
 		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
@@ -175,7 +175,7 @@ func (client BoolGroupClient) GetNullSender(req *http.Request) (*http.Response, 
 
 // GetNullResponder handles the response to the GetNull request. The method always
 // closes the http.Response Body.
-func (client BoolGroupClient) GetNullResponder(resp *http.Response) (result Bool, err error) {
+func (client BoolClient) GetNullResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -187,30 +187,30 @@ func (client BoolGroupClient) GetNullResponder(resp *http.Response) (result Bool
 }
 
 // GetTrue get true Boolean value
-func (client BoolGroupClient) GetTrue() (result Bool, err error) {
+func (client BoolClient) GetTrue() (result BoolModel, err error) {
 	req, err := client.GetTruePreparer()
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetTrue", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetTrue", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetTrueSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetTrue", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetTrue", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetTrueResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "GetTrue", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetTrue", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetTruePreparer prepares the GetTrue request.
-func (client BoolGroupClient) GetTruePreparer() (*http.Request, error) {
+func (client BoolClient) GetTruePreparer() (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -220,7 +220,7 @@ func (client BoolGroupClient) GetTruePreparer() (*http.Request, error) {
 
 // GetTrueSender sends the GetTrue request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetTrueSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetTrueSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client,
 		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
@@ -228,7 +228,7 @@ func (client BoolGroupClient) GetTrueSender(req *http.Request) (*http.Response, 
 
 // GetTrueResponder handles the response to the GetTrue request. The method always
 // closes the http.Response Body.
-func (client BoolGroupClient) GetTrueResponder(resp *http.Response) (result Bool, err error) {
+func (client BoolClient) GetTrueResponder(resp *http.Response) (result BoolModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -241,30 +241,30 @@ func (client BoolGroupClient) GetTrueResponder(resp *http.Response) (result Bool
 
 // PutFalse set Boolean value false
 //
-func (client BoolGroupClient) PutFalse(boolBody bool) (result autorest.Response, err error) {
+func (client BoolClient) PutFalse(boolBody bool) (result autorest.Response, err error) {
 	req, err := client.PutFalsePreparer(boolBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutFalse", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutFalse", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutFalseSender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutFalse", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutFalse", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutFalseResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutFalse", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutFalse", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutFalsePreparer prepares the PutFalse request.
-func (client BoolGroupClient) PutFalsePreparer(boolBody bool) (*http.Request, error) {
+func (client BoolClient) PutFalsePreparer(boolBody bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -276,7 +276,7 @@ func (client BoolGroupClient) PutFalsePreparer(boolBody bool) (*http.Request, er
 
 // PutFalseSender sends the PutFalse request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) PutFalseSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) PutFalseSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client,
 		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
@@ -284,7 +284,7 @@ func (client BoolGroupClient) PutFalseSender(req *http.Request) (*http.Response,
 
 // PutFalseResponder handles the response to the PutFalse request. The method always
 // closes the http.Response Body.
-func (client BoolGroupClient) PutFalseResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client BoolClient) PutFalseResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -296,30 +296,30 @@ func (client BoolGroupClient) PutFalseResponder(resp *http.Response) (result aut
 
 // PutTrue set Boolean value true
 //
-func (client BoolGroupClient) PutTrue(boolBody bool) (result autorest.Response, err error) {
+func (client BoolClient) PutTrue(boolBody bool) (result autorest.Response, err error) {
 	req, err := client.PutTruePreparer(boolBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutTrue", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutTrue", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutTrueSender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutTrue", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutTrue", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutTrueResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "booleangroup.BoolGroupClient", "PutTrue", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutTrue", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutTruePreparer prepares the PutTrue request.
-func (client BoolGroupClient) PutTruePreparer(boolBody bool) (*http.Request, error) {
+func (client BoolClient) PutTruePreparer(boolBody bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -331,7 +331,7 @@ func (client BoolGroupClient) PutTruePreparer(boolBody bool) (*http.Request, err
 
 // PutTrueSender sends the PutTrue request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) PutTrueSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) PutTrueSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client,
 		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
@@ -339,7 +339,7 @@ func (client BoolGroupClient) PutTrueSender(req *http.Request) (*http.Response, 
 
 // PutTrueResponder handles the response to the PutTrue request. The method always
 // closes the http.Response Body.
-func (client BoolGroupClient) PutTrueResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client BoolClient) PutTrueResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),

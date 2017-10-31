@@ -41,8 +41,8 @@ type RefColorConstant struct {
 	Field1            *string `json:"field1,omitempty"`
 }
 
-// String is
-type String struct {
+// StringModel is
+type StringModel struct {
 	autorest.Response `json:"-"`
 	Value             *string `json:"value,omitempty"`
 }

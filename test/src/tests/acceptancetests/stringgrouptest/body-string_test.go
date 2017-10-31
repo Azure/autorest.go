@@ -25,8 +25,8 @@ var _ = chk.Suite(&StringSuite{})
 var stringClient = getStringClient()
 var enumClient = getEnumClient()
 
-func getStringClient() GroupClient {
-	c := NewGroupClient()
+func getStringClient() StringClient {
+	c := NewStringClient()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c

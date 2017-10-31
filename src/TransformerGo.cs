@@ -122,10 +122,10 @@ namespace AutoRest.Go
             // NOTE: this must be done after all enum types have been accounted for
             foreach (var enumType in cmg.EnumTypes)
             {
-                enumType.SetName(CodeNamer.Instance.GetTypeName(enumType.Name.FixedValue));
+                enumType.SetName(CodeNamerGo.Instance.GetTypeName(enumType.Name.FixedValue));
                 foreach (var v in enumType.Values)
                 {
-                    v.Name = CodeNamer.Instance.GetEnumMemberName(v.Name);
+                    v.Name = CodeNamerGo.Instance.GetEnumMemberName(v.Name);
                 }
             }
 

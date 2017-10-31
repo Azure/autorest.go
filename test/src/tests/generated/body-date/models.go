@@ -11,8 +11,8 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
-// Date is
-type Date struct {
+// DateModel is
+type DateModel struct {
 	autorest.Response `json:"-"`
 	Value             *date.Date `json:"value,omitempty"`
 }

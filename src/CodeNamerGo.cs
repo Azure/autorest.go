@@ -474,7 +474,7 @@ namespace AutoRest.Go
                         || primaryType.KnownPrimaryType == KnownPrimaryType.Uuid
                         || primaryType.KnownPrimaryType == KnownPrimaryType.TimeSpan)
                     {
-                        return CodeNamer.Instance.QuoteValue(defaultValue);
+                        return CodeNamerGo.Instance.QuoteValue(defaultValue);
                     }
                     else if (primaryType.KnownPrimaryType == KnownPrimaryType.Boolean)
                     {
