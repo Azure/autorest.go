@@ -23,28 +23,20 @@ namespace AutoRest.Go.Model
 
         public string UserAgent
         {
-            get
-            {
-                _userAgent.Value();
-            }
+            get;
         }
-        private Lazy<string> _userAgent = new Lazy<string>(() => {
-            var specifiedUserAgent = Settings.Instance.Host?.GetValue<string>("user-agent");
-
-            string retval;
-            if null == specifiedUserAgent {
-                retval = $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
-            } else {
-                retval = specifiedUserAgent;
-            }
-            return retval;
-        });
 
         public CodeModelGo()
         {
             NextMethodUndefined = new List<IModelType>();
             PagedTypes = new Dictionary<IModelType, string>();
             Version = FormatVersion(Settings.Instance.PackageVersion);
+            var specifiedUserAgent = Settings.Instance.Host?.GetValue<string>("user-agent").Result;
+            if (specifiedUserAgent == null) {
+                UserAgent = $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+            } else {
+                UserAgent = specifiedUserAgent;
+            }
         }
 
         public override string Namespace
