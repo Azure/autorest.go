@@ -218,7 +218,13 @@ namespace AutoRest.Go
                     {
                         (dt as CompositeTypeGo).DiscriminatorEnum = (mtm as CompositeTypeGo).DiscriminatorEnum;
                     }
-
+                }
+                foreach (var p in mtm.Properties)
+                {
+                    if (p.ShouldBeFlattened() && p.ModelType is CompositeTypeGo)
+                    {
+                        p.Name = p.ModelType.Name;
+                    }
                 }
             }
         }
