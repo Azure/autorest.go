@@ -411,11 +411,7 @@ namespace AutoRest.Go
                     var map = prop.ModelType as DictionaryTypeGo;
                     var composite = prop.ModelType as CompositeType;
 
-                    // if this type was flattened use the name of the type instead of
-                    // the property name as it's been embedded as an anonymous field
-                    var propName = prop.Name;
-                    if (prop.WasFlattened())
-                        propName = prop.ModelType.Name;
+                    var propName = prop.Name;                    
 
                     if (primary != null || sequence != null || map != null)
                     {
