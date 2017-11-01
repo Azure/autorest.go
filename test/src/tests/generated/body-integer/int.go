@@ -7,10 +7,11 @@ package integergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"net/http"
+
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
-	"net/http"
 )
 
 // IntClient is the test Infrastructure for AutoRest
@@ -62,9 +63,8 @@ func (client IntClient) GetInvalidPreparer() (*http.Request, error) {
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -115,9 +115,8 @@ func (client IntClient) GetInvalidUnixTimePreparer() (*http.Request, error) {
 
 // GetInvalidUnixTimeSender sends the GetInvalidUnixTime request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetInvalidUnixTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetInvalidUnixTimeSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -168,9 +167,8 @@ func (client IntClient) GetNullPreparer() (*http.Request, error) {
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -221,9 +219,8 @@ func (client IntClient) GetNullUnixTimePreparer() (*http.Request, error) {
 
 // GetNullUnixTimeSender sends the GetNullUnixTime request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetNullUnixTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetNullUnixTimeSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -274,9 +271,8 @@ func (client IntClient) GetOverflowInt32Preparer() (*http.Request, error) {
 
 // GetOverflowInt32Sender sends the GetOverflowInt32 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetOverflowInt32Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetOverflowInt32Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -327,9 +323,8 @@ func (client IntClient) GetOverflowInt64Preparer() (*http.Request, error) {
 
 // GetOverflowInt64Sender sends the GetOverflowInt64 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetOverflowInt64Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetOverflowInt64Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -380,9 +375,8 @@ func (client IntClient) GetUnderflowInt32Preparer() (*http.Request, error) {
 
 // GetUnderflowInt32Sender sends the GetUnderflowInt32 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetUnderflowInt32Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetUnderflowInt32Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -433,9 +427,8 @@ func (client IntClient) GetUnderflowInt64Preparer() (*http.Request, error) {
 
 // GetUnderflowInt64Sender sends the GetUnderflowInt64 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetUnderflowInt64Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetUnderflowInt64Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -486,9 +479,8 @@ func (client IntClient) GetUnixTimePreparer() (*http.Request, error) {
 
 // GetUnixTimeSender sends the GetUnixTime request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) GetUnixTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) GetUnixTimeSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -542,9 +534,8 @@ func (client IntClient) PutMax32Preparer(intBody int32) (*http.Request, error) {
 
 // PutMax32Sender sends the PutMax32 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) PutMax32Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) PutMax32Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -597,9 +588,8 @@ func (client IntClient) PutMax64Preparer(intBody int64) (*http.Request, error) {
 
 // PutMax64Sender sends the PutMax64 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) PutMax64Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) PutMax64Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -652,9 +642,8 @@ func (client IntClient) PutMin32Preparer(intBody int32) (*http.Request, error) {
 
 // PutMin32Sender sends the PutMin32 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) PutMin32Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) PutMin32Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -707,9 +696,8 @@ func (client IntClient) PutMin64Preparer(intBody int64) (*http.Request, error) {
 
 // PutMin64Sender sends the PutMin64 request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) PutMin64Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) PutMin64Sender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -762,9 +750,8 @@ func (client IntClient) PutUnixTimeDatePreparer(intBody date.UnixTime) (*http.Re
 
 // PutUnixTimeDateSender sends the PutUnixTimeDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client IntClient) PutUnixTimeDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client IntGroupClient) PutUnixTimeDateSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

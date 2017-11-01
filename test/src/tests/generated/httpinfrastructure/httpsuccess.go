@@ -69,8 +69,7 @@ func (client HTTPSuccessClient) Delete200Preparer(booleanValue *bool) (*http.Req
 // Delete200Sender sends the Delete200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Delete200Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -128,8 +127,7 @@ func (client HTTPSuccessClient) Delete202Preparer(booleanValue *bool) (*http.Req
 // Delete202Sender sends the Delete202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Delete202Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -187,8 +185,7 @@ func (client HTTPSuccessClient) Delete204Preparer(booleanValue *bool) (*http.Req
 // Delete204Sender sends the Delete204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Delete204Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -239,8 +236,7 @@ func (client HTTPSuccessClient) Get200Preparer() (*http.Request, error) {
 // Get200Sender sends the Get200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Get200Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -292,8 +288,7 @@ func (client HTTPSuccessClient) Head200Preparer() (*http.Request, error) {
 // Head200Sender sends the Head200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Head200Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -344,8 +339,7 @@ func (client HTTPSuccessClient) Head204Preparer() (*http.Request, error) {
 // Head204Sender sends the Head204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Head204Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -396,8 +390,7 @@ func (client HTTPSuccessClient) Head404Preparer() (*http.Request, error) {
 // Head404Sender sends the Head404 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Head404Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -455,8 +448,7 @@ func (client HTTPSuccessClient) Patch200Preparer(booleanValue *bool) (*http.Requ
 // Patch200Sender sends the Patch200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Patch200Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -514,8 +506,7 @@ func (client HTTPSuccessClient) Patch202Preparer(booleanValue *bool) (*http.Requ
 // Patch202Sender sends the Patch202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Patch202Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -573,8 +564,7 @@ func (client HTTPSuccessClient) Patch204Preparer(booleanValue *bool) (*http.Requ
 // Patch204Sender sends the Patch204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Patch204Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -632,8 +622,7 @@ func (client HTTPSuccessClient) Post200Preparer(booleanValue *bool) (*http.Reque
 // Post200Sender sends the Post200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post200Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -691,8 +680,7 @@ func (client HTTPSuccessClient) Post201Preparer(booleanValue *bool) (*http.Reque
 // Post201Sender sends the Post201 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post201Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -750,8 +738,7 @@ func (client HTTPSuccessClient) Post202Preparer(booleanValue *bool) (*http.Reque
 // Post202Sender sends the Post202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post202Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -809,8 +796,7 @@ func (client HTTPSuccessClient) Post204Preparer(booleanValue *bool) (*http.Reque
 // Post204Sender sends the Post204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post204Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -868,8 +854,7 @@ func (client HTTPSuccessClient) Put200Preparer(booleanValue *bool) (*http.Reques
 // Put200Sender sends the Put200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put200Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -927,8 +912,7 @@ func (client HTTPSuccessClient) Put201Preparer(booleanValue *bool) (*http.Reques
 // Put201Sender sends the Put201 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put201Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -986,8 +970,7 @@ func (client HTTPSuccessClient) Put202Preparer(booleanValue *bool) (*http.Reques
 // Put202Sender sends the Put202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put202Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1045,8 +1028,7 @@ func (client HTTPSuccessClient) Put204Preparer(booleanValue *bool) (*http.Reques
 // Put204Sender sends the Put204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put204Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

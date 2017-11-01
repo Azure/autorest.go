@@ -7,10 +7,11 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"net/http"
+
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
-	"net/http"
 )
 
 // ByteClient is the test Infrastructure for AutoRest Swagger BAT
@@ -62,9 +63,8 @@ func (client ByteClient) GetEmptyPreparer() (*http.Request, error) {
 
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
-func (client ByteClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client GroupClient) GetEmptySender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -115,9 +115,8 @@ func (client ByteClient) GetInvalidPreparer() (*http.Request, error) {
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
-func (client ByteClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client GroupClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -168,9 +167,8 @@ func (client ByteClient) GetNonASCIIPreparer() (*http.Request, error) {
 
 // GetNonASCIISender sends the GetNonASCII request. The method will close the
 // http.Response Body if it receives an error.
-func (client ByteClient) GetNonASCIISender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client GroupClient) GetNonASCIISender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -221,9 +219,8 @@ func (client ByteClient) GetNullPreparer() (*http.Request, error) {
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client ByteClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client GroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -284,9 +281,8 @@ func (client ByteClient) PutNonASCIIPreparer(byteBody []byte) (*http.Request, er
 
 // PutNonASCIISender sends the PutNonASCII request. The method will close the
 // http.Response Body if it receives an error.
-func (client ByteClient) PutNonASCIISender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+func (client GroupClient) PutNonASCIISender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

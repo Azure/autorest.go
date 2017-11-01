@@ -68,8 +68,7 @@ func (client ExplicitClient) PostOptionalArrayHeaderPreparer(headerParameter []s
 // PostOptionalArrayHeaderSender sends the PostOptionalArrayHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalArrayHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -126,8 +125,7 @@ func (client ExplicitClient) PostOptionalArrayParameterPreparer(bodyParameter []
 // PostOptionalArrayParameterSender sends the PostOptionalArrayParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalArrayParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -184,8 +182,7 @@ func (client ExplicitClient) PostOptionalArrayPropertyPreparer(bodyParameter *Ar
 // PostOptionalArrayPropertySender sends the PostOptionalArrayProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalArrayPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -249,8 +246,7 @@ func (client ExplicitClient) PostOptionalClassParameterPreparer(bodyParameter *P
 // PostOptionalClassParameterSender sends the PostOptionalClassParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalClassParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -317,8 +313,7 @@ func (client ExplicitClient) PostOptionalClassPropertyPreparer(bodyParameter *Cl
 // PostOptionalClassPropertySender sends the PostOptionalClassProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalClassPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -374,8 +369,7 @@ func (client ExplicitClient) PostOptionalIntegerHeaderPreparer(headerParameter *
 // PostOptionalIntegerHeaderSender sends the PostOptionalIntegerHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalIntegerHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -432,8 +426,7 @@ func (client ExplicitClient) PostOptionalIntegerParameterPreparer(bodyParameter 
 // PostOptionalIntegerParameterSender sends the PostOptionalIntegerParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalIntegerParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -490,8 +483,7 @@ func (client ExplicitClient) PostOptionalIntegerPropertyPreparer(bodyParameter *
 // PostOptionalIntegerPropertySender sends the PostOptionalIntegerProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalIntegerPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -547,8 +539,7 @@ func (client ExplicitClient) PostOptionalStringHeaderPreparer(bodyParameter stri
 // PostOptionalStringHeaderSender sends the PostOptionalStringHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalStringHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -605,8 +596,7 @@ func (client ExplicitClient) PostOptionalStringParameterPreparer(bodyParameter s
 // PostOptionalStringParameterSender sends the PostOptionalStringParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalStringParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -663,8 +653,7 @@ func (client ExplicitClient) PostOptionalStringPropertyPreparer(bodyParameter *S
 // PostOptionalStringPropertySender sends the PostOptionalStringProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalStringPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -724,8 +713,7 @@ func (client ExplicitClient) PostRequiredArrayHeaderPreparer(headerParameter []s
 // PostRequiredArrayHeaderSender sends the PostRequiredArrayHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredArrayHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -787,8 +775,7 @@ func (client ExplicitClient) PostRequiredArrayParameterPreparer(bodyParameter []
 // PostRequiredArrayParameterSender sends the PostRequiredArrayParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredArrayParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -850,8 +837,7 @@ func (client ExplicitClient) PostRequiredArrayPropertyPreparer(bodyParameter Arr
 // PostRequiredArrayPropertySender sends the PostRequiredArrayProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredArrayPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -913,8 +899,7 @@ func (client ExplicitClient) PostRequiredClassParameterPreparer(bodyParameter Pr
 // PostRequiredClassParameterSender sends the PostRequiredClassParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredClassParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -977,8 +962,7 @@ func (client ExplicitClient) PostRequiredClassPropertyPreparer(bodyParameter Cla
 // PostRequiredClassPropertySender sends the PostRequiredClassProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredClassPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1033,8 +1017,7 @@ func (client ExplicitClient) PostRequiredIntegerHeaderPreparer(headerParameter i
 // PostRequiredIntegerHeaderSender sends the PostRequiredIntegerHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredIntegerHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1090,8 +1073,7 @@ func (client ExplicitClient) PostRequiredIntegerParameterPreparer(bodyParameter 
 // PostRequiredIntegerParameterSender sends the PostRequiredIntegerParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredIntegerParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1153,8 +1135,7 @@ func (client ExplicitClient) PostRequiredIntegerPropertyPreparer(bodyParameter I
 // PostRequiredIntegerPropertySender sends the PostRequiredIntegerProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredIntegerPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1209,8 +1190,7 @@ func (client ExplicitClient) PostRequiredStringHeaderPreparer(headerParameter st
 // PostRequiredStringHeaderSender sends the PostRequiredStringHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredStringHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1266,8 +1246,7 @@ func (client ExplicitClient) PostRequiredStringParameterPreparer(bodyParameter s
 // PostRequiredStringParameterSender sends the PostRequiredStringParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredStringParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -1329,8 +1308,7 @@ func (client ExplicitClient) PostRequiredStringPropertyPreparer(bodyParameter St
 // PostRequiredStringPropertySender sends the PostRequiredStringProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredStringPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

@@ -69,8 +69,7 @@ func (client HTTPRedirectsClient) Delete307Preparer(booleanValue *bool) (*http.R
 // Delete307Sender sends the Delete307 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Delete307Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -121,8 +120,7 @@ func (client HTTPRedirectsClient) Get300Preparer() (*http.Request, error) {
 // Get300Sender sends the Get300 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Get300Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -174,8 +172,7 @@ func (client HTTPRedirectsClient) Get301Preparer() (*http.Request, error) {
 // Get301Sender sends the Get301 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Get301Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -226,8 +223,7 @@ func (client HTTPRedirectsClient) Get302Preparer() (*http.Request, error) {
 // Get302Sender sends the Get302 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Get302Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -278,8 +274,7 @@ func (client HTTPRedirectsClient) Get307Preparer() (*http.Request, error) {
 // Get307Sender sends the Get307 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Get307Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -330,8 +325,7 @@ func (client HTTPRedirectsClient) Head300Preparer() (*http.Request, error) {
 // Head300Sender sends the Head300 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Head300Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -382,8 +376,7 @@ func (client HTTPRedirectsClient) Head301Preparer() (*http.Request, error) {
 // Head301Sender sends the Head301 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Head301Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -434,8 +427,7 @@ func (client HTTPRedirectsClient) Head302Preparer() (*http.Request, error) {
 // Head302Sender sends the Head302 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Head302Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -486,8 +478,7 @@ func (client HTTPRedirectsClient) Head307Preparer() (*http.Request, error) {
 // Head307Sender sends the Head307 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Head307Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -546,8 +537,7 @@ func (client HTTPRedirectsClient) Patch302Preparer(booleanValue *bool) (*http.Re
 // Patch302Sender sends the Patch302 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Patch302Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -605,8 +595,7 @@ func (client HTTPRedirectsClient) Patch307Preparer(booleanValue *bool) (*http.Re
 // Patch307Sender sends the Patch307 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Patch307Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -665,8 +654,7 @@ func (client HTTPRedirectsClient) Post303Preparer(booleanValue *bool) (*http.Req
 // Post303Sender sends the Post303 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Post303Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -724,8 +712,7 @@ func (client HTTPRedirectsClient) Post307Preparer(booleanValue *bool) (*http.Req
 // Post307Sender sends the Post307 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Post307Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -784,8 +771,7 @@ func (client HTTPRedirectsClient) Put301Preparer(booleanValue *bool) (*http.Requ
 // Put301Sender sends the Put301 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Put301Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -843,8 +829,7 @@ func (client HTTPRedirectsClient) Put307Preparer(booleanValue *bool) (*http.Requ
 // Put307Sender sends the Put307 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRedirectsClient) Put307Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client,
-		req,
+	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
