@@ -344,17 +344,6 @@ namespace AutoRest.Go
                  type.BaseModelType.DerivesFrom(possibleAncestorType));
         }
 
-        /// <summary>
-        /// Casts the specified IModelType to the specified type paramater or throws an InvalidCastException.
-        /// </summary>
-        /// <typeparam name="T">The type to cast to.</typeparam>
-        /// <param name="type">The type to cast from.</param>
-        /// <returns>The type converted to T.</returns>
-        public static T Cast<T>(this IModelType type)
-        {
-            return (T)type;
-        }
-
         /////////////////////////////////////////////////////////////////////////////////////////
         // Validate code
         //

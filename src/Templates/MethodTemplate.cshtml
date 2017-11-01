@@ -18,40 +18,62 @@
 </text>
 }
 
-func (client @(Model.Owner)) @(Model.MethodSignature) (@Model.MethodReturnSignature()) {
+func (client @(Model.Owner)) @(Model.MethodSignature) (@Model.MethodReturnSignature(false)) {
+@if (Model.ReturnViaChannel)
+{
+<text>
+    resultChan := make(chan @(Model.MethodReturnType), 1)
+    errChan:= make(chan error, 1)
+</text>
+}
 @if ((Model.CodeModel as CodeModelGo).ShouldValidate && !Model.ParameterValidations.IsNullOrEmpty())
 {
 <text>
     if err := validation.Validate([]validation.Validation{
     @(Model.ParameterValidations)}); err != nil {
-        return result, @(Model.ValidationError)
+    @if (Model.ReturnViaChannel)
+    {
+    <text>
+    errChan @("<-") @(Model.ValidationError)
+    close(errChan)
+    close(resultChan)
+    return resultChan, errChan
+    </text>
     }
+    else
+    {
+    @:return result, @(Model.ValidationError)
+    }
+}
 @EmptyLine
 </text>
 }
+@if (Model.ReturnViaChannel)
+{
+<text>
+    go func() {
+        var err error
+        var result @(Model.MethodReturnType)
 
+        defer func() {
+            if err != nil {
+                errChan @("<-") err
+            }
+            resultChan @("<-") result
+            close(resultChan)
+            close(errChan)
+        }()
+</text>
+}
     req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters(false)))
     if err != nil {
         err = @(Model.AutorestError("Failure preparing request"))
         return
     }
 @EmptyLine
-@if (Model.IsLongRunningOperation())
-{
-<text>
-    result, err = client.@(Model.SenderMethodName)(req)
-    if err != nil {
-        err = @(Model.AutorestError("Failure sending request", "resp", "result.Response()"))
-        return
-    }
-</text>
-}
-else
-{
-<text>
     resp, err := client.@(Model.SenderMethodName)(req)
     if err != nil {
-        @(Model.Response(false))
+        @(Model.Response)
         err = @(Model.AutorestError("Failure sending request", "resp"))
         return
     }
@@ -60,10 +82,18 @@ else
     if err != nil {
         err = @(Model.AutorestError("Failure responding to request", "resp"))
     }
+@if (Model.ReturnViaChannel)
+{
+<text>
+    }()
+    return resultChan, errChan
 </text>
 }
-@EmptyLine
-    return
+else
+{
+    @EmptyLine
+    @:return
+}
 }
 
 @EmptyLine
@@ -131,44 +161,25 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
     }
 </text>
 }
-    return preparer.Prepare(&http.Request{})
+
+    @(Model.IsLongRunningOperation()
+        ? "return preparer.Prepare(&http.Request{Cancel: cancel})"
+        : "return preparer.Prepare(&http.Request{})")
 }
 
-@{ 
-    var senderRetType = "*http.Response";
-    if (Model.IsLongRunningOperation())
-    {
-        senderRetType = Model.MethodReturnType;
-    }
-}
 
 @EmptyLine
 // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
 // http.Response Body if it receives an error.
-func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetType, error) {
-@if (Model.IsLongRunningOperation())
-{
-<text>
-    sender := autorest.DecorateSender(client, @Model.SendDecorators.EmitAsArguments())
-    future := azure.NewFuture(req)
-    _, err := future.Done(sender)
-    f := @(senderRetType){Future: future}
-    return f, err
-</text>
-}
-else
-{
-<text>
-    return autorest.SendWithSender(client, req,
+func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (*http.Response, error) {
+    return autorest.SendWithSender(client,
         @(Model.SendDecorators.EmitAsArguments()))
-</text>
-}
 }
 
 @EmptyLine
 // @(Model.ResponderMethodName) handles the response to the @(Model.Name) request. The method always
 // closes the http.Response Body.
-func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) { 
+func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@(Model.MethodReturnSignature(true))) { 
     @if (Model.ReturnValue().Body.IsStreamType())
     {
     @:result.Value = &resp.Body
@@ -176,7 +187,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     err = autorest.Respond(
         @(Model.RespondDecorators.EmitAsArguments()))
 
-    @(Model.Response(true))
+    @(Model.Response)
     return
 }
 
@@ -185,7 +196,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
 <text>
 @EmptyLine
 // @(Model.NextMethodName) retrieves the next set of results, if any.
-func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @(Model.ReturnValue().Body.Name)) (@Model.MethodReturnSignature()) {
+func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @(Model.ReturnValue().Body.Name)) (@Model.MethodReturnSignature(true)) {
     req, err := lastResults.@((Model.ReturnValue().Body as CompositeTypeGo).PreparerMethodName)()
     if err != nil {
         return result, @(Model.AutorestError("Failure preparing next results request"))
@@ -197,7 +208,7 @@ func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @(Model.ReturnV
     @EmptyLine
     resp, err := client.@(Model.SenderMethodName)(req)
     if err != nil {
-        @(Model.Response(false))
+        @(Model.Response)
         return result, @(Model.AutorestError("Failure sending next results request", "resp"))
     }
 

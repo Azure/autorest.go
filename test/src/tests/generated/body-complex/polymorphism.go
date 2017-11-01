@@ -63,7 +63,8 @@ func (client PolymorphismClient) GetValidPreparer() (*http.Request, error) {
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -157,7 +158,8 @@ func (client PolymorphismClient) PutValidPreparer(complexBody Fish) (*http.Reque
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -244,7 +246,8 @@ func (client PolymorphismClient) PutValidMissingRequiredPreparer(complexBody Fis
 // PutValidMissingRequiredSender sends the PutValidMissingRequired request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutValidMissingRequiredSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

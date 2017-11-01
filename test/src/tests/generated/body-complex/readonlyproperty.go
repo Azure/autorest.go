@@ -62,7 +62,8 @@ func (client ReadonlypropertyClient) GetValidPreparer() (*http.Request, error) {
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ReadonlypropertyClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -117,7 +118,8 @@ func (client ReadonlypropertyClient) PutValidPreparer(complexBody ReadonlyObj) (
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ReadonlypropertyClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

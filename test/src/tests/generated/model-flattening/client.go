@@ -75,7 +75,8 @@ func (client ManagementClient) GetArrayPreparer() (*http.Request, error) {
 // GetArraySender sends the GetArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) GetArraySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -127,7 +128,8 @@ func (client ManagementClient) GetDictionaryPreparer() (*http.Request, error) {
 // GetDictionarySender sends the GetDictionary request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) GetDictionarySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -179,7 +181,8 @@ func (client ManagementClient) GetResourceCollectionPreparer() (*http.Request, e
 // GetResourceCollectionSender sends the GetResourceCollection request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) GetResourceCollectionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -232,7 +235,8 @@ func (client ManagementClient) GetWrappedArrayPreparer() (*http.Request, error) 
 // GetWrappedArraySender sends the GetWrappedArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) GetWrappedArraySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -302,7 +306,8 @@ func (client ManagementClient) PostFlattenedSimpleProductPreparer(simpleBodyProd
 // PostFlattenedSimpleProductSender sends the PostFlattenedSimpleProduct request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PostFlattenedSimpleProductSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -361,7 +366,8 @@ func (client ManagementClient) PutArrayPreparer(resourceArray []Resource) (*http
 // PutArraySender sends the PutArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PutArraySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -419,7 +425,8 @@ func (client ManagementClient) PutDictionaryPreparer(resourceDictionary map[stri
 // PutDictionarySender sends the PutDictionary request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PutDictionarySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -477,7 +484,8 @@ func (client ManagementClient) PutResourceCollectionPreparer(resourceComplexObje
 // PutResourceCollectionSender sends the PutResourceCollection request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PutResourceCollectionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -546,7 +554,8 @@ func (client ManagementClient) PutSimpleProductPreparer(simpleBodyProduct *Simpl
 // PutSimpleProductSender sends the PutSimpleProduct request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PutSimpleProductSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -620,7 +629,8 @@ func (client ManagementClient) PutSimpleProductWithGroupingPreparer(name string,
 // PutSimpleProductWithGroupingSender sends the PutSimpleProductWithGrouping request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PutSimpleProductWithGroupingSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -680,7 +690,8 @@ func (client ManagementClient) PutWrappedArrayPreparer(resourceArray []WrappedPr
 // PutWrappedArraySender sends the PutWrappedArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client ManagementClient) PutWrappedArraySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

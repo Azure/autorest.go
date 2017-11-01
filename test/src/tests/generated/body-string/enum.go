@@ -63,7 +63,8 @@ func (client EnumClient) GetNotExpandablePreparer() (*http.Request, error) {
 // GetNotExpandableSender sends the GetNotExpandable request. The method will close the
 // http.Response Body if it receives an error.
 func (client EnumClient) GetNotExpandableSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -115,7 +116,8 @@ func (client EnumClient) GetReferencedPreparer() (*http.Request, error) {
 // GetReferencedSender sends the GetReferenced request. The method will close the
 // http.Response Body if it receives an error.
 func (client EnumClient) GetReferencedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -167,7 +169,8 @@ func (client EnumClient) GetReferencedConstantPreparer() (*http.Request, error) 
 // GetReferencedConstantSender sends the GetReferencedConstant request. The method will close the
 // http.Response Body if it receives an error.
 func (client EnumClient) GetReferencedConstantSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -223,7 +226,8 @@ func (client EnumClient) PutNotExpandablePreparer(stringBody Colors) (*http.Requ
 // PutNotExpandableSender sends the PutNotExpandable request. The method will close the
 // http.Response Body if it receives an error.
 func (client EnumClient) PutNotExpandableSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -278,7 +282,8 @@ func (client EnumClient) PutReferencedPreparer(enumStringBody Colors) (*http.Req
 // PutReferencedSender sends the PutReferenced request. The method will close the
 // http.Response Body if it receives an error.
 func (client EnumClient) PutReferencedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -338,7 +343,8 @@ func (client EnumClient) PutReferencedConstantPreparer(enumStringBody RefColorCo
 // PutReferencedConstantSender sends the PutReferencedConstant request. The method will close the
 // http.Response Body if it receives an error.
 func (client EnumClient) PutReferencedConstantSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

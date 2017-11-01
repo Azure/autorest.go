@@ -62,7 +62,8 @@ func (client ArrayClient) GetEmptyPreparer() (*http.Request, error) {
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -114,7 +115,8 @@ func (client ArrayClient) GetNotProvidedPreparer() (*http.Request, error) {
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) GetNotProvidedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -166,7 +168,8 @@ func (client ArrayClient) GetValidPreparer() (*http.Request, error) {
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -222,7 +225,8 @@ func (client ArrayClient) PutEmptyPreparer(complexBody ArrayWrapper) (*http.Requ
 // PutEmptySender sends the PutEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) PutEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
@@ -278,7 +282,8 @@ func (client ArrayClient) PutValidPreparer(complexBody ArrayWrapper) (*http.Requ
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
+	return autorest.SendWithSender(client,
+		req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 

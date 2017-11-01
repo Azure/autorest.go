@@ -214,10 +214,7 @@ namespace AutoRest.Go.Model
             return IsPolymorphic && IsResponseType;
         }
 
-        /// <summary>
-        /// Returns all the fields contained in this type in a formatted string.
-        /// </summary>
-        public virtual string Fields()
+        public string Fields()
         {
             AddPolymorphicPropertyIfNecessary();
             var indented = new IndentedStringBuilder("    ");
