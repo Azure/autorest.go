@@ -7,11 +7,10 @@ package dategroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"net/http"
-
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
+	"net/http"
 )
 
 // DateClient is the test Infrastructure for AutoRest
@@ -63,7 +62,7 @@ func (client DateClient) GetInvalidDatePreparer() (*http.Request, error) {
 
 // GetInvalidDateSender sends the GetInvalidDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetInvalidDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetInvalidDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -115,7 +114,7 @@ func (client DateClient) GetMaxDatePreparer() (*http.Request, error) {
 
 // GetMaxDateSender sends the GetMaxDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetMaxDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetMaxDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -167,7 +166,7 @@ func (client DateClient) GetMinDatePreparer() (*http.Request, error) {
 
 // GetMinDateSender sends the GetMinDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetMinDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetMinDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -219,7 +218,7 @@ func (client DateClient) GetNullPreparer() (*http.Request, error) {
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetNullSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -271,7 +270,7 @@ func (client DateClient) GetOverflowDatePreparer() (*http.Request, error) {
 
 // GetOverflowDateSender sends the GetOverflowDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetOverflowDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetOverflowDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -323,7 +322,7 @@ func (client DateClient) GetUnderflowDatePreparer() (*http.Request, error) {
 
 // GetUnderflowDateSender sends the GetUnderflowDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetUnderflowDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetUnderflowDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -378,7 +377,7 @@ func (client DateClient) PutMaxDatePreparer(dateBody date.Date) (*http.Request, 
 
 // PutMaxDateSender sends the PutMaxDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutMaxDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) PutMaxDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -432,7 +431,7 @@ func (client DateClient) PutMinDatePreparer(dateBody date.Date) (*http.Request, 
 
 // PutMinDateSender sends the PutMinDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutMinDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) PutMinDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }

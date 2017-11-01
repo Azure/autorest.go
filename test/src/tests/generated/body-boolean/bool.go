@@ -7,10 +7,9 @@ package booleangroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"net/http"
-
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"net/http"
 )
 
 // BoolClient is the test Infrastructure for AutoRest
@@ -62,7 +61,7 @@ func (client BoolClient) GetFalsePreparer() (*http.Request, error) {
 
 // GetFalseSender sends the GetFalse request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetFalseSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetFalseSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -114,7 +113,7 @@ func (client BoolClient) GetInvalidPreparer() (*http.Request, error) {
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -166,7 +165,7 @@ func (client BoolClient) GetNullPreparer() (*http.Request, error) {
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetNullSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -218,7 +217,7 @@ func (client BoolClient) GetTruePreparer() (*http.Request, error) {
 
 // GetTrueSender sends the GetTrue request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) GetTrueSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) GetTrueSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -273,7 +272,7 @@ func (client BoolClient) PutFalsePreparer(boolBody bool) (*http.Request, error) 
 
 // PutFalseSender sends the PutFalse request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) PutFalseSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) PutFalseSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -327,7 +326,7 @@ func (client BoolClient) PutTruePreparer(boolBody bool) (*http.Request, error) {
 
 // PutTrueSender sends the PutTrue request. The method will close the
 // http.Response Body if it receives an error.
-func (client BoolGroupClient) PutTrueSender(req *http.Request) (*http.Response, error) {
+func (client BoolClient) PutTrueSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }

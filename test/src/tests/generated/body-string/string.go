@@ -7,10 +7,9 @@ package stringgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"net/http"
-
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"net/http"
 )
 
 // StringClient is the test Infrastructure for AutoRest Swagger BAT
@@ -62,7 +61,7 @@ func (client StringClient) GetBase64EncodedPreparer() (*http.Request, error) {
 
 // GetBase64EncodedSender sends the GetBase64Encoded request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetBase64EncodedSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetBase64EncodedSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -114,7 +113,7 @@ func (client StringClient) GetBase64URLEncodedPreparer() (*http.Request, error) 
 
 // GetBase64URLEncodedSender sends the GetBase64URLEncoded request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -166,7 +165,7 @@ func (client StringClient) GetEmptyPreparer() (*http.Request, error) {
 
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetEmptySender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetEmptySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -218,7 +217,7 @@ func (client StringClient) GetMbcsPreparer() (*http.Request, error) {
 
 // GetMbcsSender sends the GetMbcs request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetMbcsSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetMbcsSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -270,7 +269,7 @@ func (client StringClient) GetNotProvidedPreparer() (*http.Request, error) {
 
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetNotProvidedSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetNotProvidedSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -322,7 +321,7 @@ func (client StringClient) GetNullPreparer() (*http.Request, error) {
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetNullSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -374,7 +373,7 @@ func (client StringClient) GetNullBase64URLEncodedPreparer() (*http.Request, err
 
 // GetNullBase64URLEncodedSender sends the GetNullBase64URLEncoded request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetNullBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetNullBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -427,7 +426,7 @@ func (client StringClient) GetWhitespacePreparer() (*http.Request, error) {
 
 // GetWhitespaceSender sends the GetWhitespace request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetWhitespaceSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) GetWhitespaceSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -482,7 +481,7 @@ func (client StringClient) PutBase64URLEncodedPreparer(stringBody string) (*http
 
 // PutBase64URLEncodedSender sends the PutBase64URLEncoded request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) PutBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -537,7 +536,7 @@ func (client StringClient) PutEmptyPreparer(stringBody string) (*http.Request, e
 
 // PutEmptySender sends the PutEmpty request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutEmptySender(req *http.Request) (*http.Response, error) {
+func (client StringClient) PutEmptySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -592,7 +591,7 @@ func (client StringClient) PutMbcsPreparer(stringBody string) (*http.Request, er
 
 // PutMbcsSender sends the PutMbcs request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutMbcsSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) PutMbcsSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -650,7 +649,7 @@ func (client StringClient) PutNullPreparer(stringBody string) (*http.Request, er
 
 // PutNullSender sends the PutNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutNullSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) PutNullSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
@@ -706,7 +705,7 @@ func (client StringClient) PutWhitespacePreparer(stringBody string) (*http.Reque
 
 // PutWhitespaceSender sends the PutWhitespace request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutWhitespaceSender(req *http.Request) (*http.Response, error) {
+func (client StringClient) PutWhitespaceSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
