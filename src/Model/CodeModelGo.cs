@@ -23,18 +23,21 @@ namespace AutoRest.Go.Model
 
         public string UserAgent
         {
-            get {
+            get
+            {
                 if (SpecifiedUserAgent == null) {
                     return DefaultUserAgent;
                 }
                 return SpecifiedUserAgent;
             }
-            set {
+            set
+            {
                 SpecifiedUserAgent = value;
             }
         }
         private string DefaultUserAgent{
-            get {
+            get
+            {
                 return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
             }
         }
