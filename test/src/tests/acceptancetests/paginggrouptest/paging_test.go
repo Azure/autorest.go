@@ -1,6 +1,7 @@
 package paginggrouptest
 
 import (
+	"context"
 	"net/http"
 	"testing"
 
@@ -28,7 +29,7 @@ func getPagingClient() PagingClient {
 
 func (s *PagingGroupSuite) TestGetMultiplePages(c *chk.C) {
 	// Get pages one by one...
-	res, err := pagingClient.GetMultiplePages(clientID, nil, nil)
+	res, err := pagingClient.GetMultiplePages(context.Background(), clientID, nil, nil)
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.NextLink, chk.NotNil)
 	count := 1
@@ -41,7 +42,7 @@ func (s *PagingGroupSuite) TestGetMultiplePages(c *chk.C) {
 	c.Assert(count, chk.Equals, 10)
 
 	// Get all!
-	resChan, errChan := pagingClient.GetMultiplePagesComplete(clientID, nil, nil, nil)
+	resChan, errChan := pagingClient.GetMultiplePagesComplete(context.Background(), clientID, nil, nil)
 	count = 0
 	for item := range resChan {
 		count++
@@ -50,27 +51,27 @@ func (s *PagingGroupSuite) TestGetMultiplePages(c *chk.C) {
 	c.Assert(count, chk.Equals, 10)
 	c.Assert(<-errChan, chk.IsNil)
 
-	// Get some and then cancel...
-	cancel := make(chan struct{})
-	resChan, errChan = pagingClient.GetMultiplePagesComplete(clientID, nil, nil, cancel)
+	// Get some and then cancel
+	ctx, cancel := context.WithCancel(context.Background())
+	resChan, errChan = pagingClient.GetMultiplePagesComplete(ctx, clientID, nil, nil)
 	for i := 0; i < 3; i++ {
 		_, ok := <-resChan
 		c.Assert(ok, chk.Equals, true)
 	}
-	close(cancel)
-	c.Assert(<-errChan, chk.IsNil)
+	cancel()
+	c.Assert(<-errChan, chk.ErrorMatches, "context canceled")
 	_, ok := <-resChan
 	c.Assert(ok, chk.Equals, false)
 }
 
 func (s *PagingGroupSuite) TestGetSinglePages(c *chk.C) {
-	res, err := pagingClient.GetSinglePages()
+	res, err := pagingClient.GetSinglePages(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.NextLink, chk.IsNil)
 }
 
 func (s *PagingGroupSuite) TestGetOdataMultiplePages(c *chk.C) {
-	res, err := pagingClient.GetOdataMultiplePages(clientID, nil, nil)
+	res, err := pagingClient.GetOdataMultiplePages(context.Background(), clientID, nil, nil)
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.OdataNextLink, chk.NotNil)
 	count := 1
@@ -82,7 +83,7 @@ func (s *PagingGroupSuite) TestGetOdataMultiplePages(c *chk.C) {
 	}
 	c.Assert(count, chk.Equals, 10)
 
-	resChan, errChan := pagingClient.GetOdataMultiplePagesComplete(clientID, nil, nil, nil)
+	resChan, errChan := pagingClient.GetOdataMultiplePagesComplete(context.Background(), clientID, nil, nil)
 	count = 0
 	for item := range resChan {
 		count++
@@ -93,7 +94,7 @@ func (s *PagingGroupSuite) TestGetOdataMultiplePages(c *chk.C) {
 }
 
 func (s *PagingGroupSuite) TestGetMultiplePagesWithOffset(c *chk.C) {
-	res, err := pagingClient.GetMultiplePagesWithOffset(100, clientID, nil, nil)
+	res, err := pagingClient.GetMultiplePagesWithOffset(context.Background(), 100, clientID, nil, nil)
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.NextLink, chk.NotNil)
 	count := 1
@@ -106,7 +107,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesWithOffset(c *chk.C) {
 	c.Assert(count, chk.Equals, 10)
 	c.Assert(*(*res.Values)[0].Properties.ID, chk.Equals, int32(110))
 
-	resChan, errChan := pagingClient.GetMultiplePagesWithOffsetComplete(100, clientID, nil, nil, nil)
+	resChan, errChan := pagingClient.GetMultiplePagesWithOffsetComplete(context.Background(), 100, clientID, nil, nil)
 	count = 0
 	for item := range resChan {
 		count++
@@ -117,7 +118,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesWithOffset(c *chk.C) {
 }
 
 func (s *PagingGroupSuite) TestGetMultiplePagesRetryFirst(c *chk.C) {
-	res, err := pagingClient.GetMultiplePagesRetryFirst()
+	res, err := pagingClient.GetMultiplePagesRetryFirst(context.Background())
 	c.Assert(err, chk.IsNil)
 	count := 1
 	for res.NextLink != nil {
@@ -128,7 +129,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesRetryFirst(c *chk.C) {
 	}
 	c.Assert(count, chk.Equals, 10)
 
-	resChan, errChan := pagingClient.GetMultiplePagesRetryFirstComplete(nil)
+	resChan, errChan := pagingClient.GetMultiplePagesRetryFirstComplete(context.Background())
 	count = 0
 	for item := range resChan {
 		count++
@@ -139,7 +140,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesRetryFirst(c *chk.C) {
 }
 
 func (s *PagingGroupSuite) TestGetMultiplePagesRetrySecond(c *chk.C) {
-	res, err := pagingClient.GetMultiplePagesRetrySecond()
+	res, err := pagingClient.GetMultiplePagesRetrySecond(context.Background())
 	c.Assert(err, chk.IsNil)
 	count := 1
 	for res.NextLink != nil {
@@ -150,7 +151,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesRetrySecond(c *chk.C) {
 	}
 	c.Assert(count, chk.Equals, 10)
 
-	resChan, errChan := pagingClient.GetMultiplePagesRetrySecondComplete(nil)
+	resChan, errChan := pagingClient.GetMultiplePagesRetrySecondComplete(context.Background())
 	count = 0
 	for item := range resChan {
 		count++
@@ -161,11 +162,11 @@ func (s *PagingGroupSuite) TestGetMultiplePagesRetrySecond(c *chk.C) {
 }
 
 func (s *PagingGroupSuite) TestGetSinglePagesFailure(c *chk.C) {
-	res, err := pagingClient.GetSinglePagesFailure()
+	res, err := pagingClient.GetSinglePagesFailure(context.Background())
 	c.Assert(err, chk.NotNil)
 	c.Assert(res.StatusCode, chk.Equals, http.StatusBadRequest)
 
-	resChan, errChan := pagingClient.GetSinglePagesFailureComplete(nil)
+	resChan, errChan := pagingClient.GetSinglePagesFailureComplete(context.Background())
 	count := 0
 	for item := range resChan {
 		count++
@@ -176,14 +177,14 @@ func (s *PagingGroupSuite) TestGetSinglePagesFailure(c *chk.C) {
 }
 
 func (s *PagingGroupSuite) TestGetMultiplePagesFailure(c *chk.C) {
-	res, err := pagingClient.GetMultiplePagesFailure()
+	res, err := pagingClient.GetMultiplePagesFailure(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.NextLink, chk.NotNil)
 	res, err = pagingClient.GetMultiplePagesFailureNextResults(res)
 	c.Assert(err, chk.NotNil)
 	c.Assert(res.StatusCode, chk.Equals, http.StatusBadRequest)
 
-	resChan, errChan := pagingClient.GetMultiplePagesFailureComplete(nil)
+	resChan, errChan := pagingClient.GetMultiplePagesFailureComplete(context.Background())
 	count := 0
 	for item := range resChan {
 		count++
@@ -194,14 +195,14 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFailure(c *chk.C) {
 }
 
 func (s *PagingGroupSuite) TestGetMultiplePagesFailureURI(c *chk.C) {
-	res, err := pagingClient.GetMultiplePagesFailureURI()
+	res, err := pagingClient.GetMultiplePagesFailureURI(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.NextLink, chk.Equals, "*&*#&$")
 	_, err = pagingClient.GetMultiplePagesFailureURINextResults(res)
 	c.Assert(err, chk.NotNil)
 	c.Assert(err, chk.ErrorMatches, ".*No scheme detected in URL.*")
 
-	resChan, errChan := pagingClient.GetMultiplePagesFailureURIComplete(nil)
+	resChan, errChan := pagingClient.GetMultiplePagesFailureURIComplete(context.Background())
 	count := 0
 	for item := range resChan {
 		count++
@@ -214,18 +215,18 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFailureURI(c *chk.C) {
 }
 
 func (s *PagingGroupSuite) TestGetMultiplePagesFragmentNextLink(c *chk.C) {
-	res, err := pagingClient.GetMultiplePagesFragmentNextLink("1.6", "test_user")
+	res, err := pagingClient.GetMultiplePagesFragmentNextLink(context.Background(), "1.6", "test_user")
 	c.Assert(err, chk.IsNil)
 	count := 1
 	for res.OdataNextLink != nil {
 		count++
-		resNext, err := pagingClient.NextFragment("1.6", "test_user", *res.OdataNextLink)
+		resNext, err := pagingClient.NextFragment(context.Background(), "1.6", "test_user", *res.OdataNextLink)
 		c.Assert(err, chk.IsNil)
 		res = resNext
 	}
 	c.Assert(count, chk.Equals, 10)
 
-	resChan, errChan := pagingClient.GetMultiplePagesFragmentNextLinkComplete("1.6", "test_user", nil)
+	resChan, errChan := pagingClient.GetMultiplePagesFragmentNextLinkComplete(context.Background(), "1.6", "test_user")
 	count = 0
 	for item := range resChan {
 		count++

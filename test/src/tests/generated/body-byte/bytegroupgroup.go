@@ -7,6 +7,7 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -29,8 +30,8 @@ func NewGroupClientWithBaseURI(baseURI string) GroupClient {
 }
 
 // GetEmpty get empty byte value ''
-func (client GroupClient) GetEmpty() (result ByteArray, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client GroupClient) GetEmpty(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client GroupClient) GetEmpty() (result ByteArray, err error) {
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client GroupClient) GetEmptyPreparer() (*http.Request, error) {
+func (client GroupClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -81,8 +82,8 @@ func (client GroupClient) GetEmptyResponder(resp *http.Response) (result ByteArr
 }
 
 // GetInvalid get invalid byte value ':::SWAGGER::::'
-func (client GroupClient) GetInvalid() (result ByteArray, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client GroupClient) GetInvalid(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -104,12 +105,12 @@ func (client GroupClient) GetInvalid() (result ByteArray, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client GroupClient) GetInvalidPreparer() (*http.Request, error) {
+func (client GroupClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -133,8 +134,8 @@ func (client GroupClient) GetInvalidResponder(resp *http.Response) (result ByteA
 }
 
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client GroupClient) GetNonASCII() (result ByteArray, err error) {
-	req, err := client.GetNonASCIIPreparer()
+func (client GroupClient) GetNonASCII(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetNonASCIIPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", nil, "Failure preparing request")
 		return
@@ -156,12 +157,12 @@ func (client GroupClient) GetNonASCII() (result ByteArray, err error) {
 }
 
 // GetNonASCIIPreparer prepares the GetNonASCII request.
-func (client GroupClient) GetNonASCIIPreparer() (*http.Request, error) {
+func (client GroupClient) GetNonASCIIPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/nonAscii"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNonASCIISender sends the GetNonASCII request. The method will close the
@@ -185,8 +186,8 @@ func (client GroupClient) GetNonASCIIResponder(resp *http.Response) (result Byte
 }
 
 // GetNull get null byte value
-func (client GroupClient) GetNull() (result ByteArray, err error) {
-	req, err := client.GetNullPreparer()
+func (client GroupClient) GetNull(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -208,12 +209,12 @@ func (client GroupClient) GetNull() (result ByteArray, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client GroupClient) GetNullPreparer() (*http.Request, error) {
+func (client GroupClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -239,14 +240,14 @@ func (client GroupClient) GetNullResponder(resp *http.Response) (result ByteArra
 // PutNonASCII put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 //
 // byteBody is base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client GroupClient) PutNonASCII(byteBody []byte) (result autorest.Response, err error) {
+func (client GroupClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: byteBody,
 			Constraints: []validation.Constraint{{Target: "byteBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "bytegroup.GroupClient", "PutNonASCII")
 	}
 
-	req, err := client.PutNonASCIIPreparer(byteBody)
+	req, err := client.PutNonASCIIPreparer(ctx, byteBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", nil, "Failure preparing request")
 		return
@@ -268,14 +269,14 @@ func (client GroupClient) PutNonASCII(byteBody []byte) (result autorest.Response
 }
 
 // PutNonASCIIPreparer prepares the PutNonASCII request.
-func (client GroupClient) PutNonASCIIPreparer(byteBody []byte) (*http.Request, error) {
+func (client GroupClient) PutNonASCIIPreparer(ctx context.Context, byteBody []byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/nonAscii"),
 		autorest.WithJSON(byteBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNonASCIISender sends the PutNonASCII request. The method will close the

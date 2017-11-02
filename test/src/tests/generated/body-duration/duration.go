@@ -7,6 +7,7 @@ package durationgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewDurationClientWithBaseURI(baseURI string) DurationClient {
 }
 
 // GetInvalid get an invalid duration value
-func (client DurationClient) GetInvalid() (result TimeSpan, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client DurationClient) GetInvalid(ctx context.Context) (result TimeSpan, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client DurationClient) GetInvalid() (result TimeSpan, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client DurationClient) GetInvalidPreparer() (*http.Request, error) {
+func (client DurationClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/duration/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -80,8 +81,8 @@ func (client DurationClient) GetInvalidResponder(resp *http.Response) (result Ti
 }
 
 // GetNull get null duration value
-func (client DurationClient) GetNull() (result TimeSpan, err error) {
-	req, err := client.GetNullPreparer()
+func (client DurationClient) GetNull(ctx context.Context) (result TimeSpan, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client DurationClient) GetNull() (result TimeSpan, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client DurationClient) GetNullPreparer() (*http.Request, error) {
+func (client DurationClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/duration/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -132,8 +133,8 @@ func (client DurationClient) GetNullResponder(resp *http.Response) (result TimeS
 }
 
 // GetPositiveDuration get a positive duration value
-func (client DurationClient) GetPositiveDuration() (result TimeSpan, err error) {
-	req, err := client.GetPositiveDurationPreparer()
+func (client DurationClient) GetPositiveDuration(ctx context.Context) (result TimeSpan, err error) {
+	req, err := client.GetPositiveDurationPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetPositiveDuration", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client DurationClient) GetPositiveDuration() (result TimeSpan, err error) 
 }
 
 // GetPositiveDurationPreparer prepares the GetPositiveDuration request.
-func (client DurationClient) GetPositiveDurationPreparer() (*http.Request, error) {
+func (client DurationClient) GetPositiveDurationPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/duration/positiveduration"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetPositiveDurationSender sends the GetPositiveDuration request. The method will close the
@@ -185,8 +186,8 @@ func (client DurationClient) GetPositiveDurationResponder(resp *http.Response) (
 
 // PutPositiveDuration put a positive duration value
 //
-func (client DurationClient) PutPositiveDuration(durationBody string) (result autorest.Response, err error) {
-	req, err := client.PutPositiveDurationPreparer(durationBody)
+func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBody string) (result autorest.Response, err error) {
+	req, err := client.PutPositiveDurationPreparer(ctx, durationBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "PutPositiveDuration", nil, "Failure preparing request")
 		return
@@ -208,14 +209,14 @@ func (client DurationClient) PutPositiveDuration(durationBody string) (result au
 }
 
 // PutPositiveDurationPreparer prepares the PutPositiveDuration request.
-func (client DurationClient) PutPositiveDurationPreparer(durationBody string) (*http.Request, error) {
+func (client DurationClient) PutPositiveDurationPreparer(ctx context.Context, durationBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/duration/positiveduration"),
 		autorest.WithJSON(durationBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutPositiveDurationSender sends the PutPositiveDuration request. The method will close the

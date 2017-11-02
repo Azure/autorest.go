@@ -7,6 +7,7 @@ package datetimegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -29,8 +30,8 @@ func NewDatetimeClientWithBaseURI(baseURI string) DatetimeClient {
 }
 
 // GetInvalid get invalid datetime value
-func (client DatetimeClient) GetInvalid() (result DateTime, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client DatetimeClient) GetInvalid(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client DatetimeClient) GetInvalid() (result DateTime, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client DatetimeClient) GetInvalidPreparer() (*http.Request, error) {
+func (client DatetimeClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -82,8 +83,8 @@ func (client DatetimeClient) GetInvalidResponder(resp *http.Response) (result Da
 
 // GetLocalNegativeOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999-14:00
-func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime() (result DateTime, err error) {
-	req, err := client.GetLocalNegativeOffsetLowercaseMaxDateTimePreparer()
+func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -105,12 +106,12 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime() (resul
 }
 
 // GetLocalNegativeOffsetLowercaseMaxDateTimePreparer prepares the GetLocalNegativeOffsetLowercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localnegativeoffset/lowercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLocalNegativeOffsetLowercaseMaxDateTimeSender sends the GetLocalNegativeOffsetLowercaseMaxDateTime request. The method will close the
@@ -134,8 +135,8 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeResponder
 }
 
 // GetLocalNegativeOffsetMinDateTime get min datetime value 0001-01-01T00:00:00-14:00
-func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime() (result DateTime, err error) {
-	req, err := client.GetLocalNegativeOffsetMinDateTimePreparer()
+func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetLocalNegativeOffsetMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", nil, "Failure preparing request")
 		return
@@ -157,12 +158,12 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime() (result DateTim
 }
 
 // GetLocalNegativeOffsetMinDateTimePreparer prepares the GetLocalNegativeOffsetMinDateTime request.
-func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/localnegativeoffset"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLocalNegativeOffsetMinDateTimeSender sends the GetLocalNegativeOffsetMinDateTime request. The method will close the
@@ -187,8 +188,8 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeResponder(resp *ht
 
 // GetLocalNegativeOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999-14:00
-func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime() (result DateTime, err error) {
-	req, err := client.GetLocalNegativeOffsetUppercaseMaxDateTimePreparer()
+func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -210,12 +211,12 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime() (resul
 }
 
 // GetLocalNegativeOffsetUppercaseMaxDateTimePreparer prepares the GetLocalNegativeOffsetUppercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localnegativeoffset/uppercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLocalNegativeOffsetUppercaseMaxDateTimeSender sends the GetLocalNegativeOffsetUppercaseMaxDateTime request. The method will close the
@@ -240,8 +241,8 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeResponder
 
 // GetLocalPositiveOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999+14:00
-func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime() (result DateTime, err error) {
-	req, err := client.GetLocalPositiveOffsetLowercaseMaxDateTimePreparer()
+func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -263,12 +264,12 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime() (resul
 }
 
 // GetLocalPositiveOffsetLowercaseMaxDateTimePreparer prepares the GetLocalPositiveOffsetLowercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localpositiveoffset/lowercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLocalPositiveOffsetLowercaseMaxDateTimeSender sends the GetLocalPositiveOffsetLowercaseMaxDateTime request. The method will close the
@@ -292,8 +293,8 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeResponder
 }
 
 // GetLocalPositiveOffsetMinDateTime get min datetime value 0001-01-01T00:00:00+14:00
-func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime() (result DateTime, err error) {
-	req, err := client.GetLocalPositiveOffsetMinDateTimePreparer()
+func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetLocalPositiveOffsetMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", nil, "Failure preparing request")
 		return
@@ -315,12 +316,12 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime() (result DateTim
 }
 
 // GetLocalPositiveOffsetMinDateTimePreparer prepares the GetLocalPositiveOffsetMinDateTime request.
-func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/localpositiveoffset"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLocalPositiveOffsetMinDateTimeSender sends the GetLocalPositiveOffsetMinDateTime request. The method will close the
@@ -345,8 +346,8 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeResponder(resp *ht
 
 // GetLocalPositiveOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999+14:00
-func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime() (result DateTime, err error) {
-	req, err := client.GetLocalPositiveOffsetUppercaseMaxDateTimePreparer()
+func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -368,12 +369,12 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime() (resul
 }
 
 // GetLocalPositiveOffsetUppercaseMaxDateTimePreparer prepares the GetLocalPositiveOffsetUppercaseMaxDateTime request.
-func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localpositiveoffset/uppercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLocalPositiveOffsetUppercaseMaxDateTimeSender sends the GetLocalPositiveOffsetUppercaseMaxDateTime request. The method will close the
@@ -397,8 +398,8 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeResponder
 }
 
 // GetNull get null datetime value
-func (client DatetimeClient) GetNull() (result DateTime, err error) {
-	req, err := client.GetNullPreparer()
+func (client DatetimeClient) GetNull(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -420,12 +421,12 @@ func (client DatetimeClient) GetNull() (result DateTime, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client DatetimeClient) GetNullPreparer() (*http.Request, error) {
+func (client DatetimeClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -449,8 +450,8 @@ func (client DatetimeClient) GetNullResponder(resp *http.Response) (result DateT
 }
 
 // GetOverflow get overflow datetime value
-func (client DatetimeClient) GetOverflow() (result DateTime, err error) {
-	req, err := client.GetOverflowPreparer()
+func (client DatetimeClient) GetOverflow(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetOverflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", nil, "Failure preparing request")
 		return
@@ -472,12 +473,12 @@ func (client DatetimeClient) GetOverflow() (result DateTime, err error) {
 }
 
 // GetOverflowPreparer prepares the GetOverflow request.
-func (client DatetimeClient) GetOverflowPreparer() (*http.Request, error) {
+func (client DatetimeClient) GetOverflowPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/overflow"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowSender sends the GetOverflow request. The method will close the
@@ -501,8 +502,8 @@ func (client DatetimeClient) GetOverflowResponder(resp *http.Response) (result D
 }
 
 // GetUnderflow get underflow datetime value
-func (client DatetimeClient) GetUnderflow() (result DateTime, err error) {
-	req, err := client.GetUnderflowPreparer()
+func (client DatetimeClient) GetUnderflow(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetUnderflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", nil, "Failure preparing request")
 		return
@@ -524,12 +525,12 @@ func (client DatetimeClient) GetUnderflow() (result DateTime, err error) {
 }
 
 // GetUnderflowPreparer prepares the GetUnderflow request.
-func (client DatetimeClient) GetUnderflowPreparer() (*http.Request, error) {
+func (client DatetimeClient) GetUnderflowPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/underflow"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowSender sends the GetUnderflow request. The method will close the
@@ -553,8 +554,8 @@ func (client DatetimeClient) GetUnderflowResponder(resp *http.Response) (result 
 }
 
 // GetUtcLowercaseMaxDateTime get max datetime value 9999-12-31t23:59:59.9999999z
-func (client DatetimeClient) GetUtcLowercaseMaxDateTime() (result DateTime, err error) {
-	req, err := client.GetUtcLowercaseMaxDateTimePreparer()
+func (client DatetimeClient) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetUtcLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -576,12 +577,12 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTime() (result DateTime, err 
 }
 
 // GetUtcLowercaseMaxDateTimePreparer prepares the GetUtcLowercaseMaxDateTime request.
-func (client DatetimeClient) GetUtcLowercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetUtcLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/utc/lowercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUtcLowercaseMaxDateTimeSender sends the GetUtcLowercaseMaxDateTime request. The method will close the
@@ -605,8 +606,8 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTimeResponder(resp *http.Resp
 }
 
 // GetUtcMinDateTime get min datetime value 0001-01-01T00:00:00Z
-func (client DatetimeClient) GetUtcMinDateTime() (result DateTime, err error) {
-	req, err := client.GetUtcMinDateTimePreparer()
+func (client DatetimeClient) GetUtcMinDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetUtcMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", nil, "Failure preparing request")
 		return
@@ -628,12 +629,12 @@ func (client DatetimeClient) GetUtcMinDateTime() (result DateTime, err error) {
 }
 
 // GetUtcMinDateTimePreparer prepares the GetUtcMinDateTime request.
-func (client DatetimeClient) GetUtcMinDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetUtcMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/utc"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUtcMinDateTimeSender sends the GetUtcMinDateTime request. The method will close the
@@ -657,8 +658,8 @@ func (client DatetimeClient) GetUtcMinDateTimeResponder(resp *http.Response) (re
 }
 
 // GetUtcUppercaseMaxDateTime get max datetime value 9999-12-31T23:59:59.9999999Z
-func (client DatetimeClient) GetUtcUppercaseMaxDateTime() (result DateTime, err error) {
-	req, err := client.GetUtcUppercaseMaxDateTimePreparer()
+func (client DatetimeClient) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	req, err := client.GetUtcUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -680,12 +681,12 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTime() (result DateTime, err 
 }
 
 // GetUtcUppercaseMaxDateTimePreparer prepares the GetUtcUppercaseMaxDateTime request.
-func (client DatetimeClient) GetUtcUppercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client DatetimeClient) GetUtcUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/utc/uppercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUtcUppercaseMaxDateTimeSender sends the GetUtcUppercaseMaxDateTime request. The method will close the
@@ -710,8 +711,8 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Resp
 
 // PutLocalNegativeOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00
 //
-func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(datetimeBody date.Time) (result autorest.Response, err error) {
-	req, err := client.PutLocalNegativeOffsetMaxDateTimePreparer(datetimeBody)
+func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	req, err := client.PutLocalNegativeOffsetMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", nil, "Failure preparing request")
 		return
@@ -733,14 +734,14 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(datetimeBody date
 }
 
 // PutLocalNegativeOffsetMaxDateTimePreparer prepares the PutLocalNegativeOffsetMaxDateTime request.
-func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimePreparer(datetimeBody date.Time) (*http.Request, error) {
+func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localnegativeoffset"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutLocalNegativeOffsetMaxDateTimeSender sends the PutLocalNegativeOffsetMaxDateTime request. The method will close the
@@ -764,8 +765,8 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeResponder(resp *ht
 
 // PutLocalNegativeOffsetMinDateTime put min datetime value 0001-01-01T00:00:00-14:00
 //
-func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(datetimeBody date.Time) (result autorest.Response, err error) {
-	req, err := client.PutLocalNegativeOffsetMinDateTimePreparer(datetimeBody)
+func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	req, err := client.PutLocalNegativeOffsetMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", nil, "Failure preparing request")
 		return
@@ -787,14 +788,14 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(datetimeBody date
 }
 
 // PutLocalNegativeOffsetMinDateTimePreparer prepares the PutLocalNegativeOffsetMinDateTime request.
-func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimePreparer(datetimeBody date.Time) (*http.Request, error) {
+func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/localnegativeoffset"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutLocalNegativeOffsetMinDateTimeSender sends the PutLocalNegativeOffsetMinDateTime request. The method will close the
@@ -818,8 +819,8 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *ht
 
 // PutLocalPositiveOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00
 //
-func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(datetimeBody date.Time) (result autorest.Response, err error) {
-	req, err := client.PutLocalPositiveOffsetMaxDateTimePreparer(datetimeBody)
+func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	req, err := client.PutLocalPositiveOffsetMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", nil, "Failure preparing request")
 		return
@@ -841,14 +842,14 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(datetimeBody date
 }
 
 // PutLocalPositiveOffsetMaxDateTimePreparer prepares the PutLocalPositiveOffsetMaxDateTime request.
-func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimePreparer(datetimeBody date.Time) (*http.Request, error) {
+func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localpositiveoffset"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutLocalPositiveOffsetMaxDateTimeSender sends the PutLocalPositiveOffsetMaxDateTime request. The method will close the
@@ -872,8 +873,8 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeResponder(resp *ht
 
 // PutLocalPositiveOffsetMinDateTime put min datetime value 0001-01-01T00:00:00+14:00
 //
-func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(datetimeBody date.Time) (result autorest.Response, err error) {
-	req, err := client.PutLocalPositiveOffsetMinDateTimePreparer(datetimeBody)
+func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	req, err := client.PutLocalPositiveOffsetMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", nil, "Failure preparing request")
 		return
@@ -895,14 +896,14 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(datetimeBody date
 }
 
 // PutLocalPositiveOffsetMinDateTimePreparer prepares the PutLocalPositiveOffsetMinDateTime request.
-func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimePreparer(datetimeBody date.Time) (*http.Request, error) {
+func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/localpositiveoffset"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutLocalPositiveOffsetMinDateTimeSender sends the PutLocalPositiveOffsetMinDateTime request. The method will close the
@@ -926,8 +927,8 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *ht
 
 // PutUtcMaxDateTime put max datetime value 9999-12-31T23:59:59.9999999Z
 //
-func (client DatetimeClient) PutUtcMaxDateTime(datetimeBody date.Time) (result autorest.Response, err error) {
-	req, err := client.PutUtcMaxDateTimePreparer(datetimeBody)
+func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", nil, "Failure preparing request")
 		return
@@ -949,14 +950,14 @@ func (client DatetimeClient) PutUtcMaxDateTime(datetimeBody date.Time) (result a
 }
 
 // PutUtcMaxDateTimePreparer prepares the PutUtcMaxDateTime request.
-func (client DatetimeClient) PutUtcMaxDateTimePreparer(datetimeBody date.Time) (*http.Request, error) {
+func (client DatetimeClient) PutUtcMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/utc"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutUtcMaxDateTimeSender sends the PutUtcMaxDateTime request. The method will close the
@@ -980,8 +981,8 @@ func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (re
 
 // PutUtcMinDateTime put min datetime value 0001-01-01T00:00:00Z
 //
-func (client DatetimeClient) PutUtcMinDateTime(datetimeBody date.Time) (result autorest.Response, err error) {
-	req, err := client.PutUtcMinDateTimePreparer(datetimeBody)
+func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", nil, "Failure preparing request")
 		return
@@ -1003,14 +1004,14 @@ func (client DatetimeClient) PutUtcMinDateTime(datetimeBody date.Time) (result a
 }
 
 // PutUtcMinDateTimePreparer prepares the PutUtcMinDateTime request.
-func (client DatetimeClient) PutUtcMinDateTimePreparer(datetimeBody date.Time) (*http.Request, error) {
+func (client DatetimeClient) PutUtcMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/utc"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutUtcMinDateTimeSender sends the PutUtcMinDateTime request. The method will close the

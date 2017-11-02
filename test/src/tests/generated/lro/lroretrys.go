@@ -7,6 +7,7 @@ package lrogroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -29,8 +30,8 @@ func NewLRORetrysClientWithBaseURI(baseURI string) LRORetrysClient {
 
 // Delete202Retry200 long running delete request, service returns a 500, then a 202 to the initial request. Polls
 // return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client LRORetrysClient) Delete202Retry200() (result LRORetrysDelete202Retry200Future, err error) {
-	req, err := client.Delete202Retry200Preparer()
+func (client LRORetrysClient) Delete202Retry200(ctx context.Context) (result LRORetrysDelete202Retry200Future, err error) {
+	req, err := client.Delete202Retry200Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Delete202Retry200", nil, "Failure preparing request")
 		return
@@ -46,12 +47,12 @@ func (client LRORetrysClient) Delete202Retry200() (result LRORetrysDelete202Retr
 }
 
 // Delete202Retry200Preparer prepares the Delete202Retry200 request.
-func (client LRORetrysClient) Delete202Retry200Preparer() (*http.Request, error) {
+func (client LRORetrysClient) Delete202Retry200Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/retryerror/delete/202/retry/200"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete202Retry200Sender sends the Delete202Retry200 request. The method will close the
@@ -78,8 +79,8 @@ func (client LRORetrysClient) Delete202Retry200Responder(resp *http.Response) (r
 
 // DeleteAsyncRelativeRetrySucceeded long running delete request, service returns a 500, then a 202 to the initial
 // request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceeded() (result LRORetrysDeleteAsyncRelativeRetrySucceededFuture, err error) {
-	req, err := client.DeleteAsyncRelativeRetrySucceededPreparer()
+func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceeded(ctx context.Context) (result LRORetrysDeleteAsyncRelativeRetrySucceededFuture, err error) {
+	req, err := client.DeleteAsyncRelativeRetrySucceededPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "DeleteAsyncRelativeRetrySucceeded", nil, "Failure preparing request")
 		return
@@ -95,12 +96,12 @@ func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceeded() (result LRORet
 }
 
 // DeleteAsyncRelativeRetrySucceededPreparer prepares the DeleteAsyncRelativeRetrySucceeded request.
-func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededPreparer() (*http.Request, error) {
+func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/retryerror/deleteasync/retry/succeeded"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // DeleteAsyncRelativeRetrySucceededSender sends the DeleteAsyncRelativeRetrySucceeded request. The method will close the
@@ -128,8 +129,8 @@ func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededResponder(resp *h
 // DeleteProvisioning202Accepted200Succeeded long running delete request, service returns a 500, then a  202 to the
 // initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last
 // poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client LRORetrysClient) DeleteProvisioning202Accepted200Succeeded() (result LRORetrysDeleteProvisioning202Accepted200SucceededFuture, err error) {
-	req, err := client.DeleteProvisioning202Accepted200SucceededPreparer()
+func (client LRORetrysClient) DeleteProvisioning202Accepted200Succeeded(ctx context.Context) (result LRORetrysDeleteProvisioning202Accepted200SucceededFuture, err error) {
+	req, err := client.DeleteProvisioning202Accepted200SucceededPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "DeleteProvisioning202Accepted200Succeeded", nil, "Failure preparing request")
 		return
@@ -145,12 +146,12 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200Succeeded() (resul
 }
 
 // DeleteProvisioning202Accepted200SucceededPreparer prepares the DeleteProvisioning202Accepted200Succeeded request.
-func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededPreparer() (*http.Request, error) {
+func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/retryerror/delete/provisioning/202/accepted/200/succeeded"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // DeleteProvisioning202Accepted200SucceededSender sends the DeleteProvisioning202Accepted200Succeeded request. The method will close the
@@ -180,8 +181,8 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededResponder
 // and 'Retry-After' headers, Polls return a 200 with a response body after success
 //
 // product is product to put
-func (client LRORetrysClient) Post202Retry200(product *Product) (result LRORetrysPost202Retry200Future, err error) {
-	req, err := client.Post202Retry200Preparer(product)
+func (client LRORetrysClient) Post202Retry200(ctx context.Context, product *Product) (result LRORetrysPost202Retry200Future, err error) {
+	req, err := client.Post202Retry200Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Post202Retry200", nil, "Failure preparing request")
 		return
@@ -197,7 +198,7 @@ func (client LRORetrysClient) Post202Retry200(product *Product) (result LRORetry
 }
 
 // Post202Retry200Preparer prepares the Post202Retry200 request.
-func (client LRORetrysClient) Post202Retry200Preparer(product *Product) (*http.Request, error) {
+func (client LRORetrysClient) Post202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -207,7 +208,7 @@ func (client LRORetrysClient) Post202Retry200Preparer(product *Product) (*http.R
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post202Retry200Sender sends the Post202Retry200 request. The method will close the
@@ -237,8 +238,8 @@ func (client LRORetrysClient) Post202Retry200Responder(resp *http.Response) (res
 // header for operation status
 //
 // product is product to put
-func (client LRORetrysClient) PostAsyncRelativeRetrySucceeded(product *Product) (result LRORetrysPostAsyncRelativeRetrySucceededFuture, err error) {
-	req, err := client.PostAsyncRelativeRetrySucceededPreparer(product)
+func (client LRORetrysClient) PostAsyncRelativeRetrySucceeded(ctx context.Context, product *Product) (result LRORetrysPostAsyncRelativeRetrySucceededFuture, err error) {
+	req, err := client.PostAsyncRelativeRetrySucceededPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "PostAsyncRelativeRetrySucceeded", nil, "Failure preparing request")
 		return
@@ -254,7 +255,7 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceeded(product *Product) 
 }
 
 // PostAsyncRelativeRetrySucceededPreparer prepares the PostAsyncRelativeRetrySucceeded request.
-func (client LRORetrysClient) PostAsyncRelativeRetrySucceededPreparer(product *Product) (*http.Request, error) {
+func (client LRORetrysClient) PostAsyncRelativeRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -264,7 +265,7 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceededPreparer(product *P
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostAsyncRelativeRetrySucceededSender sends the PostAsyncRelativeRetrySucceeded request. The method will close the
@@ -294,8 +295,8 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceededResponder(resp *htt
 // with ProvisioningState=’Succeeded’
 //
 // product is product to put
-func (client LRORetrysClient) Put201CreatingSucceeded200(product *Product) (result LRORetrysPut201CreatingSucceeded200Future, err error) {
-	req, err := client.Put201CreatingSucceeded200Preparer(product)
+func (client LRORetrysClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LRORetrysPut201CreatingSucceeded200Future, err error) {
+	req, err := client.Put201CreatingSucceeded200Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Put201CreatingSucceeded200", nil, "Failure preparing request")
 		return
@@ -311,7 +312,7 @@ func (client LRORetrysClient) Put201CreatingSucceeded200(product *Product) (resu
 }
 
 // Put201CreatingSucceeded200Preparer prepares the Put201CreatingSucceeded200 request.
-func (client LRORetrysClient) Put201CreatingSucceeded200Preparer(product *Product) (*http.Request, error) {
+func (client LRORetrysClient) Put201CreatingSucceeded200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -321,7 +322,7 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Preparer(product *Produc
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put201CreatingSucceeded200Sender sends the Put201CreatingSucceeded200 request. The method will close the
@@ -352,8 +353,8 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Responder(resp *http.Res
 // header for operation status
 //
 // product is product to put
-func (client LRORetrysClient) PutAsyncRelativeRetrySucceeded(product *Product) (result LRORetrysPutAsyncRelativeRetrySucceededFuture, err error) {
-	req, err := client.PutAsyncRelativeRetrySucceededPreparer(product)
+func (client LRORetrysClient) PutAsyncRelativeRetrySucceeded(ctx context.Context, product *Product) (result LRORetrysPutAsyncRelativeRetrySucceededFuture, err error) {
+	req, err := client.PutAsyncRelativeRetrySucceededPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "PutAsyncRelativeRetrySucceeded", nil, "Failure preparing request")
 		return
@@ -369,7 +370,7 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceeded(product *Product) (
 }
 
 // PutAsyncRelativeRetrySucceededPreparer prepares the PutAsyncRelativeRetrySucceeded request.
-func (client LRORetrysClient) PutAsyncRelativeRetrySucceededPreparer(product *Product) (*http.Request, error) {
+func (client LRORetrysClient) PutAsyncRelativeRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -379,7 +380,7 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceededPreparer(product *Pr
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutAsyncRelativeRetrySucceededSender sends the PutAsyncRelativeRetrySucceeded request. The method will close the

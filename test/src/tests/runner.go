@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
@@ -17,8 +18,8 @@ func main() {
 	}
 	allPass := true
 	runTests(&allPass)
-	getReport()
-	getAzureReport()
+	getReport(context.Background())
+	getAzureReport(context.Background())
 	server.Kill()
 	if !allPass {
 		fmt.Println("Not all tests passed")
@@ -89,18 +90,18 @@ func runTests(allPass *bool) {
 	}
 }
 
-func getReport() {
+func getReport(ctx context.Context) {
 	var reportClient = report.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport()
+	res, err := reportClient.GetReport(ctx)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
 	printReport(res.Value, "")
 }
 
-func getAzureReport() {
+func getAzureReport(ctx context.Context) {
 	var reportClient = azurereport.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport()
+	res, err := reportClient.GetReport(ctx)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}

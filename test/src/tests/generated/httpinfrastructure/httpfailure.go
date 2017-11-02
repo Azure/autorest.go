@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewHTTPFailureClientWithBaseURI(baseURI string) HTTPFailureClient {
 }
 
 // GetEmptyError get empty error form server
-func (client HTTPFailureClient) GetEmptyError() (result Bool, err error) {
-	req, err := client.GetEmptyErrorPreparer()
+func (client HTTPFailureClient) GetEmptyError(ctx context.Context) (result Bool, err error) {
+	req, err := client.GetEmptyErrorPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetEmptyError", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client HTTPFailureClient) GetEmptyError() (result Bool, err error) {
 }
 
 // GetEmptyErrorPreparer prepares the GetEmptyError request.
-func (client HTTPFailureClient) GetEmptyErrorPreparer() (*http.Request, error) {
+func (client HTTPFailureClient) GetEmptyErrorPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/emptybody/error"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptyErrorSender sends the GetEmptyError request. The method will close the
@@ -80,8 +81,8 @@ func (client HTTPFailureClient) GetEmptyErrorResponder(resp *http.Response) (res
 }
 
 // GetNoModelEmpty get empty response from server
-func (client HTTPFailureClient) GetNoModelEmpty() (result Bool, err error) {
-	req, err := client.GetNoModelEmptyPreparer()
+func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (result Bool, err error) {
+	req, err := client.GetNoModelEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetNoModelEmpty", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client HTTPFailureClient) GetNoModelEmpty() (result Bool, err error) {
 }
 
 // GetNoModelEmptyPreparer prepares the GetNoModelEmpty request.
-func (client HTTPFailureClient) GetNoModelEmptyPreparer() (*http.Request, error) {
+func (client HTTPFailureClient) GetNoModelEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/nomodel/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNoModelEmptySender sends the GetNoModelEmpty request. The method will close the
@@ -132,8 +133,8 @@ func (client HTTPFailureClient) GetNoModelEmptyResponder(resp *http.Response) (r
 }
 
 // GetNoModelError get empty error form server
-func (client HTTPFailureClient) GetNoModelError() (result Bool, err error) {
-	req, err := client.GetNoModelErrorPreparer()
+func (client HTTPFailureClient) GetNoModelError(ctx context.Context) (result Bool, err error) {
+	req, err := client.GetNoModelErrorPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetNoModelError", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client HTTPFailureClient) GetNoModelError() (result Bool, err error) {
 }
 
 // GetNoModelErrorPreparer prepares the GetNoModelError request.
-func (client HTTPFailureClient) GetNoModelErrorPreparer() (*http.Request, error) {
+func (client HTTPFailureClient) GetNoModelErrorPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/nomodel/error"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNoModelErrorSender sends the GetNoModelError request. The method will close the

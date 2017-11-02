@@ -1,6 +1,7 @@
 package validationgrouptest
 
 import (
+	"context"
 	"testing"
 
 	chk "gopkg.in/check.v1"
@@ -25,7 +26,7 @@ func getValidationClient() ManagementClient {
 }
 
 func (s *ValidationSuite) TestGetWithConstantInPath(c *chk.C) {
-	_, err := validationClient.GetWithConstantInPath("constant")
+	_, err := validationClient.GetWithConstantInPath(context.Background(), "constant")
 	c.Assert(err, chk.IsNil)
 }
 
@@ -42,14 +43,14 @@ func (s *ValidationSuite) TestPostWithConstantInBody(c *chk.C) {
 			ConstProperty2: &constProperty2,
 		},
 	}
-	res, err := validationClient.PostWithConstantInBody("constant", &p)
+	res, err := validationClient.PostWithConstantInBody(context.Background(), "constant", &p)
 	p.Response = res.Response
 	c.Assert(err, chk.IsNil)
 	c.Assert(res, chk.DeepEquals, p)
 }
 
 func (s *ValidationSuite) TestValidationOfBody(c *chk.C) {
-	_, err := validationClient.ValidationOfBody("123", 150, &Product{
+	_, err := validationClient.ValidationOfBody(context.Background(), "123", 150, &Product{
 		DisplayNames: &[]string{
 			"displayname1",
 			"displayname2",

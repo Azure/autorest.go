@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewPrimitiveClientWithBaseURI(baseURI string) PrimitiveClient {
 }
 
 // GetBool get complex types with bool properties
-func (client PrimitiveClient) GetBool() (result BooleanWrapper, err error) {
-	req, err := client.GetBoolPreparer()
+func (client PrimitiveClient) GetBool(ctx context.Context) (result BooleanWrapper, err error) {
+	req, err := client.GetBoolPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetBool", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client PrimitiveClient) GetBool() (result BooleanWrapper, err error) {
 }
 
 // GetBoolPreparer prepares the GetBool request.
-func (client PrimitiveClient) GetBoolPreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetBoolPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/bool"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBoolSender sends the GetBool request. The method will close the
@@ -80,8 +81,8 @@ func (client PrimitiveClient) GetBoolResponder(resp *http.Response) (result Bool
 }
 
 // GetByte get complex types with byte properties
-func (client PrimitiveClient) GetByte() (result ByteWrapper, err error) {
-	req, err := client.GetBytePreparer()
+func (client PrimitiveClient) GetByte(ctx context.Context) (result ByteWrapper, err error) {
+	req, err := client.GetBytePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetByte", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client PrimitiveClient) GetByte() (result ByteWrapper, err error) {
 }
 
 // GetBytePreparer prepares the GetByte request.
-func (client PrimitiveClient) GetBytePreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetBytePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/byte"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetByteSender sends the GetByte request. The method will close the
@@ -132,8 +133,8 @@ func (client PrimitiveClient) GetByteResponder(resp *http.Response) (result Byte
 }
 
 // GetDate get complex types with date properties
-func (client PrimitiveClient) GetDate() (result DateWrapper, err error) {
-	req, err := client.GetDatePreparer()
+func (client PrimitiveClient) GetDate(ctx context.Context) (result DateWrapper, err error) {
+	req, err := client.GetDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDate", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client PrimitiveClient) GetDate() (result DateWrapper, err error) {
 }
 
 // GetDatePreparer prepares the GetDate request.
-func (client PrimitiveClient) GetDatePreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/date"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateSender sends the GetDate request. The method will close the
@@ -184,8 +185,8 @@ func (client PrimitiveClient) GetDateResponder(resp *http.Response) (result Date
 }
 
 // GetDateTime get complex types with datetime properties
-func (client PrimitiveClient) GetDateTime() (result DatetimeWrapper, err error) {
-	req, err := client.GetDateTimePreparer()
+func (client PrimitiveClient) GetDateTime(ctx context.Context) (result DatetimeWrapper, err error) {
+	req, err := client.GetDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDateTime", nil, "Failure preparing request")
 		return
@@ -207,12 +208,12 @@ func (client PrimitiveClient) GetDateTime() (result DatetimeWrapper, err error) 
 }
 
 // GetDateTimePreparer prepares the GetDateTime request.
-func (client PrimitiveClient) GetDateTimePreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetime"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeSender sends the GetDateTime request. The method will close the
@@ -236,8 +237,8 @@ func (client PrimitiveClient) GetDateTimeResponder(resp *http.Response) (result 
 }
 
 // GetDateTimeRfc1123 get complex types with datetimeRfc1123 properties
-func (client PrimitiveClient) GetDateTimeRfc1123() (result Datetimerfc1123Wrapper, err error) {
-	req, err := client.GetDateTimeRfc1123Preparer()
+func (client PrimitiveClient) GetDateTimeRfc1123(ctx context.Context) (result Datetimerfc1123Wrapper, err error) {
+	req, err := client.GetDateTimeRfc1123Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDateTimeRfc1123", nil, "Failure preparing request")
 		return
@@ -259,12 +260,12 @@ func (client PrimitiveClient) GetDateTimeRfc1123() (result Datetimerfc1123Wrappe
 }
 
 // GetDateTimeRfc1123Preparer prepares the GetDateTimeRfc1123 request.
-func (client PrimitiveClient) GetDateTimeRfc1123Preparer() (*http.Request, error) {
+func (client PrimitiveClient) GetDateTimeRfc1123Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetimerfc1123"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeRfc1123Sender sends the GetDateTimeRfc1123 request. The method will close the
@@ -288,8 +289,8 @@ func (client PrimitiveClient) GetDateTimeRfc1123Responder(resp *http.Response) (
 }
 
 // GetDouble get complex types with double properties
-func (client PrimitiveClient) GetDouble() (result DoubleWrapper, err error) {
-	req, err := client.GetDoublePreparer()
+func (client PrimitiveClient) GetDouble(ctx context.Context) (result DoubleWrapper, err error) {
+	req, err := client.GetDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDouble", nil, "Failure preparing request")
 		return
@@ -311,12 +312,12 @@ func (client PrimitiveClient) GetDouble() (result DoubleWrapper, err error) {
 }
 
 // GetDoublePreparer prepares the GetDouble request.
-func (client PrimitiveClient) GetDoublePreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetDoublePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/double"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDoubleSender sends the GetDouble request. The method will close the
@@ -340,8 +341,8 @@ func (client PrimitiveClient) GetDoubleResponder(resp *http.Response) (result Do
 }
 
 // GetDuration get complex types with duration properties
-func (client PrimitiveClient) GetDuration() (result DurationWrapper, err error) {
-	req, err := client.GetDurationPreparer()
+func (client PrimitiveClient) GetDuration(ctx context.Context) (result DurationWrapper, err error) {
+	req, err := client.GetDurationPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDuration", nil, "Failure preparing request")
 		return
@@ -363,12 +364,12 @@ func (client PrimitiveClient) GetDuration() (result DurationWrapper, err error) 
 }
 
 // GetDurationPreparer prepares the GetDuration request.
-func (client PrimitiveClient) GetDurationPreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetDurationPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/duration"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDurationSender sends the GetDuration request. The method will close the
@@ -392,8 +393,8 @@ func (client PrimitiveClient) GetDurationResponder(resp *http.Response) (result 
 }
 
 // GetFloat get complex types with float properties
-func (client PrimitiveClient) GetFloat() (result FloatWrapper, err error) {
-	req, err := client.GetFloatPreparer()
+func (client PrimitiveClient) GetFloat(ctx context.Context) (result FloatWrapper, err error) {
+	req, err := client.GetFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetFloat", nil, "Failure preparing request")
 		return
@@ -415,12 +416,12 @@ func (client PrimitiveClient) GetFloat() (result FloatWrapper, err error) {
 }
 
 // GetFloatPreparer prepares the GetFloat request.
-func (client PrimitiveClient) GetFloatPreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetFloatPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/float"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFloatSender sends the GetFloat request. The method will close the
@@ -444,8 +445,8 @@ func (client PrimitiveClient) GetFloatResponder(resp *http.Response) (result Flo
 }
 
 // GetInt get complex types with integer properties
-func (client PrimitiveClient) GetInt() (result IntWrapper, err error) {
-	req, err := client.GetIntPreparer()
+func (client PrimitiveClient) GetInt(ctx context.Context) (result IntWrapper, err error) {
+	req, err := client.GetIntPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetInt", nil, "Failure preparing request")
 		return
@@ -467,12 +468,12 @@ func (client PrimitiveClient) GetInt() (result IntWrapper, err error) {
 }
 
 // GetIntPreparer prepares the GetInt request.
-func (client PrimitiveClient) GetIntPreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetIntPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/integer"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetIntSender sends the GetInt request. The method will close the
@@ -496,8 +497,8 @@ func (client PrimitiveClient) GetIntResponder(resp *http.Response) (result IntWr
 }
 
 // GetLong get complex types with long properties
-func (client PrimitiveClient) GetLong() (result LongWrapper, err error) {
-	req, err := client.GetLongPreparer()
+func (client PrimitiveClient) GetLong(ctx context.Context) (result LongWrapper, err error) {
+	req, err := client.GetLongPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetLong", nil, "Failure preparing request")
 		return
@@ -519,12 +520,12 @@ func (client PrimitiveClient) GetLong() (result LongWrapper, err error) {
 }
 
 // GetLongPreparer prepares the GetLong request.
-func (client PrimitiveClient) GetLongPreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetLongPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/long"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLongSender sends the GetLong request. The method will close the
@@ -548,8 +549,8 @@ func (client PrimitiveClient) GetLongResponder(resp *http.Response) (result Long
 }
 
 // GetString get complex types with string properties
-func (client PrimitiveClient) GetString() (result StringWrapper, err error) {
-	req, err := client.GetStringPreparer()
+func (client PrimitiveClient) GetString(ctx context.Context) (result StringWrapper, err error) {
+	req, err := client.GetStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetString", nil, "Failure preparing request")
 		return
@@ -571,12 +572,12 @@ func (client PrimitiveClient) GetString() (result StringWrapper, err error) {
 }
 
 // GetStringPreparer prepares the GetString request.
-func (client PrimitiveClient) GetStringPreparer() (*http.Request, error) {
+func (client PrimitiveClient) GetStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/string"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetStringSender sends the GetString request. The method will close the
@@ -602,8 +603,8 @@ func (client PrimitiveClient) GetStringResponder(resp *http.Response) (result St
 // PutBool put complex types with bool properties
 //
 // complexBody is please put true and false
-func (client PrimitiveClient) PutBool(complexBody BooleanWrapper) (result autorest.Response, err error) {
-	req, err := client.PutBoolPreparer(complexBody)
+func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (result autorest.Response, err error) {
+	req, err := client.PutBoolPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutBool", nil, "Failure preparing request")
 		return
@@ -625,14 +626,14 @@ func (client PrimitiveClient) PutBool(complexBody BooleanWrapper) (result autore
 }
 
 // PutBoolPreparer prepares the PutBool request.
-func (client PrimitiveClient) PutBoolPreparer(complexBody BooleanWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutBoolPreparer(ctx context.Context, complexBody BooleanWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/bool"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBoolSender sends the PutBool request. The method will close the
@@ -657,8 +658,8 @@ func (client PrimitiveClient) PutBoolResponder(resp *http.Response) (result auto
 // PutByte put complex types with byte properties
 //
 // complexBody is please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
-func (client PrimitiveClient) PutByte(complexBody ByteWrapper) (result autorest.Response, err error) {
-	req, err := client.PutBytePreparer(complexBody)
+func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper) (result autorest.Response, err error) {
+	req, err := client.PutBytePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutByte", nil, "Failure preparing request")
 		return
@@ -680,14 +681,14 @@ func (client PrimitiveClient) PutByte(complexBody ByteWrapper) (result autorest.
 }
 
 // PutBytePreparer prepares the PutByte request.
-func (client PrimitiveClient) PutBytePreparer(complexBody ByteWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutBytePreparer(ctx context.Context, complexBody ByteWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/byte"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutByteSender sends the PutByte request. The method will close the
@@ -712,8 +713,8 @@ func (client PrimitiveClient) PutByteResponder(resp *http.Response) (result auto
 // PutDate put complex types with date properties
 //
 // complexBody is please put '0001-01-01' and '2016-02-29'
-func (client PrimitiveClient) PutDate(complexBody DateWrapper) (result autorest.Response, err error) {
-	req, err := client.PutDatePreparer(complexBody)
+func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (result autorest.Response, err error) {
+	req, err := client.PutDatePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDate", nil, "Failure preparing request")
 		return
@@ -735,14 +736,14 @@ func (client PrimitiveClient) PutDate(complexBody DateWrapper) (result autorest.
 }
 
 // PutDatePreparer prepares the PutDate request.
-func (client PrimitiveClient) PutDatePreparer(complexBody DateWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutDatePreparer(ctx context.Context, complexBody DateWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/date"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateSender sends the PutDate request. The method will close the
@@ -767,8 +768,8 @@ func (client PrimitiveClient) PutDateResponder(resp *http.Response) (result auto
 // PutDateTime put complex types with datetime properties
 //
 // complexBody is please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
-func (client PrimitiveClient) PutDateTime(complexBody DatetimeWrapper) (result autorest.Response, err error) {
-	req, err := client.PutDateTimePreparer(complexBody)
+func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper) (result autorest.Response, err error) {
+	req, err := client.PutDateTimePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDateTime", nil, "Failure preparing request")
 		return
@@ -790,14 +791,14 @@ func (client PrimitiveClient) PutDateTime(complexBody DatetimeWrapper) (result a
 }
 
 // PutDateTimePreparer prepares the PutDateTime request.
-func (client PrimitiveClient) PutDateTimePreparer(complexBody DatetimeWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutDateTimePreparer(ctx context.Context, complexBody DatetimeWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetime"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateTimeSender sends the PutDateTime request. The method will close the
@@ -822,8 +823,8 @@ func (client PrimitiveClient) PutDateTimeResponder(resp *http.Response) (result 
 // PutDateTimeRfc1123 put complex types with datetimeRfc1123 properties
 //
 // complexBody is please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
-func (client PrimitiveClient) PutDateTimeRfc1123(complexBody Datetimerfc1123Wrapper) (result autorest.Response, err error) {
-	req, err := client.PutDateTimeRfc1123Preparer(complexBody)
+func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBody Datetimerfc1123Wrapper) (result autorest.Response, err error) {
+	req, err := client.PutDateTimeRfc1123Preparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDateTimeRfc1123", nil, "Failure preparing request")
 		return
@@ -845,14 +846,14 @@ func (client PrimitiveClient) PutDateTimeRfc1123(complexBody Datetimerfc1123Wrap
 }
 
 // PutDateTimeRfc1123Preparer prepares the PutDateTimeRfc1123 request.
-func (client PrimitiveClient) PutDateTimeRfc1123Preparer(complexBody Datetimerfc1123Wrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutDateTimeRfc1123Preparer(ctx context.Context, complexBody Datetimerfc1123Wrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetimerfc1123"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateTimeRfc1123Sender sends the PutDateTimeRfc1123 request. The method will close the
@@ -877,8 +878,8 @@ func (client PrimitiveClient) PutDateTimeRfc1123Responder(resp *http.Response) (
 // PutDouble put complex types with double properties
 //
 // complexBody is please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
-func (client PrimitiveClient) PutDouble(complexBody DoubleWrapper) (result autorest.Response, err error) {
-	req, err := client.PutDoublePreparer(complexBody)
+func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (result autorest.Response, err error) {
+	req, err := client.PutDoublePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDouble", nil, "Failure preparing request")
 		return
@@ -900,14 +901,14 @@ func (client PrimitiveClient) PutDouble(complexBody DoubleWrapper) (result autor
 }
 
 // PutDoublePreparer prepares the PutDouble request.
-func (client PrimitiveClient) PutDoublePreparer(complexBody DoubleWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutDoublePreparer(ctx context.Context, complexBody DoubleWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/double"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDoubleSender sends the PutDouble request. The method will close the
@@ -932,8 +933,8 @@ func (client PrimitiveClient) PutDoubleResponder(resp *http.Response) (result au
 // PutDuration put complex types with duration properties
 //
 // complexBody is please put 'P123DT22H14M12.011S'
-func (client PrimitiveClient) PutDuration(complexBody DurationWrapper) (result autorest.Response, err error) {
-	req, err := client.PutDurationPreparer(complexBody)
+func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper) (result autorest.Response, err error) {
+	req, err := client.PutDurationPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDuration", nil, "Failure preparing request")
 		return
@@ -955,14 +956,14 @@ func (client PrimitiveClient) PutDuration(complexBody DurationWrapper) (result a
 }
 
 // PutDurationPreparer prepares the PutDuration request.
-func (client PrimitiveClient) PutDurationPreparer(complexBody DurationWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutDurationPreparer(ctx context.Context, complexBody DurationWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/duration"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDurationSender sends the PutDuration request. The method will close the
@@ -987,8 +988,8 @@ func (client PrimitiveClient) PutDurationResponder(resp *http.Response) (result 
 // PutFloat put complex types with float properties
 //
 // complexBody is please put 1.05 and -0.003
-func (client PrimitiveClient) PutFloat(complexBody FloatWrapper) (result autorest.Response, err error) {
-	req, err := client.PutFloatPreparer(complexBody)
+func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (result autorest.Response, err error) {
+	req, err := client.PutFloatPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutFloat", nil, "Failure preparing request")
 		return
@@ -1010,14 +1011,14 @@ func (client PrimitiveClient) PutFloat(complexBody FloatWrapper) (result autores
 }
 
 // PutFloatPreparer prepares the PutFloat request.
-func (client PrimitiveClient) PutFloatPreparer(complexBody FloatWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutFloatPreparer(ctx context.Context, complexBody FloatWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/float"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutFloatSender sends the PutFloat request. The method will close the
@@ -1042,8 +1043,8 @@ func (client PrimitiveClient) PutFloatResponder(resp *http.Response) (result aut
 // PutInt put complex types with integer properties
 //
 // complexBody is please put -1 and 2
-func (client PrimitiveClient) PutInt(complexBody IntWrapper) (result autorest.Response, err error) {
-	req, err := client.PutIntPreparer(complexBody)
+func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper) (result autorest.Response, err error) {
+	req, err := client.PutIntPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutInt", nil, "Failure preparing request")
 		return
@@ -1065,14 +1066,14 @@ func (client PrimitiveClient) PutInt(complexBody IntWrapper) (result autorest.Re
 }
 
 // PutIntPreparer prepares the PutInt request.
-func (client PrimitiveClient) PutIntPreparer(complexBody IntWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutIntPreparer(ctx context.Context, complexBody IntWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/integer"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutIntSender sends the PutInt request. The method will close the
@@ -1097,8 +1098,8 @@ func (client PrimitiveClient) PutIntResponder(resp *http.Response) (result autor
 // PutLong put complex types with long properties
 //
 // complexBody is please put 1099511627775 and -999511627788
-func (client PrimitiveClient) PutLong(complexBody LongWrapper) (result autorest.Response, err error) {
-	req, err := client.PutLongPreparer(complexBody)
+func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (result autorest.Response, err error) {
+	req, err := client.PutLongPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutLong", nil, "Failure preparing request")
 		return
@@ -1120,14 +1121,14 @@ func (client PrimitiveClient) PutLong(complexBody LongWrapper) (result autorest.
 }
 
 // PutLongPreparer prepares the PutLong request.
-func (client PrimitiveClient) PutLongPreparer(complexBody LongWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutLongPreparer(ctx context.Context, complexBody LongWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/long"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutLongSender sends the PutLong request. The method will close the
@@ -1152,8 +1153,8 @@ func (client PrimitiveClient) PutLongResponder(resp *http.Response) (result auto
 // PutString put complex types with string properties
 //
 // complexBody is please put 'goodrequest', '', and null
-func (client PrimitiveClient) PutString(complexBody StringWrapper) (result autorest.Response, err error) {
-	req, err := client.PutStringPreparer(complexBody)
+func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (result autorest.Response, err error) {
+	req, err := client.PutStringPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutString", nil, "Failure preparing request")
 		return
@@ -1175,14 +1176,14 @@ func (client PrimitiveClient) PutString(complexBody StringWrapper) (result autor
 }
 
 // PutStringPreparer prepares the PutString request.
-func (client PrimitiveClient) PutStringPreparer(complexBody StringWrapper) (*http.Request, error) {
+func (client PrimitiveClient) PutStringPreparer(ctx context.Context, complexBody StringWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/string"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutStringSender sends the PutString request. The method will close the

@@ -1,6 +1,7 @@
 package stringgrouptest
 
 import (
+	"context"
 	"testing"
 
 	"tests/acceptancetests/utils"
@@ -46,59 +47,59 @@ const (
 )
 
 func (s *StringSuite) TestGetEmptyString(c *chk.C) {
-	str, err := stringClient.GetEmpty()
+	str, err := stringClient.GetEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*str.Value, chk.HasLen, 0)
 	c.Assert(*str.Value, chk.Equals, emptyString)
 }
 
 func (s *StringSuite) TestGetMbcs(c *chk.C) {
-	str, err := stringClient.GetMbcs()
+	str, err := stringClient.GetMbcs(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*str.Value, chk.Equals, multibyteBufferBody)
 }
 
 func (s *StringSuite) TestGetNotProvided(c *chk.C) {
-	str, err := stringClient.GetNotProvided()
+	str, err := stringClient.GetNotProvided(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(str.Value, chk.IsNil)
 }
 
 func (s *StringSuite) TestGetNullString(c *chk.C) {
-	str, err := stringClient.GetNull()
+	str, err := stringClient.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(str.Value, chk.IsNil)
 }
 
 func (s *StringSuite) TestGetWhitespace(c *chk.C) {
-	str, err := stringClient.GetWhitespace()
+	str, err := stringClient.GetWhitespace(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*str.Value, chk.Equals, whitespaceText)
 }
 
 func (s *StringSuite) TestPutEmptyString(c *chk.C) {
-	_, err := stringClient.PutEmpty(emptyString)
+	_, err := stringClient.PutEmpty(context.Background(), emptyString)
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *StringSuite) TestPutMbcs(c *chk.C) {
-	_, err := stringClient.PutMbcs(multibyteBufferBody)
+	_, err := stringClient.PutMbcs(context.Background(), multibyteBufferBody)
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *StringSuite) TestPutWhitespace(c *chk.C) {
-	_, err := stringClient.PutWhitespace(whitespaceText)
+	_, err := stringClient.PutWhitespace(context.Background(), whitespaceText)
 	c.Assert(err, chk.IsNil)
 }
 
 // Go doesn't support Null String
 func (s *StringSuite) TestPutNullString(c *chk.C) {
-	_, err := stringClient.PutNull("")
+	_, err := stringClient.PutNull(context.Background(), "")
 	c.Assert(err, chk.IsNil)
 }
 
 // func (s *StringSuite) TestGetBase64Encoded(c *chk.C) {
-// 	res, err := stringClient.GetBase64Encoded()
+// 	res, err := stringClient.GetBase64Encoded(context.Background())
 // 	c.Assert(err, chk.IsNil)
 // 	var expected []byte
 // 	base64.StdEncoding.Encode(expected, []byte("a string that gets encoded with base64"))
@@ -106,7 +107,7 @@ func (s *StringSuite) TestPutNullString(c *chk.C) {
 // }
 
 // func (s *StringSuite) TestGetBase64UrlEncoded(c *chk.C) {
-// 	res, err := stringClient.GetBase64UrlEncoded()
+// 	res, err := stringClient.GetBase64UrlEncoded(context.Background())
 // 	c.Assert(err, chk.IsNil)
 // 	var expected []byte
 // 	base64.URLEncoding.Encode(expected, []byte("a string that gets encoded with base64url"))
@@ -116,23 +117,23 @@ func (s *StringSuite) TestPutNullString(c *chk.C) {
 // func (s *StringSuite) TestPutBase64UrlEncoded(c *chk.C) {
 // 	var encoded []byte
 // 	base64.URLEncoding.Encode(encoded, []byte("a string that gets encoded with base64url"))
-// 	_, err := stringClient.PutBase64UrlEncoded(encoded)
+// 	_, err := stringClient.PutBase64UrlEncoded(context.Background(), encoded)
 // 	c.Assert(err, chk.IsNil)
 // }
 
 // func (s *StringSuite) TestGetNullBase64UrlEncoded(c *chk.C) {
-// 	res, err := stringClient.GetNullBase64UrlEncoded()
+// 	res, err := stringClient.GetNullBase64UrlEncoded(context.Background())
 // 	c.Assert(err, chk.IsNil)
 // 	c.Assert(res.Value, chk.IsNil)
 // }
 
 func (s *StringSuite) TestGetNotExpandable(c *chk.C) {
-	str, err := enumClient.GetNotExpandable()
+	str, err := enumClient.GetNotExpandable(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*str.Value, chk.Equals, "red color")
 }
 
 func (s *StringSuite) TestPutNotExpandable(c *chk.C) {
-	_, err := enumClient.PutNotExpandable("red color")
+	_, err := enumClient.PutNotExpandable(context.Background(), "red color")
 	c.Assert(err, chk.IsNil)
 }

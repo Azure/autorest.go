@@ -7,6 +7,7 @@ package stringgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -29,8 +30,8 @@ func NewEnumClientWithBaseURI(baseURI string) EnumClient {
 }
 
 // GetNotExpandable get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetNotExpandable() (result String, err error) {
-	req, err := client.GetNotExpandablePreparer()
+func (client EnumClient) GetNotExpandable(ctx context.Context) (result String, err error) {
+	req, err := client.GetNotExpandablePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client EnumClient) GetNotExpandable() (result String, err error) {
 }
 
 // GetNotExpandablePreparer prepares the GetNotExpandable request.
-func (client EnumClient) GetNotExpandablePreparer() (*http.Request, error) {
+func (client EnumClient) GetNotExpandablePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/notExpandable"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNotExpandableSender sends the GetNotExpandable request. The method will close the
@@ -81,8 +82,8 @@ func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result 
 }
 
 // GetReferenced get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetReferenced() (result String, err error) {
-	req, err := client.GetReferencedPreparer()
+func (client EnumClient) GetReferenced(ctx context.Context) (result String, err error) {
+	req, err := client.GetReferencedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", nil, "Failure preparing request")
 		return
@@ -104,12 +105,12 @@ func (client EnumClient) GetReferenced() (result String, err error) {
 }
 
 // GetReferencedPreparer prepares the GetReferenced request.
-func (client EnumClient) GetReferencedPreparer() (*http.Request, error) {
+func (client EnumClient) GetReferencedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/Referenced"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetReferencedSender sends the GetReferenced request. The method will close the
@@ -133,8 +134,8 @@ func (client EnumClient) GetReferencedResponder(resp *http.Response) (result Str
 }
 
 // GetReferencedConstant get value 'green-color' from the constant.
-func (client EnumClient) GetReferencedConstant() (result RefColorConstant, err error) {
-	req, err := client.GetReferencedConstantPreparer()
+func (client EnumClient) GetReferencedConstant(ctx context.Context) (result RefColorConstant, err error) {
+	req, err := client.GetReferencedConstantPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferencedConstant", nil, "Failure preparing request")
 		return
@@ -156,12 +157,12 @@ func (client EnumClient) GetReferencedConstant() (result RefColorConstant, err e
 }
 
 // GetReferencedConstantPreparer prepares the GetReferencedConstant request.
-func (client EnumClient) GetReferencedConstantPreparer() (*http.Request, error) {
+func (client EnumClient) GetReferencedConstantPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/ReferencedConstant"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetReferencedConstantSender sends the GetReferencedConstant request. The method will close the
@@ -187,8 +188,8 @@ func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (re
 // PutNotExpandable sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 //
 // stringBody is
-func (client EnumClient) PutNotExpandable(stringBody Colors) (result autorest.Response, err error) {
-	req, err := client.PutNotExpandablePreparer(stringBody)
+func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors) (result autorest.Response, err error) {
+	req, err := client.PutNotExpandablePreparer(ctx, stringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutNotExpandable", nil, "Failure preparing request")
 		return
@@ -210,14 +211,14 @@ func (client EnumClient) PutNotExpandable(stringBody Colors) (result autorest.Re
 }
 
 // PutNotExpandablePreparer prepares the PutNotExpandable request.
-func (client EnumClient) PutNotExpandablePreparer(stringBody Colors) (*http.Request, error) {
+func (client EnumClient) PutNotExpandablePreparer(ctx context.Context, stringBody Colors) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/notExpandable"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNotExpandableSender sends the PutNotExpandable request. The method will close the
@@ -242,8 +243,8 @@ func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result 
 // PutReferenced sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 //
 // enumStringBody is
-func (client EnumClient) PutReferenced(enumStringBody Colors) (result autorest.Response, err error) {
-	req, err := client.PutReferencedPreparer(enumStringBody)
+func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors) (result autorest.Response, err error) {
+	req, err := client.PutReferencedPreparer(ctx, enumStringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferenced", nil, "Failure preparing request")
 		return
@@ -265,14 +266,14 @@ func (client EnumClient) PutReferenced(enumStringBody Colors) (result autorest.R
 }
 
 // PutReferencedPreparer prepares the PutReferenced request.
-func (client EnumClient) PutReferencedPreparer(enumStringBody Colors) (*http.Request, error) {
+func (client EnumClient) PutReferencedPreparer(ctx context.Context, enumStringBody Colors) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/Referenced"),
 		autorest.WithJSON(enumStringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutReferencedSender sends the PutReferenced request. The method will close the
@@ -296,14 +297,14 @@ func (client EnumClient) PutReferencedResponder(resp *http.Response) (result aut
 
 // PutReferencedConstant sends value 'green-color' from a constant
 //
-func (client EnumClient) PutReferencedConstant(enumStringBody RefColorConstant) (result autorest.Response, err error) {
+func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: enumStringBody,
 			Constraints: []validation.Constraint{{Target: "enumStringBody.ColorConstant", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "stringgroup.EnumClient", "PutReferencedConstant")
 	}
 
-	req, err := client.PutReferencedConstantPreparer(enumStringBody)
+	req, err := client.PutReferencedConstantPreparer(ctx, enumStringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferencedConstant", nil, "Failure preparing request")
 		return
@@ -325,14 +326,14 @@ func (client EnumClient) PutReferencedConstant(enumStringBody RefColorConstant) 
 }
 
 // PutReferencedConstantPreparer prepares the PutReferencedConstant request.
-func (client EnumClient) PutReferencedConstantPreparer(enumStringBody RefColorConstant) (*http.Request, error) {
+func (client EnumClient) PutReferencedConstantPreparer(ctx context.Context, enumStringBody RefColorConstant) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/ReferencedConstant"),
 		autorest.WithJSON(enumStringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutReferencedConstantSender sends the PutReferencedConstant request. The method will close the

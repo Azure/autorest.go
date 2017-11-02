@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 }
 
 // GetEmpty get complex types with array property which is empty
-func (client ArrayClient) GetEmpty() (result ArrayWrapper, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client ArrayClient) GetEmpty(ctx context.Context) (result ArrayWrapper, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client ArrayClient) GetEmpty() (result ArrayWrapper, err error) {
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client ArrayClient) GetEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -80,8 +81,8 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ArrayWr
 }
 
 // GetNotProvided get complex types with array property while server doesn't provide a response payload
-func (client ArrayClient) GetNotProvided() (result ArrayWrapper, err error) {
-	req, err := client.GetNotProvidedPreparer()
+func (client ArrayClient) GetNotProvided(ctx context.Context) (result ArrayWrapper, err error) {
+	req, err := client.GetNotProvidedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetNotProvided", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client ArrayClient) GetNotProvided() (result ArrayWrapper, err error) {
 }
 
 // GetNotProvidedPreparer prepares the GetNotProvided request.
-func (client ArrayClient) GetNotProvidedPreparer() (*http.Request, error) {
+func (client ArrayClient) GetNotProvidedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/notprovided"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
@@ -132,8 +133,8 @@ func (client ArrayClient) GetNotProvidedResponder(resp *http.Response) (result A
 }
 
 // GetValid get complex types with array property
-func (client ArrayClient) GetValid() (result ArrayWrapper, err error) {
-	req, err := client.GetValidPreparer()
+func (client ArrayClient) GetValid(ctx context.Context) (result ArrayWrapper, err error) {
+	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetValid", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client ArrayClient) GetValid() (result ArrayWrapper, err error) {
 }
 
 // GetValidPreparer prepares the GetValid request.
-func (client ArrayClient) GetValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetValidSender sends the GetValid request. The method will close the
@@ -186,8 +187,8 @@ func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWr
 // PutEmpty put complex types with array property which is empty
 //
 // complexBody is please put an empty array
-func (client ArrayClient) PutEmpty(complexBody ArrayWrapper) (result autorest.Response, err error) {
-	req, err := client.PutEmptyPreparer(complexBody)
+func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
+	req, err := client.PutEmptyPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "PutEmpty", nil, "Failure preparing request")
 		return
@@ -209,14 +210,14 @@ func (client ArrayClient) PutEmpty(complexBody ArrayWrapper) (result autorest.Re
 }
 
 // PutEmptyPreparer prepares the PutEmpty request.
-func (client ArrayClient) PutEmptyPreparer(complexBody ArrayWrapper) (*http.Request, error) {
+func (client ArrayClient) PutEmptyPreparer(ctx context.Context, complexBody ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/empty"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutEmptySender sends the PutEmpty request. The method will close the
@@ -242,8 +243,8 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 //
 // complexBody is please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps over
 // the lazy dog"
-func (client ArrayClient) PutValid(complexBody ArrayWrapper) (result autorest.Response, err error) {
-	req, err := client.PutValidPreparer(complexBody)
+func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
+	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "PutValid", nil, "Failure preparing request")
 		return
@@ -265,14 +266,14 @@ func (client ArrayClient) PutValid(complexBody ArrayWrapper) (result autorest.Re
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client ArrayClient) PutValidPreparer(complexBody ArrayWrapper) (*http.Request, error) {
+func (client ArrayClient) PutValidPreparer(ctx context.Context, complexBody ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/valid"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidSender sends the PutValid request. The method will close the

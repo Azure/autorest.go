@@ -7,6 +7,7 @@ package lrogroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewLROSADsClientWithBaseURI(baseURI string) LROSADsClient {
 }
 
 // Delete202NonRetry400 long running delete request, service returns a 202 with a location header
-func (client LROSADsClient) Delete202NonRetry400() (result LROSADsDelete202NonRetry400Future, err error) {
-	req, err := client.Delete202NonRetry400Preparer()
+func (client LROSADsClient) Delete202NonRetry400(ctx context.Context) (result LROSADsDelete202NonRetry400Future, err error) {
+	req, err := client.Delete202NonRetry400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202NonRetry400", nil, "Failure preparing request")
 		return
@@ -45,12 +46,12 @@ func (client LROSADsClient) Delete202NonRetry400() (result LROSADsDelete202NonRe
 }
 
 // Delete202NonRetry400Preparer prepares the Delete202NonRetry400 request.
-func (client LROSADsClient) Delete202NonRetry400Preparer() (*http.Request, error) {
+func (client LROSADsClient) Delete202NonRetry400Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/delete/202/retry/400"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete202NonRetry400Sender sends the Delete202NonRetry400 request. The method will close the
@@ -77,8 +78,8 @@ func (client LROSADsClient) Delete202NonRetry400Responder(resp *http.Response) (
 
 // Delete202RetryInvalidHeader long running delete request, service returns a 202 to the initial request receing a
 // reponse with an invalid 'Location' and 'Retry-After' headers
-func (client LROSADsClient) Delete202RetryInvalidHeader() (result LROSADsDelete202RetryInvalidHeaderFuture, err error) {
-	req, err := client.Delete202RetryInvalidHeaderPreparer()
+func (client LROSADsClient) Delete202RetryInvalidHeader(ctx context.Context) (result LROSADsDelete202RetryInvalidHeaderFuture, err error) {
+	req, err := client.Delete202RetryInvalidHeaderPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202RetryInvalidHeader", nil, "Failure preparing request")
 		return
@@ -94,12 +95,12 @@ func (client LROSADsClient) Delete202RetryInvalidHeader() (result LROSADsDelete2
 }
 
 // Delete202RetryInvalidHeaderPreparer prepares the Delete202RetryInvalidHeader request.
-func (client LROSADsClient) Delete202RetryInvalidHeaderPreparer() (*http.Request, error) {
+func (client LROSADsClient) Delete202RetryInvalidHeaderPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/delete/202/retry/invalidheader"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete202RetryInvalidHeaderSender sends the Delete202RetryInvalidHeader request. The method will close the
@@ -125,8 +126,8 @@ func (client LROSADsClient) Delete202RetryInvalidHeaderResponder(resp *http.Resp
 }
 
 // Delete204Succeeded long running delete request, service returns a 204 to the initial request, indicating success.
-func (client LROSADsClient) Delete204Succeeded() (result LROSADsDelete204SucceededFuture, err error) {
-	req, err := client.Delete204SucceededPreparer()
+func (client LROSADsClient) Delete204Succeeded(ctx context.Context) (result LROSADsDelete204SucceededFuture, err error) {
+	req, err := client.Delete204SucceededPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete204Succeeded", nil, "Failure preparing request")
 		return
@@ -142,12 +143,12 @@ func (client LROSADsClient) Delete204Succeeded() (result LROSADsDelete204Succeed
 }
 
 // Delete204SucceededPreparer prepares the Delete204Succeeded request.
-func (client LROSADsClient) Delete204SucceededPreparer() (*http.Request, error) {
+func (client LROSADsClient) Delete204SucceededPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/delete/204/nolocation"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete204SucceededSender sends the Delete204Succeeded request. The method will close the
@@ -174,8 +175,8 @@ func (client LROSADsClient) Delete204SucceededResponder(resp *http.Response) (re
 
 // DeleteAsyncRelativeRetry400 long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client LROSADsClient) DeleteAsyncRelativeRetry400() (result LROSADsDeleteAsyncRelativeRetry400Future, err error) {
-	req, err := client.DeleteAsyncRelativeRetry400Preparer()
+func (client LROSADsClient) DeleteAsyncRelativeRetry400(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetry400Future, err error) {
+	req, err := client.DeleteAsyncRelativeRetry400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetry400", nil, "Failure preparing request")
 		return
@@ -191,12 +192,12 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400() (result LROSADsDeleteA
 }
 
 // DeleteAsyncRelativeRetry400Preparer prepares the DeleteAsyncRelativeRetry400 request.
-func (client LROSADsClient) DeleteAsyncRelativeRetry400Preparer() (*http.Request, error) {
+func (client LROSADsClient) DeleteAsyncRelativeRetry400Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/deleteasync/retry/400"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // DeleteAsyncRelativeRetry400Sender sends the DeleteAsyncRelativeRetry400 request. The method will close the
@@ -223,8 +224,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400Responder(resp *http.Resp
 
 // DeleteAsyncRelativeRetryInvalidHeader long running delete request, service returns a 202 to the initial request. The
 // endpoint indicated in the Azure-AsyncOperation header is invalid
-func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader() (result LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	req, err := client.DeleteAsyncRelativeRetryInvalidHeaderPreparer()
+func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture, err error) {
+	req, err := client.DeleteAsyncRelativeRetryInvalidHeaderPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidHeader", nil, "Failure preparing request")
 		return
@@ -240,12 +241,12 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader() (result LROS
 }
 
 // DeleteAsyncRelativeRetryInvalidHeaderPreparer prepares the DeleteAsyncRelativeRetryInvalidHeader request.
-func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderPreparer() (*http.Request, error) {
+func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/deleteasync/retry/invalidheader"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // DeleteAsyncRelativeRetryInvalidHeaderSender sends the DeleteAsyncRelativeRetryInvalidHeader request. The method will close the
@@ -272,8 +273,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderResponder(resp 
 
 // DeleteAsyncRelativeRetryInvalidJSONPolling long running delete request, service returns a 202 to the initial
 // request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling() (result LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	req, err := client.DeleteAsyncRelativeRetryInvalidJSONPollingPreparer()
+func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
+	req, err := client.DeleteAsyncRelativeRetryInvalidJSONPollingPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidJSONPolling", nil, "Failure preparing request")
 		return
@@ -289,12 +290,12 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling() (result
 }
 
 // DeleteAsyncRelativeRetryInvalidJSONPollingPreparer prepares the DeleteAsyncRelativeRetryInvalidJSONPolling request.
-func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingPreparer() (*http.Request, error) {
+func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/deleteasync/retry/invalidjsonpolling"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // DeleteAsyncRelativeRetryInvalidJSONPollingSender sends the DeleteAsyncRelativeRetryInvalidJSONPolling request. The method will close the
@@ -321,8 +322,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingResponder(
 
 // DeleteAsyncRelativeRetryNoStatus long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus() (result LROSADsDeleteAsyncRelativeRetryNoStatusFuture, err error) {
-	req, err := client.DeleteAsyncRelativeRetryNoStatusPreparer()
+func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryNoStatusFuture, err error) {
+	req, err := client.DeleteAsyncRelativeRetryNoStatusPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryNoStatus", nil, "Failure preparing request")
 		return
@@ -338,12 +339,12 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus() (result LROSADsDe
 }
 
 // DeleteAsyncRelativeRetryNoStatusPreparer prepares the DeleteAsyncRelativeRetryNoStatus request.
-func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusPreparer() (*http.Request, error) {
+func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/deleteasync/retry/nostatus"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // DeleteAsyncRelativeRetryNoStatusSender sends the DeleteAsyncRelativeRetryNoStatus request. The method will close the
@@ -369,8 +370,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusResponder(resp *http
 }
 
 // DeleteNonRetry400 long running delete request, service returns a 400 with an error body
-func (client LROSADsClient) DeleteNonRetry400() (result LROSADsDeleteNonRetry400Future, err error) {
-	req, err := client.DeleteNonRetry400Preparer()
+func (client LROSADsClient) DeleteNonRetry400(ctx context.Context) (result LROSADsDeleteNonRetry400Future, err error) {
+	req, err := client.DeleteNonRetry400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteNonRetry400", nil, "Failure preparing request")
 		return
@@ -386,12 +387,12 @@ func (client LROSADsClient) DeleteNonRetry400() (result LROSADsDeleteNonRetry400
 }
 
 // DeleteNonRetry400Preparer prepares the DeleteNonRetry400 request.
-func (client LROSADsClient) DeleteNonRetry400Preparer() (*http.Request, error) {
+func (client LROSADsClient) DeleteNonRetry400Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/delete/400"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // DeleteNonRetry400Sender sends the DeleteNonRetry400 request. The method will close the
@@ -420,8 +421,8 @@ func (client LROSADsClient) DeleteNonRetry400Responder(resp *http.Response) (res
 // header.
 //
 // product is product to put
-func (client LROSADsClient) Post202NoLocation(product *Product) (result LROSADsPost202NoLocationFuture, err error) {
-	req, err := client.Post202NoLocationPreparer(product)
+func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Product) (result LROSADsPost202NoLocationFuture, err error) {
+	req, err := client.Post202NoLocationPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NoLocation", nil, "Failure preparing request")
 		return
@@ -437,7 +438,7 @@ func (client LROSADsClient) Post202NoLocation(product *Product) (result LROSADsP
 }
 
 // Post202NoLocationPreparer prepares the Post202NoLocation request.
-func (client LROSADsClient) Post202NoLocationPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) Post202NoLocationPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -447,7 +448,7 @@ func (client LROSADsClient) Post202NoLocationPreparer(product *Product) (*http.R
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post202NoLocationSender sends the Post202NoLocation request. The method will close the
@@ -475,8 +476,8 @@ func (client LROSADsClient) Post202NoLocationResponder(resp *http.Response) (res
 // Post202NonRetry400 long running post request, service returns a 202 with a location header
 //
 // product is product to put
-func (client LROSADsClient) Post202NonRetry400(product *Product) (result LROSADsPost202NonRetry400Future, err error) {
-	req, err := client.Post202NonRetry400Preparer(product)
+func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Product) (result LROSADsPost202NonRetry400Future, err error) {
+	req, err := client.Post202NonRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NonRetry400", nil, "Failure preparing request")
 		return
@@ -492,7 +493,7 @@ func (client LROSADsClient) Post202NonRetry400(product *Product) (result LROSADs
 }
 
 // Post202NonRetry400Preparer prepares the Post202NonRetry400 request.
-func (client LROSADsClient) Post202NonRetry400Preparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) Post202NonRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -502,7 +503,7 @@ func (client LROSADsClient) Post202NonRetry400Preparer(product *Product) (*http.
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post202NonRetry400Sender sends the Post202NonRetry400 request. The method will close the
@@ -531,8 +532,8 @@ func (client LROSADsClient) Post202NonRetry400Responder(resp *http.Response) (re
 // 'Location' and 'Retry-After' headers.
 //
 // product is product to put
-func (client LROSADsClient) Post202RetryInvalidHeader(product *Product) (result LROSADsPost202RetryInvalidHeaderFuture, err error) {
-	req, err := client.Post202RetryInvalidHeaderPreparer(product)
+func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPost202RetryInvalidHeaderFuture, err error) {
+	req, err := client.Post202RetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202RetryInvalidHeader", nil, "Failure preparing request")
 		return
@@ -548,7 +549,7 @@ func (client LROSADsClient) Post202RetryInvalidHeader(product *Product) (result 
 }
 
 // Post202RetryInvalidHeaderPreparer prepares the Post202RetryInvalidHeader request.
-func (client LROSADsClient) Post202RetryInvalidHeaderPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) Post202RetryInvalidHeaderPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -558,7 +559,7 @@ func (client LROSADsClient) Post202RetryInvalidHeaderPreparer(product *Product) 
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post202RetryInvalidHeaderSender sends the Post202RetryInvalidHeader request. The method will close the
@@ -587,8 +588,8 @@ func (client LROSADsClient) Post202RetryInvalidHeaderResponder(resp *http.Respon
 // indicated in the Azure-AsyncOperation header for operation status
 //
 // product is product to put
-func (client LROSADsClient) PostAsyncRelativeRetry400(product *Product) (result LROSADsPostAsyncRelativeRetry400Future, err error) {
-	req, err := client.PostAsyncRelativeRetry400Preparer(product)
+func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetry400Future, err error) {
+	req, err := client.PostAsyncRelativeRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetry400", nil, "Failure preparing request")
 		return
@@ -604,7 +605,7 @@ func (client LROSADsClient) PostAsyncRelativeRetry400(product *Product) (result 
 }
 
 // PostAsyncRelativeRetry400Preparer prepares the PostAsyncRelativeRetry400 request.
-func (client LROSADsClient) PostAsyncRelativeRetry400Preparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PostAsyncRelativeRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -614,7 +615,7 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Preparer(product *Product) 
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostAsyncRelativeRetry400Sender sends the PostAsyncRelativeRetry400 request. The method will close the
@@ -644,8 +645,8 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Responder(resp *http.Respon
 // invalid.
 //
 // product is product to put
-func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(product *Product) (result LROSADsPostAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	req, err := client.PostAsyncRelativeRetryInvalidHeaderPreparer(product)
+func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidHeaderFuture, err error) {
+	req, err := client.PostAsyncRelativeRetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidHeader", nil, "Failure preparing request")
 		return
@@ -661,7 +662,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(product *Product
 }
 
 // PostAsyncRelativeRetryInvalidHeaderPreparer prepares the PostAsyncRelativeRetryInvalidHeader request.
-func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -671,7 +672,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderPreparer(product 
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostAsyncRelativeRetryInvalidHeaderSender sends the PostAsyncRelativeRetryInvalidHeader request. The method will close the
@@ -701,8 +702,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderResponder(resp *h
 // header for operation status
 //
 // product is product to put
-func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(product *Product) (result LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	req, err := client.PostAsyncRelativeRetryInvalidJSONPollingPreparer(product)
+func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
+	req, err := client.PostAsyncRelativeRetryInvalidJSONPollingPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidJSONPolling", nil, "Failure preparing request")
 		return
@@ -718,7 +719,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(product *Pr
 }
 
 // PostAsyncRelativeRetryInvalidJSONPollingPreparer prepares the PostAsyncRelativeRetryInvalidJSONPolling request.
-func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -728,7 +729,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingPreparer(pro
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostAsyncRelativeRetryInvalidJSONPollingSender sends the PostAsyncRelativeRetryInvalidJSONPolling request. The method will close the
@@ -758,8 +759,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingResponder(re
 // for operation status
 //
 // product is product to put
-func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(product *Product) (result LROSADsPostAsyncRelativeRetryNoPayloadFuture, err error) {
-	req, err := client.PostAsyncRelativeRetryNoPayloadPreparer(product)
+func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryNoPayloadFuture, err error) {
+	req, err := client.PostAsyncRelativeRetryNoPayloadPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryNoPayload", nil, "Failure preparing request")
 		return
@@ -775,7 +776,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(product *Product) (r
 }
 
 // PostAsyncRelativeRetryNoPayloadPreparer prepares the PostAsyncRelativeRetryNoPayload request.
-func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -785,7 +786,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadPreparer(product *Pro
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostAsyncRelativeRetryNoPayloadSender sends the PostAsyncRelativeRetryNoPayload request. The method will close the
@@ -813,8 +814,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadResponder(resp *http.
 // PostNonRetry400 long running post request, service returns a 400 with no error body
 //
 // product is product to put
-func (client LROSADsClient) PostNonRetry400(product *Product) (result LROSADsPostNonRetry400Future, err error) {
-	req, err := client.PostNonRetry400Preparer(product)
+func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Product) (result LROSADsPostNonRetry400Future, err error) {
+	req, err := client.PostNonRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostNonRetry400", nil, "Failure preparing request")
 		return
@@ -830,7 +831,7 @@ func (client LROSADsClient) PostNonRetry400(product *Product) (result LROSADsPos
 }
 
 // PostNonRetry400Preparer prepares the PostNonRetry400 request.
-func (client LROSADsClient) PostNonRetry400Preparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PostNonRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -840,7 +841,7 @@ func (client LROSADsClient) PostNonRetry400Preparer(product *Product) (*http.Req
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostNonRetry400Sender sends the PostNonRetry400 request. The method will close the
@@ -869,8 +870,8 @@ func (client LROSADsClient) PostNonRetry400Responder(resp *http.Response) (resul
 // a valid json
 //
 // product is product to put
-func (client LROSADsClient) Put200InvalidJSON(product *Product) (result LROSADsPut200InvalidJSONFuture, err error) {
-	req, err := client.Put200InvalidJSONPreparer(product)
+func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Product) (result LROSADsPut200InvalidJSONFuture, err error) {
+	req, err := client.Put200InvalidJSONPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Put200InvalidJSON", nil, "Failure preparing request")
 		return
@@ -886,7 +887,7 @@ func (client LROSADsClient) Put200InvalidJSON(product *Product) (result LROSADsP
 }
 
 // Put200InvalidJSONPreparer prepares the Put200InvalidJSON request.
-func (client LROSADsClient) Put200InvalidJSONPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) Put200InvalidJSONPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -896,7 +897,7 @@ func (client LROSADsClient) Put200InvalidJSONPreparer(product *Product) (*http.R
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put200InvalidJSONSender sends the Put200InvalidJSON request. The method will close the
@@ -926,8 +927,8 @@ func (client LROSADsClient) Put200InvalidJSONResponder(resp *http.Response) (res
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 //
 // product is product to put
-func (client LROSADsClient) PutAsyncRelativeRetry400(product *Product) (result LROSADsPutAsyncRelativeRetry400Future, err error) {
-	req, err := client.PutAsyncRelativeRetry400Preparer(product)
+func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetry400Future, err error) {
+	req, err := client.PutAsyncRelativeRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetry400", nil, "Failure preparing request")
 		return
@@ -943,7 +944,7 @@ func (client LROSADsClient) PutAsyncRelativeRetry400(product *Product) (result L
 }
 
 // PutAsyncRelativeRetry400Preparer prepares the PutAsyncRelativeRetry400 request.
-func (client LROSADsClient) PutAsyncRelativeRetry400Preparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutAsyncRelativeRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -953,7 +954,7 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Preparer(product *Product) (
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutAsyncRelativeRetry400Sender sends the PutAsyncRelativeRetry400 request. The method will close the
@@ -984,8 +985,8 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Responder(resp *http.Respons
 // invalid.
 //
 // product is product to put
-func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(product *Product) (result LROSADsPutAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	req, err := client.PutAsyncRelativeRetryInvalidHeaderPreparer(product)
+func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidHeaderFuture, err error) {
+	req, err := client.PutAsyncRelativeRetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidHeader", nil, "Failure preparing request")
 		return
@@ -1001,7 +1002,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(product *Product)
 }
 
 // PutAsyncRelativeRetryInvalidHeaderPreparer prepares the PutAsyncRelativeRetryInvalidHeader request.
-func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1011,7 +1012,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderPreparer(product *
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutAsyncRelativeRetryInvalidHeaderSender sends the PutAsyncRelativeRetryInvalidHeader request. The method will close the
@@ -1042,8 +1043,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderResponder(resp *ht
 // for operation status
 //
 // product is product to put
-func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(product *Product) (result LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	req, err := client.PutAsyncRelativeRetryInvalidJSONPollingPreparer(product)
+func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
+	req, err := client.PutAsyncRelativeRetryInvalidJSONPollingPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidJSONPolling", nil, "Failure preparing request")
 		return
@@ -1059,7 +1060,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(product *Pro
 }
 
 // PutAsyncRelativeRetryInvalidJSONPollingPreparer prepares the PutAsyncRelativeRetryInvalidJSONPolling request.
-func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1069,7 +1070,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingPreparer(prod
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutAsyncRelativeRetryInvalidJSONPollingSender sends the PutAsyncRelativeRetryInvalidJSONPolling request. The method will close the
@@ -1100,8 +1101,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingResponder(res
 // operation status
 //
 // product is product to put
-func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusFuture, err error) {
-	req, err := client.PutAsyncRelativeRetryNoStatusPreparer(product)
+func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusFuture, err error) {
+	req, err := client.PutAsyncRelativeRetryNoStatusPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatus", nil, "Failure preparing request")
 		return
@@ -1117,7 +1118,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(product *Product) (res
 }
 
 // PutAsyncRelativeRetryNoStatusPreparer prepares the PutAsyncRelativeRetryNoStatus request.
-func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1127,7 +1128,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPreparer(product *Produ
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutAsyncRelativeRetryNoStatusSender sends the PutAsyncRelativeRetryNoStatus request. The method will close the
@@ -1158,8 +1159,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusResponder(resp *http.Re
 // for operation status
 //
 // product is product to put
-func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture, err error) {
-	req, err := client.PutAsyncRelativeRetryNoStatusPayloadPreparer(product)
+func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture, err error) {
+	req, err := client.PutAsyncRelativeRetryNoStatusPayloadPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatusPayload", nil, "Failure preparing request")
 		return
@@ -1175,7 +1176,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(product *Produc
 }
 
 // PutAsyncRelativeRetryNoStatusPayloadPreparer prepares the PutAsyncRelativeRetryNoStatusPayload request.
-func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1185,7 +1186,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadPreparer(product
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutAsyncRelativeRetryNoStatusPayloadSender sends the PutAsyncRelativeRetryNoStatusPayload request. The method will close the
@@ -1215,8 +1216,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadResponder(resp *
 // payload
 //
 // product is product to put
-func (client LROSADsClient) PutError201NoProvisioningStatePayload(product *Product) (result LROSADsPutError201NoProvisioningStatePayloadFuture, err error) {
-	req, err := client.PutError201NoProvisioningStatePayloadPreparer(product)
+func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Context, product *Product) (result LROSADsPutError201NoProvisioningStatePayloadFuture, err error) {
+	req, err := client.PutError201NoProvisioningStatePayloadPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutError201NoProvisioningStatePayload", nil, "Failure preparing request")
 		return
@@ -1232,7 +1233,7 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayload(product *Produ
 }
 
 // PutError201NoProvisioningStatePayloadPreparer prepares the PutError201NoProvisioningStatePayload request.
-func (client LROSADsClient) PutError201NoProvisioningStatePayloadPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutError201NoProvisioningStatePayloadPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1242,7 +1243,7 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadPreparer(produc
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutError201NoProvisioningStatePayloadSender sends the PutError201NoProvisioningStatePayload request. The method will close the
@@ -1272,8 +1273,8 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadResponder(resp 
 // and 201 response code
 //
 // product is product to put
-func (client LROSADsClient) PutNonRetry201Creating400(product *Product) (result LROSADsPutNonRetry201Creating400Future, err error) {
-	req, err := client.PutNonRetry201Creating400Preparer(product)
+func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400Future, err error) {
+	req, err := client.PutNonRetry201Creating400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400", nil, "Failure preparing request")
 		return
@@ -1289,7 +1290,7 @@ func (client LROSADsClient) PutNonRetry201Creating400(product *Product) (result 
 }
 
 // PutNonRetry201Creating400Preparer prepares the PutNonRetry201Creating400 request.
-func (client LROSADsClient) PutNonRetry201Creating400Preparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutNonRetry201Creating400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1299,7 +1300,7 @@ func (client LROSADsClient) PutNonRetry201Creating400Preparer(product *Product) 
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNonRetry201Creating400Sender sends the PutNonRetry201Creating400 request. The method will close the
@@ -1329,8 +1330,8 @@ func (client LROSADsClient) PutNonRetry201Creating400Responder(resp *http.Respon
 // 'Creating' and 201 response code
 //
 // product is product to put
-func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(product *Product) (result LROSADsPutNonRetry201Creating400InvalidJSONFuture, err error) {
-	req, err := client.PutNonRetry201Creating400InvalidJSONPreparer(product)
+func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400InvalidJSONFuture, err error) {
+	req, err := client.PutNonRetry201Creating400InvalidJSONPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400InvalidJSON", nil, "Failure preparing request")
 		return
@@ -1346,7 +1347,7 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(product *Produc
 }
 
 // PutNonRetry201Creating400InvalidJSONPreparer prepares the PutNonRetry201Creating400InvalidJSON request.
-func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONPreparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1356,7 +1357,7 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONPreparer(product
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNonRetry201Creating400InvalidJSONSender sends the PutNonRetry201Creating400InvalidJSON request. The method will close the
@@ -1385,8 +1386,8 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONResponder(resp *
 // PutNonRetry400 long running put request, service returns a 400 to the initial request
 //
 // product is product to put
-func (client LROSADsClient) PutNonRetry400(product *Product) (result LROSADsPutNonRetry400Future, err error) {
-	req, err := client.PutNonRetry400Preparer(product)
+func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product) (result LROSADsPutNonRetry400Future, err error) {
+	req, err := client.PutNonRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry400", nil, "Failure preparing request")
 		return
@@ -1402,7 +1403,7 @@ func (client LROSADsClient) PutNonRetry400(product *Product) (result LROSADsPutN
 }
 
 // PutNonRetry400Preparer prepares the PutNonRetry400 request.
-func (client LROSADsClient) PutNonRetry400Preparer(product *Product) (*http.Request, error) {
+func (client LROSADsClient) PutNonRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1412,7 +1413,7 @@ func (client LROSADsClient) PutNonRetry400Preparer(product *Product) (*http.Requ
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(product))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNonRetry400Sender sends the PutNonRetry400 request. The method will close the

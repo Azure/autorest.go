@@ -7,6 +7,7 @@ package paginggroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -31,8 +32,8 @@ func NewPagingClientWithBaseURI(baseURI string) PagingClient {
 //
 // maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that the
 // server can spend processing the request, in seconds. The default is 30 seconds.
-func (client PagingClient) GetMultiplePages(clientRequestID string, maxresults *int32, timeout *int32) (result ProductResult, err error) {
-	req, err := client.GetMultiplePagesPreparer(clientRequestID, maxresults, timeout)
+func (client PagingClient) GetMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResult, err error) {
+	req, err := client.GetMultiplePagesPreparer(ctx, clientRequestID, maxresults, timeout)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePages", nil, "Failure preparing request")
 		return
@@ -54,7 +55,7 @@ func (client PagingClient) GetMultiplePages(clientRequestID string, maxresults *
 }
 
 // GetMultiplePagesPreparer prepares the GetMultiplePages request.
-func (client PagingClient) GetMultiplePagesPreparer(clientRequestID string, maxresults *int32, timeout *int32) (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesPreparer(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -71,7 +72,7 @@ func (client PagingClient) GetMultiplePagesPreparer(clientRequestID string, maxr
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(timeout)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesSender sends the GetMultiplePages request. The method will close the
@@ -119,7 +120,7 @@ func (client PagingClient) GetMultiplePagesNextResults(lastResults ProductResult
 }
 
 // GetMultiplePagesComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesComplete(clientRequestID string, maxresults *int32, timeout *int32, cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -127,7 +128,7 @@ func (client PagingClient) GetMultiplePagesComplete(clientRequestID string, maxr
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePages(clientRequestID, maxresults, timeout)
+		list, err := client.GetMultiplePages(ctx, clientRequestID, maxresults, timeout)
 		if err != nil {
 			errChan <- err
 			return
@@ -135,7 +136,8 @@ func (client PagingClient) GetMultiplePagesComplete(clientRequestID string, maxr
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -151,7 +153,8 @@ func (client PagingClient) GetMultiplePagesComplete(clientRequestID string, maxr
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -164,8 +167,8 @@ func (client PagingClient) GetMultiplePagesComplete(clientRequestID string, maxr
 }
 
 // GetMultiplePagesFailure a paging operation that receives a 400 on the second call
-func (client PagingClient) GetMultiplePagesFailure() (result ProductResult, err error) {
-	req, err := client.GetMultiplePagesFailurePreparer()
+func (client PagingClient) GetMultiplePagesFailure(ctx context.Context) (result ProductResult, err error) {
+	req, err := client.GetMultiplePagesFailurePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailure", nil, "Failure preparing request")
 		return
@@ -187,12 +190,12 @@ func (client PagingClient) GetMultiplePagesFailure() (result ProductResult, err 
 }
 
 // GetMultiplePagesFailurePreparer prepares the GetMultiplePagesFailure request.
-func (client PagingClient) GetMultiplePagesFailurePreparer() (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesFailurePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/paging/multiple/failure"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesFailureSender sends the GetMultiplePagesFailure request. The method will close the
@@ -240,7 +243,7 @@ func (client PagingClient) GetMultiplePagesFailureNextResults(lastResults Produc
 }
 
 // GetMultiplePagesFailureComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesFailureComplete(cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesFailureComplete(ctx context.Context) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -248,7 +251,7 @@ func (client PagingClient) GetMultiplePagesFailureComplete(cancel <-chan struct{
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePagesFailure()
+		list, err := client.GetMultiplePagesFailure(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -256,7 +259,8 @@ func (client PagingClient) GetMultiplePagesFailureComplete(cancel <-chan struct{
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -272,7 +276,8 @@ func (client PagingClient) GetMultiplePagesFailureComplete(cancel <-chan struct{
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -285,8 +290,8 @@ func (client PagingClient) GetMultiplePagesFailureComplete(cancel <-chan struct{
 }
 
 // GetMultiplePagesFailureURI a paging operation that receives an invalid nextLink
-func (client PagingClient) GetMultiplePagesFailureURI() (result ProductResult, err error) {
-	req, err := client.GetMultiplePagesFailureURIPreparer()
+func (client PagingClient) GetMultiplePagesFailureURI(ctx context.Context) (result ProductResult, err error) {
+	req, err := client.GetMultiplePagesFailureURIPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailureURI", nil, "Failure preparing request")
 		return
@@ -308,12 +313,12 @@ func (client PagingClient) GetMultiplePagesFailureURI() (result ProductResult, e
 }
 
 // GetMultiplePagesFailureURIPreparer prepares the GetMultiplePagesFailureURI request.
-func (client PagingClient) GetMultiplePagesFailureURIPreparer() (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesFailureURIPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/paging/multiple/failureuri"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesFailureURISender sends the GetMultiplePagesFailureURI request. The method will close the
@@ -361,7 +366,7 @@ func (client PagingClient) GetMultiplePagesFailureURINextResults(lastResults Pro
 }
 
 // GetMultiplePagesFailureURIComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesFailureURIComplete(cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesFailureURIComplete(ctx context.Context) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -369,7 +374,7 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(cancel <-chan stru
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePagesFailureURI()
+		list, err := client.GetMultiplePagesFailureURI(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -377,7 +382,8 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(cancel <-chan stru
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -393,7 +399,8 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(cancel <-chan stru
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -408,8 +415,8 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(cancel <-chan stru
 // GetMultiplePagesFragmentNextLink a paging operation that doesn't return a full URL, just a fragment
 //
 // APIVersion is sets the api version to use. tenant is sets the tenant to use.
-func (client PagingClient) GetMultiplePagesFragmentNextLink(APIVersion string, tenant string) (result OdataProductResult, err error) {
-	req, err := client.GetMultiplePagesFragmentNextLinkPreparer(APIVersion, tenant)
+func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResult, err error) {
+	req, err := client.GetMultiplePagesFragmentNextLinkPreparer(ctx, APIVersion, tenant)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentNextLink", nil, "Failure preparing request")
 		return
@@ -431,7 +438,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLink(APIVersion string, t
 }
 
 // GetMultiplePagesFragmentNextLinkPreparer prepares the GetMultiplePagesFragmentNextLink request.
-func (client PagingClient) GetMultiplePagesFragmentNextLinkPreparer(APIVersion string, tenant string) (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesFragmentNextLinkPreparer(ctx context.Context, APIVersion string, tenant string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"tenant": autorest.Encode("path", tenant),
 	}
@@ -445,7 +452,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkPreparer(APIVersion s
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/paging/multiple/fragment/{tenant}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesFragmentNextLinkSender sends the GetMultiplePagesFragmentNextLink request. The method will close the
@@ -469,7 +476,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkResponder(resp *http.
 }
 
 // GetMultiplePagesFragmentNextLinkComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(APIVersion string, tenant string, cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -477,7 +484,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(APIVersion s
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePagesFragmentNextLink(APIVersion, tenant)
+		list, err := client.GetMultiplePagesFragmentNextLink(ctx, APIVersion, tenant)
 		if err != nil {
 			errChan <- err
 			return
@@ -485,7 +492,8 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(APIVersion s
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -493,7 +501,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(APIVersion s
 			}
 		}
 		for list.OdataNextLink != nil {
-			list, err = client.NextFragment(APIVersion, tenant, *list.OdataNextLink)
+			list, err = client.NextFragment(ctx, APIVersion, tenant, *list.OdataNextLink)
 			if err != nil {
 				errChan <- err
 				return
@@ -501,7 +509,8 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(APIVersion s
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -517,8 +526,8 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(APIVersion s
 // parameters grouped
 //
 // APIVersion is sets the api version to use. tenant is sets the tenant to use.
-func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(APIVersion string, tenant string) (result OdataProductResult, err error) {
-	req, err := client.GetMultiplePagesFragmentWithGroupingNextLinkPreparer(APIVersion, tenant)
+func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResult, err error) {
+	req, err := client.GetMultiplePagesFragmentWithGroupingNextLinkPreparer(ctx, APIVersion, tenant)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFragmentWithGroupingNextLink", nil, "Failure preparing request")
 		return
@@ -540,7 +549,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(APIVersi
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLinkPreparer prepares the GetMultiplePagesFragmentWithGroupingNextLink request.
-func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkPreparer(APIVersion string, tenant string) (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkPreparer(ctx context.Context, APIVersion string, tenant string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"tenant": autorest.Encode("path", tenant),
 	}
@@ -554,7 +563,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkPreparer(
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/paging/multiple/fragmentwithgrouping/{tenant}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLinkSender sends the GetMultiplePagesFragmentWithGroupingNextLink request. The method will close the
@@ -578,7 +587,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkResponder
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLinkComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(APIVersion string, tenant string, cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -586,7 +595,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePagesFragmentWithGroupingNextLink(APIVersion, tenant)
+		list, err := client.GetMultiplePagesFragmentWithGroupingNextLink(ctx, APIVersion, tenant)
 		if err != nil {
 			errChan <- err
 			return
@@ -594,7 +603,8 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -602,7 +612,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 			}
 		}
 		for list.OdataNextLink != nil {
-			list, err = client.NextFragmentWithGrouping(APIVersion, tenant, *list.OdataNextLink)
+			list, err = client.NextFragmentWithGrouping(ctx, APIVersion, tenant, *list.OdataNextLink)
 			if err != nil {
 				errChan <- err
 				return
@@ -610,7 +620,8 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -624,8 +635,8 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 
 // GetMultiplePagesRetryFirst a paging operation that fails on the first call with 500 and then retries and then get a
 // response including a nextLink that has 10 pages
-func (client PagingClient) GetMultiplePagesRetryFirst() (result ProductResult, err error) {
-	req, err := client.GetMultiplePagesRetryFirstPreparer()
+func (client PagingClient) GetMultiplePagesRetryFirst(ctx context.Context) (result ProductResult, err error) {
+	req, err := client.GetMultiplePagesRetryFirstPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetryFirst", nil, "Failure preparing request")
 		return
@@ -647,12 +658,12 @@ func (client PagingClient) GetMultiplePagesRetryFirst() (result ProductResult, e
 }
 
 // GetMultiplePagesRetryFirstPreparer prepares the GetMultiplePagesRetryFirst request.
-func (client PagingClient) GetMultiplePagesRetryFirstPreparer() (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesRetryFirstPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/paging/multiple/retryfirst"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesRetryFirstSender sends the GetMultiplePagesRetryFirst request. The method will close the
@@ -700,7 +711,7 @@ func (client PagingClient) GetMultiplePagesRetryFirstNextResults(lastResults Pro
 }
 
 // GetMultiplePagesRetryFirstComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesRetryFirstComplete(cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesRetryFirstComplete(ctx context.Context) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -708,7 +719,7 @@ func (client PagingClient) GetMultiplePagesRetryFirstComplete(cancel <-chan stru
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePagesRetryFirst()
+		list, err := client.GetMultiplePagesRetryFirst(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -716,7 +727,8 @@ func (client PagingClient) GetMultiplePagesRetryFirstComplete(cancel <-chan stru
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -732,7 +744,8 @@ func (client PagingClient) GetMultiplePagesRetryFirstComplete(cancel <-chan stru
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -746,8 +759,8 @@ func (client PagingClient) GetMultiplePagesRetryFirstComplete(cancel <-chan stru
 
 // GetMultiplePagesRetrySecond a paging operation that includes a nextLink that has 10 pages, of which the 2nd call
 // fails first with 500. The client should retry and finish all 10 pages eventually.
-func (client PagingClient) GetMultiplePagesRetrySecond() (result ProductResult, err error) {
-	req, err := client.GetMultiplePagesRetrySecondPreparer()
+func (client PagingClient) GetMultiplePagesRetrySecond(ctx context.Context) (result ProductResult, err error) {
+	req, err := client.GetMultiplePagesRetrySecondPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetrySecond", nil, "Failure preparing request")
 		return
@@ -769,12 +782,12 @@ func (client PagingClient) GetMultiplePagesRetrySecond() (result ProductResult, 
 }
 
 // GetMultiplePagesRetrySecondPreparer prepares the GetMultiplePagesRetrySecond request.
-func (client PagingClient) GetMultiplePagesRetrySecondPreparer() (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesRetrySecondPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/paging/multiple/retrysecond"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesRetrySecondSender sends the GetMultiplePagesRetrySecond request. The method will close the
@@ -822,7 +835,7 @@ func (client PagingClient) GetMultiplePagesRetrySecondNextResults(lastResults Pr
 }
 
 // GetMultiplePagesRetrySecondComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesRetrySecondComplete(cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesRetrySecondComplete(ctx context.Context) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -830,7 +843,7 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(cancel <-chan str
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePagesRetrySecond()
+		list, err := client.GetMultiplePagesRetrySecond(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -838,7 +851,8 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(cancel <-chan str
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -854,7 +868,8 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(cancel <-chan str
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -870,8 +885,8 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(cancel <-chan str
 //
 // offset is offset of return value maxresults is sets the maximum number of items to return in the response. timeout
 // is sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
-func (client PagingClient) GetMultiplePagesWithOffset(offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResult, err error) {
-	req, err := client.GetMultiplePagesWithOffsetPreparer(offset, clientRequestID, maxresults, timeout)
+func (client PagingClient) GetMultiplePagesWithOffset(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResult, err error) {
+	req, err := client.GetMultiplePagesWithOffsetPreparer(ctx, offset, clientRequestID, maxresults, timeout)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesWithOffset", nil, "Failure preparing request")
 		return
@@ -893,7 +908,7 @@ func (client PagingClient) GetMultiplePagesWithOffset(offset int32, clientReques
 }
 
 // GetMultiplePagesWithOffsetPreparer prepares the GetMultiplePagesWithOffset request.
-func (client PagingClient) GetMultiplePagesWithOffsetPreparer(offset int32, clientRequestID string, maxresults *int32, timeout *int32) (*http.Request, error) {
+func (client PagingClient) GetMultiplePagesWithOffsetPreparer(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"offset": autorest.Encode("path", offset),
 	}
@@ -914,7 +929,7 @@ func (client PagingClient) GetMultiplePagesWithOffsetPreparer(offset int32, clie
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(timeout)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMultiplePagesWithOffsetSender sends the GetMultiplePagesWithOffset request. The method will close the
@@ -962,7 +977,7 @@ func (client PagingClient) GetMultiplePagesWithOffsetNextResults(lastResults Pro
 }
 
 // GetMultiplePagesWithOffsetComplete gets all elements from the list without paging.
-func (client PagingClient) GetMultiplePagesWithOffsetComplete(offset int32, clientRequestID string, maxresults *int32, timeout *int32, cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -970,7 +985,7 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(offset int32, clie
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetMultiplePagesWithOffset(offset, clientRequestID, maxresults, timeout)
+		list, err := client.GetMultiplePagesWithOffset(ctx, offset, clientRequestID, maxresults, timeout)
 		if err != nil {
 			errChan <- err
 			return
@@ -978,7 +993,8 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(offset int32, clie
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -994,7 +1010,8 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(offset int32, clie
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -1010,8 +1027,8 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(offset int32, clie
 //
 // maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that the
 // server can spend processing the request, in seconds. The default is 30 seconds.
-func (client PagingClient) GetOdataMultiplePages(clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResult, err error) {
-	req, err := client.GetOdataMultiplePagesPreparer(clientRequestID, maxresults, timeout)
+func (client PagingClient) GetOdataMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResult, err error) {
+	req, err := client.GetOdataMultiplePagesPreparer(ctx, clientRequestID, maxresults, timeout)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetOdataMultiplePages", nil, "Failure preparing request")
 		return
@@ -1033,7 +1050,7 @@ func (client PagingClient) GetOdataMultiplePages(clientRequestID string, maxresu
 }
 
 // GetOdataMultiplePagesPreparer prepares the GetOdataMultiplePages request.
-func (client PagingClient) GetOdataMultiplePagesPreparer(clientRequestID string, maxresults *int32, timeout *int32) (*http.Request, error) {
+func (client PagingClient) GetOdataMultiplePagesPreparer(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -1050,7 +1067,7 @@ func (client PagingClient) GetOdataMultiplePagesPreparer(clientRequestID string,
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(timeout)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOdataMultiplePagesSender sends the GetOdataMultiplePages request. The method will close the
@@ -1098,7 +1115,7 @@ func (client PagingClient) GetOdataMultiplePagesNextResults(lastResults OdataPro
 }
 
 // GetOdataMultiplePagesComplete gets all elements from the list without paging.
-func (client PagingClient) GetOdataMultiplePagesComplete(clientRequestID string, maxresults *int32, timeout *int32, cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetOdataMultiplePagesComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -1106,7 +1123,7 @@ func (client PagingClient) GetOdataMultiplePagesComplete(clientRequestID string,
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetOdataMultiplePages(clientRequestID, maxresults, timeout)
+		list, err := client.GetOdataMultiplePages(ctx, clientRequestID, maxresults, timeout)
 		if err != nil {
 			errChan <- err
 			return
@@ -1114,7 +1131,8 @@ func (client PagingClient) GetOdataMultiplePagesComplete(clientRequestID string,
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -1130,7 +1148,8 @@ func (client PagingClient) GetOdataMultiplePagesComplete(clientRequestID string,
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -1143,8 +1162,8 @@ func (client PagingClient) GetOdataMultiplePagesComplete(clientRequestID string,
 }
 
 // GetSinglePages a paging operation that finishes on the first call without a nextlink
-func (client PagingClient) GetSinglePages() (result ProductResult, err error) {
-	req, err := client.GetSinglePagesPreparer()
+func (client PagingClient) GetSinglePages(ctx context.Context) (result ProductResult, err error) {
+	req, err := client.GetSinglePagesPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePages", nil, "Failure preparing request")
 		return
@@ -1166,12 +1185,12 @@ func (client PagingClient) GetSinglePages() (result ProductResult, err error) {
 }
 
 // GetSinglePagesPreparer prepares the GetSinglePages request.
-func (client PagingClient) GetSinglePagesPreparer() (*http.Request, error) {
+func (client PagingClient) GetSinglePagesPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/paging/single"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetSinglePagesSender sends the GetSinglePages request. The method will close the
@@ -1219,7 +1238,7 @@ func (client PagingClient) GetSinglePagesNextResults(lastResults ProductResult) 
 }
 
 // GetSinglePagesComplete gets all elements from the list without paging.
-func (client PagingClient) GetSinglePagesComplete(cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetSinglePagesComplete(ctx context.Context) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -1227,7 +1246,7 @@ func (client PagingClient) GetSinglePagesComplete(cancel <-chan struct{}) (<-cha
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetSinglePages()
+		list, err := client.GetSinglePages(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -1235,7 +1254,8 @@ func (client PagingClient) GetSinglePagesComplete(cancel <-chan struct{}) (<-cha
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -1251,7 +1271,8 @@ func (client PagingClient) GetSinglePagesComplete(cancel <-chan struct{}) (<-cha
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -1264,8 +1285,8 @@ func (client PagingClient) GetSinglePagesComplete(cancel <-chan struct{}) (<-cha
 }
 
 // GetSinglePagesFailure a paging operation that receives a 400 on the first call
-func (client PagingClient) GetSinglePagesFailure() (result ProductResult, err error) {
-	req, err := client.GetSinglePagesFailurePreparer()
+func (client PagingClient) GetSinglePagesFailure(ctx context.Context) (result ProductResult, err error) {
+	req, err := client.GetSinglePagesFailurePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePagesFailure", nil, "Failure preparing request")
 		return
@@ -1287,12 +1308,12 @@ func (client PagingClient) GetSinglePagesFailure() (result ProductResult, err er
 }
 
 // GetSinglePagesFailurePreparer prepares the GetSinglePagesFailure request.
-func (client PagingClient) GetSinglePagesFailurePreparer() (*http.Request, error) {
+func (client PagingClient) GetSinglePagesFailurePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/paging/single/failure"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetSinglePagesFailureSender sends the GetSinglePagesFailure request. The method will close the
@@ -1340,7 +1361,7 @@ func (client PagingClient) GetSinglePagesFailureNextResults(lastResults ProductR
 }
 
 // GetSinglePagesFailureComplete gets all elements from the list without paging.
-func (client PagingClient) GetSinglePagesFailureComplete(cancel <-chan struct{}) (<-chan Product, <-chan error) {
+func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (<-chan Product, <-chan error) {
 	resultChan := make(chan Product)
 	errChan := make(chan error, 1)
 	go func() {
@@ -1348,7 +1369,7 @@ func (client PagingClient) GetSinglePagesFailureComplete(cancel <-chan struct{})
 			close(resultChan)
 			close(errChan)
 		}()
-		list, err := client.GetSinglePagesFailure()
+		list, err := client.GetSinglePagesFailure(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -1356,7 +1377,8 @@ func (client PagingClient) GetSinglePagesFailureComplete(cancel <-chan struct{})
 		if list.Values != nil {
 			for _, item := range *list.Values {
 				select {
-				case <-cancel:
+				case <-ctx.Done():
+					errChan <- ctx.Err()
 					return
 				case resultChan <- item:
 					// Intentionally left blank
@@ -1372,7 +1394,8 @@ func (client PagingClient) GetSinglePagesFailureComplete(cancel <-chan struct{})
 			if list.Values != nil {
 				for _, item := range *list.Values {
 					select {
-					case <-cancel:
+					case <-ctx.Done():
+						errChan <- ctx.Err()
 						return
 					case resultChan <- item:
 						// Intentionally left blank
@@ -1388,8 +1411,8 @@ func (client PagingClient) GetSinglePagesFailureComplete(cancel <-chan struct{})
 //
 // APIVersion is sets the api version to use. tenant is sets the tenant to use. nextLink is next link for list
 // operation.
-func (client PagingClient) NextFragment(APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
-	req, err := client.NextFragmentPreparer(APIVersion, tenant, nextLink)
+func (client PagingClient) NextFragment(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
+	req, err := client.NextFragmentPreparer(ctx, APIVersion, tenant, nextLink)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "NextFragment", nil, "Failure preparing request")
 		return
@@ -1411,7 +1434,7 @@ func (client PagingClient) NextFragment(APIVersion string, tenant string, nextLi
 }
 
 // NextFragmentPreparer prepares the NextFragment request.
-func (client PagingClient) NextFragmentPreparer(APIVersion string, tenant string, nextLink string) (*http.Request, error) {
+func (client PagingClient) NextFragmentPreparer(ctx context.Context, APIVersion string, tenant string, nextLink string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"nextLink": nextLink,
 		"tenant":   autorest.Encode("path", tenant),
@@ -1426,7 +1449,7 @@ func (client PagingClient) NextFragmentPreparer(APIVersion string, tenant string
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/paging/multiple/fragment/{tenant}/{nextLink}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // NextFragmentSender sends the NextFragment request. The method will close the
@@ -1453,8 +1476,8 @@ func (client PagingClient) NextFragmentResponder(resp *http.Response) (result Od
 //
 // APIVersion is sets the api version to use. tenant is sets the tenant to use. nextLink is next link for list
 // operation.
-func (client PagingClient) NextFragmentWithGrouping(APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
-	req, err := client.NextFragmentWithGroupingPreparer(APIVersion, tenant, nextLink)
+func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
+	req, err := client.NextFragmentWithGroupingPreparer(ctx, APIVersion, tenant, nextLink)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "NextFragmentWithGrouping", nil, "Failure preparing request")
 		return
@@ -1476,7 +1499,7 @@ func (client PagingClient) NextFragmentWithGrouping(APIVersion string, tenant st
 }
 
 // NextFragmentWithGroupingPreparer prepares the NextFragmentWithGrouping request.
-func (client PagingClient) NextFragmentWithGroupingPreparer(APIVersion string, tenant string, nextLink string) (*http.Request, error) {
+func (client PagingClient) NextFragmentWithGroupingPreparer(ctx context.Context, APIVersion string, tenant string, nextLink string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"nextLink": nextLink,
 		"tenant":   autorest.Encode("path", tenant),
@@ -1491,7 +1514,7 @@ func (client PagingClient) NextFragmentWithGroupingPreparer(APIVersion string, t
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // NextFragmentWithGroupingSender sends the NextFragmentWithGrouping request. The method will close the

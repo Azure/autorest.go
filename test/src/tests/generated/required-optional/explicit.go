@@ -7,6 +7,7 @@ package optionalgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -30,8 +31,8 @@ func NewExplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 
 // PostOptionalArrayHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
 //
-func (client ExplicitClient) PostOptionalArrayHeader(headerParameter []string) (result autorest.Response, err error) {
-	req, err := client.PostOptionalArrayHeaderPreparer(headerParameter)
+func (client ExplicitClient) PostOptionalArrayHeader(ctx context.Context, headerParameter []string) (result autorest.Response, err error) {
+	req, err := client.PostOptionalArrayHeaderPreparer(ctx, headerParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalArrayHeader", nil, "Failure preparing request")
 		return
@@ -53,7 +54,7 @@ func (client ExplicitClient) PostOptionalArrayHeader(headerParameter []string) (
 }
 
 // PostOptionalArrayHeaderPreparer prepares the PostOptionalArrayHeader request.
-func (client ExplicitClient) PostOptionalArrayHeaderPreparer(headerParameter []string) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalArrayHeaderPreparer(ctx context.Context, headerParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -62,7 +63,7 @@ func (client ExplicitClient) PostOptionalArrayHeaderPreparer(headerParameter []s
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("headerParameter", autorest.String(headerParameter)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalArrayHeaderSender sends the PostOptionalArrayHeader request. The method will close the
@@ -86,8 +87,8 @@ func (client ExplicitClient) PostOptionalArrayHeaderResponder(resp *http.Respons
 
 // PostOptionalArrayParameter test explicitly optional array. Please put null.
 //
-func (client ExplicitClient) PostOptionalArrayParameter(bodyParameter []string) (result autorest.Response, err error) {
-	req, err := client.PostOptionalArrayParameterPreparer(bodyParameter)
+func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bodyParameter []string) (result autorest.Response, err error) {
+	req, err := client.PostOptionalArrayParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalArrayParameter", nil, "Failure preparing request")
 		return
@@ -109,7 +110,7 @@ func (client ExplicitClient) PostOptionalArrayParameter(bodyParameter []string) 
 }
 
 // PostOptionalArrayParameterPreparer prepares the PostOptionalArrayParameter request.
-func (client ExplicitClient) PostOptionalArrayParameterPreparer(bodyParameter []string) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalArrayParameterPreparer(ctx context.Context, bodyParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -119,7 +120,7 @@ func (client ExplicitClient) PostOptionalArrayParameterPreparer(bodyParameter []
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalArrayParameterSender sends the PostOptionalArrayParameter request. The method will close the
@@ -143,8 +144,8 @@ func (client ExplicitClient) PostOptionalArrayParameterResponder(resp *http.Resp
 
 // PostOptionalArrayProperty test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
 //
-func (client ExplicitClient) PostOptionalArrayProperty(bodyParameter *ArrayOptionalWrapper) (result autorest.Response, err error) {
-	req, err := client.PostOptionalArrayPropertyPreparer(bodyParameter)
+func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (result autorest.Response, err error) {
+	req, err := client.PostOptionalArrayPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalArrayProperty", nil, "Failure preparing request")
 		return
@@ -166,7 +167,7 @@ func (client ExplicitClient) PostOptionalArrayProperty(bodyParameter *ArrayOptio
 }
 
 // PostOptionalArrayPropertyPreparer prepares the PostOptionalArrayProperty request.
-func (client ExplicitClient) PostOptionalArrayPropertyPreparer(bodyParameter *ArrayOptionalWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalArrayPropertyPreparer(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -176,7 +177,7 @@ func (client ExplicitClient) PostOptionalArrayPropertyPreparer(bodyParameter *Ar
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalArrayPropertySender sends the PostOptionalArrayProperty request. The method will close the
@@ -200,7 +201,7 @@ func (client ExplicitClient) PostOptionalArrayPropertyResponder(resp *http.Respo
 
 // PostOptionalClassParameter test explicitly optional complex object. Please put null.
 //
-func (client ExplicitClient) PostOptionalClassParameter(bodyParameter *Product) (result autorest.Response, err error) {
+func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bodyParameter *Product) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter", Name: validation.Null, Rule: false,
@@ -208,7 +209,7 @@ func (client ExplicitClient) PostOptionalClassParameter(bodyParameter *Product) 
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostOptionalClassParameter")
 	}
 
-	req, err := client.PostOptionalClassParameterPreparer(bodyParameter)
+	req, err := client.PostOptionalClassParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalClassParameter", nil, "Failure preparing request")
 		return
@@ -230,7 +231,7 @@ func (client ExplicitClient) PostOptionalClassParameter(bodyParameter *Product) 
 }
 
 // PostOptionalClassParameterPreparer prepares the PostOptionalClassParameter request.
-func (client ExplicitClient) PostOptionalClassParameterPreparer(bodyParameter *Product) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalClassParameterPreparer(ctx context.Context, bodyParameter *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -240,7 +241,7 @@ func (client ExplicitClient) PostOptionalClassParameterPreparer(bodyParameter *P
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalClassParameterSender sends the PostOptionalClassParameter request. The method will close the
@@ -265,7 +266,7 @@ func (client ExplicitClient) PostOptionalClassParameterResponder(resp *http.Resp
 // PostOptionalClassProperty test explicitly optional complex object. Please put a valid class-wrapper with 'value' =
 // null.
 //
-func (client ExplicitClient) PostOptionalClassProperty(bodyParameter *ClassOptionalWrapper) (result autorest.Response, err error) {
+func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, bodyParameter *ClassOptionalWrapper) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter", Name: validation.Null, Rule: false,
@@ -275,7 +276,7 @@ func (client ExplicitClient) PostOptionalClassProperty(bodyParameter *ClassOptio
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostOptionalClassProperty")
 	}
 
-	req, err := client.PostOptionalClassPropertyPreparer(bodyParameter)
+	req, err := client.PostOptionalClassPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalClassProperty", nil, "Failure preparing request")
 		return
@@ -297,7 +298,7 @@ func (client ExplicitClient) PostOptionalClassProperty(bodyParameter *ClassOptio
 }
 
 // PostOptionalClassPropertyPreparer prepares the PostOptionalClassProperty request.
-func (client ExplicitClient) PostOptionalClassPropertyPreparer(bodyParameter *ClassOptionalWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalClassPropertyPreparer(ctx context.Context, bodyParameter *ClassOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -307,7 +308,7 @@ func (client ExplicitClient) PostOptionalClassPropertyPreparer(bodyParameter *Cl
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalClassPropertySender sends the PostOptionalClassProperty request. The method will close the
@@ -331,8 +332,8 @@ func (client ExplicitClient) PostOptionalClassPropertyResponder(resp *http.Respo
 
 // PostOptionalIntegerHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
 //
-func (client ExplicitClient) PostOptionalIntegerHeader(headerParameter *int32) (result autorest.Response, err error) {
-	req, err := client.PostOptionalIntegerHeaderPreparer(headerParameter)
+func (client ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, headerParameter *int32) (result autorest.Response, err error) {
+	req, err := client.PostOptionalIntegerHeaderPreparer(ctx, headerParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalIntegerHeader", nil, "Failure preparing request")
 		return
@@ -354,7 +355,7 @@ func (client ExplicitClient) PostOptionalIntegerHeader(headerParameter *int32) (
 }
 
 // PostOptionalIntegerHeaderPreparer prepares the PostOptionalIntegerHeader request.
-func (client ExplicitClient) PostOptionalIntegerHeaderPreparer(headerParameter *int32) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalIntegerHeaderPreparer(ctx context.Context, headerParameter *int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -363,7 +364,7 @@ func (client ExplicitClient) PostOptionalIntegerHeaderPreparer(headerParameter *
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("headerParameter", autorest.String(headerParameter)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalIntegerHeaderSender sends the PostOptionalIntegerHeader request. The method will close the
@@ -387,8 +388,8 @@ func (client ExplicitClient) PostOptionalIntegerHeaderResponder(resp *http.Respo
 
 // PostOptionalIntegerParameter test explicitly optional integer. Please put null.
 //
-func (client ExplicitClient) PostOptionalIntegerParameter(bodyParameter *int32) (result autorest.Response, err error) {
-	req, err := client.PostOptionalIntegerParameterPreparer(bodyParameter)
+func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, bodyParameter *int32) (result autorest.Response, err error) {
+	req, err := client.PostOptionalIntegerParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalIntegerParameter", nil, "Failure preparing request")
 		return
@@ -410,7 +411,7 @@ func (client ExplicitClient) PostOptionalIntegerParameter(bodyParameter *int32) 
 }
 
 // PostOptionalIntegerParameterPreparer prepares the PostOptionalIntegerParameter request.
-func (client ExplicitClient) PostOptionalIntegerParameterPreparer(bodyParameter *int32) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalIntegerParameterPreparer(ctx context.Context, bodyParameter *int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -420,7 +421,7 @@ func (client ExplicitClient) PostOptionalIntegerParameterPreparer(bodyParameter 
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalIntegerParameterSender sends the PostOptionalIntegerParameter request. The method will close the
@@ -444,8 +445,8 @@ func (client ExplicitClient) PostOptionalIntegerParameterResponder(resp *http.Re
 
 // PostOptionalIntegerProperty test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
 //
-func (client ExplicitClient) PostOptionalIntegerProperty(bodyParameter *IntOptionalWrapper) (result autorest.Response, err error) {
-	req, err := client.PostOptionalIntegerPropertyPreparer(bodyParameter)
+func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bodyParameter *IntOptionalWrapper) (result autorest.Response, err error) {
+	req, err := client.PostOptionalIntegerPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalIntegerProperty", nil, "Failure preparing request")
 		return
@@ -467,7 +468,7 @@ func (client ExplicitClient) PostOptionalIntegerProperty(bodyParameter *IntOptio
 }
 
 // PostOptionalIntegerPropertyPreparer prepares the PostOptionalIntegerProperty request.
-func (client ExplicitClient) PostOptionalIntegerPropertyPreparer(bodyParameter *IntOptionalWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalIntegerPropertyPreparer(ctx context.Context, bodyParameter *IntOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -477,7 +478,7 @@ func (client ExplicitClient) PostOptionalIntegerPropertyPreparer(bodyParameter *
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalIntegerPropertySender sends the PostOptionalIntegerProperty request. The method will close the
@@ -501,8 +502,8 @@ func (client ExplicitClient) PostOptionalIntegerPropertyResponder(resp *http.Res
 
 // PostOptionalStringHeader test explicitly optional string. Please put a header 'headerParameter' => null.
 //
-func (client ExplicitClient) PostOptionalStringHeader(bodyParameter string) (result autorest.Response, err error) {
-	req, err := client.PostOptionalStringHeaderPreparer(bodyParameter)
+func (client ExplicitClient) PostOptionalStringHeader(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
+	req, err := client.PostOptionalStringHeaderPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalStringHeader", nil, "Failure preparing request")
 		return
@@ -524,7 +525,7 @@ func (client ExplicitClient) PostOptionalStringHeader(bodyParameter string) (res
 }
 
 // PostOptionalStringHeaderPreparer prepares the PostOptionalStringHeader request.
-func (client ExplicitClient) PostOptionalStringHeaderPreparer(bodyParameter string) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalStringHeaderPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -533,7 +534,7 @@ func (client ExplicitClient) PostOptionalStringHeaderPreparer(bodyParameter stri
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("bodyParameter", autorest.String(bodyParameter)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalStringHeaderSender sends the PostOptionalStringHeader request. The method will close the
@@ -557,8 +558,8 @@ func (client ExplicitClient) PostOptionalStringHeaderResponder(resp *http.Respon
 
 // PostOptionalStringParameter test explicitly optional string. Please put null.
 //
-func (client ExplicitClient) PostOptionalStringParameter(bodyParameter string) (result autorest.Response, err error) {
-	req, err := client.PostOptionalStringParameterPreparer(bodyParameter)
+func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
+	req, err := client.PostOptionalStringParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalStringParameter", nil, "Failure preparing request")
 		return
@@ -580,7 +581,7 @@ func (client ExplicitClient) PostOptionalStringParameter(bodyParameter string) (
 }
 
 // PostOptionalStringParameterPreparer prepares the PostOptionalStringParameter request.
-func (client ExplicitClient) PostOptionalStringParameterPreparer(bodyParameter string) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalStringParameterPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -590,7 +591,7 @@ func (client ExplicitClient) PostOptionalStringParameterPreparer(bodyParameter s
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalStringParameterSender sends the PostOptionalStringParameter request. The method will close the
@@ -614,8 +615,8 @@ func (client ExplicitClient) PostOptionalStringParameterResponder(resp *http.Res
 
 // PostOptionalStringProperty test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
 //
-func (client ExplicitClient) PostOptionalStringProperty(bodyParameter *StringOptionalWrapper) (result autorest.Response, err error) {
-	req, err := client.PostOptionalStringPropertyPreparer(bodyParameter)
+func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bodyParameter *StringOptionalWrapper) (result autorest.Response, err error) {
+	req, err := client.PostOptionalStringPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostOptionalStringProperty", nil, "Failure preparing request")
 		return
@@ -637,7 +638,7 @@ func (client ExplicitClient) PostOptionalStringProperty(bodyParameter *StringOpt
 }
 
 // PostOptionalStringPropertyPreparer prepares the PostOptionalStringProperty request.
-func (client ExplicitClient) PostOptionalStringPropertyPreparer(bodyParameter *StringOptionalWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostOptionalStringPropertyPreparer(ctx context.Context, bodyParameter *StringOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -647,7 +648,7 @@ func (client ExplicitClient) PostOptionalStringPropertyPreparer(bodyParameter *S
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostOptionalStringPropertySender sends the PostOptionalStringProperty request. The method will close the
@@ -672,14 +673,14 @@ func (client ExplicitClient) PostOptionalStringPropertyResponder(resp *http.Resp
 // PostRequiredArrayHeader test explicitly required array. Please put a header 'headerParameter' => null and the client
 // library should throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredArrayHeader(headerParameter []string) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: headerParameter,
 			Constraints: []validation.Constraint{{Target: "headerParameter", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayHeader")
 	}
 
-	req, err := client.PostRequiredArrayHeaderPreparer(headerParameter)
+	req, err := client.PostRequiredArrayHeaderPreparer(ctx, headerParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayHeader", nil, "Failure preparing request")
 		return
@@ -701,13 +702,13 @@ func (client ExplicitClient) PostRequiredArrayHeader(headerParameter []string) (
 }
 
 // PostRequiredArrayHeaderPreparer prepares the PostRequiredArrayHeader request.
-func (client ExplicitClient) PostRequiredArrayHeaderPreparer(headerParameter []string) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredArrayHeaderPreparer(ctx context.Context, headerParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/array/header"),
 		autorest.WithHeader("headerParameter", autorest.String(headerParameter)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredArrayHeaderSender sends the PostRequiredArrayHeader request. The method will close the
@@ -733,14 +734,14 @@ func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Respons
 // PostRequiredArrayParameter test explicitly required array. Please put null and the client library should throw
 // before the request is sent.
 //
-func (client ExplicitClient) PostRequiredArrayParameter(bodyParameter []string) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayParameter")
 	}
 
-	req, err := client.PostRequiredArrayParameterPreparer(bodyParameter)
+	req, err := client.PostRequiredArrayParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayParameter", nil, "Failure preparing request")
 		return
@@ -762,14 +763,14 @@ func (client ExplicitClient) PostRequiredArrayParameter(bodyParameter []string) 
 }
 
 // PostRequiredArrayParameterPreparer prepares the PostRequiredArrayParameter request.
-func (client ExplicitClient) PostRequiredArrayParameterPreparer(bodyParameter []string) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredArrayParameterPreparer(ctx context.Context, bodyParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/array/parameter"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredArrayParameterSender sends the PostRequiredArrayParameter request. The method will close the
@@ -795,14 +796,14 @@ func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Resp
 // PostRequiredArrayProperty test explicitly required array. Please put a valid array-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredArrayProperty(bodyParameter ArrayWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayProperty")
 	}
 
-	req, err := client.PostRequiredArrayPropertyPreparer(bodyParameter)
+	req, err := client.PostRequiredArrayPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayProperty", nil, "Failure preparing request")
 		return
@@ -824,14 +825,14 @@ func (client ExplicitClient) PostRequiredArrayProperty(bodyParameter ArrayWrappe
 }
 
 // PostRequiredArrayPropertyPreparer prepares the PostRequiredArrayProperty request.
-func (client ExplicitClient) PostRequiredArrayPropertyPreparer(bodyParameter ArrayWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredArrayPropertyPreparer(ctx context.Context, bodyParameter ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/array/property"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredArrayPropertySender sends the PostRequiredArrayProperty request. The method will close the
@@ -857,14 +858,14 @@ func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Respo
 // PostRequiredClassParameter test explicitly required complex object. Please put null and the client library should
 // throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredClassParameter(bodyParameter Product) (result Error, err error) {
+func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.ID", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredClassParameter")
 	}
 
-	req, err := client.PostRequiredClassParameterPreparer(bodyParameter)
+	req, err := client.PostRequiredClassParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredClassParameter", nil, "Failure preparing request")
 		return
@@ -886,14 +887,14 @@ func (client ExplicitClient) PostRequiredClassParameter(bodyParameter Product) (
 }
 
 // PostRequiredClassParameterPreparer prepares the PostRequiredClassParameter request.
-func (client ExplicitClient) PostRequiredClassParameterPreparer(bodyParameter Product) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredClassParameterPreparer(ctx context.Context, bodyParameter Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/class/parameter"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredClassParameterSender sends the PostRequiredClassParameter request. The method will close the
@@ -919,7 +920,7 @@ func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Resp
 // PostRequiredClassProperty test explicitly required complex object. Please put a valid class-wrapper with 'value' =
 // null and the client library should throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredClassProperty(bodyParameter ClassWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true,
@@ -927,7 +928,7 @@ func (client ExplicitClient) PostRequiredClassProperty(bodyParameter ClassWrappe
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredClassProperty")
 	}
 
-	req, err := client.PostRequiredClassPropertyPreparer(bodyParameter)
+	req, err := client.PostRequiredClassPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredClassProperty", nil, "Failure preparing request")
 		return
@@ -949,14 +950,14 @@ func (client ExplicitClient) PostRequiredClassProperty(bodyParameter ClassWrappe
 }
 
 // PostRequiredClassPropertyPreparer prepares the PostRequiredClassProperty request.
-func (client ExplicitClient) PostRequiredClassPropertyPreparer(bodyParameter ClassWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredClassPropertyPreparer(ctx context.Context, bodyParameter ClassWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/class/property"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredClassPropertySender sends the PostRequiredClassProperty request. The method will close the
@@ -982,8 +983,8 @@ func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Respo
 // PostRequiredIntegerHeader test explicitly required integer. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredIntegerHeader(headerParameter int32) (result Error, err error) {
-	req, err := client.PostRequiredIntegerHeaderPreparer(headerParameter)
+func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32) (result Error, err error) {
+	req, err := client.PostRequiredIntegerHeaderPreparer(ctx, headerParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerHeader", nil, "Failure preparing request")
 		return
@@ -1005,13 +1006,13 @@ func (client ExplicitClient) PostRequiredIntegerHeader(headerParameter int32) (r
 }
 
 // PostRequiredIntegerHeaderPreparer prepares the PostRequiredIntegerHeader request.
-func (client ExplicitClient) PostRequiredIntegerHeaderPreparer(headerParameter int32) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredIntegerHeaderPreparer(ctx context.Context, headerParameter int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/integer/header"),
 		autorest.WithHeader("headerParameter", autorest.String(headerParameter)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredIntegerHeaderSender sends the PostRequiredIntegerHeader request. The method will close the
@@ -1037,8 +1038,8 @@ func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Respo
 // PostRequiredIntegerParameter test explicitly required integer. Please put null and the client library should throw
 // before the request is sent.
 //
-func (client ExplicitClient) PostRequiredIntegerParameter(bodyParameter int32) (result Error, err error) {
-	req, err := client.PostRequiredIntegerParameterPreparer(bodyParameter)
+func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32) (result Error, err error) {
+	req, err := client.PostRequiredIntegerParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerParameter", nil, "Failure preparing request")
 		return
@@ -1060,14 +1061,14 @@ func (client ExplicitClient) PostRequiredIntegerParameter(bodyParameter int32) (
 }
 
 // PostRequiredIntegerParameterPreparer prepares the PostRequiredIntegerParameter request.
-func (client ExplicitClient) PostRequiredIntegerParameterPreparer(bodyParameter int32) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredIntegerParameterPreparer(ctx context.Context, bodyParameter int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/integer/parameter"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredIntegerParameterSender sends the PostRequiredIntegerParameter request. The method will close the
@@ -1093,14 +1094,14 @@ func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Re
 // PostRequiredIntegerProperty test explicitly required integer. Please put a valid int-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredIntegerProperty(bodyParameter IntWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerProperty")
 	}
 
-	req, err := client.PostRequiredIntegerPropertyPreparer(bodyParameter)
+	req, err := client.PostRequiredIntegerPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerProperty", nil, "Failure preparing request")
 		return
@@ -1122,14 +1123,14 @@ func (client ExplicitClient) PostRequiredIntegerProperty(bodyParameter IntWrappe
 }
 
 // PostRequiredIntegerPropertyPreparer prepares the PostRequiredIntegerProperty request.
-func (client ExplicitClient) PostRequiredIntegerPropertyPreparer(bodyParameter IntWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredIntegerPropertyPreparer(ctx context.Context, bodyParameter IntWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/integer/property"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredIntegerPropertySender sends the PostRequiredIntegerProperty request. The method will close the
@@ -1155,8 +1156,8 @@ func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Res
 // PostRequiredStringHeader test explicitly required string. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredStringHeader(headerParameter string) (result Error, err error) {
-	req, err := client.PostRequiredStringHeaderPreparer(headerParameter)
+func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string) (result Error, err error) {
+	req, err := client.PostRequiredStringHeaderPreparer(ctx, headerParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringHeader", nil, "Failure preparing request")
 		return
@@ -1178,13 +1179,13 @@ func (client ExplicitClient) PostRequiredStringHeader(headerParameter string) (r
 }
 
 // PostRequiredStringHeaderPreparer prepares the PostRequiredStringHeader request.
-func (client ExplicitClient) PostRequiredStringHeaderPreparer(headerParameter string) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredStringHeaderPreparer(ctx context.Context, headerParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/string/header"),
 		autorest.WithHeader("headerParameter", autorest.String(headerParameter)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredStringHeaderSender sends the PostRequiredStringHeader request. The method will close the
@@ -1210,8 +1211,8 @@ func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Respon
 // PostRequiredStringParameter test explicitly required string. Please put null and the client library should throw
 // before the request is sent.
 //
-func (client ExplicitClient) PostRequiredStringParameter(bodyParameter string) (result Error, err error) {
-	req, err := client.PostRequiredStringParameterPreparer(bodyParameter)
+func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string) (result Error, err error) {
+	req, err := client.PostRequiredStringParameterPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringParameter", nil, "Failure preparing request")
 		return
@@ -1233,14 +1234,14 @@ func (client ExplicitClient) PostRequiredStringParameter(bodyParameter string) (
 }
 
 // PostRequiredStringParameterPreparer prepares the PostRequiredStringParameter request.
-func (client ExplicitClient) PostRequiredStringParameterPreparer(bodyParameter string) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredStringParameterPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/string/parameter"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredStringParameterSender sends the PostRequiredStringParameter request. The method will close the
@@ -1266,14 +1267,14 @@ func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Res
 // PostRequiredStringProperty test explicitly required string. Please put a valid string-wrapper with 'value' = null
 // and the client library should throw before the request is sent.
 //
-func (client ExplicitClient) PostRequiredStringProperty(bodyParameter StringWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredStringProperty")
 	}
 
-	req, err := client.PostRequiredStringPropertyPreparer(bodyParameter)
+	req, err := client.PostRequiredStringPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringProperty", nil, "Failure preparing request")
 		return
@@ -1295,14 +1296,14 @@ func (client ExplicitClient) PostRequiredStringProperty(bodyParameter StringWrap
 }
 
 // PostRequiredStringPropertyPreparer prepares the PostRequiredStringProperty request.
-func (client ExplicitClient) PostRequiredStringPropertyPreparer(bodyParameter StringWrapper) (*http.Request, error) {
+func (client ExplicitClient) PostRequiredStringPropertyPreparer(ctx context.Context, bodyParameter StringWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/string/property"),
 		autorest.WithJSON(bodyParameter))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostRequiredStringPropertySender sends the PostRequiredStringProperty request. The method will close the

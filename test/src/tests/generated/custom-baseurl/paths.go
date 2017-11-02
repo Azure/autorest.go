@@ -7,6 +7,7 @@ package custombaseurlgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -25,8 +26,8 @@ func NewPathsClient() PathsClient {
 // GetEmpty get a 200 to test a valid base uri
 //
 // accountName is account Name
-func (client PathsClient) GetEmpty(accountName string) (result autorest.Response, err error) {
-	req, err := client.GetEmptyPreparer(accountName)
+func (client PathsClient) GetEmpty(ctx context.Context, accountName string) (result autorest.Response, err error) {
+	req, err := client.GetEmptyPreparer(ctx, accountName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "custombaseurlgroup.PathsClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -48,7 +49,7 @@ func (client PathsClient) GetEmpty(accountName string) (result autorest.Response
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client PathsClient) GetEmptyPreparer(accountName string) (*http.Request, error) {
+func (client PathsClient) GetEmptyPreparer(ctx context.Context, accountName string) (*http.Request, error) {
 	urlParameters := map[string]interface{}{
 		"accountName": accountName,
 		"host":        client.Host,
@@ -58,7 +59,7 @@ func (client PathsClient) GetEmptyPreparer(accountName string) (*http.Request, e
 		autorest.AsGet(),
 		autorest.WithCustomBaseURL("http://{accountName}{host}", urlParameters),
 		autorest.WithPath("/customuri"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the

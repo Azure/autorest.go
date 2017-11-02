@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewMultipleResponsesClientWithBaseURI(baseURI string) MultipleResponsesClie
 }
 
 // Get200Model201ModelDefaultError200Valid send a 200 response with valid payload: {'statusCode': '200'}
-func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid() (result A, err error) {
-	req, err := client.Get200Model201ModelDefaultError200ValidPreparer()
+func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model201ModelDefaultError200ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model201ModelDefaultError200Valid", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid() 
 }
 
 // Get200Model201ModelDefaultError200ValidPreparer prepares the Get200Model201ModelDefaultError200Valid request.
-func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/201/B/default/Error/response/200/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model201ModelDefaultError200ValidSender sends the Get200Model201ModelDefaultError200Valid request. The method will close the
@@ -81,8 +82,8 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidRes
 
 // Get200Model201ModelDefaultError201Valid send a 201 response with valid payload: {'statusCode': '201',
 // 'textStatusCode': 'Created'}
-func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid() (result A, err error) {
-	req, err := client.Get200Model201ModelDefaultError201ValidPreparer()
+func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model201ModelDefaultError201ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model201ModelDefaultError201Valid", nil, "Failure preparing request")
 		return
@@ -104,12 +105,12 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid() 
 }
 
 // Get200Model201ModelDefaultError201ValidPreparer prepares the Get200Model201ModelDefaultError201Valid request.
-func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/201/B/default/Error/response/201/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model201ModelDefaultError201ValidSender sends the Get200Model201ModelDefaultError201Valid request. The method will close the
@@ -134,8 +135,8 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidRes
 
 // Get200Model201ModelDefaultError400Valid send a 400 response with valid payload: {'code': '400', 'message': 'client
 // error'}
-func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid() (result A, err error) {
-	req, err := client.Get200Model201ModelDefaultError400ValidPreparer()
+func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model201ModelDefaultError400ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model201ModelDefaultError400Valid", nil, "Failure preparing request")
 		return
@@ -157,12 +158,12 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid() 
 }
 
 // Get200Model201ModelDefaultError400ValidPreparer prepares the Get200Model201ModelDefaultError400Valid request.
-func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/201/B/default/Error/response/400/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model201ModelDefaultError400ValidSender sends the Get200Model201ModelDefaultError400Valid request. The method will close the
@@ -186,8 +187,8 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidRes
 }
 
 // Get200Model204NoModelDefaultError200Valid send a 200 response with valid payload: {'statusCode': '200'}
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid() (result A, err error) {
-	req, err := client.Get200Model204NoModelDefaultError200ValidPreparer()
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model204NoModelDefaultError200ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError200Valid", nil, "Failure preparing request")
 		return
@@ -209,12 +210,12 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(
 }
 
 // Get200Model204NoModelDefaultError200ValidPreparer prepares the Get200Model204NoModelDefaultError200Valid request.
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/204/none/default/Error/response/200/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model204NoModelDefaultError200ValidSender sends the Get200Model204NoModelDefaultError200Valid request. The method will close the
@@ -238,8 +239,8 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidR
 }
 
 // Get200Model204NoModelDefaultError201Invalid send a 201 response with valid payload: {'statusCode': '201'}
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid() (result A, err error) {
-	req, err := client.Get200Model204NoModelDefaultError201InvalidPreparer()
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model204NoModelDefaultError201InvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError201Invalid", nil, "Failure preparing request")
 		return
@@ -261,12 +262,12 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 }
 
 // Get200Model204NoModelDefaultError201InvalidPreparer prepares the Get200Model204NoModelDefaultError201Invalid request.
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201InvalidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201InvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/204/none/default/Error/response/201/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model204NoModelDefaultError201InvalidSender sends the Get200Model204NoModelDefaultError201Invalid request. The method will close the
@@ -290,8 +291,8 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 }
 
 // Get200Model204NoModelDefaultError202None send a 202 response with no payload:
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None() (result A, err error) {
-	req, err := client.Get200Model204NoModelDefaultError202NonePreparer()
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model204NoModelDefaultError202NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError202None", nil, "Failure preparing request")
 		return
@@ -313,12 +314,12 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None()
 }
 
 // Get200Model204NoModelDefaultError202NonePreparer prepares the Get200Model204NoModelDefaultError202None request.
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/204/none/default/Error/response/202/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model204NoModelDefaultError202NoneSender sends the Get200Model204NoModelDefaultError202None request. The method will close the
@@ -342,8 +343,8 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneRe
 }
 
 // Get200Model204NoModelDefaultError204Valid send a 204 response with no payload
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid() (result A, err error) {
-	req, err := client.Get200Model204NoModelDefaultError204ValidPreparer()
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model204NoModelDefaultError204ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError204Valid", nil, "Failure preparing request")
 		return
@@ -365,12 +366,12 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(
 }
 
 // Get200Model204NoModelDefaultError204ValidPreparer prepares the Get200Model204NoModelDefaultError204Valid request.
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/204/none/default/Error/response/204/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model204NoModelDefaultError204ValidSender sends the Get200Model204NoModelDefaultError204Valid request. The method will close the
@@ -395,8 +396,8 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidR
 
 // Get200Model204NoModelDefaultError400Valid send a 400 response with valid error payload: {'status': 400, 'message':
 // 'client error'}
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid() (result A, err error) {
-	req, err := client.Get200Model204NoModelDefaultError400ValidPreparer()
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200Model204NoModelDefaultError400ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200Model204NoModelDefaultError400Valid", nil, "Failure preparing request")
 		return
@@ -418,12 +419,12 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(
 }
 
 // Get200Model204NoModelDefaultError400ValidPreparer prepares the Get200Model204NoModelDefaultError400Valid request.
-func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/204/none/default/Error/response/400/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Model204NoModelDefaultError400ValidSender sends the Get200Model204NoModelDefaultError400Valid request. The method will close the
@@ -447,8 +448,8 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidR
 }
 
 // Get200ModelA200Invalid send a 200 response with invalid payload {'statusCodeInvalid': '200'}
-func (client MultipleResponsesClient) Get200ModelA200Invalid() (result A, err error) {
-	req, err := client.Get200ModelA200InvalidPreparer()
+func (client MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200ModelA200InvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA200Invalid", nil, "Failure preparing request")
 		return
@@ -470,12 +471,12 @@ func (client MultipleResponsesClient) Get200ModelA200Invalid() (result A, err er
 }
 
 // Get200ModelA200InvalidPreparer prepares the Get200ModelA200Invalid request.
-func (client MultipleResponsesClient) Get200ModelA200InvalidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA200InvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/response/200/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA200InvalidSender sends the Get200ModelA200Invalid request. The method will close the
@@ -500,8 +501,8 @@ func (client MultipleResponsesClient) Get200ModelA200InvalidResponder(resp *http
 
 // Get200ModelA200None send a 200 response with no payload, when a payload is expected - client should return a null
 // object of thde type for model A
-func (client MultipleResponsesClient) Get200ModelA200None() (result A, err error) {
-	req, err := client.Get200ModelA200NonePreparer()
+func (client MultipleResponsesClient) Get200ModelA200None(ctx context.Context) (result A, err error) {
+	req, err := client.Get200ModelA200NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA200None", nil, "Failure preparing request")
 		return
@@ -523,12 +524,12 @@ func (client MultipleResponsesClient) Get200ModelA200None() (result A, err error
 }
 
 // Get200ModelA200NonePreparer prepares the Get200ModelA200None request.
-func (client MultipleResponsesClient) Get200ModelA200NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA200NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/response/200/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA200NoneSender sends the Get200ModelA200None request. The method will close the
@@ -552,8 +553,8 @@ func (client MultipleResponsesClient) Get200ModelA200NoneResponder(resp *http.Re
 }
 
 // Get200ModelA200Valid send a 200 response with payload {'statusCode': '200'}
-func (client MultipleResponsesClient) Get200ModelA200Valid() (result A, err error) {
-	req, err := client.Get200ModelA200ValidPreparer()
+func (client MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200ModelA200ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA200Valid", nil, "Failure preparing request")
 		return
@@ -575,12 +576,12 @@ func (client MultipleResponsesClient) Get200ModelA200Valid() (result A, err erro
 }
 
 // Get200ModelA200ValidPreparer prepares the Get200ModelA200Valid request.
-func (client MultipleResponsesClient) Get200ModelA200ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA200ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/response/200/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA200ValidSender sends the Get200ModelA200Valid request. The method will close the
@@ -604,8 +605,8 @@ func (client MultipleResponsesClient) Get200ModelA200ValidResponder(resp *http.R
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid send a 200 response with valid payload: {'statusCode': '200'}
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid() (result SetObject, err error) {
-	req, err := client.Get200ModelA201ModelC404ModelDDefaultError200ValidPreparer()
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context) (result SetObject, err error) {
+	req, err := client.Get200ModelA201ModelC404ModelDDefaultError200ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError200Valid", nil, "Failure preparing request")
 		return
@@ -627,12 +628,12 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200ValidPreparer prepares the Get200ModelA201ModelC404ModelDDefaultError200Valid request.
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/201/C/404/D/default/Error/response/200/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError200Valid request. The method will close the
@@ -656,8 +657,8 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError201Valid send a 200 response with valid payload: {'httpCode': '201'}
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid() (result SetObject, err error) {
-	req, err := client.Get200ModelA201ModelC404ModelDDefaultError201ValidPreparer()
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context) (result SetObject, err error) {
+	req, err := client.Get200ModelA201ModelC404ModelDDefaultError201ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError201Valid", nil, "Failure preparing request")
 		return
@@ -679,12 +680,12 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError201ValidPreparer prepares the Get200ModelA201ModelC404ModelDDefaultError201Valid request.
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/201/C/404/D/default/Error/response/201/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError201ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError201Valid request. The method will close the
@@ -709,8 +710,8 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 
 // Get200ModelA201ModelC404ModelDDefaultError400Valid send a 400 response with valid payload: {'code': '400',
 // 'message': 'client error'}
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid() (result SetObject, err error) {
-	req, err := client.Get200ModelA201ModelC404ModelDDefaultError400ValidPreparer()
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context) (result SetObject, err error) {
+	req, err := client.Get200ModelA201ModelC404ModelDDefaultError400ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError400Valid", nil, "Failure preparing request")
 		return
@@ -732,12 +733,12 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError400ValidPreparer prepares the Get200ModelA201ModelC404ModelDDefaultError400Valid request.
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/201/C/404/D/default/Error/response/400/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError400ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError400Valid request. The method will close the
@@ -761,8 +762,8 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError404Valid send a 200 response with valid payload: {'httpStatusCode': '404'}
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid() (result SetObject, err error) {
-	req, err := client.Get200ModelA201ModelC404ModelDDefaultError404ValidPreparer()
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context) (result SetObject, err error) {
+	req, err := client.Get200ModelA201ModelC404ModelDDefaultError404ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA201ModelC404ModelDDefaultError404Valid", nil, "Failure preparing request")
 		return
@@ -784,12 +785,12 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError404ValidPreparer prepares the Get200ModelA201ModelC404ModelDDefaultError404Valid request.
-func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/201/C/404/D/default/Error/response/404/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError404ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError404Valid request. The method will close the
@@ -813,8 +814,8 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 }
 
 // Get200ModelA202Valid send a 202 response with payload {'statusCode': '202'}
-func (client MultipleResponsesClient) Get200ModelA202Valid() (result A, err error) {
-	req, err := client.Get200ModelA202ValidPreparer()
+func (client MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200ModelA202ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA202Valid", nil, "Failure preparing request")
 		return
@@ -836,12 +837,12 @@ func (client MultipleResponsesClient) Get200ModelA202Valid() (result A, err erro
 }
 
 // Get200ModelA202ValidPreparer prepares the Get200ModelA202Valid request.
-func (client MultipleResponsesClient) Get200ModelA202ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA202ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/response/202/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA202ValidSender sends the Get200ModelA202Valid request. The method will close the
@@ -865,8 +866,8 @@ func (client MultipleResponsesClient) Get200ModelA202ValidResponder(resp *http.R
 }
 
 // Get200ModelA400Invalid send a 200 response with invalid payload {'statusCodeInvalid': '400'}
-func (client MultipleResponsesClient) Get200ModelA400Invalid() (result A, err error) {
-	req, err := client.Get200ModelA400InvalidPreparer()
+func (client MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200ModelA400InvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA400Invalid", nil, "Failure preparing request")
 		return
@@ -888,12 +889,12 @@ func (client MultipleResponsesClient) Get200ModelA400Invalid() (result A, err er
 }
 
 // Get200ModelA400InvalidPreparer prepares the Get200ModelA400Invalid request.
-func (client MultipleResponsesClient) Get200ModelA400InvalidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA400InvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/response/400/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA400InvalidSender sends the Get200ModelA400Invalid request. The method will close the
@@ -917,8 +918,8 @@ func (client MultipleResponsesClient) Get200ModelA400InvalidResponder(resp *http
 }
 
 // Get200ModelA400None send a 400 response with no payload client should treat as an http error with no error model
-func (client MultipleResponsesClient) Get200ModelA400None() (result A, err error) {
-	req, err := client.Get200ModelA400NonePreparer()
+func (client MultipleResponsesClient) Get200ModelA400None(ctx context.Context) (result A, err error) {
+	req, err := client.Get200ModelA400NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA400None", nil, "Failure preparing request")
 		return
@@ -940,12 +941,12 @@ func (client MultipleResponsesClient) Get200ModelA400None() (result A, err error
 }
 
 // Get200ModelA400NonePreparer prepares the Get200ModelA400None request.
-func (client MultipleResponsesClient) Get200ModelA400NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA400NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/response/400/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA400NoneSender sends the Get200ModelA400None request. The method will close the
@@ -969,8 +970,8 @@ func (client MultipleResponsesClient) Get200ModelA400NoneResponder(resp *http.Re
 }
 
 // Get200ModelA400Valid send a 200 response with payload {'statusCode': '400'}
-func (client MultipleResponsesClient) Get200ModelA400Valid() (result A, err error) {
-	req, err := client.Get200ModelA400ValidPreparer()
+func (client MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context) (result A, err error) {
+	req, err := client.Get200ModelA400ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get200ModelA400Valid", nil, "Failure preparing request")
 		return
@@ -992,12 +993,12 @@ func (client MultipleResponsesClient) Get200ModelA400Valid() (result A, err erro
 }
 
 // Get200ModelA400ValidPreparer prepares the Get200ModelA400Valid request.
-func (client MultipleResponsesClient) Get200ModelA400ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get200ModelA400ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/200/A/response/400/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200ModelA400ValidSender sends the Get200ModelA400Valid request. The method will close the
@@ -1021,8 +1022,8 @@ func (client MultipleResponsesClient) Get200ModelA400ValidResponder(resp *http.R
 }
 
 // Get202None204NoneDefaultError202None send a 202 response with no payload
-func (client MultipleResponsesClient) Get202None204NoneDefaultError202None() (result autorest.Response, err error) {
-	req, err := client.Get202None204NoneDefaultError202NonePreparer()
+func (client MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get202None204NoneDefaultError202NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultError202None", nil, "Failure preparing request")
 		return
@@ -1044,12 +1045,12 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202None() (re
 }
 
 // Get202None204NoneDefaultError202NonePreparer prepares the Get202None204NoneDefaultError202None request.
-func (client MultipleResponsesClient) Get202None204NoneDefaultError202NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get202None204NoneDefaultError202NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/202/none/204/none/default/Error/response/202/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get202None204NoneDefaultError202NoneSender sends the Get202None204NoneDefaultError202None request. The method will close the
@@ -1072,8 +1073,8 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202NoneRespon
 }
 
 // Get202None204NoneDefaultError204None send a 204 response with no payload
-func (client MultipleResponsesClient) Get202None204NoneDefaultError204None() (result autorest.Response, err error) {
-	req, err := client.Get202None204NoneDefaultError204NonePreparer()
+func (client MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get202None204NoneDefaultError204NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultError204None", nil, "Failure preparing request")
 		return
@@ -1095,12 +1096,12 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204None() (re
 }
 
 // Get202None204NoneDefaultError204NonePreparer prepares the Get202None204NoneDefaultError204None request.
-func (client MultipleResponsesClient) Get202None204NoneDefaultError204NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get202None204NoneDefaultError204NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/202/none/204/none/default/Error/response/204/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get202None204NoneDefaultError204NoneSender sends the Get202None204NoneDefaultError204None request. The method will close the
@@ -1124,8 +1125,8 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204NoneRespon
 
 // Get202None204NoneDefaultError400Valid send a 400 response with valid payload: {'code': '400', 'message': 'client
 // error'}
-func (client MultipleResponsesClient) Get202None204NoneDefaultError400Valid() (result autorest.Response, err error) {
-	req, err := client.Get202None204NoneDefaultError400ValidPreparer()
+func (client MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get202None204NoneDefaultError400ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultError400Valid", nil, "Failure preparing request")
 		return
@@ -1147,12 +1148,12 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400Valid() (r
 }
 
 // Get202None204NoneDefaultError400ValidPreparer prepares the Get202None204NoneDefaultError400Valid request.
-func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/202/none/204/none/default/Error/response/400/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get202None204NoneDefaultError400ValidSender sends the Get202None204NoneDefaultError400Valid request. The method will close the
@@ -1175,8 +1176,8 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidRespo
 }
 
 // Get202None204NoneDefaultNone202Invalid send a 202 response with an unexpected payload {'property': 'value'}
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid() (result autorest.Response, err error) {
-	req, err := client.Get202None204NoneDefaultNone202InvalidPreparer()
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get202None204NoneDefaultNone202InvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone202Invalid", nil, "Failure preparing request")
 		return
@@ -1198,12 +1199,12 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid() (
 }
 
 // Get202None204NoneDefaultNone202InvalidPreparer prepares the Get202None204NoneDefaultNone202Invalid request.
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/202/none/204/none/default/none/response/202/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get202None204NoneDefaultNone202InvalidSender sends the Get202None204NoneDefaultNone202Invalid request. The method will close the
@@ -1226,8 +1227,8 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidResp
 }
 
 // Get202None204NoneDefaultNone204None send a 204 response with no payload
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone204None() (result autorest.Response, err error) {
-	req, err := client.Get202None204NoneDefaultNone204NonePreparer()
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get202None204NoneDefaultNone204NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone204None", nil, "Failure preparing request")
 		return
@@ -1249,12 +1250,12 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204None() (res
 }
 
 // Get202None204NoneDefaultNone204NonePreparer prepares the Get202None204NoneDefaultNone204None request.
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/202/none/204/none/default/none/response/204/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get202None204NoneDefaultNone204NoneSender sends the Get202None204NoneDefaultNone204None request. The method will close the
@@ -1277,8 +1278,8 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NoneRespond
 }
 
 // Get202None204NoneDefaultNone400Invalid send a 400 response with an unexpected payload {'property': 'value'}
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid() (result autorest.Response, err error) {
-	req, err := client.Get202None204NoneDefaultNone400InvalidPreparer()
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get202None204NoneDefaultNone400InvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone400Invalid", nil, "Failure preparing request")
 		return
@@ -1300,12 +1301,12 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid() (
 }
 
 // Get202None204NoneDefaultNone400InvalidPreparer prepares the Get202None204NoneDefaultNone400Invalid request.
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/202/none/204/none/default/none/response/400/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get202None204NoneDefaultNone400InvalidSender sends the Get202None204NoneDefaultNone400Invalid request. The method will close the
@@ -1328,8 +1329,8 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidResp
 }
 
 // Get202None204NoneDefaultNone400None send a 400 response with no payload
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone400None() (result autorest.Response, err error) {
-	req, err := client.Get202None204NoneDefaultNone400NonePreparer()
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Get202None204NoneDefaultNone400NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "Get202None204NoneDefaultNone400None", nil, "Failure preparing request")
 		return
@@ -1351,12 +1352,12 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400None() (res
 }
 
 // Get202None204NoneDefaultNone400NonePreparer prepares the Get202None204NoneDefaultNone400None request.
-func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/202/none/204/none/default/none/response/400/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get202None204NoneDefaultNone400NoneSender sends the Get202None204NoneDefaultNone400None request. The method will close the
@@ -1379,8 +1380,8 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NoneRespond
 }
 
 // GetDefaultModelA200None send a 200 response with no payload
-func (client MultipleResponsesClient) GetDefaultModelA200None() (result A, err error) {
-	req, err := client.GetDefaultModelA200NonePreparer()
+func (client MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context) (result A, err error) {
+	req, err := client.GetDefaultModelA200NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA200None", nil, "Failure preparing request")
 		return
@@ -1402,12 +1403,12 @@ func (client MultipleResponsesClient) GetDefaultModelA200None() (result A, err e
 }
 
 // GetDefaultModelA200NonePreparer prepares the GetDefaultModelA200None request.
-func (client MultipleResponsesClient) GetDefaultModelA200NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultModelA200NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/A/response/200/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultModelA200NoneSender sends the GetDefaultModelA200None request. The method will close the
@@ -1431,8 +1432,8 @@ func (client MultipleResponsesClient) GetDefaultModelA200NoneResponder(resp *htt
 }
 
 // GetDefaultModelA200Valid send a 200 response with valid payload: {'statusCode': '200'}
-func (client MultipleResponsesClient) GetDefaultModelA200Valid() (result A, err error) {
-	req, err := client.GetDefaultModelA200ValidPreparer()
+func (client MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context) (result A, err error) {
+	req, err := client.GetDefaultModelA200ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA200Valid", nil, "Failure preparing request")
 		return
@@ -1454,12 +1455,12 @@ func (client MultipleResponsesClient) GetDefaultModelA200Valid() (result A, err 
 }
 
 // GetDefaultModelA200ValidPreparer prepares the GetDefaultModelA200Valid request.
-func (client MultipleResponsesClient) GetDefaultModelA200ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultModelA200ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/A/response/200/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultModelA200ValidSender sends the GetDefaultModelA200Valid request. The method will close the
@@ -1483,8 +1484,8 @@ func (client MultipleResponsesClient) GetDefaultModelA200ValidResponder(resp *ht
 }
 
 // GetDefaultModelA400None send a 400 response with no payload
-func (client MultipleResponsesClient) GetDefaultModelA400None() (result A, err error) {
-	req, err := client.GetDefaultModelA400NonePreparer()
+func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context) (result A, err error) {
+	req, err := client.GetDefaultModelA400NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA400None", nil, "Failure preparing request")
 		return
@@ -1506,12 +1507,12 @@ func (client MultipleResponsesClient) GetDefaultModelA400None() (result A, err e
 }
 
 // GetDefaultModelA400NonePreparer prepares the GetDefaultModelA400None request.
-func (client MultipleResponsesClient) GetDefaultModelA400NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultModelA400NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/A/response/400/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultModelA400NoneSender sends the GetDefaultModelA400None request. The method will close the
@@ -1535,8 +1536,8 @@ func (client MultipleResponsesClient) GetDefaultModelA400NoneResponder(resp *htt
 }
 
 // GetDefaultModelA400Valid send a 400 response with valid payload: {'statusCode': '400'}
-func (client MultipleResponsesClient) GetDefaultModelA400Valid() (result A, err error) {
-	req, err := client.GetDefaultModelA400ValidPreparer()
+func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context) (result A, err error) {
+	req, err := client.GetDefaultModelA400ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA400Valid", nil, "Failure preparing request")
 		return
@@ -1558,12 +1559,12 @@ func (client MultipleResponsesClient) GetDefaultModelA400Valid() (result A, err 
 }
 
 // GetDefaultModelA400ValidPreparer prepares the GetDefaultModelA400Valid request.
-func (client MultipleResponsesClient) GetDefaultModelA400ValidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultModelA400ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/A/response/400/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultModelA400ValidSender sends the GetDefaultModelA400Valid request. The method will close the
@@ -1587,8 +1588,8 @@ func (client MultipleResponsesClient) GetDefaultModelA400ValidResponder(resp *ht
 }
 
 // GetDefaultNone200Invalid send a 200 response with invalid payload: {'statusCode': '200'}
-func (client MultipleResponsesClient) GetDefaultNone200Invalid() (result autorest.Response, err error) {
-	req, err := client.GetDefaultNone200InvalidPreparer()
+func (client MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetDefaultNone200InvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone200Invalid", nil, "Failure preparing request")
 		return
@@ -1610,12 +1611,12 @@ func (client MultipleResponsesClient) GetDefaultNone200Invalid() (result autores
 }
 
 // GetDefaultNone200InvalidPreparer prepares the GetDefaultNone200Invalid request.
-func (client MultipleResponsesClient) GetDefaultNone200InvalidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultNone200InvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/none/response/200/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultNone200InvalidSender sends the GetDefaultNone200Invalid request. The method will close the
@@ -1638,8 +1639,8 @@ func (client MultipleResponsesClient) GetDefaultNone200InvalidResponder(resp *ht
 }
 
 // GetDefaultNone200None send a 200 response with no payload
-func (client MultipleResponsesClient) GetDefaultNone200None() (result autorest.Response, err error) {
-	req, err := client.GetDefaultNone200NonePreparer()
+func (client MultipleResponsesClient) GetDefaultNone200None(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetDefaultNone200NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone200None", nil, "Failure preparing request")
 		return
@@ -1661,12 +1662,12 @@ func (client MultipleResponsesClient) GetDefaultNone200None() (result autorest.R
 }
 
 // GetDefaultNone200NonePreparer prepares the GetDefaultNone200None request.
-func (client MultipleResponsesClient) GetDefaultNone200NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultNone200NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/none/response/200/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultNone200NoneSender sends the GetDefaultNone200None request. The method will close the
@@ -1689,8 +1690,8 @@ func (client MultipleResponsesClient) GetDefaultNone200NoneResponder(resp *http.
 }
 
 // GetDefaultNone400Invalid send a 400 response with valid payload: {'statusCode': '400'}
-func (client MultipleResponsesClient) GetDefaultNone400Invalid() (result autorest.Response, err error) {
-	req, err := client.GetDefaultNone400InvalidPreparer()
+func (client MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetDefaultNone400InvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone400Invalid", nil, "Failure preparing request")
 		return
@@ -1712,12 +1713,12 @@ func (client MultipleResponsesClient) GetDefaultNone400Invalid() (result autores
 }
 
 // GetDefaultNone400InvalidPreparer prepares the GetDefaultNone400Invalid request.
-func (client MultipleResponsesClient) GetDefaultNone400InvalidPreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultNone400InvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/none/response/400/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultNone400InvalidSender sends the GetDefaultNone400Invalid request. The method will close the
@@ -1740,8 +1741,8 @@ func (client MultipleResponsesClient) GetDefaultNone400InvalidResponder(resp *ht
 }
 
 // GetDefaultNone400None send a 400 response with no payload
-func (client MultipleResponsesClient) GetDefaultNone400None() (result autorest.Response, err error) {
-	req, err := client.GetDefaultNone400NonePreparer()
+func (client MultipleResponsesClient) GetDefaultNone400None(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetDefaultNone400NonePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultNone400None", nil, "Failure preparing request")
 		return
@@ -1763,12 +1764,12 @@ func (client MultipleResponsesClient) GetDefaultNone400None() (result autorest.R
 }
 
 // GetDefaultNone400NonePreparer prepares the GetDefaultNone400None request.
-func (client MultipleResponsesClient) GetDefaultNone400NonePreparer() (*http.Request, error) {
+func (client MultipleResponsesClient) GetDefaultNone400NonePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/payloads/default/none/response/400/none"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDefaultNone400NoneSender sends the GetDefaultNone400None request. The method will close the

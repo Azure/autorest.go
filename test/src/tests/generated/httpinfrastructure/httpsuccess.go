@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -30,8 +31,8 @@ func NewHTTPSuccessClientWithBaseURI(baseURI string) HTTPSuccessClient {
 // Delete200 delete simple boolean value true returns 200
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Delete200(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Delete200Preparer(booleanValue)
+func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Delete200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete200", nil, "Failure preparing request")
 		return
@@ -53,7 +54,7 @@ func (client HTTPSuccessClient) Delete200(booleanValue *bool) (result autorest.R
 }
 
 // Delete200Preparer prepares the Delete200 request.
-func (client HTTPSuccessClient) Delete200Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Delete200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -63,7 +64,7 @@ func (client HTTPSuccessClient) Delete200Preparer(booleanValue *bool) (*http.Req
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete200Sender sends the Delete200 request. The method will close the
@@ -88,8 +89,8 @@ func (client HTTPSuccessClient) Delete200Responder(resp *http.Response) (result 
 // Delete202 delete true Boolean value in request returns 202 (accepted)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Delete202(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Delete202Preparer(booleanValue)
+func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Delete202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete202", nil, "Failure preparing request")
 		return
@@ -111,7 +112,7 @@ func (client HTTPSuccessClient) Delete202(booleanValue *bool) (result autorest.R
 }
 
 // Delete202Preparer prepares the Delete202 request.
-func (client HTTPSuccessClient) Delete202Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Delete202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -121,7 +122,7 @@ func (client HTTPSuccessClient) Delete202Preparer(booleanValue *bool) (*http.Req
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete202Sender sends the Delete202 request. The method will close the
@@ -146,8 +147,8 @@ func (client HTTPSuccessClient) Delete202Responder(resp *http.Response) (result 
 // Delete204 delete true Boolean value in request returns 204 (no content)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Delete204(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Delete204Preparer(booleanValue)
+func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Delete204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete204", nil, "Failure preparing request")
 		return
@@ -169,7 +170,7 @@ func (client HTTPSuccessClient) Delete204(booleanValue *bool) (result autorest.R
 }
 
 // Delete204Preparer prepares the Delete204 request.
-func (client HTTPSuccessClient) Delete204Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Delete204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -179,7 +180,7 @@ func (client HTTPSuccessClient) Delete204Preparer(booleanValue *bool) (*http.Req
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete204Sender sends the Delete204 request. The method will close the
@@ -202,8 +203,8 @@ func (client HTTPSuccessClient) Delete204Responder(resp *http.Response) (result 
 }
 
 // Get200 get 200 success
-func (client HTTPSuccessClient) Get200() (result Bool, err error) {
-	req, err := client.Get200Preparer()
+func (client HTTPSuccessClient) Get200(ctx context.Context) (result Bool, err error) {
+	req, err := client.Get200Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Get200", nil, "Failure preparing request")
 		return
@@ -225,12 +226,12 @@ func (client HTTPSuccessClient) Get200() (result Bool, err error) {
 }
 
 // Get200Preparer prepares the Get200 request.
-func (client HTTPSuccessClient) Get200Preparer() (*http.Request, error) {
+func (client HTTPSuccessClient) Get200Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/200"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get200Sender sends the Get200 request. The method will close the
@@ -254,8 +255,8 @@ func (client HTTPSuccessClient) Get200Responder(resp *http.Response) (result Boo
 }
 
 // Head200 return 200 status code if successful
-func (client HTTPSuccessClient) Head200() (result autorest.Response, err error) {
-	req, err := client.Head200Preparer()
+func (client HTTPSuccessClient) Head200(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head200Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head200", nil, "Failure preparing request")
 		return
@@ -277,12 +278,12 @@ func (client HTTPSuccessClient) Head200() (result autorest.Response, err error) 
 }
 
 // Head200Preparer prepares the Head200 request.
-func (client HTTPSuccessClient) Head200Preparer() (*http.Request, error) {
+func (client HTTPSuccessClient) Head200Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/200"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head200Sender sends the Head200 request. The method will close the
@@ -305,8 +306,8 @@ func (client HTTPSuccessClient) Head200Responder(resp *http.Response) (result au
 }
 
 // Head204 return 204 status code if successful
-func (client HTTPSuccessClient) Head204() (result autorest.Response, err error) {
-	req, err := client.Head204Preparer()
+func (client HTTPSuccessClient) Head204(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head204Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head204", nil, "Failure preparing request")
 		return
@@ -328,12 +329,12 @@ func (client HTTPSuccessClient) Head204() (result autorest.Response, err error) 
 }
 
 // Head204Preparer prepares the Head204 request.
-func (client HTTPSuccessClient) Head204Preparer() (*http.Request, error) {
+func (client HTTPSuccessClient) Head204Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/204"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head204Sender sends the Head204 request. The method will close the
@@ -356,8 +357,8 @@ func (client HTTPSuccessClient) Head204Responder(resp *http.Response) (result au
 }
 
 // Head404 return 404 status code
-func (client HTTPSuccessClient) Head404() (result autorest.Response, err error) {
-	req, err := client.Head404Preparer()
+func (client HTTPSuccessClient) Head404(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.Head404Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head404", nil, "Failure preparing request")
 		return
@@ -379,12 +380,12 @@ func (client HTTPSuccessClient) Head404() (result autorest.Response, err error) 
 }
 
 // Head404Preparer prepares the Head404 request.
-func (client HTTPSuccessClient) Head404Preparer() (*http.Request, error) {
+func (client HTTPSuccessClient) Head404Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/404"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head404Sender sends the Head404 request. The method will close the
@@ -409,8 +410,8 @@ func (client HTTPSuccessClient) Head404Responder(resp *http.Response) (result au
 // Patch200 patch true Boolean value in request returning 200
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Patch200(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Patch200Preparer(booleanValue)
+func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Patch200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch200", nil, "Failure preparing request")
 		return
@@ -432,7 +433,7 @@ func (client HTTPSuccessClient) Patch200(booleanValue *bool) (result autorest.Re
 }
 
 // Patch200Preparer prepares the Patch200 request.
-func (client HTTPSuccessClient) Patch200Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Patch200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -442,7 +443,7 @@ func (client HTTPSuccessClient) Patch200Preparer(booleanValue *bool) (*http.Requ
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch200Sender sends the Patch200 request. The method will close the
@@ -467,8 +468,8 @@ func (client HTTPSuccessClient) Patch200Responder(resp *http.Response) (result a
 // Patch202 patch true Boolean value in request returns 202
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Patch202(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Patch202Preparer(booleanValue)
+func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Patch202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch202", nil, "Failure preparing request")
 		return
@@ -490,7 +491,7 @@ func (client HTTPSuccessClient) Patch202(booleanValue *bool) (result autorest.Re
 }
 
 // Patch202Preparer prepares the Patch202 request.
-func (client HTTPSuccessClient) Patch202Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Patch202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -500,7 +501,7 @@ func (client HTTPSuccessClient) Patch202Preparer(booleanValue *bool) (*http.Requ
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch202Sender sends the Patch202 request. The method will close the
@@ -525,8 +526,8 @@ func (client HTTPSuccessClient) Patch202Responder(resp *http.Response) (result a
 // Patch204 patch true Boolean value in request returns 204 (no content)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Patch204(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Patch204Preparer(booleanValue)
+func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Patch204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch204", nil, "Failure preparing request")
 		return
@@ -548,7 +549,7 @@ func (client HTTPSuccessClient) Patch204(booleanValue *bool) (result autorest.Re
 }
 
 // Patch204Preparer prepares the Patch204 request.
-func (client HTTPSuccessClient) Patch204Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Patch204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -558,7 +559,7 @@ func (client HTTPSuccessClient) Patch204Preparer(booleanValue *bool) (*http.Requ
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch204Sender sends the Patch204 request. The method will close the
@@ -583,8 +584,8 @@ func (client HTTPSuccessClient) Patch204Responder(resp *http.Response) (result a
 // Post200 post bollean value true in request that returns a 200
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Post200(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Post200Preparer(booleanValue)
+func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Post200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post200", nil, "Failure preparing request")
 		return
@@ -606,7 +607,7 @@ func (client HTTPSuccessClient) Post200(booleanValue *bool) (result autorest.Res
 }
 
 // Post200Preparer prepares the Post200 request.
-func (client HTTPSuccessClient) Post200Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Post200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -616,7 +617,7 @@ func (client HTTPSuccessClient) Post200Preparer(booleanValue *bool) (*http.Reque
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post200Sender sends the Post200 request. The method will close the
@@ -641,8 +642,8 @@ func (client HTTPSuccessClient) Post200Responder(resp *http.Response) (result au
 // Post201 post true Boolean value in request returns 201 (Created)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Post201(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Post201Preparer(booleanValue)
+func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Post201Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post201", nil, "Failure preparing request")
 		return
@@ -664,7 +665,7 @@ func (client HTTPSuccessClient) Post201(booleanValue *bool) (result autorest.Res
 }
 
 // Post201Preparer prepares the Post201 request.
-func (client HTTPSuccessClient) Post201Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Post201Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -674,7 +675,7 @@ func (client HTTPSuccessClient) Post201Preparer(booleanValue *bool) (*http.Reque
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post201Sender sends the Post201 request. The method will close the
@@ -699,8 +700,8 @@ func (client HTTPSuccessClient) Post201Responder(resp *http.Response) (result au
 // Post202 post true Boolean value in request returns 202 (Accepted)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Post202(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Post202Preparer(booleanValue)
+func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Post202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post202", nil, "Failure preparing request")
 		return
@@ -722,7 +723,7 @@ func (client HTTPSuccessClient) Post202(booleanValue *bool) (result autorest.Res
 }
 
 // Post202Preparer prepares the Post202 request.
-func (client HTTPSuccessClient) Post202Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Post202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -732,7 +733,7 @@ func (client HTTPSuccessClient) Post202Preparer(booleanValue *bool) (*http.Reque
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post202Sender sends the Post202 request. The method will close the
@@ -757,8 +758,8 @@ func (client HTTPSuccessClient) Post202Responder(resp *http.Response) (result au
 // Post204 post true Boolean value in request returns 204 (no content)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Post204(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Post204Preparer(booleanValue)
+func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Post204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post204", nil, "Failure preparing request")
 		return
@@ -780,7 +781,7 @@ func (client HTTPSuccessClient) Post204(booleanValue *bool) (result autorest.Res
 }
 
 // Post204Preparer prepares the Post204 request.
-func (client HTTPSuccessClient) Post204Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Post204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -790,7 +791,7 @@ func (client HTTPSuccessClient) Post204Preparer(booleanValue *bool) (*http.Reque
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post204Sender sends the Post204 request. The method will close the
@@ -815,8 +816,8 @@ func (client HTTPSuccessClient) Post204Responder(resp *http.Response) (result au
 // Put200 put boolean value true returning 200 success
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Put200(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put200Preparer(booleanValue)
+func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put200", nil, "Failure preparing request")
 		return
@@ -838,7 +839,7 @@ func (client HTTPSuccessClient) Put200(booleanValue *bool) (result autorest.Resp
 }
 
 // Put200Preparer prepares the Put200 request.
-func (client HTTPSuccessClient) Put200Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Put200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -848,7 +849,7 @@ func (client HTTPSuccessClient) Put200Preparer(booleanValue *bool) (*http.Reques
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put200Sender sends the Put200 request. The method will close the
@@ -873,8 +874,8 @@ func (client HTTPSuccessClient) Put200Responder(resp *http.Response) (result aut
 // Put201 put true Boolean value in request returns 201
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Put201(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put201Preparer(booleanValue)
+func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put201Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put201", nil, "Failure preparing request")
 		return
@@ -896,7 +897,7 @@ func (client HTTPSuccessClient) Put201(booleanValue *bool) (result autorest.Resp
 }
 
 // Put201Preparer prepares the Put201 request.
-func (client HTTPSuccessClient) Put201Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Put201Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -906,7 +907,7 @@ func (client HTTPSuccessClient) Put201Preparer(booleanValue *bool) (*http.Reques
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put201Sender sends the Put201 request. The method will close the
@@ -931,8 +932,8 @@ func (client HTTPSuccessClient) Put201Responder(resp *http.Response) (result aut
 // Put202 put true Boolean value in request returns 202 (Accepted)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Put202(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put202Preparer(booleanValue)
+func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put202", nil, "Failure preparing request")
 		return
@@ -954,7 +955,7 @@ func (client HTTPSuccessClient) Put202(booleanValue *bool) (result autorest.Resp
 }
 
 // Put202Preparer prepares the Put202 request.
-func (client HTTPSuccessClient) Put202Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Put202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -964,7 +965,7 @@ func (client HTTPSuccessClient) Put202Preparer(booleanValue *bool) (*http.Reques
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put202Sender sends the Put202 request. The method will close the
@@ -989,8 +990,8 @@ func (client HTTPSuccessClient) Put202Responder(resp *http.Response) (result aut
 // Put204 put true Boolean value in request returns 204 (no content)
 //
 // booleanValue is simple boolean value true
-func (client HTTPSuccessClient) Put204(booleanValue *bool) (result autorest.Response, err error) {
-	req, err := client.Put204Preparer(booleanValue)
+func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	req, err := client.Put204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put204", nil, "Failure preparing request")
 		return
@@ -1012,7 +1013,7 @@ func (client HTTPSuccessClient) Put204(booleanValue *bool) (result autorest.Resp
 }
 
 // Put204Preparer prepares the Put204 request.
-func (client HTTPSuccessClient) Put204Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPSuccessClient) Put204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1022,7 +1023,7 @@ func (client HTTPSuccessClient) Put204Preparer(booleanValue *bool) (*http.Reques
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put204Sender sends the Put204 request. The method will close the

@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -30,8 +31,8 @@ func NewHTTPClientFailureClientWithBaseURI(baseURI string) HTTPClientFailureClie
 // Delete400 return 400 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Delete400(booleanValue *bool) (result Error, err error) {
-	req, err := client.Delete400Preparer(booleanValue)
+func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Delete400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete400", nil, "Failure preparing request")
 		return
@@ -53,7 +54,7 @@ func (client HTTPClientFailureClient) Delete400(booleanValue *bool) (result Erro
 }
 
 // Delete400Preparer prepares the Delete400 request.
-func (client HTTPClientFailureClient) Delete400Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Delete400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -63,7 +64,7 @@ func (client HTTPClientFailureClient) Delete400Preparer(booleanValue *bool) (*ht
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete400Sender sends the Delete400 request. The method will close the
@@ -89,8 +90,8 @@ func (client HTTPClientFailureClient) Delete400Responder(resp *http.Response) (r
 // Delete407 return 407 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Delete407(booleanValue *bool) (result Error, err error) {
-	req, err := client.Delete407Preparer(booleanValue)
+func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Delete407Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete407", nil, "Failure preparing request")
 		return
@@ -112,7 +113,7 @@ func (client HTTPClientFailureClient) Delete407(booleanValue *bool) (result Erro
 }
 
 // Delete407Preparer prepares the Delete407 request.
-func (client HTTPClientFailureClient) Delete407Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Delete407Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -122,7 +123,7 @@ func (client HTTPClientFailureClient) Delete407Preparer(booleanValue *bool) (*ht
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete407Sender sends the Delete407 request. The method will close the
@@ -148,8 +149,8 @@ func (client HTTPClientFailureClient) Delete407Responder(resp *http.Response) (r
 // Delete417 return 417 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Delete417(booleanValue *bool) (result Error, err error) {
-	req, err := client.Delete417Preparer(booleanValue)
+func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Delete417Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete417", nil, "Failure preparing request")
 		return
@@ -171,7 +172,7 @@ func (client HTTPClientFailureClient) Delete417(booleanValue *bool) (result Erro
 }
 
 // Delete417Preparer prepares the Delete417 request.
-func (client HTTPClientFailureClient) Delete417Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Delete417Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -181,7 +182,7 @@ func (client HTTPClientFailureClient) Delete417Preparer(booleanValue *bool) (*ht
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete417Sender sends the Delete417 request. The method will close the
@@ -205,8 +206,8 @@ func (client HTTPClientFailureClient) Delete417Responder(resp *http.Response) (r
 }
 
 // Get400 return 400 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get400() (result Error, err error) {
-	req, err := client.Get400Preparer()
+func (client HTTPClientFailureClient) Get400(ctx context.Context) (result Error, err error) {
+	req, err := client.Get400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get400", nil, "Failure preparing request")
 		return
@@ -228,12 +229,12 @@ func (client HTTPClientFailureClient) Get400() (result Error, err error) {
 }
 
 // Get400Preparer prepares the Get400 request.
-func (client HTTPClientFailureClient) Get400Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Get400Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get400Sender sends the Get400 request. The method will close the
@@ -257,8 +258,8 @@ func (client HTTPClientFailureClient) Get400Responder(resp *http.Response) (resu
 }
 
 // Get402 return 402 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get402() (result Error, err error) {
-	req, err := client.Get402Preparer()
+func (client HTTPClientFailureClient) Get402(ctx context.Context) (result Error, err error) {
+	req, err := client.Get402Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get402", nil, "Failure preparing request")
 		return
@@ -280,12 +281,12 @@ func (client HTTPClientFailureClient) Get402() (result Error, err error) {
 }
 
 // Get402Preparer prepares the Get402 request.
-func (client HTTPClientFailureClient) Get402Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Get402Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/402"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get402Sender sends the Get402 request. The method will close the
@@ -309,8 +310,8 @@ func (client HTTPClientFailureClient) Get402Responder(resp *http.Response) (resu
 }
 
 // Get403 return 403 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get403() (result Error, err error) {
-	req, err := client.Get403Preparer()
+func (client HTTPClientFailureClient) Get403(ctx context.Context) (result Error, err error) {
+	req, err := client.Get403Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get403", nil, "Failure preparing request")
 		return
@@ -332,12 +333,12 @@ func (client HTTPClientFailureClient) Get403() (result Error, err error) {
 }
 
 // Get403Preparer prepares the Get403 request.
-func (client HTTPClientFailureClient) Get403Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Get403Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/403"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get403Sender sends the Get403 request. The method will close the
@@ -361,8 +362,8 @@ func (client HTTPClientFailureClient) Get403Responder(resp *http.Response) (resu
 }
 
 // Get411 return 411 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get411() (result Error, err error) {
-	req, err := client.Get411Preparer()
+func (client HTTPClientFailureClient) Get411(ctx context.Context) (result Error, err error) {
+	req, err := client.Get411Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get411", nil, "Failure preparing request")
 		return
@@ -384,12 +385,12 @@ func (client HTTPClientFailureClient) Get411() (result Error, err error) {
 }
 
 // Get411Preparer prepares the Get411 request.
-func (client HTTPClientFailureClient) Get411Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Get411Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/411"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get411Sender sends the Get411 request. The method will close the
@@ -413,8 +414,8 @@ func (client HTTPClientFailureClient) Get411Responder(resp *http.Response) (resu
 }
 
 // Get412 return 412 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get412() (result Error, err error) {
-	req, err := client.Get412Preparer()
+func (client HTTPClientFailureClient) Get412(ctx context.Context) (result Error, err error) {
+	req, err := client.Get412Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get412", nil, "Failure preparing request")
 		return
@@ -436,12 +437,12 @@ func (client HTTPClientFailureClient) Get412() (result Error, err error) {
 }
 
 // Get412Preparer prepares the Get412 request.
-func (client HTTPClientFailureClient) Get412Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Get412Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/412"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get412Sender sends the Get412 request. The method will close the
@@ -465,8 +466,8 @@ func (client HTTPClientFailureClient) Get412Responder(resp *http.Response) (resu
 }
 
 // Get416 return 416 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Get416() (result Error, err error) {
-	req, err := client.Get416Preparer()
+func (client HTTPClientFailureClient) Get416(ctx context.Context) (result Error, err error) {
+	req, err := client.Get416Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get416", nil, "Failure preparing request")
 		return
@@ -488,12 +489,12 @@ func (client HTTPClientFailureClient) Get416() (result Error, err error) {
 }
 
 // Get416Preparer prepares the Get416 request.
-func (client HTTPClientFailureClient) Get416Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Get416Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/416"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get416Sender sends the Get416 request. The method will close the
@@ -517,8 +518,8 @@ func (client HTTPClientFailureClient) Get416Responder(resp *http.Response) (resu
 }
 
 // Head400 return 400 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head400() (result Error, err error) {
-	req, err := client.Head400Preparer()
+func (client HTTPClientFailureClient) Head400(ctx context.Context) (result Error, err error) {
+	req, err := client.Head400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head400", nil, "Failure preparing request")
 		return
@@ -540,12 +541,12 @@ func (client HTTPClientFailureClient) Head400() (result Error, err error) {
 }
 
 // Head400Preparer prepares the Head400 request.
-func (client HTTPClientFailureClient) Head400Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Head400Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head400Sender sends the Head400 request. The method will close the
@@ -569,8 +570,8 @@ func (client HTTPClientFailureClient) Head400Responder(resp *http.Response) (res
 }
 
 // Head401 return 401 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head401() (result Error, err error) {
-	req, err := client.Head401Preparer()
+func (client HTTPClientFailureClient) Head401(ctx context.Context) (result Error, err error) {
+	req, err := client.Head401Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head401", nil, "Failure preparing request")
 		return
@@ -592,12 +593,12 @@ func (client HTTPClientFailureClient) Head401() (result Error, err error) {
 }
 
 // Head401Preparer prepares the Head401 request.
-func (client HTTPClientFailureClient) Head401Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Head401Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/401"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head401Sender sends the Head401 request. The method will close the
@@ -621,8 +622,8 @@ func (client HTTPClientFailureClient) Head401Responder(resp *http.Response) (res
 }
 
 // Head410 return 410 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head410() (result Error, err error) {
-	req, err := client.Head410Preparer()
+func (client HTTPClientFailureClient) Head410(ctx context.Context) (result Error, err error) {
+	req, err := client.Head410Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head410", nil, "Failure preparing request")
 		return
@@ -644,12 +645,12 @@ func (client HTTPClientFailureClient) Head410() (result Error, err error) {
 }
 
 // Head410Preparer prepares the Head410 request.
-func (client HTTPClientFailureClient) Head410Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Head410Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/410"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head410Sender sends the Head410 request. The method will close the
@@ -673,8 +674,8 @@ func (client HTTPClientFailureClient) Head410Responder(resp *http.Response) (res
 }
 
 // Head429 return 429 status code - should be represented in the client as an error
-func (client HTTPClientFailureClient) Head429() (result Error, err error) {
-	req, err := client.Head429Preparer()
+func (client HTTPClientFailureClient) Head429(ctx context.Context) (result Error, err error) {
+	req, err := client.Head429Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head429", nil, "Failure preparing request")
 		return
@@ -696,12 +697,12 @@ func (client HTTPClientFailureClient) Head429() (result Error, err error) {
 }
 
 // Head429Preparer prepares the Head429 request.
-func (client HTTPClientFailureClient) Head429Preparer() (*http.Request, error) {
+func (client HTTPClientFailureClient) Head429Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/429"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head429Sender sends the Head429 request. The method will close the
@@ -727,8 +728,8 @@ func (client HTTPClientFailureClient) Head429Responder(resp *http.Response) (res
 // Patch400 return 400 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Patch400(booleanValue *bool) (result Error, err error) {
-	req, err := client.Patch400Preparer(booleanValue)
+func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Patch400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch400", nil, "Failure preparing request")
 		return
@@ -750,7 +751,7 @@ func (client HTTPClientFailureClient) Patch400(booleanValue *bool) (result Error
 }
 
 // Patch400Preparer prepares the Patch400 request.
-func (client HTTPClientFailureClient) Patch400Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Patch400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -760,7 +761,7 @@ func (client HTTPClientFailureClient) Patch400Preparer(booleanValue *bool) (*htt
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch400Sender sends the Patch400 request. The method will close the
@@ -786,8 +787,8 @@ func (client HTTPClientFailureClient) Patch400Responder(resp *http.Response) (re
 // Patch405 return 405 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Patch405(booleanValue *bool) (result Error, err error) {
-	req, err := client.Patch405Preparer(booleanValue)
+func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Patch405Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch405", nil, "Failure preparing request")
 		return
@@ -809,7 +810,7 @@ func (client HTTPClientFailureClient) Patch405(booleanValue *bool) (result Error
 }
 
 // Patch405Preparer prepares the Patch405 request.
-func (client HTTPClientFailureClient) Patch405Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Patch405Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -819,7 +820,7 @@ func (client HTTPClientFailureClient) Patch405Preparer(booleanValue *bool) (*htt
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch405Sender sends the Patch405 request. The method will close the
@@ -845,8 +846,8 @@ func (client HTTPClientFailureClient) Patch405Responder(resp *http.Response) (re
 // Patch414 return 414 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Patch414(booleanValue *bool) (result Error, err error) {
-	req, err := client.Patch414Preparer(booleanValue)
+func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Patch414Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch414", nil, "Failure preparing request")
 		return
@@ -868,7 +869,7 @@ func (client HTTPClientFailureClient) Patch414(booleanValue *bool) (result Error
 }
 
 // Patch414Preparer prepares the Patch414 request.
-func (client HTTPClientFailureClient) Patch414Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Patch414Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPatch(),
@@ -878,7 +879,7 @@ func (client HTTPClientFailureClient) Patch414Preparer(booleanValue *bool) (*htt
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Patch414Sender sends the Patch414 request. The method will close the
@@ -904,8 +905,8 @@ func (client HTTPClientFailureClient) Patch414Responder(resp *http.Response) (re
 // Post400 return 400 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Post400(booleanValue *bool) (result Error, err error) {
-	req, err := client.Post400Preparer(booleanValue)
+func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Post400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post400", nil, "Failure preparing request")
 		return
@@ -927,7 +928,7 @@ func (client HTTPClientFailureClient) Post400(booleanValue *bool) (result Error,
 }
 
 // Post400Preparer prepares the Post400 request.
-func (client HTTPClientFailureClient) Post400Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Post400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -937,7 +938,7 @@ func (client HTTPClientFailureClient) Post400Preparer(booleanValue *bool) (*http
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post400Sender sends the Post400 request. The method will close the
@@ -963,8 +964,8 @@ func (client HTTPClientFailureClient) Post400Responder(resp *http.Response) (res
 // Post406 return 406 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Post406(booleanValue *bool) (result Error, err error) {
-	req, err := client.Post406Preparer(booleanValue)
+func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Post406Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post406", nil, "Failure preparing request")
 		return
@@ -986,7 +987,7 @@ func (client HTTPClientFailureClient) Post406(booleanValue *bool) (result Error,
 }
 
 // Post406Preparer prepares the Post406 request.
-func (client HTTPClientFailureClient) Post406Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Post406Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -996,7 +997,7 @@ func (client HTTPClientFailureClient) Post406Preparer(booleanValue *bool) (*http
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post406Sender sends the Post406 request. The method will close the
@@ -1022,8 +1023,8 @@ func (client HTTPClientFailureClient) Post406Responder(resp *http.Response) (res
 // Post415 return 415 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Post415(booleanValue *bool) (result Error, err error) {
-	req, err := client.Post415Preparer(booleanValue)
+func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Post415Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post415", nil, "Failure preparing request")
 		return
@@ -1045,7 +1046,7 @@ func (client HTTPClientFailureClient) Post415(booleanValue *bool) (result Error,
 }
 
 // Post415Preparer prepares the Post415 request.
-func (client HTTPClientFailureClient) Post415Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Post415Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -1055,7 +1056,7 @@ func (client HTTPClientFailureClient) Post415Preparer(booleanValue *bool) (*http
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post415Sender sends the Post415 request. The method will close the
@@ -1081,8 +1082,8 @@ func (client HTTPClientFailureClient) Post415Responder(resp *http.Response) (res
 // Put400 return 400 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Put400(booleanValue *bool) (result Error, err error) {
-	req, err := client.Put400Preparer(booleanValue)
+func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Put400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put400", nil, "Failure preparing request")
 		return
@@ -1104,7 +1105,7 @@ func (client HTTPClientFailureClient) Put400(booleanValue *bool) (result Error, 
 }
 
 // Put400Preparer prepares the Put400 request.
-func (client HTTPClientFailureClient) Put400Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Put400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1114,7 +1115,7 @@ func (client HTTPClientFailureClient) Put400Preparer(booleanValue *bool) (*http.
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put400Sender sends the Put400 request. The method will close the
@@ -1140,8 +1141,8 @@ func (client HTTPClientFailureClient) Put400Responder(resp *http.Response) (resu
 // Put404 return 404 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Put404(booleanValue *bool) (result Error, err error) {
-	req, err := client.Put404Preparer(booleanValue)
+func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Put404Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put404", nil, "Failure preparing request")
 		return
@@ -1163,7 +1164,7 @@ func (client HTTPClientFailureClient) Put404(booleanValue *bool) (result Error, 
 }
 
 // Put404Preparer prepares the Put404 request.
-func (client HTTPClientFailureClient) Put404Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Put404Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1173,7 +1174,7 @@ func (client HTTPClientFailureClient) Put404Preparer(booleanValue *bool) (*http.
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put404Sender sends the Put404 request. The method will close the
@@ -1199,8 +1200,8 @@ func (client HTTPClientFailureClient) Put404Responder(resp *http.Response) (resu
 // Put409 return 409 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Put409(booleanValue *bool) (result Error, err error) {
-	req, err := client.Put409Preparer(booleanValue)
+func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Put409Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put409", nil, "Failure preparing request")
 		return
@@ -1222,7 +1223,7 @@ func (client HTTPClientFailureClient) Put409(booleanValue *bool) (result Error, 
 }
 
 // Put409Preparer prepares the Put409 request.
-func (client HTTPClientFailureClient) Put409Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Put409Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1232,7 +1233,7 @@ func (client HTTPClientFailureClient) Put409Preparer(booleanValue *bool) (*http.
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put409Sender sends the Put409 request. The method will close the
@@ -1258,8 +1259,8 @@ func (client HTTPClientFailureClient) Put409Responder(resp *http.Response) (resu
 // Put413 return 413 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPClientFailureClient) Put413(booleanValue *bool) (result Error, err error) {
-	req, err := client.Put413Preparer(booleanValue)
+func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Put413Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put413", nil, "Failure preparing request")
 		return
@@ -1281,7 +1282,7 @@ func (client HTTPClientFailureClient) Put413(booleanValue *bool) (result Error, 
 }
 
 // Put413Preparer prepares the Put413 request.
-func (client HTTPClientFailureClient) Put413Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPClientFailureClient) Put413Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -1291,7 +1292,7 @@ func (client HTTPClientFailureClient) Put413Preparer(booleanValue *bool) (*http.
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Put413Sender sends the Put413 request. The method will close the

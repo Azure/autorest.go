@@ -7,6 +7,7 @@ package integergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -29,8 +30,8 @@ func NewIntGroupClientWithBaseURI(baseURI string) IntGroupClient {
 }
 
 // GetInvalid get invalid Int value
-func (client IntGroupClient) GetInvalid() (result Int32, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client IntGroupClient) GetInvalid(ctx context.Context) (result Int32, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client IntGroupClient) GetInvalid() (result Int32, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client IntGroupClient) GetInvalidPreparer() (*http.Request, error) {
+func (client IntGroupClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -81,8 +82,8 @@ func (client IntGroupClient) GetInvalidResponder(resp *http.Response) (result In
 }
 
 // GetInvalidUnixTime get invalid Unix time value
-func (client IntGroupClient) GetInvalidUnixTime() (result UnixTime, err error) {
-	req, err := client.GetInvalidUnixTimePreparer()
+func (client IntGroupClient) GetInvalidUnixTime(ctx context.Context) (result UnixTime, err error) {
+	req, err := client.GetInvalidUnixTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetInvalidUnixTime", nil, "Failure preparing request")
 		return
@@ -104,12 +105,12 @@ func (client IntGroupClient) GetInvalidUnixTime() (result UnixTime, err error) {
 }
 
 // GetInvalidUnixTimePreparer prepares the GetInvalidUnixTime request.
-func (client IntGroupClient) GetInvalidUnixTimePreparer() (*http.Request, error) {
+func (client IntGroupClient) GetInvalidUnixTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/invalidunixtime"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidUnixTimeSender sends the GetInvalidUnixTime request. The method will close the
@@ -133,8 +134,8 @@ func (client IntGroupClient) GetInvalidUnixTimeResponder(resp *http.Response) (r
 }
 
 // GetNull get null Int value
-func (client IntGroupClient) GetNull() (result Int32, err error) {
-	req, err := client.GetNullPreparer()
+func (client IntGroupClient) GetNull(ctx context.Context) (result Int32, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -156,12 +157,12 @@ func (client IntGroupClient) GetNull() (result Int32, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client IntGroupClient) GetNullPreparer() (*http.Request, error) {
+func (client IntGroupClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -185,8 +186,8 @@ func (client IntGroupClient) GetNullResponder(resp *http.Response) (result Int32
 }
 
 // GetNullUnixTime get null Unix time value
-func (client IntGroupClient) GetNullUnixTime() (result UnixTime, err error) {
-	req, err := client.GetNullUnixTimePreparer()
+func (client IntGroupClient) GetNullUnixTime(ctx context.Context) (result UnixTime, err error) {
+	req, err := client.GetNullUnixTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetNullUnixTime", nil, "Failure preparing request")
 		return
@@ -208,12 +209,12 @@ func (client IntGroupClient) GetNullUnixTime() (result UnixTime, err error) {
 }
 
 // GetNullUnixTimePreparer prepares the GetNullUnixTime request.
-func (client IntGroupClient) GetNullUnixTimePreparer() (*http.Request, error) {
+func (client IntGroupClient) GetNullUnixTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/nullunixtime"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullUnixTimeSender sends the GetNullUnixTime request. The method will close the
@@ -237,8 +238,8 @@ func (client IntGroupClient) GetNullUnixTimeResponder(resp *http.Response) (resu
 }
 
 // GetOverflowInt32 get overflow Int32 value
-func (client IntGroupClient) GetOverflowInt32() (result Int32, err error) {
-	req, err := client.GetOverflowInt32Preparer()
+func (client IntGroupClient) GetOverflowInt32(ctx context.Context) (result Int32, err error) {
+	req, err := client.GetOverflowInt32Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetOverflowInt32", nil, "Failure preparing request")
 		return
@@ -260,12 +261,12 @@ func (client IntGroupClient) GetOverflowInt32() (result Int32, err error) {
 }
 
 // GetOverflowInt32Preparer prepares the GetOverflowInt32 request.
-func (client IntGroupClient) GetOverflowInt32Preparer() (*http.Request, error) {
+func (client IntGroupClient) GetOverflowInt32Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/overflowint32"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowInt32Sender sends the GetOverflowInt32 request. The method will close the
@@ -289,8 +290,8 @@ func (client IntGroupClient) GetOverflowInt32Responder(resp *http.Response) (res
 }
 
 // GetOverflowInt64 get overflow Int64 value
-func (client IntGroupClient) GetOverflowInt64() (result Int64, err error) {
-	req, err := client.GetOverflowInt64Preparer()
+func (client IntGroupClient) GetOverflowInt64(ctx context.Context) (result Int64, err error) {
+	req, err := client.GetOverflowInt64Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetOverflowInt64", nil, "Failure preparing request")
 		return
@@ -312,12 +313,12 @@ func (client IntGroupClient) GetOverflowInt64() (result Int64, err error) {
 }
 
 // GetOverflowInt64Preparer prepares the GetOverflowInt64 request.
-func (client IntGroupClient) GetOverflowInt64Preparer() (*http.Request, error) {
+func (client IntGroupClient) GetOverflowInt64Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/overflowint64"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowInt64Sender sends the GetOverflowInt64 request. The method will close the
@@ -341,8 +342,8 @@ func (client IntGroupClient) GetOverflowInt64Responder(resp *http.Response) (res
 }
 
 // GetUnderflowInt32 get underflow Int32 value
-func (client IntGroupClient) GetUnderflowInt32() (result Int32, err error) {
-	req, err := client.GetUnderflowInt32Preparer()
+func (client IntGroupClient) GetUnderflowInt32(ctx context.Context) (result Int32, err error) {
+	req, err := client.GetUnderflowInt32Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetUnderflowInt32", nil, "Failure preparing request")
 		return
@@ -364,12 +365,12 @@ func (client IntGroupClient) GetUnderflowInt32() (result Int32, err error) {
 }
 
 // GetUnderflowInt32Preparer prepares the GetUnderflowInt32 request.
-func (client IntGroupClient) GetUnderflowInt32Preparer() (*http.Request, error) {
+func (client IntGroupClient) GetUnderflowInt32Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/underflowint32"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowInt32Sender sends the GetUnderflowInt32 request. The method will close the
@@ -393,8 +394,8 @@ func (client IntGroupClient) GetUnderflowInt32Responder(resp *http.Response) (re
 }
 
 // GetUnderflowInt64 get underflow Int64 value
-func (client IntGroupClient) GetUnderflowInt64() (result Int64, err error) {
-	req, err := client.GetUnderflowInt64Preparer()
+func (client IntGroupClient) GetUnderflowInt64(ctx context.Context) (result Int64, err error) {
+	req, err := client.GetUnderflowInt64Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetUnderflowInt64", nil, "Failure preparing request")
 		return
@@ -416,12 +417,12 @@ func (client IntGroupClient) GetUnderflowInt64() (result Int64, err error) {
 }
 
 // GetUnderflowInt64Preparer prepares the GetUnderflowInt64 request.
-func (client IntGroupClient) GetUnderflowInt64Preparer() (*http.Request, error) {
+func (client IntGroupClient) GetUnderflowInt64Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/underflowint64"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowInt64Sender sends the GetUnderflowInt64 request. The method will close the
@@ -445,8 +446,8 @@ func (client IntGroupClient) GetUnderflowInt64Responder(resp *http.Response) (re
 }
 
 // GetUnixTime get datetime encoded as Unix time value
-func (client IntGroupClient) GetUnixTime() (result UnixTime, err error) {
-	req, err := client.GetUnixTimePreparer()
+func (client IntGroupClient) GetUnixTime(ctx context.Context) (result UnixTime, err error) {
+	req, err := client.GetUnixTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "GetUnixTime", nil, "Failure preparing request")
 		return
@@ -468,12 +469,12 @@ func (client IntGroupClient) GetUnixTime() (result UnixTime, err error) {
 }
 
 // GetUnixTimePreparer prepares the GetUnixTime request.
-func (client IntGroupClient) GetUnixTimePreparer() (*http.Request, error) {
+func (client IntGroupClient) GetUnixTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/unixtime"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnixTimeSender sends the GetUnixTime request. The method will close the
@@ -498,8 +499,8 @@ func (client IntGroupClient) GetUnixTimeResponder(resp *http.Response) (result U
 
 // PutMax32 put max int32 value
 //
-func (client IntGroupClient) PutMax32(intBody int32) (result autorest.Response, err error) {
-	req, err := client.PutMax32Preparer(intBody)
+func (client IntGroupClient) PutMax32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
+	req, err := client.PutMax32Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "PutMax32", nil, "Failure preparing request")
 		return
@@ -521,14 +522,14 @@ func (client IntGroupClient) PutMax32(intBody int32) (result autorest.Response, 
 }
 
 // PutMax32Preparer prepares the PutMax32 request.
-func (client IntGroupClient) PutMax32Preparer(intBody int32) (*http.Request, error) {
+func (client IntGroupClient) PutMax32Preparer(ctx context.Context, intBody int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/max/32"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMax32Sender sends the PutMax32 request. The method will close the
@@ -552,8 +553,8 @@ func (client IntGroupClient) PutMax32Responder(resp *http.Response) (result auto
 
 // PutMax64 put max int64 value
 //
-func (client IntGroupClient) PutMax64(intBody int64) (result autorest.Response, err error) {
-	req, err := client.PutMax64Preparer(intBody)
+func (client IntGroupClient) PutMax64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
+	req, err := client.PutMax64Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "PutMax64", nil, "Failure preparing request")
 		return
@@ -575,14 +576,14 @@ func (client IntGroupClient) PutMax64(intBody int64) (result autorest.Response, 
 }
 
 // PutMax64Preparer prepares the PutMax64 request.
-func (client IntGroupClient) PutMax64Preparer(intBody int64) (*http.Request, error) {
+func (client IntGroupClient) PutMax64Preparer(ctx context.Context, intBody int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/max/64"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMax64Sender sends the PutMax64 request. The method will close the
@@ -606,8 +607,8 @@ func (client IntGroupClient) PutMax64Responder(resp *http.Response) (result auto
 
 // PutMin32 put min int32 value
 //
-func (client IntGroupClient) PutMin32(intBody int32) (result autorest.Response, err error) {
-	req, err := client.PutMin32Preparer(intBody)
+func (client IntGroupClient) PutMin32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
+	req, err := client.PutMin32Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "PutMin32", nil, "Failure preparing request")
 		return
@@ -629,14 +630,14 @@ func (client IntGroupClient) PutMin32(intBody int32) (result autorest.Response, 
 }
 
 // PutMin32Preparer prepares the PutMin32 request.
-func (client IntGroupClient) PutMin32Preparer(intBody int32) (*http.Request, error) {
+func (client IntGroupClient) PutMin32Preparer(ctx context.Context, intBody int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/min/32"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMin32Sender sends the PutMin32 request. The method will close the
@@ -660,8 +661,8 @@ func (client IntGroupClient) PutMin32Responder(resp *http.Response) (result auto
 
 // PutMin64 put min int64 value
 //
-func (client IntGroupClient) PutMin64(intBody int64) (result autorest.Response, err error) {
-	req, err := client.PutMin64Preparer(intBody)
+func (client IntGroupClient) PutMin64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
+	req, err := client.PutMin64Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "PutMin64", nil, "Failure preparing request")
 		return
@@ -683,14 +684,14 @@ func (client IntGroupClient) PutMin64(intBody int64) (result autorest.Response, 
 }
 
 // PutMin64Preparer prepares the PutMin64 request.
-func (client IntGroupClient) PutMin64Preparer(intBody int64) (*http.Request, error) {
+func (client IntGroupClient) PutMin64Preparer(ctx context.Context, intBody int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/min/64"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMin64Sender sends the PutMin64 request. The method will close the
@@ -714,8 +715,8 @@ func (client IntGroupClient) PutMin64Responder(resp *http.Response) (result auto
 
 // PutUnixTimeDate put datetime encoded as Unix time
 //
-func (client IntGroupClient) PutUnixTimeDate(intBody date.UnixTime) (result autorest.Response, err error) {
-	req, err := client.PutUnixTimeDatePreparer(intBody)
+func (client IntGroupClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTime) (result autorest.Response, err error) {
+	req, err := client.PutUnixTimeDatePreparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntGroupClient", "PutUnixTimeDate", nil, "Failure preparing request")
 		return
@@ -737,14 +738,14 @@ func (client IntGroupClient) PutUnixTimeDate(intBody date.UnixTime) (result auto
 }
 
 // PutUnixTimeDatePreparer prepares the PutUnixTimeDate request.
-func (client IntGroupClient) PutUnixTimeDatePreparer(intBody date.UnixTime) (*http.Request, error) {
+func (client IntGroupClient) PutUnixTimeDatePreparer(ctx context.Context, intBody date.UnixTime) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/unixtime"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutUnixTimeDateSender sends the PutUnixTimeDate request. The method will close the

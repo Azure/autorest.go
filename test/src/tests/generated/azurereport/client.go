@@ -10,6 +10,7 @@ package azurereport
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -40,8 +41,8 @@ func NewWithBaseURI(baseURI string) ManagementClient {
 }
 
 // GetReport get test coverage report
-func (client ManagementClient) GetReport() (result SetInt32, err error) {
-	req, err := client.GetReportPreparer()
+func (client ManagementClient) GetReport(ctx context.Context) (result SetInt32, err error) {
+	req, err := client.GetReportPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "azurereport.ManagementClient", "GetReport", nil, "Failure preparing request")
 		return
@@ -63,12 +64,12 @@ func (client ManagementClient) GetReport() (result SetInt32, err error) {
 }
 
 // GetReportPreparer prepares the GetReport request.
-func (client ManagementClient) GetReportPreparer() (*http.Request, error) {
+func (client ManagementClient) GetReportPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/report/azure"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetReportSender sends the GetReport request. The method will close the

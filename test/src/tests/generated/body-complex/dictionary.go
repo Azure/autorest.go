@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 }
 
 // GetEmpty get complex types with dictionary property which is empty
-func (client DictionaryClient) GetEmpty() (result DictionaryWrapper, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client DictionaryClient) GetEmpty(ctx context.Context) (result DictionaryWrapper, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client DictionaryClient) GetEmpty() (result DictionaryWrapper, err error) 
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client DictionaryClient) GetEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -80,8 +81,8 @@ func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result Di
 }
 
 // GetNotProvided get complex types with dictionary property while server doesn't provide a response payload
-func (client DictionaryClient) GetNotProvided() (result DictionaryWrapper, err error) {
-	req, err := client.GetNotProvidedPreparer()
+func (client DictionaryClient) GetNotProvided(ctx context.Context) (result DictionaryWrapper, err error) {
+	req, err := client.GetNotProvidedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetNotProvided", nil, "Failure preparing request")
 		return
@@ -103,12 +104,12 @@ func (client DictionaryClient) GetNotProvided() (result DictionaryWrapper, err e
 }
 
 // GetNotProvidedPreparer prepares the GetNotProvided request.
-func (client DictionaryClient) GetNotProvidedPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetNotProvidedPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/notprovided"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
@@ -132,8 +133,8 @@ func (client DictionaryClient) GetNotProvidedResponder(resp *http.Response) (res
 }
 
 // GetNull get complex types with dictionary property which is null
-func (client DictionaryClient) GetNull() (result DictionaryWrapper, err error) {
-	req, err := client.GetNullPreparer()
+func (client DictionaryClient) GetNull(ctx context.Context) (result DictionaryWrapper, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -155,12 +156,12 @@ func (client DictionaryClient) GetNull() (result DictionaryWrapper, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client DictionaryClient) GetNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -184,8 +185,8 @@ func (client DictionaryClient) GetNullResponder(resp *http.Response) (result Dic
 }
 
 // GetValid get complex types with dictionary property
-func (client DictionaryClient) GetValid() (result DictionaryWrapper, err error) {
-	req, err := client.GetValidPreparer()
+func (client DictionaryClient) GetValid(ctx context.Context) (result DictionaryWrapper, err error) {
+	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetValid", nil, "Failure preparing request")
 		return
@@ -207,12 +208,12 @@ func (client DictionaryClient) GetValid() (result DictionaryWrapper, err error) 
 }
 
 // GetValidPreparer prepares the GetValid request.
-func (client DictionaryClient) GetValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetValidSender sends the GetValid request. The method will close the
@@ -238,8 +239,8 @@ func (client DictionaryClient) GetValidResponder(resp *http.Response) (result Di
 // PutEmpty put complex types with dictionary property which is empty
 //
 // complexBody is please put an empty dictionary
-func (client DictionaryClient) PutEmpty(complexBody DictionaryWrapper) (result autorest.Response, err error) {
-	req, err := client.PutEmptyPreparer(complexBody)
+func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
+	req, err := client.PutEmptyPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "PutEmpty", nil, "Failure preparing request")
 		return
@@ -261,14 +262,14 @@ func (client DictionaryClient) PutEmpty(complexBody DictionaryWrapper) (result a
 }
 
 // PutEmptyPreparer prepares the PutEmpty request.
-func (client DictionaryClient) PutEmptyPreparer(complexBody DictionaryWrapper) (*http.Request, error) {
+func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, complexBody DictionaryWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/empty"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutEmptySender sends the PutEmpty request. The method will close the
@@ -294,8 +295,8 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 //
 // complexBody is please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint", "xls":"excel",
 // "exe":"", "":null
-func (client DictionaryClient) PutValid(complexBody DictionaryWrapper) (result autorest.Response, err error) {
-	req, err := client.PutValidPreparer(complexBody)
+func (client DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
+	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "PutValid", nil, "Failure preparing request")
 		return
@@ -317,14 +318,14 @@ func (client DictionaryClient) PutValid(complexBody DictionaryWrapper) (result a
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client DictionaryClient) PutValidPreparer(complexBody DictionaryWrapper) (*http.Request, error) {
+func (client DictionaryClient) PutValidPreparer(ctx context.Context, complexBody DictionaryWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/valid"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidSender sends the PutValid request. The method will close the

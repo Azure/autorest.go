@@ -7,6 +7,7 @@ package arraygroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -31,8 +32,8 @@ func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 }
 
 // GetArrayEmpty get an empty array []
-func (client ArrayClient) GetArrayEmpty() (result ListListString, err error) {
-	req, err := client.GetArrayEmptyPreparer()
+func (client ArrayClient) GetArrayEmpty(ctx context.Context) (result ListListString, err error) {
+	req, err := client.GetArrayEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayEmpty", nil, "Failure preparing request")
 		return
@@ -54,12 +55,12 @@ func (client ArrayClient) GetArrayEmpty() (result ListListString, err error) {
 }
 
 // GetArrayEmptyPreparer prepares the GetArrayEmpty request.
-func (client ArrayClient) GetArrayEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetArrayEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/array/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayEmptySender sends the GetArrayEmpty request. The method will close the
@@ -83,8 +84,8 @@ func (client ArrayClient) GetArrayEmptyResponder(resp *http.Response) (result Li
 }
 
 // GetArrayItemEmpty get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
-func (client ArrayClient) GetArrayItemEmpty() (result ListListString, err error) {
-	req, err := client.GetArrayItemEmptyPreparer()
+func (client ArrayClient) GetArrayItemEmpty(ctx context.Context) (result ListListString, err error) {
+	req, err := client.GetArrayItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemEmpty", nil, "Failure preparing request")
 		return
@@ -106,12 +107,12 @@ func (client ArrayClient) GetArrayItemEmpty() (result ListListString, err error)
 }
 
 // GetArrayItemEmptyPreparer prepares the GetArrayItemEmpty request.
-func (client ArrayClient) GetArrayItemEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetArrayItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/array/itemempty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayItemEmptySender sends the GetArrayItemEmpty request. The method will close the
@@ -135,8 +136,8 @@ func (client ArrayClient) GetArrayItemEmptyResponder(resp *http.Response) (resul
 }
 
 // GetArrayItemNull get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
-func (client ArrayClient) GetArrayItemNull() (result ListListString, err error) {
-	req, err := client.GetArrayItemNullPreparer()
+func (client ArrayClient) GetArrayItemNull(ctx context.Context) (result ListListString, err error) {
+	req, err := client.GetArrayItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayItemNull", nil, "Failure preparing request")
 		return
@@ -158,12 +159,12 @@ func (client ArrayClient) GetArrayItemNull() (result ListListString, err error) 
 }
 
 // GetArrayItemNullPreparer prepares the GetArrayItemNull request.
-func (client ArrayClient) GetArrayItemNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetArrayItemNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/array/itemnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayItemNullSender sends the GetArrayItemNull request. The method will close the
@@ -187,8 +188,8 @@ func (client ArrayClient) GetArrayItemNullResponder(resp *http.Response) (result
 }
 
 // GetArrayNull get a null array
-func (client ArrayClient) GetArrayNull() (result ListListString, err error) {
-	req, err := client.GetArrayNullPreparer()
+func (client ArrayClient) GetArrayNull(ctx context.Context) (result ListListString, err error) {
+	req, err := client.GetArrayNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayNull", nil, "Failure preparing request")
 		return
@@ -210,12 +211,12 @@ func (client ArrayClient) GetArrayNull() (result ListListString, err error) {
 }
 
 // GetArrayNullPreparer prepares the GetArrayNull request.
-func (client ArrayClient) GetArrayNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetArrayNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/array/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayNullSender sends the GetArrayNull request. The method will close the
@@ -239,8 +240,8 @@ func (client ArrayClient) GetArrayNullResponder(resp *http.Response) (result Lis
 }
 
 // GetArrayValid get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
-func (client ArrayClient) GetArrayValid() (result ListListString, err error) {
-	req, err := client.GetArrayValidPreparer()
+func (client ArrayClient) GetArrayValid(ctx context.Context) (result ListListString, err error) {
+	req, err := client.GetArrayValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetArrayValid", nil, "Failure preparing request")
 		return
@@ -262,12 +263,12 @@ func (client ArrayClient) GetArrayValid() (result ListListString, err error) {
 }
 
 // GetArrayValidPreparer prepares the GetArrayValid request.
-func (client ArrayClient) GetArrayValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetArrayValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/array/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayValidSender sends the GetArrayValid request. The method will close the
@@ -292,8 +293,8 @@ func (client ArrayClient) GetArrayValidResponder(resp *http.Response) (result Li
 
 // GetBase64URL get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the
 // items base64url encoded
-func (client ArrayClient) GetBase64URL() (result ListBase64URL, err error) {
-	req, err := client.GetBase64URLPreparer()
+func (client ArrayClient) GetBase64URL(ctx context.Context) (result ListBase64URL, err error) {
+	req, err := client.GetBase64URLPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBase64URL", nil, "Failure preparing request")
 		return
@@ -315,12 +316,12 @@ func (client ArrayClient) GetBase64URL() (result ListBase64URL, err error) {
 }
 
 // GetBase64URLPreparer prepares the GetBase64URL request.
-func (client ArrayClient) GetBase64URLPreparer() (*http.Request, error) {
+func (client ArrayClient) GetBase64URLPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/base64url/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBase64URLSender sends the GetBase64URL request. The method will close the
@@ -344,8 +345,8 @@ func (client ArrayClient) GetBase64URLResponder(resp *http.Response) (result Lis
 }
 
 // GetBooleanInvalidNull get boolean array value [true, null, false]
-func (client ArrayClient) GetBooleanInvalidNull() (result ListBool, err error) {
-	req, err := client.GetBooleanInvalidNullPreparer()
+func (client ArrayClient) GetBooleanInvalidNull(ctx context.Context) (result ListBool, err error) {
+	req, err := client.GetBooleanInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidNull", nil, "Failure preparing request")
 		return
@@ -367,12 +368,12 @@ func (client ArrayClient) GetBooleanInvalidNull() (result ListBool, err error) {
 }
 
 // GetBooleanInvalidNullPreparer prepares the GetBooleanInvalidNull request.
-func (client ArrayClient) GetBooleanInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetBooleanInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/boolean/true.null.false"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBooleanInvalidNullSender sends the GetBooleanInvalidNull request. The method will close the
@@ -396,8 +397,8 @@ func (client ArrayClient) GetBooleanInvalidNullResponder(resp *http.Response) (r
 }
 
 // GetBooleanInvalidString get boolean array value [true, 'boolean', false]
-func (client ArrayClient) GetBooleanInvalidString() (result ListBool, err error) {
-	req, err := client.GetBooleanInvalidStringPreparer()
+func (client ArrayClient) GetBooleanInvalidString(ctx context.Context) (result ListBool, err error) {
+	req, err := client.GetBooleanInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanInvalidString", nil, "Failure preparing request")
 		return
@@ -419,12 +420,12 @@ func (client ArrayClient) GetBooleanInvalidString() (result ListBool, err error)
 }
 
 // GetBooleanInvalidStringPreparer prepares the GetBooleanInvalidString request.
-func (client ArrayClient) GetBooleanInvalidStringPreparer() (*http.Request, error) {
+func (client ArrayClient) GetBooleanInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/boolean/true.boolean.false"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBooleanInvalidStringSender sends the GetBooleanInvalidString request. The method will close the
@@ -448,8 +449,8 @@ func (client ArrayClient) GetBooleanInvalidStringResponder(resp *http.Response) 
 }
 
 // GetBooleanTfft get boolean array value [true, false, false, true]
-func (client ArrayClient) GetBooleanTfft() (result ListBool, err error) {
-	req, err := client.GetBooleanTfftPreparer()
+func (client ArrayClient) GetBooleanTfft(ctx context.Context) (result ListBool, err error) {
+	req, err := client.GetBooleanTfftPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetBooleanTfft", nil, "Failure preparing request")
 		return
@@ -471,12 +472,12 @@ func (client ArrayClient) GetBooleanTfft() (result ListBool, err error) {
 }
 
 // GetBooleanTfftPreparer prepares the GetBooleanTfft request.
-func (client ArrayClient) GetBooleanTfftPreparer() (*http.Request, error) {
+func (client ArrayClient) GetBooleanTfftPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/boolean/tfft"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBooleanTfftSender sends the GetBooleanTfft request. The method will close the
@@ -500,8 +501,8 @@ func (client ArrayClient) GetBooleanTfftResponder(resp *http.Response) (result L
 }
 
 // GetByteInvalidNull get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
-func (client ArrayClient) GetByteInvalidNull() (result ListByteArray, err error) {
-	req, err := client.GetByteInvalidNullPreparer()
+func (client ArrayClient) GetByteInvalidNull(ctx context.Context) (result ListByteArray, err error) {
+	req, err := client.GetByteInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteInvalidNull", nil, "Failure preparing request")
 		return
@@ -523,12 +524,12 @@ func (client ArrayClient) GetByteInvalidNull() (result ListByteArray, err error)
 }
 
 // GetByteInvalidNullPreparer prepares the GetByteInvalidNull request.
-func (client ArrayClient) GetByteInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetByteInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/byte/invalidnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetByteInvalidNullSender sends the GetByteInvalidNull request. The method will close the
@@ -553,8 +554,8 @@ func (client ArrayClient) GetByteInvalidNullResponder(resp *http.Response) (resu
 
 // GetByteValid get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in
 // base64
-func (client ArrayClient) GetByteValid() (result ListByteArray, err error) {
-	req, err := client.GetByteValidPreparer()
+func (client ArrayClient) GetByteValid(ctx context.Context) (result ListByteArray, err error) {
+	req, err := client.GetByteValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetByteValid", nil, "Failure preparing request")
 		return
@@ -576,12 +577,12 @@ func (client ArrayClient) GetByteValid() (result ListByteArray, err error) {
 }
 
 // GetByteValidPreparer prepares the GetByteValid request.
-func (client ArrayClient) GetByteValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetByteValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/byte/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetByteValidSender sends the GetByteValid request. The method will close the
@@ -605,8 +606,8 @@ func (client ArrayClient) GetByteValidResponder(resp *http.Response) (result Lis
 }
 
 // GetComplexEmpty get empty array of complex type []
-func (client ArrayClient) GetComplexEmpty() (result ListProduct, err error) {
-	req, err := client.GetComplexEmptyPreparer()
+func (client ArrayClient) GetComplexEmpty(ctx context.Context) (result ListProduct, err error) {
+	req, err := client.GetComplexEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexEmpty", nil, "Failure preparing request")
 		return
@@ -628,12 +629,12 @@ func (client ArrayClient) GetComplexEmpty() (result ListProduct, err error) {
 }
 
 // GetComplexEmptyPreparer prepares the GetComplexEmpty request.
-func (client ArrayClient) GetComplexEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetComplexEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/complex/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexEmptySender sends the GetComplexEmpty request. The method will close the
@@ -658,8 +659,8 @@ func (client ArrayClient) GetComplexEmptyResponder(resp *http.Response) (result 
 
 // GetComplexItemEmpty get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5,
 // 'string': '6'}]
-func (client ArrayClient) GetComplexItemEmpty() (result ListProduct, err error) {
-	req, err := client.GetComplexItemEmptyPreparer()
+func (client ArrayClient) GetComplexItemEmpty(ctx context.Context) (result ListProduct, err error) {
+	req, err := client.GetComplexItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemEmpty", nil, "Failure preparing request")
 		return
@@ -681,12 +682,12 @@ func (client ArrayClient) GetComplexItemEmpty() (result ListProduct, err error) 
 }
 
 // GetComplexItemEmptyPreparer prepares the GetComplexItemEmpty request.
-func (client ArrayClient) GetComplexItemEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetComplexItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/complex/itemempty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexItemEmptySender sends the GetComplexItemEmpty request. The method will close the
@@ -711,8 +712,8 @@ func (client ArrayClient) GetComplexItemEmptyResponder(resp *http.Response) (res
 
 // GetComplexItemNull get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5,
 // 'string': '6'}]
-func (client ArrayClient) GetComplexItemNull() (result ListProduct, err error) {
-	req, err := client.GetComplexItemNullPreparer()
+func (client ArrayClient) GetComplexItemNull(ctx context.Context) (result ListProduct, err error) {
+	req, err := client.GetComplexItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexItemNull", nil, "Failure preparing request")
 		return
@@ -734,12 +735,12 @@ func (client ArrayClient) GetComplexItemNull() (result ListProduct, err error) {
 }
 
 // GetComplexItemNullPreparer prepares the GetComplexItemNull request.
-func (client ArrayClient) GetComplexItemNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetComplexItemNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/complex/itemnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexItemNullSender sends the GetComplexItemNull request. The method will close the
@@ -763,8 +764,8 @@ func (client ArrayClient) GetComplexItemNullResponder(resp *http.Response) (resu
 }
 
 // GetComplexNull get array of complex type null value
-func (client ArrayClient) GetComplexNull() (result ListProduct, err error) {
-	req, err := client.GetComplexNullPreparer()
+func (client ArrayClient) GetComplexNull(ctx context.Context) (result ListProduct, err error) {
+	req, err := client.GetComplexNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexNull", nil, "Failure preparing request")
 		return
@@ -786,12 +787,12 @@ func (client ArrayClient) GetComplexNull() (result ListProduct, err error) {
 }
 
 // GetComplexNullPreparer prepares the GetComplexNull request.
-func (client ArrayClient) GetComplexNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetComplexNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/complex/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexNullSender sends the GetComplexNull request. The method will close the
@@ -816,8 +817,8 @@ func (client ArrayClient) GetComplexNullResponder(resp *http.Response) (result L
 
 // GetComplexValid get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
 // {'integer': 5, 'string': '6'}]
-func (client ArrayClient) GetComplexValid() (result ListProduct, err error) {
-	req, err := client.GetComplexValidPreparer()
+func (client ArrayClient) GetComplexValid(ctx context.Context) (result ListProduct, err error) {
+	req, err := client.GetComplexValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetComplexValid", nil, "Failure preparing request")
 		return
@@ -839,12 +840,12 @@ func (client ArrayClient) GetComplexValid() (result ListProduct, err error) {
 }
 
 // GetComplexValidPreparer prepares the GetComplexValid request.
-func (client ArrayClient) GetComplexValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetComplexValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/complex/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexValidSender sends the GetComplexValid request. The method will close the
@@ -868,8 +869,8 @@ func (client ArrayClient) GetComplexValidResponder(resp *http.Response) (result 
 }
 
 // GetDateInvalidChars get date array value ['2011-03-22', 'date']
-func (client ArrayClient) GetDateInvalidChars() (result ListDate, err error) {
-	req, err := client.GetDateInvalidCharsPreparer()
+func (client ArrayClient) GetDateInvalidChars(ctx context.Context) (result ListDate, err error) {
+	req, err := client.GetDateInvalidCharsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidChars", nil, "Failure preparing request")
 		return
@@ -891,12 +892,12 @@ func (client ArrayClient) GetDateInvalidChars() (result ListDate, err error) {
 }
 
 // GetDateInvalidCharsPreparer prepares the GetDateInvalidChars request.
-func (client ArrayClient) GetDateInvalidCharsPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDateInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date/invalidchars"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateInvalidCharsSender sends the GetDateInvalidChars request. The method will close the
@@ -920,8 +921,8 @@ func (client ArrayClient) GetDateInvalidCharsResponder(resp *http.Response) (res
 }
 
 // GetDateInvalidNull get date array value ['2012-01-01', null, '1776-07-04']
-func (client ArrayClient) GetDateInvalidNull() (result ListDate, err error) {
-	req, err := client.GetDateInvalidNullPreparer()
+func (client ArrayClient) GetDateInvalidNull(ctx context.Context) (result ListDate, err error) {
+	req, err := client.GetDateInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateInvalidNull", nil, "Failure preparing request")
 		return
@@ -943,12 +944,12 @@ func (client ArrayClient) GetDateInvalidNull() (result ListDate, err error) {
 }
 
 // GetDateInvalidNullPreparer prepares the GetDateInvalidNull request.
-func (client ArrayClient) GetDateInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDateInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date/invalidnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateInvalidNullSender sends the GetDateInvalidNull request. The method will close the
@@ -972,8 +973,8 @@ func (client ArrayClient) GetDateInvalidNullResponder(resp *http.Response) (resu
 }
 
 // GetDateTimeInvalidChars get date array value ['2000-12-01t00:00:01z', 'date-time']
-func (client ArrayClient) GetDateTimeInvalidChars() (result ListDateTime, err error) {
-	req, err := client.GetDateTimeInvalidCharsPreparer()
+func (client ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (result ListDateTime, err error) {
+	req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidChars", nil, "Failure preparing request")
 		return
@@ -995,12 +996,12 @@ func (client ArrayClient) GetDateTimeInvalidChars() (result ListDateTime, err er
 }
 
 // GetDateTimeInvalidCharsPreparer prepares the GetDateTimeInvalidChars request.
-func (client ArrayClient) GetDateTimeInvalidCharsPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDateTimeInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time/invalidchars"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeInvalidCharsSender sends the GetDateTimeInvalidChars request. The method will close the
@@ -1024,8 +1025,8 @@ func (client ArrayClient) GetDateTimeInvalidCharsResponder(resp *http.Response) 
 }
 
 // GetDateTimeInvalidNull get date array value ['2000-12-01t00:00:01z', null]
-func (client ArrayClient) GetDateTimeInvalidNull() (result ListDateTime, err error) {
-	req, err := client.GetDateTimeInvalidNullPreparer()
+func (client ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (result ListDateTime, err error) {
+	req, err := client.GetDateTimeInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeInvalidNull", nil, "Failure preparing request")
 		return
@@ -1047,12 +1048,12 @@ func (client ArrayClient) GetDateTimeInvalidNull() (result ListDateTime, err err
 }
 
 // GetDateTimeInvalidNullPreparer prepares the GetDateTimeInvalidNull request.
-func (client ArrayClient) GetDateTimeInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDateTimeInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time/invalidnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeInvalidNullSender sends the GetDateTimeInvalidNull request. The method will close the
@@ -1077,8 +1078,8 @@ func (client ArrayClient) GetDateTimeInvalidNullResponder(resp *http.Response) (
 
 // GetDateTimeRfc1123Valid get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
 // 'Wed, 12 Oct 1492 10:15:01 GMT']
-func (client ArrayClient) GetDateTimeRfc1123Valid() (result ListDateTimeRfc1123, err error) {
-	req, err := client.GetDateTimeRfc1123ValidPreparer()
+func (client ArrayClient) GetDateTimeRfc1123Valid(ctx context.Context) (result ListDateTimeRfc1123, err error) {
+	req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeRfc1123Valid", nil, "Failure preparing request")
 		return
@@ -1100,12 +1101,12 @@ func (client ArrayClient) GetDateTimeRfc1123Valid() (result ListDateTimeRfc1123,
 }
 
 // GetDateTimeRfc1123ValidPreparer prepares the GetDateTimeRfc1123Valid request.
-func (client ArrayClient) GetDateTimeRfc1123ValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDateTimeRfc1123ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time-rfc1123/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeRfc1123ValidSender sends the GetDateTimeRfc1123Valid request. The method will close the
@@ -1130,8 +1131,8 @@ func (client ArrayClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) 
 
 // GetDateTimeValid get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00',
 // '1492-10-12T10:15:01-08:00']
-func (client ArrayClient) GetDateTimeValid() (result ListDateTime, err error) {
-	req, err := client.GetDateTimeValidPreparer()
+func (client ArrayClient) GetDateTimeValid(ctx context.Context) (result ListDateTime, err error) {
+	req, err := client.GetDateTimeValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateTimeValid", nil, "Failure preparing request")
 		return
@@ -1153,12 +1154,12 @@ func (client ArrayClient) GetDateTimeValid() (result ListDateTime, err error) {
 }
 
 // GetDateTimeValidPreparer prepares the GetDateTimeValid request.
-func (client ArrayClient) GetDateTimeValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeValidSender sends the GetDateTimeValid request. The method will close the
@@ -1182,8 +1183,8 @@ func (client ArrayClient) GetDateTimeValidResponder(resp *http.Response) (result
 }
 
 // GetDateValid get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
-func (client ArrayClient) GetDateValid() (result ListDate, err error) {
-	req, err := client.GetDateValidPreparer()
+func (client ArrayClient) GetDateValid(ctx context.Context) (result ListDate, err error) {
+	req, err := client.GetDateValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDateValid", nil, "Failure preparing request")
 		return
@@ -1205,12 +1206,12 @@ func (client ArrayClient) GetDateValid() (result ListDate, err error) {
 }
 
 // GetDateValidPreparer prepares the GetDateValid request.
-func (client ArrayClient) GetDateValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDateValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateValidSender sends the GetDateValid request. The method will close the
@@ -1234,8 +1235,8 @@ func (client ArrayClient) GetDateValidResponder(resp *http.Response) (result Lis
 }
 
 // GetDictionaryEmpty get an array of Dictionaries of type <string, string> with value []
-func (client ArrayClient) GetDictionaryEmpty() (result ListSetString, err error) {
-	req, err := client.GetDictionaryEmptyPreparer()
+func (client ArrayClient) GetDictionaryEmpty(ctx context.Context) (result ListSetString, err error) {
+	req, err := client.GetDictionaryEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryEmpty", nil, "Failure preparing request")
 		return
@@ -1257,12 +1258,12 @@ func (client ArrayClient) GetDictionaryEmpty() (result ListSetString, err error)
 }
 
 // GetDictionaryEmptyPreparer prepares the GetDictionaryEmpty request.
-func (client ArrayClient) GetDictionaryEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDictionaryEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/dictionary/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryEmptySender sends the GetDictionaryEmpty request. The method will close the
@@ -1287,8 +1288,8 @@ func (client ArrayClient) GetDictionaryEmptyResponder(resp *http.Response) (resu
 
 // GetDictionaryItemEmpty get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two',
 // '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-func (client ArrayClient) GetDictionaryItemEmpty() (result ListSetString, err error) {
-	req, err := client.GetDictionaryItemEmptyPreparer()
+func (client ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (result ListSetString, err error) {
+	req, err := client.GetDictionaryItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemEmpty", nil, "Failure preparing request")
 		return
@@ -1310,12 +1311,12 @@ func (client ArrayClient) GetDictionaryItemEmpty() (result ListSetString, err er
 }
 
 // GetDictionaryItemEmptyPreparer prepares the GetDictionaryItemEmpty request.
-func (client ArrayClient) GetDictionaryItemEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDictionaryItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/dictionary/itemempty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryItemEmptySender sends the GetDictionaryItemEmpty request. The method will close the
@@ -1340,8 +1341,8 @@ func (client ArrayClient) GetDictionaryItemEmptyResponder(resp *http.Response) (
 
 // GetDictionaryItemNull get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two',
 // '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-func (client ArrayClient) GetDictionaryItemNull() (result ListSetString, err error) {
-	req, err := client.GetDictionaryItemNullPreparer()
+func (client ArrayClient) GetDictionaryItemNull(ctx context.Context) (result ListSetString, err error) {
+	req, err := client.GetDictionaryItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryItemNull", nil, "Failure preparing request")
 		return
@@ -1363,12 +1364,12 @@ func (client ArrayClient) GetDictionaryItemNull() (result ListSetString, err err
 }
 
 // GetDictionaryItemNullPreparer prepares the GetDictionaryItemNull request.
-func (client ArrayClient) GetDictionaryItemNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDictionaryItemNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/dictionary/itemnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryItemNullSender sends the GetDictionaryItemNull request. The method will close the
@@ -1392,8 +1393,8 @@ func (client ArrayClient) GetDictionaryItemNullResponder(resp *http.Response) (r
 }
 
 // GetDictionaryNull get an array of Dictionaries with value null
-func (client ArrayClient) GetDictionaryNull() (result ListSetString, err error) {
-	req, err := client.GetDictionaryNullPreparer()
+func (client ArrayClient) GetDictionaryNull(ctx context.Context) (result ListSetString, err error) {
+	req, err := client.GetDictionaryNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryNull", nil, "Failure preparing request")
 		return
@@ -1415,12 +1416,12 @@ func (client ArrayClient) GetDictionaryNull() (result ListSetString, err error) 
 }
 
 // GetDictionaryNullPreparer prepares the GetDictionaryNull request.
-func (client ArrayClient) GetDictionaryNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDictionaryNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/dictionary/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryNullSender sends the GetDictionaryNull request. The method will close the
@@ -1445,8 +1446,8 @@ func (client ArrayClient) GetDictionaryNullResponder(resp *http.Response) (resul
 
 // GetDictionaryValid get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3':
 // 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-func (client ArrayClient) GetDictionaryValid() (result ListSetString, err error) {
-	req, err := client.GetDictionaryValidPreparer()
+func (client ArrayClient) GetDictionaryValid(ctx context.Context) (result ListSetString, err error) {
+	req, err := client.GetDictionaryValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDictionaryValid", nil, "Failure preparing request")
 		return
@@ -1468,12 +1469,12 @@ func (client ArrayClient) GetDictionaryValid() (result ListSetString, err error)
 }
 
 // GetDictionaryValidPreparer prepares the GetDictionaryValid request.
-func (client ArrayClient) GetDictionaryValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDictionaryValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/dictionary/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryValidSender sends the GetDictionaryValid request. The method will close the
@@ -1497,8 +1498,8 @@ func (client ArrayClient) GetDictionaryValidResponder(resp *http.Response) (resu
 }
 
 // GetDoubleInvalidNull get float array value [0.0, null, -1.2e20]
-func (client ArrayClient) GetDoubleInvalidNull() (result ListFloat64, err error) {
-	req, err := client.GetDoubleInvalidNullPreparer()
+func (client ArrayClient) GetDoubleInvalidNull(ctx context.Context) (result ListFloat64, err error) {
+	req, err := client.GetDoubleInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidNull", nil, "Failure preparing request")
 		return
@@ -1520,12 +1521,12 @@ func (client ArrayClient) GetDoubleInvalidNull() (result ListFloat64, err error)
 }
 
 // GetDoubleInvalidNullPreparer prepares the GetDoubleInvalidNull request.
-func (client ArrayClient) GetDoubleInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDoubleInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/double/0.0-null-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDoubleInvalidNullSender sends the GetDoubleInvalidNull request. The method will close the
@@ -1549,8 +1550,8 @@ func (client ArrayClient) GetDoubleInvalidNullResponder(resp *http.Response) (re
 }
 
 // GetDoubleInvalidString get boolean array value [1.0, 'number', 0.0]
-func (client ArrayClient) GetDoubleInvalidString() (result ListFloat64, err error) {
-	req, err := client.GetDoubleInvalidStringPreparer()
+func (client ArrayClient) GetDoubleInvalidString(ctx context.Context) (result ListFloat64, err error) {
+	req, err := client.GetDoubleInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleInvalidString", nil, "Failure preparing request")
 		return
@@ -1572,12 +1573,12 @@ func (client ArrayClient) GetDoubleInvalidString() (result ListFloat64, err erro
 }
 
 // GetDoubleInvalidStringPreparer prepares the GetDoubleInvalidString request.
-func (client ArrayClient) GetDoubleInvalidStringPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDoubleInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/double/1.number.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDoubleInvalidStringSender sends the GetDoubleInvalidString request. The method will close the
@@ -1601,8 +1602,8 @@ func (client ArrayClient) GetDoubleInvalidStringResponder(resp *http.Response) (
 }
 
 // GetDoubleValid get float array value [0, -0.01, 1.2e20]
-func (client ArrayClient) GetDoubleValid() (result ListFloat64, err error) {
-	req, err := client.GetDoubleValidPreparer()
+func (client ArrayClient) GetDoubleValid(ctx context.Context) (result ListFloat64, err error) {
+	req, err := client.GetDoubleValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDoubleValid", nil, "Failure preparing request")
 		return
@@ -1624,12 +1625,12 @@ func (client ArrayClient) GetDoubleValid() (result ListFloat64, err error) {
 }
 
 // GetDoubleValidPreparer prepares the GetDoubleValid request.
-func (client ArrayClient) GetDoubleValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDoubleValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/double/0--0.01-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDoubleValidSender sends the GetDoubleValid request. The method will close the
@@ -1653,8 +1654,8 @@ func (client ArrayClient) GetDoubleValidResponder(resp *http.Response) (result L
 }
 
 // GetDurationValid get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-func (client ArrayClient) GetDurationValid() (result ListTimeSpan, err error) {
-	req, err := client.GetDurationValidPreparer()
+func (client ArrayClient) GetDurationValid(ctx context.Context) (result ListTimeSpan, err error) {
+	req, err := client.GetDurationValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetDurationValid", nil, "Failure preparing request")
 		return
@@ -1676,12 +1677,12 @@ func (client ArrayClient) GetDurationValid() (result ListTimeSpan, err error) {
 }
 
 // GetDurationValidPreparer prepares the GetDurationValid request.
-func (client ArrayClient) GetDurationValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetDurationValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/duration/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDurationValidSender sends the GetDurationValid request. The method will close the
@@ -1705,8 +1706,8 @@ func (client ArrayClient) GetDurationValidResponder(resp *http.Response) (result
 }
 
 // GetEmpty get empty array value []
-func (client ArrayClient) GetEmpty() (result ListInt32, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client ArrayClient) GetEmpty(ctx context.Context) (result ListInt32, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -1728,12 +1729,12 @@ func (client ArrayClient) GetEmpty() (result ListInt32, err error) {
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client ArrayClient) GetEmptyPreparer() (*http.Request, error) {
+func (client ArrayClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -1757,8 +1758,8 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ListInt
 }
 
 // GetFloatInvalidNull get float array value [0.0, null, -1.2e20]
-func (client ArrayClient) GetFloatInvalidNull() (result ListFloat64, err error) {
-	req, err := client.GetFloatInvalidNullPreparer()
+func (client ArrayClient) GetFloatInvalidNull(ctx context.Context) (result ListFloat64, err error) {
+	req, err := client.GetFloatInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidNull", nil, "Failure preparing request")
 		return
@@ -1780,12 +1781,12 @@ func (client ArrayClient) GetFloatInvalidNull() (result ListFloat64, err error) 
 }
 
 // GetFloatInvalidNullPreparer prepares the GetFloatInvalidNull request.
-func (client ArrayClient) GetFloatInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetFloatInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/float/0.0-null-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFloatInvalidNullSender sends the GetFloatInvalidNull request. The method will close the
@@ -1809,8 +1810,8 @@ func (client ArrayClient) GetFloatInvalidNullResponder(resp *http.Response) (res
 }
 
 // GetFloatInvalidString get boolean array value [1.0, 'number', 0.0]
-func (client ArrayClient) GetFloatInvalidString() (result ListFloat64, err error) {
-	req, err := client.GetFloatInvalidStringPreparer()
+func (client ArrayClient) GetFloatInvalidString(ctx context.Context) (result ListFloat64, err error) {
+	req, err := client.GetFloatInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatInvalidString", nil, "Failure preparing request")
 		return
@@ -1832,12 +1833,12 @@ func (client ArrayClient) GetFloatInvalidString() (result ListFloat64, err error
 }
 
 // GetFloatInvalidStringPreparer prepares the GetFloatInvalidString request.
-func (client ArrayClient) GetFloatInvalidStringPreparer() (*http.Request, error) {
+func (client ArrayClient) GetFloatInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/float/1.number.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFloatInvalidStringSender sends the GetFloatInvalidString request. The method will close the
@@ -1861,8 +1862,8 @@ func (client ArrayClient) GetFloatInvalidStringResponder(resp *http.Response) (r
 }
 
 // GetFloatValid get float array value [0, -0.01, 1.2e20]
-func (client ArrayClient) GetFloatValid() (result ListFloat64, err error) {
-	req, err := client.GetFloatValidPreparer()
+func (client ArrayClient) GetFloatValid(ctx context.Context) (result ListFloat64, err error) {
+	req, err := client.GetFloatValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetFloatValid", nil, "Failure preparing request")
 		return
@@ -1884,12 +1885,12 @@ func (client ArrayClient) GetFloatValid() (result ListFloat64, err error) {
 }
 
 // GetFloatValidPreparer prepares the GetFloatValid request.
-func (client ArrayClient) GetFloatValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetFloatValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/float/0--0.01-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFloatValidSender sends the GetFloatValid request. The method will close the
@@ -1913,8 +1914,8 @@ func (client ArrayClient) GetFloatValidResponder(resp *http.Response) (result Li
 }
 
 // GetIntegerValid get integer array value [1, -1, 3, 300]
-func (client ArrayClient) GetIntegerValid() (result ListInt32, err error) {
-	req, err := client.GetIntegerValidPreparer()
+func (client ArrayClient) GetIntegerValid(ctx context.Context) (result ListInt32, err error) {
+	req, err := client.GetIntegerValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntegerValid", nil, "Failure preparing request")
 		return
@@ -1936,12 +1937,12 @@ func (client ArrayClient) GetIntegerValid() (result ListInt32, err error) {
 }
 
 // GetIntegerValidPreparer prepares the GetIntegerValid request.
-func (client ArrayClient) GetIntegerValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetIntegerValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/integer/1.-1.3.300"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetIntegerValidSender sends the GetIntegerValid request. The method will close the
@@ -1965,8 +1966,8 @@ func (client ArrayClient) GetIntegerValidResponder(resp *http.Response) (result 
 }
 
 // GetIntInvalidNull get integer array value [1, null, 0]
-func (client ArrayClient) GetIntInvalidNull() (result ListInt32, err error) {
-	req, err := client.GetIntInvalidNullPreparer()
+func (client ArrayClient) GetIntInvalidNull(ctx context.Context) (result ListInt32, err error) {
+	req, err := client.GetIntInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidNull", nil, "Failure preparing request")
 		return
@@ -1988,12 +1989,12 @@ func (client ArrayClient) GetIntInvalidNull() (result ListInt32, err error) {
 }
 
 // GetIntInvalidNullPreparer prepares the GetIntInvalidNull request.
-func (client ArrayClient) GetIntInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetIntInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/integer/1.null.zero"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetIntInvalidNullSender sends the GetIntInvalidNull request. The method will close the
@@ -2017,8 +2018,8 @@ func (client ArrayClient) GetIntInvalidNullResponder(resp *http.Response) (resul
 }
 
 // GetIntInvalidString get integer array value [1, 'integer', 0]
-func (client ArrayClient) GetIntInvalidString() (result ListInt32, err error) {
-	req, err := client.GetIntInvalidStringPreparer()
+func (client ArrayClient) GetIntInvalidString(ctx context.Context) (result ListInt32, err error) {
+	req, err := client.GetIntInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetIntInvalidString", nil, "Failure preparing request")
 		return
@@ -2040,12 +2041,12 @@ func (client ArrayClient) GetIntInvalidString() (result ListInt32, err error) {
 }
 
 // GetIntInvalidStringPreparer prepares the GetIntInvalidString request.
-func (client ArrayClient) GetIntInvalidStringPreparer() (*http.Request, error) {
+func (client ArrayClient) GetIntInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/integer/1.integer.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetIntInvalidStringSender sends the GetIntInvalidString request. The method will close the
@@ -2069,8 +2070,8 @@ func (client ArrayClient) GetIntInvalidStringResponder(resp *http.Response) (res
 }
 
 // GetInvalid get invalid array [1, 2, 3
-func (client ArrayClient) GetInvalid() (result ListInt32, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client ArrayClient) GetInvalid(ctx context.Context) (result ListInt32, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -2092,12 +2093,12 @@ func (client ArrayClient) GetInvalid() (result ListInt32, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client ArrayClient) GetInvalidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -2121,8 +2122,8 @@ func (client ArrayClient) GetInvalidResponder(resp *http.Response) (result ListI
 }
 
 // GetLongInvalidNull get long array value [1, null, 0]
-func (client ArrayClient) GetLongInvalidNull() (result ListInt64, err error) {
-	req, err := client.GetLongInvalidNullPreparer()
+func (client ArrayClient) GetLongInvalidNull(ctx context.Context) (result ListInt64, err error) {
+	req, err := client.GetLongInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidNull", nil, "Failure preparing request")
 		return
@@ -2144,12 +2145,12 @@ func (client ArrayClient) GetLongInvalidNull() (result ListInt64, err error) {
 }
 
 // GetLongInvalidNullPreparer prepares the GetLongInvalidNull request.
-func (client ArrayClient) GetLongInvalidNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetLongInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/long/1.null.zero"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLongInvalidNullSender sends the GetLongInvalidNull request. The method will close the
@@ -2173,8 +2174,8 @@ func (client ArrayClient) GetLongInvalidNullResponder(resp *http.Response) (resu
 }
 
 // GetLongInvalidString get long array value [1, 'integer', 0]
-func (client ArrayClient) GetLongInvalidString() (result ListInt64, err error) {
-	req, err := client.GetLongInvalidStringPreparer()
+func (client ArrayClient) GetLongInvalidString(ctx context.Context) (result ListInt64, err error) {
+	req, err := client.GetLongInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongInvalidString", nil, "Failure preparing request")
 		return
@@ -2196,12 +2197,12 @@ func (client ArrayClient) GetLongInvalidString() (result ListInt64, err error) {
 }
 
 // GetLongInvalidStringPreparer prepares the GetLongInvalidString request.
-func (client ArrayClient) GetLongInvalidStringPreparer() (*http.Request, error) {
+func (client ArrayClient) GetLongInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/long/1.integer.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLongInvalidStringSender sends the GetLongInvalidString request. The method will close the
@@ -2225,8 +2226,8 @@ func (client ArrayClient) GetLongInvalidStringResponder(resp *http.Response) (re
 }
 
 // GetLongValid get integer array value [1, -1, 3, 300]
-func (client ArrayClient) GetLongValid() (result ListInt64, err error) {
-	req, err := client.GetLongValidPreparer()
+func (client ArrayClient) GetLongValid(ctx context.Context) (result ListInt64, err error) {
+	req, err := client.GetLongValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetLongValid", nil, "Failure preparing request")
 		return
@@ -2248,12 +2249,12 @@ func (client ArrayClient) GetLongValid() (result ListInt64, err error) {
 }
 
 // GetLongValidPreparer prepares the GetLongValid request.
-func (client ArrayClient) GetLongValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetLongValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/long/1.-1.3.300"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLongValidSender sends the GetLongValid request. The method will close the
@@ -2277,8 +2278,8 @@ func (client ArrayClient) GetLongValidResponder(resp *http.Response) (result Lis
 }
 
 // GetNull get null array value
-func (client ArrayClient) GetNull() (result ListInt32, err error) {
-	req, err := client.GetNullPreparer()
+func (client ArrayClient) GetNull(ctx context.Context) (result ListInt32, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -2300,12 +2301,12 @@ func (client ArrayClient) GetNull() (result ListInt32, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client ArrayClient) GetNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -2329,8 +2330,8 @@ func (client ArrayClient) GetNullResponder(resp *http.Response) (result ListInt3
 }
 
 // GetStringValid get string array value ['foo1', 'foo2', 'foo3']
-func (client ArrayClient) GetStringValid() (result ListString, err error) {
-	req, err := client.GetStringValidPreparer()
+func (client ArrayClient) GetStringValid(ctx context.Context) (result ListString, err error) {
+	req, err := client.GetStringValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringValid", nil, "Failure preparing request")
 		return
@@ -2352,12 +2353,12 @@ func (client ArrayClient) GetStringValid() (result ListString, err error) {
 }
 
 // GetStringValidPreparer prepares the GetStringValid request.
-func (client ArrayClient) GetStringValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetStringValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/string/foo1.foo2.foo3"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetStringValidSender sends the GetStringValid request. The method will close the
@@ -2381,8 +2382,8 @@ func (client ArrayClient) GetStringValidResponder(resp *http.Response) (result L
 }
 
 // GetStringWithInvalid get string array value ['foo', 123, 'foo2']
-func (client ArrayClient) GetStringWithInvalid() (result ListString, err error) {
-	req, err := client.GetStringWithInvalidPreparer()
+func (client ArrayClient) GetStringWithInvalid(ctx context.Context) (result ListString, err error) {
+	req, err := client.GetStringWithInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithInvalid", nil, "Failure preparing request")
 		return
@@ -2404,12 +2405,12 @@ func (client ArrayClient) GetStringWithInvalid() (result ListString, err error) 
 }
 
 // GetStringWithInvalidPreparer prepares the GetStringWithInvalid request.
-func (client ArrayClient) GetStringWithInvalidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetStringWithInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/string/foo.123.foo2"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetStringWithInvalidSender sends the GetStringWithInvalid request. The method will close the
@@ -2433,8 +2434,8 @@ func (client ArrayClient) GetStringWithInvalidResponder(resp *http.Response) (re
 }
 
 // GetStringWithNull get string array value ['foo', null, 'foo2']
-func (client ArrayClient) GetStringWithNull() (result ListString, err error) {
-	req, err := client.GetStringWithNullPreparer()
+func (client ArrayClient) GetStringWithNull(ctx context.Context) (result ListString, err error) {
+	req, err := client.GetStringWithNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringWithNull", nil, "Failure preparing request")
 		return
@@ -2456,12 +2457,12 @@ func (client ArrayClient) GetStringWithNull() (result ListString, err error) {
 }
 
 // GetStringWithNullPreparer prepares the GetStringWithNull request.
-func (client ArrayClient) GetStringWithNullPreparer() (*http.Request, error) {
+func (client ArrayClient) GetStringWithNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/string/foo.null.foo2"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetStringWithNullSender sends the GetStringWithNull request. The method will close the
@@ -2485,8 +2486,8 @@ func (client ArrayClient) GetStringWithNullResponder(resp *http.Response) (resul
 }
 
 // GetUUIDInvalidChars get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
-func (client ArrayClient) GetUUIDInvalidChars() (result ListUUID, err error) {
-	req, err := client.GetUUIDInvalidCharsPreparer()
+func (client ArrayClient) GetUUIDInvalidChars(ctx context.Context) (result ListUUID, err error) {
+	req, err := client.GetUUIDInvalidCharsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDInvalidChars", nil, "Failure preparing request")
 		return
@@ -2508,12 +2509,12 @@ func (client ArrayClient) GetUUIDInvalidChars() (result ListUUID, err error) {
 }
 
 // GetUUIDInvalidCharsPreparer prepares the GetUUIDInvalidChars request.
-func (client ArrayClient) GetUUIDInvalidCharsPreparer() (*http.Request, error) {
+func (client ArrayClient) GetUUIDInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/uuid/invalidchars"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUUIDInvalidCharsSender sends the GetUUIDInvalidChars request. The method will close the
@@ -2538,8 +2539,8 @@ func (client ArrayClient) GetUUIDInvalidCharsResponder(resp *http.Response) (res
 
 // GetUUIDValid get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db',
 // 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
-func (client ArrayClient) GetUUIDValid() (result ListUUID, err error) {
-	req, err := client.GetUUIDValidPreparer()
+func (client ArrayClient) GetUUIDValid(ctx context.Context) (result ListUUID, err error) {
+	req, err := client.GetUUIDValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetUUIDValid", nil, "Failure preparing request")
 		return
@@ -2561,12 +2562,12 @@ func (client ArrayClient) GetUUIDValid() (result ListUUID, err error) {
 }
 
 // GetUUIDValidPreparer prepares the GetUUIDValid request.
-func (client ArrayClient) GetUUIDValidPreparer() (*http.Request, error) {
+func (client ArrayClient) GetUUIDValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/uuid/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUUIDValidSender sends the GetUUIDValid request. The method will close the
@@ -2591,14 +2592,14 @@ func (client ArrayClient) GetUUIDValidResponder(resp *http.Response) (result Lis
 
 // PutArrayValid put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 //
-func (client ArrayClient) PutArrayValid(arrayBody [][]string) (result autorest.Response, err error) {
+func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutArrayValid")
 	}
 
-	req, err := client.PutArrayValidPreparer(arrayBody)
+	req, err := client.PutArrayValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutArrayValid", nil, "Failure preparing request")
 		return
@@ -2620,14 +2621,14 @@ func (client ArrayClient) PutArrayValid(arrayBody [][]string) (result autorest.R
 }
 
 // PutArrayValidPreparer prepares the PutArrayValid request.
-func (client ArrayClient) PutArrayValidPreparer(arrayBody [][]string) (*http.Request, error) {
+func (client ArrayClient) PutArrayValidPreparer(ctx context.Context, arrayBody [][]string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/array/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutArrayValidSender sends the PutArrayValid request. The method will close the
@@ -2651,14 +2652,14 @@ func (client ArrayClient) PutArrayValidResponder(resp *http.Response) (result au
 
 // PutBooleanTfft set array value empty [true, false, false, true]
 //
-func (client ArrayClient) PutBooleanTfft(arrayBody []bool) (result autorest.Response, err error) {
+func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutBooleanTfft")
 	}
 
-	req, err := client.PutBooleanTfftPreparer(arrayBody)
+	req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutBooleanTfft", nil, "Failure preparing request")
 		return
@@ -2680,14 +2681,14 @@ func (client ArrayClient) PutBooleanTfft(arrayBody []bool) (result autorest.Resp
 }
 
 // PutBooleanTfftPreparer prepares the PutBooleanTfft request.
-func (client ArrayClient) PutBooleanTfftPreparer(arrayBody []bool) (*http.Request, error) {
+func (client ArrayClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody []bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/boolean/tfft"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBooleanTfftSender sends the PutBooleanTfft request. The method will close the
@@ -2712,14 +2713,14 @@ func (client ArrayClient) PutBooleanTfftResponder(resp *http.Response) (result a
 // PutByteValid put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in
 // base 64
 //
-func (client ArrayClient) PutByteValid(arrayBody [][]byte) (result autorest.Response, err error) {
+func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutByteValid")
 	}
 
-	req, err := client.PutByteValidPreparer(arrayBody)
+	req, err := client.PutByteValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutByteValid", nil, "Failure preparing request")
 		return
@@ -2741,14 +2742,14 @@ func (client ArrayClient) PutByteValid(arrayBody [][]byte) (result autorest.Resp
 }
 
 // PutByteValidPreparer prepares the PutByteValid request.
-func (client ArrayClient) PutByteValidPreparer(arrayBody [][]byte) (*http.Request, error) {
+func (client ArrayClient) PutByteValidPreparer(ctx context.Context, arrayBody [][]byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/byte/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutByteValidSender sends the PutByteValid request. The method will close the
@@ -2773,14 +2774,14 @@ func (client ArrayClient) PutByteValidResponder(resp *http.Response) (result aut
 // PutComplexValid put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string':
 // '4'}, {'integer': 5, 'string': '6'}]
 //
-func (client ArrayClient) PutComplexValid(arrayBody []Product) (result autorest.Response, err error) {
+func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Product) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutComplexValid")
 	}
 
-	req, err := client.PutComplexValidPreparer(arrayBody)
+	req, err := client.PutComplexValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutComplexValid", nil, "Failure preparing request")
 		return
@@ -2802,14 +2803,14 @@ func (client ArrayClient) PutComplexValid(arrayBody []Product) (result autorest.
 }
 
 // PutComplexValidPreparer prepares the PutComplexValid request.
-func (client ArrayClient) PutComplexValidPreparer(arrayBody []Product) (*http.Request, error) {
+func (client ArrayClient) PutComplexValidPreparer(ctx context.Context, arrayBody []Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/complex/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutComplexValidSender sends the PutComplexValid request. The method will close the
@@ -2834,14 +2835,14 @@ func (client ArrayClient) PutComplexValidResponder(resp *http.Response) (result 
 // PutDateTimeRfc1123Valid set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12
 // Oct 1492 10:15:01 GMT']
 //
-func (client ArrayClient) PutDateTimeRfc1123Valid(arrayBody []date.TimeRFC1123) (result autorest.Response, err error) {
+func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody []date.TimeRFC1123) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid")
 	}
 
-	req, err := client.PutDateTimeRfc1123ValidPreparer(arrayBody)
+	req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", nil, "Failure preparing request")
 		return
@@ -2863,14 +2864,14 @@ func (client ArrayClient) PutDateTimeRfc1123Valid(arrayBody []date.TimeRFC1123) 
 }
 
 // PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
-func (client ArrayClient) PutDateTimeRfc1123ValidPreparer(arrayBody []date.TimeRFC1123) (*http.Request, error) {
+func (client ArrayClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody []date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time-rfc1123/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateTimeRfc1123ValidSender sends the PutDateTimeRfc1123Valid request. The method will close the
@@ -2894,14 +2895,14 @@ func (client ArrayClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) 
 
 // PutDateTimeValid set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 //
-func (client ArrayClient) PutDateTimeValid(arrayBody []date.Time) (result autorest.Response, err error) {
+func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date.Time) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDateTimeValid")
 	}
 
-	req, err := client.PutDateTimeValidPreparer(arrayBody)
+	req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateTimeValid", nil, "Failure preparing request")
 		return
@@ -2923,14 +2924,14 @@ func (client ArrayClient) PutDateTimeValid(arrayBody []date.Time) (result autore
 }
 
 // PutDateTimeValidPreparer prepares the PutDateTimeValid request.
-func (client ArrayClient) PutDateTimeValidPreparer(arrayBody []date.Time) (*http.Request, error) {
+func (client ArrayClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody []date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateTimeValidSender sends the PutDateTimeValid request. The method will close the
@@ -2954,14 +2955,14 @@ func (client ArrayClient) PutDateTimeValidResponder(resp *http.Response) (result
 
 // PutDateValid set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 //
-func (client ArrayClient) PutDateValid(arrayBody []date.Date) (result autorest.Response, err error) {
+func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Date) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDateValid")
 	}
 
-	req, err := client.PutDateValidPreparer(arrayBody)
+	req, err := client.PutDateValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDateValid", nil, "Failure preparing request")
 		return
@@ -2983,14 +2984,14 @@ func (client ArrayClient) PutDateValid(arrayBody []date.Date) (result autorest.R
 }
 
 // PutDateValidPreparer prepares the PutDateValid request.
-func (client ArrayClient) PutDateValidPreparer(arrayBody []date.Date) (*http.Request, error) {
+func (client ArrayClient) PutDateValidPreparer(ctx context.Context, arrayBody []date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateValidSender sends the PutDateValid request. The method will close the
@@ -3015,14 +3016,14 @@ func (client ArrayClient) PutDateValidResponder(resp *http.Response) (result aut
 // PutDictionaryValid get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3':
 // 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 //
-func (client ArrayClient) PutDictionaryValid(arrayBody []map[string]*string) (result autorest.Response, err error) {
+func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDictionaryValid")
 	}
 
-	req, err := client.PutDictionaryValidPreparer(arrayBody)
+	req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDictionaryValid", nil, "Failure preparing request")
 		return
@@ -3044,14 +3045,14 @@ func (client ArrayClient) PutDictionaryValid(arrayBody []map[string]*string) (re
 }
 
 // PutDictionaryValidPreparer prepares the PutDictionaryValid request.
-func (client ArrayClient) PutDictionaryValidPreparer(arrayBody []map[string]*string) (*http.Request, error) {
+func (client ArrayClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody []map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/dictionary/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDictionaryValidSender sends the PutDictionaryValid request. The method will close the
@@ -3075,14 +3076,14 @@ func (client ArrayClient) PutDictionaryValidResponder(resp *http.Response) (resu
 
 // PutDoubleValid set array value [0, -0.01, 1.2e20]
 //
-func (client ArrayClient) PutDoubleValid(arrayBody []float64) (result autorest.Response, err error) {
+func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDoubleValid")
 	}
 
-	req, err := client.PutDoubleValidPreparer(arrayBody)
+	req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDoubleValid", nil, "Failure preparing request")
 		return
@@ -3104,14 +3105,14 @@ func (client ArrayClient) PutDoubleValid(arrayBody []float64) (result autorest.R
 }
 
 // PutDoubleValidPreparer prepares the PutDoubleValid request.
-func (client ArrayClient) PutDoubleValidPreparer(arrayBody []float64) (*http.Request, error) {
+func (client ArrayClient) PutDoubleValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/double/0--0.01-1.2e20"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDoubleValidSender sends the PutDoubleValid request. The method will close the
@@ -3135,14 +3136,14 @@ func (client ArrayClient) PutDoubleValidResponder(resp *http.Response) (result a
 
 // PutDurationValid set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 //
-func (client ArrayClient) PutDurationValid(arrayBody []string) (result autorest.Response, err error) {
+func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDurationValid")
 	}
 
-	req, err := client.PutDurationValidPreparer(arrayBody)
+	req, err := client.PutDurationValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutDurationValid", nil, "Failure preparing request")
 		return
@@ -3164,14 +3165,14 @@ func (client ArrayClient) PutDurationValid(arrayBody []string) (result autorest.
 }
 
 // PutDurationValidPreparer prepares the PutDurationValid request.
-func (client ArrayClient) PutDurationValidPreparer(arrayBody []string) (*http.Request, error) {
+func (client ArrayClient) PutDurationValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/duration/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDurationValidSender sends the PutDurationValid request. The method will close the
@@ -3195,14 +3196,14 @@ func (client ArrayClient) PutDurationValidResponder(resp *http.Response) (result
 
 // PutEmpty set array value empty []
 //
-func (client ArrayClient) PutEmpty(arrayBody []string) (result autorest.Response, err error) {
+func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutEmpty")
 	}
 
-	req, err := client.PutEmptyPreparer(arrayBody)
+	req, err := client.PutEmptyPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEmpty", nil, "Failure preparing request")
 		return
@@ -3224,14 +3225,14 @@ func (client ArrayClient) PutEmpty(arrayBody []string) (result autorest.Response
 }
 
 // PutEmptyPreparer prepares the PutEmpty request.
-func (client ArrayClient) PutEmptyPreparer(arrayBody []string) (*http.Request, error) {
+func (client ArrayClient) PutEmptyPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/empty"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutEmptySender sends the PutEmpty request. The method will close the
@@ -3255,14 +3256,14 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 
 // PutFloatValid set array value [0, -0.01, 1.2e20]
 //
-func (client ArrayClient) PutFloatValid(arrayBody []float64) (result autorest.Response, err error) {
+func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutFloatValid")
 	}
 
-	req, err := client.PutFloatValidPreparer(arrayBody)
+	req, err := client.PutFloatValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutFloatValid", nil, "Failure preparing request")
 		return
@@ -3284,14 +3285,14 @@ func (client ArrayClient) PutFloatValid(arrayBody []float64) (result autorest.Re
 }
 
 // PutFloatValidPreparer prepares the PutFloatValid request.
-func (client ArrayClient) PutFloatValidPreparer(arrayBody []float64) (*http.Request, error) {
+func (client ArrayClient) PutFloatValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/float/0--0.01-1.2e20"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutFloatValidSender sends the PutFloatValid request. The method will close the
@@ -3315,14 +3316,14 @@ func (client ArrayClient) PutFloatValidResponder(resp *http.Response) (result au
 
 // PutIntegerValid set array value empty [1, -1, 3, 300]
 //
-func (client ArrayClient) PutIntegerValid(arrayBody []int32) (result autorest.Response, err error) {
+func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutIntegerValid")
 	}
 
-	req, err := client.PutIntegerValidPreparer(arrayBody)
+	req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutIntegerValid", nil, "Failure preparing request")
 		return
@@ -3344,14 +3345,14 @@ func (client ArrayClient) PutIntegerValid(arrayBody []int32) (result autorest.Re
 }
 
 // PutIntegerValidPreparer prepares the PutIntegerValid request.
-func (client ArrayClient) PutIntegerValidPreparer(arrayBody []int32) (*http.Request, error) {
+func (client ArrayClient) PutIntegerValidPreparer(ctx context.Context, arrayBody []int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/integer/1.-1.3.300"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutIntegerValidSender sends the PutIntegerValid request. The method will close the
@@ -3375,14 +3376,14 @@ func (client ArrayClient) PutIntegerValidResponder(resp *http.Response) (result 
 
 // PutLongValid set array value empty [1, -1, 3, 300]
 //
-func (client ArrayClient) PutLongValid(arrayBody []int64) (result autorest.Response, err error) {
+func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutLongValid")
 	}
 
-	req, err := client.PutLongValidPreparer(arrayBody)
+	req, err := client.PutLongValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutLongValid", nil, "Failure preparing request")
 		return
@@ -3404,14 +3405,14 @@ func (client ArrayClient) PutLongValid(arrayBody []int64) (result autorest.Respo
 }
 
 // PutLongValidPreparer prepares the PutLongValid request.
-func (client ArrayClient) PutLongValidPreparer(arrayBody []int64) (*http.Request, error) {
+func (client ArrayClient) PutLongValidPreparer(ctx context.Context, arrayBody []int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/long/1.-1.3.300"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutLongValidSender sends the PutLongValid request. The method will close the
@@ -3435,14 +3436,14 @@ func (client ArrayClient) PutLongValidResponder(resp *http.Response) (result aut
 
 // PutStringValid set array value ['foo1', 'foo2', 'foo3']
 //
-func (client ArrayClient) PutStringValid(arrayBody []string) (result autorest.Response, err error) {
+func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutStringValid")
 	}
 
-	req, err := client.PutStringValidPreparer(arrayBody)
+	req, err := client.PutStringValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringValid", nil, "Failure preparing request")
 		return
@@ -3464,14 +3465,14 @@ func (client ArrayClient) PutStringValid(arrayBody []string) (result autorest.Re
 }
 
 // PutStringValidPreparer prepares the PutStringValid request.
-func (client ArrayClient) PutStringValidPreparer(arrayBody []string) (*http.Request, error) {
+func (client ArrayClient) PutStringValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/string/foo1.foo2.foo3"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutStringValidSender sends the PutStringValid request. The method will close the
@@ -3496,14 +3497,14 @@ func (client ArrayClient) PutStringValidResponder(resp *http.Response) (result a
 // PutUUIDValid set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db',
 // 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 //
-func (client ArrayClient) PutUUIDValid(arrayBody []uuid.UUID) (result autorest.Response, err error) {
+func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUID) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutUUIDValid")
 	}
 
-	req, err := client.PutUUIDValidPreparer(arrayBody)
+	req, err := client.PutUUIDValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutUUIDValid", nil, "Failure preparing request")
 		return
@@ -3525,14 +3526,14 @@ func (client ArrayClient) PutUUIDValid(arrayBody []uuid.UUID) (result autorest.R
 }
 
 // PutUUIDValidPreparer prepares the PutUUIDValid request.
-func (client ArrayClient) PutUUIDValidPreparer(arrayBody []uuid.UUID) (*http.Request, error) {
+func (client ArrayClient) PutUUIDValidPreparer(ctx context.Context, arrayBody []uuid.UUID) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/uuid/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutUUIDValidSender sends the PutUUIDValid request. The method will close the

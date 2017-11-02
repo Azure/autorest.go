@@ -7,6 +7,7 @@ package filegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewFilesClientWithBaseURI(baseURI string) FilesClient {
 }
 
 // GetEmptyFile get empty file
-func (client FilesClient) GetEmptyFile() (result ReadCloser, err error) {
-	req, err := client.GetEmptyFilePreparer()
+func (client FilesClient) GetEmptyFile(ctx context.Context) (result ReadCloser, err error) {
+	req, err := client.GetEmptyFilePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetEmptyFile", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client FilesClient) GetEmptyFile() (result ReadCloser, err error) {
 }
 
 // GetEmptyFilePreparer prepares the GetEmptyFile request.
-func (client FilesClient) GetEmptyFilePreparer() (*http.Request, error) {
+func (client FilesClient) GetEmptyFilePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/files/stream/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptyFileSender sends the GetEmptyFile request. The method will close the
@@ -79,8 +80,8 @@ func (client FilesClient) GetEmptyFileResponder(resp *http.Response) (result Rea
 }
 
 // GetFile get file
-func (client FilesClient) GetFile() (result ReadCloser, err error) {
-	req, err := client.GetFilePreparer()
+func (client FilesClient) GetFile(ctx context.Context) (result ReadCloser, err error) {
+	req, err := client.GetFilePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetFile", nil, "Failure preparing request")
 		return
@@ -102,12 +103,12 @@ func (client FilesClient) GetFile() (result ReadCloser, err error) {
 }
 
 // GetFilePreparer prepares the GetFile request.
-func (client FilesClient) GetFilePreparer() (*http.Request, error) {
+func (client FilesClient) GetFilePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/files/stream/nonempty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFileSender sends the GetFile request. The method will close the
@@ -130,8 +131,8 @@ func (client FilesClient) GetFileResponder(resp *http.Response) (result ReadClos
 }
 
 // GetFileLarge get a large file
-func (client FilesClient) GetFileLarge() (result ReadCloser, err error) {
-	req, err := client.GetFileLargePreparer()
+func (client FilesClient) GetFileLarge(ctx context.Context) (result ReadCloser, err error) {
+	req, err := client.GetFileLargePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetFileLarge", nil, "Failure preparing request")
 		return
@@ -153,12 +154,12 @@ func (client FilesClient) GetFileLarge() (result ReadCloser, err error) {
 }
 
 // GetFileLargePreparer prepares the GetFileLarge request.
-func (client FilesClient) GetFileLargePreparer() (*http.Request, error) {
+func (client FilesClient) GetFileLargePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/files/stream/verylarge"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFileLargeSender sends the GetFileLarge request. The method will close the

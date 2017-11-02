@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -30,8 +31,8 @@ func NewHTTPServerFailureClientWithBaseURI(baseURI string) HTTPServerFailureClie
 // Delete505 return 505 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPServerFailureClient) Delete505(booleanValue *bool) (result Error, err error) {
-	req, err := client.Delete505Preparer(booleanValue)
+func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Delete505Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Delete505", nil, "Failure preparing request")
 		return
@@ -53,7 +54,7 @@ func (client HTTPServerFailureClient) Delete505(booleanValue *bool) (result Erro
 }
 
 // Delete505Preparer prepares the Delete505 request.
-func (client HTTPServerFailureClient) Delete505Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPServerFailureClient) Delete505Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsDelete(),
@@ -63,7 +64,7 @@ func (client HTTPServerFailureClient) Delete505Preparer(booleanValue *bool) (*ht
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Delete505Sender sends the Delete505 request. The method will close the
@@ -87,8 +88,8 @@ func (client HTTPServerFailureClient) Delete505Responder(resp *http.Response) (r
 }
 
 // Get501 return 501 status code - should be represented in the client as an error
-func (client HTTPServerFailureClient) Get501() (result Error, err error) {
-	req, err := client.Get501Preparer()
+func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error, err error) {
+	req, err := client.Get501Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Get501", nil, "Failure preparing request")
 		return
@@ -110,12 +111,12 @@ func (client HTTPServerFailureClient) Get501() (result Error, err error) {
 }
 
 // Get501Preparer prepares the Get501 request.
-func (client HTTPServerFailureClient) Get501Preparer() (*http.Request, error) {
+func (client HTTPServerFailureClient) Get501Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/server/501"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Get501Sender sends the Get501 request. The method will close the
@@ -139,8 +140,8 @@ func (client HTTPServerFailureClient) Get501Responder(resp *http.Response) (resu
 }
 
 // Head501 return 501 status code - should be represented in the client as an error
-func (client HTTPServerFailureClient) Head501() (result Error, err error) {
-	req, err := client.Head501Preparer()
+func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error, err error) {
+	req, err := client.Head501Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Head501", nil, "Failure preparing request")
 		return
@@ -162,12 +163,12 @@ func (client HTTPServerFailureClient) Head501() (result Error, err error) {
 }
 
 // Head501Preparer prepares the Head501 request.
-func (client HTTPServerFailureClient) Head501Preparer() (*http.Request, error) {
+func (client HTTPServerFailureClient) Head501Preparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsHead(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/server/501"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Head501Sender sends the Head501 request. The method will close the
@@ -193,8 +194,8 @@ func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (res
 // Post505 return 505 status code - should be represented in the client as an error
 //
 // booleanValue is simple boolean value true
-func (client HTTPServerFailureClient) Post505(booleanValue *bool) (result Error, err error) {
-	req, err := client.Post505Preparer(booleanValue)
+func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	req, err := client.Post505Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPServerFailureClient", "Post505", nil, "Failure preparing request")
 		return
@@ -216,7 +217,7 @@ func (client HTTPServerFailureClient) Post505(booleanValue *bool) (result Error,
 }
 
 // Post505Preparer prepares the Post505 request.
-func (client HTTPServerFailureClient) Post505Preparer(booleanValue *bool) (*http.Request, error) {
+func (client HTTPServerFailureClient) Post505Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -226,7 +227,7 @@ func (client HTTPServerFailureClient) Post505Preparer(booleanValue *bool) (*http
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(booleanValue))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // Post505Sender sends the Post505 request. The method will close the

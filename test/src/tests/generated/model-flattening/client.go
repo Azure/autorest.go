@@ -10,6 +10,7 @@ package modelflatteninggroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -41,8 +42,8 @@ func NewWithBaseURI(baseURI string) ManagementClient {
 }
 
 // GetArray get External Resource as an Array
-func (client ManagementClient) GetArray() (result ListFlattenedProduct, err error) {
-	req, err := client.GetArrayPreparer()
+func (client ManagementClient) GetArray(ctx context.Context) (result ListFlattenedProduct, err error) {
+	req, err := client.GetArrayPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetArray", nil, "Failure preparing request")
 		return
@@ -64,12 +65,12 @@ func (client ManagementClient) GetArray() (result ListFlattenedProduct, err erro
 }
 
 // GetArrayPreparer prepares the GetArray request.
-func (client ManagementClient) GetArrayPreparer() (*http.Request, error) {
+func (client ManagementClient) GetArrayPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/array"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArraySender sends the GetArray request. The method will close the
@@ -93,8 +94,8 @@ func (client ManagementClient) GetArrayResponder(resp *http.Response) (result Li
 }
 
 // GetDictionary get External Resource as a Dictionary
-func (client ManagementClient) GetDictionary() (result SetFlattenedProduct, err error) {
-	req, err := client.GetDictionaryPreparer()
+func (client ManagementClient) GetDictionary(ctx context.Context) (result SetFlattenedProduct, err error) {
+	req, err := client.GetDictionaryPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetDictionary", nil, "Failure preparing request")
 		return
@@ -116,12 +117,12 @@ func (client ManagementClient) GetDictionary() (result SetFlattenedProduct, err 
 }
 
 // GetDictionaryPreparer prepares the GetDictionary request.
-func (client ManagementClient) GetDictionaryPreparer() (*http.Request, error) {
+func (client ManagementClient) GetDictionaryPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/dictionary"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionarySender sends the GetDictionary request. The method will close the
@@ -145,8 +146,8 @@ func (client ManagementClient) GetDictionaryResponder(resp *http.Response) (resu
 }
 
 // GetResourceCollection get External Resource as a ResourceCollection
-func (client ManagementClient) GetResourceCollection() (result ResourceCollection, err error) {
-	req, err := client.GetResourceCollectionPreparer()
+func (client ManagementClient) GetResourceCollection(ctx context.Context) (result ResourceCollection, err error) {
+	req, err := client.GetResourceCollectionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetResourceCollection", nil, "Failure preparing request")
 		return
@@ -168,12 +169,12 @@ func (client ManagementClient) GetResourceCollection() (result ResourceCollectio
 }
 
 // GetResourceCollectionPreparer prepares the GetResourceCollection request.
-func (client ManagementClient) GetResourceCollectionPreparer() (*http.Request, error) {
+func (client ManagementClient) GetResourceCollectionPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/resourcecollection"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetResourceCollectionSender sends the GetResourceCollection request. The method will close the
@@ -198,8 +199,8 @@ func (client ManagementClient) GetResourceCollectionResponder(resp *http.Respons
 
 // GetWrappedArray no need to have a route in Express server for this operation. Used to verify the type flattened is
 // not removed if it's referenced in an array
-func (client ManagementClient) GetWrappedArray() (result ListProductWrapper, err error) {
-	req, err := client.GetWrappedArrayPreparer()
+func (client ManagementClient) GetWrappedArray(ctx context.Context) (result ListProductWrapper, err error) {
+	req, err := client.GetWrappedArrayPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetWrappedArray", nil, "Failure preparing request")
 		return
@@ -221,12 +222,12 @@ func (client ManagementClient) GetWrappedArray() (result ListProductWrapper, err
 }
 
 // GetWrappedArrayPreparer prepares the GetWrappedArray request.
-func (client ManagementClient) GetWrappedArrayPreparer() (*http.Request, error) {
+func (client ManagementClient) GetWrappedArrayPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/wrappedarray"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetWrappedArraySender sends the GetWrappedArray request. The method will close the
@@ -252,7 +253,7 @@ func (client ManagementClient) GetWrappedArrayResponder(resp *http.Response) (re
 // PostFlattenedSimpleProduct put Flattened Simple Product with client flattening true on the parameter
 //
 // simpleBodyProduct is simple body product to post
-func (client ManagementClient) PostFlattenedSimpleProduct(simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
+func (client ManagementClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -264,7 +265,7 @@ func (client ManagementClient) PostFlattenedSimpleProduct(simpleBodyProduct *Sim
 		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.ManagementClient", "PostFlattenedSimpleProduct")
 	}
 
-	req, err := client.PostFlattenedSimpleProductPreparer(simpleBodyProduct)
+	req, err := client.PostFlattenedSimpleProductPreparer(ctx, simpleBodyProduct)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PostFlattenedSimpleProduct", nil, "Failure preparing request")
 		return
@@ -286,7 +287,7 @@ func (client ManagementClient) PostFlattenedSimpleProduct(simpleBodyProduct *Sim
 }
 
 // PostFlattenedSimpleProductPreparer prepares the PostFlattenedSimpleProduct request.
-func (client ManagementClient) PostFlattenedSimpleProductPreparer(simpleBodyProduct *SimpleProduct) (*http.Request, error) {
+func (client ManagementClient) PostFlattenedSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -296,7 +297,7 @@ func (client ManagementClient) PostFlattenedSimpleProductPreparer(simpleBodyProd
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(simpleBodyProduct))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PostFlattenedSimpleProductSender sends the PostFlattenedSimpleProduct request. The method will close the
@@ -322,8 +323,8 @@ func (client ManagementClient) PostFlattenedSimpleProductResponder(resp *http.Re
 // PutArray put External Resource as an Array
 //
 // resourceArray is external Resource as an Array to put
-func (client ManagementClient) PutArray(resourceArray []Resource) (result autorest.Response, err error) {
-	req, err := client.PutArrayPreparer(resourceArray)
+func (client ManagementClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
+	req, err := client.PutArrayPreparer(ctx, resourceArray)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutArray", nil, "Failure preparing request")
 		return
@@ -345,7 +346,7 @@ func (client ManagementClient) PutArray(resourceArray []Resource) (result autore
 }
 
 // PutArrayPreparer prepares the PutArray request.
-func (client ManagementClient) PutArrayPreparer(resourceArray []Resource) (*http.Request, error) {
+func (client ManagementClient) PutArrayPreparer(ctx context.Context, resourceArray []Resource) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -355,7 +356,7 @@ func (client ManagementClient) PutArrayPreparer(resourceArray []Resource) (*http
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(resourceArray))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutArraySender sends the PutArray request. The method will close the
@@ -380,8 +381,8 @@ func (client ManagementClient) PutArrayResponder(resp *http.Response) (result au
 // PutDictionary put External Resource as a Dictionary
 //
 // resourceDictionary is external Resource as a Dictionary to put
-func (client ManagementClient) PutDictionary(resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
-	req, err := client.PutDictionaryPreparer(resourceDictionary)
+func (client ManagementClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
+	req, err := client.PutDictionaryPreparer(ctx, resourceDictionary)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutDictionary", nil, "Failure preparing request")
 		return
@@ -403,7 +404,7 @@ func (client ManagementClient) PutDictionary(resourceDictionary map[string]*Flat
 }
 
 // PutDictionaryPreparer prepares the PutDictionary request.
-func (client ManagementClient) PutDictionaryPreparer(resourceDictionary map[string]*FlattenedProduct) (*http.Request, error) {
+func (client ManagementClient) PutDictionaryPreparer(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -413,7 +414,7 @@ func (client ManagementClient) PutDictionaryPreparer(resourceDictionary map[stri
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(resourceDictionary))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDictionarySender sends the PutDictionary request. The method will close the
@@ -438,8 +439,8 @@ func (client ManagementClient) PutDictionaryResponder(resp *http.Response) (resu
 // PutResourceCollection put External Resource as a ResourceCollection
 //
 // resourceComplexObject is external Resource as a ResourceCollection to put
-func (client ManagementClient) PutResourceCollection(resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
-	req, err := client.PutResourceCollectionPreparer(resourceComplexObject)
+func (client ManagementClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
+	req, err := client.PutResourceCollectionPreparer(ctx, resourceComplexObject)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutResourceCollection", nil, "Failure preparing request")
 		return
@@ -461,7 +462,7 @@ func (client ManagementClient) PutResourceCollection(resourceComplexObject *Reso
 }
 
 // PutResourceCollectionPreparer prepares the PutResourceCollection request.
-func (client ManagementClient) PutResourceCollectionPreparer(resourceComplexObject *ResourceCollection) (*http.Request, error) {
+func (client ManagementClient) PutResourceCollectionPreparer(ctx context.Context, resourceComplexObject *ResourceCollection) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -471,7 +472,7 @@ func (client ManagementClient) PutResourceCollectionPreparer(resourceComplexObje
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(resourceComplexObject))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutResourceCollectionSender sends the PutResourceCollection request. The method will close the
@@ -496,7 +497,7 @@ func (client ManagementClient) PutResourceCollectionResponder(resp *http.Respons
 // PutSimpleProduct put Simple Product with client flattening true on the model
 //
 // simpleBodyProduct is simple body product to put
-func (client ManagementClient) PutSimpleProduct(simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
+func (client ManagementClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -508,7 +509,7 @@ func (client ManagementClient) PutSimpleProduct(simpleBodyProduct *SimpleProduct
 		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProduct")
 	}
 
-	req, err := client.PutSimpleProductPreparer(simpleBodyProduct)
+	req, err := client.PutSimpleProductPreparer(ctx, simpleBodyProduct)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProduct", nil, "Failure preparing request")
 		return
@@ -530,7 +531,7 @@ func (client ManagementClient) PutSimpleProduct(simpleBodyProduct *SimpleProduct
 }
 
 // PutSimpleProductPreparer prepares the PutSimpleProduct request.
-func (client ManagementClient) PutSimpleProductPreparer(simpleBodyProduct *SimpleProduct) (*http.Request, error) {
+func (client ManagementClient) PutSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -540,7 +541,7 @@ func (client ManagementClient) PutSimpleProductPreparer(simpleBodyProduct *Simpl
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(simpleBodyProduct))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutSimpleProductSender sends the PutSimpleProduct request. The method will close the
@@ -566,7 +567,7 @@ func (client ManagementClient) PutSimpleProductResponder(resp *http.Response) (r
 // PutSimpleProductWithGrouping put Simple Product with client flattening true on the model
 //
 // name is product name with value 'groupproduct' simpleBodyProduct is simple body product to put
-func (client ManagementClient) PutSimpleProductWithGrouping(name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
+func (client ManagementClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -578,7 +579,7 @@ func (client ManagementClient) PutSimpleProductWithGrouping(name string, simpleB
 		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProductWithGrouping")
 	}
 
-	req, err := client.PutSimpleProductWithGroupingPreparer(name, simpleBodyProduct)
+	req, err := client.PutSimpleProductWithGroupingPreparer(ctx, name, simpleBodyProduct)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProductWithGrouping", nil, "Failure preparing request")
 		return
@@ -600,7 +601,7 @@ func (client ManagementClient) PutSimpleProductWithGrouping(name string, simpleB
 }
 
 // PutSimpleProductWithGroupingPreparer prepares the PutSimpleProductWithGrouping request.
-func (client ManagementClient) PutSimpleProductWithGroupingPreparer(name string, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
+func (client ManagementClient) PutSimpleProductWithGroupingPreparer(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"name": autorest.Encode("path", name),
 	}
@@ -614,7 +615,7 @@ func (client ManagementClient) PutSimpleProductWithGroupingPreparer(name string,
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(simpleBodyProduct))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutSimpleProductWithGroupingSender sends the PutSimpleProductWithGrouping request. The method will close the
@@ -641,8 +642,8 @@ func (client ManagementClient) PutSimpleProductWithGroupingResponder(resp *http.
 // not removed if it's referenced in an array
 //
 // resourceArray is external Resource as an Array to put
-func (client ManagementClient) PutWrappedArray(resourceArray []WrappedProduct) (result autorest.Response, err error) {
-	req, err := client.PutWrappedArrayPreparer(resourceArray)
+func (client ManagementClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
+	req, err := client.PutWrappedArrayPreparer(ctx, resourceArray)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutWrappedArray", nil, "Failure preparing request")
 		return
@@ -664,7 +665,7 @@ func (client ManagementClient) PutWrappedArray(resourceArray []WrappedProduct) (
 }
 
 // PutWrappedArrayPreparer prepares the PutWrappedArray request.
-func (client ManagementClient) PutWrappedArrayPreparer(resourceArray []WrappedProduct) (*http.Request, error) {
+func (client ManagementClient) PutWrappedArrayPreparer(ctx context.Context, resourceArray []WrappedProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -674,7 +675,7 @@ func (client ManagementClient) PutWrappedArrayPreparer(resourceArray []WrappedPr
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(resourceArray))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutWrappedArraySender sends the PutWrappedArray request. The method will close the
