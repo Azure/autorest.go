@@ -31,8 +31,6 @@ namespace AutoRest.Go
             var cmg = cm as CodeModelGo;
 
             SwaggerExtensions.ProcessGlobalParameters(cmg);
-            // Add the current package name as a reserved keyword
-            CodeNamerGo.Instance.ReserveNamespace(cm.Namespace);
             FixStutteringTypeNames(cmg);
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);

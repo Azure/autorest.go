@@ -323,9 +323,9 @@ namespace AutoRest.Go
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return name;
+               return name;
             }
-
+            
             return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
         }
 
@@ -414,12 +414,6 @@ namespace AutoRest.Go
             }
 
             return name;
-        }
-
-        // Refactor -> Namer
-        public void ReserveNamespace(string ns)
-        {
-            ReservedWords.Add(ns);
         }
 
         // EnsureNameCase ensures that all "words" in the passed name adhere to Golint casing expectations.
