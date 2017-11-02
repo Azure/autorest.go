@@ -1,8 +1,8 @@
-hash: 516661b7307b13bb04c166910e8282ea4a7dfc07f3b51149bddc7f31824b1ecd
-updated: 2017-10-20T15:31:38.0643256-07:00
+hash: 9ad88d257f226f9e6986f2684384c6210d79f1b8d442b633b8ed6f976c78eea7
+updated: 2017-11-02T13:15:40.2506532-07:00
 imports:
 - name: github.com/Azure/go-autorest
-  version: 7aa5b8a6f18b5c15910c767ab005fc4585221177
+  version: 1afda22949fbf449a85ac9109c3ca96d08684220
   subpackages:
   - autorest
   - autorest/adal

@@ -69,7 +69,7 @@ func (client LROsCustomHeaderClient) Post202Retry200Sender(req *http.Request) (L
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROsCustomHeaderPost202Retry200Future{Future: future}
+	f := LROsCustomHeaderPost202Retry200Future{Future: future, req: req}
 	return f, err
 }
 
@@ -126,7 +126,7 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededSender(req *http.Req
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROsCustomHeaderPostAsyncRetrySucceededFuture{Future: future}
+	f := LROsCustomHeaderPostAsyncRetrySucceededFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -184,7 +184,7 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Sender(req *http.
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROsCustomHeaderPut201CreatingSucceeded200Future{Future: future}
+	f := LROsCustomHeaderPut201CreatingSucceeded200Future{Future: future, req: req}
 	return f, err
 }
 
@@ -242,7 +242,7 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceededSender(req *http.Requ
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROsCustomHeaderPutAsyncRetrySucceededFuture{Future: future}
+	f := LROsCustomHeaderPutAsyncRetrySucceededFuture{Future: future, req: req}
 	return f, err
 }
 

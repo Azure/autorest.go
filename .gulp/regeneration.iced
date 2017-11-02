@@ -98,6 +98,8 @@ task 'regenerate-go', '', (done) ->
     'nsPrefix': ' ',
     'language': 'go'
   },done
+  process.env.GOPATH = "#{basefolder}/test"
+  await execute "glide up",          { cwd: './test/src/tests' }, defer code, stderr, stdout
   return null
 
 task 'regenerate', "regenerate expected code for tests", ['regenerate-go'], (done) ->

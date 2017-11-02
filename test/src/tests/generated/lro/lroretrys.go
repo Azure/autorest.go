@@ -61,7 +61,7 @@ func (client LRORetrysClient) Delete202Retry200Sender(req *http.Request) (LRORet
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LRORetrysDelete202Retry200Future{Future: future}
+	f := LRORetrysDelete202Retry200Future{Future: future, req: req}
 	return f, err
 }
 
@@ -110,7 +110,7 @@ func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededSender(req *http.
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LRORetrysDeleteAsyncRelativeRetrySucceededFuture{Future: future}
+	f := LRORetrysDeleteAsyncRelativeRetrySucceededFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -160,7 +160,7 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededSender(re
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LRORetrysDeleteProvisioning202Accepted200SucceededFuture{Future: future}
+	f := LRORetrysDeleteProvisioning202Accepted200SucceededFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -217,7 +217,7 @@ func (client LRORetrysClient) Post202Retry200Sender(req *http.Request) (LRORetry
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LRORetrysPost202Retry200Future{Future: future}
+	f := LRORetrysPost202Retry200Future{Future: future, req: req}
 	return f, err
 }
 
@@ -274,7 +274,7 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceededSender(req *http.Re
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LRORetrysPostAsyncRelativeRetrySucceededFuture{Future: future}
+	f := LRORetrysPostAsyncRelativeRetrySucceededFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -331,7 +331,7 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Sender(req *http.Request
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LRORetrysPut201CreatingSucceeded200Future{Future: future}
+	f := LRORetrysPut201CreatingSucceeded200Future{Future: future, req: req}
 	return f, err
 }
 
@@ -389,7 +389,7 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceededSender(req *http.Req
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LRORetrysPutAsyncRelativeRetrySucceededFuture{Future: future}
+	f := LRORetrysPutAsyncRelativeRetrySucceededFuture{Future: future, req: req}
 	return f, err
 }
 
