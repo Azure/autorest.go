@@ -25,8 +25,25 @@ namespace AutoRest.Go.Model
         {
             get
             {
+                if (SpecifiedUserAgent == null) {
+                    return DefaultUserAgent;
+                }
+                return SpecifiedUserAgent;
+            }
+            set
+            {
+                SpecifiedUserAgent = value;
+            }
+        }
+        private string DefaultUserAgent{
+            get
+            {
                 return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
             }
+        }
+        private string SpecifiedUserAgent {
+            get;
+            set;
         }
 
         public CodeModelGo()
@@ -34,6 +51,7 @@ namespace AutoRest.Go.Model
             NextMethodUndefined = new List<IModelType>();
             PagedTypes = new Dictionary<IModelType, string>();
             Version = FormatVersion(Settings.Instance.PackageVersion);
+            SpecifiedUserAgent = Settings.Instance.Host?.GetValue<string>("user-agent").Result;
         }
 
         public override string Namespace
