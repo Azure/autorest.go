@@ -104,18 +104,15 @@ func (client PagingClient) GetMultiplePagesNextResults(lastResults ProductResult
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetMultiplePagesSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePages", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetMultiplePagesResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePages", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -227,18 +224,15 @@ func (client PagingClient) GetMultiplePagesFailureNextResults(lastResults Produc
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetMultiplePagesFailureSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailure", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetMultiplePagesFailureResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailure", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -350,18 +344,15 @@ func (client PagingClient) GetMultiplePagesFailureURINextResults(lastResults Pro
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetMultiplePagesFailureURISender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailureURI", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetMultiplePagesFailureURIResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesFailureURI", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -695,18 +686,15 @@ func (client PagingClient) GetMultiplePagesRetryFirstNextResults(lastResults Pro
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetMultiplePagesRetryFirstSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetryFirst", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetMultiplePagesRetryFirstResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetryFirst", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -819,18 +807,15 @@ func (client PagingClient) GetMultiplePagesRetrySecondNextResults(lastResults Pr
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetMultiplePagesRetrySecondSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetrySecond", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetMultiplePagesRetrySecondResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesRetrySecond", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -961,18 +946,15 @@ func (client PagingClient) GetMultiplePagesWithOffsetNextResults(lastResults Pro
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetMultiplePagesWithOffsetSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesWithOffset", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetMultiplePagesWithOffsetResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesWithOffset", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -1099,18 +1081,15 @@ func (client PagingClient) GetOdataMultiplePagesNextResults(lastResults OdataPro
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetOdataMultiplePagesSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetOdataMultiplePages", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetOdataMultiplePagesResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetOdataMultiplePages", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -1222,18 +1201,15 @@ func (client PagingClient) GetSinglePagesNextResults(lastResults ProductResult) 
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetSinglePagesSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePages", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetSinglePagesResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePages", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 
@@ -1345,18 +1321,15 @@ func (client PagingClient) GetSinglePagesFailureNextResults(lastResults ProductR
 	if req == nil {
 		return
 	}
-
 	resp, err := client.GetSinglePagesFailureSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
 		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePagesFailure", resp, "Failure sending next results request")
 	}
-
 	result, err = client.GetSinglePagesFailureResponder(resp)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetSinglePagesFailure", resp, "Failure responding to next results request")
 	}
-
 	return
 }
 

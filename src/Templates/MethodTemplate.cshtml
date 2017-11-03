@@ -182,33 +182,43 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
 
 @if (Model.IsPageable && !Model.NextAlreadyDefined)
 {
+    var lastResTypyeName = Model.ReturnValue().Body.Name;
+    var preparerName = Model.ReturnValue().Body.Cast<CompositeTypeGo>().PreparerMethodName;
+    if (Model.IsLongRunningOperation())
+    {
+        lastResTypyeName = Model.ReturnValue().Body.Cast<FutureTypeGo>().ResultTypeName;
+        preparerName = $"{lastResTypyeName}Preparer";
+    }
 <text>
 @EmptyLine
 // @(Model.NextMethodName) retrieves the next set of results, if any.
-func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @(Model.ReturnValue().Body.Name)) (@Model.MethodReturnSignature()) {
-    req, err := lastResults.@((Model.ReturnValue().Body as CompositeTypeGo).PreparerMethodName)()
+func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @lastResTypyeName) (@Model.MethodReturnSignature()) {
+    req, err := lastResults.@(preparerName)()
     if err != nil {
         return result, @(Model.AutorestError("Failure preparing next results request"))
     }
     if req == nil {
         return
     }
-
-    @EmptyLine
+    @if (Model.IsLongRunningOperation())
+    {
+    @:return client.@(Model.SenderMethodName)(req)
+    }
+    else
+    {
+    <text>
     resp, err := client.@(Model.SenderMethodName)(req)
     if err != nil {
         @(Model.Response(false))
         return result, @(Model.AutorestError("Failure sending next results request", "resp"))
     }
-
-    @EmptyLine
     result, err = client.@(Model.ResponderMethodName)(resp)
     if err != nil {
         err = @(Model.AutorestError("Failure responding to next results request", "resp"))
     }
-
-    @EmptyLine
     return
+    </text>
+    }
 }
 </text>
 }
