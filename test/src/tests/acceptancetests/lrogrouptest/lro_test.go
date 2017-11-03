@@ -2,6 +2,7 @@ package lrogrouptest
 
 import (
 	"context"
+	"net/http"
 	"testing"
 	"time"
 
@@ -65,10 +66,8 @@ func (s *LROSuite) TestDelete202NoRetry204(c *chk.C) {
 
 func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
 	future, err := lroRetryClient.Delete202Retry200(context.Background())
-	c.Assert(err, chk.NotNil)
-
-	future, err = lroRetryClient.Delete202Retry200(context.Background())
 	c.Assert(err, chk.IsNil)
+	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusAccepted)
 
 	for done, err := future.Done(lroRetryClient); !done; done, err = future.Done(lroRetryClient) {
 		c.Assert(err, chk.IsNil)
@@ -76,7 +75,7 @@ func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
 		c.Assert(ok, chk.Equals, true)
 		time.Sleep(dur)
 	}
-	c.Assert(future.Response().StatusCode, chk.Equals, 500)
+	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusInternalServerError)
 }
 
 func (s *LROSuite) TestDelete202NonRetry400(c *chk.C) {
