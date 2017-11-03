@@ -55,7 +55,7 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string ServiceName => CodeNamer.Instance.PascalCase(Namespace ?? string.Empty);
+        public string ServiceName => CodeNamerGo.Instance.PascalCase(Namespace ?? string.Empty);
 
         public string GetDocumentation()
         {

@@ -21,8 +21,8 @@ var _ = chk.Suite(&IntegerSuite{})
 
 var intClient = getIntegerClient()
 
-func getIntegerClient() IntGroupClient {
-	c := NewIntGroupClient()
+func getIntegerClient() IntClient {
+	c := NewIntClient()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c

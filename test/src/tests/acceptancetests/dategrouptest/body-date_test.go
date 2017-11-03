@@ -20,8 +20,8 @@ var _ = chk.Suite(&DateGroupSuite{})
 
 var dateClient = getDateClient()
 
-func getDateClient() GroupClient {
-	c := NewGroupClient()
+func getDateClient() DateClient {
+	c := NewDateClient()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c

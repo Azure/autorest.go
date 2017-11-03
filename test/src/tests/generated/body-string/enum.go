@@ -30,7 +30,7 @@ func NewEnumClientWithBaseURI(baseURI string) EnumClient {
 }
 
 // GetNotExpandable get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetNotExpandable(ctx context.Context) (result String, err error) {
+func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringModel, err error) {
 	req, err := client.GetNotExpandablePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", nil, "Failure preparing request")
@@ -70,7 +70,7 @@ func (client EnumClient) GetNotExpandableSender(req *http.Request) (*http.Respon
 
 // GetNotExpandableResponder handles the response to the GetNotExpandable request. The method always
 // closes the http.Response Body.
-func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result String, err error) {
+func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -82,7 +82,7 @@ func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result 
 }
 
 // GetReferenced get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetReferenced(ctx context.Context) (result String, err error) {
+func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel, err error) {
 	req, err := client.GetReferencedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", nil, "Failure preparing request")
@@ -122,7 +122,7 @@ func (client EnumClient) GetReferencedSender(req *http.Request) (*http.Response,
 
 // GetReferencedResponder handles the response to the GetReferenced request. The method always
 // closes the http.Response Body.
-func (client EnumClient) GetReferencedResponder(resp *http.Response) (result String, err error) {
+func (client EnumClient) GetReferencedResponder(resp *http.Response) (result StringModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),

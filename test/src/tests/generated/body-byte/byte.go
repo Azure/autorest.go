@@ -14,46 +14,46 @@ import (
 	"net/http"
 )
 
-// GroupClient is the test Infrastructure for AutoRest Swagger BAT
-type GroupClient struct {
+// ByteClient is the test Infrastructure for AutoRest Swagger BAT
+type ByteClient struct {
 	ManagementClient
 }
 
-// NewGroupClient creates an instance of the GroupClient client.
-func NewGroupClient() GroupClient {
-	return NewGroupClientWithBaseURI(DefaultBaseURI)
+// NewByteClient creates an instance of the ByteClient client.
+func NewByteClient() ByteClient {
+	return NewByteClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewGroupClientWithBaseURI creates an instance of the GroupClient client.
-func NewGroupClientWithBaseURI(baseURI string) GroupClient {
-	return GroupClient{NewWithBaseURI(baseURI)}
+// NewByteClientWithBaseURI creates an instance of the ByteClient client.
+func NewByteClientWithBaseURI(baseURI string) ByteClient {
+	return ByteClient{NewWithBaseURI(baseURI)}
 }
 
 // GetEmpty get empty byte value ''
-func (client GroupClient) GetEmpty(ctx context.Context) (result ByteArray, err error) {
+func (client ByteClient) GetEmpty(ctx context.Context) (result ByteArray, err error) {
 	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetEmpty", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetEmptySender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetEmpty", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetEmptyResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetEmpty", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetEmpty", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client GroupClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
+func (client ByteClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -63,14 +63,14 @@ func (client GroupClient) GetEmptyPreparer(ctx context.Context) (*http.Request, 
 
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetEmptySender(req *http.Request) (*http.Response, error) {
+func (client ByteClient) GetEmptySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetEmptyResponder handles the response to the GetEmpty request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetEmptyResponder(resp *http.Response) (result ByteArray, err error) {
+func (client ByteClient) GetEmptyResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -82,30 +82,30 @@ func (client GroupClient) GetEmptyResponder(resp *http.Response) (result ByteArr
 }
 
 // GetInvalid get invalid byte value ':::SWAGGER::::'
-func (client GroupClient) GetInvalid(ctx context.Context) (result ByteArray, err error) {
+func (client ByteClient) GetInvalid(ctx context.Context) (result ByteArray, err error) {
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetInvalid", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetInvalidSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetInvalid", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetInvalidResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetInvalid", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetInvalid", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client GroupClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
+func (client ByteClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -115,14 +115,14 @@ func (client GroupClient) GetInvalidPreparer(ctx context.Context) (*http.Request
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
+func (client ByteClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetInvalidResponder(resp *http.Response) (result ByteArray, err error) {
+func (client ByteClient) GetInvalidResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -134,30 +134,30 @@ func (client GroupClient) GetInvalidResponder(resp *http.Response) (result ByteA
 }
 
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client GroupClient) GetNonASCII(ctx context.Context) (result ByteArray, err error) {
+func (client ByteClient) GetNonASCII(ctx context.Context) (result ByteArray, err error) {
 	req, err := client.GetNonASCIIPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNonASCII", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetNonASCIISender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNonASCII", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetNonASCIIResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNonASCII", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNonASCII", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetNonASCIIPreparer prepares the GetNonASCII request.
-func (client GroupClient) GetNonASCIIPreparer(ctx context.Context) (*http.Request, error) {
+func (client ByteClient) GetNonASCIIPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -167,14 +167,14 @@ func (client GroupClient) GetNonASCIIPreparer(ctx context.Context) (*http.Reques
 
 // GetNonASCIISender sends the GetNonASCII request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetNonASCIISender(req *http.Request) (*http.Response, error) {
+func (client ByteClient) GetNonASCIISender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNonASCIIResponder handles the response to the GetNonASCII request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetNonASCIIResponder(resp *http.Response) (result ByteArray, err error) {
+func (client ByteClient) GetNonASCIIResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -186,30 +186,30 @@ func (client GroupClient) GetNonASCIIResponder(resp *http.Response) (result Byte
 }
 
 // GetNull get null byte value
-func (client GroupClient) GetNull(ctx context.Context) (result ByteArray, err error) {
+func (client ByteClient) GetNull(ctx context.Context) (result ByteArray, err error) {
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNull", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetNullSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNull", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "GetNull", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNull", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client GroupClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
+func (client ByteClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -219,14 +219,14 @@ func (client GroupClient) GetNullPreparer(ctx context.Context) (*http.Request, e
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+func (client ByteClient) GetNullSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetNullResponder(resp *http.Response) (result ByteArray, err error) {
+func (client ByteClient) GetNullResponder(resp *http.Response) (result ByteArray, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -240,36 +240,36 @@ func (client GroupClient) GetNullResponder(resp *http.Response) (result ByteArra
 // PutNonASCII put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 //
 // byteBody is base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client GroupClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
+func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: byteBody,
 			Constraints: []validation.Constraint{{Target: "byteBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "bytegroup.GroupClient", "PutNonASCII")
+		return result, validation.NewErrorWithValidationError(err, "bytegroup.ByteClient", "PutNonASCII")
 	}
 
 	req, err := client.PutNonASCIIPreparer(ctx, byteBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "PutNonASCII", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutNonASCIISender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "PutNonASCII", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutNonASCIIResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.GroupClient", "PutNonASCII", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "PutNonASCII", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutNonASCIIPreparer prepares the PutNonASCII request.
-func (client GroupClient) PutNonASCIIPreparer(ctx context.Context, byteBody []byte) (*http.Request, error) {
+func (client ByteClient) PutNonASCIIPreparer(ctx context.Context, byteBody []byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -281,14 +281,14 @@ func (client GroupClient) PutNonASCIIPreparer(ctx context.Context, byteBody []by
 
 // PutNonASCIISender sends the PutNonASCII request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutNonASCIISender(req *http.Request) (*http.Response, error) {
+func (client ByteClient) PutNonASCIISender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutNonASCIIResponder handles the response to the PutNonASCII request. The method always
 // closes the http.Response Body.
-func (client GroupClient) PutNonASCIIResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client ByteClient) PutNonASCIIResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),

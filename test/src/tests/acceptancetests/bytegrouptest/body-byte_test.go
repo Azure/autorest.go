@@ -19,8 +19,8 @@ var _ = chk.Suite(&ByteGroupSuite{})
 
 var byteClient = getByteClient()
 
-func getByteClient() GroupClient {
-	c := NewGroupClient()
+func getByteClient() ByteClient {
+	c := NewByteClient()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c

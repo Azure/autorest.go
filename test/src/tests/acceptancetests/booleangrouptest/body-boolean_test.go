@@ -18,8 +18,8 @@ var _ = chk.Suite(&BoolGroupSuite{})
 
 var boolClient = getBooleanClient()
 
-func getBooleanClient() BoolGroupClient {
-	c := NewBoolGroupClient()
+func getBooleanClient() BoolClient {
+	c := NewBoolClient()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c

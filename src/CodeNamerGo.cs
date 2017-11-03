@@ -324,12 +324,10 @@ namespace AutoRest.Go
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return name;
+               return name;
             }
-
-            // we use the base implementation here as it uses a case-insensitive comparison.
-            // this is a bit of a hacky work-around for some naming changes introduced in core...
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(base.GetEscapedReservedName(name, "Group"))));
+            
+            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
         }
 
         /// <summary>
@@ -419,12 +417,6 @@ namespace AutoRest.Go
             return name;
         }
 
-        // Refactor -> Namer
-        public void ReserveNamespace(string ns)
-        {
-            ReservedWords.Add(ns);
-        }
-
         // EnsureNameCase ensures that all "words" in the passed name adhere to Golint casing expectations.
         // A "word" is a sequence of characters separated by a change in case or underscores. Since this
         // method alters name casing, it should be used after any other method that expects normal
@@ -475,7 +467,7 @@ namespace AutoRest.Go
                         || primaryType.KnownPrimaryType == KnownPrimaryType.Uuid
                         || primaryType.KnownPrimaryType == KnownPrimaryType.TimeSpan)
                     {
-                        return CodeNamer.Instance.QuoteValue(defaultValue);
+                        return CodeNamerGo.Instance.QuoteValue(defaultValue);
                     }
                     else if (primaryType.KnownPrimaryType == KnownPrimaryType.Boolean)
                     {

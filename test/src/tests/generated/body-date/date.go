@@ -14,46 +14,46 @@ import (
 	"net/http"
 )
 
-// GroupClient is the test Infrastructure for AutoRest
-type GroupClient struct {
+// DateClient is the test Infrastructure for AutoRest
+type DateClient struct {
 	ManagementClient
 }
 
-// NewGroupClient creates an instance of the GroupClient client.
-func NewGroupClient() GroupClient {
-	return NewGroupClientWithBaseURI(DefaultBaseURI)
+// NewDateClient creates an instance of the DateClient client.
+func NewDateClient() DateClient {
+	return NewDateClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewGroupClientWithBaseURI creates an instance of the GroupClient client.
-func NewGroupClientWithBaseURI(baseURI string) GroupClient {
-	return GroupClient{NewWithBaseURI(baseURI)}
+// NewDateClientWithBaseURI creates an instance of the DateClient client.
+func NewDateClientWithBaseURI(baseURI string) DateClient {
+	return DateClient{NewWithBaseURI(baseURI)}
 }
 
 // GetInvalidDate get invalid date value
-func (client GroupClient) GetInvalidDate(ctx context.Context) (result Date, err error) {
+func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, err error) {
 	req, err := client.GetInvalidDatePreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetInvalidDate", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetInvalidDate", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetInvalidDateSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetInvalidDate", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetInvalidDate", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetInvalidDateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetInvalidDate", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetInvalidDate", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetInvalidDatePreparer prepares the GetInvalidDate request.
-func (client GroupClient) GetInvalidDatePreparer(ctx context.Context) (*http.Request, error) {
+func (client DateClient) GetInvalidDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -63,14 +63,14 @@ func (client GroupClient) GetInvalidDatePreparer(ctx context.Context) (*http.Req
 
 // GetInvalidDateSender sends the GetInvalidDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetInvalidDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetInvalidDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetInvalidDateResponder handles the response to the GetInvalidDate request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetInvalidDateResponder(resp *http.Response) (result Date, err error) {
+func (client DateClient) GetInvalidDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -82,30 +82,30 @@ func (client GroupClient) GetInvalidDateResponder(resp *http.Response) (result D
 }
 
 // GetMaxDate get max date value 9999-12-31
-func (client GroupClient) GetMaxDate(ctx context.Context) (result Date, err error) {
+func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err error) {
 	req, err := client.GetMaxDatePreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMaxDate", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMaxDate", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetMaxDateSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMaxDate", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMaxDate", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetMaxDateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMaxDate", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMaxDate", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetMaxDatePreparer prepares the GetMaxDate request.
-func (client GroupClient) GetMaxDatePreparer(ctx context.Context) (*http.Request, error) {
+func (client DateClient) GetMaxDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -115,14 +115,14 @@ func (client GroupClient) GetMaxDatePreparer(ctx context.Context) (*http.Request
 
 // GetMaxDateSender sends the GetMaxDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetMaxDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetMaxDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMaxDateResponder handles the response to the GetMaxDate request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetMaxDateResponder(resp *http.Response) (result Date, err error) {
+func (client DateClient) GetMaxDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -134,30 +134,30 @@ func (client GroupClient) GetMaxDateResponder(resp *http.Response) (result Date,
 }
 
 // GetMinDate get min date value 0000-01-01
-func (client GroupClient) GetMinDate(ctx context.Context) (result Date, err error) {
+func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err error) {
 	req, err := client.GetMinDatePreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMinDate", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMinDate", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetMinDateSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMinDate", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMinDate", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetMinDateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetMinDate", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMinDate", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetMinDatePreparer prepares the GetMinDate request.
-func (client GroupClient) GetMinDatePreparer(ctx context.Context) (*http.Request, error) {
+func (client DateClient) GetMinDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -167,14 +167,14 @@ func (client GroupClient) GetMinDatePreparer(ctx context.Context) (*http.Request
 
 // GetMinDateSender sends the GetMinDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetMinDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetMinDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetMinDateResponder handles the response to the GetMinDate request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetMinDateResponder(resp *http.Response) (result Date, err error) {
+func (client DateClient) GetMinDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -186,30 +186,30 @@ func (client GroupClient) GetMinDateResponder(resp *http.Response) (result Date,
 }
 
 // GetNull get null date value
-func (client GroupClient) GetNull(ctx context.Context) (result Date, err error) {
+func (client DateClient) GetNull(ctx context.Context) (result DateModel, err error) {
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetNull", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetNull", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetNullSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetNull", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetNull", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetNullResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetNull", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetNull", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client GroupClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
+func (client DateClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -219,14 +219,14 @@ func (client GroupClient) GetNullPreparer(ctx context.Context) (*http.Request, e
 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetNullSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetNullSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetNullResponder(resp *http.Response) (result Date, err error) {
+func (client DateClient) GetNullResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -238,30 +238,30 @@ func (client GroupClient) GetNullResponder(resp *http.Response) (result Date, er
 }
 
 // GetOverflowDate get overflow date value
-func (client GroupClient) GetOverflowDate(ctx context.Context) (result Date, err error) {
+func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel, err error) {
 	req, err := client.GetOverflowDatePreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetOverflowDate", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetOverflowDate", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetOverflowDateSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetOverflowDate", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetOverflowDate", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetOverflowDateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetOverflowDate", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetOverflowDate", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetOverflowDatePreparer prepares the GetOverflowDate request.
-func (client GroupClient) GetOverflowDatePreparer(ctx context.Context) (*http.Request, error) {
+func (client DateClient) GetOverflowDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -271,14 +271,14 @@ func (client GroupClient) GetOverflowDatePreparer(ctx context.Context) (*http.Re
 
 // GetOverflowDateSender sends the GetOverflowDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetOverflowDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetOverflowDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetOverflowDateResponder handles the response to the GetOverflowDate request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetOverflowDateResponder(resp *http.Response) (result Date, err error) {
+func (client DateClient) GetOverflowDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -290,30 +290,30 @@ func (client GroupClient) GetOverflowDateResponder(resp *http.Response) (result 
 }
 
 // GetUnderflowDate get underflow date value
-func (client GroupClient) GetUnderflowDate(ctx context.Context) (result Date, err error) {
+func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel, err error) {
 	req, err := client.GetUnderflowDatePreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetUnderflowDate", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetUnderflowDate", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetUnderflowDateSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetUnderflowDate", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetUnderflowDate", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetUnderflowDateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "GetUnderflowDate", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetUnderflowDate", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetUnderflowDatePreparer prepares the GetUnderflowDate request.
-func (client GroupClient) GetUnderflowDatePreparer(ctx context.Context) (*http.Request, error) {
+func (client DateClient) GetUnderflowDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -323,14 +323,14 @@ func (client GroupClient) GetUnderflowDatePreparer(ctx context.Context) (*http.R
 
 // GetUnderflowDateSender sends the GetUnderflowDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) GetUnderflowDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) GetUnderflowDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetUnderflowDateResponder handles the response to the GetUnderflowDate request. The method always
 // closes the http.Response Body.
-func (client GroupClient) GetUnderflowDateResponder(resp *http.Response) (result Date, err error) {
+func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result DateModel, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -343,30 +343,30 @@ func (client GroupClient) GetUnderflowDateResponder(resp *http.Response) (result
 
 // PutMaxDate put max date value 9999-12-31
 //
-func (client GroupClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	req, err := client.PutMaxDatePreparer(ctx, dateBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMaxDate", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMaxDate", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutMaxDateSender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMaxDate", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMaxDate", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutMaxDateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMaxDate", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMaxDate", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutMaxDatePreparer prepares the PutMaxDate request.
-func (client GroupClient) PutMaxDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
+func (client DateClient) PutMaxDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -378,14 +378,14 @@ func (client GroupClient) PutMaxDatePreparer(ctx context.Context, dateBody date.
 
 // PutMaxDateSender sends the PutMaxDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutMaxDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) PutMaxDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutMaxDateResponder handles the response to the PutMaxDate request. The method always
 // closes the http.Response Body.
-func (client GroupClient) PutMaxDateResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -397,30 +397,30 @@ func (client GroupClient) PutMaxDateResponder(resp *http.Response) (result autor
 
 // PutMinDate put min date value 0000-01-01
 //
-func (client GroupClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	req, err := client.PutMinDatePreparer(ctx, dateBody)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMinDate", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMinDate", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutMinDateSender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMinDate", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMinDate", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutMinDateResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "dategroup.GroupClient", "PutMinDate", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMinDate", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutMinDatePreparer prepares the PutMinDate request.
-func (client GroupClient) PutMinDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
+func (client DateClient) PutMinDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -432,14 +432,14 @@ func (client GroupClient) PutMinDatePreparer(ctx context.Context, dateBody date.
 
 // PutMinDateSender sends the PutMinDate request. The method will close the
 // http.Response Body if it receives an error.
-func (client GroupClient) PutMinDateSender(req *http.Request) (*http.Response, error) {
+func (client DateClient) PutMinDateSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutMinDateResponder handles the response to the PutMinDate request. The method always
 // closes the http.Response Body.
-func (client GroupClient) PutMinDateResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client DateClient) PutMinDateResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
