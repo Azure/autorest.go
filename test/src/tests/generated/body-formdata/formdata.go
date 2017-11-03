@@ -7,6 +7,7 @@ package formdatagroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"io"
@@ -32,8 +33,8 @@ func NewFormdataClientWithBaseURI(baseURI string) FormdataClient {
 //
 // fileContent is file to upload. fileContent will be closed upon successful return. Callers should ensure closure when
 // receiving an error.fileName is file name to upload. Name has to be spelled exactly as written here.
-func (client FormdataClient) UploadFile(fileContent io.ReadCloser, fileName string) (result ReadCloser, err error) {
-	req, err := client.UploadFilePreparer(fileContent, fileName)
+func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadCloser, fileName string) (result ReadCloser, err error) {
+	req, err := client.UploadFilePreparer(ctx, fileContent, fileName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "formdatagroup.FormdataClient", "UploadFile", nil, "Failure preparing request")
 		return
@@ -55,7 +56,7 @@ func (client FormdataClient) UploadFile(fileContent io.ReadCloser, fileName stri
 }
 
 // UploadFilePreparer prepares the UploadFile request.
-func (client FormdataClient) UploadFilePreparer(fileContent io.ReadCloser, fileName string) (*http.Request, error) {
+func (client FormdataClient) UploadFilePreparer(ctx context.Context, fileContent io.ReadCloser, fileName string) (*http.Request, error) {
 	formDataParameters := map[string]interface{}{
 		"fileContent": fileContent,
 		"fileName":    fileName,
@@ -66,7 +67,7 @@ func (client FormdataClient) UploadFilePreparer(fileContent io.ReadCloser, fileN
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/formdata/stream/uploadfile"),
 		autorest.WithMultiPartFormData(formDataParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // UploadFileSender sends the UploadFile request. The method will close the
@@ -92,8 +93,8 @@ func (client FormdataClient) UploadFileResponder(resp *http.Response) (result Re
 //
 // fileContent is file to upload. fileContent will be closed upon successful return. Callers should ensure closure when
 // receiving an error.
-func (client FormdataClient) UploadFileViaBody(fileContent io.ReadCloser) (result ReadCloser, err error) {
-	req, err := client.UploadFileViaBodyPreparer(fileContent)
+func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadCloser) (result ReadCloser, err error) {
+	req, err := client.UploadFileViaBodyPreparer(ctx, fileContent)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "formdatagroup.FormdataClient", "UploadFileViaBody", nil, "Failure preparing request")
 		return
@@ -115,13 +116,13 @@ func (client FormdataClient) UploadFileViaBody(fileContent io.ReadCloser) (resul
 }
 
 // UploadFileViaBodyPreparer prepares the UploadFileViaBody request.
-func (client FormdataClient) UploadFileViaBodyPreparer(fileContent io.ReadCloser) (*http.Request, error) {
+func (client FormdataClient) UploadFileViaBodyPreparer(ctx context.Context, fileContent io.ReadCloser) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/formdata/stream/uploadfile"),
 		autorest.WithFile(fileContent))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // UploadFileViaBodySender sends the UploadFileViaBody request. The method will close the

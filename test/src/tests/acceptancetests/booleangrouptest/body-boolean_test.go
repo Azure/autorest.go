@@ -1,6 +1,7 @@
 package booleangrouptest
 
 import (
+	"context"
 	"testing"
 
 	chk "gopkg.in/check.v1"
@@ -25,34 +26,34 @@ func getBooleanClient() BoolClient {
 }
 
 func (s *BoolGroupSuite) TestGetTrue(c *chk.C) {
-	res, err := boolClient.GetTrue()
+	res, err := boolClient.GetTrue(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.Equals, true)
 }
 
 func (s *BoolGroupSuite) TestPutTrue(c *chk.C) {
-	_, err := boolClient.PutTrue(true)
+	_, err := boolClient.PutTrue(context.Background(), true)
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *BoolGroupSuite) TestGetFalse(c *chk.C) {
-	res, err := boolClient.GetFalse()
+	res, err := boolClient.GetFalse(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.Equals, false)
 }
 
 func (s *BoolGroupSuite) TestPutFalse(c *chk.C) {
-	_, err := boolClient.PutFalse(false)
+	_, err := boolClient.PutFalse(context.Background(), false)
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *BoolGroupSuite) TestGetInvalidBool(c *chk.C) {
-	_, err := boolClient.GetInvalid()
+	_, err := boolClient.GetInvalid(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *BoolGroupSuite) TestGetNullBool(c *chk.C) {
-	res, err := boolClient.GetNull()
+	res, err := boolClient.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Value, chk.IsNil)
 }

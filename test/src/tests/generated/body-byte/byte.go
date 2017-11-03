@@ -7,10 +7,11 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"net/http"
+
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
-	"net/http"
 )
 
 // ByteClient is the test Infrastructure for AutoRest Swagger BAT
@@ -57,7 +58,7 @@ func (client ByteClient) GetEmptyPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -109,7 +110,7 @@ func (client ByteClient) GetInvalidPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -135,10 +136,6 @@ func (client ByteClient) GetInvalidResponder(resp *http.Response) (result ByteAr
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client ByteClient) GetNonASCII() (result ByteArray, err error) {
 	req, err := client.GetNonASCIIPreparer()
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNonASCII", nil, "Failure preparing request")
-		return
-	}
 
 	resp, err := client.GetNonASCIISender(req)
 	if err != nil {
@@ -161,7 +158,7 @@ func (client ByteClient) GetNonASCIIPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/nonAscii"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNonASCIISender sends the GetNonASCII request. The method will close the
@@ -213,7 +210,7 @@ func (client ByteClient) GetNullPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -246,7 +243,7 @@ func (client ByteClient) PutNonASCII(byteBody []byte) (result autorest.Response,
 		return result, validation.NewErrorWithValidationError(err, "bytegroup.ByteClient", "PutNonASCII")
 	}
 
-	req, err := client.PutNonASCIIPreparer(byteBody)
+	req, err := client.PutNonASCIIPreparer(ctx, byteBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "PutNonASCII", nil, "Failure preparing request")
 		return
@@ -275,7 +272,7 @@ func (client ByteClient) PutNonASCIIPreparer(byteBody []byte) (*http.Request, er
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/nonAscii"),
 		autorest.WithJSON(byteBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNonASCIISender sends the PutNonASCII request. The method will close the

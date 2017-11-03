@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewInheritanceClientWithBaseURI(baseURI string) InheritanceClient {
 }
 
 // GetValid get complex types that extend others
-func (client InheritanceClient) GetValid() (result Siamese, err error) {
-	req, err := client.GetValidPreparer()
+func (client InheritanceClient) GetValid(ctx context.Context) (result Siamese, err error) {
+	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client InheritanceClient) GetValid() (result Siamese, err error) {
 }
 
 // GetValidPreparer prepares the GetValid request.
-func (client InheritanceClient) GetValidPreparer() (*http.Request, error) {
+func (client InheritanceClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/inheritance/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetValidSender sends the GetValid request. The method will close the
@@ -84,8 +85,8 @@ func (client InheritanceClient) GetValidResponder(resp *http.Response) (result S
 // complexBody is please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs, the
 // 1st one named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and food="french
 // fries".
-func (client InheritanceClient) PutValid(complexBody Siamese) (result autorest.Response, err error) {
-	req, err := client.PutValidPreparer(complexBody)
+func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (result autorest.Response, err error) {
+	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", nil, "Failure preparing request")
 		return
@@ -107,14 +108,14 @@ func (client InheritanceClient) PutValid(complexBody Siamese) (result autorest.R
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client InheritanceClient) PutValidPreparer(complexBody Siamese) (*http.Request, error) {
+func (client InheritanceClient) PutValidPreparer(ctx context.Context, complexBody Siamese) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/inheritance/valid"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidSender sends the PutValid request. The method will close the

@@ -7,6 +7,7 @@ package booleangroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -56,7 +57,7 @@ func (client BoolClient) GetFalsePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/false"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFalseSender sends the GetFalse request. The method will close the
@@ -108,7 +109,7 @@ func (client BoolClient) GetInvalidPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -160,7 +161,7 @@ func (client BoolClient) GetNullPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -208,11 +209,7 @@ func (client BoolClient) GetTrue() (result BoolModel, err error) {
 
 // GetTruePreparer prepares the GetTrue request.
 func (client BoolClient) GetTruePreparer() (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/bool/true"))
-	return preparer.Prepare(&http.Request{})
 }
 
 // GetTrueSender sends the GetTrue request. The method will close the
@@ -267,7 +264,7 @@ func (client BoolClient) PutFalsePreparer(boolBody bool) (*http.Request, error) 
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/false"),
 		autorest.WithJSON(boolBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutFalseSender sends the PutFalse request. The method will close the
@@ -321,7 +318,7 @@ func (client BoolClient) PutTruePreparer(boolBody bool) (*http.Request, error) {
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/true"),
 		autorest.WithJSON(boolBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutTrueSender sends the PutTrue request. The method will close the

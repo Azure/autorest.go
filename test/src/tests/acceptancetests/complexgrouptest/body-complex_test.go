@@ -1,6 +1,7 @@
 package complexgrouptest
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -87,7 +88,7 @@ func getPolymorphismRecursiveClient() PolymorphicrecursiveClient {
 
 // Primitive tests
 func (s *ComplexGroupSuite) TestGetBoolComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetBool()
+	res, err := complexPrimitiveClient.GetBool(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.FieldTrue, chk.Equals, true)
@@ -95,13 +96,13 @@ func (s *ComplexGroupSuite) TestGetBoolComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetByteComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetByte()
+	res, err := complexPrimitiveClient.GetByte(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Field, chk.DeepEquals, []byte{0x0FF, 0x0FE, 0x0FD, 0x0FC, 0x000, 0x0FA, 0x0F9, 0x0F8, 0x0F7, 0x0F6})
 }
 
 func (s *ComplexGroupSuite) TestGetDateComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetDate()
+	res, err := complexPrimitiveClient.GetDate(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.Field, chk.DeepEquals, date.Date{time.Date(0001, time.January, 1, 0, 0, 0, 0, time.UTC)})
@@ -109,7 +110,7 @@ func (s *ComplexGroupSuite) TestGetDateComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetDateTimeComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetDateTime()
+	res, err := complexPrimitiveClient.GetDateTime(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.Field, chk.DeepEquals, utils.ToDateTime("0001-01-01T00:00:00Z"))
@@ -117,7 +118,7 @@ func (s *ComplexGroupSuite) TestGetDateTimeComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetDateTimeRfc1123Complex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetDateTimeRfc1123()
+	res, err := complexPrimitiveClient.GetDateTimeRfc1123(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.Field, chk.DeepEquals, utils.ToDateTimeRFC1123("Mon, 01 Jan 0001 00:00:00 GMT"))
@@ -125,7 +126,7 @@ func (s *ComplexGroupSuite) TestGetDateTimeRfc1123Complex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetDoubleComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetDouble()
+	res, err := complexPrimitiveClient.GetDouble(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.Field1, chk.Equals, 3e-100)
@@ -133,13 +134,13 @@ func (s *ComplexGroupSuite) TestGetDoubleComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetDurationComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetDuration()
+	res, err := complexPrimitiveClient.GetDuration(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Field, chk.Equals, "P123DT22H14M12.011S")
 }
 
 func (s *ComplexGroupSuite) TestGetFloatComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetFloat()
+	res, err := complexPrimitiveClient.GetFloat(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.Field1, chk.Equals, 1.05)
@@ -147,21 +148,21 @@ func (s *ComplexGroupSuite) TestGetFloatComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetIntComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetInt()
+	res, err := complexPrimitiveClient.GetInt(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Field1, chk.Equals, int32(-1))
 	c.Assert(*res.Field2, chk.Equals, int32(2))
 }
 
 func (s *ComplexGroupSuite) TestGetLongComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetLong()
+	res, err := complexPrimitiveClient.GetLong(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Field1, chk.Equals, int64(1099511627775))
 	c.Assert(*res.Field2, chk.Equals, int64(-999511627788))
 }
 
 func (s *ComplexGroupSuite) TestGetStringComplex(c *chk.C) {
-	res, err := complexPrimitiveClient.GetString()
+	res, err := complexPrimitiveClient.GetString(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.Field, chk.Equals, "goodrequest")
@@ -171,18 +172,18 @@ func (s *ComplexGroupSuite) TestGetStringComplex(c *chk.C) {
 
 func (s *ComplexGroupSuite) TestPutBoolComplex(c *chk.C) {
 	a, b := true, false
-	_, err := complexPrimitiveClient.PutBool(BooleanWrapper{FieldTrue: &a, FieldFalse: &b})
+	_, err := complexPrimitiveClient.PutBool(context.Background(), BooleanWrapper{FieldTrue: &a, FieldFalse: &b})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutByteComplex(c *chk.C) {
-	_, err := complexPrimitiveClient.PutByte(
+	_, err := complexPrimitiveClient.PutByte(context.Background(),
 		ByteWrapper{Field: &[]byte{0x0FF, 0x0FE, 0x0FD, 0x0FC, 0x000, 0x0FA, 0x0F9, 0x0F8, 0x0F7, 0x0F6}})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutDateComplex(c *chk.C) {
-	_, err := complexPrimitiveClient.PutDate(
+	_, err := complexPrimitiveClient.PutDate(context.Background(),
 		DateWrapper{Field: &date.Date{time.Date(0001, time.January, 1, 0, 0, 0, 0, time.UTC)},
 			Leap: &date.Date{time.Date(2016, time.February, 29, 0, 0, 0, 0, time.UTC)}})
 	c.Assert(err, chk.IsNil)
@@ -190,62 +191,62 @@ func (s *ComplexGroupSuite) TestPutDateComplex(c *chk.C) {
 
 func (s *ComplexGroupSuite) TestPutDateTimeComplex(c *chk.C) {
 	dt1, dt2 := utils.ToDateTime("0001-01-01T00:00:00Z"), utils.ToDateTime("2015-05-18T18:38:00Z")
-	_, err := complexPrimitiveClient.PutDateTime(DatetimeWrapper{Field: &dt1, Now: &dt2})
+	_, err := complexPrimitiveClient.PutDateTime(context.Background(), DatetimeWrapper{Field: &dt1, Now: &dt2})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutDateTimeRFC1123Complex(c *chk.C) {
 	dt1, dt2 := utils.ToDateTimeRFC1123("Mon, 01 Jan 0001 00:00:00 GMT"), utils.ToDateTimeRFC1123("Mon, 18 May 2015 11:38:00 GMT")
-	_, err := complexPrimitiveClient.PutDateTimeRfc1123(Datetimerfc1123Wrapper{Field: &dt1, Now: &dt2})
+	_, err := complexPrimitiveClient.PutDateTimeRfc1123(context.Background(), Datetimerfc1123Wrapper{Field: &dt1, Now: &dt2})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutDoubleComplex(c *chk.C) {
 	d1, d2 := 3e-100, -0.000000000000000000000000000000000000000000000000000000005
-	_, err := complexPrimitiveClient.PutDouble(DoubleWrapper{Field1: &d1,
+	_, err := complexPrimitiveClient.PutDouble(context.Background(), DoubleWrapper{Field1: &d1,
 		Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &d2})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutDurationComplex(c *chk.C) {
 	duration := "P123DT22H14M12.011S"
-	_, err := complexPrimitiveClient.PutDuration(DurationWrapper{Field: &duration})
+	_, err := complexPrimitiveClient.PutDuration(context.Background(), DurationWrapper{Field: &duration})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutFloatComplex(c *chk.C) {
 	f1, f2 := 1.05, -0.003
-	_, err := complexPrimitiveClient.PutFloat(FloatWrapper{Field1: &f1, Field2: &f2})
+	_, err := complexPrimitiveClient.PutFloat(context.Background(), FloatWrapper{Field1: &f1, Field2: &f2})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutIntComplex(c *chk.C) {
 	var i1, i2 int32 = -1, 2
-	_, err := complexPrimitiveClient.PutInt(IntWrapper{Field1: &i1, Field2: &i2})
+	_, err := complexPrimitiveClient.PutInt(context.Background(), IntWrapper{Field1: &i1, Field2: &i2})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutLongComplex(c *chk.C) {
 	var l1, l2 int64 = 1099511627775, -999511627788
-	_, err := complexPrimitiveClient.PutLong(LongWrapper{Field1: &l1, Field2: &l2})
+	_, err := complexPrimitiveClient.PutLong(context.Background(), LongWrapper{Field1: &l1, Field2: &l2})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestPutStringComplex(c *chk.C) {
 	s1, s2 := "goodrequest", ""
-	_, err := complexPrimitiveClient.PutString(StringWrapper{Field: &s1, Empty: &s2, Null: nil})
+	_, err := complexPrimitiveClient.PutString(context.Background(), StringWrapper{Field: &s1, Empty: &s2, Null: nil})
 	c.Assert(err, chk.IsNil)
 }
 
 //Array Complex tests
 func (s *ComplexGroupSuite) TestGetEmptyArrayComplex(c *chk.C) {
-	res, err := complexArrayClient.GetEmpty()
+	res, err := complexArrayClient.GetEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Array, chk.DeepEquals, []string{})
 }
 
 func (s *ComplexGroupSuite) TestGetNotProvidedArrayComplex(c *chk.C) {
-	res, err := complexArrayClient.GetNotProvided()
+	res, err := complexArrayClient.GetNotProvided(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Array, chk.IsNil)
 }
@@ -253,38 +254,38 @@ func (s *ComplexGroupSuite) TestGetNotProvidedArrayComplex(c *chk.C) {
 func (s *ComplexGroupSuite) TestGetValidArrayComplex(c *chk.C) {
 	// string can't be null
 	array := []string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}
-	res, err := complexArrayClient.GetValid()
+	res, err := complexArrayClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Array, chk.DeepEquals, array)
 }
 
 func (s *ComplexGroupSuite) TestPutEmptyArrayComplex(c *chk.C) {
-	_, err := complexArrayClient.PutEmpty(ArrayWrapper{Array: &[]string{}})
+	_, err := complexArrayClient.PutEmpty(context.Background(), ArrayWrapper{Array: &[]string{}})
 	c.Assert(err, chk.IsNil)
 }
 
 // func (s *ComplexGroupSuite) TestPutComplexArrayValid(c *chk.C) {
 // 	// string can't be null
 // 	array := []string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}
-// 	_, err := complexArrayClient.PutValid(ArrayWrapper{Array: &array})
+// 	_, err := complexArray.PutValid(context.Background(), ArrayWrapper{Array: &array})
 // 	c.Assert(err, chk.IsNil)
 // }
 
 // Dictionary complex tests
 func (s *ComplexGroupSuite) TestGetEmptyDictionaryComplex(c *chk.C) {
-	res, err := complexDictionaryClient.GetEmpty()
+	res, err := complexDictionaryClient.GetEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.DefaultProgram, chk.DeepEquals, map[string]*string{})
 }
 
 func (s *ComplexGroupSuite) TestGetNotProvidedDictionaryComplex(c *chk.C) {
-	res, err := complexDictionaryClient.GetNotProvided()
+	res, err := complexDictionaryClient.GetNotProvided(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.DefaultProgram, chk.IsNil)
 }
 
 func (s *ComplexGroupSuite) TestGetNullDictionaryComplex(c *chk.C) {
-	res, err := complexDictionaryClient.GetNull()
+	res, err := complexDictionaryClient.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.DefaultProgram, chk.IsNil)
 }
@@ -292,13 +293,13 @@ func (s *ComplexGroupSuite) TestGetNullDictionaryComplex(c *chk.C) {
 func (s *ComplexGroupSuite) TestGetValidDictionaryComplex(c *chk.C) {
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
 	dic := map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}
-	res, err := complexDictionaryClient.GetValid()
+	res, err := complexDictionaryClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.DefaultProgram, chk.DeepEquals, dic)
 }
 
 func (s *ComplexGroupSuite) TestPutEmptyDictionaryComplex(c *chk.C) {
-	_, err := complexDictionaryClient.PutEmpty(DictionaryWrapper{DefaultProgram: &map[string]*string{}})
+	_, err := complexDictionaryClient.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]*string{}})
 	c.Assert(err, chk.IsNil)
 }
 
@@ -307,13 +308,13 @@ func (s *ComplexGroupSuite) TestPutValidDictionaryComplex(c *chk.C) {
 	var dw DictionaryWrapper
 	err := json.Unmarshal([]byte(jsonBlob), &dw)
 	c.Assert(err, chk.IsNil)
-	_, err = complexDictionaryClient.PutValid(dw)
+	_, err = complexDictionaryClient.PutValid(context.Background(), dw)
 	c.Assert(err, chk.IsNil)
 }
 
 // Basic operations tests
 func (s *ComplexGroupSuite) TestGetEmptyBasicOperationsComplex(c *chk.C) {
-	res, err := complexBasicOperationsClient.GetEmpty()
+	res, err := complexBasicOperationsClient.GetEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(res.ID, chk.IsNil)
@@ -323,12 +324,12 @@ func (s *ComplexGroupSuite) TestGetEmptyBasicOperationsComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetInvalidBasicOperationsComplex(c *chk.C) {
-	_, err := complexBasicOperationsClient.GetInvalid()
+	_, err := complexBasicOperationsClient.GetInvalid(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *ComplexGroupSuite) TestGetNotProvidedBasicOperationsComplex(c *chk.C) {
-	res, err := complexBasicOperationsClient.GetNotProvided()
+	res, err := complexBasicOperationsClient.GetNotProvided(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(res.ID, chk.IsNil)
@@ -338,7 +339,7 @@ func (s *ComplexGroupSuite) TestGetNotProvidedBasicOperationsComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetValidBasicOperationsComplex(c *chk.C) {
-	res, err := complexBasicOperationsClient.GetValid()
+	res, err := complexBasicOperationsClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.ID, chk.Equals, int32(2))
@@ -348,7 +349,7 @@ func (s *ComplexGroupSuite) TestGetValidBasicOperationsComplex(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestGetNullBasicOperationsComplex(c *chk.C) {
-	res, err := complexBasicOperationsClient.GetNull()
+	res, err := complexBasicOperationsClient.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(res.ID, chk.IsNil)
@@ -360,13 +361,13 @@ func (s *ComplexGroupSuite) TestGetNullBasicOperationsComplex(c *chk.C) {
 func (s *ComplexGroupSuite) TestPutValidBasicOperationsComplex(c *chk.C) {
 	m, n := int32(2), "abc"
 	expected := Basic{ID: &m, Name: &n, Color: "Magenta"}
-	_, err := complexBasicOperationsClient.PutValid(expected)
+	_, err := complexBasicOperationsClient.PutValid(context.Background(), expected)
 	c.Assert(err, chk.IsNil)
 }
 
 // Inheritance tests
 func (s *ComplexGroupSuite) TestGetValidInheritanceComplex(c *chk.C) {
-	res, err := complexInheritanceClient.GetValid()
+	res, err := complexInheritanceClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	dogs := []Dog{getDogObject("tomato", 1, "Potato"), getDogObject("french fries", -1, "Tomato")}
 
@@ -389,7 +390,7 @@ func (s *ComplexGroupSuite) TestPutValidInheritanceComplex(c *chk.C) {
 			getDogObject("french fries", -1, "Tomato"),
 		},
 	}
-	_, err := complexInheritanceClient.PutValid(cat)
+	_, err := complexInheritanceClient.PutValid(context.Background(), cat)
 	c.Assert(err, chk.IsNil)
 }
 
@@ -428,7 +429,7 @@ var f = Salmon{
 }
 
 func (s *ComplexGroupSuite) TestGetComplexPolymorphicValid(c *chk.C) {
-	resp, err := complexPolymorphicClient.GetValid()
+	resp, err := complexPolymorphicClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	salmon, b := resp.Value.AsSalmon()
@@ -464,7 +465,7 @@ func (s *ComplexGroupSuite) TestGetComplexPolymorphicValid(c *chk.C) {
 }
 
 func (s *ComplexGroupSuite) TestPutComplexPolymorphismValid(c *chk.C) {
-	_, err := complexPolymorphicClient.PutValid(f)
+	_, err := complexPolymorphicClient.PutValid(context.Background(), f)
 	c.Assert(err, chk.IsNil)
 }
 
@@ -489,14 +490,14 @@ func (s *ComplexGroupSuite) TestPutComplexPolymorphismValidMissingRequired(c *ch
 			},
 		},
 	}
-	resp, err := complexPolymorphicClient.PutValidMissingRequired(badF)
+	resp, err := complexPolymorphicClient.PutValidMissingRequired(context.Background(), badF)
 	c.Assert(err, chk.NotNil)
 	c.Assert(resp.StatusCode, chk.Equals, http.StatusBadRequest)
 }
 
 // Polymorphic recursive tests
 func (s *ComplexGroupSuite) TestGetComplexPolymorphicRecursive(c *chk.C) {
-	resp, err := complexPolymorphicRecursiveClient.GetValid()
+	resp, err := complexPolymorphicRecursiveClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(resp.Value, chk.FitsTypeOf, Salmon{})
@@ -559,6 +560,6 @@ func (s *ComplexGroupSuite) TestPutComplexPolymorphicRecursive(c *chk.C) {
 			},
 		},
 	}
-	_, err := complexPolymorphicRecursiveClient.PutValid(recF)
+	_, err := complexPolymorphicRecursiveClient.PutValid(context.Background(), recF)
 	c.Assert(err, chk.IsNil)
 }

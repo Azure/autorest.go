@@ -7,10 +7,12 @@ package integergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
+	"net/http"
+
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
-	"net/http"
 )
 
 // IntClient is the test Infrastructure for AutoRest
@@ -57,7 +59,7 @@ func (client IntClient) GetInvalidPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -109,7 +111,7 @@ func (client IntClient) GetInvalidUnixTimePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/invalidunixtime"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidUnixTimeSender sends the GetInvalidUnixTime request. The method will close the
@@ -161,7 +163,7 @@ func (client IntClient) GetNullPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -213,7 +215,7 @@ func (client IntClient) GetNullUnixTimePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/nullunixtime"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullUnixTimeSender sends the GetNullUnixTime request. The method will close the
@@ -237,8 +239,8 @@ func (client IntClient) GetNullUnixTimeResponder(resp *http.Response) (result Un
 }
 
 // GetOverflowInt32 get overflow Int32 value
-func (client IntClient) GetOverflowInt32() (result Int32, err error) {
-	req, err := client.GetOverflowInt32Preparer()
+func (client IntGroupClient) GetOverflowInt32(ctx context.Context) (result Int32, err error) {
+	req, err := client.GetOverflowInt32Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetOverflowInt32", nil, "Failure preparing request")
 		return
@@ -265,7 +267,7 @@ func (client IntClient) GetOverflowInt32Preparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/overflowint32"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowInt32Sender sends the GetOverflowInt32 request. The method will close the
@@ -317,7 +319,7 @@ func (client IntClient) GetOverflowInt64Preparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/overflowint64"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowInt64Sender sends the GetOverflowInt64 request. The method will close the
@@ -369,7 +371,7 @@ func (client IntClient) GetUnderflowInt32Preparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/underflowint32"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowInt32Sender sends the GetUnderflowInt32 request. The method will close the
@@ -421,7 +423,7 @@ func (client IntClient) GetUnderflowInt64Preparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/underflowint64"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowInt64Sender sends the GetUnderflowInt64 request. The method will close the
@@ -473,7 +475,7 @@ func (client IntClient) GetUnixTimePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/unixtime"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnixTimeSender sends the GetUnixTime request. The method will close the
@@ -528,7 +530,7 @@ func (client IntClient) PutMax32Preparer(intBody int32) (*http.Request, error) {
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/max/32"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMax32Sender sends the PutMax32 request. The method will close the
@@ -582,7 +584,7 @@ func (client IntClient) PutMax64Preparer(intBody int64) (*http.Request, error) {
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/max/64"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMax64Sender sends the PutMax64 request. The method will close the
@@ -636,7 +638,7 @@ func (client IntClient) PutMin32Preparer(intBody int32) (*http.Request, error) {
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/min/32"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMin32Sender sends the PutMin32 request. The method will close the
@@ -690,7 +692,7 @@ func (client IntClient) PutMin64Preparer(intBody int64) (*http.Request, error) {
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/min/64"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMin64Sender sends the PutMin64 request. The method will close the
@@ -744,7 +746,7 @@ func (client IntClient) PutUnixTimeDatePreparer(intBody date.UnixTime) (*http.Re
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/unixtime"),
 		autorest.WithJSON(intBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutUnixTimeDateSender sends the PutUnixTimeDate request. The method will close the

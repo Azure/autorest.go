@@ -7,6 +7,7 @@ package datetimerfc1123group
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -29,8 +30,8 @@ func NewDatetimerfc1123ClientWithBaseURI(baseURI string) Datetimerfc1123Client {
 }
 
 // GetInvalid get invalid datetime value
-func (client Datetimerfc1123Client) GetInvalid() (result DateTimeRfc1123, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client Datetimerfc1123Client) GetInvalid(ctx context.Context) (result DateTimeRfc1123, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client Datetimerfc1123Client) GetInvalid() (result DateTimeRfc1123, err er
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client Datetimerfc1123Client) GetInvalidPreparer() (*http.Request, error) {
+func (client Datetimerfc1123Client) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -81,8 +82,8 @@ func (client Datetimerfc1123Client) GetInvalidResponder(resp *http.Response) (re
 }
 
 // GetNull get null datetime value
-func (client Datetimerfc1123Client) GetNull() (result DateTimeRfc1123, err error) {
-	req, err := client.GetNullPreparer()
+func (client Datetimerfc1123Client) GetNull(ctx context.Context) (result DateTimeRfc1123, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetNull", nil, "Failure preparing request")
 		return
@@ -104,12 +105,12 @@ func (client Datetimerfc1123Client) GetNull() (result DateTimeRfc1123, err error
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client Datetimerfc1123Client) GetNullPreparer() (*http.Request, error) {
+func (client Datetimerfc1123Client) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -133,8 +134,8 @@ func (client Datetimerfc1123Client) GetNullResponder(resp *http.Response) (resul
 }
 
 // GetOverflow get overflow datetime value
-func (client Datetimerfc1123Client) GetOverflow() (result DateTimeRfc1123, err error) {
-	req, err := client.GetOverflowPreparer()
+func (client Datetimerfc1123Client) GetOverflow(ctx context.Context) (result DateTimeRfc1123, err error) {
+	req, err := client.GetOverflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetOverflow", nil, "Failure preparing request")
 		return
@@ -156,12 +157,12 @@ func (client Datetimerfc1123Client) GetOverflow() (result DateTimeRfc1123, err e
 }
 
 // GetOverflowPreparer prepares the GetOverflow request.
-func (client Datetimerfc1123Client) GetOverflowPreparer() (*http.Request, error) {
+func (client Datetimerfc1123Client) GetOverflowPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/overflow"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowSender sends the GetOverflow request. The method will close the
@@ -185,8 +186,8 @@ func (client Datetimerfc1123Client) GetOverflowResponder(resp *http.Response) (r
 }
 
 // GetUnderflow get underflow datetime value
-func (client Datetimerfc1123Client) GetUnderflow() (result DateTimeRfc1123, err error) {
-	req, err := client.GetUnderflowPreparer()
+func (client Datetimerfc1123Client) GetUnderflow(ctx context.Context) (result DateTimeRfc1123, err error) {
+	req, err := client.GetUnderflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUnderflow", nil, "Failure preparing request")
 		return
@@ -208,12 +209,12 @@ func (client Datetimerfc1123Client) GetUnderflow() (result DateTimeRfc1123, err 
 }
 
 // GetUnderflowPreparer prepares the GetUnderflow request.
-func (client Datetimerfc1123Client) GetUnderflowPreparer() (*http.Request, error) {
+func (client Datetimerfc1123Client) GetUnderflowPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/underflow"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowSender sends the GetUnderflow request. The method will close the
@@ -237,8 +238,8 @@ func (client Datetimerfc1123Client) GetUnderflowResponder(resp *http.Response) (
 }
 
 // GetUtcLowercaseMaxDateTime get max datetime value fri, 31 dec 9999 23:59:59 gmt
-func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTime() (result DateTimeRfc1123, err error) {
-	req, err := client.GetUtcLowercaseMaxDateTimePreparer()
+func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
+	req, err := client.GetUtcLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcLowercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -260,12 +261,12 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTime() (result DateTim
 }
 
 // GetUtcLowercaseMaxDateTimePreparer prepares the GetUtcLowercaseMaxDateTime request.
-func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/max/lowercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUtcLowercaseMaxDateTimeSender sends the GetUtcLowercaseMaxDateTime request. The method will close the
@@ -289,8 +290,8 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimeResponder(resp *ht
 }
 
 // GetUtcMinDateTime get min datetime value Mon, 1 Jan 0001 00:00:00 GMT
-func (client Datetimerfc1123Client) GetUtcMinDateTime() (result DateTimeRfc1123, err error) {
-	req, err := client.GetUtcMinDateTimePreparer()
+func (client Datetimerfc1123Client) GetUtcMinDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
+	req, err := client.GetUtcMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcMinDateTime", nil, "Failure preparing request")
 		return
@@ -312,12 +313,12 @@ func (client Datetimerfc1123Client) GetUtcMinDateTime() (result DateTimeRfc1123,
 }
 
 // GetUtcMinDateTimePreparer prepares the GetUtcMinDateTime request.
-func (client Datetimerfc1123Client) GetUtcMinDateTimePreparer() (*http.Request, error) {
+func (client Datetimerfc1123Client) GetUtcMinDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/min"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUtcMinDateTimeSender sends the GetUtcMinDateTime request. The method will close the
@@ -341,8 +342,8 @@ func (client Datetimerfc1123Client) GetUtcMinDateTimeResponder(resp *http.Respon
 }
 
 // GetUtcUppercaseMaxDateTime get max datetime value FRI, 31 DEC 9999 23:59:59 GMT
-func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTime() (result DateTimeRfc1123, err error) {
-	req, err := client.GetUtcUppercaseMaxDateTimePreparer()
+func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
+	req, err := client.GetUtcUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcUppercaseMaxDateTime", nil, "Failure preparing request")
 		return
@@ -364,12 +365,12 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTime() (result DateTim
 }
 
 // GetUtcUppercaseMaxDateTimePreparer prepares the GetUtcUppercaseMaxDateTime request.
-func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimePreparer() (*http.Request, error) {
+func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/max/uppercase"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUtcUppercaseMaxDateTimeSender sends the GetUtcUppercaseMaxDateTime request. The method will close the
@@ -394,8 +395,8 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimeResponder(resp *ht
 
 // PutUtcMaxDateTime put max datetime value Fri, 31 Dec 9999 23:59:59 GMT
 //
-func (client Datetimerfc1123Client) PutUtcMaxDateTime(datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
-	req, err := client.PutUtcMaxDateTimePreparer(datetimeBody)
+func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
+	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "PutUtcMaxDateTime", nil, "Failure preparing request")
 		return
@@ -417,14 +418,14 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTime(datetimeBody date.TimeRFC1
 }
 
 // PutUtcMaxDateTimePreparer prepares the PutUtcMaxDateTime request.
-func (client Datetimerfc1123Client) PutUtcMaxDateTimePreparer(datetimeBody date.TimeRFC1123) (*http.Request, error) {
+func (client Datetimerfc1123Client) PutUtcMaxDateTimePreparer(ctx context.Context, datetimeBody date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/max"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutUtcMaxDateTimeSender sends the PutUtcMaxDateTime request. The method will close the
@@ -448,8 +449,8 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTimeResponder(resp *http.Respon
 
 // PutUtcMinDateTime put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 //
-func (client Datetimerfc1123Client) PutUtcMinDateTime(datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
-	req, err := client.PutUtcMinDateTimePreparer(datetimeBody)
+func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
+	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "PutUtcMinDateTime", nil, "Failure preparing request")
 		return
@@ -471,14 +472,14 @@ func (client Datetimerfc1123Client) PutUtcMinDateTime(datetimeBody date.TimeRFC1
 }
 
 // PutUtcMinDateTimePreparer prepares the PutUtcMinDateTime request.
-func (client Datetimerfc1123Client) PutUtcMinDateTimePreparer(datetimeBody date.TimeRFC1123) (*http.Request, error) {
+func (client Datetimerfc1123Client) PutUtcMinDateTimePreparer(ctx context.Context, datetimeBody date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/min"),
 		autorest.WithJSON(datetimeBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutUtcMinDateTimeSender sends the PutUtcMinDateTime request. The method will close the

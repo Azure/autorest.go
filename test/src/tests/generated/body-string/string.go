@@ -7,6 +7,7 @@ package stringgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -56,7 +57,7 @@ func (client StringClient) GetBase64EncodedPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/base64Encoding"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBase64EncodedSender sends the GetBase64Encoded request. The method will close the
@@ -108,7 +109,7 @@ func (client StringClient) GetBase64URLEncodedPreparer() (*http.Request, error) 
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/base64UrlEncoding"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBase64URLEncodedSender sends the GetBase64URLEncoded request. The method will close the
@@ -156,11 +157,7 @@ func (client StringClient) GetEmpty() (result StringModel, err error) {
 
 // GetEmptyPreparer prepares the GetEmpty request.
 func (client StringClient) GetEmptyPreparer() (*http.Request, error) {
-	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
-		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/string/empty"))
-	return preparer.Prepare(&http.Request{})
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -212,7 +209,7 @@ func (client StringClient) GetMbcsPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/mbcs"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMbcsSender sends the GetMbcs request. The method will close the
@@ -264,7 +261,7 @@ func (client StringClient) GetNotProvidedPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/notProvided"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
@@ -316,7 +313,7 @@ func (client StringClient) GetNullPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -368,7 +365,7 @@ func (client StringClient) GetNullBase64URLEncodedPreparer() (*http.Request, err
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/nullBase64UrlEncoding"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullBase64URLEncodedSender sends the GetNullBase64URLEncoded request. The method will close the
@@ -421,7 +418,7 @@ func (client StringClient) GetWhitespacePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/whitespace"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetWhitespaceSender sends the GetWhitespace request. The method will close the
@@ -476,7 +473,7 @@ func (client StringClient) PutBase64URLEncodedPreparer(stringBody string) (*http
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/base64UrlEncoding"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBase64URLEncodedSender sends the PutBase64URLEncoded request. The method will close the
@@ -531,7 +528,7 @@ func (client StringClient) PutEmptyPreparer(stringBody string) (*http.Request, e
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/empty"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutEmptySender sends the PutEmpty request. The method will close the
@@ -586,7 +583,7 @@ func (client StringClient) PutMbcsPreparer(stringBody string) (*http.Request, er
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/mbcs"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMbcsSender sends the PutMbcs request. The method will close the
@@ -644,7 +641,7 @@ func (client StringClient) PutNullPreparer(stringBody string) (*http.Request, er
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(stringBody))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutNullSender sends the PutNull request. The method will close the
@@ -700,7 +697,7 @@ func (client StringClient) PutWhitespacePreparer(stringBody string) (*http.Reque
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/whitespace"),
 		autorest.WithJSON(stringBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutWhitespaceSender sends the PutWhitespace request. The method will close the

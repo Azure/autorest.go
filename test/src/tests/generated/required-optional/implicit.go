@@ -7,6 +7,7 @@ package optionalgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewImplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 }
 
 // GetOptionalGlobalQuery test implicitly optional query parameter
-func (client ImplicitClient) GetOptionalGlobalQuery() (result Error, err error) {
-	req, err := client.GetOptionalGlobalQueryPreparer()
+func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result Error, err error) {
+	req, err := client.GetOptionalGlobalQueryPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetOptionalGlobalQuery", nil, "Failure preparing request")
 		return
@@ -51,7 +52,7 @@ func (client ImplicitClient) GetOptionalGlobalQuery() (result Error, err error) 
 }
 
 // GetOptionalGlobalQueryPreparer prepares the GetOptionalGlobalQuery request.
-func (client ImplicitClient) GetOptionalGlobalQueryPreparer() (*http.Request, error) {
+func (client ImplicitClient) GetOptionalGlobalQueryPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{}
 	if client.OptionalGlobalQuery != nil {
 		queryParameters["optional-global-query"] = autorest.Encode("query", *client.OptionalGlobalQuery)
@@ -62,7 +63,7 @@ func (client ImplicitClient) GetOptionalGlobalQueryPreparer() (*http.Request, er
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/global/optional/query"),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOptionalGlobalQuerySender sends the GetOptionalGlobalQuery request. The method will close the
@@ -86,8 +87,8 @@ func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response
 }
 
 // GetRequiredGlobalPath test implicitly required path parameter
-func (client ImplicitClient) GetRequiredGlobalPath() (result Error, err error) {
-	req, err := client.GetRequiredGlobalPathPreparer()
+func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result Error, err error) {
+	req, err := client.GetRequiredGlobalPathPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalPath", nil, "Failure preparing request")
 		return
@@ -109,7 +110,7 @@ func (client ImplicitClient) GetRequiredGlobalPath() (result Error, err error) {
 }
 
 // GetRequiredGlobalPathPreparer prepares the GetRequiredGlobalPath request.
-func (client ImplicitClient) GetRequiredGlobalPathPreparer() (*http.Request, error) {
+func (client ImplicitClient) GetRequiredGlobalPathPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"required-global-path": autorest.Encode("path", client.RequiredGlobalPath),
 	}
@@ -118,7 +119,7 @@ func (client ImplicitClient) GetRequiredGlobalPathPreparer() (*http.Request, err
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/reqopt/global/required/path/{required-global-path}", pathParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetRequiredGlobalPathSender sends the GetRequiredGlobalPath request. The method will close the
@@ -142,8 +143,8 @@ func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response)
 }
 
 // GetRequiredGlobalQuery test implicitly required query parameter
-func (client ImplicitClient) GetRequiredGlobalQuery() (result Error, err error) {
-	req, err := client.GetRequiredGlobalQueryPreparer()
+func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result Error, err error) {
+	req, err := client.GetRequiredGlobalQueryPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalQuery", nil, "Failure preparing request")
 		return
@@ -165,7 +166,7 @@ func (client ImplicitClient) GetRequiredGlobalQuery() (result Error, err error) 
 }
 
 // GetRequiredGlobalQueryPreparer prepares the GetRequiredGlobalQuery request.
-func (client ImplicitClient) GetRequiredGlobalQueryPreparer() (*http.Request, error) {
+func (client ImplicitClient) GetRequiredGlobalQueryPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
 		"required-global-query": autorest.Encode("query", client.RequiredGlobalQuery),
 	}
@@ -175,7 +176,7 @@ func (client ImplicitClient) GetRequiredGlobalQueryPreparer() (*http.Request, er
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/global/required/query"),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetRequiredGlobalQuerySender sends the GetRequiredGlobalQuery request. The method will close the
@@ -200,8 +201,8 @@ func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response
 
 // GetRequiredPath test implicitly required path parameter
 //
-func (client ImplicitClient) GetRequiredPath(pathParameter string) (result Error, err error) {
-	req, err := client.GetRequiredPathPreparer(pathParameter)
+func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result Error, err error) {
+	req, err := client.GetRequiredPathPreparer(ctx, pathParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredPath", nil, "Failure preparing request")
 		return
@@ -223,7 +224,7 @@ func (client ImplicitClient) GetRequiredPath(pathParameter string) (result Error
 }
 
 // GetRequiredPathPreparer prepares the GetRequiredPath request.
-func (client ImplicitClient) GetRequiredPathPreparer(pathParameter string) (*http.Request, error) {
+func (client ImplicitClient) GetRequiredPathPreparer(ctx context.Context, pathParameter string) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"pathParameter": autorest.Encode("path", pathParameter),
 	}
@@ -232,7 +233,7 @@ func (client ImplicitClient) GetRequiredPathPreparer(pathParameter string) (*htt
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/reqopt/implicit/required/path/{pathParameter}", pathParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetRequiredPathSender sends the GetRequiredPath request. The method will close the
@@ -257,8 +258,8 @@ func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (resu
 
 // PutOptionalBody test implicitly optional body parameter
 //
-func (client ImplicitClient) PutOptionalBody(bodyParameter string) (result autorest.Response, err error) {
-	req, err := client.PutOptionalBodyPreparer(bodyParameter)
+func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
+	req, err := client.PutOptionalBodyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalBody", nil, "Failure preparing request")
 		return
@@ -280,7 +281,7 @@ func (client ImplicitClient) PutOptionalBody(bodyParameter string) (result autor
 }
 
 // PutOptionalBodyPreparer prepares the PutOptionalBody request.
-func (client ImplicitClient) PutOptionalBodyPreparer(bodyParameter string) (*http.Request, error) {
+func (client ImplicitClient) PutOptionalBodyPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -290,7 +291,7 @@ func (client ImplicitClient) PutOptionalBodyPreparer(bodyParameter string) (*htt
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithJSON(bodyParameter))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutOptionalBodySender sends the PutOptionalBody request. The method will close the
@@ -314,8 +315,8 @@ func (client ImplicitClient) PutOptionalBodyResponder(resp *http.Response) (resu
 
 // PutOptionalHeader test implicitly optional header parameter
 //
-func (client ImplicitClient) PutOptionalHeader(queryParameter string) (result autorest.Response, err error) {
-	req, err := client.PutOptionalHeaderPreparer(queryParameter)
+func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
+	req, err := client.PutOptionalHeaderPreparer(ctx, queryParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalHeader", nil, "Failure preparing request")
 		return
@@ -337,7 +338,7 @@ func (client ImplicitClient) PutOptionalHeader(queryParameter string) (result au
 }
 
 // PutOptionalHeaderPreparer prepares the PutOptionalHeader request.
-func (client ImplicitClient) PutOptionalHeaderPreparer(queryParameter string) (*http.Request, error) {
+func (client ImplicitClient) PutOptionalHeaderPreparer(ctx context.Context, queryParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -346,7 +347,7 @@ func (client ImplicitClient) PutOptionalHeaderPreparer(queryParameter string) (*
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("queryParameter", autorest.String(queryParameter)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutOptionalHeaderSender sends the PutOptionalHeader request. The method will close the
@@ -370,8 +371,8 @@ func (client ImplicitClient) PutOptionalHeaderResponder(resp *http.Response) (re
 
 // PutOptionalQuery test implicitly optional query parameter
 //
-func (client ImplicitClient) PutOptionalQuery(queryParameter string) (result autorest.Response, err error) {
-	req, err := client.PutOptionalQueryPreparer(queryParameter)
+func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
+	req, err := client.PutOptionalQueryPreparer(ctx, queryParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalQuery", nil, "Failure preparing request")
 		return
@@ -393,7 +394,7 @@ func (client ImplicitClient) PutOptionalQuery(queryParameter string) (result aut
 }
 
 // PutOptionalQueryPreparer prepares the PutOptionalQuery request.
-func (client ImplicitClient) PutOptionalQueryPreparer(queryParameter string) (*http.Request, error) {
+func (client ImplicitClient) PutOptionalQueryPreparer(ctx context.Context, queryParameter string) (*http.Request, error) {
 	queryParameters := map[string]interface{}{}
 	if len(queryParameter) > 0 {
 		queryParameters["queryParameter"] = autorest.Encode("query", queryParameter)
@@ -404,7 +405,7 @@ func (client ImplicitClient) PutOptionalQueryPreparer(queryParameter string) (*h
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/implicit/optional/query"),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutOptionalQuerySender sends the PutOptionalQuery request. The method will close the

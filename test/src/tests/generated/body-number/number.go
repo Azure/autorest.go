@@ -7,6 +7,7 @@ package numbergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/shopspring/decimal"
@@ -29,8 +30,8 @@ func NewNumberClientWithBaseURI(baseURI string) NumberClient {
 }
 
 // GetBigDecimal get big decimal value 2.5976931e+101
-func (client NumberClient) GetBigDecimal() (result Decimal, err error) {
-	req, err := client.GetBigDecimalPreparer()
+func (client NumberClient) GetBigDecimal(ctx context.Context) (result Decimal, err error) {
+	req, err := client.GetBigDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimal", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client NumberClient) GetBigDecimal() (result Decimal, err error) {
 }
 
 // GetBigDecimalPreparer prepares the GetBigDecimal request.
-func (client NumberClient) GetBigDecimalPreparer() (*http.Request, error) {
+func (client NumberClient) GetBigDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/2.5976931e+101"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBigDecimalSender sends the GetBigDecimal request. The method will close the
@@ -81,8 +82,8 @@ func (client NumberClient) GetBigDecimalResponder(resp *http.Response) (result D
 }
 
 // GetBigDecimalNegativeDecimal get big decimal value -99999999.99
-func (client NumberClient) GetBigDecimalNegativeDecimal() (result Decimal, err error) {
-	req, err := client.GetBigDecimalNegativeDecimalPreparer()
+func (client NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context) (result Decimal, err error) {
+	req, err := client.GetBigDecimalNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalNegativeDecimal", nil, "Failure preparing request")
 		return
@@ -104,12 +105,12 @@ func (client NumberClient) GetBigDecimalNegativeDecimal() (result Decimal, err e
 }
 
 // GetBigDecimalNegativeDecimalPreparer prepares the GetBigDecimalNegativeDecimal request.
-func (client NumberClient) GetBigDecimalNegativeDecimalPreparer() (*http.Request, error) {
+func (client NumberClient) GetBigDecimalNegativeDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/-99999999.99"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBigDecimalNegativeDecimalSender sends the GetBigDecimalNegativeDecimal request. The method will close the
@@ -133,8 +134,8 @@ func (client NumberClient) GetBigDecimalNegativeDecimalResponder(resp *http.Resp
 }
 
 // GetBigDecimalPositiveDecimal get big decimal value 99999999.99
-func (client NumberClient) GetBigDecimalPositiveDecimal() (result Decimal, err error) {
-	req, err := client.GetBigDecimalPositiveDecimalPreparer()
+func (client NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context) (result Decimal, err error) {
+	req, err := client.GetBigDecimalPositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalPositiveDecimal", nil, "Failure preparing request")
 		return
@@ -156,12 +157,12 @@ func (client NumberClient) GetBigDecimalPositiveDecimal() (result Decimal, err e
 }
 
 // GetBigDecimalPositiveDecimalPreparer prepares the GetBigDecimalPositiveDecimal request.
-func (client NumberClient) GetBigDecimalPositiveDecimalPreparer() (*http.Request, error) {
+func (client NumberClient) GetBigDecimalPositiveDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/99999999.99"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBigDecimalPositiveDecimalSender sends the GetBigDecimalPositiveDecimal request. The method will close the
@@ -185,8 +186,8 @@ func (client NumberClient) GetBigDecimalPositiveDecimalResponder(resp *http.Resp
 }
 
 // GetBigDouble get big double value 2.5976931e+101
-func (client NumberClient) GetBigDouble() (result Float64, err error) {
-	req, err := client.GetBigDoublePreparer()
+func (client NumberClient) GetBigDouble(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetBigDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDouble", nil, "Failure preparing request")
 		return
@@ -208,12 +209,12 @@ func (client NumberClient) GetBigDouble() (result Float64, err error) {
 }
 
 // GetBigDoublePreparer prepares the GetBigDouble request.
-func (client NumberClient) GetBigDoublePreparer() (*http.Request, error) {
+func (client NumberClient) GetBigDoublePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/2.5976931e+101"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBigDoubleSender sends the GetBigDouble request. The method will close the
@@ -237,8 +238,8 @@ func (client NumberClient) GetBigDoubleResponder(resp *http.Response) (result Fl
 }
 
 // GetBigDoubleNegativeDecimal get big double value -99999999.99
-func (client NumberClient) GetBigDoubleNegativeDecimal() (result Float64, err error) {
-	req, err := client.GetBigDoubleNegativeDecimalPreparer()
+func (client NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetBigDoubleNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDoubleNegativeDecimal", nil, "Failure preparing request")
 		return
@@ -260,12 +261,12 @@ func (client NumberClient) GetBigDoubleNegativeDecimal() (result Float64, err er
 }
 
 // GetBigDoubleNegativeDecimalPreparer prepares the GetBigDoubleNegativeDecimal request.
-func (client NumberClient) GetBigDoubleNegativeDecimalPreparer() (*http.Request, error) {
+func (client NumberClient) GetBigDoubleNegativeDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/-99999999.99"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBigDoubleNegativeDecimalSender sends the GetBigDoubleNegativeDecimal request. The method will close the
@@ -289,8 +290,8 @@ func (client NumberClient) GetBigDoubleNegativeDecimalResponder(resp *http.Respo
 }
 
 // GetBigDoublePositiveDecimal get big double value 99999999.99
-func (client NumberClient) GetBigDoublePositiveDecimal() (result Float64, err error) {
-	req, err := client.GetBigDoublePositiveDecimalPreparer()
+func (client NumberClient) GetBigDoublePositiveDecimal(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetBigDoublePositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDoublePositiveDecimal", nil, "Failure preparing request")
 		return
@@ -312,12 +313,12 @@ func (client NumberClient) GetBigDoublePositiveDecimal() (result Float64, err er
 }
 
 // GetBigDoublePositiveDecimalPreparer prepares the GetBigDoublePositiveDecimal request.
-func (client NumberClient) GetBigDoublePositiveDecimalPreparer() (*http.Request, error) {
+func (client NumberClient) GetBigDoublePositiveDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/99999999.99"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBigDoublePositiveDecimalSender sends the GetBigDoublePositiveDecimal request. The method will close the
@@ -341,8 +342,8 @@ func (client NumberClient) GetBigDoublePositiveDecimalResponder(resp *http.Respo
 }
 
 // GetBigFloat get big float value 3.402823e+20
-func (client NumberClient) GetBigFloat() (result Float64, err error) {
-	req, err := client.GetBigFloatPreparer()
+func (client NumberClient) GetBigFloat(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetBigFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigFloat", nil, "Failure preparing request")
 		return
@@ -364,12 +365,12 @@ func (client NumberClient) GetBigFloat() (result Float64, err error) {
 }
 
 // GetBigFloatPreparer prepares the GetBigFloat request.
-func (client NumberClient) GetBigFloatPreparer() (*http.Request, error) {
+func (client NumberClient) GetBigFloatPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/float/3.402823e+20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBigFloatSender sends the GetBigFloat request. The method will close the
@@ -393,8 +394,8 @@ func (client NumberClient) GetBigFloatResponder(resp *http.Response) (result Flo
 }
 
 // GetInvalidDecimal get invalid decimal Number value
-func (client NumberClient) GetInvalidDecimal() (result Decimal, err error) {
-	req, err := client.GetInvalidDecimalPreparer()
+func (client NumberClient) GetInvalidDecimal(ctx context.Context) (result Decimal, err error) {
+	req, err := client.GetInvalidDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDecimal", nil, "Failure preparing request")
 		return
@@ -416,12 +417,12 @@ func (client NumberClient) GetInvalidDecimal() (result Decimal, err error) {
 }
 
 // GetInvalidDecimalPreparer prepares the GetInvalidDecimal request.
-func (client NumberClient) GetInvalidDecimalPreparer() (*http.Request, error) {
+func (client NumberClient) GetInvalidDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/invaliddecimal"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidDecimalSender sends the GetInvalidDecimal request. The method will close the
@@ -445,8 +446,8 @@ func (client NumberClient) GetInvalidDecimalResponder(resp *http.Response) (resu
 }
 
 // GetInvalidDouble get invalid double Number value
-func (client NumberClient) GetInvalidDouble() (result Float64, err error) {
-	req, err := client.GetInvalidDoublePreparer()
+func (client NumberClient) GetInvalidDouble(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetInvalidDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDouble", nil, "Failure preparing request")
 		return
@@ -468,12 +469,12 @@ func (client NumberClient) GetInvalidDouble() (result Float64, err error) {
 }
 
 // GetInvalidDoublePreparer prepares the GetInvalidDouble request.
-func (client NumberClient) GetInvalidDoublePreparer() (*http.Request, error) {
+func (client NumberClient) GetInvalidDoublePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/invaliddouble"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidDoubleSender sends the GetInvalidDouble request. The method will close the
@@ -497,8 +498,8 @@ func (client NumberClient) GetInvalidDoubleResponder(resp *http.Response) (resul
 }
 
 // GetInvalidFloat get invalid float Number value
-func (client NumberClient) GetInvalidFloat() (result Float64, err error) {
-	req, err := client.GetInvalidFloatPreparer()
+func (client NumberClient) GetInvalidFloat(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetInvalidFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidFloat", nil, "Failure preparing request")
 		return
@@ -520,12 +521,12 @@ func (client NumberClient) GetInvalidFloat() (result Float64, err error) {
 }
 
 // GetInvalidFloatPreparer prepares the GetInvalidFloat request.
-func (client NumberClient) GetInvalidFloatPreparer() (*http.Request, error) {
+func (client NumberClient) GetInvalidFloatPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/invalidfloat"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidFloatSender sends the GetInvalidFloat request. The method will close the
@@ -549,8 +550,8 @@ func (client NumberClient) GetInvalidFloatResponder(resp *http.Response) (result
 }
 
 // GetNull get null Number value
-func (client NumberClient) GetNull() (result Float64, err error) {
-	req, err := client.GetNullPreparer()
+func (client NumberClient) GetNull(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -572,12 +573,12 @@ func (client NumberClient) GetNull() (result Float64, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client NumberClient) GetNullPreparer() (*http.Request, error) {
+func (client NumberClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -601,8 +602,8 @@ func (client NumberClient) GetNullResponder(resp *http.Response) (result Float64
 }
 
 // GetSmallDecimal get small decimal value 2.5976931e-101
-func (client NumberClient) GetSmallDecimal() (result Decimal, err error) {
-	req, err := client.GetSmallDecimalPreparer()
+func (client NumberClient) GetSmallDecimal(ctx context.Context) (result Decimal, err error) {
+	req, err := client.GetSmallDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDecimal", nil, "Failure preparing request")
 		return
@@ -624,12 +625,12 @@ func (client NumberClient) GetSmallDecimal() (result Decimal, err error) {
 }
 
 // GetSmallDecimalPreparer prepares the GetSmallDecimal request.
-func (client NumberClient) GetSmallDecimalPreparer() (*http.Request, error) {
+func (client NumberClient) GetSmallDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/decimal/2.5976931e-101"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetSmallDecimalSender sends the GetSmallDecimal request. The method will close the
@@ -653,8 +654,8 @@ func (client NumberClient) GetSmallDecimalResponder(resp *http.Response) (result
 }
 
 // GetSmallDouble get big double value 2.5976931e-101
-func (client NumberClient) GetSmallDouble() (result Float64, err error) {
-	req, err := client.GetSmallDoublePreparer()
+func (client NumberClient) GetSmallDouble(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetSmallDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDouble", nil, "Failure preparing request")
 		return
@@ -676,12 +677,12 @@ func (client NumberClient) GetSmallDouble() (result Float64, err error) {
 }
 
 // GetSmallDoublePreparer prepares the GetSmallDouble request.
-func (client NumberClient) GetSmallDoublePreparer() (*http.Request, error) {
+func (client NumberClient) GetSmallDoublePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/double/2.5976931e-101"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetSmallDoubleSender sends the GetSmallDouble request. The method will close the
@@ -705,8 +706,8 @@ func (client NumberClient) GetSmallDoubleResponder(resp *http.Response) (result 
 }
 
 // GetSmallFloat get big double value 3.402823e-20
-func (client NumberClient) GetSmallFloat() (result Float64, err error) {
-	req, err := client.GetSmallFloatPreparer()
+func (client NumberClient) GetSmallFloat(ctx context.Context) (result Float64, err error) {
+	req, err := client.GetSmallFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallFloat", nil, "Failure preparing request")
 		return
@@ -728,12 +729,12 @@ func (client NumberClient) GetSmallFloat() (result Float64, err error) {
 }
 
 // GetSmallFloatPreparer prepares the GetSmallFloat request.
-func (client NumberClient) GetSmallFloatPreparer() (*http.Request, error) {
+func (client NumberClient) GetSmallFloatPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/float/3.402823e-20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetSmallFloatSender sends the GetSmallFloat request. The method will close the
@@ -758,8 +759,8 @@ func (client NumberClient) GetSmallFloatResponder(resp *http.Response) (result F
 
 // PutBigDecimal put big decimal value 2.5976931e+101
 //
-func (client NumberClient) PutBigDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
-	req, err := client.PutBigDecimalPreparer(numberBody)
+func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimal", nil, "Failure preparing request")
 		return
@@ -781,14 +782,14 @@ func (client NumberClient) PutBigDecimal(numberBody decimal.Decimal) (result aut
 }
 
 // PutBigDecimalPreparer prepares the PutBigDecimal request.
-func (client NumberClient) PutBigDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+func (client NumberClient) PutBigDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/2.5976931e+101"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBigDecimalSender sends the PutBigDecimal request. The method will close the
@@ -812,8 +813,8 @@ func (client NumberClient) PutBigDecimalResponder(resp *http.Response) (result a
 
 // PutBigDecimalNegativeDecimal put big decimal value -99999999.99
 //
-func (client NumberClient) PutBigDecimalNegativeDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
-	req, err := client.PutBigDecimalNegativeDecimalPreparer(numberBody)
+func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalNegativeDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalNegativeDecimal", nil, "Failure preparing request")
 		return
@@ -835,14 +836,14 @@ func (client NumberClient) PutBigDecimalNegativeDecimal(numberBody decimal.Decim
 }
 
 // PutBigDecimalNegativeDecimalPreparer prepares the PutBigDecimalNegativeDecimal request.
-func (client NumberClient) PutBigDecimalNegativeDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+func (client NumberClient) PutBigDecimalNegativeDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/-99999999.99"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBigDecimalNegativeDecimalSender sends the PutBigDecimalNegativeDecimal request. The method will close the
@@ -866,8 +867,8 @@ func (client NumberClient) PutBigDecimalNegativeDecimalResponder(resp *http.Resp
 
 // PutBigDecimalPositiveDecimal put big decimal value 99999999.99
 //
-func (client NumberClient) PutBigDecimalPositiveDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
-	req, err := client.PutBigDecimalPositiveDecimalPreparer(numberBody)
+func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalPositiveDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalPositiveDecimal", nil, "Failure preparing request")
 		return
@@ -889,14 +890,14 @@ func (client NumberClient) PutBigDecimalPositiveDecimal(numberBody decimal.Decim
 }
 
 // PutBigDecimalPositiveDecimalPreparer prepares the PutBigDecimalPositiveDecimal request.
-func (client NumberClient) PutBigDecimalPositiveDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+func (client NumberClient) PutBigDecimalPositiveDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/99999999.99"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBigDecimalPositiveDecimalSender sends the PutBigDecimalPositiveDecimal request. The method will close the
@@ -920,8 +921,8 @@ func (client NumberClient) PutBigDecimalPositiveDecimalResponder(resp *http.Resp
 
 // PutBigDouble put big double value 2.5976931e+101
 //
-func (client NumberClient) PutBigDouble(numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutBigDoublePreparer(numberBody)
+func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	req, err := client.PutBigDoublePreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDouble", nil, "Failure preparing request")
 		return
@@ -943,14 +944,14 @@ func (client NumberClient) PutBigDouble(numberBody float64) (result autorest.Res
 }
 
 // PutBigDoublePreparer prepares the PutBigDouble request.
-func (client NumberClient) PutBigDoublePreparer(numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutBigDoublePreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/2.5976931e+101"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBigDoubleSender sends the PutBigDouble request. The method will close the
@@ -974,8 +975,8 @@ func (client NumberClient) PutBigDoubleResponder(resp *http.Response) (result au
 
 // PutBigDoubleNegativeDecimal put big double value -99999999.99
 //
-func (client NumberClient) PutBigDoubleNegativeDecimal(numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutBigDoubleNegativeDecimalPreparer(numberBody)
+func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	req, err := client.PutBigDoubleNegativeDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoubleNegativeDecimal", nil, "Failure preparing request")
 		return
@@ -997,14 +998,14 @@ func (client NumberClient) PutBigDoubleNegativeDecimal(numberBody float64) (resu
 }
 
 // PutBigDoubleNegativeDecimalPreparer prepares the PutBigDoubleNegativeDecimal request.
-func (client NumberClient) PutBigDoubleNegativeDecimalPreparer(numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutBigDoubleNegativeDecimalPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/-99999999.99"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBigDoubleNegativeDecimalSender sends the PutBigDoubleNegativeDecimal request. The method will close the
@@ -1028,8 +1029,8 @@ func (client NumberClient) PutBigDoubleNegativeDecimalResponder(resp *http.Respo
 
 // PutBigDoublePositiveDecimal put big double value 99999999.99
 //
-func (client NumberClient) PutBigDoublePositiveDecimal(numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutBigDoublePositiveDecimalPreparer(numberBody)
+func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	req, err := client.PutBigDoublePositiveDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoublePositiveDecimal", nil, "Failure preparing request")
 		return
@@ -1051,14 +1052,14 @@ func (client NumberClient) PutBigDoublePositiveDecimal(numberBody float64) (resu
 }
 
 // PutBigDoublePositiveDecimalPreparer prepares the PutBigDoublePositiveDecimal request.
-func (client NumberClient) PutBigDoublePositiveDecimalPreparer(numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutBigDoublePositiveDecimalPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/99999999.99"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBigDoublePositiveDecimalSender sends the PutBigDoublePositiveDecimal request. The method will close the
@@ -1082,8 +1083,8 @@ func (client NumberClient) PutBigDoublePositiveDecimalResponder(resp *http.Respo
 
 // PutBigFloat put big float value 3.402823e+20
 //
-func (client NumberClient) PutBigFloat(numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutBigFloatPreparer(numberBody)
+func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	req, err := client.PutBigFloatPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigFloat", nil, "Failure preparing request")
 		return
@@ -1105,14 +1106,14 @@ func (client NumberClient) PutBigFloat(numberBody float64) (result autorest.Resp
 }
 
 // PutBigFloatPreparer prepares the PutBigFloat request.
-func (client NumberClient) PutBigFloatPreparer(numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutBigFloatPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/float/3.402823e+20"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBigFloatSender sends the PutBigFloat request. The method will close the
@@ -1136,8 +1137,8 @@ func (client NumberClient) PutBigFloatResponder(resp *http.Response) (result aut
 
 // PutSmallDecimal put small decimal value 2.5976931e-101
 //
-func (client NumberClient) PutSmallDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
-	req, err := client.PutSmallDecimalPreparer(numberBody)
+func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutSmallDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDecimal", nil, "Failure preparing request")
 		return
@@ -1159,14 +1160,14 @@ func (client NumberClient) PutSmallDecimal(numberBody decimal.Decimal) (result a
 }
 
 // PutSmallDecimalPreparer prepares the PutSmallDecimal request.
-func (client NumberClient) PutSmallDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+func (client NumberClient) PutSmallDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/decimal/2.5976931e-101"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutSmallDecimalSender sends the PutSmallDecimal request. The method will close the
@@ -1190,8 +1191,8 @@ func (client NumberClient) PutSmallDecimalResponder(resp *http.Response) (result
 
 // PutSmallDouble put small double value 2.5976931e-101
 //
-func (client NumberClient) PutSmallDouble(numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutSmallDoublePreparer(numberBody)
+func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	req, err := client.PutSmallDoublePreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDouble", nil, "Failure preparing request")
 		return
@@ -1213,14 +1214,14 @@ func (client NumberClient) PutSmallDouble(numberBody float64) (result autorest.R
 }
 
 // PutSmallDoublePreparer prepares the PutSmallDouble request.
-func (client NumberClient) PutSmallDoublePreparer(numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutSmallDoublePreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/double/2.5976931e-101"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutSmallDoubleSender sends the PutSmallDouble request. The method will close the
@@ -1244,8 +1245,8 @@ func (client NumberClient) PutSmallDoubleResponder(resp *http.Response) (result 
 
 // PutSmallFloat put small float value 3.402823e-20
 //
-func (client NumberClient) PutSmallFloat(numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutSmallFloatPreparer(numberBody)
+func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	req, err := client.PutSmallFloatPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallFloat", nil, "Failure preparing request")
 		return
@@ -1267,14 +1268,14 @@ func (client NumberClient) PutSmallFloat(numberBody float64) (result autorest.Re
 }
 
 // PutSmallFloatPreparer prepares the PutSmallFloat request.
-func (client NumberClient) PutSmallFloatPreparer(numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutSmallFloatPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/float/3.402823e-20"),
 		autorest.WithJSON(numberBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutSmallFloatSender sends the PutSmallFloat request. The method will close the

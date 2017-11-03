@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -29,8 +30,8 @@ func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
 }
 
 // GetValid get complex types that are polymorphic
-func (client PolymorphismClient) GetValid() (result FishModel, err error) {
-	req, err := client.GetValidPreparer()
+func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
+	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client PolymorphismClient) GetValid() (result FishModel, err error) {
 }
 
 // GetValidPreparer prepares the GetValid request.
-func (client PolymorphismClient) GetValidPreparer() (*http.Request, error) {
+func (client PolymorphismClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetValidSender sends the GetValid request. The method will close the
@@ -115,14 +116,14 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 // }
 // ]
 // };
-func (client PolymorphismClient) PutValid(complexBody Fish) (result autorest.Response, err error) {
+func (client PolymorphismClient) PutValid(ctx context.Context, complexBody Fish) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValid")
 	}
 
-	req, err := client.PutValidPreparer(complexBody)
+	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValid", nil, "Failure preparing request")
 		return
@@ -144,14 +145,14 @@ func (client PolymorphismClient) PutValid(complexBody Fish) (result autorest.Res
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client PolymorphismClient) PutValidPreparer(complexBody Fish) (*http.Request, error) {
+func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBody Fish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/valid"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidSender sends the PutValid request. The method will close the
@@ -202,14 +203,14 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 // }
 // ]
 // }
-func (client PolymorphismClient) PutValidMissingRequired(complexBody Fish) (result autorest.Response, err error) {
+func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody Fish) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired")
 	}
 
-	req, err := client.PutValidMissingRequiredPreparer(complexBody)
+	req, err := client.PutValidMissingRequiredPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired", nil, "Failure preparing request")
 		return
@@ -231,14 +232,14 @@ func (client PolymorphismClient) PutValidMissingRequired(complexBody Fish) (resu
 }
 
 // PutValidMissingRequiredPreparer prepares the PutValidMissingRequired request.
-func (client PolymorphismClient) PutValidMissingRequiredPreparer(complexBody Fish) (*http.Request, error) {
+func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Context, complexBody Fish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/missingrequired/invalid"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidMissingRequiredSender sends the PutValidMissingRequired request. The method will close the

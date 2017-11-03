@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -29,8 +30,8 @@ func NewPolymorphicrecursiveClientWithBaseURI(baseURI string) Polymorphicrecursi
 }
 
 // GetValid get complex types that are polymorphic and have recursive references
-func (client PolymorphicrecursiveClient) GetValid() (result FishModel, err error) {
-	req, err := client.GetValidPreparer()
+func (client PolymorphicrecursiveClient) GetValid(ctx context.Context) (result FishModel, err error) {
+	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphicrecursiveClient", "GetValid", nil, "Failure preparing request")
 		return
@@ -52,12 +53,12 @@ func (client PolymorphicrecursiveClient) GetValid() (result FishModel, err error
 }
 
 // GetValidPreparer prepares the GetValid request.
-func (client PolymorphicrecursiveClient) GetValidPreparer() (*http.Request, error) {
+func (client PolymorphicrecursiveClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphicrecursive/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetValidSender sends the GetValid request. The method will close the
@@ -135,14 +136,14 @@ func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) 
 // }
 // ]
 // }
-func (client PolymorphicrecursiveClient) PutValid(complexBody Fish) (result autorest.Response, err error) {
+func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody Fish) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphicrecursiveClient", "PutValid")
 	}
 
-	req, err := client.PutValidPreparer(complexBody)
+	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphicrecursiveClient", "PutValid", nil, "Failure preparing request")
 		return
@@ -164,14 +165,14 @@ func (client PolymorphicrecursiveClient) PutValid(complexBody Fish) (result auto
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client PolymorphicrecursiveClient) PutValidPreparer(complexBody Fish) (*http.Request, error) {
+func (client PolymorphicrecursiveClient) PutValidPreparer(ctx context.Context, complexBody Fish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphicrecursive/valid"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidSender sends the PutValid request. The method will close the

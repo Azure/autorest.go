@@ -1,6 +1,7 @@
 package modelflatteninggrouptest
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 
@@ -26,7 +27,7 @@ func getmodelflatteningClient() ManagementClient {
 }
 
 func (s *ModelFlatteningSuite) TestGetArray(c *chk.C) {
-	res, err := modelflatteningClient.GetArray()
+	res, err := modelflatteningClient.GetArray(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.HasLen, 3)
 
@@ -63,7 +64,7 @@ func (s *ModelFlatteningSuite) TestGetArray(c *chk.C) {
 }
 
 func (s *ModelFlatteningSuite) TestGetDictionary(c *chk.C) {
-	res, err := modelflatteningClient.GetDictionary()
+	res, err := modelflatteningClient.GetDictionary(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.HasLen, 3)
 
@@ -100,7 +101,7 @@ func (s *ModelFlatteningSuite) TestGetDictionary(c *chk.C) {
 }
 
 func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
-	res, err := modelflatteningClient.GetResourceCollection()
+	res, err := modelflatteningClient.GetResourceCollection(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	tag1, tag2 := "value1", "value3"
@@ -194,7 +195,7 @@ func (s *ModelFlatteningSuite) TestPostFlattenedSimpleProduct(c *chk.C) {
 		},
 	}
 
-	res, err := modelflatteningClient.PostFlattenedSimpleProduct(&arg)
+	res, err := modelflatteningClient.PostFlattenedSimpleProduct(context.Background(), &arg)
 	c.Assert(err, chk.IsNil)
 	arg.Response = res.Response
 	c.Assert(res, chk.DeepEquals, arg)
@@ -202,7 +203,7 @@ func (s *ModelFlatteningSuite) TestPostFlattenedSimpleProduct(c *chk.C) {
 
 func (s *ModelFlatteningSuite) TestPutArray(c *chk.C) {
 	loc1, loc2, tag1, tag2 := "West US", "Building 44", "value1", "value3"
-	_, err := modelflatteningClient.PutArray([]Resource{
+	_, err := modelflatteningClient.PutArray(context.Background(), []Resource{
 		Resource{
 			Tags:     &map[string]*string{"tag1": &tag1, "tag2": &tag2},
 			Location: &loc1,
@@ -221,7 +222,7 @@ func (s *ModelFlatteningSuite) TestPutDictionary(c *chk.C) {
 	var r resourceDictionary
 
 	_ = json.Unmarshal([]byte(jsonBlob), &r)
-	_, err := modelflatteningClient.PutDictionary(r)
+	_, err := modelflatteningClient.PutDictionary(context.Background(), r)
 	c.Assert(err, chk.IsNil)
 }
 
@@ -234,7 +235,7 @@ func (s *ModelFlatteningSuite) TestPutResourceCollection(c *chk.C) {
 	var r ResourceCollection
 
 	err := json.Unmarshal([]byte(jsonBlob), &r)
-	_, err = modelflatteningClient.PutResourceCollection(&r)
+	_, err = modelflatteningClient.PutResourceCollection(context.Background(), &r)
 	c.Assert(err, chk.IsNil)
 }
 
@@ -254,7 +255,7 @@ func (s *ModelFlatteningSuite) TestPutSimpleProduct(c *chk.C) {
 		},
 	}
 
-	res, err := modelflatteningClient.PutSimpleProduct(arg)
+	res, err := modelflatteningClient.PutSimpleProduct(context.Background(), arg)
 	c.Assert(err, chk.IsNil)
 	arg.Response = res.Response
 	c.Assert(res, chk.DeepEquals, *arg)
@@ -274,7 +275,7 @@ func (s *ModelFlatteningSuite) TestPutSimpleProductWithGrouping(c *chk.C) {
 			},
 		},
 	}
-	res, err := modelflatteningClient.PutSimpleProductWithGrouping("groupproduct", arg)
+	res, err := modelflatteningClient.PutSimpleProductWithGrouping(context.Background(), "groupproduct", arg)
 	c.Assert(err, chk.IsNil)
 	arg.Response = res.Response
 	c.Assert(res, chk.DeepEquals, *arg)

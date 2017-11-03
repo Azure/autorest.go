@@ -7,10 +7,11 @@ package dategroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"net/http"
+
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
-	"net/http"
 )
 
 // DateClient is the test Infrastructure for AutoRest
@@ -57,7 +58,7 @@ func (client DateClient) GetInvalidDatePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/invaliddate"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidDateSender sends the GetInvalidDate request. The method will close the
@@ -109,7 +110,7 @@ func (client DateClient) GetMaxDatePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/max"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMaxDateSender sends the GetMaxDate request. The method will close the
@@ -161,7 +162,7 @@ func (client DateClient) GetMinDatePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/min"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetMinDateSender sends the GetMinDate request. The method will close the
@@ -213,7 +214,7 @@ func (client DateClient) GetNullPreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -265,7 +266,7 @@ func (client DateClient) GetOverflowDatePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/overflowdate"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetOverflowDateSender sends the GetOverflowDate request. The method will close the
@@ -317,7 +318,7 @@ func (client DateClient) GetUnderflowDatePreparer() (*http.Request, error) {
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/underflowdate"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetUnderflowDateSender sends the GetUnderflowDate request. The method will close the
@@ -372,7 +373,7 @@ func (client DateClient) PutMaxDatePreparer(dateBody date.Date) (*http.Request, 
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/max"),
 		autorest.WithJSON(dateBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMaxDateSender sends the PutMaxDate request. The method will close the
@@ -426,7 +427,7 @@ func (client DateClient) PutMinDatePreparer(dateBody date.Date) (*http.Request, 
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/date/min"),
 		autorest.WithJSON(dateBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutMinDateSender sends the PutMinDate request. The method will close the

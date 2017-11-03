@@ -7,6 +7,7 @@ package headergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -30,8 +31,8 @@ func NewHeaderClientWithBaseURI(baseURI string) HeaderClient {
 }
 
 // CustomRequestID send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
-func (client HeaderClient) CustomRequestID() (result autorest.Response, err error) {
-	req, err := client.CustomRequestIDPreparer()
+func (client HeaderClient) CustomRequestID(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.CustomRequestIDPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "CustomRequestID", nil, "Failure preparing request")
 		return
@@ -53,12 +54,12 @@ func (client HeaderClient) CustomRequestID() (result autorest.Response, err erro
 }
 
 // CustomRequestIDPreparer prepares the CustomRequestID request.
-func (client HeaderClient) CustomRequestIDPreparer() (*http.Request, error) {
+func (client HeaderClient) CustomRequestIDPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // CustomRequestIDSender sends the CustomRequestID request. The method will close the
@@ -85,8 +86,8 @@ func (client HeaderClient) CustomRequestIDResponder(resp *http.Response) (result
 //
 // scenario is send a post request with header values "scenario": "true" or "false" value is send a post request with
 // header values true or false
-func (client HeaderClient) ParamBool(scenario string, value bool) (result autorest.Response, err error) {
-	req, err := client.ParamBoolPreparer(scenario, value)
+func (client HeaderClient) ParamBool(ctx context.Context, scenario string, value bool) (result autorest.Response, err error) {
+	req, err := client.ParamBoolPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamBool", nil, "Failure preparing request")
 		return
@@ -108,14 +109,14 @@ func (client HeaderClient) ParamBool(scenario string, value bool) (result autore
 }
 
 // ParamBoolPreparer prepares the ParamBool request.
-func (client HeaderClient) ParamBoolPreparer(scenario string, value bool) (*http.Request, error) {
+func (client HeaderClient) ParamBoolPreparer(ctx context.Context, scenario string, value bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/bool"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamBoolSender sends the ParamBool request. The method will close the
@@ -141,14 +142,14 @@ func (client HeaderClient) ParamBoolResponder(resp *http.Response) (result autor
 //
 // scenario is send a post request with header values "scenario": "valid" value is send a post request with header
 // values "啊齄丂狛狜隣郎隣兀﨩"
-func (client HeaderClient) ParamByte(scenario string, value []byte) (result autorest.Response, err error) {
+func (client HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: value,
 			Constraints: []validation.Constraint{{Target: "value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "headergroup.HeaderClient", "ParamByte")
 	}
 
-	req, err := client.ParamBytePreparer(scenario, value)
+	req, err := client.ParamBytePreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamByte", nil, "Failure preparing request")
 		return
@@ -170,14 +171,14 @@ func (client HeaderClient) ParamByte(scenario string, value []byte) (result auto
 }
 
 // ParamBytePreparer prepares the ParamByte request.
-func (client HeaderClient) ParamBytePreparer(scenario string, value []byte) (*http.Request, error) {
+func (client HeaderClient) ParamBytePreparer(ctx context.Context, scenario string, value []byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/byte"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamByteSender sends the ParamByte request. The method will close the
@@ -204,8 +205,8 @@ func (client HeaderClient) ParamByteResponder(resp *http.Response) (result autor
 //
 // scenario is send a post request with header values "scenario": "valid" or "min" value is send a post request with
 // header values "2010-01-01" or "0001-01-01"
-func (client HeaderClient) ParamDate(scenario string, value date.Date) (result autorest.Response, err error) {
-	req, err := client.ParamDatePreparer(scenario, value)
+func (client HeaderClient) ParamDate(ctx context.Context, scenario string, value date.Date) (result autorest.Response, err error) {
+	req, err := client.ParamDatePreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDate", nil, "Failure preparing request")
 		return
@@ -227,14 +228,14 @@ func (client HeaderClient) ParamDate(scenario string, value date.Date) (result a
 }
 
 // ParamDatePreparer prepares the ParamDate request.
-func (client HeaderClient) ParamDatePreparer(scenario string, value date.Date) (*http.Request, error) {
+func (client HeaderClient) ParamDatePreparer(ctx context.Context, scenario string, value date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/date"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamDateSender sends the ParamDate request. The method will close the
@@ -261,8 +262,8 @@ func (client HeaderClient) ParamDateResponder(resp *http.Response) (result autor
 //
 // scenario is send a post request with header values "scenario": "valid" or "min" value is send a post request with
 // header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
-func (client HeaderClient) ParamDatetime(scenario string, value date.Time) (result autorest.Response, err error) {
-	req, err := client.ParamDatetimePreparer(scenario, value)
+func (client HeaderClient) ParamDatetime(ctx context.Context, scenario string, value date.Time) (result autorest.Response, err error) {
+	req, err := client.ParamDatetimePreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDatetime", nil, "Failure preparing request")
 		return
@@ -284,14 +285,14 @@ func (client HeaderClient) ParamDatetime(scenario string, value date.Time) (resu
 }
 
 // ParamDatetimePreparer prepares the ParamDatetime request.
-func (client HeaderClient) ParamDatetimePreparer(scenario string, value date.Time) (*http.Request, error) {
+func (client HeaderClient) ParamDatetimePreparer(ctx context.Context, scenario string, value date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/datetime"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamDatetimeSender sends the ParamDatetime request. The method will close the
@@ -318,8 +319,8 @@ func (client HeaderClient) ParamDatetimeResponder(resp *http.Response) (result a
 //
 // scenario is send a post request with header values "scenario": "valid" or "min" value is send a post request with
 // header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
-func (client HeaderClient) ParamDatetimeRfc1123(scenario string, value *date.TimeRFC1123) (result autorest.Response, err error) {
-	req, err := client.ParamDatetimeRfc1123Preparer(scenario, value)
+func (client HeaderClient) ParamDatetimeRfc1123(ctx context.Context, scenario string, value *date.TimeRFC1123) (result autorest.Response, err error) {
+	req, err := client.ParamDatetimeRfc1123Preparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDatetimeRfc1123", nil, "Failure preparing request")
 		return
@@ -341,7 +342,7 @@ func (client HeaderClient) ParamDatetimeRfc1123(scenario string, value *date.Tim
 }
 
 // ParamDatetimeRfc1123Preparer prepares the ParamDatetimeRfc1123 request.
-func (client HeaderClient) ParamDatetimeRfc1123Preparer(scenario string, value *date.TimeRFC1123) (*http.Request, error) {
+func (client HeaderClient) ParamDatetimeRfc1123Preparer(ctx context.Context, scenario string, value *date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -351,7 +352,7 @@ func (client HeaderClient) ParamDatetimeRfc1123Preparer(scenario string, value *
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("value", autorest.String(value)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamDatetimeRfc1123Sender sends the ParamDatetimeRfc1123 request. The method will close the
@@ -378,8 +379,8 @@ func (client HeaderClient) ParamDatetimeRfc1123Responder(resp *http.Response) (r
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post request
 // with header values 7e120 or -3.0
-func (client HeaderClient) ParamDouble(scenario string, value float64) (result autorest.Response, err error) {
-	req, err := client.ParamDoublePreparer(scenario, value)
+func (client HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
+	req, err := client.ParamDoublePreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDouble", nil, "Failure preparing request")
 		return
@@ -401,14 +402,14 @@ func (client HeaderClient) ParamDouble(scenario string, value float64) (result a
 }
 
 // ParamDoublePreparer prepares the ParamDouble request.
-func (client HeaderClient) ParamDoublePreparer(scenario string, value float64) (*http.Request, error) {
+func (client HeaderClient) ParamDoublePreparer(ctx context.Context, scenario string, value float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/double"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamDoubleSender sends the ParamDouble request. The method will close the
@@ -434,8 +435,8 @@ func (client HeaderClient) ParamDoubleResponder(resp *http.Response) (result aut
 //
 // scenario is send a post request with header values "scenario": "valid" value is send a post request with header
 // values "P123DT22H14M12.011S"
-func (client HeaderClient) ParamDuration(scenario string, value string) (result autorest.Response, err error) {
-	req, err := client.ParamDurationPreparer(scenario, value)
+func (client HeaderClient) ParamDuration(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
+	req, err := client.ParamDurationPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDuration", nil, "Failure preparing request")
 		return
@@ -457,14 +458,14 @@ func (client HeaderClient) ParamDuration(scenario string, value string) (result 
 }
 
 // ParamDurationPreparer prepares the ParamDuration request.
-func (client HeaderClient) ParamDurationPreparer(scenario string, value string) (*http.Request, error) {
+func (client HeaderClient) ParamDurationPreparer(ctx context.Context, scenario string, value string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/duration"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamDurationSender sends the ParamDuration request. The method will close the
@@ -491,8 +492,8 @@ func (client HeaderClient) ParamDurationResponder(resp *http.Response) (result a
 //
 // scenario is send a post request with header values "scenario": "valid" or "null" or "empty" value is send a post
 // request with header values 'GREY'
-func (client HeaderClient) ParamEnum(scenario string, value GreyscaleColors) (result autorest.Response, err error) {
-	req, err := client.ParamEnumPreparer(scenario, value)
+func (client HeaderClient) ParamEnum(ctx context.Context, scenario string, value GreyscaleColors) (result autorest.Response, err error) {
+	req, err := client.ParamEnumPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamEnum", nil, "Failure preparing request")
 		return
@@ -514,7 +515,7 @@ func (client HeaderClient) ParamEnum(scenario string, value GreyscaleColors) (re
 }
 
 // ParamEnumPreparer prepares the ParamEnum request.
-func (client HeaderClient) ParamEnumPreparer(scenario string, value GreyscaleColors) (*http.Request, error) {
+func (client HeaderClient) ParamEnumPreparer(ctx context.Context, scenario string, value GreyscaleColors) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -524,7 +525,7 @@ func (client HeaderClient) ParamEnumPreparer(scenario string, value GreyscaleCol
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("value", autorest.String(value)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamEnumSender sends the ParamEnum request. The method will close the
@@ -549,8 +550,8 @@ func (client HeaderClient) ParamEnumResponder(resp *http.Response) (result autor
 // ParamExistingKey send a post request with header value "User-Agent": "overwrite"
 //
 // userAgent is send a post request with header value "User-Agent": "overwrite"
-func (client HeaderClient) ParamExistingKey(userAgent string) (result autorest.Response, err error) {
-	req, err := client.ParamExistingKeyPreparer(userAgent)
+func (client HeaderClient) ParamExistingKey(ctx context.Context, userAgent string) (result autorest.Response, err error) {
+	req, err := client.ParamExistingKeyPreparer(ctx, userAgent)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamExistingKey", nil, "Failure preparing request")
 		return
@@ -572,13 +573,13 @@ func (client HeaderClient) ParamExistingKey(userAgent string) (result autorest.R
 }
 
 // ParamExistingKeyPreparer prepares the ParamExistingKey request.
-func (client HeaderClient) ParamExistingKeyPreparer(userAgent string) (*http.Request, error) {
+func (client HeaderClient) ParamExistingKeyPreparer(ctx context.Context, userAgent string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/existingkey"),
 		autorest.WithHeader("User-Agent", autorest.String(userAgent)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamExistingKeySender sends the ParamExistingKey request. The method will close the
@@ -605,8 +606,8 @@ func (client HeaderClient) ParamExistingKeyResponder(resp *http.Response) (resul
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post request
 // with header values 0.07 or -3.0
-func (client HeaderClient) ParamFloat(scenario string, value float64) (result autorest.Response, err error) {
-	req, err := client.ParamFloatPreparer(scenario, value)
+func (client HeaderClient) ParamFloat(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
+	req, err := client.ParamFloatPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamFloat", nil, "Failure preparing request")
 		return
@@ -628,14 +629,14 @@ func (client HeaderClient) ParamFloat(scenario string, value float64) (result au
 }
 
 // ParamFloatPreparer prepares the ParamFloat request.
-func (client HeaderClient) ParamFloatPreparer(scenario string, value float64) (*http.Request, error) {
+func (client HeaderClient) ParamFloatPreparer(ctx context.Context, scenario string, value float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/float"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamFloatSender sends the ParamFloat request. The method will close the
@@ -662,8 +663,8 @@ func (client HeaderClient) ParamFloatResponder(resp *http.Response) (result auto
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post request
 // with header values 1 or -2
-func (client HeaderClient) ParamInteger(scenario string, value int32) (result autorest.Response, err error) {
-	req, err := client.ParamIntegerPreparer(scenario, value)
+func (client HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32) (result autorest.Response, err error) {
+	req, err := client.ParamIntegerPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamInteger", nil, "Failure preparing request")
 		return
@@ -685,14 +686,14 @@ func (client HeaderClient) ParamInteger(scenario string, value int32) (result au
 }
 
 // ParamIntegerPreparer prepares the ParamInteger request.
-func (client HeaderClient) ParamIntegerPreparer(scenario string, value int32) (*http.Request, error) {
+func (client HeaderClient) ParamIntegerPreparer(ctx context.Context, scenario string, value int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/integer"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamIntegerSender sends the ParamInteger request. The method will close the
@@ -719,8 +720,8 @@ func (client HeaderClient) ParamIntegerResponder(resp *http.Response) (result au
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post request
 // with header values 105 or -2
-func (client HeaderClient) ParamLong(scenario string, value int64) (result autorest.Response, err error) {
-	req, err := client.ParamLongPreparer(scenario, value)
+func (client HeaderClient) ParamLong(ctx context.Context, scenario string, value int64) (result autorest.Response, err error) {
+	req, err := client.ParamLongPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamLong", nil, "Failure preparing request")
 		return
@@ -742,14 +743,14 @@ func (client HeaderClient) ParamLong(scenario string, value int64) (result autor
 }
 
 // ParamLongPreparer prepares the ParamLong request.
-func (client HeaderClient) ParamLongPreparer(scenario string, value int64) (*http.Request, error) {
+func (client HeaderClient) ParamLongPreparer(ctx context.Context, scenario string, value int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/prim/long"),
 		autorest.WithHeader("scenario", autorest.String(scenario)),
 		autorest.WithHeader("value", autorest.String(value)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamLongSender sends the ParamLong request. The method will close the
@@ -774,8 +775,8 @@ func (client HeaderClient) ParamLongResponder(resp *http.Response) (result autor
 // ParamProtectedKey send a post request with header value "Content-Type": "text/html"
 //
 // contentType is send a post request with header value "Content-Type": "text/html"
-func (client HeaderClient) ParamProtectedKey(contentType string) (result autorest.Response, err error) {
-	req, err := client.ParamProtectedKeyPreparer(contentType)
+func (client HeaderClient) ParamProtectedKey(ctx context.Context, contentType string) (result autorest.Response, err error) {
+	req, err := client.ParamProtectedKeyPreparer(ctx, contentType)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamProtectedKey", nil, "Failure preparing request")
 		return
@@ -797,13 +798,13 @@ func (client HeaderClient) ParamProtectedKey(contentType string) (result autores
 }
 
 // ParamProtectedKeyPreparer prepares the ParamProtectedKey request.
-func (client HeaderClient) ParamProtectedKeyPreparer(contentType string) (*http.Request, error) {
+func (client HeaderClient) ParamProtectedKeyPreparer(ctx context.Context, contentType string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/param/protectedkey"),
 		autorest.WithHeader("Content-Type", autorest.String(contentType)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamProtectedKeySender sends the ParamProtectedKey request. The method will close the
@@ -830,8 +831,8 @@ func (client HeaderClient) ParamProtectedKeyResponder(resp *http.Response) (resu
 //
 // scenario is send a post request with header values "scenario": "valid" or "null" or "empty" value is send a post
 // request with header values "The quick brown fox jumps over the lazy dog" or null or ""
-func (client HeaderClient) ParamString(scenario string, value string) (result autorest.Response, err error) {
-	req, err := client.ParamStringPreparer(scenario, value)
+func (client HeaderClient) ParamString(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
+	req, err := client.ParamStringPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamString", nil, "Failure preparing request")
 		return
@@ -853,7 +854,7 @@ func (client HeaderClient) ParamString(scenario string, value string) (result au
 }
 
 // ParamStringPreparer prepares the ParamString request.
-func (client HeaderClient) ParamStringPreparer(scenario string, value string) (*http.Request, error) {
+func (client HeaderClient) ParamStringPreparer(ctx context.Context, scenario string, value string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -863,7 +864,7 @@ func (client HeaderClient) ParamStringPreparer(scenario string, value string) (*
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("value", autorest.String(value)))
 	}
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ParamStringSender sends the ParamString request. The method will close the
@@ -888,8 +889,8 @@ func (client HeaderClient) ParamStringResponder(resp *http.Response) (result aut
 // ResponseBool get a response with header value "value": true or false
 //
 // scenario is send a post request with header values "scenario": "true" or "false"
-func (client HeaderClient) ResponseBool(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseBoolPreparer(scenario)
+func (client HeaderClient) ResponseBool(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseBoolPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseBool", nil, "Failure preparing request")
 		return
@@ -911,13 +912,13 @@ func (client HeaderClient) ResponseBool(scenario string) (result autorest.Respon
 }
 
 // ResponseBoolPreparer prepares the ResponseBool request.
-func (client HeaderClient) ResponseBoolPreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseBoolPreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/bool"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseBoolSender sends the ResponseBool request. The method will close the
@@ -942,8 +943,8 @@ func (client HeaderClient) ResponseBoolResponder(resp *http.Response) (result au
 // ResponseByte get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
 //
 // scenario is send a post request with header values "scenario": "valid"
-func (client HeaderClient) ResponseByte(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseBytePreparer(scenario)
+func (client HeaderClient) ResponseByte(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseBytePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseByte", nil, "Failure preparing request")
 		return
@@ -965,13 +966,13 @@ func (client HeaderClient) ResponseByte(scenario string) (result autorest.Respon
 }
 
 // ResponseBytePreparer prepares the ResponseByte request.
-func (client HeaderClient) ResponseBytePreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseBytePreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/byte"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseByteSender sends the ResponseByte request. The method will close the
@@ -996,8 +997,8 @@ func (client HeaderClient) ResponseByteResponder(resp *http.Response) (result au
 // ResponseDate get a response with header values "2010-01-01" or "0001-01-01"
 //
 // scenario is send a post request with header values "scenario": "valid" or "min"
-func (client HeaderClient) ResponseDate(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseDatePreparer(scenario)
+func (client HeaderClient) ResponseDate(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseDatePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDate", nil, "Failure preparing request")
 		return
@@ -1019,13 +1020,13 @@ func (client HeaderClient) ResponseDate(scenario string) (result autorest.Respon
 }
 
 // ResponseDatePreparer prepares the ResponseDate request.
-func (client HeaderClient) ResponseDatePreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseDatePreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/date"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseDateSender sends the ResponseDate request. The method will close the
@@ -1050,8 +1051,8 @@ func (client HeaderClient) ResponseDateResponder(resp *http.Response) (result au
 // ResponseDatetime get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
 //
 // scenario is send a post request with header values "scenario": "valid" or "min"
-func (client HeaderClient) ResponseDatetime(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseDatetimePreparer(scenario)
+func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseDatetimePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDatetime", nil, "Failure preparing request")
 		return
@@ -1073,13 +1074,13 @@ func (client HeaderClient) ResponseDatetime(scenario string) (result autorest.Re
 }
 
 // ResponseDatetimePreparer prepares the ResponseDatetime request.
-func (client HeaderClient) ResponseDatetimePreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseDatetimePreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/datetime"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseDatetimeSender sends the ResponseDatetime request. The method will close the
@@ -1105,8 +1106,8 @@ func (client HeaderClient) ResponseDatetimeResponder(resp *http.Response) (resul
 // 00:00:00 GMT"
 //
 // scenario is send a post request with header values "scenario": "valid" or "min"
-func (client HeaderClient) ResponseDatetimeRfc1123(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseDatetimeRfc1123Preparer(scenario)
+func (client HeaderClient) ResponseDatetimeRfc1123(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseDatetimeRfc1123Preparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDatetimeRfc1123", nil, "Failure preparing request")
 		return
@@ -1128,13 +1129,13 @@ func (client HeaderClient) ResponseDatetimeRfc1123(scenario string) (result auto
 }
 
 // ResponseDatetimeRfc1123Preparer prepares the ResponseDatetimeRfc1123 request.
-func (client HeaderClient) ResponseDatetimeRfc1123Preparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseDatetimeRfc1123Preparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/datetimerfc1123"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseDatetimeRfc1123Sender sends the ResponseDatetimeRfc1123 request. The method will close the
@@ -1159,8 +1160,8 @@ func (client HeaderClient) ResponseDatetimeRfc1123Responder(resp *http.Response)
 // ResponseDouble get a response with header value "value": 7e120 or -3.0
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative"
-func (client HeaderClient) ResponseDouble(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseDoublePreparer(scenario)
+func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseDoublePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDouble", nil, "Failure preparing request")
 		return
@@ -1182,13 +1183,13 @@ func (client HeaderClient) ResponseDouble(scenario string) (result autorest.Resp
 }
 
 // ResponseDoublePreparer prepares the ResponseDouble request.
-func (client HeaderClient) ResponseDoublePreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseDoublePreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/double"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseDoubleSender sends the ResponseDouble request. The method will close the
@@ -1213,8 +1214,8 @@ func (client HeaderClient) ResponseDoubleResponder(resp *http.Response) (result 
 // ResponseDuration get a response with header values "P123DT22H14M12.011S"
 //
 // scenario is send a post request with header values "scenario": "valid"
-func (client HeaderClient) ResponseDuration(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseDurationPreparer(scenario)
+func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseDurationPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDuration", nil, "Failure preparing request")
 		return
@@ -1236,13 +1237,13 @@ func (client HeaderClient) ResponseDuration(scenario string) (result autorest.Re
 }
 
 // ResponseDurationPreparer prepares the ResponseDuration request.
-func (client HeaderClient) ResponseDurationPreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseDurationPreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/duration"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseDurationSender sends the ResponseDuration request. The method will close the
@@ -1267,8 +1268,8 @@ func (client HeaderClient) ResponseDurationResponder(resp *http.Response) (resul
 // ResponseEnum get a response with header values "GREY" or null
 //
 // scenario is send a post request with header values "scenario": "valid" or "null" or "empty"
-func (client HeaderClient) ResponseEnum(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseEnumPreparer(scenario)
+func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseEnumPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseEnum", nil, "Failure preparing request")
 		return
@@ -1290,13 +1291,13 @@ func (client HeaderClient) ResponseEnum(scenario string) (result autorest.Respon
 }
 
 // ResponseEnumPreparer prepares the ResponseEnum request.
-func (client HeaderClient) ResponseEnumPreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseEnumPreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/enum"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseEnumSender sends the ResponseEnum request. The method will close the
@@ -1319,8 +1320,8 @@ func (client HeaderClient) ResponseEnumResponder(resp *http.Response) (result au
 }
 
 // ResponseExistingKey get a response with header value "User-Agent": "overwrite"
-func (client HeaderClient) ResponseExistingKey() (result autorest.Response, err error) {
-	req, err := client.ResponseExistingKeyPreparer()
+func (client HeaderClient) ResponseExistingKey(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.ResponseExistingKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseExistingKey", nil, "Failure preparing request")
 		return
@@ -1342,12 +1343,12 @@ func (client HeaderClient) ResponseExistingKey() (result autorest.Response, err 
 }
 
 // ResponseExistingKeyPreparer prepares the ResponseExistingKey request.
-func (client HeaderClient) ResponseExistingKeyPreparer() (*http.Request, error) {
+func (client HeaderClient) ResponseExistingKeyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/existingkey"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseExistingKeySender sends the ResponseExistingKey request. The method will close the
@@ -1372,8 +1373,8 @@ func (client HeaderClient) ResponseExistingKeyResponder(resp *http.Response) (re
 // ResponseFloat get a response with header value "value": 0.07 or -3.0
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative"
-func (client HeaderClient) ResponseFloat(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseFloatPreparer(scenario)
+func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseFloatPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseFloat", nil, "Failure preparing request")
 		return
@@ -1395,13 +1396,13 @@ func (client HeaderClient) ResponseFloat(scenario string) (result autorest.Respo
 }
 
 // ResponseFloatPreparer prepares the ResponseFloat request.
-func (client HeaderClient) ResponseFloatPreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseFloatPreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/float"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseFloatSender sends the ResponseFloat request. The method will close the
@@ -1426,8 +1427,8 @@ func (client HeaderClient) ResponseFloatResponder(resp *http.Response) (result a
 // ResponseInteger get a response with header value "value": 1 or -2
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative"
-func (client HeaderClient) ResponseInteger(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseIntegerPreparer(scenario)
+func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseIntegerPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseInteger", nil, "Failure preparing request")
 		return
@@ -1449,13 +1450,13 @@ func (client HeaderClient) ResponseInteger(scenario string) (result autorest.Res
 }
 
 // ResponseIntegerPreparer prepares the ResponseInteger request.
-func (client HeaderClient) ResponseIntegerPreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseIntegerPreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/integer"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseIntegerSender sends the ResponseInteger request. The method will close the
@@ -1480,8 +1481,8 @@ func (client HeaderClient) ResponseIntegerResponder(resp *http.Response) (result
 // ResponseLong get a response with header value "value": 105 or -2
 //
 // scenario is send a post request with header values "scenario": "positive" or "negative"
-func (client HeaderClient) ResponseLong(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseLongPreparer(scenario)
+func (client HeaderClient) ResponseLong(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseLongPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseLong", nil, "Failure preparing request")
 		return
@@ -1503,13 +1504,13 @@ func (client HeaderClient) ResponseLong(scenario string) (result autorest.Respon
 }
 
 // ResponseLongPreparer prepares the ResponseLong request.
-func (client HeaderClient) ResponseLongPreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseLongPreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/long"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseLongSender sends the ResponseLong request. The method will close the
@@ -1532,8 +1533,8 @@ func (client HeaderClient) ResponseLongResponder(resp *http.Response) (result au
 }
 
 // ResponseProtectedKey get a response with header value "Content-Type": "text/html"
-func (client HeaderClient) ResponseProtectedKey() (result autorest.Response, err error) {
-	req, err := client.ResponseProtectedKeyPreparer()
+func (client HeaderClient) ResponseProtectedKey(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.ResponseProtectedKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseProtectedKey", nil, "Failure preparing request")
 		return
@@ -1555,12 +1556,12 @@ func (client HeaderClient) ResponseProtectedKey() (result autorest.Response, err
 }
 
 // ResponseProtectedKeyPreparer prepares the ResponseProtectedKey request.
-func (client HeaderClient) ResponseProtectedKeyPreparer() (*http.Request, error) {
+func (client HeaderClient) ResponseProtectedKeyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/protectedkey"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseProtectedKeySender sends the ResponseProtectedKey request. The method will close the
@@ -1585,8 +1586,8 @@ func (client HeaderClient) ResponseProtectedKeyResponder(resp *http.Response) (r
 // ResponseString get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
 //
 // scenario is send a post request with header values "scenario": "valid" or "null" or "empty"
-func (client HeaderClient) ResponseString(scenario string) (result autorest.Response, err error) {
-	req, err := client.ResponseStringPreparer(scenario)
+func (client HeaderClient) ResponseString(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	req, err := client.ResponseStringPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseString", nil, "Failure preparing request")
 		return
@@ -1608,13 +1609,13 @@ func (client HeaderClient) ResponseString(scenario string) (result autorest.Resp
 }
 
 // ResponseStringPreparer prepares the ResponseString request.
-func (client HeaderClient) ResponseStringPreparer(scenario string) (*http.Request, error) {
+func (client HeaderClient) ResponseStringPreparer(ctx context.Context, scenario string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/header/response/prim/string"),
 		autorest.WithHeader("scenario", autorest.String(scenario)))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // ResponseStringSender sends the ResponseString request. The method will close the

@@ -7,6 +7,7 @@ package complexgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -28,8 +29,8 @@ func NewReadonlypropertyClientWithBaseURI(baseURI string) ReadonlypropertyClient
 }
 
 // GetValid get complex types that have readonly properties
-func (client ReadonlypropertyClient) GetValid() (result ReadonlyObj, err error) {
-	req, err := client.GetValidPreparer()
+func (client ReadonlypropertyClient) GetValid(ctx context.Context) (result ReadonlyObj, err error) {
+	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ReadonlypropertyClient", "GetValid", nil, "Failure preparing request")
 		return
@@ -51,12 +52,12 @@ func (client ReadonlypropertyClient) GetValid() (result ReadonlyObj, err error) 
 }
 
 // GetValidPreparer prepares the GetValid request.
-func (client ReadonlypropertyClient) GetValidPreparer() (*http.Request, error) {
+func (client ReadonlypropertyClient) GetValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/readonlyproperty/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetValidSender sends the GetValid request. The method will close the
@@ -81,8 +82,8 @@ func (client ReadonlypropertyClient) GetValidResponder(resp *http.Response) (res
 
 // PutValid put complex types that have readonly properties
 //
-func (client ReadonlypropertyClient) PutValid(complexBody ReadonlyObj) (result autorest.Response, err error) {
-	req, err := client.PutValidPreparer(complexBody)
+func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (result autorest.Response, err error) {
+	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ReadonlypropertyClient", "PutValid", nil, "Failure preparing request")
 		return
@@ -104,14 +105,14 @@ func (client ReadonlypropertyClient) PutValid(complexBody ReadonlyObj) (result a
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client ReadonlypropertyClient) PutValidPreparer(complexBody ReadonlyObj) (*http.Request, error) {
+func (client ReadonlypropertyClient) PutValidPreparer(ctx context.Context, complexBody ReadonlyObj) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/readonlyproperty/valid"),
 		autorest.WithJSON(complexBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutValidSender sends the PutValid request. The method will close the

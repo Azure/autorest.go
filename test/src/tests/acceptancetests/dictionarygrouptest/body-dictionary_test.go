@@ -1,6 +1,7 @@
 package dictionarygrouptest
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -34,13 +35,13 @@ func getDictionaryClient() DictionaryClient {
 }
 
 func (s *DictionaryGroupSuite) TestGetArrayEmptyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetArrayEmpty()
+	res, err := dictionaryClient.GetArrayEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string][]string{})
 }
 
 func (s *DictionaryGroupSuite) TestGetArrayItemEmptyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetArrayItemEmpty()
+	res, err := dictionaryClient.GetArrayItemEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string][]string{
 		"0": {"1", "2", "3"},
@@ -50,7 +51,7 @@ func (s *DictionaryGroupSuite) TestGetArrayItemEmptyDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetArrayItemNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetArrayItemNull()
+	res, err := dictionaryClient.GetArrayItemNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string][]string{
 		"0": {"1", "2", "3"},
@@ -60,13 +61,13 @@ func (s *DictionaryGroupSuite) TestGetArrayItemNullDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetArrayNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetArrayNull()
+	res, err := dictionaryClient.GetArrayNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Value, chk.IsNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetArrayValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetArrayValid()
+	res, err := dictionaryClient.GetArrayValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string][]string{
 		"0": {"1", "2", "3"},
@@ -76,26 +77,26 @@ func (s *DictionaryGroupSuite) TestGetArrayValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetBooleanInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetBooleanInvalidNull()
+	res, err := dictionaryClient.GetBooleanInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	i, j := true, false
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*bool{"0": &i, "1": nil, "2": &j})
 }
 
 func (s *DictionaryGroupSuite) TestGetBooleanInvalidStringDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetBooleanInvalidString()
+	_, err := dictionaryClient.GetBooleanInvalidString(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetBooleanTfftDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetBooleanTfft()
+	res, err := dictionaryClient.GetBooleanTfft(context.Background())
 	c.Assert(err, chk.IsNil)
 	i, j := true, false
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*bool{"0": &i, "1": &j, "2": &j, "3": &i})
 }
 
 func (s *DictionaryGroupSuite) TestGetByteValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetByteValid()
+	res, err := dictionaryClient.GetByteValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string][]byte{
 		"0": {255, 255, 255, 250},
@@ -105,13 +106,13 @@ func (s *DictionaryGroupSuite) TestGetByteValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetByteInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetByteInvalidNull()
+	res, err := dictionaryClient.GetByteInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string][]byte{"0": {171, 172, 173}, "1": nil})
 }
 
 // func (s *DictionaryGroupSuite) TestGetBase64Url(c *chk.C) {
-// 	res, err := dictionaryClient.GetBase64Url()
+// 	res, err := dictionaryClient.GetBase64Url(context.Background())
 // 	c.Assert(err, chk.IsNil)
 // 	var val0, val1, val2 []byte
 // 	base64.URLEncoding.Encode(val0, []byte("a string that gets encoded with base64url"))
@@ -124,42 +125,42 @@ func (s *DictionaryGroupSuite) TestGetByteInvalidNullDictionary(c *chk.C) {
 // }
 
 func (s *DictionaryGroupSuite) TestGetComplexEmptyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetComplexEmpty()
+	res, err := dictionaryClient.GetComplexEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, getComplexDictionary("empty"))
 }
 
 func (s *DictionaryGroupSuite) TestGetComplexValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetComplexValid()
+	res, err := dictionaryClient.GetComplexValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, getComplexDictionary("valid"))
 }
 
 func (s *DictionaryGroupSuite) TestGetComplexNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetComplexNull()
+	res, err := dictionaryClient.GetComplexNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Value, chk.IsNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetComplexItemNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetComplexItemNull()
+	res, err := dictionaryClient.GetComplexItemNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, getComplexDictionary("itemNull"))
 }
 
 func (s *DictionaryGroupSuite) TestGetComplexItemEmptyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetComplexItemEmpty()
+	res, err := dictionaryClient.GetComplexItemEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, getComplexDictionary("itemEmpty"))
 }
 
 func (s *DictionaryGroupSuite) TestGetDateInvalidCharsDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetDateInvalidChars()
+	_, err := dictionaryClient.GetDateInvalidChars(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetDateInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDateInvalidNull()
+	res, err := dictionaryClient.GetDateInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*date.Date{
 		"0": &date.Date{time.Date(2012, time.January, 01, 0, 0, 0, 0, time.UTC)},
@@ -169,7 +170,7 @@ func (s *DictionaryGroupSuite) TestGetDateInvalidNullDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDateTimeInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDateTimeInvalidNull()
+	res, err := dictionaryClient.GetDateTimeInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*date.Time{
@@ -179,12 +180,12 @@ func (s *DictionaryGroupSuite) TestGetDateTimeInvalidNullDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDateTimeInvalidCharsDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetDateTimeInvalidChars()
+	_, err := dictionaryClient.GetDateTimeInvalidChars(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetDateTimeRfc1123ValidDictionary(c *chk.C) {
-	dt, err := dictionaryClient.GetDateTimeRfc1123Valid()
+	dt, err := dictionaryClient.GetDateTimeRfc1123Valid(context.Background())
 	c.Assert(err, chk.IsNil)
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
@@ -197,7 +198,7 @@ func (s *DictionaryGroupSuite) TestGetDateTimeRfc1123ValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDateTimeValidDictionary(c *chk.C) {
-	dt, err := dictionaryClient.GetDateTimeValid()
+	dt, err := dictionaryClient.GetDateTimeValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	dt2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35+01:00")
@@ -210,7 +211,7 @@ func (s *DictionaryGroupSuite) TestGetDateTimeValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDateValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDateValid()
+	res, err := dictionaryClient.GetDateValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*date.Date{
 		"0": &date.Date{time.Date(2000, time.December, 01, 0, 0, 0, 0, time.UTC)},
@@ -220,13 +221,13 @@ func (s *DictionaryGroupSuite) TestGetDateValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDictionaryEmptyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDictionaryEmpty()
+	res, err := dictionaryClient.GetDictionaryEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]map[string]*string{})
 }
 
 func (s *DictionaryGroupSuite) TestGetDictionaryItemEmptyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDictionaryItemEmpty()
+	res, err := dictionaryClient.GetDictionaryItemEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]map[string]*string{
 		"0": {"1": &one, "2": &two, "3": &three},
@@ -236,7 +237,7 @@ func (s *DictionaryGroupSuite) TestGetDictionaryItemEmptyDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDictionaryItemNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDictionaryItemNull()
+	res, err := dictionaryClient.GetDictionaryItemNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]map[string]*string{
 		"0": {"1": &one, "2": &two, "3": &three},
@@ -246,13 +247,13 @@ func (s *DictionaryGroupSuite) TestGetDictionaryItemNullDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDictionaryNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDictionaryNull()
+	res, err := dictionaryClient.GetDictionaryNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Value, chk.IsNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetDictionaryValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDictionaryValid()
+	res, err := dictionaryClient.GetDictionaryValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]map[string]*string{
 		"0": {"1": &one, "2": &two, "3": &three},
@@ -262,19 +263,19 @@ func (s *DictionaryGroupSuite) TestGetDictionaryValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDoubleInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDoubleInvalidNull()
+	res, err := dictionaryClient.GetDoubleInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	f1, f2 := 0.0, -1.2e20
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*float64{"0": &f1, "1": nil, "2": &f2})
 }
 
 func (s *DictionaryGroupSuite) TestGetDoubleInvalidStringDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetDoubleInvalidString()
+	_, err := dictionaryClient.GetDoubleInvalidString(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetDoubleValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDoubleValid()
+	res, err := dictionaryClient.GetDoubleValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	f1, f2, f3 := 0.0, -0.01, -1.2e20
 	expected := map[string]*float64{"0": &f1, "1": &f2, "2": &f3}
@@ -282,125 +283,125 @@ func (s *DictionaryGroupSuite) TestGetDoubleValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestGetDurationValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetDurationValid()
+	res, err := dictionaryClient.GetDurationValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	timespan1, timespan2 := "P123DT22H14M12.011S", "P5DT1H"
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*string{"0": &timespan1, "1": &timespan2})
 }
 
 func (s *DictionaryGroupSuite) TestGetEmptyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetEmpty()
+	res, err := dictionaryClient.GetEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*int32{})
 }
 
 func (s *DictionaryGroupSuite) TestGetEmptyStringKeyDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetEmptyStringKey()
+	res, err := dictionaryClient.GetEmptyStringKey(context.Background())
 	c.Assert(err, chk.IsNil)
 	str := "val1"
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*string{"": &str})
 }
 
 func (s *DictionaryGroupSuite) TestGetFloatInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetFloatInvalidNull()
+	res, err := dictionaryClient.GetFloatInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	f1, f3 := 0.0, -1.2e20
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*float64{"0": &f1, "1": nil, "2": &f3})
 }
 
 func (s *DictionaryGroupSuite) TestGetFloatInvalidStringDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetFloatInvalidString()
+	_, err := dictionaryClient.GetFloatInvalidString(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetFloatValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetFloatValid()
+	res, err := dictionaryClient.GetFloatValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	f1, f2, f3 := 0.0, -0.01, -1.2e20
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*float64{"0": &f1, "1": &f2, "2": &f3})
 }
 
 func (s *DictionaryGroupSuite) TestGetIntegerValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetIntegerValid()
+	res, err := dictionaryClient.GetIntegerValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	var i1, i2, i3, i4 int32 = 1, -1, 3, 300
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*int32{"0": &i1, "1": &i2, "2": &i3, "3": &i4})
 }
 
 func (s *DictionaryGroupSuite) TestGetIntInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetIntInvalidNull()
+	res, err := dictionaryClient.GetIntInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	var i1, i2 int32 = 1, 0
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*int32{"0": &i1, "1": nil, "2": &i2})
 }
 
 func (s *DictionaryGroupSuite) TestGetIntInvalidStringDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetIntInvalidString()
+	_, err := dictionaryClient.GetIntInvalidString(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetInvalidDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetInvalid()
+	_, err := dictionaryClient.GetInvalid(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetLongInvalidNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetLongInvalidNull()
+	res, err := dictionaryClient.GetLongInvalidNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	var i1, i2 int64 = 1, 0
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*int64{"0": &i1, "1": nil, "2": &i2})
 }
 
 func (s *DictionaryGroupSuite) TestGetLongInvalidStringDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetLongInvalidString()
+	_, err := dictionaryClient.GetLongInvalidString(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetLongValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetLongValid()
+	res, err := dictionaryClient.GetLongValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	var i1, i2, i3, i4 int64 = 1, -1, 3, 300
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*int64{"0": &i1, "1": &i2, "2": &i3, "3": &i4})
 }
 
 func (s *DictionaryGroupSuite) TestGetNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetNull()
+	res, err := dictionaryClient.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.Value, chk.IsNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetNullKeyDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetNullKey()
+	_, err := dictionaryClient.GetNullKey(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetNullValueDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetNullValue()
+	res, err := dictionaryClient.GetNullValue(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*string{"key1": nil})
 }
 
 func (s *DictionaryGroupSuite) TestGetStringValidDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetStringValid()
+	res, err := dictionaryClient.GetStringValid(context.Background())
 	c.Assert(err, chk.IsNil)
 	str0, str1, str2 := "foo1", "foo2", "foo3"
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*string{"0": &str0, "1": &str1, "2": &str2})
 }
 
 func (s *DictionaryGroupSuite) TestGetStringWithInvalidDictionary(c *chk.C) {
-	_, err := dictionaryClient.GetStringWithInvalid()
+	_, err := dictionaryClient.GetStringWithInvalid(context.Background())
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *DictionaryGroupSuite) TestGetStringWithNullDictionary(c *chk.C) {
-	res, err := dictionaryClient.GetStringWithNull()
+	res, err := dictionaryClient.GetStringWithNull(context.Background())
 	c.Assert(err, chk.IsNil)
 	str0, str2 := "foo", "foo2"
 	c.Assert(*res.Value, chk.DeepEquals, map[string]*string{"0": &str0, "1": nil, "2": &str2})
 }
 
 func (s *DictionaryGroupSuite) TestPutArrayValidDictionary(c *chk.C) {
-	_, err := dictionaryClient.PutArrayValid(map[string][]string{
+	_, err := dictionaryClient.PutArrayValid(context.Background(), map[string][]string{
 		"0": {"1", "2", "3"},
 		"1": {"4", "5", "6"},
 		"2": {"7", "8", "9"},
@@ -410,7 +411,7 @@ func (s *DictionaryGroupSuite) TestPutArrayValidDictionary(c *chk.C) {
 
 func (s *DictionaryGroupSuite) TestPutBooleanTfftDictionary(c *chk.C) {
 	t, f := true, false
-	_, err := dictionaryClient.PutBooleanTfft(map[string]*bool{
+	_, err := dictionaryClient.PutBooleanTfft(context.Background(), map[string]*bool{
 		"0": &t,
 		"1": &f,
 		"2": &f,
@@ -419,7 +420,7 @@ func (s *DictionaryGroupSuite) TestPutBooleanTfftDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestPutByteValidDictionary(c *chk.C) {
-	_, err := dictionaryClient.PutByteValid(map[string][]byte{
+	_, err := dictionaryClient.PutByteValid(context.Background(), map[string][]byte{
 		"0": {255, 255, 255, 250},
 		"1": {1, 2, 3},
 		"2": {37, 41, 67},
@@ -431,7 +432,7 @@ func (s *DictionaryGroupSuite) TestPutDateTimeRfc1123ValidDictionary(c *chk.C) {
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	dt3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
-	_, err := dictionaryClient.PutDateTimeRfc1123Valid(map[string]*date.TimeRFC1123{
+	_, err := dictionaryClient.PutDateTimeRfc1123Valid(context.Background(), map[string]*date.TimeRFC1123{
 		"0": &date.TimeRFC1123{dt1},
 		"1": &date.TimeRFC1123{dt2},
 		"2": &date.TimeRFC1123{dt3},
@@ -441,7 +442,7 @@ func (s *DictionaryGroupSuite) TestPutDateTimeRfc1123ValidDictionary(c *chk.C) {
 
 func (s *DictionaryGroupSuite) TestPutLongValidDictionary(c *chk.C) {
 	v1, v2, v3, v4 := int64(1), int64(-1), int64(3), int64(300)
-	_, err := dictionaryClient.PutLongValid(map[string]*int64{
+	_, err := dictionaryClient.PutLongValid(context.Background(), map[string]*int64{
 		"0": &v1,
 		"1": &v2,
 		"2": &v3,
@@ -451,7 +452,7 @@ func (s *DictionaryGroupSuite) TestPutLongValidDictionary(c *chk.C) {
 
 func (s *DictionaryGroupSuite) TestPutIntegerValidDictionary(c *chk.C) {
 	v1, v2, v3, v4 := int32(1), int32(-1), int32(3), int32(300)
-	_, err := dictionaryClient.PutIntegerValid(map[string]*int32{
+	_, err := dictionaryClient.PutIntegerValid(context.Background(), map[string]*int32{
 		"0": &v1,
 		"1": &v2,
 		"2": &v3,
@@ -461,7 +462,7 @@ func (s *DictionaryGroupSuite) TestPutIntegerValidDictionary(c *chk.C) {
 
 func (s *DictionaryGroupSuite) TestPutFloatValidDictionary(c *chk.C) {
 	f1, f2, f3 := float64(0.0), float64(-0.01), float64(-1.2e20)
-	_, err := dictionaryClient.PutFloatValid(map[string]*float64{
+	_, err := dictionaryClient.PutFloatValid(context.Background(), map[string]*float64{
 		"0": &f1,
 		"1": &f2,
 		"2": &f3})
@@ -470,7 +471,7 @@ func (s *DictionaryGroupSuite) TestPutFloatValidDictionary(c *chk.C) {
 
 func (s *DictionaryGroupSuite) TestPutDurationValidDictionary(c *chk.C) {
 	v1, v2 := "P123DT22H14M12.011S", "P5DT1H"
-	_, err := dictionaryClient.PutDurationValid(map[string]*string{
+	_, err := dictionaryClient.PutDurationValid(context.Background(), map[string]*string{
 		"0": &v1,
 		"1": &v2})
 	c.Assert(err, chk.IsNil)
@@ -478,7 +479,7 @@ func (s *DictionaryGroupSuite) TestPutDurationValidDictionary(c *chk.C) {
 
 func (s *DictionaryGroupSuite) TestPutDoubleValidDictionary(c *chk.C) {
 	f1, f2, f3 := float64(0.0), float64(-0.01), float64(-1.2e20)
-	_, err := dictionaryClient.PutDoubleValid(map[string]*float64{
+	_, err := dictionaryClient.PutDoubleValid(context.Background(), map[string]*float64{
 		"0": &f1,
 		"1": &f2,
 		"2": &f3})
@@ -486,7 +487,7 @@ func (s *DictionaryGroupSuite) TestPutDoubleValidDictionary(c *chk.C) {
 }
 
 func (s *DictionaryGroupSuite) TestPutDictionaryValidDictionary(c *chk.C) {
-	_, err := dictionaryClient.PutDictionaryValid(map[string]map[string]*string{
+	_, err := dictionaryClient.PutDictionaryValid(context.Background(), map[string]map[string]*string{
 		"0": {"1": &one, "2": &two, "3": &three},
 		"1": {"4": &four, "5": &five, "6": &six},
 		"2": {"7": &seven, "8": &eight, "9": &nine},
@@ -503,12 +504,12 @@ func (s *DictionaryGroupSuite) TestPutDateTimeValidDictionary(c *chk.C) {
 		"1": &date.Time{dt2},
 		"2": &date.Time{dt3},
 	}
-	_, err := dictionaryClient.PutDateTimeValid(dic)
+	_, err := dictionaryClient.PutDateTimeValid(context.Background(), dic)
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *DictionaryGroupSuite) TestPutDateValidDictionary(c *chk.C) {
-	_, err := dictionaryClient.PutDateValid(map[string]*date.Date{
+	_, err := dictionaryClient.PutDateValid(context.Background(), map[string]*date.Date{
 		"0": &date.Date{time.Date(2000, time.December, 01, 0, 0, 0, 0, time.UTC)},
 		"1": &date.Date{time.Date(1980, time.January, 02, 0, 0, 0, 0, time.UTC)},
 		"2": &date.Date{time.Date(1492, time.October, 12, 0, 0, 0, 0, time.UTC)},
@@ -519,19 +520,19 @@ func (s *DictionaryGroupSuite) TestPutDateValidDictionary(c *chk.C) {
 func (s *DictionaryGroupSuite) TestPutStringValidDictionary(c *chk.C) {
 	foo1, foo2, foo3 := "foo1", "foo2", "foo3"
 	dic := map[string]*string{"0": &foo1, "1": &foo2, "2": &foo3}
-	_, err := dictionaryClient.PutStringValid(dic)
+	_, err := dictionaryClient.PutStringValid(context.Background(), dic)
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *DictionaryGroupSuite) TestPutEmptyDictionary(c *chk.C) {
-	_, err := dictionaryClient.PutEmpty(map[string]*string{})
+	_, err := dictionaryClient.PutEmpty(context.Background(), map[string]*string{})
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *DictionaryGroupSuite) TestPutComplexValidDictionary(c *chk.C) {
 	var i0, i1, i2 int32 = 1, 3, 5
 	var str0, str1, str2 = "2", "4", "6"
-	_, err := dictionaryClient.PutComplexValid(map[string]*Widget{
+	_, err := dictionaryClient.PutComplexValid(context.Background(), map[string]*Widget{
 		"0": &Widget{&i0, &str0},
 		"1": &Widget{&i1, &str1},
 		"2": &Widget{&i2, &str2},

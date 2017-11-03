@@ -7,6 +7,7 @@ package morecustombaseurigroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -26,8 +27,8 @@ func NewPathsClient(subscriptionID string) PathsClient {
 //
 // vault is the vault name, e.g. https://myvault secret is secret value. keyName is the key name with value 'key1'.
 // keyVersion is the key version. Default value 'v1'.
-func (client PathsClient) GetEmpty(vault string, secret string, keyName string, keyVersion string) (result autorest.Response, err error) {
-	req, err := client.GetEmptyPreparer(vault, secret, keyName, keyVersion)
+func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, keyVersion string) (result autorest.Response, err error) {
+	req, err := client.GetEmptyPreparer(ctx, vault, secret, keyName, keyVersion)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "morecustombaseurigroup.PathsClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -49,7 +50,7 @@ func (client PathsClient) GetEmpty(vault string, secret string, keyName string, 
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client PathsClient) GetEmptyPreparer(vault string, secret string, keyName string, keyVersion string) (*http.Request, error) {
+func (client PathsClient) GetEmptyPreparer(ctx context.Context, vault string, secret string, keyName string, keyVersion string) (*http.Request, error) {
 	urlParameters := map[string]interface{}{
 		"dnsSuffix": client.DNSSuffix,
 		"secret":    secret,
@@ -71,7 +72,7 @@ func (client PathsClient) GetEmptyPreparer(vault string, secret string, keyName 
 		autorest.WithCustomBaseURL("{vault}{secret}{dnsSuffix}", urlParameters),
 		autorest.WithPathParameters("/customuri/{subscriptionId}/{keyName}", pathParameters),
 		autorest.WithQueryParameters(queryParameters))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the

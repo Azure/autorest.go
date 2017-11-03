@@ -7,6 +7,7 @@ package dictionarygroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -30,8 +31,8 @@ func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 }
 
 // GetArrayEmpty get an empty dictionary {}
-func (client DictionaryClient) GetArrayEmpty() (result SetListString, err error) {
-	req, err := client.GetArrayEmptyPreparer()
+func (client DictionaryClient) GetArrayEmpty(ctx context.Context) (result SetListString, err error) {
+	req, err := client.GetArrayEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", nil, "Failure preparing request")
 		return
@@ -53,12 +54,12 @@ func (client DictionaryClient) GetArrayEmpty() (result SetListString, err error)
 }
 
 // GetArrayEmptyPreparer prepares the GetArrayEmpty request.
-func (client DictionaryClient) GetArrayEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetArrayEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/array/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayEmptySender sends the GetArrayEmpty request. The method will close the
@@ -82,8 +83,8 @@ func (client DictionaryClient) GetArrayEmptyResponder(resp *http.Response) (resu
 }
 
 // GetArrayItemEmpty get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
-func (client DictionaryClient) GetArrayItemEmpty() (result SetListString, err error) {
-	req, err := client.GetArrayItemEmptyPreparer()
+func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context) (result SetListString, err error) {
+	req, err := client.GetArrayItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", nil, "Failure preparing request")
 		return
@@ -105,12 +106,12 @@ func (client DictionaryClient) GetArrayItemEmpty() (result SetListString, err er
 }
 
 // GetArrayItemEmptyPreparer prepares the GetArrayItemEmpty request.
-func (client DictionaryClient) GetArrayItemEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetArrayItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/array/itemempty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayItemEmptySender sends the GetArrayItemEmpty request. The method will close the
@@ -134,8 +135,8 @@ func (client DictionaryClient) GetArrayItemEmptyResponder(resp *http.Response) (
 }
 
 // GetArrayItemNull get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
-func (client DictionaryClient) GetArrayItemNull() (result SetListString, err error) {
-	req, err := client.GetArrayItemNullPreparer()
+func (client DictionaryClient) GetArrayItemNull(ctx context.Context) (result SetListString, err error) {
+	req, err := client.GetArrayItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", nil, "Failure preparing request")
 		return
@@ -157,12 +158,12 @@ func (client DictionaryClient) GetArrayItemNull() (result SetListString, err err
 }
 
 // GetArrayItemNullPreparer prepares the GetArrayItemNull request.
-func (client DictionaryClient) GetArrayItemNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetArrayItemNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/array/itemnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayItemNullSender sends the GetArrayItemNull request. The method will close the
@@ -186,8 +187,8 @@ func (client DictionaryClient) GetArrayItemNullResponder(resp *http.Response) (r
 }
 
 // GetArrayNull get a null array
-func (client DictionaryClient) GetArrayNull() (result SetListString, err error) {
-	req, err := client.GetArrayNullPreparer()
+func (client DictionaryClient) GetArrayNull(ctx context.Context) (result SetListString, err error) {
+	req, err := client.GetArrayNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", nil, "Failure preparing request")
 		return
@@ -209,12 +210,12 @@ func (client DictionaryClient) GetArrayNull() (result SetListString, err error) 
 }
 
 // GetArrayNullPreparer prepares the GetArrayNull request.
-func (client DictionaryClient) GetArrayNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetArrayNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/array/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayNullSender sends the GetArrayNull request. The method will close the
@@ -238,8 +239,8 @@ func (client DictionaryClient) GetArrayNullResponder(resp *http.Response) (resul
 }
 
 // GetArrayValid get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-func (client DictionaryClient) GetArrayValid() (result SetListString, err error) {
-	req, err := client.GetArrayValidPreparer()
+func (client DictionaryClient) GetArrayValid(ctx context.Context) (result SetListString, err error) {
+	req, err := client.GetArrayValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", nil, "Failure preparing request")
 		return
@@ -261,12 +262,12 @@ func (client DictionaryClient) GetArrayValid() (result SetListString, err error)
 }
 
 // GetArrayValidPreparer prepares the GetArrayValid request.
-func (client DictionaryClient) GetArrayValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetArrayValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/array/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetArrayValidSender sends the GetArrayValid request. The method will close the
@@ -291,8 +292,8 @@ func (client DictionaryClient) GetArrayValidResponder(resp *http.Response) (resu
 
 // GetBase64URL get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string",
 // "2": "Lorem ipsum"}
-func (client DictionaryClient) GetBase64URL() (result SetBase64URL, err error) {
-	req, err := client.GetBase64URLPreparer()
+func (client DictionaryClient) GetBase64URL(ctx context.Context) (result SetBase64URL, err error) {
+	req, err := client.GetBase64URLPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", nil, "Failure preparing request")
 		return
@@ -314,12 +315,12 @@ func (client DictionaryClient) GetBase64URL() (result SetBase64URL, err error) {
 }
 
 // GetBase64URLPreparer prepares the GetBase64URL request.
-func (client DictionaryClient) GetBase64URLPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetBase64URLPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/base64url/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBase64URLSender sends the GetBase64URL request. The method will close the
@@ -343,8 +344,8 @@ func (client DictionaryClient) GetBase64URLResponder(resp *http.Response) (resul
 }
 
 // GetBooleanInvalidNull get boolean dictionary value {"0": true, "1": null, "2": false }
-func (client DictionaryClient) GetBooleanInvalidNull() (result SetBool, err error) {
-	req, err := client.GetBooleanInvalidNullPreparer()
+func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context) (result SetBool, err error) {
+	req, err := client.GetBooleanInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", nil, "Failure preparing request")
 		return
@@ -366,12 +367,12 @@ func (client DictionaryClient) GetBooleanInvalidNull() (result SetBool, err erro
 }
 
 // GetBooleanInvalidNullPreparer prepares the GetBooleanInvalidNull request.
-func (client DictionaryClient) GetBooleanInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetBooleanInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/boolean/true.null.false"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBooleanInvalidNullSender sends the GetBooleanInvalidNull request. The method will close the
@@ -395,8 +396,8 @@ func (client DictionaryClient) GetBooleanInvalidNullResponder(resp *http.Respons
 }
 
 // GetBooleanInvalidString get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
-func (client DictionaryClient) GetBooleanInvalidString() (result SetBool, err error) {
-	req, err := client.GetBooleanInvalidStringPreparer()
+func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context) (result SetBool, err error) {
+	req, err := client.GetBooleanInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", nil, "Failure preparing request")
 		return
@@ -418,12 +419,12 @@ func (client DictionaryClient) GetBooleanInvalidString() (result SetBool, err er
 }
 
 // GetBooleanInvalidStringPreparer prepares the GetBooleanInvalidString request.
-func (client DictionaryClient) GetBooleanInvalidStringPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetBooleanInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/boolean/true.boolean.false"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBooleanInvalidStringSender sends the GetBooleanInvalidString request. The method will close the
@@ -447,8 +448,8 @@ func (client DictionaryClient) GetBooleanInvalidStringResponder(resp *http.Respo
 }
 
 // GetBooleanTfft get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
-func (client DictionaryClient) GetBooleanTfft() (result SetBool, err error) {
-	req, err := client.GetBooleanTfftPreparer()
+func (client DictionaryClient) GetBooleanTfft(ctx context.Context) (result SetBool, err error) {
+	req, err := client.GetBooleanTfftPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", nil, "Failure preparing request")
 		return
@@ -470,12 +471,12 @@ func (client DictionaryClient) GetBooleanTfft() (result SetBool, err error) {
 }
 
 // GetBooleanTfftPreparer prepares the GetBooleanTfft request.
-func (client DictionaryClient) GetBooleanTfftPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetBooleanTfftPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/boolean/tfft"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetBooleanTfftSender sends the GetBooleanTfft request. The method will close the
@@ -499,8 +500,8 @@ func (client DictionaryClient) GetBooleanTfftResponder(resp *http.Response) (res
 }
 
 // GetByteInvalidNull get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
-func (client DictionaryClient) GetByteInvalidNull() (result SetByteArray, err error) {
-	req, err := client.GetByteInvalidNullPreparer()
+func (client DictionaryClient) GetByteInvalidNull(ctx context.Context) (result SetByteArray, err error) {
+	req, err := client.GetByteInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", nil, "Failure preparing request")
 		return
@@ -522,12 +523,12 @@ func (client DictionaryClient) GetByteInvalidNull() (result SetByteArray, err er
 }
 
 // GetByteInvalidNullPreparer prepares the GetByteInvalidNull request.
-func (client DictionaryClient) GetByteInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetByteInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/byte/invalidnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetByteInvalidNullSender sends the GetByteInvalidNull request. The method will close the
@@ -552,8 +553,8 @@ func (client DictionaryClient) GetByteInvalidNullResponder(resp *http.Response) 
 
 // GetByteValid get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each
 // item encoded in base64
-func (client DictionaryClient) GetByteValid() (result SetByteArray, err error) {
-	req, err := client.GetByteValidPreparer()
+func (client DictionaryClient) GetByteValid(ctx context.Context) (result SetByteArray, err error) {
+	req, err := client.GetByteValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", nil, "Failure preparing request")
 		return
@@ -575,12 +576,12 @@ func (client DictionaryClient) GetByteValid() (result SetByteArray, err error) {
 }
 
 // GetByteValidPreparer prepares the GetByteValid request.
-func (client DictionaryClient) GetByteValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetByteValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/byte/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetByteValidSender sends the GetByteValid request. The method will close the
@@ -604,8 +605,8 @@ func (client DictionaryClient) GetByteValidResponder(resp *http.Response) (resul
 }
 
 // GetComplexEmpty get empty dictionary of complex type {}
-func (client DictionaryClient) GetComplexEmpty() (result SetWidget, err error) {
-	req, err := client.GetComplexEmptyPreparer()
+func (client DictionaryClient) GetComplexEmpty(ctx context.Context) (result SetWidget, err error) {
+	req, err := client.GetComplexEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", nil, "Failure preparing request")
 		return
@@ -627,12 +628,12 @@ func (client DictionaryClient) GetComplexEmpty() (result SetWidget, err error) {
 }
 
 // GetComplexEmptyPreparer prepares the GetComplexEmpty request.
-func (client DictionaryClient) GetComplexEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetComplexEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/complex/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexEmptySender sends the GetComplexEmpty request. The method will close the
@@ -657,8 +658,8 @@ func (client DictionaryClient) GetComplexEmptyResponder(resp *http.Response) (re
 
 // GetComplexItemEmpty get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {},
 // "2": {"integer": 5, "string": "6"}}
-func (client DictionaryClient) GetComplexItemEmpty() (result SetWidget, err error) {
-	req, err := client.GetComplexItemEmptyPreparer()
+func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context) (result SetWidget, err error) {
+	req, err := client.GetComplexItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", nil, "Failure preparing request")
 		return
@@ -680,12 +681,12 @@ func (client DictionaryClient) GetComplexItemEmpty() (result SetWidget, err erro
 }
 
 // GetComplexItemEmptyPreparer prepares the GetComplexItemEmpty request.
-func (client DictionaryClient) GetComplexItemEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetComplexItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/complex/itemempty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexItemEmptySender sends the GetComplexItemEmpty request. The method will close the
@@ -710,8 +711,8 @@ func (client DictionaryClient) GetComplexItemEmptyResponder(resp *http.Response)
 
 // GetComplexItemNull get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null,
 // "2": {"integer": 5, "string": "6"}}
-func (client DictionaryClient) GetComplexItemNull() (result SetWidget, err error) {
-	req, err := client.GetComplexItemNullPreparer()
+func (client DictionaryClient) GetComplexItemNull(ctx context.Context) (result SetWidget, err error) {
+	req, err := client.GetComplexItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", nil, "Failure preparing request")
 		return
@@ -733,12 +734,12 @@ func (client DictionaryClient) GetComplexItemNull() (result SetWidget, err error
 }
 
 // GetComplexItemNullPreparer prepares the GetComplexItemNull request.
-func (client DictionaryClient) GetComplexItemNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetComplexItemNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/complex/itemnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexItemNullSender sends the GetComplexItemNull request. The method will close the
@@ -762,8 +763,8 @@ func (client DictionaryClient) GetComplexItemNullResponder(resp *http.Response) 
 }
 
 // GetComplexNull get dictionary of complex type null value
-func (client DictionaryClient) GetComplexNull() (result SetWidget, err error) {
-	req, err := client.GetComplexNullPreparer()
+func (client DictionaryClient) GetComplexNull(ctx context.Context) (result SetWidget, err error) {
+	req, err := client.GetComplexNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", nil, "Failure preparing request")
 		return
@@ -785,12 +786,12 @@ func (client DictionaryClient) GetComplexNull() (result SetWidget, err error) {
 }
 
 // GetComplexNullPreparer prepares the GetComplexNull request.
-func (client DictionaryClient) GetComplexNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetComplexNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/complex/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexNullSender sends the GetComplexNull request. The method will close the
@@ -815,8 +816,8 @@ func (client DictionaryClient) GetComplexNullResponder(resp *http.Response) (res
 
 // GetComplexValid get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
 // "string": "4"}, "2": {"integer": 5, "string": "6"}}
-func (client DictionaryClient) GetComplexValid() (result SetWidget, err error) {
-	req, err := client.GetComplexValidPreparer()
+func (client DictionaryClient) GetComplexValid(ctx context.Context) (result SetWidget, err error) {
+	req, err := client.GetComplexValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", nil, "Failure preparing request")
 		return
@@ -838,12 +839,12 @@ func (client DictionaryClient) GetComplexValid() (result SetWidget, err error) {
 }
 
 // GetComplexValidPreparer prepares the GetComplexValid request.
-func (client DictionaryClient) GetComplexValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetComplexValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/complex/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetComplexValidSender sends the GetComplexValid request. The method will close the
@@ -867,8 +868,8 @@ func (client DictionaryClient) GetComplexValidResponder(resp *http.Response) (re
 }
 
 // GetDateInvalidChars get date dictionary value {"0": "2011-03-22", "1": "date"}
-func (client DictionaryClient) GetDateInvalidChars() (result SetDate, err error) {
-	req, err := client.GetDateInvalidCharsPreparer()
+func (client DictionaryClient) GetDateInvalidChars(ctx context.Context) (result SetDate, err error) {
+	req, err := client.GetDateInvalidCharsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", nil, "Failure preparing request")
 		return
@@ -890,12 +891,12 @@ func (client DictionaryClient) GetDateInvalidChars() (result SetDate, err error)
 }
 
 // GetDateInvalidCharsPreparer prepares the GetDateInvalidChars request.
-func (client DictionaryClient) GetDateInvalidCharsPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDateInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date/invalidchars"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateInvalidCharsSender sends the GetDateInvalidChars request. The method will close the
@@ -919,8 +920,8 @@ func (client DictionaryClient) GetDateInvalidCharsResponder(resp *http.Response)
 }
 
 // GetDateInvalidNull get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
-func (client DictionaryClient) GetDateInvalidNull() (result SetDate, err error) {
-	req, err := client.GetDateInvalidNullPreparer()
+func (client DictionaryClient) GetDateInvalidNull(ctx context.Context) (result SetDate, err error) {
+	req, err := client.GetDateInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", nil, "Failure preparing request")
 		return
@@ -942,12 +943,12 @@ func (client DictionaryClient) GetDateInvalidNull() (result SetDate, err error) 
 }
 
 // GetDateInvalidNullPreparer prepares the GetDateInvalidNull request.
-func (client DictionaryClient) GetDateInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDateInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date/invalidnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateInvalidNullSender sends the GetDateInvalidNull request. The method will close the
@@ -971,8 +972,8 @@ func (client DictionaryClient) GetDateInvalidNullResponder(resp *http.Response) 
 }
 
 // GetDateTimeInvalidChars get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
-func (client DictionaryClient) GetDateTimeInvalidChars() (result SetDateTime, err error) {
-	req, err := client.GetDateTimeInvalidCharsPreparer()
+func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context) (result SetDateTime, err error) {
+	req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", nil, "Failure preparing request")
 		return
@@ -994,12 +995,12 @@ func (client DictionaryClient) GetDateTimeInvalidChars() (result SetDateTime, er
 }
 
 // GetDateTimeInvalidCharsPreparer prepares the GetDateTimeInvalidChars request.
-func (client DictionaryClient) GetDateTimeInvalidCharsPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDateTimeInvalidCharsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time/invalidchars"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeInvalidCharsSender sends the GetDateTimeInvalidChars request. The method will close the
@@ -1023,8 +1024,8 @@ func (client DictionaryClient) GetDateTimeInvalidCharsResponder(resp *http.Respo
 }
 
 // GetDateTimeInvalidNull get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
-func (client DictionaryClient) GetDateTimeInvalidNull() (result SetDateTime, err error) {
-	req, err := client.GetDateTimeInvalidNullPreparer()
+func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context) (result SetDateTime, err error) {
+	req, err := client.GetDateTimeInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", nil, "Failure preparing request")
 		return
@@ -1046,12 +1047,12 @@ func (client DictionaryClient) GetDateTimeInvalidNull() (result SetDateTime, err
 }
 
 // GetDateTimeInvalidNullPreparer prepares the GetDateTimeInvalidNull request.
-func (client DictionaryClient) GetDateTimeInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDateTimeInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time/invalidnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeInvalidNullSender sends the GetDateTimeInvalidNull request. The method will close the
@@ -1076,8 +1077,8 @@ func (client DictionaryClient) GetDateTimeInvalidNullResponder(resp *http.Respon
 
 // GetDateTimeRfc1123Valid get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02
 // Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
-func (client DictionaryClient) GetDateTimeRfc1123Valid() (result SetDateTimeRfc1123, err error) {
-	req, err := client.GetDateTimeRfc1123ValidPreparer()
+func (client DictionaryClient) GetDateTimeRfc1123Valid(ctx context.Context) (result SetDateTimeRfc1123, err error) {
+	req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", nil, "Failure preparing request")
 		return
@@ -1099,12 +1100,12 @@ func (client DictionaryClient) GetDateTimeRfc1123Valid() (result SetDateTimeRfc1
 }
 
 // GetDateTimeRfc1123ValidPreparer prepares the GetDateTimeRfc1123Valid request.
-func (client DictionaryClient) GetDateTimeRfc1123ValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDateTimeRfc1123ValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time-rfc1123/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeRfc1123ValidSender sends the GetDateTimeRfc1123Valid request. The method will close the
@@ -1129,8 +1130,8 @@ func (client DictionaryClient) GetDateTimeRfc1123ValidResponder(resp *http.Respo
 
 // GetDateTimeValid get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
-func (client DictionaryClient) GetDateTimeValid() (result SetDateTime, err error) {
-	req, err := client.GetDateTimeValidPreparer()
+func (client DictionaryClient) GetDateTimeValid(ctx context.Context) (result SetDateTime, err error) {
+	req, err := client.GetDateTimeValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", nil, "Failure preparing request")
 		return
@@ -1152,12 +1153,12 @@ func (client DictionaryClient) GetDateTimeValid() (result SetDateTime, err error
 }
 
 // GetDateTimeValidPreparer prepares the GetDateTimeValid request.
-func (client DictionaryClient) GetDateTimeValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateTimeValidSender sends the GetDateTimeValid request. The method will close the
@@ -1181,8 +1182,8 @@ func (client DictionaryClient) GetDateTimeValidResponder(resp *http.Response) (r
 }
 
 // GetDateValid get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-func (client DictionaryClient) GetDateValid() (result SetDate, err error) {
-	req, err := client.GetDateValidPreparer()
+func (client DictionaryClient) GetDateValid(ctx context.Context) (result SetDate, err error) {
+	req, err := client.GetDateValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", nil, "Failure preparing request")
 		return
@@ -1204,12 +1205,12 @@ func (client DictionaryClient) GetDateValid() (result SetDate, err error) {
 }
 
 // GetDateValidPreparer prepares the GetDateValid request.
-func (client DictionaryClient) GetDateValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDateValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDateValidSender sends the GetDateValid request. The method will close the
@@ -1233,8 +1234,8 @@ func (client DictionaryClient) GetDateValidResponder(resp *http.Response) (resul
 }
 
 // GetDictionaryEmpty get an dictionaries of dictionaries of type <string, string> with value {}
-func (client DictionaryClient) GetDictionaryEmpty() (result SetSetString, err error) {
-	req, err := client.GetDictionaryEmptyPreparer()
+func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context) (result SetSetString, err error) {
+	req, err := client.GetDictionaryEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", nil, "Failure preparing request")
 		return
@@ -1256,12 +1257,12 @@ func (client DictionaryClient) GetDictionaryEmpty() (result SetSetString, err er
 }
 
 // GetDictionaryEmptyPreparer prepares the GetDictionaryEmpty request.
-func (client DictionaryClient) GetDictionaryEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDictionaryEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/dictionary/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryEmptySender sends the GetDictionaryEmpty request. The method will close the
@@ -1286,8 +1287,8 @@ func (client DictionaryClient) GetDictionaryEmptyResponder(resp *http.Response) 
 
 // GetDictionaryItemEmpty get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one",
 // "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client DictionaryClient) GetDictionaryItemEmpty() (result SetSetString, err error) {
-	req, err := client.GetDictionaryItemEmptyPreparer()
+func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context) (result SetSetString, err error) {
+	req, err := client.GetDictionaryItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", nil, "Failure preparing request")
 		return
@@ -1309,12 +1310,12 @@ func (client DictionaryClient) GetDictionaryItemEmpty() (result SetSetString, er
 }
 
 // GetDictionaryItemEmptyPreparer prepares the GetDictionaryItemEmpty request.
-func (client DictionaryClient) GetDictionaryItemEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDictionaryItemEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/dictionary/itemempty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryItemEmptySender sends the GetDictionaryItemEmpty request. The method will close the
@@ -1339,8 +1340,8 @@ func (client DictionaryClient) GetDictionaryItemEmptyResponder(resp *http.Respon
 
 // GetDictionaryItemNull get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one",
 // "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client DictionaryClient) GetDictionaryItemNull() (result SetSetString, err error) {
-	req, err := client.GetDictionaryItemNullPreparer()
+func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context) (result SetSetString, err error) {
+	req, err := client.GetDictionaryItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", nil, "Failure preparing request")
 		return
@@ -1362,12 +1363,12 @@ func (client DictionaryClient) GetDictionaryItemNull() (result SetSetString, err
 }
 
 // GetDictionaryItemNullPreparer prepares the GetDictionaryItemNull request.
-func (client DictionaryClient) GetDictionaryItemNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDictionaryItemNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/dictionary/itemnull"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryItemNullSender sends the GetDictionaryItemNull request. The method will close the
@@ -1391,8 +1392,8 @@ func (client DictionaryClient) GetDictionaryItemNullResponder(resp *http.Respons
 }
 
 // GetDictionaryNull get an dictionaries of dictionaries with value null
-func (client DictionaryClient) GetDictionaryNull() (result SetSetString, err error) {
-	req, err := client.GetDictionaryNullPreparer()
+func (client DictionaryClient) GetDictionaryNull(ctx context.Context) (result SetSetString, err error) {
+	req, err := client.GetDictionaryNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", nil, "Failure preparing request")
 		return
@@ -1414,12 +1415,12 @@ func (client DictionaryClient) GetDictionaryNull() (result SetSetString, err err
 }
 
 // GetDictionaryNullPreparer prepares the GetDictionaryNull request.
-func (client DictionaryClient) GetDictionaryNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDictionaryNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/dictionary/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryNullSender sends the GetDictionaryNull request. The method will close the
@@ -1444,8 +1445,8 @@ func (client DictionaryClient) GetDictionaryNullResponder(resp *http.Response) (
 
 // GetDictionaryValid get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2":
 // "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-func (client DictionaryClient) GetDictionaryValid() (result SetSetString, err error) {
-	req, err := client.GetDictionaryValidPreparer()
+func (client DictionaryClient) GetDictionaryValid(ctx context.Context) (result SetSetString, err error) {
+	req, err := client.GetDictionaryValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", nil, "Failure preparing request")
 		return
@@ -1467,12 +1468,12 @@ func (client DictionaryClient) GetDictionaryValid() (result SetSetString, err er
 }
 
 // GetDictionaryValidPreparer prepares the GetDictionaryValid request.
-func (client DictionaryClient) GetDictionaryValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDictionaryValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/dictionary/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDictionaryValidSender sends the GetDictionaryValid request. The method will close the
@@ -1496,8 +1497,8 @@ func (client DictionaryClient) GetDictionaryValidResponder(resp *http.Response) 
 }
 
 // GetDoubleInvalidNull get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-func (client DictionaryClient) GetDoubleInvalidNull() (result SetFloat64, err error) {
-	req, err := client.GetDoubleInvalidNullPreparer()
+func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context) (result SetFloat64, err error) {
+	req, err := client.GetDoubleInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", nil, "Failure preparing request")
 		return
@@ -1519,12 +1520,12 @@ func (client DictionaryClient) GetDoubleInvalidNull() (result SetFloat64, err er
 }
 
 // GetDoubleInvalidNullPreparer prepares the GetDoubleInvalidNull request.
-func (client DictionaryClient) GetDoubleInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDoubleInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/double/0.0-null-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDoubleInvalidNullSender sends the GetDoubleInvalidNull request. The method will close the
@@ -1548,8 +1549,8 @@ func (client DictionaryClient) GetDoubleInvalidNullResponder(resp *http.Response
 }
 
 // GetDoubleInvalidString get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-func (client DictionaryClient) GetDoubleInvalidString() (result SetFloat64, err error) {
-	req, err := client.GetDoubleInvalidStringPreparer()
+func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context) (result SetFloat64, err error) {
+	req, err := client.GetDoubleInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", nil, "Failure preparing request")
 		return
@@ -1571,12 +1572,12 @@ func (client DictionaryClient) GetDoubleInvalidString() (result SetFloat64, err 
 }
 
 // GetDoubleInvalidStringPreparer prepares the GetDoubleInvalidString request.
-func (client DictionaryClient) GetDoubleInvalidStringPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDoubleInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/double/1.number.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDoubleInvalidStringSender sends the GetDoubleInvalidString request. The method will close the
@@ -1600,8 +1601,8 @@ func (client DictionaryClient) GetDoubleInvalidStringResponder(resp *http.Respon
 }
 
 // GetDoubleValid get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client DictionaryClient) GetDoubleValid() (result SetFloat64, err error) {
-	req, err := client.GetDoubleValidPreparer()
+func (client DictionaryClient) GetDoubleValid(ctx context.Context) (result SetFloat64, err error) {
+	req, err := client.GetDoubleValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", nil, "Failure preparing request")
 		return
@@ -1623,12 +1624,12 @@ func (client DictionaryClient) GetDoubleValid() (result SetFloat64, err error) {
 }
 
 // GetDoubleValidPreparer prepares the GetDoubleValid request.
-func (client DictionaryClient) GetDoubleValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDoubleValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/double/0--0.01-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDoubleValidSender sends the GetDoubleValid request. The method will close the
@@ -1652,8 +1653,8 @@ func (client DictionaryClient) GetDoubleValidResponder(resp *http.Response) (res
 }
 
 // GetDurationValid get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-func (client DictionaryClient) GetDurationValid() (result SetTimeSpan, err error) {
-	req, err := client.GetDurationValidPreparer()
+func (client DictionaryClient) GetDurationValid(ctx context.Context) (result SetTimeSpan, err error) {
+	req, err := client.GetDurationValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", nil, "Failure preparing request")
 		return
@@ -1675,12 +1676,12 @@ func (client DictionaryClient) GetDurationValid() (result SetTimeSpan, err error
 }
 
 // GetDurationValidPreparer prepares the GetDurationValid request.
-func (client DictionaryClient) GetDurationValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetDurationValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/duration/valid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetDurationValidSender sends the GetDurationValid request. The method will close the
@@ -1704,8 +1705,8 @@ func (client DictionaryClient) GetDurationValidResponder(resp *http.Response) (r
 }
 
 // GetEmpty get empty dictionary value {}
-func (client DictionaryClient) GetEmpty() (result SetInt32, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client DictionaryClient) GetEmpty(ctx context.Context) (result SetInt32, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -1727,12 +1728,12 @@ func (client DictionaryClient) GetEmpty() (result SetInt32, err error) {
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client DictionaryClient) GetEmptyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/empty"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptySender sends the GetEmpty request. The method will close the
@@ -1756,8 +1757,8 @@ func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result Se
 }
 
 // GetEmptyStringKey get Dictionary with key as empty string
-func (client DictionaryClient) GetEmptyStringKey() (result SetString, err error) {
-	req, err := client.GetEmptyStringKeyPreparer()
+func (client DictionaryClient) GetEmptyStringKey(ctx context.Context) (result SetString, err error) {
+	req, err := client.GetEmptyStringKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", nil, "Failure preparing request")
 		return
@@ -1779,12 +1780,12 @@ func (client DictionaryClient) GetEmptyStringKey() (result SetString, err error)
 }
 
 // GetEmptyStringKeyPreparer prepares the GetEmptyStringKey request.
-func (client DictionaryClient) GetEmptyStringKeyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetEmptyStringKeyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/keyemptystring"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetEmptyStringKeySender sends the GetEmptyStringKey request. The method will close the
@@ -1808,8 +1809,8 @@ func (client DictionaryClient) GetEmptyStringKeyResponder(resp *http.Response) (
 }
 
 // GetFloatInvalidNull get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-func (client DictionaryClient) GetFloatInvalidNull() (result SetFloat64, err error) {
-	req, err := client.GetFloatInvalidNullPreparer()
+func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context) (result SetFloat64, err error) {
+	req, err := client.GetFloatInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", nil, "Failure preparing request")
 		return
@@ -1831,12 +1832,12 @@ func (client DictionaryClient) GetFloatInvalidNull() (result SetFloat64, err err
 }
 
 // GetFloatInvalidNullPreparer prepares the GetFloatInvalidNull request.
-func (client DictionaryClient) GetFloatInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetFloatInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/float/0.0-null-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFloatInvalidNullSender sends the GetFloatInvalidNull request. The method will close the
@@ -1860,8 +1861,8 @@ func (client DictionaryClient) GetFloatInvalidNullResponder(resp *http.Response)
 }
 
 // GetFloatInvalidString get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-func (client DictionaryClient) GetFloatInvalidString() (result SetFloat64, err error) {
-	req, err := client.GetFloatInvalidStringPreparer()
+func (client DictionaryClient) GetFloatInvalidString(ctx context.Context) (result SetFloat64, err error) {
+	req, err := client.GetFloatInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", nil, "Failure preparing request")
 		return
@@ -1883,12 +1884,12 @@ func (client DictionaryClient) GetFloatInvalidString() (result SetFloat64, err e
 }
 
 // GetFloatInvalidStringPreparer prepares the GetFloatInvalidString request.
-func (client DictionaryClient) GetFloatInvalidStringPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetFloatInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/float/1.number.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFloatInvalidStringSender sends the GetFloatInvalidString request. The method will close the
@@ -1912,8 +1913,8 @@ func (client DictionaryClient) GetFloatInvalidStringResponder(resp *http.Respons
 }
 
 // GetFloatValid get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-func (client DictionaryClient) GetFloatValid() (result SetFloat64, err error) {
-	req, err := client.GetFloatValidPreparer()
+func (client DictionaryClient) GetFloatValid(ctx context.Context) (result SetFloat64, err error) {
+	req, err := client.GetFloatValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", nil, "Failure preparing request")
 		return
@@ -1935,12 +1936,12 @@ func (client DictionaryClient) GetFloatValid() (result SetFloat64, err error) {
 }
 
 // GetFloatValidPreparer prepares the GetFloatValid request.
-func (client DictionaryClient) GetFloatValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetFloatValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/float/0--0.01-1.2e20"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetFloatValidSender sends the GetFloatValid request. The method will close the
@@ -1964,8 +1965,8 @@ func (client DictionaryClient) GetFloatValidResponder(resp *http.Response) (resu
 }
 
 // GetIntegerValid get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client DictionaryClient) GetIntegerValid() (result SetInt32, err error) {
-	req, err := client.GetIntegerValidPreparer()
+func (client DictionaryClient) GetIntegerValid(ctx context.Context) (result SetInt32, err error) {
+	req, err := client.GetIntegerValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", nil, "Failure preparing request")
 		return
@@ -1987,12 +1988,12 @@ func (client DictionaryClient) GetIntegerValid() (result SetInt32, err error) {
 }
 
 // GetIntegerValidPreparer prepares the GetIntegerValid request.
-func (client DictionaryClient) GetIntegerValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetIntegerValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/integer/1.-1.3.300"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetIntegerValidSender sends the GetIntegerValid request. The method will close the
@@ -2016,8 +2017,8 @@ func (client DictionaryClient) GetIntegerValidResponder(resp *http.Response) (re
 }
 
 // GetIntInvalidNull get integer dictionary value {"0": 1, "1": null, "2": 0}
-func (client DictionaryClient) GetIntInvalidNull() (result SetInt32, err error) {
-	req, err := client.GetIntInvalidNullPreparer()
+func (client DictionaryClient) GetIntInvalidNull(ctx context.Context) (result SetInt32, err error) {
+	req, err := client.GetIntInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", nil, "Failure preparing request")
 		return
@@ -2039,12 +2040,12 @@ func (client DictionaryClient) GetIntInvalidNull() (result SetInt32, err error) 
 }
 
 // GetIntInvalidNullPreparer prepares the GetIntInvalidNull request.
-func (client DictionaryClient) GetIntInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetIntInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/integer/1.null.zero"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetIntInvalidNullSender sends the GetIntInvalidNull request. The method will close the
@@ -2068,8 +2069,8 @@ func (client DictionaryClient) GetIntInvalidNullResponder(resp *http.Response) (
 }
 
 // GetIntInvalidString get integer dictionary value {"0": 1, "1": "integer", "2": 0}
-func (client DictionaryClient) GetIntInvalidString() (result SetInt32, err error) {
-	req, err := client.GetIntInvalidStringPreparer()
+func (client DictionaryClient) GetIntInvalidString(ctx context.Context) (result SetInt32, err error) {
+	req, err := client.GetIntInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", nil, "Failure preparing request")
 		return
@@ -2091,12 +2092,12 @@ func (client DictionaryClient) GetIntInvalidString() (result SetInt32, err error
 }
 
 // GetIntInvalidStringPreparer prepares the GetIntInvalidString request.
-func (client DictionaryClient) GetIntInvalidStringPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetIntInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/integer/1.integer.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetIntInvalidStringSender sends the GetIntInvalidString request. The method will close the
@@ -2120,8 +2121,8 @@ func (client DictionaryClient) GetIntInvalidStringResponder(resp *http.Response)
 }
 
 // GetInvalid get invalid Dictionary value
-func (client DictionaryClient) GetInvalid() (result SetString, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client DictionaryClient) GetInvalid(ctx context.Context) (result SetString, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -2143,12 +2144,12 @@ func (client DictionaryClient) GetInvalid() (result SetString, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client DictionaryClient) GetInvalidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/invalid"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetInvalidSender sends the GetInvalid request. The method will close the
@@ -2172,8 +2173,8 @@ func (client DictionaryClient) GetInvalidResponder(resp *http.Response) (result 
 }
 
 // GetLongInvalidNull get long dictionary value {"0": 1, "1": null, "2": 0}
-func (client DictionaryClient) GetLongInvalidNull() (result SetInt64, err error) {
-	req, err := client.GetLongInvalidNullPreparer()
+func (client DictionaryClient) GetLongInvalidNull(ctx context.Context) (result SetInt64, err error) {
+	req, err := client.GetLongInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", nil, "Failure preparing request")
 		return
@@ -2195,12 +2196,12 @@ func (client DictionaryClient) GetLongInvalidNull() (result SetInt64, err error)
 }
 
 // GetLongInvalidNullPreparer prepares the GetLongInvalidNull request.
-func (client DictionaryClient) GetLongInvalidNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetLongInvalidNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/long/1.null.zero"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLongInvalidNullSender sends the GetLongInvalidNull request. The method will close the
@@ -2224,8 +2225,8 @@ func (client DictionaryClient) GetLongInvalidNullResponder(resp *http.Response) 
 }
 
 // GetLongInvalidString get long dictionary value {"0": 1, "1": "integer", "2": 0}
-func (client DictionaryClient) GetLongInvalidString() (result SetInt64, err error) {
-	req, err := client.GetLongInvalidStringPreparer()
+func (client DictionaryClient) GetLongInvalidString(ctx context.Context) (result SetInt64, err error) {
+	req, err := client.GetLongInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", nil, "Failure preparing request")
 		return
@@ -2247,12 +2248,12 @@ func (client DictionaryClient) GetLongInvalidString() (result SetInt64, err erro
 }
 
 // GetLongInvalidStringPreparer prepares the GetLongInvalidString request.
-func (client DictionaryClient) GetLongInvalidStringPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetLongInvalidStringPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/long/1.integer.0"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLongInvalidStringSender sends the GetLongInvalidString request. The method will close the
@@ -2276,8 +2277,8 @@ func (client DictionaryClient) GetLongInvalidStringResponder(resp *http.Response
 }
 
 // GetLongValid get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-func (client DictionaryClient) GetLongValid() (result SetInt64, err error) {
-	req, err := client.GetLongValidPreparer()
+func (client DictionaryClient) GetLongValid(ctx context.Context) (result SetInt64, err error) {
+	req, err := client.GetLongValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", nil, "Failure preparing request")
 		return
@@ -2299,12 +2300,12 @@ func (client DictionaryClient) GetLongValid() (result SetInt64, err error) {
 }
 
 // GetLongValidPreparer prepares the GetLongValid request.
-func (client DictionaryClient) GetLongValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetLongValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/long/1.-1.3.300"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetLongValidSender sends the GetLongValid request. The method will close the
@@ -2328,8 +2329,8 @@ func (client DictionaryClient) GetLongValidResponder(resp *http.Response) (resul
 }
 
 // GetNull get null dictionary value
-func (client DictionaryClient) GetNull() (result SetInt32, err error) {
-	req, err := client.GetNullPreparer()
+func (client DictionaryClient) GetNull(ctx context.Context) (result SetInt32, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -2351,12 +2352,12 @@ func (client DictionaryClient) GetNull() (result SetInt32, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client DictionaryClient) GetNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/null"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullSender sends the GetNull request. The method will close the
@@ -2380,8 +2381,8 @@ func (client DictionaryClient) GetNullResponder(resp *http.Response) (result Set
 }
 
 // GetNullKey get Dictionary with null key
-func (client DictionaryClient) GetNullKey() (result SetString, err error) {
-	req, err := client.GetNullKeyPreparer()
+func (client DictionaryClient) GetNullKey(ctx context.Context) (result SetString, err error) {
+	req, err := client.GetNullKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", nil, "Failure preparing request")
 		return
@@ -2403,12 +2404,12 @@ func (client DictionaryClient) GetNullKey() (result SetString, err error) {
 }
 
 // GetNullKeyPreparer prepares the GetNullKey request.
-func (client DictionaryClient) GetNullKeyPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetNullKeyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/nullkey"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullKeySender sends the GetNullKey request. The method will close the
@@ -2432,8 +2433,8 @@ func (client DictionaryClient) GetNullKeyResponder(resp *http.Response) (result 
 }
 
 // GetNullValue get Dictionary with null value
-func (client DictionaryClient) GetNullValue() (result SetString, err error) {
-	req, err := client.GetNullValuePreparer()
+func (client DictionaryClient) GetNullValue(ctx context.Context) (result SetString, err error) {
+	req, err := client.GetNullValuePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", nil, "Failure preparing request")
 		return
@@ -2455,12 +2456,12 @@ func (client DictionaryClient) GetNullValue() (result SetString, err error) {
 }
 
 // GetNullValuePreparer prepares the GetNullValue request.
-func (client DictionaryClient) GetNullValuePreparer() (*http.Request, error) {
+func (client DictionaryClient) GetNullValuePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/nullvalue"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetNullValueSender sends the GetNullValue request. The method will close the
@@ -2484,8 +2485,8 @@ func (client DictionaryClient) GetNullValueResponder(resp *http.Response) (resul
 }
 
 // GetStringValid get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-func (client DictionaryClient) GetStringValid() (result SetString, err error) {
-	req, err := client.GetStringValidPreparer()
+func (client DictionaryClient) GetStringValid(ctx context.Context) (result SetString, err error) {
+	req, err := client.GetStringValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", nil, "Failure preparing request")
 		return
@@ -2507,12 +2508,12 @@ func (client DictionaryClient) GetStringValid() (result SetString, err error) {
 }
 
 // GetStringValidPreparer prepares the GetStringValid request.
-func (client DictionaryClient) GetStringValidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetStringValidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/string/foo1.foo2.foo3"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetStringValidSender sends the GetStringValid request. The method will close the
@@ -2536,8 +2537,8 @@ func (client DictionaryClient) GetStringValidResponder(resp *http.Response) (res
 }
 
 // GetStringWithInvalid get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
-func (client DictionaryClient) GetStringWithInvalid() (result SetString, err error) {
-	req, err := client.GetStringWithInvalidPreparer()
+func (client DictionaryClient) GetStringWithInvalid(ctx context.Context) (result SetString, err error) {
+	req, err := client.GetStringWithInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", nil, "Failure preparing request")
 		return
@@ -2559,12 +2560,12 @@ func (client DictionaryClient) GetStringWithInvalid() (result SetString, err err
 }
 
 // GetStringWithInvalidPreparer prepares the GetStringWithInvalid request.
-func (client DictionaryClient) GetStringWithInvalidPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetStringWithInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/string/foo.123.foo2"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetStringWithInvalidSender sends the GetStringWithInvalid request. The method will close the
@@ -2588,8 +2589,8 @@ func (client DictionaryClient) GetStringWithInvalidResponder(resp *http.Response
 }
 
 // GetStringWithNull get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
-func (client DictionaryClient) GetStringWithNull() (result SetString, err error) {
-	req, err := client.GetStringWithNullPreparer()
+func (client DictionaryClient) GetStringWithNull(ctx context.Context) (result SetString, err error) {
+	req, err := client.GetStringWithNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", nil, "Failure preparing request")
 		return
@@ -2611,12 +2612,12 @@ func (client DictionaryClient) GetStringWithNull() (result SetString, err error)
 }
 
 // GetStringWithNullPreparer prepares the GetStringWithNull request.
-func (client DictionaryClient) GetStringWithNullPreparer() (*http.Request, error) {
+func (client DictionaryClient) GetStringWithNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/string/foo.null.foo2"))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // GetStringWithNullSender sends the GetStringWithNull request. The method will close the
@@ -2641,14 +2642,14 @@ func (client DictionaryClient) GetStringWithNullResponder(resp *http.Response) (
 
 // PutArrayValid put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 //
-func (client DictionaryClient) PutArrayValid(arrayBody map[string][]string) (result autorest.Response, err error) {
+func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutArrayValid")
 	}
 
-	req, err := client.PutArrayValidPreparer(arrayBody)
+	req, err := client.PutArrayValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutArrayValid", nil, "Failure preparing request")
 		return
@@ -2670,14 +2671,14 @@ func (client DictionaryClient) PutArrayValid(arrayBody map[string][]string) (res
 }
 
 // PutArrayValidPreparer prepares the PutArrayValid request.
-func (client DictionaryClient) PutArrayValidPreparer(arrayBody map[string][]string) (*http.Request, error) {
+func (client DictionaryClient) PutArrayValidPreparer(ctx context.Context, arrayBody map[string][]string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/array/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutArrayValidSender sends the PutArrayValid request. The method will close the
@@ -2701,14 +2702,14 @@ func (client DictionaryClient) PutArrayValidResponder(resp *http.Response) (resu
 
 // PutBooleanTfft set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
 //
-func (client DictionaryClient) PutBooleanTfft(arrayBody map[string]*bool) (result autorest.Response, err error) {
+func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft")
 	}
 
-	req, err := client.PutBooleanTfftPreparer(arrayBody)
+	req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft", nil, "Failure preparing request")
 		return
@@ -2730,14 +2731,14 @@ func (client DictionaryClient) PutBooleanTfft(arrayBody map[string]*bool) (resul
 }
 
 // PutBooleanTfftPreparer prepares the PutBooleanTfft request.
-func (client DictionaryClient) PutBooleanTfftPreparer(arrayBody map[string]*bool) (*http.Request, error) {
+func (client DictionaryClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody map[string]*bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/boolean/tfft"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutBooleanTfftSender sends the PutBooleanTfft request. The method will close the
@@ -2762,14 +2763,14 @@ func (client DictionaryClient) PutBooleanTfftResponder(resp *http.Response) (res
 // PutByteValid put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each
 // elementencoded in base 64
 //
-func (client DictionaryClient) PutByteValid(arrayBody map[string][]byte) (result autorest.Response, err error) {
+func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutByteValid")
 	}
 
-	req, err := client.PutByteValidPreparer(arrayBody)
+	req, err := client.PutByteValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutByteValid", nil, "Failure preparing request")
 		return
@@ -2791,14 +2792,14 @@ func (client DictionaryClient) PutByteValid(arrayBody map[string][]byte) (result
 }
 
 // PutByteValidPreparer prepares the PutByteValid request.
-func (client DictionaryClient) PutByteValidPreparer(arrayBody map[string][]byte) (*http.Request, error) {
+func (client DictionaryClient) PutByteValidPreparer(ctx context.Context, arrayBody map[string][]byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/byte/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutByteValidSender sends the PutByteValid request. The method will close the
@@ -2823,14 +2824,14 @@ func (client DictionaryClient) PutByteValidResponder(resp *http.Response) (resul
 // PutComplexValid put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer":
 // 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
 //
-func (client DictionaryClient) PutComplexValid(arrayBody map[string]*Widget) (result autorest.Response, err error) {
+func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutComplexValid")
 	}
 
-	req, err := client.PutComplexValidPreparer(arrayBody)
+	req, err := client.PutComplexValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutComplexValid", nil, "Failure preparing request")
 		return
@@ -2852,14 +2853,14 @@ func (client DictionaryClient) PutComplexValid(arrayBody map[string]*Widget) (re
 }
 
 // PutComplexValidPreparer prepares the PutComplexValid request.
-func (client DictionaryClient) PutComplexValidPreparer(arrayBody map[string]*Widget) (*http.Request, error) {
+func (client DictionaryClient) PutComplexValidPreparer(ctx context.Context, arrayBody map[string]*Widget) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/complex/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutComplexValidSender sends the PutComplexValid request. The method will close the
@@ -2884,14 +2885,14 @@ func (client DictionaryClient) PutComplexValidResponder(resp *http.Response) (re
 // PutDateTimeRfc1123Valid set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980
 // 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 //
-func (client DictionaryClient) PutDateTimeRfc1123Valid(arrayBody map[string]*date.TimeRFC1123) (result autorest.Response, err error) {
+func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid")
 	}
 
-	req, err := client.PutDateTimeRfc1123ValidPreparer(arrayBody)
+	req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", nil, "Failure preparing request")
 		return
@@ -2913,14 +2914,14 @@ func (client DictionaryClient) PutDateTimeRfc1123Valid(arrayBody map[string]*dat
 }
 
 // PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
-func (client DictionaryClient) PutDateTimeRfc1123ValidPreparer(arrayBody map[string]*date.TimeRFC1123) (*http.Request, error) {
+func (client DictionaryClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time-rfc1123/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateTimeRfc1123ValidSender sends the PutDateTimeRfc1123Valid request. The method will close the
@@ -2945,14 +2946,14 @@ func (client DictionaryClient) PutDateTimeRfc1123ValidResponder(resp *http.Respo
 // PutDateTimeValid set dictionary value  {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
 //
-func (client DictionaryClient) PutDateTimeValid(arrayBody map[string]*date.Time) (result autorest.Response, err error) {
+func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*date.Time) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid")
 	}
 
-	req, err := client.PutDateTimeValidPreparer(arrayBody)
+	req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid", nil, "Failure preparing request")
 		return
@@ -2974,14 +2975,14 @@ func (client DictionaryClient) PutDateTimeValid(arrayBody map[string]*date.Time)
 }
 
 // PutDateTimeValidPreparer prepares the PutDateTimeValid request.
-func (client DictionaryClient) PutDateTimeValidPreparer(arrayBody map[string]*date.Time) (*http.Request, error) {
+func (client DictionaryClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody map[string]*date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateTimeValidSender sends the PutDateTimeValid request. The method will close the
@@ -3005,14 +3006,14 @@ func (client DictionaryClient) PutDateTimeValidResponder(resp *http.Response) (r
 
 // PutDateValid set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 //
-func (client DictionaryClient) PutDateValid(arrayBody map[string]*date.Date) (result autorest.Response, err error) {
+func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*date.Date) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDateValid")
 	}
 
-	req, err := client.PutDateValidPreparer(arrayBody)
+	req, err := client.PutDateValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDateValid", nil, "Failure preparing request")
 		return
@@ -3034,14 +3035,14 @@ func (client DictionaryClient) PutDateValid(arrayBody map[string]*date.Date) (re
 }
 
 // PutDateValidPreparer prepares the PutDateValid request.
-func (client DictionaryClient) PutDateValidPreparer(arrayBody map[string]*date.Date) (*http.Request, error) {
+func (client DictionaryClient) PutDateValidPreparer(ctx context.Context, arrayBody map[string]*date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDateValidSender sends the PutDateValid request. The method will close the
@@ -3066,14 +3067,14 @@ func (client DictionaryClient) PutDateValidResponder(resp *http.Response) (resul
 // PutDictionaryValid get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2":
 // "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 //
-func (client DictionaryClient) PutDictionaryValid(arrayBody map[string]map[string]*string) (result autorest.Response, err error) {
+func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid")
 	}
 
-	req, err := client.PutDictionaryValidPreparer(arrayBody)
+	req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid", nil, "Failure preparing request")
 		return
@@ -3095,14 +3096,14 @@ func (client DictionaryClient) PutDictionaryValid(arrayBody map[string]map[strin
 }
 
 // PutDictionaryValidPreparer prepares the PutDictionaryValid request.
-func (client DictionaryClient) PutDictionaryValidPreparer(arrayBody map[string]map[string]*string) (*http.Request, error) {
+func (client DictionaryClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody map[string]map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/dictionary/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDictionaryValidSender sends the PutDictionaryValid request. The method will close the
@@ -3126,14 +3127,14 @@ func (client DictionaryClient) PutDictionaryValidResponder(resp *http.Response) 
 
 // PutDoubleValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 //
-func (client DictionaryClient) PutDoubleValid(arrayBody map[string]*float64) (result autorest.Response, err error) {
+func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid")
 	}
 
-	req, err := client.PutDoubleValidPreparer(arrayBody)
+	req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid", nil, "Failure preparing request")
 		return
@@ -3155,14 +3156,14 @@ func (client DictionaryClient) PutDoubleValid(arrayBody map[string]*float64) (re
 }
 
 // PutDoubleValidPreparer prepares the PutDoubleValid request.
-func (client DictionaryClient) PutDoubleValidPreparer(arrayBody map[string]*float64) (*http.Request, error) {
+func (client DictionaryClient) PutDoubleValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/double/0--0.01-1.2e20"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDoubleValidSender sends the PutDoubleValid request. The method will close the
@@ -3186,14 +3187,14 @@ func (client DictionaryClient) PutDoubleValidResponder(resp *http.Response) (res
 
 // PutDurationValid set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 //
-func (client DictionaryClient) PutDurationValid(arrayBody map[string]*string) (result autorest.Response, err error) {
+func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDurationValid")
 	}
 
-	req, err := client.PutDurationValidPreparer(arrayBody)
+	req, err := client.PutDurationValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutDurationValid", nil, "Failure preparing request")
 		return
@@ -3215,14 +3216,14 @@ func (client DictionaryClient) PutDurationValid(arrayBody map[string]*string) (r
 }
 
 // PutDurationValidPreparer prepares the PutDurationValid request.
-func (client DictionaryClient) PutDurationValidPreparer(arrayBody map[string]*string) (*http.Request, error) {
+func (client DictionaryClient) PutDurationValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/duration/valid"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutDurationValidSender sends the PutDurationValid request. The method will close the
@@ -3246,14 +3247,14 @@ func (client DictionaryClient) PutDurationValidResponder(resp *http.Response) (r
 
 // PutEmpty set dictionary value empty {}
 //
-func (client DictionaryClient) PutEmpty(arrayBody map[string]*string) (result autorest.Response, err error) {
+func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutEmpty")
 	}
 
-	req, err := client.PutEmptyPreparer(arrayBody)
+	req, err := client.PutEmptyPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutEmpty", nil, "Failure preparing request")
 		return
@@ -3275,14 +3276,14 @@ func (client DictionaryClient) PutEmpty(arrayBody map[string]*string) (result au
 }
 
 // PutEmptyPreparer prepares the PutEmpty request.
-func (client DictionaryClient) PutEmptyPreparer(arrayBody map[string]*string) (*http.Request, error) {
+func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/empty"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutEmptySender sends the PutEmpty request. The method will close the
@@ -3306,14 +3307,14 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 
 // PutFloatValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 //
-func (client DictionaryClient) PutFloatValid(arrayBody map[string]*float64) (result autorest.Response, err error) {
+func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutFloatValid")
 	}
 
-	req, err := client.PutFloatValidPreparer(arrayBody)
+	req, err := client.PutFloatValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutFloatValid", nil, "Failure preparing request")
 		return
@@ -3335,14 +3336,14 @@ func (client DictionaryClient) PutFloatValid(arrayBody map[string]*float64) (res
 }
 
 // PutFloatValidPreparer prepares the PutFloatValid request.
-func (client DictionaryClient) PutFloatValidPreparer(arrayBody map[string]*float64) (*http.Request, error) {
+func (client DictionaryClient) PutFloatValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/float/0--0.01-1.2e20"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutFloatValidSender sends the PutFloatValid request. The method will close the
@@ -3366,14 +3367,14 @@ func (client DictionaryClient) PutFloatValidResponder(resp *http.Response) (resu
 
 // PutIntegerValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 //
-func (client DictionaryClient) PutIntegerValid(arrayBody map[string]*int32) (result autorest.Response, err error) {
+func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid")
 	}
 
-	req, err := client.PutIntegerValidPreparer(arrayBody)
+	req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid", nil, "Failure preparing request")
 		return
@@ -3395,14 +3396,14 @@ func (client DictionaryClient) PutIntegerValid(arrayBody map[string]*int32) (res
 }
 
 // PutIntegerValidPreparer prepares the PutIntegerValid request.
-func (client DictionaryClient) PutIntegerValidPreparer(arrayBody map[string]*int32) (*http.Request, error) {
+func (client DictionaryClient) PutIntegerValidPreparer(ctx context.Context, arrayBody map[string]*int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/integer/1.-1.3.300"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutIntegerValidSender sends the PutIntegerValid request. The method will close the
@@ -3426,14 +3427,14 @@ func (client DictionaryClient) PutIntegerValidResponder(resp *http.Response) (re
 
 // PutLongValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 //
-func (client DictionaryClient) PutLongValid(arrayBody map[string]*int64) (result autorest.Response, err error) {
+func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutLongValid")
 	}
 
-	req, err := client.PutLongValidPreparer(arrayBody)
+	req, err := client.PutLongValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutLongValid", nil, "Failure preparing request")
 		return
@@ -3455,14 +3456,14 @@ func (client DictionaryClient) PutLongValid(arrayBody map[string]*int64) (result
 }
 
 // PutLongValidPreparer prepares the PutLongValid request.
-func (client DictionaryClient) PutLongValidPreparer(arrayBody map[string]*int64) (*http.Request, error) {
+func (client DictionaryClient) PutLongValidPreparer(ctx context.Context, arrayBody map[string]*int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/long/1.-1.3.300"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutLongValidSender sends the PutLongValid request. The method will close the
@@ -3486,14 +3487,14 @@ func (client DictionaryClient) PutLongValidResponder(resp *http.Response) (resul
 
 // PutStringValid set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 //
-func (client DictionaryClient) PutStringValid(arrayBody map[string]*string) (result autorest.Response, err error) {
+func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
 		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutStringValid")
 	}
 
-	req, err := client.PutStringValidPreparer(arrayBody)
+	req, err := client.PutStringValidPreparer(ctx, arrayBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "PutStringValid", nil, "Failure preparing request")
 		return
@@ -3515,14 +3516,14 @@ func (client DictionaryClient) PutStringValid(arrayBody map[string]*string) (res
 }
 
 // PutStringValidPreparer prepares the PutStringValid request.
-func (client DictionaryClient) PutStringValidPreparer(arrayBody map[string]*string) (*http.Request, error) {
+func (client DictionaryClient) PutStringValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/string/foo1.foo2.foo3"),
 		autorest.WithJSON(arrayBody))
-	return preparer.Prepare(&http.Request{})
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
 // PutStringValidSender sends the PutStringValid request. The method will close the

@@ -1,6 +1,7 @@
 package custombaseurlgrouptest
 
 import (
+	"context"
 	"testing"
 
 	chk "gopkg.in/check.v1"
@@ -23,15 +24,15 @@ func getCustomBaseURIClient() PathsClient {
 }
 
 func (s *CustomBaseURLGroupSuite) TestCustomBaseUriPositive(c *chk.C) {
-	_, err := custombaseuriClient.GetEmpty("local")
+	_, err := custombaseuriClient.GetEmpty(context.Background(), "local")
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *CustomBaseURLGroupSuite) TestCustomBaseUriNegative(c *chk.C) {
-	_, err := custombaseuriClient.GetEmpty("badhost:3000")
+	_, err := custombaseuriClient.GetEmpty(context.Background(), "badhost:3000")
 	c.Assert(err, chk.NotNil)
 
 	custombaseuriClient.RetryAttempts = 0
-	_, err = custombaseuriClient.GetEmpty("bad")
+	_, err = custombaseuriClient.GetEmpty(context.Background(), "bad")
 	c.Assert(err, chk.NotNil)
 }

@@ -2,6 +2,7 @@ package filegrouptest
 
 import (
 	"bufio"
+	"context"
 	"io"
 	"io/ioutil"
 	"testing"
@@ -28,7 +29,7 @@ func getFileClient() FilesClient {
 }
 
 func (s *FileSuite) TestGetFile(c *chk.C) {
-	res, err := filesClient.GetFile()
+	res, err := filesClient.GetFile(context.Background())
 	c.Assert(err, chk.IsNil)
 	b, err := ioutil.ReadAll(*res.Value)
 	defer func() { (res.Body).Close() }()
@@ -37,7 +38,7 @@ func (s *FileSuite) TestGetFile(c *chk.C) {
 }
 
 func (s *FileSuite) TestGetEmptyFile(c *chk.C) {
-	res, err := filesClient.GetEmptyFile()
+	res, err := filesClient.GetEmptyFile(context.Background())
 	c.Assert(err, chk.IsNil)
 	b, err := ioutil.ReadAll(*res.Value)
 	defer func() { (res.Body).Close() }()
@@ -46,7 +47,7 @@ func (s *FileSuite) TestGetEmptyFile(c *chk.C) {
 }
 
 func (s *FileSuite) TestGetFileLarge(c *chk.C) {
-	res, err := filesClient.GetFileLarge()
+	res, err := filesClient.GetFileLarge(context.Background())
 	c.Assert(err, chk.IsNil)
 	numberOfBytes, err := readLargeFile(*res.Value)
 	c.Assert(err, chk.IsNil)
