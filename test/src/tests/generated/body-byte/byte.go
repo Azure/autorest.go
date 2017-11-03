@@ -7,11 +7,11 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"net/http"
-
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"net/http"
 )
 
 // ByteClient is the test Infrastructure for AutoRest Swagger BAT
@@ -30,8 +30,8 @@ func NewByteClientWithBaseURI(baseURI string) ByteClient {
 }
 
 // GetEmpty get empty byte value ''
-func (client ByteClient) GetEmpty() (result ByteArray, err error) {
-	req, err := client.GetEmptyPreparer()
+func (client ByteClient) GetEmpty(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetEmpty", nil, "Failure preparing request")
 		return
@@ -53,7 +53,7 @@ func (client ByteClient) GetEmpty() (result ByteArray, err error) {
 }
 
 // GetEmptyPreparer prepares the GetEmpty request.
-func (client ByteClient) GetEmptyPreparer() (*http.Request, error) {
+func (client ByteClient) GetEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -82,8 +82,8 @@ func (client ByteClient) GetEmptyResponder(resp *http.Response) (result ByteArra
 }
 
 // GetInvalid get invalid byte value ':::SWAGGER::::'
-func (client ByteClient) GetInvalid() (result ByteArray, err error) {
-	req, err := client.GetInvalidPreparer()
+func (client ByteClient) GetInvalid(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetInvalid", nil, "Failure preparing request")
 		return
@@ -105,7 +105,7 @@ func (client ByteClient) GetInvalid() (result ByteArray, err error) {
 }
 
 // GetInvalidPreparer prepares the GetInvalid request.
-func (client ByteClient) GetInvalidPreparer() (*http.Request, error) {
+func (client ByteClient) GetInvalidPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -134,8 +134,12 @@ func (client ByteClient) GetInvalidResponder(resp *http.Response) (result ByteAr
 }
 
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client ByteClient) GetNonASCII() (result ByteArray, err error) {
-	req, err := client.GetNonASCIIPreparer()
+func (client ByteClient) GetNonASCII(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetNonASCIIPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNonASCII", nil, "Failure preparing request")
+		return
+	}
 
 	resp, err := client.GetNonASCIISender(req)
 	if err != nil {
@@ -153,7 +157,7 @@ func (client ByteClient) GetNonASCII() (result ByteArray, err error) {
 }
 
 // GetNonASCIIPreparer prepares the GetNonASCII request.
-func (client ByteClient) GetNonASCIIPreparer() (*http.Request, error) {
+func (client ByteClient) GetNonASCIIPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -182,8 +186,8 @@ func (client ByteClient) GetNonASCIIResponder(resp *http.Response) (result ByteA
 }
 
 // GetNull get null byte value
-func (client ByteClient) GetNull() (result ByteArray, err error) {
-	req, err := client.GetNullPreparer()
+func (client ByteClient) GetNull(ctx context.Context) (result ByteArray, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -205,7 +209,7 @@ func (client ByteClient) GetNull() (result ByteArray, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client ByteClient) GetNullPreparer() (*http.Request, error) {
+func (client ByteClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -236,7 +240,7 @@ func (client ByteClient) GetNullResponder(resp *http.Response) (result ByteArray
 // PutNonASCII put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 //
 // byteBody is base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client ByteClient) PutNonASCII(byteBody []byte) (result autorest.Response, err error) {
+func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: byteBody,
 			Constraints: []validation.Constraint{{Target: "byteBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -265,7 +269,7 @@ func (client ByteClient) PutNonASCII(byteBody []byte) (result autorest.Response,
 }
 
 // PutNonASCIIPreparer prepares the PutNonASCII request.
-func (client ByteClient) PutNonASCIIPreparer(byteBody []byte) (*http.Request, error) {
+func (client ByteClient) PutNonASCIIPreparer(ctx context.Context, byteBody []byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),

@@ -7,11 +7,11 @@ package dategroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"net/http"
-
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
+	"net/http"
 )
 
 // DateClient is the test Infrastructure for AutoRest
@@ -30,8 +30,8 @@ func NewDateClientWithBaseURI(baseURI string) DateClient {
 }
 
 // GetInvalidDate get invalid date value
-func (client DateClient) GetInvalidDate() (result DateModel, err error) {
-	req, err := client.GetInvalidDatePreparer()
+func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, err error) {
+	req, err := client.GetInvalidDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetInvalidDate", nil, "Failure preparing request")
 		return
@@ -53,7 +53,7 @@ func (client DateClient) GetInvalidDate() (result DateModel, err error) {
 }
 
 // GetInvalidDatePreparer prepares the GetInvalidDate request.
-func (client DateClient) GetInvalidDatePreparer() (*http.Request, error) {
+func (client DateClient) GetInvalidDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -82,8 +82,8 @@ func (client DateClient) GetInvalidDateResponder(resp *http.Response) (result Da
 }
 
 // GetMaxDate get max date value 9999-12-31
-func (client DateClient) GetMaxDate() (result DateModel, err error) {
-	req, err := client.GetMaxDatePreparer()
+func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err error) {
+	req, err := client.GetMaxDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMaxDate", nil, "Failure preparing request")
 		return
@@ -105,7 +105,7 @@ func (client DateClient) GetMaxDate() (result DateModel, err error) {
 }
 
 // GetMaxDatePreparer prepares the GetMaxDate request.
-func (client DateClient) GetMaxDatePreparer() (*http.Request, error) {
+func (client DateClient) GetMaxDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -134,8 +134,8 @@ func (client DateClient) GetMaxDateResponder(resp *http.Response) (result DateMo
 }
 
 // GetMinDate get min date value 0000-01-01
-func (client DateClient) GetMinDate() (result DateModel, err error) {
-	req, err := client.GetMinDatePreparer()
+func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err error) {
+	req, err := client.GetMinDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMinDate", nil, "Failure preparing request")
 		return
@@ -157,7 +157,7 @@ func (client DateClient) GetMinDate() (result DateModel, err error) {
 }
 
 // GetMinDatePreparer prepares the GetMinDate request.
-func (client DateClient) GetMinDatePreparer() (*http.Request, error) {
+func (client DateClient) GetMinDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -186,8 +186,8 @@ func (client DateClient) GetMinDateResponder(resp *http.Response) (result DateMo
 }
 
 // GetNull get null date value
-func (client DateClient) GetNull() (result DateModel, err error) {
-	req, err := client.GetNullPreparer()
+func (client DateClient) GetNull(ctx context.Context) (result DateModel, err error) {
+	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetNull", nil, "Failure preparing request")
 		return
@@ -209,7 +209,7 @@ func (client DateClient) GetNull() (result DateModel, err error) {
 }
 
 // GetNullPreparer prepares the GetNull request.
-func (client DateClient) GetNullPreparer() (*http.Request, error) {
+func (client DateClient) GetNullPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -238,8 +238,8 @@ func (client DateClient) GetNullResponder(resp *http.Response) (result DateModel
 }
 
 // GetOverflowDate get overflow date value
-func (client DateClient) GetOverflowDate() (result DateModel, err error) {
-	req, err := client.GetOverflowDatePreparer()
+func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel, err error) {
+	req, err := client.GetOverflowDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetOverflowDate", nil, "Failure preparing request")
 		return
@@ -261,7 +261,7 @@ func (client DateClient) GetOverflowDate() (result DateModel, err error) {
 }
 
 // GetOverflowDatePreparer prepares the GetOverflowDate request.
-func (client DateClient) GetOverflowDatePreparer() (*http.Request, error) {
+func (client DateClient) GetOverflowDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -290,8 +290,8 @@ func (client DateClient) GetOverflowDateResponder(resp *http.Response) (result D
 }
 
 // GetUnderflowDate get underflow date value
-func (client DateClient) GetUnderflowDate() (result DateModel, err error) {
-	req, err := client.GetUnderflowDatePreparer()
+func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel, err error) {
+	req, err := client.GetUnderflowDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetUnderflowDate", nil, "Failure preparing request")
 		return
@@ -313,7 +313,7 @@ func (client DateClient) GetUnderflowDate() (result DateModel, err error) {
 }
 
 // GetUnderflowDatePreparer prepares the GetUnderflowDate request.
-func (client DateClient) GetUnderflowDatePreparer() (*http.Request, error) {
+func (client DateClient) GetUnderflowDatePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -343,8 +343,8 @@ func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result 
 
 // PutMaxDate put max date value 9999-12-31
 //
-func (client DateClient) PutMaxDate(dateBody date.Date) (result autorest.Response, err error) {
-	req, err := client.PutMaxDatePreparer(dateBody)
+func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+	req, err := client.PutMaxDatePreparer(ctx, dateBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMaxDate", nil, "Failure preparing request")
 		return
@@ -366,7 +366,7 @@ func (client DateClient) PutMaxDate(dateBody date.Date) (result autorest.Respons
 }
 
 // PutMaxDatePreparer prepares the PutMaxDate request.
-func (client DateClient) PutMaxDatePreparer(dateBody date.Date) (*http.Request, error) {
+func (client DateClient) PutMaxDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -397,8 +397,8 @@ func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autore
 
 // PutMinDate put min date value 0000-01-01
 //
-func (client DateClient) PutMinDate(dateBody date.Date) (result autorest.Response, err error) {
-	req, err := client.PutMinDatePreparer(dateBody)
+func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+	req, err := client.PutMinDatePreparer(ctx, dateBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMinDate", nil, "Failure preparing request")
 		return
@@ -420,7 +420,7 @@ func (client DateClient) PutMinDate(dateBody date.Date) (result autorest.Respons
 }
 
 // PutMinDatePreparer prepares the PutMinDate request.
-func (client DateClient) PutMinDatePreparer(dateBody date.Date) (*http.Request, error) {
+func (client DateClient) PutMinDatePreparer(ctx context.Context, dateBody date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),

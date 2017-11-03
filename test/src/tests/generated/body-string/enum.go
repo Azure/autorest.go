@@ -8,11 +8,10 @@ package stringgroup
 
 import (
 	"context"
-	"net/http"
-
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"net/http"
 )
 
 // EnumClient is the test Infrastructure for AutoRest Swagger BAT
@@ -31,8 +30,8 @@ func NewEnumClientWithBaseURI(baseURI string) EnumClient {
 }
 
 // GetNotExpandable get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetNotExpandable() (result StringModel, err error) {
-	req, err := client.GetNotExpandablePreparer()
+func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringModel, err error) {
+	req, err := client.GetNotExpandablePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", nil, "Failure preparing request")
 		return
@@ -83,8 +82,8 @@ func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result 
 }
 
 // GetReferenced get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
-func (client EnumClient) GetReferenced() (result StringModel, err error) {
-	req, err := client.GetReferencedPreparer()
+func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel, err error) {
+	req, err := client.GetReferencedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", nil, "Failure preparing request")
 		return
