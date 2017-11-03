@@ -113,6 +113,7 @@ namespace AutoRest.Go.Model
                 if (_futureTypes.Any())
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest/azure"));
+                    imports.Add(PrimaryTypeGo.GetImportLine("net/http"));
                 }
                 ModelTypes.Cast<CompositeTypeGo>()
                     .ForEach(mt =>

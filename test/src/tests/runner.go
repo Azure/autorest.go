@@ -70,6 +70,7 @@ func runTests(allPass *bool) {
 		// "formdatagroup",
 		"paginggroup",
 		"morecustombaseurigroup",
+		"lrogroup",
 	}
 
 	for _, suite := range testSuites {
