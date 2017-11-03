@@ -60,7 +60,7 @@ func (client LROSADsClient) Delete202NonRetry400Sender(req *http.Request) (LROSA
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDelete202NonRetry400Future{Future: future}
+	f := LROSADsDelete202NonRetry400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -109,7 +109,7 @@ func (client LROSADsClient) Delete202RetryInvalidHeaderSender(req *http.Request)
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDelete202RetryInvalidHeaderFuture{Future: future}
+	f := LROSADsDelete202RetryInvalidHeaderFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -157,7 +157,7 @@ func (client LROSADsClient) Delete204SucceededSender(req *http.Request) (LROSADs
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDelete204SucceededFuture{Future: future}
+	f := LROSADsDelete204SucceededFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -206,7 +206,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400Sender(req *http.Request)
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDeleteAsyncRelativeRetry400Future{Future: future}
+	f := LROSADsDeleteAsyncRelativeRetry400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -255,7 +255,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderSender(req *htt
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture{Future: future}
+	f := LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -304,7 +304,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingSender(req
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture{Future: future}
+	f := LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -353,7 +353,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusSender(req *http.Req
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDeleteAsyncRelativeRetryNoStatusFuture{Future: future}
+	f := LROSADsDeleteAsyncRelativeRetryNoStatusFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -401,7 +401,7 @@ func (client LROSADsClient) DeleteNonRetry400Sender(req *http.Request) (LROSADsD
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsDeleteNonRetry400Future{Future: future}
+	f := LROSADsDeleteNonRetry400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -457,7 +457,7 @@ func (client LROSADsClient) Post202NoLocationSender(req *http.Request) (LROSADsP
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPost202NoLocationFuture{Future: future}
+	f := LROSADsPost202NoLocationFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -512,7 +512,7 @@ func (client LROSADsClient) Post202NonRetry400Sender(req *http.Request) (LROSADs
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPost202NonRetry400Future{Future: future}
+	f := LROSADsPost202NonRetry400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -568,7 +568,7 @@ func (client LROSADsClient) Post202RetryInvalidHeaderSender(req *http.Request) (
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPost202RetryInvalidHeaderFuture{Future: future}
+	f := LROSADsPost202RetryInvalidHeaderFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -624,7 +624,7 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Sender(req *http.Request) (
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPostAsyncRelativeRetry400Future{Future: future}
+	f := LROSADsPostAsyncRelativeRetry400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -681,7 +681,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderSender(req *http.
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPostAsyncRelativeRetryInvalidHeaderFuture{Future: future}
+	f := LROSADsPostAsyncRelativeRetryInvalidHeaderFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -738,7 +738,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingSender(req *
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture{Future: future}
+	f := LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -795,7 +795,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadSender(req *http.Requ
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPostAsyncRelativeRetryNoPayloadFuture{Future: future}
+	f := LROSADsPostAsyncRelativeRetryNoPayloadFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -850,7 +850,7 @@ func (client LROSADsClient) PostNonRetry400Sender(req *http.Request) (LROSADsPos
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPostNonRetry400Future{Future: future}
+	f := LROSADsPostNonRetry400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -906,7 +906,7 @@ func (client LROSADsClient) Put200InvalidJSONSender(req *http.Request) (LROSADsP
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPut200InvalidJSONFuture{Future: future}
+	f := LROSADsPut200InvalidJSONFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -963,7 +963,7 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Sender(req *http.Request) (L
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutAsyncRelativeRetry400Future{Future: future}
+	f := LROSADsPutAsyncRelativeRetry400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -1021,7 +1021,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderSender(req *http.R
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutAsyncRelativeRetryInvalidHeaderFuture{Future: future}
+	f := LROSADsPutAsyncRelativeRetryInvalidHeaderFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -1079,7 +1079,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingSender(req *h
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture{Future: future}
+	f := LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -1137,7 +1137,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusSender(req *http.Reques
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutAsyncRelativeRetryNoStatusFuture{Future: future}
+	f := LROSADsPutAsyncRelativeRetryNoStatusFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -1195,7 +1195,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadSender(req *http
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture{Future: future}
+	f := LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -1252,7 +1252,7 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadSender(req *htt
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutError201NoProvisioningStatePayloadFuture{Future: future}
+	f := LROSADsPutError201NoProvisioningStatePayloadFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -1309,7 +1309,7 @@ func (client LROSADsClient) PutNonRetry201Creating400Sender(req *http.Request) (
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutNonRetry201Creating400Future{Future: future}
+	f := LROSADsPutNonRetry201Creating400Future{Future: future, req: req}
 	return f, err
 }
 
@@ -1366,7 +1366,7 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONSender(req *http
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutNonRetry201Creating400InvalidJSONFuture{Future: future}
+	f := LROSADsPutNonRetry201Creating400InvalidJSONFuture{Future: future, req: req}
 	return f, err
 }
 
@@ -1422,7 +1422,7 @@ func (client LROSADsClient) PutNonRetry400Sender(req *http.Request) (LROSADsPutN
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	future := azure.NewFuture(req)
 	_, err := future.Done(sender)
-	f := LROSADsPutNonRetry400Future{Future: future}
+	f := LROSADsPutNonRetry400Future{Future: future, req: req}
 	return f, err
 }
 

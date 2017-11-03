@@ -45,4 +45,10 @@ task 'testci', "more", [], (done) ->
   echo stderr
   echo stdout
   throw "Potentially unnoticed regression (see diff above)! Run `npm run regenerate`, then review and commit the changes." if stdout.length + stderr.length > 0
-  done() 
+  done()
+
+# update glide.lock
+task 'glideup', "runs `glide up` to update the lock file", [], (done) ->
+  process.env.GOPATH = "#{basefolder}/test"
+  await execute "glide up",          { cwd: './test/src/tests' }, defer code, stderr, stdout
+  done()

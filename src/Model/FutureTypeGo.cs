@@ -31,7 +31,7 @@ namespace AutoRest.Go.Model
 
         public override string Fields()
         {
-            return "    azure.Future";
+            return "    azure.Future\n    req *http.Request";
         }
 
         /// <summary>

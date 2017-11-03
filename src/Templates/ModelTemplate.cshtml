@@ -205,10 +205,15 @@ func (future @Model.Name) Result(client @ftg.ClientTypeName) (@ftg.ResultTypeNam
     if !done {
         return @ftg.ResultTypeName{}, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "asynchronous operation has not completed")
     }
-    if future.Response().Body == nil {
-        return @ftg.ResultTypeName{}, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "response does not contain a result")
+    if future.PollingMethod() == azure.PollingLocation {
+        return client.@(ftg.ResponderMethodName)(future.Response())
     }
-    return client.@(ftg.ResponderMethodName)(future.Response())
+    resp, err := autorest.SendWithSender(client, autorest.ChangeToGet(future.req),
+        autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+    if err != nil {
+        return @ftg.ResultTypeName{}, err
+    }
+    return client.@(ftg.ResponderMethodName)(resp)
 }
 </text>
 }

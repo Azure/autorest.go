@@ -152,7 +152,7 @@ func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@send
     sender := autorest.DecorateSender(client, @Model.SendDecorators.EmitAsArguments())
     future := azure.NewFuture(req)
     _, err := future.Done(sender)
-    f := @(senderRetType){Future: future}
+    f := @(senderRetType){Future: future, req: req}
     return f, err
 </text>
 }
