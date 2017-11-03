@@ -1,6 +1,7 @@
 package lrogrouptest
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -50,7 +51,7 @@ func getLROsCustomHeaderClient() LROsCustomHeaderClient {
 }
 
 func (s *LROSuite) TestDelete202NoRetry204(c *chk.C) {
-	future, err := lrosClient.Delete202NoRetry204()
+	future, err := lrosClient.Delete202NoRetry204(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	for done, err := future.Done(lrosClient); !done; done, err = future.Done(lrosClient) {
@@ -63,10 +64,10 @@ func (s *LROSuite) TestDelete202NoRetry204(c *chk.C) {
 }
 
 func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
-	future, err := lroRetryClient.Delete202Retry200()
+	future, err := lroRetryClient.Delete202Retry200(context.Background())
 	c.Assert(err, chk.NotNil)
 
-	future, err = lroRetryClient.Delete202Retry200()
+	future, err = lroRetryClient.Delete202Retry200(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	for done, err := future.Done(lroRetryClient); !done; done, err = future.Done(lroRetryClient) {
@@ -79,7 +80,7 @@ func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
 }
 
 func (s *LROSuite) TestDelete202NonRetry400(c *chk.C) {
-	future, err := lroSADSClient.Delete202NonRetry400()
+	future, err := lroSADSClient.Delete202NonRetry400(context.Background())
 	c.Assert(err, chk.IsNil)
 
 	for done, err := future.Done(lroSADSClient); !done; done, err = future.Done(lroSADSClient) {
