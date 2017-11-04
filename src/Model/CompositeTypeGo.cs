@@ -207,11 +207,15 @@ namespace AutoRest.Go.Model
         }
 
         public bool IsPolymorphicResponse() {
-            if (BaseIsPolymorphic && BaseModelType != null)
+            if (IsPolymorphic && IsResponseType)
+            {
+                return true;
+            }
+            if (BaseModelType != null && BaseIsPolymorphic)
             {
                 return (BaseModelType as CompositeTypeGo).IsPolymorphicResponse();
             }
-            return IsPolymorphic && IsResponseType;
+            return false;
         }
 
         /// <summary>
