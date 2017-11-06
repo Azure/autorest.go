@@ -24,16 +24,12 @@ import (
 )
 
 @EmptyLine
-const (
-@if (!Model.IsCustomBaseUri)
+@if (!Model.ConstGlobalDefaultParameters.IsNullOrEmpty())
 {
-<text>
-    // DefaultBaseURI is the default URI used for the service @(Model.ServiceName)
-    DefaultBaseURI = "@Model.BaseUrl"
-</text>
-}
+@:const (
     @(Model.ConstGlobalDefaultParameters)
-)
+@:)
+}
 
 @EmptyLine
 @WrapComment("// ", Model.ClientDocumentation)
