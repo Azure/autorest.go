@@ -215,7 +215,7 @@ namespace AutoRest.Go.Model
                 var constDeclaration = new List<string>();
                 if (!IsCustomBaseUri)
                 {
-                    constDeclaration.Add("// DefaultBaseURI is the default URI used for the service {ServiceName}\nDefaultBaseURI = \"{BaseUrl}\"");
+                    constDeclaration.Add($"// DefaultBaseURI is the default URI used for the service {ServiceName}\nDefaultBaseURI = \"{BaseUrl}\"");
                 }
                 foreach (var p in Properties)
                 {
