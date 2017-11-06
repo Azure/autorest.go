@@ -79,7 +79,7 @@ namespace AutoRest.Go
             {
                 if (mt.IsPolymorphic)
                 {
-                    var values  = new List<EnumValue>();
+                    var values = new List<EnumValue>();
                     foreach (var dt in (mt as CompositeTypeGo).DerivedTypes)
                     {
                         var ev = new EnumValue();
@@ -110,6 +110,7 @@ namespace AutoRest.Go
                     {
                         (mt as CompositeTypeGo).DiscriminatorEnum = (cmg.Add(New<EnumType>(new{
                             Name = nameAlreadyExists ? string.Format("{0}{1}", mt.PolymorphicDiscriminator, mt.Name) :  mt.PolymorphicDiscriminator,
+                            // how to add values ensuring they dont get repeated across the SDK?
                             Values = values,
                         })) as EnumTypeGo);
                     }
@@ -176,7 +177,6 @@ namespace AutoRest.Go
             }
 
             // Find all methods that returned paged results
-
             cmg.Methods.Cast<MethodGo>()
                 .Where(m => m.IsPageable).ToList()
                 .ForEach(m =>
