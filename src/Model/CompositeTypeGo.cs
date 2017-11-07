@@ -192,7 +192,7 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
-            if (BaseIsPolymorphic && !IsPolymorphic)
+            if (IsPolymorphic)
             {
                 imports.Add("\"encoding/json\"");
                 imports.Add("\"errors\"");
