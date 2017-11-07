@@ -57,7 +57,7 @@ namespace AutoRest.Go.Model
 
         public EnumTypeGo DiscriminatorEnum;
 
-        public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Constants.FirstOrDefault(c => c.Value.Equals(SerializedName)).Key;
+        public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
 
         public CompositeTypeGo()
         {

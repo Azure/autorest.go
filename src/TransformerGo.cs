@@ -110,7 +110,6 @@ namespace AutoRest.Go
                     {
                         (mt as CompositeTypeGo).DiscriminatorEnum = (cmg.Add(New<EnumType>(new{
                             Name = nameAlreadyExists ? string.Format("{0}{1}", mt.PolymorphicDiscriminator, mt.Name) :  mt.PolymorphicDiscriminator,
-                            // how to add values ensuring they dont get repeated across the SDK?
                             Values = values,
                         })) as EnumTypeGo);
                     }
@@ -147,7 +146,10 @@ namespace AutoRest.Go
             {
                 if (em.Values.Where(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)).Any())
                 {
-                    em.HasUniqueNames = false;
+                    foreach (var v in em.Values)
+                    {
+                        v.Name = em.Name + v.Name;
+                    }
                 }
                 else
                 {
@@ -288,7 +290,6 @@ namespace AutoRest.Go
 
             if (stutteringTypes.Any())
             {
-                Logger.Instance.Log(Category.Warning, string.Format(CultureInfo.InvariantCulture, Resources.NamesStutter, stutteringTypes.Count()));
                 stutteringTypes.ForEach(exported =>
                     {
                         var name = exported is IModelType
