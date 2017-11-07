@@ -156,6 +156,17 @@ namespace AutoRest.Go
                     topLevelNames.UnionWith(em.Values.Select(ev => ev.Name));
                 }
             }
+
+            var modelList = new List<EnumValue>();
+            foreach (var em in cmg.EnumTypes.OrderBy(etg => etg.Name.Value))
+            {
+                foreach (var v in em.Values)
+                {
+                    v.Name = CodeNamerGo.Instance.GetUnique(v.Name, v, cmg.ModelTypes, modelList);
+                    modelList.Add(v);
+                }
+            }
+
         }
 
         private void TransformModelTypes(CodeModelGo cmg)
@@ -295,8 +306,6 @@ namespace AutoRest.Go
                         var name = exported is IModelType
                                         ? (exported as IModelType).Name
                                         : (exported as Method).Name;
-
-                        Logger.Instance.Log(Category.Warning, string.Format(CultureInfo.InvariantCulture, Resources.StutteringName, name));
 
                         name = name.Value.TrimPackageName(cmg.Namespace);
 
