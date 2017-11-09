@@ -4,7 +4,6 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
 @{
-    var constants = Model.Constants.Keys.OrderBy(v => v);
     var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
     var modelPhrase = Model.Name.FixedValue.ToPhrase();
 }
@@ -13,15 +12,15 @@
 type @Model.Name string
 
 @EmptyLine
-@if (constants.Any())
+@if (Model.Values.Any())
 {
 <text>
 const (
-@foreach (var c in constants)
+@foreach (var v in Model.Values.OrderBy(v => v.Name))
 {
     <text>
-@WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(c), c.ToPhrase(), modelPhrase))
-@(CodeNamerGo.Instance.GetEnumMemberName(c)) @(Model.Name) = "@(Model.Constants[c])"
+@WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(v.Name), v.Name.ToPhrase(), modelPhrase))
+@(CodeNamerGo.Instance.GetEnumMemberName(v.Name)) @(Model.Name) = "@(v.SerializedName)"
     </text>
 }
 )

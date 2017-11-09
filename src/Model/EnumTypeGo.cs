@@ -16,9 +16,6 @@ namespace AutoRest.Go.Model
         {
             // the default value for unnamed enums is "enum"
             Name.OnGet += v => v == "enum" ? "string" : v;
-
-            // Assume members have unique names		
-            HasUniqueNames = true;
         }
 
         public EnumTypeGo(EnumType source) : this()
@@ -30,21 +27,6 @@ namespace AutoRest.Go.Model
         /// Returns true if this enum has a name (swagger supports "anonymous" enums).
         /// </summary>
         public bool IsNamed => Name != "string" && Values.Any();
-
-        public IDictionary<string, string> Constants
-        {
-            get
-            {
-                var constants = new Dictionary<string, string>();
-                Values
-                    .ForEach(v =>
-                    {
-                        constants.Add(HasUniqueNames ? v.Name : Name + v.Name, v.SerializedName);
-                    });
-
-                return constants;
-            }
-        }
 
         /// <summary>
         /// Gets the doc string for this enum type.

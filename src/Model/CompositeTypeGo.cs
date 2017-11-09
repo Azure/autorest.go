@@ -57,7 +57,7 @@ namespace AutoRest.Go.Model
 
         public EnumTypeGo DiscriminatorEnum;
 
-        public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Constants.FirstOrDefault(c => c.Value.Equals(SerializedName)).Key;
+        public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
 
         public CompositeTypeGo()
         {
@@ -192,7 +192,7 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
-            if (BaseIsPolymorphic && !IsPolymorphic)
+            if (IsPolymorphic)
             {
                 imports.Add("\"encoding/json\"");
                 imports.Add("\"errors\"");
@@ -207,11 +207,15 @@ namespace AutoRest.Go.Model
         }
 
         public bool IsPolymorphicResponse() {
-            if (BaseIsPolymorphic && BaseModelType != null)
+            if (IsPolymorphic && IsResponseType)
+            {
+                return true;
+            }
+            if (BaseModelType != null && BaseIsPolymorphic)
             {
                 return (BaseModelType as CompositeTypeGo).IsPolymorphicResponse();
             }
-            return IsPolymorphic && IsResponseType;
+            return false;
         }
 
         /// <summary>

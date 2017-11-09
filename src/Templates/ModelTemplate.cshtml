@@ -112,13 +112,27 @@ func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(s
 func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body []byte) error {
     @if (Model.IsWrapperType)
     {
+        @if (Model.BaseType is SequenceType)
+        {
+    @:@((Model.BaseType as SequenceTypeGo).ElementType.Name.FixedValue.ToShortName()), err := unmarshal@((Model.BaseType as SequenceTypeGo).ElementType.Name)Array(body)
+        }
+        else
+        {
+    @:@(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.Name)(body)
+        }
     <text>
-    @(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.Name)(body)
 	if err != nil {
 		return err
 	}
-    @(Model.Name.FixedValue.ToShortName()).Value = @(Model.BaseType.Name.FixedValue.ToShortName())
     </text>
+        @if (Model.BaseType is SequenceType)
+        {
+    @:@(Model.Name.FixedValue.ToShortName()).Value = &@((Model.BaseType as SequenceTypeGo).ElementType.Name.FixedValue.ToShortName())
+        }
+        else
+        {
+    @:@(Model.Name.FixedValue.ToShortName()).Value = @(Model.BaseType.Name.FixedValue.ToShortName())
+        }
     }
     else
     {

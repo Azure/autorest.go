@@ -79,7 +79,7 @@ namespace AutoRest.Go
             {
                 if (mt.IsPolymorphic)
                 {
-                    var values  = new List<EnumValue>();
+                    var values = new List<EnumValue>();
                     foreach (var dt in (mt as CompositeTypeGo).DerivedTypes)
                     {
                         var ev = new EnumValue();
@@ -146,13 +146,27 @@ namespace AutoRest.Go
             {
                 if (em.Values.Where(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)).Any())
                 {
-                    em.HasUniqueNames = false;
+                    foreach (var v in em.Values)
+                    {
+                        v.Name = em.Name + v.Name;
+                    }
                 }
                 else
                 {
                     topLevelNames.UnionWith(em.Values.Select(ev => ev.Name));
                 }
             }
+
+            var modelList = new List<EnumValue>();
+            foreach (var em in cmg.EnumTypes.OrderBy(etg => etg.Name.Value))
+            {
+                foreach (var v in em.Values)
+                {
+                    v.Name = CodeNamerGo.Instance.GetUnique(v.Name, v, cmg.ModelTypes, modelList);
+                    modelList.Add(v);
+                }
+            }
+
         }
 
         private void TransformModelTypes(CodeModelGo cmg)
@@ -176,7 +190,6 @@ namespace AutoRest.Go
             }
 
             // Find all methods that returned paged results
-
             cmg.Methods.Cast<MethodGo>()
                 .Where(m => m.IsPageable).ToList()
                 .ForEach(m =>
@@ -288,14 +301,11 @@ namespace AutoRest.Go
 
             if (stutteringTypes.Any())
             {
-                Logger.Instance.Log(Category.Warning, string.Format(CultureInfo.InvariantCulture, Resources.NamesStutter, stutteringTypes.Count()));
                 stutteringTypes.ForEach(exported =>
                     {
                         var name = exported is IModelType
                                         ? (exported as IModelType).Name
                                         : (exported as Method).Name;
-
-                        Logger.Instance.Log(Category.Warning, string.Format(CultureInfo.InvariantCulture, Resources.StutteringName, name));
 
                         name = name.Value.TrimPackageName(cmg.Namespace);
 
