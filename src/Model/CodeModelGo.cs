@@ -62,8 +62,17 @@ namespace AutoRest.Go.Model
             return $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(Documentation ?? string.Empty).UnwrapAnchorTags()}";
         }
 
-        public string BaseClient => "ManagementClient";
-
+        public string BaseClient 
+        {
+            get
+            {
+                if (APIType.EqualsIgnoreCase("data-plane"))
+                {
+                    return "DataplaneClient";                    
+                }
+                return "ManagementClient";
+            }
+        }
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
         public string APIType => (string)Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
