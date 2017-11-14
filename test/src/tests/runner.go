@@ -15,7 +15,7 @@ const testServerPath = "../../../node_modules/@microsoft.azure/autorest.testserv
 func main() {
 	err := startServer()
 	if err != nil {
-		fmt.Printf("Error starting server: %v\n", err)
+		panic(fmt.Sprintf("Error starting server: %v\n", err))
 	}
 	allPass := true
 	runTests(&allPass)
@@ -47,7 +47,7 @@ func startServer() error {
 func stopServer() error {
 	server := exec.Command("npm", "stop")
 	server.Dir = testServerPath
-	return server.Start()
+	return server.Run()
 }
 
 func runTests(allPass *bool) {
