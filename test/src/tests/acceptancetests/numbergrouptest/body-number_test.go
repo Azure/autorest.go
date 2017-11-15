@@ -109,11 +109,6 @@ func (s *NumberSuite) TestPutSmallFloat(c *chk.C) {
 	c.Assert(err, chk.IsNil)
 }
 
-func (s *NumberSuite) TestGetInvalidDecimal(c *chk.C) {
-	_, err := numberClient.GetInvalidDecimal()
-	c.Assert(err, chk.NotNil)
-}
-
 // func (s *NumberSuite) TestGetBigDecimal(c *chk.C) {
 // 	res, err := numberClient.GetBigDecimal()
 // 	c.Assert(err, chk.IsNil)
