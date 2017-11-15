@@ -8,14 +8,7 @@ package numbergroup
 
 import (
 	"github.com/Azure/go-autorest/autorest"
-	"github.com/shopspring/decimal"
 )
-
-// Decimal is
-type Decimal struct {
-	autorest.Response `json:"-"`
-	Value             *decimal.Decimal `json:"value,omitempty"`
-}
 
 // Error is
 type Error struct {

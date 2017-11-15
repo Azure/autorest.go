@@ -132,6 +132,11 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
     var v *json.RawMessage
         @foreach (var p in Model.AllProperties)
         {
+            if (p.ModelType is DictionaryTypeGo && ((DictionaryTypeGo)p.ModelType).SupportsAdditionalProperties)
+            {
+                // TODO: codegen for this scenario is broken
+                continue;
+            }
         <text>
     @EmptyLine
     v = m["@(p.SerializedName)"]
