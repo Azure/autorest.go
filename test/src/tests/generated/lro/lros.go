@@ -15,7 +15,7 @@ import (
 
 // LROsClient is the long-running Operation for AutoRest
 type LROsClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewLROsClient creates an instance of the LROsClient client.

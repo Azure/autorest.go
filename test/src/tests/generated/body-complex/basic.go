@@ -15,7 +15,7 @@ import (
 
 // BasicClient is the test Infrastructure for AutoRest
 type BasicClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewBasicClient creates an instance of the BasicClient client.

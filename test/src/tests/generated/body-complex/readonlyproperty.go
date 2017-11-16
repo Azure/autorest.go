@@ -15,7 +15,7 @@ import (
 
 // ReadonlypropertyClient is the test Infrastructure for AutoRest
 type ReadonlypropertyClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewReadonlypropertyClient creates an instance of the ReadonlypropertyClient client.

@@ -18,8 +18,8 @@ const (
 	DefaultBaseURI = "http://localhost"
 )
 
-// ManagementClient is the base client for Optionalgroup.
-type ManagementClient struct {
+// BaseClient is the base client for Optionalgroup.
+type BaseClient struct {
 	autorest.Client
 	BaseURI             string
 	RequiredGlobalPath  string
@@ -27,14 +27,14 @@ type ManagementClient struct {
 	OptionalGlobalQuery *int32
 }
 
-// New creates an instance of the ManagementClient client.
-func New(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ManagementClient {
+// New creates an instance of the BaseClient client.
+func New(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) BaseClient {
 	return NewWithBaseURI(DefaultBaseURI, requiredGlobalPath, requiredGlobalQuery, optionalGlobalQuery)
 }
 
-// NewWithBaseURI creates an instance of the ManagementClient client.
-func NewWithBaseURI(baseURI string, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ManagementClient {
-	return ManagementClient{
+// NewWithBaseURI creates an instance of the BaseClient client.
+func NewWithBaseURI(baseURI string, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) BaseClient {
+	return BaseClient{
 		Client:              autorest.NewClientWithUserAgent(UserAgent()),
 		BaseURI:             baseURI,
 		RequiredGlobalPath:  requiredGlobalPath,

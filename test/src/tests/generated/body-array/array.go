@@ -18,7 +18,7 @@ import (
 
 // ArrayClient is the test Infrastructure for AutoRest Swagger BAT
 type ArrayClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewArrayClient creates an instance of the ArrayClient client.

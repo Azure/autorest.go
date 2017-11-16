@@ -17,7 +17,7 @@ import (
 
 // PathsClient is the test Infrastructure for AutoRest
 type PathsClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewPathsClient creates an instance of the PathsClient client.

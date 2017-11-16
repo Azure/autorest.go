@@ -17,7 +17,7 @@ import (
 
 // HeaderClient is the test Infrastructure for AutoRest
 type HeaderClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewHeaderClient creates an instance of the HeaderClient client.

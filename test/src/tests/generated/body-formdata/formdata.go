@@ -16,7 +16,7 @@ import (
 
 // FormdataClient is the test Infrastructure for AutoRest Swagger BAT
 type FormdataClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewFormdataClient creates an instance of the FormdataClient client.

@@ -18,7 +18,7 @@ var _ = chk.Suite(&ValidationSuite{})
 
 var validationClient = getValidationClient()
 
-func getValidationClient() ManagementClient {
+func getValidationClient() BaseClient {
 	c := New("abc123")
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()

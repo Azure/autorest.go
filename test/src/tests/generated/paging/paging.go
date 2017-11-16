@@ -15,7 +15,7 @@ import (
 
 // PagingClient is the long-running Operation for AutoRest
 type PagingClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewPagingClient creates an instance of the PagingClient client.

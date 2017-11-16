@@ -15,7 +15,7 @@ import (
 
 // LROsCustomHeaderClient is the long-running Operation for AutoRest
 type LROsCustomHeaderClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewLROsCustomHeaderClient creates an instance of the LROsCustomHeaderClient client.

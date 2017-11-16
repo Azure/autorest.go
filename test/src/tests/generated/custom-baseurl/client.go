@@ -18,20 +18,20 @@ const (
 	DefaultHost = "host"
 )
 
-// ManagementClient is the base client for Custombaseurlgroup.
-type ManagementClient struct {
+// BaseClient is the base client for Custombaseurlgroup.
+type BaseClient struct {
 	autorest.Client
 	Host string
 }
 
-// New creates an instance of the ManagementClient client.
-func New() ManagementClient {
+// New creates an instance of the BaseClient client.
+func New() BaseClient {
 	return NewWithoutDefaults(DefaultHost)
 }
 
-// NewWithoutDefaults creates an instance of the ManagementClient client.
-func NewWithoutDefaults(host string) ManagementClient {
-	return ManagementClient{
+// NewWithoutDefaults creates an instance of the BaseClient client.
+func NewWithoutDefaults(host string) BaseClient {
+	return BaseClient{
 		Client: autorest.NewClientWithUserAgent(UserAgent()),
 		Host:   host,
 	}

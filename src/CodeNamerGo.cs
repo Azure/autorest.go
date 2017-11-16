@@ -88,7 +88,7 @@ namespace AutoRest.Go
                                                             "Version",
                                                             "APIVersion",
                                                             "DefaultBaseURI",
-                                                            "ManagementClient",
+                                                            "BaseClient",
                                                             "NewWithBaseURI",
                                                             "New",
                                                             "NewWithoutDefaults",

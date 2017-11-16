@@ -22,50 +22,50 @@ const (
 	DefaultBaseURI = "http://localhost"
 )
 
-// ManagementClient is the base client for Modelflatteninggroup.
-type ManagementClient struct {
+// BaseClient is the base client for Modelflatteninggroup.
+type BaseClient struct {
 	autorest.Client
 	BaseURI string
 }
 
-// New creates an instance of the ManagementClient client.
-func New() ManagementClient {
+// New creates an instance of the BaseClient client.
+func New() BaseClient {
 	return NewWithBaseURI(DefaultBaseURI)
 }
 
-// NewWithBaseURI creates an instance of the ManagementClient client.
-func NewWithBaseURI(baseURI string) ManagementClient {
-	return ManagementClient{
+// NewWithBaseURI creates an instance of the BaseClient client.
+func NewWithBaseURI(baseURI string) BaseClient {
+	return BaseClient{
 		Client:  autorest.NewClientWithUserAgent(UserAgent()),
 		BaseURI: baseURI,
 	}
 }
 
 // GetArray get External Resource as an Array
-func (client ManagementClient) GetArray(ctx context.Context) (result ListFlattenedProduct, err error) {
+func (client BaseClient) GetArray(ctx context.Context) (result ListFlattenedProduct, err error) {
 	req, err := client.GetArrayPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetArray", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetArray", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetArraySender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetArray", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetArray", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetArrayResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetArray", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetArray", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetArrayPreparer prepares the GetArray request.
-func (client ManagementClient) GetArrayPreparer(ctx context.Context) (*http.Request, error) {
+func (client BaseClient) GetArrayPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -75,14 +75,14 @@ func (client ManagementClient) GetArrayPreparer(ctx context.Context) (*http.Requ
 
 // GetArraySender sends the GetArray request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) GetArraySender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) GetArraySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetArrayResponder handles the response to the GetArray request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) GetArrayResponder(resp *http.Response) (result ListFlattenedProduct, err error) {
+func (client BaseClient) GetArrayResponder(resp *http.Response) (result ListFlattenedProduct, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -94,30 +94,30 @@ func (client ManagementClient) GetArrayResponder(resp *http.Response) (result Li
 }
 
 // GetDictionary get External Resource as a Dictionary
-func (client ManagementClient) GetDictionary(ctx context.Context) (result SetFlattenedProduct, err error) {
+func (client BaseClient) GetDictionary(ctx context.Context) (result SetFlattenedProduct, err error) {
 	req, err := client.GetDictionaryPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetDictionary", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetDictionary", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetDictionarySender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetDictionary", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetDictionary", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetDictionaryResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetDictionary", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetDictionary", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetDictionaryPreparer prepares the GetDictionary request.
-func (client ManagementClient) GetDictionaryPreparer(ctx context.Context) (*http.Request, error) {
+func (client BaseClient) GetDictionaryPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -127,14 +127,14 @@ func (client ManagementClient) GetDictionaryPreparer(ctx context.Context) (*http
 
 // GetDictionarySender sends the GetDictionary request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) GetDictionarySender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) GetDictionarySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDictionaryResponder handles the response to the GetDictionary request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) GetDictionaryResponder(resp *http.Response) (result SetFlattenedProduct, err error) {
+func (client BaseClient) GetDictionaryResponder(resp *http.Response) (result SetFlattenedProduct, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -146,30 +146,30 @@ func (client ManagementClient) GetDictionaryResponder(resp *http.Response) (resu
 }
 
 // GetResourceCollection get External Resource as a ResourceCollection
-func (client ManagementClient) GetResourceCollection(ctx context.Context) (result ResourceCollection, err error) {
+func (client BaseClient) GetResourceCollection(ctx context.Context) (result ResourceCollection, err error) {
 	req, err := client.GetResourceCollectionPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetResourceCollection", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetResourceCollection", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetResourceCollectionSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetResourceCollection", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetResourceCollection", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetResourceCollectionResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetResourceCollection", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetResourceCollection", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetResourceCollectionPreparer prepares the GetResourceCollection request.
-func (client ManagementClient) GetResourceCollectionPreparer(ctx context.Context) (*http.Request, error) {
+func (client BaseClient) GetResourceCollectionPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -179,14 +179,14 @@ func (client ManagementClient) GetResourceCollectionPreparer(ctx context.Context
 
 // GetResourceCollectionSender sends the GetResourceCollection request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) GetResourceCollectionSender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) GetResourceCollectionSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetResourceCollectionResponder handles the response to the GetResourceCollection request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) GetResourceCollectionResponder(resp *http.Response) (result ResourceCollection, err error) {
+func (client BaseClient) GetResourceCollectionResponder(resp *http.Response) (result ResourceCollection, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -199,30 +199,30 @@ func (client ManagementClient) GetResourceCollectionResponder(resp *http.Respons
 
 // GetWrappedArray no need to have a route in Express server for this operation. Used to verify the type flattened is
 // not removed if it's referenced in an array
-func (client ManagementClient) GetWrappedArray(ctx context.Context) (result ListProductWrapper, err error) {
+func (client BaseClient) GetWrappedArray(ctx context.Context) (result ListProductWrapper, err error) {
 	req, err := client.GetWrappedArrayPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetWrappedArray", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetWrappedArray", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetWrappedArraySender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetWrappedArray", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetWrappedArray", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetWrappedArrayResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "GetWrappedArray", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetWrappedArray", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetWrappedArrayPreparer prepares the GetWrappedArray request.
-func (client ManagementClient) GetWrappedArrayPreparer(ctx context.Context) (*http.Request, error) {
+func (client BaseClient) GetWrappedArrayPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -232,14 +232,14 @@ func (client ManagementClient) GetWrappedArrayPreparer(ctx context.Context) (*ht
 
 // GetWrappedArraySender sends the GetWrappedArray request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) GetWrappedArraySender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) GetWrappedArraySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetWrappedArrayResponder handles the response to the GetWrappedArray request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) GetWrappedArrayResponder(resp *http.Response) (result ListProductWrapper, err error) {
+func (client BaseClient) GetWrappedArrayResponder(resp *http.Response) (result ListProductWrapper, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -253,7 +253,7 @@ func (client ManagementClient) GetWrappedArrayResponder(resp *http.Response) (re
 // PostFlattenedSimpleProduct put Flattened Simple Product with client flattening true on the parameter
 //
 // simpleBodyProduct is simple body product to post
-func (client ManagementClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
+func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -262,32 +262,32 @@ func (client ManagementClient) PostFlattenedSimpleProduct(ctx context.Context, s
 						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.ManagementClient", "PostFlattenedSimpleProduct")
+		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct")
 	}
 
 	req, err := client.PostFlattenedSimpleProductPreparer(ctx, simpleBodyProduct)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PostFlattenedSimpleProduct", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PostFlattenedSimpleProductSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PostFlattenedSimpleProduct", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PostFlattenedSimpleProductResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PostFlattenedSimpleProduct", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PostFlattenedSimpleProductPreparer prepares the PostFlattenedSimpleProduct request.
-func (client ManagementClient) PostFlattenedSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
+func (client BaseClient) PostFlattenedSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPost(),
@@ -302,14 +302,14 @@ func (client ManagementClient) PostFlattenedSimpleProductPreparer(ctx context.Co
 
 // PostFlattenedSimpleProductSender sends the PostFlattenedSimpleProduct request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) PostFlattenedSimpleProductSender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) PostFlattenedSimpleProductSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PostFlattenedSimpleProductResponder handles the response to the PostFlattenedSimpleProduct request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) PostFlattenedSimpleProductResponder(resp *http.Response) (result SimpleProduct, err error) {
+func (client BaseClient) PostFlattenedSimpleProductResponder(resp *http.Response) (result SimpleProduct, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -323,30 +323,30 @@ func (client ManagementClient) PostFlattenedSimpleProductResponder(resp *http.Re
 // PutArray put External Resource as an Array
 //
 // resourceArray is external Resource as an Array to put
-func (client ManagementClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
+func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
 	req, err := client.PutArrayPreparer(ctx, resourceArray)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutArray", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutArray", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutArraySender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutArray", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutArray", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutArrayResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutArray", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutArray", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutArrayPreparer prepares the PutArray request.
-func (client ManagementClient) PutArrayPreparer(ctx context.Context, resourceArray []Resource) (*http.Request, error) {
+func (client BaseClient) PutArrayPreparer(ctx context.Context, resourceArray []Resource) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -361,14 +361,14 @@ func (client ManagementClient) PutArrayPreparer(ctx context.Context, resourceArr
 
 // PutArraySender sends the PutArray request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) PutArraySender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) PutArraySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutArrayResponder handles the response to the PutArray request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) PutArrayResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client BaseClient) PutArrayResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -381,30 +381,30 @@ func (client ManagementClient) PutArrayResponder(resp *http.Response) (result au
 // PutDictionary put External Resource as a Dictionary
 //
 // resourceDictionary is external Resource as a Dictionary to put
-func (client ManagementClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
+func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
 	req, err := client.PutDictionaryPreparer(ctx, resourceDictionary)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutDictionary", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutDictionary", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutDictionarySender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutDictionary", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutDictionary", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutDictionaryResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutDictionary", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutDictionary", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutDictionaryPreparer prepares the PutDictionary request.
-func (client ManagementClient) PutDictionaryPreparer(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (*http.Request, error) {
+func (client BaseClient) PutDictionaryPreparer(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -419,14 +419,14 @@ func (client ManagementClient) PutDictionaryPreparer(ctx context.Context, resour
 
 // PutDictionarySender sends the PutDictionary request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) PutDictionarySender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) PutDictionarySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutDictionaryResponder handles the response to the PutDictionary request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) PutDictionaryResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client BaseClient) PutDictionaryResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -439,30 +439,30 @@ func (client ManagementClient) PutDictionaryResponder(resp *http.Response) (resu
 // PutResourceCollection put External Resource as a ResourceCollection
 //
 // resourceComplexObject is external Resource as a ResourceCollection to put
-func (client ManagementClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
+func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
 	req, err := client.PutResourceCollectionPreparer(ctx, resourceComplexObject)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutResourceCollection", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutResourceCollection", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutResourceCollectionSender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutResourceCollection", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutResourceCollection", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutResourceCollectionResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutResourceCollection", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutResourceCollection", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutResourceCollectionPreparer prepares the PutResourceCollection request.
-func (client ManagementClient) PutResourceCollectionPreparer(ctx context.Context, resourceComplexObject *ResourceCollection) (*http.Request, error) {
+func (client BaseClient) PutResourceCollectionPreparer(ctx context.Context, resourceComplexObject *ResourceCollection) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -477,14 +477,14 @@ func (client ManagementClient) PutResourceCollectionPreparer(ctx context.Context
 
 // PutResourceCollectionSender sends the PutResourceCollection request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) PutResourceCollectionSender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) PutResourceCollectionSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutResourceCollectionResponder handles the response to the PutResourceCollection request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) PutResourceCollectionResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client BaseClient) PutResourceCollectionResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -497,7 +497,7 @@ func (client ManagementClient) PutResourceCollectionResponder(resp *http.Respons
 // PutSimpleProduct put Simple Product with client flattening true on the model
 //
 // simpleBodyProduct is simple body product to put
-func (client ManagementClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
+func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -506,32 +506,32 @@ func (client ManagementClient) PutSimpleProduct(ctx context.Context, simpleBodyP
 						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProduct")
+		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.BaseClient", "PutSimpleProduct")
 	}
 
 	req, err := client.PutSimpleProductPreparer(ctx, simpleBodyProduct)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProduct", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProduct", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutSimpleProductSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProduct", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProduct", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutSimpleProductResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProduct", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProduct", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutSimpleProductPreparer prepares the PutSimpleProduct request.
-func (client ManagementClient) PutSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
+func (client BaseClient) PutSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -546,14 +546,14 @@ func (client ManagementClient) PutSimpleProductPreparer(ctx context.Context, sim
 
 // PutSimpleProductSender sends the PutSimpleProduct request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) PutSimpleProductSender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) PutSimpleProductSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutSimpleProductResponder handles the response to the PutSimpleProduct request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) PutSimpleProductResponder(resp *http.Response) (result SimpleProduct, err error) {
+func (client BaseClient) PutSimpleProductResponder(resp *http.Response) (result SimpleProduct, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -567,7 +567,7 @@ func (client ManagementClient) PutSimpleProductResponder(resp *http.Response) (r
 // PutSimpleProductWithGrouping put Simple Product with client flattening true on the model
 //
 // name is product name with value 'groupproduct' simpleBodyProduct is simple body product to put
-func (client ManagementClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
+func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -576,32 +576,32 @@ func (client ManagementClient) PutSimpleProductWithGrouping(ctx context.Context,
 						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProductWithGrouping")
+		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping")
 	}
 
 	req, err := client.PutSimpleProductWithGroupingPreparer(ctx, name, simpleBodyProduct)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProductWithGrouping", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutSimpleProductWithGroupingSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProductWithGrouping", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutSimpleProductWithGroupingResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutSimpleProductWithGrouping", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutSimpleProductWithGroupingPreparer prepares the PutSimpleProductWithGrouping request.
-func (client ManagementClient) PutSimpleProductWithGroupingPreparer(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
+func (client BaseClient) PutSimpleProductWithGroupingPreparer(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
 		"name": autorest.Encode("path", name),
 	}
@@ -620,14 +620,14 @@ func (client ManagementClient) PutSimpleProductWithGroupingPreparer(ctx context.
 
 // PutSimpleProductWithGroupingSender sends the PutSimpleProductWithGrouping request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) PutSimpleProductWithGroupingSender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) PutSimpleProductWithGroupingSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutSimpleProductWithGroupingResponder handles the response to the PutSimpleProductWithGrouping request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) PutSimpleProductWithGroupingResponder(resp *http.Response) (result SimpleProduct, err error) {
+func (client BaseClient) PutSimpleProductWithGroupingResponder(resp *http.Response) (result SimpleProduct, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -642,30 +642,30 @@ func (client ManagementClient) PutSimpleProductWithGroupingResponder(resp *http.
 // not removed if it's referenced in an array
 //
 // resourceArray is external Resource as an Array to put
-func (client ManagementClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
+func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
 	req, err := client.PutWrappedArrayPreparer(ctx, resourceArray)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutWrappedArray", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutWrappedArray", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.PutWrappedArraySender(req)
 	if err != nil {
 		result.Response = resp
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutWrappedArray", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutWrappedArray", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.PutWrappedArrayResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "modelflatteninggroup.ManagementClient", "PutWrappedArray", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutWrappedArray", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // PutWrappedArrayPreparer prepares the PutWrappedArray request.
-func (client ManagementClient) PutWrappedArrayPreparer(ctx context.Context, resourceArray []WrappedProduct) (*http.Request, error) {
+func (client BaseClient) PutWrappedArrayPreparer(ctx context.Context, resourceArray []WrappedProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -680,14 +680,14 @@ func (client ManagementClient) PutWrappedArrayPreparer(ctx context.Context, reso
 
 // PutWrappedArraySender sends the PutWrappedArray request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) PutWrappedArraySender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) PutWrappedArraySender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutWrappedArrayResponder handles the response to the PutWrappedArray request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) PutWrappedArrayResponder(resp *http.Response) (result autorest.Response, err error) {
+func (client BaseClient) PutWrappedArrayResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),

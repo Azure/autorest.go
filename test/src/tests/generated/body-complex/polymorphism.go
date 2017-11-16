@@ -16,7 +16,7 @@ import (
 
 // PolymorphismClient is the test Infrastructure for AutoRest
 type PolymorphismClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewPolymorphismClient creates an instance of the PolymorphismClient client.

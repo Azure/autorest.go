@@ -17,7 +17,7 @@ import (
 
 // QueriesClient is the test Infrastructure for AutoRest
 type QueriesClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewQueriesClient creates an instance of the QueriesClient client.

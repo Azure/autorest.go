@@ -16,7 +16,7 @@ import (
 
 // PolymorphicrecursiveClient is the test Infrastructure for AutoRest
 type PolymorphicrecursiveClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewPolymorphicrecursiveClient creates an instance of the PolymorphicrecursiveClient client.

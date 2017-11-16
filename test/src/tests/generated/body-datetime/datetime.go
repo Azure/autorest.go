@@ -16,7 +16,7 @@ import (
 
 // DatetimeClient is the test Infrastructure for AutoRest
 type DatetimeClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewDatetimeClient creates an instance of the DatetimeClient client.

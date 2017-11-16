@@ -16,7 +16,7 @@ import (
 
 // ByteClient is the test Infrastructure for AutoRest Swagger BAT
 type ByteClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewByteClient creates an instance of the ByteClient client.

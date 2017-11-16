@@ -15,7 +15,7 @@ import (
 
 // HTTPServerFailureClient is the test Infrastructure for AutoRest
 type HTTPServerFailureClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewHTTPServerFailureClient creates an instance of the HTTPServerFailureClient client.

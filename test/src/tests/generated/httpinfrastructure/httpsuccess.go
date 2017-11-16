@@ -15,7 +15,7 @@ import (
 
 // HTTPSuccessClient is the test Infrastructure for AutoRest
 type HTTPSuccessClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewHTTPSuccessClient creates an instance of the HTTPSuccessClient client.

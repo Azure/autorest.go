@@ -16,7 +16,7 @@ import (
 
 // Datetimerfc1123Client is the test Infrastructure for AutoRest
 type Datetimerfc1123Client struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewDatetimerfc1123Client creates an instance of the Datetimerfc1123Client client.

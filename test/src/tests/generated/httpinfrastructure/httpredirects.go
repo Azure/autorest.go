@@ -15,7 +15,7 @@ import (
 
 // HTTPRedirectsClient is the test Infrastructure for AutoRest
 type HTTPRedirectsClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewHTTPRedirectsClient creates an instance of the HTTPRedirectsClient client.

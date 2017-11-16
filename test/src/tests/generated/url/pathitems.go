@@ -15,7 +15,7 @@ import (
 
 // PathItemsClient is the test Infrastructure for AutoRest
 type PathItemsClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewPathItemsClient creates an instance of the PathItemsClient client.

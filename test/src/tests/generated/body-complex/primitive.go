@@ -15,7 +15,7 @@ import (
 
 // PrimitiveClient is the test Infrastructure for AutoRest
 type PrimitiveClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewPrimitiveClient creates an instance of the PrimitiveClient client.
