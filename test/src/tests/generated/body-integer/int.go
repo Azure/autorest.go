@@ -16,7 +16,7 @@ import (
 
 // IntClient is the test Infrastructure for AutoRest
 type IntClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewIntClient creates an instance of the IntClient client.

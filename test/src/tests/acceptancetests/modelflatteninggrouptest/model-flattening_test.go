@@ -19,7 +19,7 @@ var _ = chk.Suite(&ModelFlatteningSuite{})
 
 var modelflatteningClient = getmodelflatteningClient()
 
-func getmodelflatteningClient() ManagementClient {
+func getmodelflatteningClient() BaseClient {
 	c := New()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()

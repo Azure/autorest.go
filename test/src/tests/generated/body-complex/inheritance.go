@@ -15,7 +15,7 @@ import (
 
 // InheritanceClient is the test Infrastructure for AutoRest
 type InheritanceClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewInheritanceClient creates an instance of the InheritanceClient client.

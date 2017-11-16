@@ -15,7 +15,7 @@ import (
 
 // DurationClient is the test Infrastructure for AutoRest
 type DurationClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewDurationClient creates an instance of the DurationClient client.

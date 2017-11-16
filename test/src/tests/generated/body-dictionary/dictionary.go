@@ -17,7 +17,7 @@ import (
 
 // DictionaryClient is the test Infrastructure for AutoRest Swagger BAT
 type DictionaryClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewDictionaryClient creates an instance of the DictionaryClient client.

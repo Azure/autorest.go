@@ -15,7 +15,7 @@ import (
 
 // LRORetrysClient is the long-running Operation for AutoRest
 type LRORetrysClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewLRORetrysClient creates an instance of the LRORetrysClient client.

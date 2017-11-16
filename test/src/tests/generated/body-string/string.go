@@ -15,7 +15,7 @@ import (
 
 // StringClient is the test Infrastructure for AutoRest Swagger BAT
 type StringClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewStringClient creates an instance of the StringClient client.

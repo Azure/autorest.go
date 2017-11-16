@@ -16,7 +16,7 @@ import (
 
 // NumberClient is the test Infrastructure for AutoRest
 type NumberClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewNumberClient creates an instance of the NumberClient client.

@@ -15,7 +15,7 @@ import (
 
 // HTTPRetryClient is the test Infrastructure for AutoRest
 type HTTPRetryClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewHTTPRetryClient creates an instance of the HTTPRetryClient client.

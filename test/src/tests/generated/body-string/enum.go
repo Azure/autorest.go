@@ -16,7 +16,7 @@ import (
 
 // EnumClient is the test Infrastructure for AutoRest Swagger BAT
 type EnumClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewEnumClient creates an instance of the EnumClient client.

@@ -18,22 +18,22 @@ const (
 	DefaultBaseURI = "http://localhost"
 )
 
-// ManagementClient is the base client for Urlgroup.
-type ManagementClient struct {
+// BaseClient is the base client for Urlgroup.
+type BaseClient struct {
 	autorest.Client
 	BaseURI           string
 	GlobalStringPath  string
 	GlobalStringQuery string
 }
 
-// New creates an instance of the ManagementClient client.
-func New(globalStringPath string, globalStringQuery string) ManagementClient {
+// New creates an instance of the BaseClient client.
+func New(globalStringPath string, globalStringQuery string) BaseClient {
 	return NewWithBaseURI(DefaultBaseURI, globalStringPath, globalStringQuery)
 }
 
-// NewWithBaseURI creates an instance of the ManagementClient client.
-func NewWithBaseURI(baseURI string, globalStringPath string, globalStringQuery string) ManagementClient {
-	return ManagementClient{
+// NewWithBaseURI creates an instance of the BaseClient client.
+func NewWithBaseURI(baseURI string, globalStringPath string, globalStringQuery string) BaseClient {
+	return BaseClient{
 		Client:            autorest.NewClientWithUserAgent(UserAgent()),
 		BaseURI:           baseURI,
 		GlobalStringPath:  globalStringPath,

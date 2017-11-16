@@ -15,7 +15,7 @@ import (
 
 // FilesClient is the test Infrastructure for AutoRest Swagger BAT
 type FilesClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewFilesClient creates an instance of the FilesClient client.

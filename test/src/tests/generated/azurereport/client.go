@@ -21,50 +21,50 @@ const (
 	DefaultBaseURI = "http://localhost"
 )
 
-// ManagementClient is the base client for Azurereport.
-type ManagementClient struct {
+// BaseClient is the base client for Azurereport.
+type BaseClient struct {
 	autorest.Client
 	BaseURI string
 }
 
-// New creates an instance of the ManagementClient client.
-func New() ManagementClient {
+// New creates an instance of the BaseClient client.
+func New() BaseClient {
 	return NewWithBaseURI(DefaultBaseURI)
 }
 
-// NewWithBaseURI creates an instance of the ManagementClient client.
-func NewWithBaseURI(baseURI string) ManagementClient {
-	return ManagementClient{
+// NewWithBaseURI creates an instance of the BaseClient client.
+func NewWithBaseURI(baseURI string) BaseClient {
+	return BaseClient{
 		Client:  autorest.NewClientWithUserAgent(UserAgent()),
 		BaseURI: baseURI,
 	}
 }
 
 // GetReport get test coverage report
-func (client ManagementClient) GetReport(ctx context.Context) (result SetInt32, err error) {
+func (client BaseClient) GetReport(ctx context.Context) (result SetInt32, err error) {
 	req, err := client.GetReportPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "azurereport.ManagementClient", "GetReport", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "azurereport.BaseClient", "GetReport", nil, "Failure preparing request")
 		return
 	}
 
 	resp, err := client.GetReportSender(req)
 	if err != nil {
 		result.Response = autorest.Response{Response: resp}
-		err = autorest.NewErrorWithError(err, "azurereport.ManagementClient", "GetReport", resp, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "azurereport.BaseClient", "GetReport", resp, "Failure sending request")
 		return
 	}
 
 	result, err = client.GetReportResponder(resp)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "azurereport.ManagementClient", "GetReport", resp, "Failure responding to request")
+		err = autorest.NewErrorWithError(err, "azurereport.BaseClient", "GetReport", resp, "Failure responding to request")
 	}
 
 	return
 }
 
 // GetReportPreparer prepares the GetReport request.
-func (client ManagementClient) GetReportPreparer(ctx context.Context) (*http.Request, error) {
+func (client BaseClient) GetReportPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
@@ -74,14 +74,14 @@ func (client ManagementClient) GetReportPreparer(ctx context.Context) (*http.Req
 
 // GetReportSender sends the GetReport request. The method will close the
 // http.Response Body if it receives an error.
-func (client ManagementClient) GetReportSender(req *http.Request) (*http.Response, error) {
+func (client BaseClient) GetReportSender(req *http.Request) (*http.Response, error) {
 	return autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetReportResponder handles the response to the GetReport request. The method always
 // closes the http.Response Body.
-func (client ManagementClient) GetReportResponder(resp *http.Response) (result SetInt32, err error) {
+func (client BaseClient) GetReportResponder(resp *http.Response) (result SetInt32, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),

@@ -18,21 +18,21 @@ const (
 	DefaultDNSSuffix = "host"
 )
 
-// ManagementClient is the base client for Morecustombaseurigroup.
-type ManagementClient struct {
+// BaseClient is the base client for Morecustombaseurigroup.
+type BaseClient struct {
 	autorest.Client
 	SubscriptionID string
 	DNSSuffix      string
 }
 
-// New creates an instance of the ManagementClient client.
-func New(subscriptionID string) ManagementClient {
+// New creates an instance of the BaseClient client.
+func New(subscriptionID string) BaseClient {
 	return NewWithoutDefaults(subscriptionID, DefaultDNSSuffix)
 }
 
-// NewWithoutDefaults creates an instance of the ManagementClient client.
-func NewWithoutDefaults(subscriptionID string, dNSSuffix string) ManagementClient {
-	return ManagementClient{
+// NewWithoutDefaults creates an instance of the BaseClient client.
+func NewWithoutDefaults(subscriptionID string, dNSSuffix string) BaseClient {
+	return BaseClient{
 		Client:         autorest.NewClientWithUserAgent(UserAgent()),
 		SubscriptionID: subscriptionID,
 		DNSSuffix:      dNSSuffix,

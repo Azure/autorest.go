@@ -15,7 +15,7 @@ import (
 
 // MultipleResponsesClient is the test Infrastructure for AutoRest
 type MultipleResponsesClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewMultipleResponsesClient creates an instance of the MultipleResponsesClient client.

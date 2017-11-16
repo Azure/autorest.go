@@ -15,7 +15,7 @@ import (
 
 // ImplicitClient is the test Infrastructure for AutoRest
 type ImplicitClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewImplicitClient creates an instance of the ImplicitClient client.

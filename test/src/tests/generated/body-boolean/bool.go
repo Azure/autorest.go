@@ -15,7 +15,7 @@ import (
 
 // BoolClient is the test Infrastructure for AutoRest
 type BoolClient struct {
-	ManagementClient
+	BaseClient
 }
 
 // NewBoolClient creates an instance of the BoolClient client.

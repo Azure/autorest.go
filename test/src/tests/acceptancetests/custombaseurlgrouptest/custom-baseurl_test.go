@@ -20,7 +20,7 @@ var custombaseuriClient = getCustomBaseURIClient()
 func getCustomBaseURIClient() PathsClient {
 	c := NewWithoutDefaults("host:3000")
 	c.RetryDuration = 1
-	return PathsClient{ManagementClient: c}
+	return PathsClient{BaseClient: c}
 }
 
 func (s *CustomBaseURLGroupSuite) TestCustomBaseUriPositive(c *chk.C) {
