@@ -509,7 +509,6 @@ func (client GroupClient) PutBase64URLEncodedResponder(resp *http.Response) (res
 
 // PutEmpty set string value empty ''
 //
-// stringBody is
 func (client GroupClient) PutEmpty(stringBody string) (result autorest.Response, err error) {
 	req, err := client.PutEmptyPreparer(stringBody)
 	if err != nil {
@@ -565,7 +564,6 @@ func (client GroupClient) PutEmptyResponder(resp *http.Response) (result autores
 
 // PutMbcs set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 //
-// stringBody is
 func (client GroupClient) PutMbcs(stringBody string) (result autorest.Response, err error) {
 	req, err := client.PutMbcsPreparer(stringBody)
 	if err != nil {
@@ -681,7 +679,6 @@ func (client GroupClient) PutNullResponder(resp *http.Response) (result autorest
 // PutWhitespace set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good
 // men to come to the aid of their country<tab><space><space>'
 //
-// stringBody is
 func (client GroupClient) PutWhitespace(stringBody string) (result autorest.Response, err error) {
 	req, err := client.PutWhitespacePreparer(stringBody)
 	if err != nil {
