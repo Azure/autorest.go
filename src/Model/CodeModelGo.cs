@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
 {
@@ -20,16 +19,6 @@ namespace AutoRest.Go.Model
 
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
 
-        public string Version { get; }
-
-        public string UserAgent
-        {
-            get
-            {
-                return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
-            }
-        }
-
         public CodeModelGo()
         {
             NextMethodUndefined = new List<IModelType>();
@@ -38,29 +27,11 @@ namespace AutoRest.Go.Model
             _futureTypes = new Dictionary<FutureTypeGo, FutureTypeGo>();
         }
 
-        public override string Namespace
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(base.Namespace))
-                {
-                    return base.Namespace;
-                }
+        public string Version { get; }
 
-                return base.Namespace.ToLowerInvariant();
-            }
-            set
-            {
-                base.Namespace = value;
-            }
-        }
+        public string UserAgent => $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
 
         public string ServiceName => CodeNamerGo.Instance.PascalCase(Namespace ?? string.Empty);
-
-        public string GetDocumentation()
-        {
-            return $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(Documentation ?? string.Empty).UnwrapAnchorTags()}";
-        }
 
         public string BaseClient => "BaseClient";
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
@@ -73,7 +44,7 @@ namespace AutoRest.Go.Model
             {
                 var imports = new HashSet<string>();
                 imports.UnionWith(CodeNamerGo.Instance.AutorestImports);
-                var clientMg = MethodGroups.Where(mg => string.IsNullOrEmpty(mg.Name)).FirstOrDefault();
+                var clientMg = MethodGroups.FirstOrDefault(mg => string.IsNullOrEmpty(mg.Name));
                 if (clientMg != null)
                 {
                     imports.UnionWith(clientMg.Imports);
@@ -93,7 +64,7 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Returns an enumerator to the collection of future types; may be empty.
         /// </summary>
-        internal IEnumerable<FutureTypeGo> FutureTypes { get { return _futureTypes.Keys; } }
+        internal IEnumerable<FutureTypeGo> FutureTypes => _futureTypes.Keys;
 
         // NextMethodUndefined is used to keep track of those models which are returned by paged methods,
         // but the next method is not defined in the service client, so these models need a preparer.
@@ -232,7 +203,7 @@ namespace AutoRest.Go.Model
                 {
                     return GlobalParameters;
                 }
-                return string.Join(", ", new string[] { GlobalParameters, GlobalDefaultParameters });
+                return string.Join(", ", GlobalParameters, GlobalDefaultParameters);
             }
         }
 
@@ -248,17 +219,54 @@ namespace AutoRest.Go.Model
                 {
                     return HelperGlobalParameters;
                 }
-                return string.Join(", ", new string[] { HelperGlobalParameters, HelperGlobalDefaultParameters });
+                return string.Join(", ", HelperGlobalParameters, HelperGlobalDefaultParameters);
             }
         }
 
-        public IEnumerable<MethodGo> ClientMethods
+        // client methods are the ones with no method group
+        public IEnumerable<MethodGo> ClientMethods => Methods.Cast<MethodGo>().Where(m => string.IsNullOrEmpty(m.MethodGroup.Name));
+
+        public override string Namespace
         {
-            get
+            get => string.IsNullOrEmpty(base.Namespace) ? base.Namespace : base.Namespace.ToLowerInvariant();
+            set => base.Namespace = value;
+        }
+
+        public string GetDocumentation()
+        {
+            return $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(Documentation ?? string.Empty).UnwrapAnchorTags()}";
+        }
+
+        /// FormatVersion normalizes a version string into a SemVer if it resembles one. Otherwise,
+        /// it returns the original string unmodified. If version is empty or only comprised of
+        /// whitespace, 
+        public static string FormatVersion(string version)
+        {
+
+            if (string.IsNullOrWhiteSpace(version))
             {
-                // client methods are the ones with no method group
-                return Methods.Cast<MethodGo>().Where(m => string.IsNullOrEmpty(m.MethodGroup.Name));
+                return "0.0.0";
             }
+
+            var semVerMatch = semVerPattern.Match(version);
+
+            if (!semVerMatch.Success)
+            {
+                return version;
+            }
+
+            var builder = new StringBuilder("v");
+            builder.Append(semVerMatch.Groups["major"].Value);
+            builder.Append('.');
+            builder.Append(semVerMatch.Groups["minor"].Value);
+            builder.Append('.');
+            builder.Append(semVerMatch.Groups["patch"].Value);
+            if (semVerMatch.Groups["tag"].Success)
+            {
+                builder.Append('-');
+                builder.Append(semVerMatch.Groups["tag"].Value);
+            }
+            return builder.ToString();
         }
 
         /// <summary>
@@ -284,38 +292,6 @@ namespace AutoRest.Go.Model
             }
 
             method.ReturnType = new Response(future, method.ReturnType.Headers);
-        }
-
-        /// FormatVersion normalizes a version string into a SemVer if it resembles one. Otherwise,
-        /// it returns the original string unmodified. If version is empty or only comprised of
-        /// whitespace, 
-        public static string FormatVersion(string version)
-        {
-
-            if (string.IsNullOrWhiteSpace(version))
-            {
-                return "0.0.0";
-            }
-
-            var semVerMatch = semVerPattern.Match(version);
-
-            if (semVerMatch.Success)
-            {
-                var builder = new StringBuilder("v");
-                builder.Append(semVerMatch.Groups["major"].Value);
-                builder.Append('.');
-                builder.Append(semVerMatch.Groups["minor"].Value);
-                builder.Append('.');
-                builder.Append(semVerMatch.Groups["patch"].Value);
-                if (semVerMatch.Groups["tag"].Success)
-                {
-                    builder.Append('-');
-                    builder.Append(semVerMatch.Groups["tag"].Value);
-                }
-                return builder.ToString();
-            }
-
-            return version;
         }
     }
 }

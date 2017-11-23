@@ -10,7 +10,7 @@
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.MethodGo>
 
 @WrapComment("// ", Model.Name + " " + Model.Description.ToSentence())
-@if (Model.LocalParameters.Count() > 0)
+@if (Model.LocalParameters.Any())
 {
 <text>
 //

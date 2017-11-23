@@ -16,48 +16,19 @@ namespace AutoRest.Go.Model
     /// </summary>
     public class CompositeTypeGo : CompositeType
     {
-        private bool _wrapper;
-
-        // True if the type is returned by a method
+        /// <summary>
+        ///True if the type is returned by a method
+        /// </summary>
         public bool IsResponseType;
 
-        // Name of the field containing the URL used to retrieve the next result set
-        // (null or empty if the model is not paged).
+        /// <summary>
+        /// Name of the field containing the URL used to retrieve the next result set (null or empty if the model is not paged).
+        /// </summary>
         public string NextLink;
 
         public bool PreparerNeeded = false;
 
-        public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
-
-        public IEnumerable<CompositeType> SiblingTypes
-        {
-            get
-            {
-                var st = (BaseModelType as CompositeTypeGo).DerivedTypes;
-                if (BaseModelType.BaseModelType != null && BaseModelType.BaseIsPolymorphic)
-                {
-                    st = st.Union((BaseModelType as CompositeTypeGo).SiblingTypes);
-                }
-                return st;
-            }
-        }
-
-        public bool HasPolymorphicFields
-        {
-            get
-            {
-                return AllProperties.Any(p => 
-                        // polymorphic composite
-                        (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
-                        // polymorphic array
-                        (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType &&
-                            ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
-            }
-        }
-
         public EnumTypeGo DiscriminatorEnum;
-
-        public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
 
         public CompositeTypeGo()
         {
@@ -125,58 +96,62 @@ namespace AutoRest.Go.Model
             }
 
             // add the wrapped type as a property named Value
-            var p = new PropertyGo();
-            p.Name = "Value";
-            p.SerializedName = "value";
-            p.ModelType = wrappedType;
-            Add(p);
-
-            _wrapper = true;
-        }
-
-        /// <summary>
-        /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
-        /// </summary>
-        private void AddPolymorphicPropertyIfNecessary()
-        {
-            if (!string.IsNullOrEmpty(PolymorphicDiscriminator) && Properties.All(p => p.SerializedName != PolymorphicDiscriminator))
+            var p = new PropertyGo
             {
-                base.Add(New<Property>(new
-                {
-                    Name = CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator),
-                    SerializedName = PolymorphicDiscriminator,
-                    ModelType = DiscriminatorEnum,
-                }));
-            }            
+                Name = "Value",
+                SerializedName = "value",
+                ModelType = wrappedType
+            };
+            base.Add(p);
+            AddPolymorphicPropertyIfNecessary();
+
+            IsWrapperType = true;
         }
 
-        public string PolymorphicProperty
+        public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
+
+        public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
+
+        public string PreparerMethodName => $"{Name}Preparer";
+
+        public bool IsWrapperType { get; }
+
+        public IModelType BaseType { get; private set; }
+
+        public IEnumerable<CompositeType> SiblingTypes
         {
             get
             {
-                if (!string.IsNullOrEmpty(PolymorphicDiscriminator))
+                var st = (BaseModelType as CompositeTypeGo).DerivedTypes;
+                if (BaseModelType.BaseModelType != null && BaseModelType.BaseIsPolymorphic)
                 {
-                    return CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator);
+                    st = st.Union((BaseModelType as CompositeTypeGo).SiblingTypes);
                 }
-                if (BaseModelType != null)
-                {
-                    return (BaseModelType as CompositeTypeGo).PolymorphicProperty;
-                }
-                return null;
+                return st;
             }
         }
 
-        public IEnumerable<PropertyGo> AllProperties
+        public bool HasPolymorphicFields
         {
             get
             {
-                if (BaseModelType != null)
-                {
-                    return Properties.Cast<PropertyGo>().Concat((BaseModelType as CompositeTypeGo).AllProperties);
-                }
-                return Properties.Cast<PropertyGo>();
+                return AllProperties.Any(p => 
+                        // polymorphic composite
+                        (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
+                        // polymorphic array
+                        (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType &&
+                            ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
             }
         }
+
+
+        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) ?
+            CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) :
+            (BaseModelType as CompositeTypeGo)?.PolymorphicProperty;
+
+        public IEnumerable<PropertyGo> AllProperties => BaseModelType != null ?
+            Properties.Cast<PropertyGo>().Concat((BaseModelType as CompositeTypeGo).AllProperties) :
+            Properties.Cast<PropertyGo>();
 
         public override Property Add(Property item)
         {
@@ -235,8 +210,7 @@ namespace AutoRest.Go.Model
             // Emit each property, except for named Enumerated types, as a pointer to the type
             foreach (var property in properties)
             {
-                var enumType = property.ModelType as EnumTypeGo;
-                if (enumType != null && enumType.IsNamed)
+                if (property.ModelType is EnumTypeGo enumType && enumType.IsNamed)
                 {
                     indented.AppendFormat("{0} {1} {2}\n",
                                     property.Name,
@@ -282,10 +256,6 @@ namespace AutoRest.Go.Model
             return indented.ToString();
         }
 
-        public bool IsWrapperType => _wrapper;
-
-        public IModelType BaseType { get; private set; }
-
         public IModelType GetElementType(IModelType type)
         {
             if (type is SequenceTypeGo)
@@ -304,11 +274,25 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string PreparerMethodName => $"{Name}Preparer";
-
         public void SetName(string name)
         {
             Name = name;
+        }
+
+        /// <summary>
+        /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
+        /// </summary>
+        private void AddPolymorphicPropertyIfNecessary()
+        {
+            if (!string.IsNullOrEmpty(PolymorphicDiscriminator) && Properties.All(p => p.SerializedName != PolymorphicDiscriminator))
+            {
+                base.Add(New<Property>(new
+                {
+                    Name = CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator),
+                    SerializedName = PolymorphicDiscriminator,
+                    ModelType = DiscriminatorEnum
+                }));
+            }
         }
     }
 }
