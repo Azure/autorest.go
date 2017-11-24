@@ -36,7 +36,7 @@ namespace AutoRest.Go.Model
         public string BaseClient => "BaseClient";
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
-        public string APIType => (string)Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
+        public string APIType => Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
 
         public IEnumerable<string> ClientImports
         {
@@ -232,10 +232,7 @@ namespace AutoRest.Go.Model
             set => base.Namespace = value;
         }
 
-        public string GetDocumentation()
-        {
-            return $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(Documentation ?? string.Empty).UnwrapAnchorTags()}";
-        }
+        public new string Documentation => $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(base.Documentation ?? string.Empty).UnwrapAnchorTags()}";
 
         /// FormatVersion normalizes a version string into a SemVer if it resembles one. Otherwise,
         /// it returns the original string unmodified. If version is empty or only comprised of

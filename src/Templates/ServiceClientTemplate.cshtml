@@ -10,7 +10,7 @@
     var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
     var methods = Model.ClientMethods.OrderBy(m => m.Name.Value);
 }
-@WrapComment("// ", Model.GetDocumentation())
+@WrapComment("// ", Model.Documentation)
 package @Model.Namespace
 @EmptyLine
 @Header("// ")

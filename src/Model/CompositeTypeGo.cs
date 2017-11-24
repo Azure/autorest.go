@@ -7,6 +7,7 @@ using AutoRest.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoRest.Core.Utilities.Collections;
 using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
@@ -29,6 +30,8 @@ namespace AutoRest.Go.Model
         public bool PreparerNeeded = false;
 
         public EnumTypeGo DiscriminatorEnum;
+
+        private CompositeTypeGo _rootType;
 
         public CompositeTypeGo()
         {
@@ -110,24 +113,27 @@ namespace AutoRest.Go.Model
 
         public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
 
-        public string DiscriminatorEnumValue => (DiscriminatorEnum as EnumTypeGo).Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
+        public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
 
         public string PreparerMethodName => $"{Name}Preparer";
 
         public bool IsWrapperType { get; }
 
-        public IModelType BaseType { get; private set; }
+        public IModelType BaseType { get; }
 
         public IEnumerable<CompositeType> SiblingTypes
         {
             get
             {
-                var st = (BaseModelType as CompositeTypeGo).DerivedTypes;
-                if (BaseModelType.BaseModelType != null && BaseModelType.BaseIsPolymorphic)
+
+                var siblingTypes = RootType.DerivedTypes;
+
+                if (RootType.IsPolymorphic)
                 {
-                    st = st.Union((BaseModelType as CompositeTypeGo).SiblingTypes);
+                    siblingTypes = siblingTypes.ConcatSingleItem(RootType);
                 }
-                return st;
+
+                return siblingTypes;
             }
         }
 
@@ -135,7 +141,7 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                return AllProperties.Any(p => 
+                return AllProperties.Any(p =>
                         // polymorphic composite
                         (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
                         // polymorphic array
@@ -144,7 +150,6 @@ namespace AutoRest.Go.Model
             }
         }
 
-
         public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) ?
             CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) :
             (BaseModelType as CompositeTypeGo)?.PolymorphicProperty;
@@ -152,6 +157,34 @@ namespace AutoRest.Go.Model
         public IEnumerable<PropertyGo> AllProperties => BaseModelType != null ?
             Properties.Cast<PropertyGo>().Concat((BaseModelType as CompositeTypeGo).AllProperties) :
             Properties.Cast<PropertyGo>();
+
+        /// <summary>
+        /// Gets the interface name for the model.
+        /// </summary>
+        public string InterfaceName => $"I{Name}";
+
+        /// <summary>
+        /// Gets the root type of the inheritance chain.
+        /// </summary>
+        public CompositeTypeGo RootType
+        {
+            get
+            {
+                if (_rootType == null)
+                {
+
+                    CompositeType rootModelType = this;
+                    while (rootModelType.BaseModelType != null && rootModelType.BaseIsPolymorphic)
+                    {
+                        rootModelType = rootModelType.BaseModelType;
+                    }
+
+                    _rootType = rootModelType as CompositeTypeGo;
+                }
+
+                return _rootType;
+            }
+        }
 
         public override Property Add(Property item)
         {

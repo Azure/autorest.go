@@ -16,13 +16,7 @@ namespace AutoRest.Go
 {
     public class CodeNamerGo : CodeNamer
     {
-        public new static CodeNamerGo Instance
-        {
-            get
-            {
-                return (CodeNamerGo)CodeNamer.Instance;
-            }
-        }
+        public new static CodeNamerGo Instance => (CodeNamerGo)CodeNamer.Instance;
 
         public virtual IEnumerable<string> AutorestImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
 
@@ -40,6 +34,19 @@ namespace AutoRest.Go
         };
 
         public virtual IEnumerable<string> ValidationImport => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
+
+        public string[] UserDefinedNames => new string[] {
+                                                            "UserAgent",
+                                                            "Version",
+                                                            "APIVersion",
+                                                            "DefaultBaseURI",
+                                                            "BaseClient",
+                                                            "NewWithBaseURI",
+                                                            "New",
+                                                            "NewWithoutDefaults",
+                                                        };
+
+        public IReadOnlyDictionary<HttpStatusCode, string> StatusCodeToGoString;
 
         // CommonInitialisms are those "words" within a name that Golint expects to be uppercase.
         // See https://github.com/golang/lint/blob/master/lint.go for detail.
@@ -82,22 +89,6 @@ namespace AutoRest.Go
                                                             "Xsrf",
                                                             "Xss",
                                                         };
-
-        public string[] UserDefinedNames => new string[] {
-                                                            "UserAgent",
-                                                            "Version",
-                                                            "APIVersion",
-                                                            "DefaultBaseURI",
-                                                            "BaseClient",
-                                                            "NewWithBaseURI",
-                                                            "New",
-                                                            "NewWithoutDefaults",
-                                                        };
-
-        public IReadOnlyDictionary<HttpStatusCode, string> StatusCodeToGoString;
-
-
-
         /// <summary>
         /// Initializes a new instance of CodeNamerGo.
         /// </summary>
@@ -266,7 +257,6 @@ namespace AutoRest.Go
         /// Refactor -> Namer ... Even better if this already exists in the core :D
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="splitter"></param>
         /// <returns>The formatted string</returns>
         public override string PascalCase(string name)
         {
@@ -283,28 +273,17 @@ namespace AutoRest.Go
                     .Aggregate(string.Concat);
         }
 
-        public override string GetEnumMemberName(string name)
-        {
-            return EnsureNameCase(base.GetEnumMemberName(name));
-        }
+        public override string GetEnumMemberName(string name) => EnsureNameCase(base.GetEnumMemberName(name));
 
-        public override string GetFieldName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(GetEscapedReservedName(name, "Field"))));
-        }
+        public override string GetFieldName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(RemoveInvalidCharacters(PascalCase(GetEscapedReservedName(name, "Field"))));
 
-        public override string GetInterfaceName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
-        }
+        public override string GetInterfaceName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
 
         /// <summary>
         /// Formats a string for naming a method using Pascal case by default.
@@ -313,21 +292,14 @@ namespace AutoRest.Go
         /// <returns>The formatted string.</returns>
         public override string GetMethodName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Method"));
+            return string.IsNullOrWhiteSpace(name) ?
+                name :
+                EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Method"));
         }
 
         public override string GetMethodGroupName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-               return name;
-            }
-            
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
+            return string.IsNullOrWhiteSpace(name) ? name : EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
         }
 
         /// <summary>
@@ -341,7 +313,7 @@ namespace AutoRest.Go
             {
                 return name;
             }
-            if (Extensions.StartsWithAcronym(name))
+            if (name.StartsWithAcronym())
             {
                 return EnsureNameCase(GetEscapedReservedName((RemoveInvalidCharacters(name).ToLower()), "Parameter"));
             }
@@ -353,41 +325,79 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetPropertyName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Property"));
-        }
+        public override string GetPropertyName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Property"));
 
         /// <summary>
         /// Formats a string for naming a Type or Object using Pascal case by default.
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetTypeName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));
-        }
+        public override string GetTypeName(string name) => 
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));
 
         /// <summary>
         /// Formats a string for naming a local variable using Camel case by default.
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetVariableName(string name)
+        public override string GetVariableName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(GetEscapedReservedName(CamelCase(RemoveInvalidCharacters(name)), "Var"));
+
+        public override string EscapeDefaultValue(string defaultValue, IModelType type)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (type == null)
             {
-                return name;
+                throw new ArgumentNullException(nameof(type));
             }
-            return EnsureNameCase(GetEscapedReservedName(CamelCase(RemoveInvalidCharacters(name)), "Var"));
+            var primaryType = type as PrimaryType;
+
+            if (defaultValue == null)
+            {
+                return null;
+            }
+            if (type is CompositeType)
+            {
+                return type.Name + "{}";
+            }
+            if (primaryType == null)
+            {
+                return defaultValue;
+            }
+
+            switch (primaryType.KnownPrimaryType)
+            {
+                case KnownPrimaryType.String:
+                case KnownPrimaryType.Uuid:
+                case KnownPrimaryType.TimeSpan:
+                    return CodeNamerGo.Instance.QuoteValue(defaultValue);
+                case KnownPrimaryType.Boolean:
+                    return defaultValue.ToLowerInvariant();
+                case KnownPrimaryType.ByteArray:
+                    return "[]bytearray(\"" + defaultValue + "\")";
+                default:
+                    //TODO: handle imports for package types.
+                    break;
+            }
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Returns the future type name for the specified method, which is the type to
+        /// be returned from the method (this is applicable to long-running operations).
+        /// </summary>
+        /// <param name="method">The long-running operation.</param>
+        /// <returns>The name of the type to be returned from the specified method.</returns>
+        public string GetFutureTypeName(MethodGo method)
+        {
+            // operation group + method name is guaranteed to be unique
+            return $"{method.Group}{method.Name}Future";
         }
 
         /// <summary>
@@ -400,12 +410,12 @@ namespace AutoRest.Go
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             if (appendValue == null)
             {
-                throw new ArgumentNullException("appendValue");
+                throw new ArgumentNullException(nameof(appendValue));
             }
 
             // Use case-sensitive comparisons to reduce generated names
@@ -432,11 +442,11 @@ namespace AutoRest.Go
                 {
                     word = word.ToUpper();
                 }
-                else if (i < words.Length-1)
+                else if (i < words.Length - 1)
                 {
                     // This ensures that names like `ClusterUsersGroupDNs`
                     // get propery cased to `ClusterUsersGroupDNS`
-                    var concat = words[i] + words[i+1];
+                    var concat = words[i] + words[i + 1];
                     if (CommonInitialisms.Contains(concat.ToLower()))
                     {
                         word = concat.ToUpper();
@@ -446,56 +456,6 @@ namespace AutoRest.Go
                 builder.Append(word);
             }
             return builder.ToString();
-        }
-
-        public override string EscapeDefaultValue(string defaultValue, IModelType type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-            PrimaryType primaryType = type as PrimaryType;
-            if (defaultValue != null)
-            {
-                if (type is CompositeType)
-                {
-                    return type.Name + "{}";
-                }
-                else if (primaryType != null)
-                {
-                    if (primaryType.KnownPrimaryType == KnownPrimaryType.String
-                        || primaryType.KnownPrimaryType == KnownPrimaryType.Uuid
-                        || primaryType.KnownPrimaryType == KnownPrimaryType.TimeSpan)
-                    {
-                        return CodeNamerGo.Instance.QuoteValue(defaultValue);
-                    }
-                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.Boolean)
-                    {
-                        return defaultValue.ToLowerInvariant();
-                    }
-                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray)
-                    {
-                        return "[]bytearray(\"" + defaultValue + "\")";
-                    }
-                    else
-                    {
-                        //TODO: handle imports for package types.
-                    }
-                }
-            }
-            return defaultValue;
-        }
-
-        /// <summary>
-        /// Returns the future type name for the specified method, which is the type to
-        /// be returned from the method (this is applicable to long-running operations).
-        /// </summary>
-        /// <param name="method">The long-running operation.</param>
-        /// <returns>The name of the type to be returned from the specified method.</returns>
-        public string GetFutureTypeName(MethodGo method)
-        {
-            // operation group + method name is guaranteed to be unique
-            return $"{method.Group}{method.Name}Future";
         }
     }
 }

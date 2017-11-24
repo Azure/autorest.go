@@ -80,12 +80,22 @@ namespace AutoRest.Go
                 if (mt.IsPolymorphic)
                 {
                     var values = new List<EnumValue>();
+
+                    var baseTypeEnumValue = new EnumValue
+                    {
+                        Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(mt.SerializedName)}",
+                        SerializedName = mt.SerializedName
+                    };
+
+                    values.Add(baseTypeEnumValue);
+
                     foreach (var dt in (mt as CompositeTypeGo).DerivedTypes)
                     {
-                        var ev = new EnumValue();
-                        ev.Name =  string.Format("{0}{1}", CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator),
-                            CodeNamerGo.Instance.GetTypeName(dt.SerializedName));
-                        ev.SerializedName = dt.SerializedName;
+                        var ev = new EnumValue
+                        {
+                            Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(dt.SerializedName)}",
+                            SerializedName = dt.SerializedName
+                        };
                         values.Add(ev);
                     }
                     bool nameAlreadyExists = cmg.EnumTypes.Any(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
@@ -108,10 +118,10 @@ namespace AutoRest.Go
                     }
                     if (!alreadyExists)
                     {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = (cmg.Add(New<EnumType>(new{
-                            Name = nameAlreadyExists ? string.Format("{0}{1}", mt.PolymorphicDiscriminator, mt.Name) :  mt.PolymorphicDiscriminator,
+                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.Add(New<EnumType>(new{
+                            Name = nameAlreadyExists ? $"{mt.PolymorphicDiscriminator}{mt.Name}" :  mt.PolymorphicDiscriminator,
                             Values = values,
-                        })) as EnumTypeGo);
+                        })) as EnumTypeGo;
                     }
                 }
             }
