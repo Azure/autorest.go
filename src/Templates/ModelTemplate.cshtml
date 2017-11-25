@@ -6,10 +6,10 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CompositeTypeGo>
 
-@WrapComment("// ", $"{Model.Name} is {Model.Documentation.ToSentence()}")
 @if (Model.IsPolymorphic)
 {
-<text>
+@WrapComment("// ", $"{Model.InterfaceName} {Model.Documentation.ToSentence()}")
+    <text>
 type @(Model.InterfaceName) interface {
     @foreach (var dt in Model.DerivedTypes)
     {
@@ -19,7 +19,7 @@ type @(Model.InterfaceName) interface {
 }
 
 @EmptyLine
-
+@WrapComment("// ", $"{Model.InterfaceName} {Model.Documentation.ToSentence()}")
 type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -72,7 +72,8 @@ func unmarshal@(Model.InterfaceName)Array(body []byte) ([]@(Model.InterfaceName)
 }
 else
 {
-<text>
+@WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+    <text>
 type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -124,20 +125,20 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
     {
         if (Model.BaseType is SequenceType)
         {
-    @:@((Model.BaseType as SequenceTypeGo).ElementType.Name.FixedValue.ToShortName()), err := unmarshal@((Model.BaseType as SequenceTypeGo).ElementType.Name)Array(body)
+    @:@(((SequenceTypeGo) Model.BaseType).ElementType.Name.FixedValue.ToShortName()), err := unmarshal@((Model.BaseType as SequenceTypeGo).ElementType.GetInterfaceName())Array(body)
         }
         else
         {
-    @:@(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.Name)(body)
+    @:@(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.GetInterfaceName())(body)
         }
     <text>
 	if err != nil {
 		return err
 	}
     </text>
-        if (Model.BaseType is SequenceType)
+        if (Model.BaseType is SequenceType type)
         {
-    @:@(Model.Name.FixedValue.ToShortName()).Value = &@((Model.BaseType as SequenceTypeGo).ElementType.Name.FixedValue.ToShortName())
+            @:@(Model.Name.FixedValue.ToShortName()).Value = &@type.ElementType.Name.FixedValue.ToShortName()
         }
         else
         {
@@ -160,13 +161,13 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
     @EmptyLine
     v = m["@(p.SerializedName)"]
     if v != nil {
-            @if (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic)
+            @if (p.ModelType is CompositeType && ((CompositeTypeGo) p.ModelType).IsPolymorphic)
             {
-        @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(p.ModelType.Name)(*m["@(p.SerializedName)"])
+        @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(p.ModelType.GetInterfaceName())(*m["@(p.SerializedName)"])
             }
-            else if (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType && ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic)
+            else if ((p.ModelType as SequenceType)?.ElementType is CompositeType && ((CompositeType) ((SequenceType) p.ModelType).ElementType).IsPolymorphic)
             {
-        @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@((p.ModelType as SequenceTypeGo).ElementType.Name)Array(*m["@(p.SerializedName)"])
+        @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(((SequenceTypeGo) p.ModelType).ElementType.GetInterfaceName())Array(*m["@(p.SerializedName)"])
             }
             else
             {
@@ -178,7 +179,7 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
         if err != nil {
             return err
         }
-            @if ((p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) || (p.ModelType is EnumType))
+            @if ((p.ModelType is CompositeType && ((CompositeTypeGo) p.ModelType).IsPolymorphic) || (p.ModelType is EnumType))
             {
         @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
             }

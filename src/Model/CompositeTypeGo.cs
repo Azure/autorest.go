@@ -7,6 +7,7 @@ using AutoRest.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using AutoRest.Core.Utilities.Collections;
 using static AutoRest.Core.Utilities.DependencyInjection;
 
@@ -35,12 +36,10 @@ namespace AutoRest.Go.Model
 
         public CompositeTypeGo()
         {
-
         }
 
         public CompositeTypeGo(string name) : base(name)
         {
-
         }
 
         public CompositeTypeGo(IModelType wrappedType)
@@ -186,6 +185,11 @@ namespace AutoRest.Go.Model
             }
         }
 
+        /// <summary>
+        /// Gets if the type is a root type for an inheritance chain.
+        /// </summary>
+        public bool IsRootType => IsPolymorphic && RootType == this;
+
         public override Property Add(Property item)
         {
             var property = base.Add(item) as PropertyGo;
@@ -203,7 +207,6 @@ namespace AutoRest.Go.Model
             if (IsPolymorphic)
             {
                 imports.Add("\"encoding/json\"");
-                imports.Add("\"errors\"");
             }
         }
 
@@ -271,9 +274,9 @@ namespace AutoRest.Go.Model
                         "*{0} {1}\n",
                             property.ModelType.Name, property.JsonTag());
                 }
-                else if (property.ModelType is CompositeTypeGo && (property.ModelType as CompositeTypeGo).IsPolymorphic)
+                else if (property.ModelType is CompositeTypeGo && ((CompositeTypeGo) property.ModelType).IsPolymorphic)
                 {
-                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
+                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.JsonTag());
                 }
                 else
                 {

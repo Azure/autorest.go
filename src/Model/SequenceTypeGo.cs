@@ -8,9 +8,12 @@ namespace AutoRest.Go.Model
 {
     public class SequenceTypeGo : SequenceType
     {
-        public SequenceTypeGo() : base()
+        public SequenceTypeGo()
         {
-            Name.OnGet += v => $"[]{ElementType.Name}";
+            Name.OnGet += v => 
+                ElementType is CompositeTypeGo type && type.IsPolymorphic && type.RootType == type ?
+                $"[]{ElementType.GetInterfaceName()}" :
+                $"[]{ElementType.Name}";
         }
 
         /// <summary>

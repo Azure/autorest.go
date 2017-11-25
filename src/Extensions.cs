@@ -331,6 +331,16 @@ namespace AutoRest.Go
         }
 
         /// <summary>
+        /// Gets the interface name for the type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetInterfaceName(this IModelType type)
+        {
+            return $"I{type.Name}";
+        }
+
+        /// <summary>
         /// Determines whether one composite type derives directly or indirectly from another.
         /// </summary>
         /// <param name="type">Type to test.</param>
