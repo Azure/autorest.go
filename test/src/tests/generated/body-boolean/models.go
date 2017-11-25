@@ -10,13 +10,13 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// BoolModel is
+// BoolModel
 type BoolModel struct {
 	autorest.Response `json:"-"`
 	Value             *bool `json:"value,omitempty"`
 }
 
-// Error is
+// Error
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`

@@ -18,26 +18,26 @@ const (
 	ConstantStringAsEnum EnumConst = "constant_string_as_enum"
 )
 
-// ChildProduct is the product documentation.
+// ChildProduct the product documentation.
 type ChildProduct struct {
 	ConstProperty *string `json:"constProperty,omitempty"`
 	Count         *int32  `json:"count,omitempty"`
 }
 
-// ConstantProduct is the product documentation.
+// ConstantProduct the product documentation.
 type ConstantProduct struct {
 	ConstProperty  *string `json:"constProperty,omitempty"`
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
-// Error is
+// Error
 type Error struct {
 	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
 	Fields  *string `json:"fields,omitempty"`
 }
 
-// Product is the product documentation.
+// Product the product documentation.
 type Product struct {
 	autorest.Response `json:"-"`
 	DisplayNames      *[]string        `json:"display_names,omitempty"`

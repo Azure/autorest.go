@@ -136,7 +136,7 @@ func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) 
 // }
 // ]
 // }
-func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody Fish) (result autorest.Response, err error) {
+func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody IFish) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -165,7 +165,7 @@ func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBo
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client PolymorphicrecursiveClient) PutValidPreparer(ctx context.Context, complexBody Fish) (*http.Request, error) {
+func (client PolymorphicrecursiveClient) PutValidPreparer(ctx context.Context, complexBody IFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),

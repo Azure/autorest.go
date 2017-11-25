@@ -10,55 +10,55 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// ArrayOptionalWrapper is
+// ArrayOptionalWrapper
 type ArrayOptionalWrapper struct {
 	Value *[]string `json:"value,omitempty"`
 }
 
-// ArrayWrapper is
+// ArrayWrapper
 type ArrayWrapper struct {
 	Value *[]string `json:"value,omitempty"`
 }
 
-// ClassOptionalWrapper is
+// ClassOptionalWrapper
 type ClassOptionalWrapper struct {
 	Value *Product `json:"value,omitempty"`
 }
 
-// ClassWrapper is
+// ClassWrapper
 type ClassWrapper struct {
 	Value *Product `json:"value,omitempty"`
 }
 
-// Error is
+// Error
 type Error struct {
 	autorest.Response `json:"-"`
 	Status            *int32  `json:"status,omitempty"`
 	Message           *string `json:"message,omitempty"`
 }
 
-// IntOptionalWrapper is
+// IntOptionalWrapper
 type IntOptionalWrapper struct {
 	Value *int32 `json:"value,omitempty"`
 }
 
-// IntWrapper is
+// IntWrapper
 type IntWrapper struct {
 	Value *int32 `json:"value,omitempty"`
 }
 
-// Product is
+// Product
 type Product struct {
 	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
-// StringOptionalWrapper is
+// StringOptionalWrapper
 type StringOptionalWrapper struct {
 	Value *string `json:"value,omitempty"`
 }
 
-// StringWrapper is
+// StringWrapper
 type StringWrapper struct {
 	Value *string `json:"value,omitempty"`
 }
