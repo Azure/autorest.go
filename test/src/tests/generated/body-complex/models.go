@@ -264,7 +264,7 @@ type IFish interface {
 	AsFish() (*Fish, bool)
 }
 
-// IFish
+// Fish
 type Fish struct {
 	autorest.Response `json:"-"`
 	Species           *string  `json:"species,omitempty"`

@@ -19,7 +19,7 @@ type @(Model.InterfaceName) interface {
 }
 
 @EmptyLine
-@WrapComment("// ", $"{Model.InterfaceName} {Model.Documentation.ToSentence()}")
+@WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
 type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -46,7 +46,7 @@ func unmarshal@(Model.InterfaceName)(body []byte) (@(Model.InterfaceName), error
     default:
         var @(Model.Name.FixedValue.ToShortName()) @(Model.Name)
         err := json.Unmarshal(body, &@(Model.Name.FixedValue.ToShortName()))
-        return @(Model.Name.FixedValue.ToShortName()), err 
+        return @(Model.Name.FixedValue.ToShortName()), err
     }
 }
 
@@ -153,7 +153,7 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
 	if err != nil {
 		return err
 	}
-    
+
     var v *json.RawMessage
         @foreach (var p in Model.AllProperties)
         {
