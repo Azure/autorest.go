@@ -11,7 +11,7 @@ namespace AutoRest.Go.Model
         public SequenceTypeGo()
         {
             Name.OnGet += v => 
-                ElementType is CompositeTypeGo type && type.IsPolymorphic && type.RootType == type ?
+                ElementType is CompositeTypeGo type && (type.IsPolymorphic || type.BaseIsPolymorphic) && !type.IsLeafType?
                 $"[]{ElementType.GetInterfaceName()}" :
                 $"[]{ElementType.Name}";
         }

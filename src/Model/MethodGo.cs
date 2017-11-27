@@ -126,7 +126,7 @@ namespace AutoRest.Go.Model
             get
             {
                 var body = ReturnType.Body as CompositeTypeGo;
-                return body.Properties.Where(p => p.ModelType is SequenceTypeGo).FirstOrDefault() as PropertyGo;
+                return body.Properties.FirstOrDefault(p => p.ModelType is SequenceTypeGo) as PropertyGo;
             }
         }
 
@@ -144,7 +144,7 @@ namespace AutoRest.Go.Model
                     .ForEach(p => declarations.Add(string.Format(
                                                         p.IsRequired || p.ModelType.CanBeEmpty()
                                                             ? "{0} {1}"
-                                                            : "{0} *{1}", p.Name, p.ModelType is CompositeTypeGo type && type.IsRootType
+                                                            : "{0} *{1}", p.Name, p.ModelType is CompositeTypeGo type && type.HasInterface
                                                                 ? p.ModelType.GetInterfaceName()
                                                                 : p.ModelType.Name.ToString())));
                 return string.Join(", ", declarations);

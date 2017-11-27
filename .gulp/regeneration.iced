@@ -1,6 +1,6 @@
 
 ###############################################
-# LEGACY 
+# LEGACY
 # Instead: have bunch of configuration files sitting in a well-known spot, discover them, feed them to AutoRest, done.
 
 regenExpected = (opts,done) ->
@@ -11,7 +11,7 @@ regenExpected = (opts,done) ->
   for kkey in keys
     optsMappingsValue = opts.mappings[kkey]
     key = kkey.trim();
-    
+
     swaggerFiles = (if optsMappingsValue instanceof Array then optsMappingsValue[0] else optsMappingsValue).split(";")
     args = [
       "--use=#{basefolder}"
@@ -32,10 +32,10 @@ regenExpected = (opts,done) ->
 
     if (opts.fluent)
       args.push("--#{opts.language}.fluent=true")
-    
+
     if (opts.syncMethods)
       args.push("--#{opts.language}.sync-methods=#{opts.syncMethods}")
-    
+
     if (opts.flatteningThreshold)
       args.push("--#{opts.language}.payload-flattening-threshold=#{opts.flatteningThreshold}")
 
@@ -54,7 +54,7 @@ regenExpected = (opts,done) ->
 
     autorest args,() =>
       instances--
-      if instances is 0 
+      if instances is 0
         await execute "go fmt ./generated/...", { cwd: './test/src/tests' }, defer code, stderr, stdout
         return done()
 

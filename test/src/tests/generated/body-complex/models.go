@@ -857,6 +857,14 @@ func (s *Sawshark) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
+// IShark
+type IShark interface {
+	AsSawshark() (*Sawshark, bool)
+	AsGoblinshark() (*Goblinshark, bool)
+	AsCookiecuttershark() (*Cookiecuttershark, bool)
+	AsShark() (*Shark, bool)
+}
+
 // Shark
 type Shark struct {
 	Species  *string    `json:"species,omitempty"`
@@ -865,6 +873,51 @@ type Shark struct {
 	Fishtype Fishtype   `json:"fishtype,omitempty"`
 	Age      *int32     `json:"age,omitempty"`
 	Birthday *date.Time `json:"birthday,omitempty"`
+}
+
+func unmarshalIShark(body []byte) (IShark, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["fishtype"] {
+	case string(FishtypeSawshark):
+		var s Sawshark
+		err := json.Unmarshal(body, &s)
+		return s, err
+	case string(FishtypeGoblin):
+		var g Goblinshark
+		err := json.Unmarshal(body, &g)
+		return g, err
+	case string(FishtypeCookiecuttershark):
+		var c Cookiecuttershark
+		err := json.Unmarshal(body, &c)
+		return c, err
+	default:
+		var s Shark
+		err := json.Unmarshal(body, &s)
+		return s, err
+	}
+}
+func unmarshalISharkArray(body []byte) ([]IShark, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	sArray := make([]IShark, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		s, err := unmarshalIShark(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		sArray[index] = s
+	}
+	return sArray, nil
 }
 
 // MarshalJSON is the custom marshaler for Shark.

@@ -7,7 +7,6 @@ using AutoRest.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using AutoRest.Core.Utilities.Collections;
 using static AutoRest.Core.Utilities.DependencyInjection;
 
@@ -158,11 +157,6 @@ namespace AutoRest.Go.Model
             Properties.Cast<PropertyGo>();
 
         /// <summary>
-        /// Gets the interface name for the model.
-        /// </summary>
-        public string InterfaceName => $"I{Name}";
-
-        /// <summary>
         /// Gets the root type of the inheritance chain.
         /// </summary>
         public CompositeTypeGo RootType
@@ -186,9 +180,19 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Gets if the type is a root type for an inheritance chain.
+        /// Gets if the type is a root type in an inheritance chain.
         /// </summary>
         public bool IsRootType => IsPolymorphic && RootType == this;
+
+        /// <summary>
+        /// Gets if the type is a leaf type in an inheritance chain.
+        /// </summary>
+        public bool IsLeafType => BaseIsPolymorphic && DerivedTypes.IsNullOrEmpty();
+
+        /// <summary>
+        /// Gets if the type has an interface.
+        /// </summary>
+        public bool HasInterface => IsRootType || (BaseIsPolymorphic && !IsLeafType);
 
         public override Property Add(Property item)
         {
@@ -294,15 +298,15 @@ namespace AutoRest.Go.Model
 
         public IModelType GetElementType(IModelType type)
         {
-            if (type is SequenceTypeGo)
+            if (type is SequenceTypeGo sequenceType)
             {
                 Name += "List";
-                return GetElementType((type as SequenceType).ElementType);
+                return GetElementType(sequenceType.ElementType);
             }
-            else if (type is DictionaryTypeGo)
+            else if (type is DictionaryTypeGo dictionaryType)
             {
                 Name += "Set";
-                return GetElementType(((type as DictionaryTypeGo).ValueType));
+                return GetElementType(dictionaryType.ValueType);
             }
             else
             {
