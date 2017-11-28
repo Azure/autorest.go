@@ -4,7 +4,6 @@
 # Instead: have bunch of configuration files sitting in a well-known spot, discover them, feed them to AutoRest, done.
 
 regenExpected = (opts,done) ->
-  outputDir = if !!opts.outputBaseDir then "#{opts.outputBaseDir}/#{opts.outputDir}" else opts.outputDir
   keys = Object.getOwnPropertyNames(opts.mappings)
   instances = keys.length
 
@@ -15,8 +14,8 @@ regenExpected = (opts,done) ->
     swaggerFiles = (if optsMappingsValue instanceof Array then optsMappingsValue[0] else optsMappingsValue).split(";")
     args = [
       "--use=#{basefolder}"
-      "--#{opts.language}",
-      "--output-folder=#{outputDir}/#{key}",
+      "--go",
+      "--output-folder=#{opts.outputBaseDir}/#{key}",
       "--license-header=#{if !!opts.header then opts.header else 'MICROSOFT_MIT_NO_VERSION'}",
       "--enable-xml"
     ]
@@ -25,25 +24,21 @@ regenExpected = (opts,done) ->
       args.push("--input-file=#{if !!opts.inputBaseDir then "#{opts.inputBaseDir}/#{swaggerFile}" else swaggerFile}")
 
     if (opts.addCredentials)
-      args.push("--#{opts.language}.add-credentials=true")
+      args.push("--go.add-credentials=true")
 
     if (opts.azureArm)
-      args.push("--#{opts.language}.azure-arm=true")
+      args.push("--go.azure-arm=true")
 
     if (opts.fluent)
-      args.push("--#{opts.language}.fluent=true")
+      args.push("--go.fluent=true")
     
     if (opts.syncMethods)
-      args.push("--#{opts.language}.sync-methods=#{opts.syncMethods}")
+      args.push("--go.sync-methods=#{opts.syncMethods}")
     
     if (opts.flatteningThreshold)
-      args.push("--#{opts.language}.payload-flattening-threshold=#{opts.flatteningThreshold}")
+      args.push("--go.payload-flattening-threshold=#{opts.flatteningThreshold}")
 
-    if (!!opts.nsPrefix)
-      if (optsMappingsValue instanceof Array && optsMappingsValue[1] != undefined)
-        args.push("--#{opts.language}.namespace=#{optsMappingsValue[1]}")
-      else
-        args.push("--#{opts.language}.namespace=#{[opts.nsPrefix, key.replace(/\/|\./, '')].join('.')}")
+    args.push("--go.namespace=#{optsMappingsValue[1]}")
 
     if (opts['override-info.version'])
       args.push("--override-info.version=#{opts['override-info.version']}")
@@ -90,12 +85,9 @@ swaggerDir = "node_modules/@microsoft.azure/autorest.testserver/swagger"
 
 task 'regenerate-go', '', (done) ->
   regenExpected {
-    'outputBaseDir': 'test/src/tests',
+    'outputBaseDir': 'test/src/tests/generated',
     'inputBaseDir': swaggerDir,
-    'mappings': goMappings,
-    'outputDir': 'generated',
-    'nsPrefix': ' ',
-    'language': 'go'
+    'mappings': goMappings
   },done
   return null
 
