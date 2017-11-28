@@ -40,8 +40,11 @@ func NewWithBaseURI(baseURI string) ManagementClient {
 }
 
 // GetReport get test coverage report
-func (client ManagementClient) GetReport() (result SetInt32, err error) {
-	req, err := client.GetReportPreparer()
+//
+// qualifier is if specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only
+// effect is, that generators that run all tests several times, can distinguish the generated reports.
+func (client ManagementClient) GetReport(qualifier string) (result SetInt32, err error) {
+	req, err := client.GetReportPreparer(qualifier)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "report.ManagementClient", "GetReport", nil, "Failure preparing request")
 		return
@@ -63,11 +66,17 @@ func (client ManagementClient) GetReport() (result SetInt32, err error) {
 }
 
 // GetReportPreparer prepares the GetReport request.
-func (client ManagementClient) GetReportPreparer() (*http.Request, error) {
+func (client ManagementClient) GetReportPreparer(qualifier string) (*http.Request, error) {
+	queryParameters := map[string]interface{}{}
+	if len(qualifier) > 0 {
+		queryParameters["qualifier"] = autorest.Encode("query", qualifier)
+	}
+
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/report"))
+		autorest.WithPath("/report"),
+		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare(&http.Request{})
 }
 

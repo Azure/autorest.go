@@ -9,6 +9,7 @@ package numbergroup
 import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/shopspring/decimal"
 	"net/http"
 )
 
@@ -25,6 +26,165 @@ func NewNumberClient() NumberClient {
 // NewNumberClientWithBaseURI creates an instance of the NumberClient client.
 func NewNumberClientWithBaseURI(baseURI string) NumberClient {
 	return NumberClient{NewWithBaseURI(baseURI)}
+}
+
+// GetBigDecimal get big decimal value 2.5976931e+101
+func (client NumberClient) GetBigDecimal() (result Decimal, err error) {
+	req, err := client.GetBigDecimalPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetBigDecimalSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetBigDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetBigDecimalPreparer prepares the GetBigDecimal request.
+func (client NumberClient) GetBigDecimalPreparer() (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/big/decimal/2.5976931e+101"))
+	return preparer.Prepare(&http.Request{})
+}
+
+// GetBigDecimalSender sends the GetBigDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) GetBigDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetBigDecimalResponder handles the response to the GetBigDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) GetBigDecimalResponder(resp *http.Response) (result Decimal, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// GetBigDecimalNegativeDecimal get big decimal value -99999999.99
+func (client NumberClient) GetBigDecimalNegativeDecimal() (result Decimal, err error) {
+	req, err := client.GetBigDecimalNegativeDecimalPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalNegativeDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetBigDecimalNegativeDecimalSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalNegativeDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetBigDecimalNegativeDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalNegativeDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetBigDecimalNegativeDecimalPreparer prepares the GetBigDecimalNegativeDecimal request.
+func (client NumberClient) GetBigDecimalNegativeDecimalPreparer() (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/big/decimal/-99999999.99"))
+	return preparer.Prepare(&http.Request{})
+}
+
+// GetBigDecimalNegativeDecimalSender sends the GetBigDecimalNegativeDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) GetBigDecimalNegativeDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetBigDecimalNegativeDecimalResponder handles the response to the GetBigDecimalNegativeDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) GetBigDecimalNegativeDecimalResponder(resp *http.Response) (result Decimal, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// GetBigDecimalPositiveDecimal get big decimal value 99999999.99
+func (client NumberClient) GetBigDecimalPositiveDecimal() (result Decimal, err error) {
+	req, err := client.GetBigDecimalPositiveDecimalPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalPositiveDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetBigDecimalPositiveDecimalSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalPositiveDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetBigDecimalPositiveDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalPositiveDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetBigDecimalPositiveDecimalPreparer prepares the GetBigDecimalPositiveDecimal request.
+func (client NumberClient) GetBigDecimalPositiveDecimalPreparer() (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/big/decimal/99999999.99"))
+	return preparer.Prepare(&http.Request{})
+}
+
+// GetBigDecimalPositiveDecimalSender sends the GetBigDecimalPositiveDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) GetBigDecimalPositiveDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetBigDecimalPositiveDecimalResponder handles the response to the GetBigDecimalPositiveDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) GetBigDecimalPositiveDecimalResponder(resp *http.Response) (result Decimal, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // GetBigDouble get big double value 2.5976931e+101
@@ -239,6 +399,59 @@ func (client NumberClient) GetBigFloatResponder(resp *http.Response) (result Flo
 	return
 }
 
+// GetInvalidDecimal get invalid decimal Number value
+func (client NumberClient) GetInvalidDecimal() (result Decimal, err error) {
+	req, err := client.GetInvalidDecimalPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetInvalidDecimalSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetInvalidDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetInvalidDecimalPreparer prepares the GetInvalidDecimal request.
+func (client NumberClient) GetInvalidDecimalPreparer() (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/invaliddecimal"))
+	return preparer.Prepare(&http.Request{})
+}
+
+// GetInvalidDecimalSender sends the GetInvalidDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) GetInvalidDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetInvalidDecimalResponder handles the response to the GetInvalidDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) GetInvalidDecimalResponder(resp *http.Response) (result Decimal, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetInvalidDouble get invalid double Number value
 func (client NumberClient) GetInvalidDouble() (result Float64, err error) {
 	req, err := client.GetInvalidDoublePreparer()
@@ -398,6 +611,59 @@ func (client NumberClient) GetNullResponder(resp *http.Response) (result Float64
 	return
 }
 
+// GetSmallDecimal get small decimal value 2.5976931e-101
+func (client NumberClient) GetSmallDecimal() (result Decimal, err error) {
+	req, err := client.GetSmallDecimalPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetSmallDecimalSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetSmallDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetSmallDecimalPreparer prepares the GetSmallDecimal request.
+func (client NumberClient) GetSmallDecimalPreparer() (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/small/decimal/2.5976931e-101"))
+	return preparer.Prepare(&http.Request{})
+}
+
+// GetSmallDecimalSender sends the GetSmallDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) GetSmallDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetSmallDecimalResponder handles the response to the GetSmallDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) GetSmallDecimalResponder(resp *http.Response) (result Decimal, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetSmallDouble get big double value 2.5976931e-101
 func (client NumberClient) GetSmallDouble() (result Float64, err error) {
 	req, err := client.GetSmallDoublePreparer()
@@ -501,6 +767,171 @@ func (client NumberClient) GetSmallFloatResponder(resp *http.Response) (result F
 		autorest.ByUnmarshallingJSON(&result.Value),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// PutBigDecimal put big decimal value 2.5976931e+101
+//
+func (client NumberClient) PutBigDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalPreparer(numberBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutBigDecimalSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutBigDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutBigDecimalPreparer prepares the PutBigDecimal request.
+func (client NumberClient) PutBigDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/big/decimal/2.5976931e+101"),
+		autorest.WithJSON(numberBody))
+	return preparer.Prepare(&http.Request{})
+}
+
+// PutBigDecimalSender sends the PutBigDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) PutBigDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutBigDecimalResponder handles the response to the PutBigDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) PutBigDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
+// PutBigDecimalNegativeDecimal put big decimal value -99999999.99
+//
+func (client NumberClient) PutBigDecimalNegativeDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalNegativeDecimalPreparer(numberBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalNegativeDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutBigDecimalNegativeDecimalSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalNegativeDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutBigDecimalNegativeDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalNegativeDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutBigDecimalNegativeDecimalPreparer prepares the PutBigDecimalNegativeDecimal request.
+func (client NumberClient) PutBigDecimalNegativeDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/big/decimal/-99999999.99"),
+		autorest.WithJSON(numberBody))
+	return preparer.Prepare(&http.Request{})
+}
+
+// PutBigDecimalNegativeDecimalSender sends the PutBigDecimalNegativeDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) PutBigDecimalNegativeDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutBigDecimalNegativeDecimalResponder handles the response to the PutBigDecimalNegativeDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) PutBigDecimalNegativeDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
+// PutBigDecimalPositiveDecimal put big decimal value 99999999.99
+//
+func (client NumberClient) PutBigDecimalPositiveDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalPositiveDecimalPreparer(numberBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalPositiveDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutBigDecimalPositiveDecimalSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalPositiveDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutBigDecimalPositiveDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalPositiveDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutBigDecimalPositiveDecimalPreparer prepares the PutBigDecimalPositiveDecimal request.
+func (client NumberClient) PutBigDecimalPositiveDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/big/decimal/99999999.99"),
+		autorest.WithJSON(numberBody))
+	return preparer.Prepare(&http.Request{})
+}
+
+// PutBigDecimalPositiveDecimalSender sends the PutBigDecimalPositiveDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) PutBigDecimalPositiveDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutBigDecimalPositiveDecimalResponder handles the response to the PutBigDecimalPositiveDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) PutBigDecimalPositiveDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
 	return
 }
 
@@ -715,6 +1146,61 @@ func (client NumberClient) PutBigFloatSender(req *http.Request) (*http.Response,
 // PutBigFloatResponder handles the response to the PutBigFloat request. The method always
 // closes the http.Response Body.
 func (client NumberClient) PutBigFloatResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
+// PutSmallDecimal put small decimal value 2.5976931e-101
+//
+func (client NumberClient) PutSmallDecimal(numberBody decimal.Decimal) (result autorest.Response, err error) {
+	req, err := client.PutSmallDecimalPreparer(numberBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDecimal", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutSmallDecimalSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDecimal", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutSmallDecimalResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDecimal", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutSmallDecimalPreparer prepares the PutSmallDecimal request.
+func (client NumberClient) PutSmallDecimalPreparer(numberBody decimal.Decimal) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/number/small/decimal/2.5976931e-101"),
+		autorest.WithJSON(numberBody))
+	return preparer.Prepare(&http.Request{})
+}
+
+// PutSmallDecimalSender sends the PutSmallDecimal request. The method will close the
+// http.Response Body if it receives an error.
+func (client NumberClient) PutSmallDecimalSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client,
+		req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutSmallDecimalResponder handles the response to the PutSmallDecimal request. The method always
+// closes the http.Response Body.
+func (client NumberClient) PutSmallDecimalResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),

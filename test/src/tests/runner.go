@@ -98,7 +98,7 @@ func runTests(allPass *bool) {
 
 func getReport() {
 	var reportClient = report.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport()
+	res, err := reportClient.GetReport("")
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
@@ -107,7 +107,7 @@ func getReport() {
 
 func getAzureReport() {
 	var reportClient = azurereport.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport()
+	res, err := reportClient.GetReport("")
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
