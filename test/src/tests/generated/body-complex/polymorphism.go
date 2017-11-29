@@ -116,7 +116,7 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 // }
 // ]
 // };
-func (client PolymorphismClient) PutValid(ctx context.Context, complexBody IFish) (result autorest.Response, err error) {
+func (client PolymorphismClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -145,7 +145,7 @@ func (client PolymorphismClient) PutValid(ctx context.Context, complexBody IFish
 }
 
 // PutValidPreparer prepares the PutValid request.
-func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBody IFish) (*http.Request, error) {
+func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
@@ -203,7 +203,7 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 // }
 // ]
 // }
-func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody IFish) (result autorest.Response, err error) {
+func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -232,7 +232,7 @@ func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, co
 }
 
 // PutValidMissingRequiredPreparer prepares the PutValidMissingRequired request.
-func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Context, complexBody IFish) (*http.Request, error) {
+func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),

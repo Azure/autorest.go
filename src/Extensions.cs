@@ -39,7 +39,7 @@ namespace AutoRest.Go
         /////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
-        /// This method changes string to sentence where is make the first word 
+        /// This method changes string to sentence where is make the first word
         /// of sentence to lowercase (unless it is an acronym). The sentence is coming directly from swagger.
         /// </summary>
         /// <param name="value"></param>
@@ -56,7 +56,7 @@ namespace AutoRest.Go
                 if (value.StartsWithAcronym())
                 {
                     return value;
-                }                
+                }
                 return value.First().ToString().ToLowerInvariant() + (value.Length > 1 ? value.Substring(1) : "");
             }
         }
@@ -122,7 +122,7 @@ namespace AutoRest.Go
         }
 
         /// <summary>
-        /// This method checks if MethodGroupName is plural of package name. 
+        /// This method checks if MethodGroupName is plural of package name.
         /// It returns false for packages not listed in dictionary 'plural'.
         /// Example, group EventHubs in package EventHub.
         /// Refactor -> Namer, but also could be used by the CodeModelTransformer
@@ -325,8 +325,8 @@ namespace AutoRest.Go
         }
 
         public static bool ShouldBeSyntheticType(this IModelType type)
-        {            
-            return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType || 
+        {
+            return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType ||
                 (type is CompositeType && (type as CompositeTypeGo).IsPolymorphicResponse()));
         }
 
@@ -337,7 +337,7 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static string GetInterfaceName(this IModelType type)
         {
-            return $"I{type.Name}";
+            return $"Basic{type.Name}";
         }
 
         /// <summary>
@@ -368,9 +368,9 @@ namespace AutoRest.Go
         /////////////////////////////////////////////////////////////////////////////////////////
         // Validate code
         //
-        // This code generates a validation object which is defined in 
-        // go-autorest/autorest/validation package and is used to validate 
-        // constraints. 
+        // This code generates a validation object which is defined in
+        // go-autorest/autorest/validation package and is used to validate
+        // constraints.
         // See PR: https://github.com/Azure/go-autorest/tree/master/autorest/validation
         //
         /////////////////////////////////////////////////////////////////////////////////////////
@@ -432,7 +432,7 @@ namespace AutoRest.Go
                     var map = prop.ModelType as DictionaryTypeGo;
                     var composite = prop.ModelType as CompositeType;
 
-                    var propName = prop.Name;                    
+                    var propName = prop.Name;
 
                     if (primary != null || sequence != null || map != null)
                     {
@@ -501,7 +501,7 @@ namespace AutoRest.Go
             return a;
         }
         /// <summary>
-        /// CheckNull 
+        /// CheckNull
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>

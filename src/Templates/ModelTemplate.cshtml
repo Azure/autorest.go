@@ -13,7 +13,11 @@
 type @(Model.GetInterfaceName()) interface {
     @foreach (var dt in Model.DerivedTypes)
     {
-    @:As@(dt.Name) () (*@(dt.Name), bool)
+        @:As@(dt.Name) () (*@(dt.Name), bool)
+        if (dt is CompositeTypeGo type && type.HasInterface)
+        {
+            @:As@(dt.GetInterfaceName()) () (@(dt.GetInterfaceName()), bool)
+        }
     }
     As@(Model.Name) () (*@(Model.Name), bool)
 }
@@ -110,7 +114,24 @@ func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(s
         {
     @:return nil, false
         }
-}
+        }
+
+    @if (st is CompositeTypeGo type && type.HasInterface)
+    {
+        @EmptyLine
+        @:// As@(st.GetInterfaceName()) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
+        @:func(@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.GetInterfaceName())()(@(st.GetInterfaceName()), bool) {
+        if (st.Equals(Model) || Model.DerivesFrom(st))
+        {
+            @:return &@(Model.Name.FixedValue.ToShortName()), true
+        }
+        else
+        {
+            @:return nil, false
+        }
+        @:}
+        @EmptyLine
+    }
     </text>
     }
 </text>

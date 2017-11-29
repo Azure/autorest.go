@@ -81,12 +81,12 @@ type Cat struct {
 
 // Cookiecuttershark
 type Cookiecuttershark struct {
-	Species  *string    `json:"species,omitempty"`
-	Length   *float64   `json:"length,omitempty"`
-	Siblings *[]IFish   `json:"siblings,omitempty"`
-	Fishtype Fishtype   `json:"fishtype,omitempty"`
-	Age      *int32     `json:"age,omitempty"`
-	Birthday *date.Time `json:"birthday,omitempty"`
+	Species  *string      `json:"species,omitempty"`
+	Length   *float64     `json:"length,omitempty"`
+	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	Fishtype Fishtype     `json:"fishtype,omitempty"`
+	Age      *int32       `json:"age,omitempty"`
+	Birthday *date.Time   `json:"birthday,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Cookiecuttershark.
@@ -100,34 +100,44 @@ func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// AsSalmon is the IFish implementation for Cookiecuttershark.
+// AsSalmon is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsSalmon() (*Salmon, bool) {
 	return nil, false
 }
 
-// AsShark is the IFish implementation for Cookiecuttershark.
+// AsShark is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsShark() (*Shark, bool) {
 	return nil, false
 }
 
-// AsSawshark is the IFish implementation for Cookiecuttershark.
+// AsBasicShark is the BasicFish implementation for Cookiecuttershark.
+func (c Cookiecuttershark) AsBasicShark() (BasicShark, bool) {
+	return &c, true
+}
+
+// AsSawshark is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsSawshark() (*Sawshark, bool) {
 	return nil, false
 }
 
-// AsGoblinshark is the IFish implementation for Cookiecuttershark.
+// AsGoblinshark is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsGoblinshark() (*Goblinshark, bool) {
 	return nil, false
 }
 
-// AsCookiecuttershark is the IFish implementation for Cookiecuttershark.
+// AsCookiecuttershark is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
 	return &c, true
 }
 
-// AsFish is the IFish implementation for Cookiecuttershark.
+// AsFish is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsFish() (*Fish, bool) {
 	return nil, false
+}
+
+// AsBasicFish is the BasicFish implementation for Cookiecuttershark.
+func (c Cookiecuttershark) AsBasicFish() (BasicFish, bool) {
+	return &c, true
 }
 
 // UnmarshalJSON is the custom unmarshaler for Cookiecuttershark struct.
@@ -181,7 +191,7 @@ func (c *Cookiecuttershark) UnmarshalJSON(body []byte) error {
 
 	v = m["siblings"]
 	if v != nil {
-		siblings, err := unmarshalIFishArray(*m["siblings"])
+		siblings, err := unmarshalBasicFishArray(*m["siblings"])
 		if err != nil {
 			return err
 		}
@@ -254,10 +264,11 @@ type Error struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// IFish
-type IFish interface {
+// BasicFish
+type BasicFish interface {
 	AsSalmon() (*Salmon, bool)
 	AsShark() (*Shark, bool)
+	AsBasicShark() (BasicShark, bool)
 	AsSawshark() (*Sawshark, bool)
 	AsGoblinshark() (*Goblinshark, bool)
 	AsCookiecuttershark() (*Cookiecuttershark, bool)
@@ -267,13 +278,13 @@ type IFish interface {
 // Fish
 type Fish struct {
 	autorest.Response `json:"-"`
-	Species           *string  `json:"species,omitempty"`
-	Length            *float64 `json:"length,omitempty"`
-	Siblings          *[]IFish `json:"siblings,omitempty"`
-	Fishtype          Fishtype `json:"fishtype,omitempty"`
+	Species           *string      `json:"species,omitempty"`
+	Length            *float64     `json:"length,omitempty"`
+	Siblings          *[]BasicFish `json:"siblings,omitempty"`
+	Fishtype          Fishtype     `json:"fishtype,omitempty"`
 }
 
-func unmarshalIFish(body []byte) (IFish, error) {
+func unmarshalBasicFish(body []byte) (BasicFish, error) {
 	var m map[string]interface{}
 	err := json.Unmarshal(body, &m)
 	if err != nil {
@@ -307,17 +318,17 @@ func unmarshalIFish(body []byte) (IFish, error) {
 		return f, err
 	}
 }
-func unmarshalIFishArray(body []byte) ([]IFish, error) {
+func unmarshalBasicFishArray(body []byte) ([]BasicFish, error) {
 	var rawMessages []*json.RawMessage
 	err := json.Unmarshal(body, &rawMessages)
 	if err != nil {
 		return nil, err
 	}
 
-	fArray := make([]IFish, len(rawMessages))
+	fArray := make([]BasicFish, len(rawMessages))
 
 	for index, rawMessage := range rawMessages {
-		f, err := unmarshalIFish(*rawMessage)
+		f, err := unmarshalBasicFish(*rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -337,33 +348,43 @@ func (f Fish) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// AsSalmon is the IFish implementation for Fish.
+// AsSalmon is the BasicFish implementation for Fish.
 func (f Fish) AsSalmon() (*Salmon, bool) {
 	return nil, false
 }
 
-// AsShark is the IFish implementation for Fish.
+// AsShark is the BasicFish implementation for Fish.
 func (f Fish) AsShark() (*Shark, bool) {
 	return nil, false
 }
 
-// AsSawshark is the IFish implementation for Fish.
+// AsBasicShark is the BasicFish implementation for Fish.
+func (f Fish) AsBasicShark() (BasicShark, bool) {
+	return nil, false
+}
+
+// AsSawshark is the BasicFish implementation for Fish.
 func (f Fish) AsSawshark() (*Sawshark, bool) {
 	return nil, false
 }
 
-// AsGoblinshark is the IFish implementation for Fish.
+// AsGoblinshark is the BasicFish implementation for Fish.
 func (f Fish) AsGoblinshark() (*Goblinshark, bool) {
 	return nil, false
 }
 
-// AsCookiecuttershark is the IFish implementation for Fish.
+// AsCookiecuttershark is the BasicFish implementation for Fish.
 func (f Fish) AsCookiecuttershark() (*Cookiecuttershark, bool) {
 	return nil, false
 }
 
-// AsFish is the IFish implementation for Fish.
+// AsFish is the BasicFish implementation for Fish.
 func (f Fish) AsFish() (*Fish, bool) {
+	return &f, true
+}
+
+// AsBasicFish is the BasicFish implementation for Fish.
+func (f Fish) AsBasicFish() (BasicFish, bool) {
 	return &f, true
 }
 
@@ -398,7 +419,7 @@ func (f *Fish) UnmarshalJSON(body []byte) error {
 
 	v = m["siblings"]
 	if v != nil {
-		siblings, err := unmarshalIFishArray(*m["siblings"])
+		siblings, err := unmarshalBasicFishArray(*m["siblings"])
 		if err != nil {
 			return err
 		}
@@ -421,12 +442,12 @@ func (f *Fish) UnmarshalJSON(body []byte) error {
 // FishModel
 type FishModel struct {
 	autorest.Response `json:"-"`
-	Value             IFish `json:"value,omitempty"`
+	Value             BasicFish `json:"value,omitempty"`
 }
 
 // UnmarshalJSON is the custom unmarshaler for FishModel struct.
 func (fm *FishModel) UnmarshalJSON(body []byte) error {
-	f, err := unmarshalIFish(body)
+	f, err := unmarshalBasicFish(body)
 	if err != nil {
 		return err
 	}
@@ -444,13 +465,13 @@ type FloatWrapper struct {
 
 // Goblinshark
 type Goblinshark struct {
-	Species  *string    `json:"species,omitempty"`
-	Length   *float64   `json:"length,omitempty"`
-	Siblings *[]IFish   `json:"siblings,omitempty"`
-	Fishtype Fishtype   `json:"fishtype,omitempty"`
-	Age      *int32     `json:"age,omitempty"`
-	Birthday *date.Time `json:"birthday,omitempty"`
-	Jawsize  *int32     `json:"jawsize,omitempty"`
+	Species  *string      `json:"species,omitempty"`
+	Length   *float64     `json:"length,omitempty"`
+	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	Fishtype Fishtype     `json:"fishtype,omitempty"`
+	Age      *int32       `json:"age,omitempty"`
+	Birthday *date.Time   `json:"birthday,omitempty"`
+	Jawsize  *int32       `json:"jawsize,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Goblinshark.
@@ -464,34 +485,44 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// AsSalmon is the IFish implementation for Goblinshark.
+// AsSalmon is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsSalmon() (*Salmon, bool) {
 	return nil, false
 }
 
-// AsShark is the IFish implementation for Goblinshark.
+// AsShark is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsShark() (*Shark, bool) {
 	return nil, false
 }
 
-// AsSawshark is the IFish implementation for Goblinshark.
+// AsBasicShark is the BasicFish implementation for Goblinshark.
+func (g Goblinshark) AsBasicShark() (BasicShark, bool) {
+	return &g, true
+}
+
+// AsSawshark is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsSawshark() (*Sawshark, bool) {
 	return nil, false
 }
 
-// AsGoblinshark is the IFish implementation for Goblinshark.
+// AsGoblinshark is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsGoblinshark() (*Goblinshark, bool) {
 	return &g, true
 }
 
-// AsCookiecuttershark is the IFish implementation for Goblinshark.
+// AsCookiecuttershark is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
 	return nil, false
 }
 
-// AsFish is the IFish implementation for Goblinshark.
+// AsFish is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsFish() (*Fish, bool) {
 	return nil, false
+}
+
+// AsBasicFish is the BasicFish implementation for Goblinshark.
+func (g Goblinshark) AsBasicFish() (BasicFish, bool) {
+	return &g, true
 }
 
 // UnmarshalJSON is the custom unmarshaler for Goblinshark struct.
@@ -555,7 +586,7 @@ func (g *Goblinshark) UnmarshalJSON(body []byte) error {
 
 	v = m["siblings"]
 	if v != nil {
-		siblings, err := unmarshalIFishArray(*m["siblings"])
+		siblings, err := unmarshalBasicFishArray(*m["siblings"])
 		if err != nil {
 			return err
 		}
@@ -604,12 +635,12 @@ type ReadonlyObj struct {
 
 // Salmon
 type Salmon struct {
-	Species  *string  `json:"species,omitempty"`
-	Length   *float64 `json:"length,omitempty"`
-	Siblings *[]IFish `json:"siblings,omitempty"`
-	Fishtype Fishtype `json:"fishtype,omitempty"`
-	Location *string  `json:"location,omitempty"`
-	Iswild   *bool    `json:"iswild,omitempty"`
+	Species  *string      `json:"species,omitempty"`
+	Length   *float64     `json:"length,omitempty"`
+	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	Fishtype Fishtype     `json:"fishtype,omitempty"`
+	Location *string      `json:"location,omitempty"`
+	Iswild   *bool        `json:"iswild,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Salmon.
@@ -623,34 +654,44 @@ func (s Salmon) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// AsSalmon is the IFish implementation for Salmon.
+// AsSalmon is the BasicFish implementation for Salmon.
 func (s Salmon) AsSalmon() (*Salmon, bool) {
 	return &s, true
 }
 
-// AsShark is the IFish implementation for Salmon.
+// AsShark is the BasicFish implementation for Salmon.
 func (s Salmon) AsShark() (*Shark, bool) {
 	return nil, false
 }
 
-// AsSawshark is the IFish implementation for Salmon.
+// AsBasicShark is the BasicFish implementation for Salmon.
+func (s Salmon) AsBasicShark() (BasicShark, bool) {
+	return nil, false
+}
+
+// AsSawshark is the BasicFish implementation for Salmon.
 func (s Salmon) AsSawshark() (*Sawshark, bool) {
 	return nil, false
 }
 
-// AsGoblinshark is the IFish implementation for Salmon.
+// AsGoblinshark is the BasicFish implementation for Salmon.
 func (s Salmon) AsGoblinshark() (*Goblinshark, bool) {
 	return nil, false
 }
 
-// AsCookiecuttershark is the IFish implementation for Salmon.
+// AsCookiecuttershark is the BasicFish implementation for Salmon.
 func (s Salmon) AsCookiecuttershark() (*Cookiecuttershark, bool) {
 	return nil, false
 }
 
-// AsFish is the IFish implementation for Salmon.
+// AsFish is the BasicFish implementation for Salmon.
 func (s Salmon) AsFish() (*Fish, bool) {
 	return nil, false
+}
+
+// AsBasicFish is the BasicFish implementation for Salmon.
+func (s Salmon) AsBasicFish() (BasicFish, bool) {
+	return &s, true
 }
 
 // UnmarshalJSON is the custom unmarshaler for Salmon struct.
@@ -704,7 +745,7 @@ func (s *Salmon) UnmarshalJSON(body []byte) error {
 
 	v = m["siblings"]
 	if v != nil {
-		siblings, err := unmarshalIFishArray(*m["siblings"])
+		siblings, err := unmarshalBasicFishArray(*m["siblings"])
 		if err != nil {
 			return err
 		}
@@ -726,13 +767,13 @@ func (s *Salmon) UnmarshalJSON(body []byte) error {
 
 // Sawshark
 type Sawshark struct {
-	Species  *string    `json:"species,omitempty"`
-	Length   *float64   `json:"length,omitempty"`
-	Siblings *[]IFish   `json:"siblings,omitempty"`
-	Fishtype Fishtype   `json:"fishtype,omitempty"`
-	Age      *int32     `json:"age,omitempty"`
-	Birthday *date.Time `json:"birthday,omitempty"`
-	Picture  *[]byte    `json:"picture,omitempty"`
+	Species  *string      `json:"species,omitempty"`
+	Length   *float64     `json:"length,omitempty"`
+	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	Fishtype Fishtype     `json:"fishtype,omitempty"`
+	Age      *int32       `json:"age,omitempty"`
+	Birthday *date.Time   `json:"birthday,omitempty"`
+	Picture  *[]byte      `json:"picture,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Sawshark.
@@ -746,34 +787,44 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// AsSalmon is the IFish implementation for Sawshark.
+// AsSalmon is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsSalmon() (*Salmon, bool) {
 	return nil, false
 }
 
-// AsShark is the IFish implementation for Sawshark.
+// AsShark is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsShark() (*Shark, bool) {
 	return nil, false
 }
 
-// AsSawshark is the IFish implementation for Sawshark.
+// AsBasicShark is the BasicFish implementation for Sawshark.
+func (s Sawshark) AsBasicShark() (BasicShark, bool) {
+	return &s, true
+}
+
+// AsSawshark is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsSawshark() (*Sawshark, bool) {
 	return &s, true
 }
 
-// AsGoblinshark is the IFish implementation for Sawshark.
+// AsGoblinshark is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsGoblinshark() (*Goblinshark, bool) {
 	return nil, false
 }
 
-// AsCookiecuttershark is the IFish implementation for Sawshark.
+// AsCookiecuttershark is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
 	return nil, false
 }
 
-// AsFish is the IFish implementation for Sawshark.
+// AsFish is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsFish() (*Fish, bool) {
 	return nil, false
+}
+
+// AsBasicFish is the BasicFish implementation for Sawshark.
+func (s Sawshark) AsBasicFish() (BasicFish, bool) {
+	return &s, true
 }
 
 // UnmarshalJSON is the custom unmarshaler for Sawshark struct.
@@ -837,7 +888,7 @@ func (s *Sawshark) UnmarshalJSON(body []byte) error {
 
 	v = m["siblings"]
 	if v != nil {
-		siblings, err := unmarshalIFishArray(*m["siblings"])
+		siblings, err := unmarshalBasicFishArray(*m["siblings"])
 		if err != nil {
 			return err
 		}
@@ -857,8 +908,8 @@ func (s *Sawshark) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// IShark
-type IShark interface {
+// BasicShark
+type BasicShark interface {
 	AsSawshark() (*Sawshark, bool)
 	AsGoblinshark() (*Goblinshark, bool)
 	AsCookiecuttershark() (*Cookiecuttershark, bool)
@@ -867,15 +918,15 @@ type IShark interface {
 
 // Shark
 type Shark struct {
-	Species  *string    `json:"species,omitempty"`
-	Length   *float64   `json:"length,omitempty"`
-	Siblings *[]IFish   `json:"siblings,omitempty"`
-	Fishtype Fishtype   `json:"fishtype,omitempty"`
-	Age      *int32     `json:"age,omitempty"`
-	Birthday *date.Time `json:"birthday,omitempty"`
+	Species  *string      `json:"species,omitempty"`
+	Length   *float64     `json:"length,omitempty"`
+	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	Fishtype Fishtype     `json:"fishtype,omitempty"`
+	Age      *int32       `json:"age,omitempty"`
+	Birthday *date.Time   `json:"birthday,omitempty"`
 }
 
-func unmarshalIShark(body []byte) (IShark, error) {
+func unmarshalBasicShark(body []byte) (BasicShark, error) {
 	var m map[string]interface{}
 	err := json.Unmarshal(body, &m)
 	if err != nil {
@@ -901,17 +952,17 @@ func unmarshalIShark(body []byte) (IShark, error) {
 		return s, err
 	}
 }
-func unmarshalISharkArray(body []byte) ([]IShark, error) {
+func unmarshalBasicSharkArray(body []byte) ([]BasicShark, error) {
 	var rawMessages []*json.RawMessage
 	err := json.Unmarshal(body, &rawMessages)
 	if err != nil {
 		return nil, err
 	}
 
-	sArray := make([]IShark, len(rawMessages))
+	sArray := make([]BasicShark, len(rawMessages))
 
 	for index, rawMessage := range rawMessages {
-		s, err := unmarshalIShark(*rawMessage)
+		s, err := unmarshalBasicShark(*rawMessage)
 		if err != nil {
 			return nil, err
 		}
@@ -931,34 +982,44 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// AsSalmon is the IFish implementation for Shark.
+// AsSalmon is the BasicFish implementation for Shark.
 func (s Shark) AsSalmon() (*Salmon, bool) {
 	return nil, false
 }
 
-// AsShark is the IFish implementation for Shark.
+// AsShark is the BasicFish implementation for Shark.
 func (s Shark) AsShark() (*Shark, bool) {
 	return &s, true
 }
 
-// AsSawshark is the IFish implementation for Shark.
+// AsBasicShark is the BasicFish implementation for Shark.
+func (s Shark) AsBasicShark() (BasicShark, bool) {
+	return &s, true
+}
+
+// AsSawshark is the BasicFish implementation for Shark.
 func (s Shark) AsSawshark() (*Sawshark, bool) {
 	return nil, false
 }
 
-// AsGoblinshark is the IFish implementation for Shark.
+// AsGoblinshark is the BasicFish implementation for Shark.
 func (s Shark) AsGoblinshark() (*Goblinshark, bool) {
 	return nil, false
 }
 
-// AsCookiecuttershark is the IFish implementation for Shark.
+// AsCookiecuttershark is the BasicFish implementation for Shark.
 func (s Shark) AsCookiecuttershark() (*Cookiecuttershark, bool) {
 	return nil, false
 }
 
-// AsFish is the IFish implementation for Shark.
+// AsFish is the BasicFish implementation for Shark.
 func (s Shark) AsFish() (*Fish, bool) {
 	return nil, false
+}
+
+// AsBasicFish is the BasicFish implementation for Shark.
+func (s Shark) AsBasicFish() (BasicFish, bool) {
+	return &s, true
 }
 
 // UnmarshalJSON is the custom unmarshaler for Shark struct.
@@ -1012,7 +1073,7 @@ func (s *Shark) UnmarshalJSON(body []byte) error {
 
 	v = m["siblings"]
 	if v != nil {
-		siblings, err := unmarshalIFishArray(*m["siblings"])
+		siblings, err := unmarshalBasicFishArray(*m["siblings"])
 		if err != nil {
 			return err
 		}
