@@ -11,25 +11,25 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
-// Error is
+// Error
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// Int32 is
+// Int32
 type Int32 struct {
 	autorest.Response `json:"-"`
 	Value             *int32 `json:"value,omitempty"`
 }
 
-// Int64 is
+// Int64
 type Int64 struct {
 	autorest.Response `json:"-"`
 	Value             *int64 `json:"value,omitempty"`
 }
 
-// UnixTime is
+// UnixTime
 type UnixTime struct {
 	autorest.Response `json:"-"`
 	Value             *date.UnixTime `json:"value,omitempty"`

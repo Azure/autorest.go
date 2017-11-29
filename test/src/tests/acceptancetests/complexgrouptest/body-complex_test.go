@@ -404,7 +404,7 @@ var f = Salmon{
 	Iswild:   to.BoolPtr(true),
 	Location: to.StringPtr("alaska"),
 	Species:  to.StringPtr("king"),
-	Siblings: &[]Fish{
+	Siblings: &[]BasicFish{
 		Shark{
 			Length:   to.Float64Ptr(20),
 			Birthday: &date.Time{time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)},
@@ -475,7 +475,7 @@ func (s *ComplexGroupSuite) TestPutComplexPolymorphismValidMissingRequired(c *ch
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
 		Species:  to.StringPtr("king"),
-		Siblings: &[]Fish{
+		Siblings: &[]BasicFish{
 			Shark{
 				Length:   to.Float64Ptr(20),
 				Birthday: &date.Time{time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)},
@@ -512,19 +512,19 @@ func (s *ComplexGroupSuite) TestPutComplexPolymorphicRecursive(c *chk.C) {
 		Length:   to.Float64Ptr(1),
 		Species:  to.StringPtr("king"),
 		Location: to.StringPtr("alaska"),
-		Siblings: &[]Fish{
+		Siblings: &[]BasicFish{
 			Shark{
 				Age:      to.Int32Ptr(6),
 				Length:   to.Float64Ptr(20),
 				Species:  to.StringPtr("predator"),
 				Birthday: &date.Time{time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)},
-				Siblings: &[]Fish{
+				Siblings: &[]BasicFish{
 					Salmon{
 						Iswild:   to.BoolPtr(true),
 						Length:   to.Float64Ptr(2),
 						Location: to.StringPtr("atlantic"),
 						Species:  to.StringPtr("coho"),
-						Siblings: &[]Fish{
+						Siblings: &[]BasicFish{
 							Shark{
 								Age:      to.Int32Ptr(6),
 								Length:   to.Float64Ptr(20),
@@ -544,7 +544,7 @@ func (s *ComplexGroupSuite) TestPutComplexPolymorphicRecursive(c *chk.C) {
 						Age:      to.Int32Ptr(105),
 						Length:   to.Float64Ptr(10),
 						Species:  to.StringPtr("dangerous"),
-						Siblings: &[]Fish{},
+						Siblings: &[]BasicFish{},
 						Birthday: &date.Time{time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)},
 						Picture:  &[]byte{255, 255, 255, 255, 254},
 					},
@@ -554,7 +554,7 @@ func (s *ComplexGroupSuite) TestPutComplexPolymorphicRecursive(c *chk.C) {
 				Age:      to.Int32Ptr(105),
 				Length:   to.Float64Ptr(10),
 				Species:  to.StringPtr("dangerous"),
-				Siblings: &[]Fish{},
+				Siblings: &[]BasicFish{},
 				Birthday: &date.Time{time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)},
 				Picture:  &[]byte{255, 255, 255, 255, 254},
 			},

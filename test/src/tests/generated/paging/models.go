@@ -40,7 +40,7 @@ const (
 	Updating Status = "Updating"
 )
 
-// OdataProductResult is
+// OdataProductResult
 type OdataProductResult struct {
 	autorest.Response `json:"-"`
 	Values            *[]Product `json:"values,omitempty"`
@@ -59,23 +59,23 @@ func (client OdataProductResult) OdataProductResultPreparer() (*http.Request, er
 		autorest.WithBaseURL(to.String(client.OdataNextLink)))
 }
 
-// OperationResult is
+// OperationResult
 type OperationResult struct {
 	Status Status `json:"status,omitempty"`
 }
 
-// Product is
+// Product
 type Product struct {
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
-// ProductProperties is
+// ProductProperties
 type ProductProperties struct {
 	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
-// ProductResult is
+// ProductResult
 type ProductResult struct {
 	autorest.Response `json:"-"`
 	Values            *[]Product `json:"values,omitempty"`

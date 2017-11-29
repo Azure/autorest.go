@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace AutoRest.Go.Model
 {
@@ -125,7 +126,7 @@ namespace AutoRest.Go.Model
             get
             {
                 var body = ReturnType.Body as CompositeTypeGo;
-                return body.Properties.Where(p => p.ModelType is SequenceTypeGo).FirstOrDefault() as PropertyGo;
+                return body.Properties.FirstOrDefault(p => p.ModelType is SequenceTypeGo) as PropertyGo;
             }
         }
 
@@ -138,13 +139,14 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                List<string> declarations = new List<string>();
-                declarations.Add("ctx context.Context");
+                var declarations = new List<string> {"ctx context.Context"};
                 LocalParameters
                     .ForEach(p => declarations.Add(string.Format(
                                                         p.IsRequired || p.ModelType.CanBeEmpty()
                                                             ? "{0} {1}"
-                                                            : "{0} *{1}", p.Name, p.ModelType.Name)));
+                                                            : "{0} *{1}", p.Name, p.ModelType is CompositeTypeGo type && type.HasInterface
+                                                                ? p.ModelType.GetInterfaceName()
+                                                                : p.ModelType.Name.ToString())));
                 return string.Join(", ", declarations);
             }
         }
@@ -152,13 +154,7 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Gets the return type name for this method.
         /// </summary>
-        public string MethodReturnType
-        {
-            get
-            {
-                return HasReturnValue() ? ReturnValue().Body.Name.ToString() : DefaultReturnType;
-            }
-        }
+        public string MethodReturnType => HasReturnValue() ? ReturnValue().Body.Name.ToString() : DefaultReturnType;
 
         private string MethodReturnSig(string resultTypeName)
         {
@@ -198,8 +194,7 @@ namespace AutoRest.Go.Model
 
         public string HelperInvocationParameters(bool complete)
         {
-            List<string> invocationParams = new List<string>();
-            invocationParams.Add("ctx");
+            var invocationParams = new List<string> {"ctx"};
 
             foreach (ParameterGo p in LocalParameters)
             {
@@ -329,14 +324,10 @@ namespace AutoRest.Go.Model
                 {
                     foreach (var param in Parameters.Where(p => p.IsRequired && p.Location == ParameterLocation.Header))
                     {
-                        if (param.IsClientProperty)
-                        {
-                            decorators.Add(string.Format("autorest.WithHeader(\"{0}\",client.{1})", param.SerializedName, param.Name.ToPascalCase().ToString()));
-                        }
-                        else
-                        {
-                            decorators.Add(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))", param.SerializedName, param.Name.ToString()));
-                        }
+                        decorators.Add(param.IsClientProperty
+                            ? $"autorest.WithHeader(\"{param.SerializedName}\",client.{param.Name.ToPascalCase()})"
+                            : $"autorest.WithHeader(\"{param.SerializedName}\",autorest.String({param.Name}))"
+                                );
                     }
                 }
 
@@ -367,14 +358,12 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var decorators = new List<string>();
-                if (RegisterRP)
+                var decorators = new List<string>
                 {
-                    decorators.Add("azure.DoRetryWithRegistration(client.Client)");
-                } else
-                {
-                    decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
-                }
+                    RegisterRP
+                        ? "azure.DoRetryWithRegistration(client.Client)"
+                        : "autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)"
+                };
                 return decorators;
             }
         }
@@ -383,10 +372,12 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var decorators = new List<string>();
-                decorators.Add("resp");
-                decorators.Add("client.ByInspecting()");
-                decorators.Add(string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray())));
+                var decorators = new List<string>
+                {
+                    "resp",
+                    "client.ByInspecting()",
+                    string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray()))
+                };
 
                 if (HasReturnValue() && !ReturnValue().Body.IsStreamType() && !LroWrapsDefaultResp())
                 {
@@ -513,13 +504,7 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string NextOperationName
-        {
-            get
-            {
-                return NextMethod?.Name.Value;
-            }
-        }
+        public string NextOperationName => NextMethod?.Name.Value;
 
         /// <summary>
         /// Check if method has long running extension (x-ms-long-running-operation) enabled.
@@ -560,19 +545,22 @@ namespace AutoRest.Go.Model
                 // Note:
                 // Methods can be paged, even if "nextLinkName" is null
                 // Paged method just means a method returns an array
-                if (Extensions.ContainsKey(AzureExtensions.PageableExtension))
+                if (!Extensions.ContainsKey(AzureExtensions.PageableExtension))
                 {
-                    var pageableExtension = Extensions[AzureExtensions.PageableExtension] as Newtonsoft.Json.Linq.JContainer;
-                    if (pageableExtension != null)
-                    {
-                        var nextLink = (string)pageableExtension["nextLinkName"];
-                        if (!string.IsNullOrEmpty(nextLink))
-                        {
-                            return CodeNamerGo.Instance.GetPropertyName(nextLink);
-                        }
-                    }
+                    return null;
                 }
-                return null;
+                if (!(Extensions[AzureExtensions.PageableExtension] is JContainer pageableExtension))
+                {
+                    return null;
+                }
+
+                var nextLink = (string)pageableExtension["nextLinkName"];
+                if (string.IsNullOrEmpty(nextLink))
+                {
+                    return null;
+
+                }
+                return CodeNamerGo.Instance.GetPropertyName(nextLink);
             }
         }
     }

@@ -10,13 +10,13 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// Error is
+// Error
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// SetInt32 is
+// SetInt32
 type SetInt32 struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*int32 `json:"value,omitempty"`

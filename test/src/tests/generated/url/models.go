@@ -18,7 +18,7 @@ const (
 	Redcolor URIColor = "red color"
 )
 
-// Error is
+// Error
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`

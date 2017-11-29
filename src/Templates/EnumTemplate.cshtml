@@ -19,7 +19,7 @@ const (
 @foreach (var v in Model.Values.OrderBy(v => v.Name))
 {
     <text>
-@WrapComment("// ", string.Format("{0} specifies the {1} state for {2}.", CodeNamerGo.Instance.GetEnumMemberName(v.Name), v.Name.ToPhrase(), modelPhrase))
+@WrapComment("// ", $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} specifies the {v.Name.ToPhrase()} state for {modelPhrase}.")
 @(CodeNamerGo.Instance.GetEnumMemberName(v.Name)) @(Model.Name) = "@(v.SerializedName)"
     </text>
 }

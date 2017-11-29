@@ -38,20 +38,20 @@ const (
 	Updating ProvisioningStateValues = "Updating"
 )
 
-// BaseProduct is the product documentation.
+// BaseProduct the product documentation.
 type BaseProduct struct {
 	ProductID   *string `json:"base_product_id,omitempty"`
 	Description *string `json:"base_product_description,omitempty"`
 }
 
-// Error is
+// Error
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 	*Error  `json:"parentError,omitempty"`
 }
 
-// FlattenedProduct is flattened product.
+// FlattenedProduct flattened product.
 type FlattenedProduct struct {
 	ID                          *string             `json:"id,omitempty"`
 	Type                        *string             `json:"type,omitempty"`
@@ -61,7 +61,7 @@ type FlattenedProduct struct {
 	*FlattenedProductProperties `json:"properties,omitempty"`
 }
 
-// FlattenedProductProperties is
+// FlattenedProductProperties
 type FlattenedProductProperties struct {
 	PName                   *string                 `json:"p.name,omitempty"`
 	Type                    *string                 `json:"type,omitempty"`
@@ -69,35 +69,35 @@ type FlattenedProductProperties struct {
 	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
 }
 
-// GenericURL is the Generic URL.
+// GenericURL the Generic URL.
 type GenericURL struct {
 	GenericValue *string `json:"generic_value,omitempty"`
 }
 
-// ListFlattenedProduct is
+// ListFlattenedProduct
 type ListFlattenedProduct struct {
 	autorest.Response `json:"-"`
 	Value             *[]FlattenedProduct `json:"value,omitempty"`
 }
 
-// ListProductWrapper is
+// ListProductWrapper
 type ListProductWrapper struct {
 	autorest.Response `json:"-"`
 	Value             *[]ProductWrapper `json:"value,omitempty"`
 }
 
-// ProductURL is the product URL.
+// ProductURL the product URL.
 type ProductURL struct {
 	GenericValue *string `json:"generic_value,omitempty"`
 	OdataValue   *string `json:"@odata.value,omitempty"`
 }
 
-// ProductWrapper is the wrapped produc.
+// ProductWrapper the wrapped produc.
 type ProductWrapper struct {
 	*WrappedProduct `json:"property,omitempty"`
 }
 
-// Resource is
+// Resource
 type Resource struct {
 	ID       *string             `json:"id,omitempty"`
 	Type     *string             `json:"type,omitempty"`
@@ -106,7 +106,7 @@ type Resource struct {
 	Name     *string             `json:"name,omitempty"`
 }
 
-// ResourceCollection is
+// ResourceCollection
 type ResourceCollection struct {
 	autorest.Response     `json:"-"`
 	Productresource       *FlattenedProduct             `json:"productresource,omitempty"`
@@ -114,13 +114,13 @@ type ResourceCollection struct {
 	Dictionaryofresources *map[string]*FlattenedProduct `json:"dictionaryofresources,omitempty"`
 }
 
-// SetFlattenedProduct is
+// SetFlattenedProduct
 type SetFlattenedProduct struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*FlattenedProduct `json:"value,omitempty"`
 }
 
-// SimpleProduct is the product documentation.
+// SimpleProduct the product documentation.
 type SimpleProduct struct {
 	autorest.Response        `json:"-"`
 	ProductID                *string `json:"base_product_id,omitempty"`
@@ -128,14 +128,14 @@ type SimpleProduct struct {
 	*SimpleProductProperties `json:"details,omitempty"`
 }
 
-// SimpleProductProperties is the product documentation.
+// SimpleProductProperties the product documentation.
 type SimpleProductProperties struct {
 	MaxProductDisplayName *string `json:"max_product_display_name,omitempty"`
 	Capacity              *string `json:"max_product_capacity,omitempty"`
 	*ProductURL           `json:"max_product_image,omitempty"`
 }
 
-// WrappedProduct is the wrapped produc.
+// WrappedProduct the wrapped produc.
 type WrappedProduct struct {
 	Value *string `json:"value,omitempty"`
 }
