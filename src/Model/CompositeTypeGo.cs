@@ -18,16 +18,9 @@ namespace AutoRest.Go.Model
     public class CompositeTypeGo : CompositeType
     {
         /// <summary>
-        ///True if the type is returned by a method
+        /// True if the type is returned by a method
         /// </summary>
         public bool IsResponseType;
-
-        /// <summary>
-        /// Name of the field containing the URL used to retrieve the next result set (null or empty if the model is not paged).
-        /// </summary>
-        public string NextLink;
-
-        public bool PreparerNeeded = false;
 
         public EnumTypeGo DiscriminatorEnum;
 
@@ -221,7 +214,8 @@ namespace AutoRest.Go.Model
                 null;
         }
 
-        public bool IsPolymorphicResponse() {
+        public bool IsPolymorphicResponse()
+        {
             if (IsPolymorphic && IsResponseType)
             {
                 return true;
@@ -284,11 +278,6 @@ namespace AutoRest.Go.Model
                 }
                 else
                 {
-                    // NextLinks might have differences in casing, but they need to be consistent
-                    if (property.Name.EqualsIgnoreCase(NextLink))
-                    {
-                        property.Name = NextLink;
-                    }
                     indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
                 }
             }
@@ -320,6 +309,10 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
+        /// Gets the expression for a zero-initialized composite type.
+        /// </summary>
+        public string ZeroInitExpression => $"{Name}{{}}";
+
         /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
         /// </summary>
         private void AddPolymorphicPropertyIfNecessary()

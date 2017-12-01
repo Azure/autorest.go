@@ -113,6 +113,10 @@ namespace AutoRest.Go
             return WordSplitPattern.Split(value).Where(s => !string.IsNullOrEmpty(s)).ToArray();
         }
 
+        /// <summary>
+        /// Creates a string from the first letter in each word.
+        /// E.g. "SomeTypeName" would generate the string "stn".
+        /// </summary>
         public static string ToShortName(this string longName)
         {
             var initials = from word in longName.ToWords()
@@ -122,7 +126,16 @@ namespace AutoRest.Go
         }
 
         /// <summary>
-        /// This method checks if MethodGroupName is plural of package name.
+        /// Creates a string from the first letter in each word.
+        /// E.g. "SomeTypeName" would generate the string "stn".
+        /// </summary>
+        public static string ToShortName(this Fixable<string> longName)
+        {
+            return longName.ToString().ToShortName();
+        }
+
+        /// <summary>
+        /// This method checks if MethodGroupName is plural of package name. 
         /// It returns false for packages not listed in dictionary 'plural'.
         /// Example, group EventHubs in package EventHub.
         /// Refactor -> Namer, but also could be used by the CodeModelTransformer
@@ -363,6 +376,57 @@ namespace AutoRest.Go
         public static T Cast<T>(this IModelType type)
         {
             return (T)type;
+        }
+
+        /// <summary>
+        /// Converts the specified composite type into a page type.
+        /// If the type specified is a future it will "unwrap" the page type from it.
+        /// Throws if the specified type is not a future or page type.
+        /// </summary>
+        /// <param name="ctg">The type to convert from.</param>
+        /// <returns>The type converted to a page type.</returns>
+        public static PageTypeGo UnwrapPageType(this CompositeTypeGo ctg)
+        {
+            PageTypeGo result;
+            if (ctg is FutureTypeGo)
+            {
+                result = ctg.Cast<FutureTypeGo>().ResultType.Cast<PageTypeGo>();
+            }
+            else if (ctg is PageTypeGo)
+            {
+                result = ctg.Cast<PageTypeGo>();
+            }
+            else
+            {
+                throw new InvalidCastException("supplied object is not a FutureTypeGo or PageTypeGo");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns an expression for zero-initializing the specified type.
+        /// </summary>
+        /// <param name="type">The type for which to create a zero-init expression.</param>
+        /// <returns>The zero-init expression.</returns>
+        public static string GetZeroInitExpression(this IModelType type)
+        {
+            if (type is CompositeTypeGo)
+            {
+                return type.Cast<CompositeTypeGo>().ZeroInitExpression;
+            }
+            else if (type is EnumTypeGo)
+            {
+                return type.Cast<EnumTypeGo>().ZeroInitExpression;
+            }
+            else if (type is PrimaryTypeGo)
+            {
+                return type.Cast<PrimaryTypeGo>().ZeroInitExpression;
+            }
+            else if (type is DictionaryTypeGo)
+            {
+                return type.Cast<DictionaryTypeGo>().ZeroInitExpression;
+            }
+            throw new NotImplementedException($"GetZeroInitExpression for type {type} NYI");
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////

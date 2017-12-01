@@ -15,16 +15,11 @@ namespace AutoRest.Go.Model
 {
     public class CodeModelGo : CodeModel
     {
-        private Dictionary<FutureTypeGo, FutureTypeGo> _futureTypes;
-
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
 
         public CodeModelGo()
         {
-            NextMethodUndefined = new List<IModelType>();
-            PagedTypes = new Dictionary<IModelType, string>();
             Version = FormatVersion(Settings.Instance.PackageVersion);
-            _futureTypes = new Dictionary<FutureTypeGo, FutureTypeGo>();
         }
 
         public string Version { get; }
@@ -59,17 +54,6 @@ namespace AutoRest.Go.Model
 
         public string ClientDocumentation => string.Format("{0} is the base client for {1}.", BaseClient, ServiceName);
 
-        public Dictionary<IModelType, string> PagedTypes { get; }
-
-        /// <summary>
-        /// Returns an enumerator to the collection of future types; may be empty.
-        /// </summary>
-        internal IEnumerable<FutureTypeGo> FutureTypes => _futureTypes.Keys;
-
-        // NextMethodUndefined is used to keep track of those models which are returned by paged methods,
-        // but the next method is not defined in the service client, so these models need a preparer.
-        public List<IModelType> NextMethodUndefined { get; }
-
         public IEnumerable<string> ModelImports
         {
             get
@@ -80,7 +64,7 @@ namespace AutoRest.Go.Model
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest"));
                 }
-                if (_futureTypes.Any())
+                if (ModelTypes.Any(mt => mt is FutureTypeGo))
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest/azure"));
                     imports.Add(PrimaryTypeGo.GetImportLine("net/http"));
@@ -89,11 +73,12 @@ namespace AutoRest.Go.Model
                     .ForEach(mt =>
                     {
                         mt.AddImports(imports);
-                        if (NextMethodUndefined.Any())
-                        {
-                            imports.UnionWith(CodeNamerGo.Instance.PageableImports);
-                        }
                     });
+                // if any paged types need a preparer created add the pageable imports
+                if (ModelTypes.Any(mt => mt is PageTypeGo && mt.Cast<PageTypeGo>().PreparerNeeded))
+                {
+                    imports.UnionWith(CodeNamerGo.Instance.PageableImports);
+                }
                 return imports.OrderBy(i => i);
             }
         }
@@ -267,6 +252,31 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
+        /// Creates a pageable type for the specified method and updates its return type.
+        /// </summary>
+        /// <param name="method">The method to be modified.</param>
+        internal void CreatePageableTypeForMethod(MethodGo method)
+        {
+            if (!method.IsPageable)
+            {
+                throw new InvalidOperationException("CreatePageableTypeForMethod requires method to be a pageable operation");
+            }
+
+            var page = new PageTypeGo(method);
+            if (ModelTypes.Contains(page))
+            {
+                page = ModelTypes.Where(mt => mt.Equals(page)).First().Cast<PageTypeGo>();
+            }
+            else
+            {
+                Add(page);
+                Add(page.IteratorType);
+            }
+
+            method.ReturnType = new Response(page, method.ReturnType.Headers);
+        }
+
+        /// <summary>
         /// Creates a future for the specified method and updates its return type.
         /// </summary>
         /// <param name="method">The method to be modified.</param>
@@ -277,18 +287,40 @@ namespace AutoRest.Go.Model
                 throw new InvalidOperationException("CreateFutureTypeForMethod requires method to be a long-running operation");
             }
 
-            // don't create duplicate future types
-            var future = new FutureTypeGo(method);
-            if (_futureTypes.ContainsKey(future))
+            // this is the future to return from the method
+            var future = GetOrAddFuture(new FutureTypeGo(method));
+
+            // if this is a pageable method create a future type for the
+            // "list all" method wrapped in our custom response type
+            if (method.IsPageable)
             {
-                future = _futureTypes[future];
+                var listAllFuture = GetOrAddFuture(new FutureTypeGo(CodeNamerGo.Instance.GetFutureTypeName($"{method.Group}{method.Name}All"), method));
+                method.ReturnType = new LroPagedResponseGo(future, listAllFuture, method.ReturnType.Headers);
             }
             else
             {
-                _futureTypes.Add(future, future);
+                method.ReturnType = new Response(future, method.ReturnType.Headers);
             }
+        }
 
-            method.ReturnType = new Response(future, method.ReturnType.Headers);
+        /// <summary>
+        /// Checks if the specified future type already exists, if it does return that one instead.
+        /// If it does not exist it is added to the collection of model types and returned.
+        /// </summary>
+        /// <param name="futureType">The future type to check for and possibly add.</param>
+        /// <returns>The existing or added object.</returns>
+        private FutureTypeGo GetOrAddFuture(FutureTypeGo futureType)
+        {
+            // don't create duplicate future types
+            if (ModelTypes.Contains(futureType))
+            {
+                futureType = ModelTypes.Where(mt => mt.Equals(futureType)).First().Cast<FutureTypeGo>();
+            }
+            else
+            {
+                Add(futureType);
+            }
+            return futureType;
         }
     }
 }

@@ -82,6 +82,10 @@ namespace AutoRest.Go.Model
                     {
                         mg.ReturnType.Body.AddImports(imports);
                     }
+                    if (mg.IsNextMethod)
+                    {
+                        imports.UnionWith(CodeNamerGo.Instance.PageableImports);
+                    }
                 });
 
             foreach (var p in cmg.Properties)

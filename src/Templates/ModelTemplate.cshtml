@@ -76,8 +76,41 @@ func unmarshal@(Model.GetInterfaceName())Array(body []byte) ([]@(Model.GetInterf
 }
 else
 {
-@WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+    @if (Model is PageTypeGo)
+    {
+        var pageType = Model as PageTypeGo;
+        var itemName = pageType.ItemName;
+        var contentType = pageType.ContentType.Name;
+        var receiverVar = contentType.FixedValue.ToShortName();
+
     <text>
+@EmptyLine
+// IsEmpty returns true if the ListResult contains no values.
+func (@receiverVar @contentType) IsEmpty() bool {
+    return @(receiverVar).@itemName == nil || len(*@(receiverVar).@itemName) == 0
+}
+@EmptyLine
+    </text>
+        if (pageType.PreparerNeeded)
+        {
+        <text>
+// @(pageType.PreparerMethodName) prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (@receiverVar @contentType) @(pageType.PreparerMethodName)() (*http.Request, error) {
+    if @(receiverVar).@(pageType.NextLink) == nil || len(to.String(@(receiverVar).@(pageType.NextLink))) < 1 {
+        return nil, nil
+    }
+    return autorest.Prepare(&http.Request{},
+    autorest.AsJSON(),
+    autorest.AsGet(),
+    autorest.WithBaseURL(to.String( @(receiverVar).@(pageType.NextLink))));
+}
+@EmptyLine
+        </text>
+        }
+    }
+<text>
+@WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
 type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -178,6 +211,11 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
     var v *json.RawMessage
         @foreach (var p in Model.AllProperties)
         {
+            if (p.ModelType is DictionaryTypeGo && ((DictionaryTypeGo)p.ModelType).SupportsAdditionalProperties)
+            {
+                // TODO: codegen for this scenario is broken
+                continue;
+            }
         <text>
     @EmptyLine
     v = m["@(p.SerializedName)"]
@@ -219,20 +257,83 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
 </text>
 }
 
-@if (!string.IsNullOrEmpty(Model.NextLink) && Model.PreparerNeeded)
+@if (Model is PageTypeGo)
 {
+    var pageType = (PageTypeGo)Model;
+    var itemName = pageType.ItemName;
+    var itemType = pageType.ElementType.Name;
 <text>
 @EmptyLine
-// @(Model.PreparerMethodName) prepares a request to retrieve the next set of results. It returns
-// nil if no more results exist.
-func (client @(Model.Name)) @(Model.PreparerMethodName)() (*http.Request, error) {
-    if client.@(Model.NextLink) == nil || len(to.String(client.@(Model.NextLink))) <= 0 {
-        return nil, nil
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page * @Model.Name) Next() error {
+    next, err := page.@(pageType.FnFieldName)(page.@pageType.ResultFieldName)
+    if err != nil {
+        return err
     }
-    return autorest.Prepare(&http.Request{},
-        autorest.AsJSON(),
-        autorest.AsGet(),
-        autorest.WithBaseURL(to.String(client.@(Model.NextLink))));
+    page.@pageType.ResultFieldName = next
+    return nil
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page @Model.Name) NotDone() bool {
+    return !page.@(pageType.ResultFieldName).IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page @Model.Name) Response() autorest.Response {
+    return page.@(pageType.ResultFieldName).Response
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page @Model.Name) Values() []@(itemType) {
+    if page.@(pageType.ResultFieldName).IsEmpty() {
+        return nil
+    }
+    return *page.@(pageType.ResultFieldName).@itemName
+}
+</text>
+}
+
+@if (Model is IteratorTypeGo)
+{
+    var iterType = (IteratorTypeGo)Model;
+    var itemType = iterType.PageType.ElementType;
+    var itemTypeName = iterType.PageType.ElementType.Name;
+<text>
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter * @Model.Name) Next() error {
+    iter.@(iterType.IndexField)++
+    if iter.@(iterType.IndexField) < len(iter. @(iterType.PageField).Values()) {
+        return nil
+    }
+    err := iter.@(iterType.PageField).Next()
+    if err != nil {
+        iter. @(iterType.IndexField)--
+        return err
+    }
+    iter.@(iterType.IndexField) = 0
+    return nil
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter @Model.Name) NotDone() bool {
+    return iter.@(iterType.PageField).NotDone() && iter.@(iterType.IndexField) < len(iter. @(iterType.PageField).Values())
+}
+
+// Response returns the raw server response.
+func (iter @Model.Name) Response() autorest.Response {
+    return iter.@(iterType.PageField).Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter @Model.Name) Value() @(itemTypeName) {
+    if !iter.@(iterType.PageField).NotDone() {
+        return @itemType.GetZeroInitExpression()
+    }
+    return iter.@(iterType.PageField).Values()[iter.@(iterType.IndexField)]
 }
 </text>
 }
@@ -240,26 +341,36 @@ func (client @(Model.Name)) @(Model.PreparerMethodName)() (*http.Request, error)
 @if (Model is FutureTypeGo)
 {
     var ftg = Model as FutureTypeGo;
+    var resultVar = ftg.ResultTypeName.ToShortName();
+    var resultVarTarget = resultVar;
+    if (ftg.ResultType is IteratorTypeGo)
+    {
+        resultVarTarget = $"{resultVarTarget}.{ftg.ResultType.Cast<IteratorTypeGo>().PageField}";
+    }
 <text>
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future @Model.Name) Result(client @ftg.ClientTypeName) (@ftg.ResultTypeName, error) {
-    done, err := future.Done(client)
+func (future @Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
+    var done bool
+    done, err = future.Done(client)
     if err != nil {
-        return @ftg.ResultTypeName{}, err
+        return
     }
     if !done {
-        return @ftg.ResultTypeName{}, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "asynchronous operation has not completed")
+        return @resultVar, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "asynchronous operation has not completed")
     }
     if future.PollingMethod() == azure.PollingLocation {
-        return client.@(ftg.ResponderMethodName)(future.Response())
+        @resultVarTarget, err = client.@(ftg.ResponderMethodName)(future.Response())
+        return
     }
-    resp, err := autorest.SendWithSender(client, autorest.ChangeToGet(future.req),
+    var resp *http.Response
+    resp, err = autorest.SendWithSender(client, autorest.ChangeToGet(future.req),
         autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
     if err != nil {
-        return @ftg.ResultTypeName{}, err
+        return
     }
-    return client.@(ftg.ResponderMethodName)(resp)
+    @resultVarTarget, err = client.@(ftg.ResponderMethodName)(resp)
+    return
 }
 </text>
 }

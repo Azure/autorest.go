@@ -29,6 +29,59 @@ func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
 	return PolymorphismClient{NewWithBaseURI(baseURI)}
 }
 
+// GetComplicated get complex types that are polymorphic, but not at the root of the hierarchy; also have additional
+// properties
+func (client PolymorphismClient) GetComplicated(ctx context.Context) (result SalmonModel, err error) {
+	req, err := client.GetComplicatedPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetComplicatedSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetComplicatedResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetComplicatedPreparer prepares the GetComplicated request.
+func (client PolymorphismClient) GetComplicatedPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/complicated"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetComplicatedSender sends the GetComplicated request. The method will close the
+// http.Response Body if it receives an error.
+func (client PolymorphismClient) GetComplicatedSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetComplicatedResponder handles the response to the GetComplicated request. The method always
+// closes the http.Response Body.
+func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (result SalmonModel, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetValid get complex types that are polymorphic
 func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
 	req, err := client.GetValidPreparer(ctx)
@@ -78,6 +131,61 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// PutComplicated put complex types that are polymorphic, but not at the root of the hierarchy; also have additional
+// properties
+//
+func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody BasicSalmon) (result autorest.Response, err error) {
+	req, err := client.PutComplicatedPreparer(ctx, complexBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutComplicatedSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutComplicatedResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutComplicatedPreparer prepares the PutComplicated request.
+func (client PolymorphismClient) PutComplicatedPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/complicated"),
+		autorest.WithJSON(complexBody))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PutComplicatedSender sends the PutComplicated request. The method will close the
+// http.Response Body if it receives an error.
+func (client PolymorphismClient) PutComplicatedSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutComplicatedResponder handles the response to the PutComplicated request. The method always
+// closes the http.Response Body.
+func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
 	return
 }
 

@@ -124,7 +124,8 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public static string GetImportLine(string package, string alias = default(string)) {
+        public static string GetImportLine(string package, string alias = default(string))
+        {
             var builder = new StringBuilder();
             if(!string.IsNullOrEmpty(alias)){
                 builder.Append(alias);
@@ -135,6 +136,56 @@ namespace AutoRest.Go.Model
             builder.Append(package);
             builder.Append('"');
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the expression for a zero-initialized primary type.
+        /// </summary>
+        public string ZeroInitExpression
+        {
+            get
+            {
+                switch (KnownPrimaryType)
+                {
+                    case KnownPrimaryType.ByteArray:
+                        return "nil";
+
+                    case KnownPrimaryType.Boolean:
+                        return "false";
+
+                    case KnownPrimaryType.Date:
+                        return "date.Date{}";
+
+                    case KnownPrimaryType.DateTime:
+                        return "date.Time{}";
+
+                    case KnownPrimaryType.DateTimeRfc1123:
+                        return "date.TimeRFC1123{}";
+
+                    case KnownPrimaryType.Double:
+                    case KnownPrimaryType.Decimal:
+                    case KnownPrimaryType.Int:
+                    case KnownPrimaryType.Long:
+                        return "0";
+
+                    case KnownPrimaryType.Base64Url:
+                    case KnownPrimaryType.String:
+                        return "\"\"";
+
+                    case KnownPrimaryType.Object:
+                        return "map[string]interface{}{}";
+
+                    case KnownPrimaryType.UnixTime:
+                        return "date.UnixTime{}";
+
+                    case KnownPrimaryType.Uuid:
+                        return "uuid.UUID{}";
+
+                    default:
+                        throw new NotImplementedException($"ZeroInitExpression for primary type {KnownPrimaryType} NYI");
+
+                }
+            }
         }
     }
 }

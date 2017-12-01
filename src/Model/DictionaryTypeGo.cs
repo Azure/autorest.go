@@ -58,5 +58,10 @@ namespace AutoRest.Go.Model
         {
             return ValueType.GetHashCode();
         }
+
+        /// <summary>
+        /// Gets the expression for a zero-initialized dictionary type.
+        /// </summary>
+        public string ZeroInitExpression => $"{FieldNameFormat}{{}}";
     }
 }

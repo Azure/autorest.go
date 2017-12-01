@@ -15,7 +15,7 @@ namespace AutoRest.Go.Model
         /// Creates a new future type for the specified method.
         /// </summary>
         /// <param name="method">The method that will return a future.</param>
-        public FutureTypeGo(MethodGo method) : base(CodeNamerGo.Instance.GetFutureTypeName(method))
+        public FutureTypeGo(MethodGo method) : this(CodeNamerGo.Instance.GetFutureTypeName(method), method)
         {
             if (!method.IsLongRunningOperation())
             {
@@ -25,7 +25,25 @@ namespace AutoRest.Go.Model
             CodeModel = method.CodeModel;
             Documentation = "An abstraction for monitoring and retrieving the results of a long-running operation.";
             ClientTypeName = method.Owner;
-            ResultTypeName = method.MethodReturnType;
+            ResultType = method.ReturnValue().Body;
+            ResponderMethodName = method.ResponderMethodName;
+        }
+
+        /// <summary>
+        /// Creates a new future type for the specified method using the specified name.
+        /// </summary>
+        /// <param name="method">The method that will return a future.</param>
+        public FutureTypeGo(string methodName, MethodGo method) : base(methodName)
+        {
+            if (!method.IsLongRunningOperation())
+            {
+                throw new InvalidOperationException($"method {method.Owner}.{method.Name} is not a long-running operation");
+            }
+
+            CodeModel = method.CodeModel;
+            Documentation = "An abstraction for monitoring and retrieving the results of a long-running operation.";
+            ClientTypeName = method.Owner;
+            ResultType = method.ReturnValue().Body;
             ResponderMethodName = method.ResponderMethodName;
         }
 
@@ -40,9 +58,26 @@ namespace AutoRest.Go.Model
         public string ClientTypeName { get; }
 
         /// <summary>
-        /// Gets the type name for the object that's returned when the operation is complete.
+        /// Gets the type of the object that's returned when the operation is complete.
+        /// If the future doesn't have a response body this will be null.
         /// </summary>
-        public string ResultTypeName { get; }
+        public IModelType ResultType { get; }
+
+        /// <summary>
+        /// Gets the type name of the object that's returned when the operation is complete.
+        /// </summary>
+        public string ResultTypeName
+        {
+            get
+            {
+                var resTypeName = MethodGo.DefaultReturnType;
+                if (ResultType != null)
+                {
+                    resTypeName = ResultType.Name.ToString();
+                }
+                return resTypeName;
+            }
+        }
 
         /// <summary>
         /// Gets the name of the responder method associated with this future.

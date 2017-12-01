@@ -20,7 +20,7 @@ namespace AutoRest.Go.Model
 {
     public class MethodGo : Method
     {
-        private const string DefaultReturnType = "autorest.Response";
+        internal const string DefaultReturnType = "autorest.Response";
 
         public string Owner { get; private set; }
 
@@ -84,19 +84,6 @@ namespace AutoRest.Go.Model
             RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
         }
 
-        public string MethodSignature => $"{Name}({MethodParametersSignature})";
-
-        public string MethodReturnSignatureComplete
-        {
-            get
-            {
-                var signature = new StringBuilder("(<-chan ");
-                signature.Append((ListElement.ModelType as SequenceTypeGo).GetElement);
-                signature.Append(", <-chan error)");
-                return signature.ToString();
-            }
-        }
-
         public string ParametersDocumentation
         {
             get
@@ -121,17 +108,6 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public PropertyGo ListElement
-        {
-            get
-            {
-                var body = ReturnType.Body as CompositeTypeGo;
-                return body.Properties.FirstOrDefault(p => p.ModelType is SequenceTypeGo) as PropertyGo;
-            }
-        }
-
-        public string ListCompleteMethodName => $"{Name}Complete";
-
         /// <summary>
         /// Generate the method parameter declaration.
         /// </summary>
@@ -139,7 +115,7 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var declarations = new List<string> {"ctx context.Context"};
+                var declarations = new List<string> { "ctx context.Context" };
                 LocalParameters
                     .ForEach(p => declarations.Add(string.Format(
                                                         p.IsRequired || p.ModelType.CanBeEmpty()
@@ -181,10 +157,41 @@ namespace AutoRest.Go.Model
             {
                 return MethodReturnSig(ReturnType.Body.Cast<FutureTypeGo>().ResultTypeName);
             }
+            else if (IsPageable && !IsNextMethod)
+            {
+                return MethodReturnSig(ReturnType.Body.Cast<PageTypeGo>().ContentType.Name);
+            }
             return MethodReturnSignature();
         }
 
-        public string NextMethodName => $"{Name}NextResults";
+        /// <summary>
+        /// Returns the method return signature for the next results page method (e.g. "foo, bar").
+        /// </summary>
+        /// <returns>The method signature for the next results page method.</returns>
+        public string NextMethodReturnSignature()
+        {
+            return MethodReturnSig(ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().ContentType.Name);
+        }
+
+        /// <summary>
+        /// Returns the type name used as the parameter for the "next results" method.
+        /// </summary>
+        /// <returns>The "next results" method parameter type name.</returns>
+        public string LastResultsTypeName()
+        {
+            var type = ReturnValue().Body;
+            if (IsLongRunningOperation())
+            {
+                type = type.Cast<FutureTypeGo>().ResultType;
+            }
+            if (IsPageable && !IsNextMethod)
+            {
+                type = type.Cast<PageTypeGo>().ContentType;
+            }
+            return type.Name;
+        }
+
+        public string NextMethodName => $"{Name.ToCamelCase()}NextResults";
 
         public string PreparerMethodName => $"{Name}Preparer";
 
@@ -192,15 +199,17 @@ namespace AutoRest.Go.Model
 
         public string ResponderMethodName => $"{Name}Responder";
 
+        public string ListAllMethodName => $"{Name}All";
+
         public string HelperInvocationParameters(bool complete)
         {
-            var invocationParams = new List<string> {"ctx"};
+            var invocationParams = new List<string> { "ctx" };
 
             foreach (ParameterGo p in LocalParameters)
             {
                 if (p.Name.EqualsIgnoreCase("nextlink") && complete)
                 {
-                    invocationParams.Add(string.Format("*list.{0}", NextLink));
+                    invocationParams.Add(string.Format("*list.{0}", p.Name));
                 }
                 else
                 {
@@ -432,16 +441,42 @@ namespace AutoRest.Go.Model
             {
                 return "result.Response = resp";
             }
-            return "result.Response = autorest.Response{Response: resp}";
+            var lhs = "result.Response";
+            if (!forResponder)
+            {
+                lhs = $"{ResponseAssignTarget}.Response";
+            }
+            return $"{lhs} = autorest.Response{{Response: resp}}";
         }
 
-        public string AutorestError(string phase, string response = null, string parameter = null)
+        /// <summary>
+        /// Gets the left-hand side of the response assignment.
+        /// It can be different if the method is pageable.
+        /// </summary>
+        public string ResponseAssignTarget
         {
+            get
+            {
+                var target = "result";
+                if (IsPageable && !IsNextMethod)
+                {
+                    target = $"result.{ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().ResultFieldName}";
+                }
+                return target;
+            }
+        }
+
+        public string AutorestError(string phase, string response = null, string parameter = null, string methodName = null)
+        {
+            if (methodName == null)
+            {
+                methodName = Name;
+            }
             return !string.IsNullOrEmpty(parameter)
-                        ? string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", nil , \"{3}\'{4}\'\")", PackageName, Owner, Name, phase, parameter)
+                        ? string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", nil , \"{3}\'{4}\'\")", PackageName, Owner, methodName, phase, parameter)
                         : string.IsNullOrEmpty(response)
-                                 ? string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", nil , \"{3}\")", PackageName, Owner, Name, phase)
-                                 : string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", {3}, \"{4}\")", PackageName, Owner, Name, response, phase);
+                                 ? string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", nil , \"{3}\")", PackageName, Owner, methodName, phase)
+                                 : string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", {3}, \"{4}\")", PackageName, Owner, methodName, response, phase);
         }
 
         public string ValidationError => $"validation.NewErrorWithValidationError(err, \"{PackageName}.{Owner}\",\"{Name}\")";
@@ -465,12 +500,26 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Checks if method has pageable extension (x-ms-pageable) enabled.
+        /// Returns true if method has pageable extension (x-ms-pageable) with a non-null nextLinkName.
         /// </summary>
-        /// <returns></returns>
+        public bool IsPageable
+        {
+            get
+            {
+                if (!Extensions.ContainsKey(AzureExtensions.PageableExtension))
+                {
+                    return false;
+                }
+                // if the nextLinkName field in the swagger has a null value ("nextLinkName": null)
+                // then don't treat this operation as pageable.
+                var pageableExtension = Extensions[AzureExtensions.PageableExtension] as JContainer;
+                return (string)pageableExtension["nextLinkName"] != null;
+            }
+        }
 
-        public bool IsPageable => !string.IsNullOrEmpty(NextLink);
-
+        /// <summary>
+        /// Returns true if method is a "next method" as defined in swagger (x-ms-pageable:operationName).
+        /// </summary>
         public bool IsNextMethod => Name.Value.EqualsIgnoreCase(NextOperationName);
 
         /// <summary>
@@ -531,36 +580,6 @@ namespace AutoRest.Go.Model
                     } is invalid in Swagger. It should be boolean.";
 
                 throw new InvalidOperationException(message);
-            }
-        }
-
-        /// <summary>
-        /// Add NextLink attribute for pageable extension for the method.
-        /// </summary>
-        /// <returns></returns>
-        public string NextLink
-        {
-            get
-            {
-                // Note:
-                // Methods can be paged, even if "nextLinkName" is null
-                // Paged method just means a method returns an array
-                if (!Extensions.ContainsKey(AzureExtensions.PageableExtension))
-                {
-                    return null;
-                }
-                if (!(Extensions[AzureExtensions.PageableExtension] is JContainer pageableExtension))
-                {
-                    return null;
-                }
-
-                var nextLink = (string)pageableExtension["nextLinkName"];
-                if (string.IsNullOrEmpty(nextLink))
-                {
-                    return null;
-
-                }
-                return CodeNamerGo.Instance.GetPropertyName(nextLink);
             }
         }
     }
