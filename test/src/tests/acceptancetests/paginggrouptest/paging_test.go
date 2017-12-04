@@ -39,7 +39,7 @@ func (s *PagingGroupSuite) TestGetMultiplePages(c *chk.C) {
 
 	// Get all!
 	count = 0
-	for iter, err := pagingClient.GetMultiplePagesAll(context.Background(), clientID, nil, nil); iter.NotDone(); err = iter.Next() {
+	for iter, err := pagingClient.GetMultiplePagesComplete(context.Background(), clientID, nil, nil); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value().Properties, chk.NotNil)
 		count++
@@ -69,7 +69,7 @@ func (s *PagingGroupSuite) TestGetOdataMultiplePages(c *chk.C) {
 	c.Assert(count, chk.Equals, 10)
 
 	count = 0
-	for iter, err := pagingClient.GetOdataMultiplePagesAll(context.Background(), clientID, nil, nil); iter.NotDone(); err = iter.Next() {
+	for iter, err := pagingClient.GetOdataMultiplePagesComplete(context.Background(), clientID, nil, nil); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value().Properties, chk.NotNil)
 		count++
@@ -90,7 +90,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesWithOffset(c *chk.C) {
 	c.Assert(id, chk.Equals, int32(110))
 
 	count = 0
-	for iter, err := pagingClient.GetMultiplePagesWithOffsetAll(context.Background(), 100, clientID, nil, nil); iter.NotDone(); err = iter.Next() {
+	for iter, err := pagingClient.GetMultiplePagesWithOffsetComplete(context.Background(), 100, clientID, nil, nil); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value().Properties, chk.NotNil)
 		count++
@@ -108,7 +108,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesRetryFirst(c *chk.C) {
 	c.Assert(count, chk.Equals, 10)
 
 	count = 0
-	for iter, err := pagingClient.GetMultiplePagesRetryFirstAll(context.Background()); iter.NotDone(); err = iter.Next() {
+	for iter, err := pagingClient.GetMultiplePagesRetryFirstComplete(context.Background()); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value().Properties, chk.NotNil)
 		count++
@@ -126,7 +126,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesRetrySecond(c *chk.C) {
 	c.Assert(count, chk.Equals, 10)
 
 	count = 0
-	for iter, err := pagingClient.GetMultiplePagesRetrySecondAll(context.Background()); iter.NotDone(); err = iter.Next() {
+	for iter, err := pagingClient.GetMultiplePagesRetrySecondComplete(context.Background()); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value().Properties, chk.NotNil)
 		count++
@@ -140,7 +140,7 @@ func (s *PagingGroupSuite) TestGetSinglePagesFailure(c *chk.C) {
 	c.Assert(page.Response().StatusCode, chk.Equals, http.StatusBadRequest)
 
 	count := 0
-	for iter, err := pagingClient.GetSinglePagesFailureAll(context.Background()); iter.NotDone(); err = iter.Next() {
+	for iter, err := pagingClient.GetSinglePagesFailureComplete(context.Background()); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value().Properties, chk.NotNil)
 		count++
@@ -157,7 +157,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFailure(c *chk.C) {
 	//c.Assert(page.Response().StatusCode, chk.Equals, http.StatusBadRequest)
 
 	count := 0
-	for iter, err := pagingClient.GetMultiplePagesFailureAll(context.Background()); err == nil; err = iter.Next() {
+	for iter, err := pagingClient.GetMultiplePagesFailureComplete(context.Background()); err == nil; err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value().Properties, chk.NotNil)
 		count++
@@ -174,7 +174,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFailureURI(c *chk.C) {
 	c.Assert(err, chk.ErrorMatches, ".*No scheme detected in URL.*")
 
 	count := 0
-	for iter, err := pagingClient.GetMultiplePagesFailureURIAll(context.Background()); err == nil; err = iter.Next() {
+	for iter, err := pagingClient.GetMultiplePagesFailureURIComplete(context.Background()); err == nil; err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value(), chk.NotNil)
 		count++
@@ -194,7 +194,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFragmentNextLink(c *chk.C) {
 	c.Assert(count, chk.Equals, 10)
 
 	count = 0
-	for iter, err := pagingClient.GetMultiplePagesFragmentNextLinkAll(context.Background(), "1.6", "test_user"); iter.NotDone(); err = iter.Next() {
+	for iter, err := pagingClient.GetMultiplePagesFragmentNextLinkComplete(context.Background(), "1.6", "test_user"); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value(), chk.NotNil)
 		count++

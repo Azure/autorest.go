@@ -388,13 +388,13 @@ namespace AutoRest.Go
         public static PageTypeGo UnwrapPageType(this CompositeTypeGo ctg)
         {
             PageTypeGo result;
-            if (ctg is FutureTypeGo)
+            if (ctg is FutureTypeGo ftg)
             {
-                result = ctg.Cast<FutureTypeGo>().ResultType.Cast<PageTypeGo>();
+                result = ftg.ResultType.Cast<PageTypeGo>();
             }
-            else if (ctg is PageTypeGo)
+            else if (ctg is PageTypeGo ptg)
             {
-                result = ctg.Cast<PageTypeGo>();
+                result = ptg;
             }
             else
             {
@@ -410,21 +410,21 @@ namespace AutoRest.Go
         /// <returns>The zero-init expression.</returns>
         public static string GetZeroInitExpression(this IModelType type)
         {
-            if (type is CompositeTypeGo)
+            if (type is CompositeTypeGo ctg)
             {
-                return type.Cast<CompositeTypeGo>().ZeroInitExpression;
+                return ctg.ZeroInitExpression;
             }
-            else if (type is EnumTypeGo)
+            else if (type is EnumTypeGo etg)
             {
-                return type.Cast<EnumTypeGo>().ZeroInitExpression;
+                return etg.ZeroInitExpression;
             }
-            else if (type is PrimaryTypeGo)
+            else if (type is PrimaryTypeGo ptg)
             {
-                return type.Cast<PrimaryTypeGo>().ZeroInitExpression;
+                return ptg.ZeroInitExpression;
             }
-            else if (type is DictionaryTypeGo)
+            else if (type is DictionaryTypeGo dtg)
             {
-                return type.Cast<DictionaryTypeGo>().ZeroInitExpression;
+                return dtg.ZeroInitExpression;
             }
             throw new NotImplementedException($"GetZeroInitExpression for type {type} NYI");
         }

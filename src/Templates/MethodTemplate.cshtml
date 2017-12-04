@@ -42,7 +42,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         if lastResult.@nextLinkField == nil || len(to.String(lastResult.@nextLinkField)) < 1 {
             return @returnType{}, nil
         }
-        return client.@(nextMethod.Name)( @Model.HelperInvocationParameters(false), *lastResult.@nextLinkField )
+        return client.@(nextMethod.Name)( @Model.HelperInvocationParameters(), *lastResult.@nextLinkField )
     }
     </text>
     }
@@ -51,7 +51,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @:result.@fnField = client.@(Model.NextMethodName)
     }
 }
-    req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters(false)))
+    req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters()))
     if err != nil {
         err = @(Model.AutorestError("Failure preparing request"))
         return
@@ -291,13 +291,13 @@ func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @Model.LastResu
     }
 <text>
 @EmptyLine
-// @(Model.ListAllMethodName) enumerates all values, automatically crossing page boundaries as required.
-func (client @(Model.Owner)) @(Model.ListAllMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
+// @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
+func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
     @if (Model.IsLongRunningOperation())
     {
     <text>
     var future @Model.MethodReturnType
-    future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters(false)))
+    future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
     result.Future = future.Future
     result.req = future.req
     </text>
@@ -305,7 +305,7 @@ func (client @(Model.Owner)) @(Model.ListAllMethodName)(@(Model.MethodParameters
     else
     {
     <text>
-    result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters(false)))
+    result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
     </text>
     }
     return

@@ -199,22 +199,15 @@ namespace AutoRest.Go.Model
 
         public string ResponderMethodName => $"{Name}Responder";
 
-        public string ListAllMethodName => $"{Name}All";
+        public string ListCompleteMethodName => $"{Name}Complete";
 
-        public string HelperInvocationParameters(bool complete)
+        public string HelperInvocationParameters()
         {
             var invocationParams = new List<string> { "ctx" };
 
             foreach (ParameterGo p in LocalParameters)
             {
-                if (p.Name.EqualsIgnoreCase("nextlink") && complete)
-                {
-                    invocationParams.Add(string.Format("*list.{0}", p.Name));
-                }
-                else
-                {
-                    invocationParams.Add(p.Name);
-                }
+                invocationParams.Add(p.Name);
             }
             return string.Join(", ", invocationParams);
         }

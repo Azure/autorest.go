@@ -118,8 +118,8 @@ func (client PagingClient) getMultiplePagesNextResults(lastResults ProductResult
 	return
 }
 
-// GetMultiplePagesAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesAll(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultIterator, err error) {
+// GetMultiplePagesComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePages(ctx, clientRequestID, maxresults, timeout)
 	return
 }
@@ -198,8 +198,8 @@ func (client PagingClient) getMultiplePagesFailureNextResults(lastResults Produc
 	return
 }
 
-// GetMultiplePagesFailureAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesFailureAll(ctx context.Context) (result ProductResultIterator, err error) {
+// GetMultiplePagesFailureComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesFailureComplete(ctx context.Context) (result ProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePagesFailure(ctx)
 	return
 }
@@ -278,8 +278,8 @@ func (client PagingClient) getMultiplePagesFailureURINextResults(lastResults Pro
 	return
 }
 
-// GetMultiplePagesFailureURIAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesFailureURIAll(ctx context.Context) (result ProductResultIterator, err error) {
+// GetMultiplePagesFailureURIComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesFailureURIComplete(ctx context.Context) (result ProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePagesFailureURI(ctx)
 	return
 }
@@ -353,8 +353,8 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkResponder(resp *http.
 	return
 }
 
-// GetMultiplePagesFragmentNextLinkAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesFragmentNextLinkAll(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
+// GetMultiplePagesFragmentNextLinkComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePagesFragmentNextLink(ctx, APIVersion, tenant)
 	return
 }
@@ -429,8 +429,8 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkResponder
 	return
 }
 
-// GetMultiplePagesFragmentWithGroupingNextLinkAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkAll(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
+// GetMultiplePagesFragmentWithGroupingNextLinkComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePagesFragmentWithGroupingNextLink(ctx, APIVersion, tenant)
 	return
 }
@@ -510,8 +510,8 @@ func (client PagingClient) getMultiplePagesRetryFirstNextResults(lastResults Pro
 	return
 }
 
-// GetMultiplePagesRetryFirstAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesRetryFirstAll(ctx context.Context) (result ProductResultIterator, err error) {
+// GetMultiplePagesRetryFirstComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesRetryFirstComplete(ctx context.Context) (result ProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePagesRetryFirst(ctx)
 	return
 }
@@ -591,8 +591,8 @@ func (client PagingClient) getMultiplePagesRetrySecondNextResults(lastResults Pr
 	return
 }
 
-// GetMultiplePagesRetrySecondAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesRetrySecondAll(ctx context.Context) (result ProductResultIterator, err error) {
+// GetMultiplePagesRetrySecondComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesRetrySecondComplete(ctx context.Context) (result ProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePagesRetrySecond(ctx)
 	return
 }
@@ -690,8 +690,8 @@ func (client PagingClient) getMultiplePagesWithOffsetNextResults(lastResults Pro
 	return
 }
 
-// GetMultiplePagesWithOffsetAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetMultiplePagesWithOffsetAll(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultIterator, err error) {
+// GetMultiplePagesWithOffsetComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultIterator, err error) {
 	result.page, err = client.GetMultiplePagesWithOffset(ctx, offset, clientRequestID, maxresults, timeout)
 	return
 }
@@ -785,8 +785,8 @@ func (client PagingClient) getOdataMultiplePagesNextResults(lastResults OdataPro
 	return
 }
 
-// GetOdataMultiplePagesAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetOdataMultiplePagesAll(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResultIterator, err error) {
+// GetOdataMultiplePagesComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetOdataMultiplePagesComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResultIterator, err error) {
 	result.page, err = client.GetOdataMultiplePages(ctx, clientRequestID, maxresults, timeout)
 	return
 }
@@ -865,8 +865,8 @@ func (client PagingClient) getSinglePagesNextResults(lastResults ProductResult) 
 	return
 }
 
-// GetSinglePagesAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetSinglePagesAll(ctx context.Context) (result ProductResultIterator, err error) {
+// GetSinglePagesComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetSinglePagesComplete(ctx context.Context) (result ProductResultIterator, err error) {
 	result.page, err = client.GetSinglePages(ctx)
 	return
 }
@@ -945,8 +945,8 @@ func (client PagingClient) getSinglePagesFailureNextResults(lastResults ProductR
 	return
 }
 
-// GetSinglePagesFailureAll enumerates all values, automatically crossing page boundaries as required.
-func (client PagingClient) GetSinglePagesFailureAll(ctx context.Context) (result ProductResultIterator, err error) {
+// GetSinglePagesFailureComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (result ProductResultIterator, err error) {
 	result.page, err = client.GetSinglePagesFailure(ctx)
 	return
 }
