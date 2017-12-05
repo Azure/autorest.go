@@ -213,6 +213,68 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
+        /// Calculates the args to be passed to the "next method".
+        /// </summary>
+        /// <param name="nextLink">The arg to be passed in the "next link" param.</param>
+        /// <returns>The params string, e.g. "ctx, foo, nextLink".</returns>
+        public string NextMethodInvocationParameters(string nextLink)
+        {
+            // some next methods take the same params as the "list initial" method plus
+            // the next link param.  so if the param counts match assume this is the case.
+            // to date, the only place where this appears is in the autorest tests.
+            if (NextMethod.LocalParameters.Count() == LocalParameters.Count() + 1)
+            {
+                return $"{HelperInvocationParameters()}, {nextLink}";
+            }
+
+            // attempt to match our local params to that of the next method.
+            // by convention ctx is always the first parameter.
+            // NOTE: the context param is implicit, i.e. it isn't part of the code model
+            var invocationParams = new List<string> { "ctx" };
+
+            // short-circuit simple case, if the next method takes
+            // one parameter then it can only be nextLink
+            if (NextMethod.LocalParameters.Count() == 1)
+            {
+                invocationParams.Add(nextLink);
+            }
+            else
+            {
+                // create param lists so we can walk them by ordinal
+                var myMethodParams = LocalParameters.ToList();
+                var nextMethodParams = NextMethod.LocalParameters.ToList();
+
+                for (int i = 0; i < nextMethodParams.Count; ++i)
+                {
+                    if (nextMethodParams[i].Name.EqualsIgnoreCase("nextlink"))
+                    {
+                        invocationParams.Add(nextLink);
+                    }
+                    else if (i < myMethodParams.Count && ParameterGo.Match(myMethodParams[i], nextMethodParams[i]))
+                    {
+                        invocationParams.Add(myMethodParams[i].Name);
+                    }
+                    else
+                    {
+                        // try to find a match in our local params
+                        var param = myMethodParams
+                            .Where(p => ParameterGo.Match(p, nextMethodParams[i]))
+                            .FirstOrDefault();
+
+                        if (param == null)
+                        {
+                            throw new Exception("failed to find a matching local parameter");
+                        }
+
+                        invocationParams.Add(param.Name);
+                    }
+                }
+            }
+
+            return string.Join(", ", invocationParams);
+        }
+
+        /// <summary>
         /// Return the parameters as they appear in the method signature excluding global parameters.
         /// </summary>
         public IEnumerable<ParameterGo> LocalParameters

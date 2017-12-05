@@ -42,7 +42,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         if lastResult.@nextLinkField == nil || len(to.String(lastResult.@nextLinkField)) < 1 {
             return @returnType{}, nil
         }
-        return client.@(nextMethod.Name)( @Model.HelperInvocationParameters(), *lastResult.@nextLinkField )
+        return client.@(nextMethod.Name)( @Model.NextMethodInvocationParameters($"*lastResult.{nextLinkField}") )
     }
     </text>
     }
