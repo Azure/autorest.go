@@ -394,7 +394,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="method">The long-running operation.</param>
         /// <returns>The name of the type to be returned from the specified method.</returns>
-        public string GetFutureTypeName(MethodGo method)
+        internal string GetFutureTypeName(MethodGo method)
         {
             // operation group + method name is guaranteed to be unique
             return GetFutureTypeName($"{method.Group}{method.Name}");
@@ -405,7 +405,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="prefix">The prefix string.</param>
         /// <returns>The future type name.</returns>
-        public string GetFutureTypeName(string prefix)
+        internal string GetFutureTypeName(string prefix)
         {
             return $"{prefix}Future";
         }
@@ -416,7 +416,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="method">The paged operation.</param>
         /// <returns>The name of the type to be returned from the specified method.</returns>
-        public string GetPageTypeName(MethodGo method)
+        internal string GetPageTypeName(MethodGo method)
         {
             return $"{method.MethodReturnType}Page";
         }
@@ -427,7 +427,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="pageType">The page type.</param>
         /// <returns>The name of the type to be returned from the "list all" method.</returns>
-        public string GetIteratorTypeName(PageTypeGo pageType)
+        internal string GetIteratorTypeName(PageTypeGo pageType)
         {
             return $"{pageType.ContentType.Name}Iterator";
         }

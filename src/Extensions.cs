@@ -385,7 +385,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="ctg">The type to convert from.</param>
         /// <returns>The type converted to a page type.</returns>
-        public static PageTypeGo UnwrapPageType(this CompositeTypeGo ctg)
+        internal static PageTypeGo UnwrapPageType(this CompositeTypeGo ctg)
         {
             PageTypeGo result;
             if (ctg is FutureTypeGo ftg)

@@ -106,8 +106,6 @@ namespace AutoRest.Go.Model
 
         public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
 
-        public string PreparerMethodName => $"{Name}Preparer";
-
         public bool IsWrapperType { get; }
 
         public IModelType BaseType { get; }

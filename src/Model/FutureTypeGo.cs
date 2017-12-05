@@ -9,7 +9,7 @@ namespace AutoRest.Go.Model
     /// <summary>
     /// Represents a future, which is the return type for long-running operations.
     /// </summary>
-    class FutureTypeGo : CompositeTypeGo
+    internal class FutureTypeGo : CompositeTypeGo
     {
         /// <summary>
         /// Creates a new future type for the specified method.

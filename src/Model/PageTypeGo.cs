@@ -13,7 +13,7 @@ namespace AutoRest.Go.Model
     /// <summary>
     /// Represents a response from a pageable operation.
     /// </summary>
-    public class PageTypeGo : CompositeTypeGo
+    internal class PageTypeGo : CompositeTypeGo
     {
         /// <summary>
         /// Creates a new pageable type for the specified response type.
@@ -101,17 +101,17 @@ namespace AutoRest.Go.Model
                 return false;
             }
 
-            var asMyType = other as PageTypeGo;
-            if (asMyType == null)
-            {
-                return false;
-            }
-
             if (ReferenceEquals(this, other))
             {
                 return true;
             }
-            return string.Compare(Name, asMyType.Name, StringComparison.Ordinal) == 0;
+
+            if (other is PageTypeGo asMyType)
+            {
+                return string.Compare(Name, asMyType.Name, StringComparison.Ordinal) == 0;
+            }
+
+            return false;
         }
 
         public override int GetHashCode()

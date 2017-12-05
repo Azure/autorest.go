@@ -13,7 +13,7 @@ namespace AutoRest.Go.Model
     /// <summary>
     /// An abstraction for seamlessly iterating over a pageable collection.
     /// </summary>
-    public class IteratorTypeGo : CompositeTypeGo
+    internal class IteratorTypeGo : CompositeTypeGo
     {
         /// <summary>
         /// Creates a new iterator type for the specified pageable type.

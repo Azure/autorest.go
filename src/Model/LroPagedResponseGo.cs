@@ -10,7 +10,7 @@ namespace AutoRest.Go.Model
     /// This is a bit of a hack as the "list all" method isn't part of the code model and doing
     /// it this way was the path of least resistance (we should fix this eventually).
     /// </summary>
-    class LroPagedResponseGo : Response
+    internal class LroPagedResponseGo : Response
     {
         public LroPagedResponseGo(FutureTypeGo returnType, FutureTypeGo listAllReturnType, IModelType headers) : base(returnType, headers)
         {
