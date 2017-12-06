@@ -62,7 +62,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
 <text>
     result, err = client.@(Model.SenderMethodName)(req)
     if err != nil {
-        err = @(Model.AutorestError("Failure sending request", "resp", "result.Response()"))
+        err = @(Model.AutorestError("Failure sending request", "result.Response()"))
         return
     }
 </text>
@@ -156,25 +156,30 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 }
 
 @{
-    var senderRetType = "*http.Response";
+    var senderRetSig = "*http.Response, error";
     if (Model.IsLongRunningOperation())
     {
-        senderRetType = Model.MethodReturnType;
+        senderRetSig = $"future {Model.MethodReturnType}, err error";
     }
 }
 
 @EmptyLine
 // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
 // http.Response Body if it receives an error.
-func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetType, error) {
+func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
 @if (Model.IsLongRunningOperation())
 {
 <text>
     sender := autorest.DecorateSender(client, @Model.SendDecorators.EmitAsArguments())
-    future := azure.NewFuture(req)
-    _, err := future.Done(sender)
-    f := @(senderRetType){Future: future, req: req}
-    return f, err
+    future.Future = azure.NewFuture(req)
+    future.req = req
+    _, err = future.Done(sender)
+    if err != nil {
+        return
+    }
+    err = autorest.Respond(future.Response(),
+        azure.WithErrorUnlessStatusCode(@(string.Join(",", Model.ResponseCodes.ToArray()))))
+    return
 </text>
 }
 else

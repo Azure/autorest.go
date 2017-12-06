@@ -42,7 +42,7 @@ func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, produc
 
 	result, err = client.Post202Retry200Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Post202Retry200", nil, "Failure sending request'result.Response()'")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Post202Retry200", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -65,12 +65,17 @@ func (client LROsCustomHeaderClient) Post202Retry200Preparer(ctx context.Context
 
 // Post202Retry200Sender sends the Post202Retry200 request. The method will close the
 // http.Response Body if it receives an error.
-func (client LROsCustomHeaderClient) Post202Retry200Sender(req *http.Request) (LROsCustomHeaderPost202Retry200Future, error) {
+func (client LROsCustomHeaderClient) Post202Retry200Sender(req *http.Request) (future LROsCustomHeaderPost202Retry200Future, err error) {
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future := azure.NewFuture(req)
-	_, err := future.Done(sender)
-	f := LROsCustomHeaderPost202Retry200Future{Future: future, req: req}
-	return f, err
+	future.Future = azure.NewFuture(req)
+	future.req = req
+	_, err = future.Done(sender)
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(future.Response(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	return
 }
 
 // Post202Retry200Responder handles the response to the Post202Retry200 request. The method always
@@ -99,7 +104,7 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context
 
 	result, err = client.PostAsyncRetrySucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PostAsyncRetrySucceeded", nil, "Failure sending request'result.Response()'")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PostAsyncRetrySucceeded", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -122,12 +127,17 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededPreparer(ctx context
 
 // PostAsyncRetrySucceededSender sends the PostAsyncRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
-func (client LROsCustomHeaderClient) PostAsyncRetrySucceededSender(req *http.Request) (LROsCustomHeaderPostAsyncRetrySucceededFuture, error) {
+func (client LROsCustomHeaderClient) PostAsyncRetrySucceededSender(req *http.Request) (future LROsCustomHeaderPostAsyncRetrySucceededFuture, err error) {
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future := azure.NewFuture(req)
-	_, err := future.Done(sender)
-	f := LROsCustomHeaderPostAsyncRetrySucceededFuture{Future: future, req: req}
-	return f, err
+	future.Future = azure.NewFuture(req)
+	future.req = req
+	_, err = future.Done(sender)
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(future.Response(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	return
 }
 
 // PostAsyncRetrySucceededResponder handles the response to the PostAsyncRetrySucceeded request. The method always
@@ -157,7 +167,7 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Cont
 
 	result, err = client.Put201CreatingSucceeded200Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Put201CreatingSucceeded200", nil, "Failure sending request'result.Response()'")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Put201CreatingSucceeded200", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -180,12 +190,17 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Preparer(ctx cont
 
 // Put201CreatingSucceeded200Sender sends the Put201CreatingSucceeded200 request. The method will close the
 // http.Response Body if it receives an error.
-func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Sender(req *http.Request) (LROsCustomHeaderPut201CreatingSucceeded200Future, error) {
+func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Sender(req *http.Request) (future LROsCustomHeaderPut201CreatingSucceeded200Future, err error) {
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future := azure.NewFuture(req)
-	_, err := future.Done(sender)
-	f := LROsCustomHeaderPut201CreatingSucceeded200Future{Future: future, req: req}
-	return f, err
+	future.Future = azure.NewFuture(req)
+	future.req = req
+	_, err = future.Done(sender)
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(future.Response(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated))
+	return
 }
 
 // Put201CreatingSucceeded200Responder handles the response to the Put201CreatingSucceeded200 request. The method always
@@ -215,7 +230,7 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context,
 
 	result, err = client.PutAsyncRetrySucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PutAsyncRetrySucceeded", nil, "Failure sending request'result.Response()'")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PutAsyncRetrySucceeded", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -238,12 +253,17 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceededPreparer(ctx context.
 
 // PutAsyncRetrySucceededSender sends the PutAsyncRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
-func (client LROsCustomHeaderClient) PutAsyncRetrySucceededSender(req *http.Request) (LROsCustomHeaderPutAsyncRetrySucceededFuture, error) {
+func (client LROsCustomHeaderClient) PutAsyncRetrySucceededSender(req *http.Request) (future LROsCustomHeaderPutAsyncRetrySucceededFuture, err error) {
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future := azure.NewFuture(req)
-	_, err := future.Done(sender)
-	f := LROsCustomHeaderPutAsyncRetrySucceededFuture{Future: future, req: req}
-	return f, err
+	future.Future = azure.NewFuture(req)
+	future.req = req
+	_, err = future.Done(sender)
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(future.Response(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	return
 }
 
 // PutAsyncRetrySucceededResponder handles the response to the PutAsyncRetrySucceeded request. The method always
