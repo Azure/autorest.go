@@ -67,6 +67,11 @@ namespace AutoRest.Go
             }
 
             // Add discriminators
+            // For all polymorphic types we need an enum with values for all the implementing types.
+            // To do this:
+            // 1. Create an enum with the basic type and all derived types as values.
+            // 2. Check if there is any enum already present that has the same name. If there is, check if it contains all the values of current enum.
+            // 3. If it has the same name and all values of current enum, use it. Otherwise create a new one and use it.
             foreach (var mt in cmg.ModelTypes.Cast<CompositeTypeGo>())
             {
                 if (!mt.IsPolymorphic)
@@ -93,20 +98,23 @@ namespace AutoRest.Go
                     };
                     enumValues.Add(ev);
                 }
-                bool nameAlreadyExists = cmg.EnumTypes.Any(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
-                bool enumAlreadyExists = nameAlreadyExists;
 
-                if (nameAlreadyExists)
+                var enumAlreadyExists = false;
+                var enumWithSameName = (EnumTypeGo)cmg.EnumTypes.FirstOrDefault(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
+
+                if (enumWithSameName != null)
                 {
-                    mt.DiscriminatorEnum = (EnumTypeGo) cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
-                    enumAlreadyExists = !mt.DiscriminatorEnum.Values.Select(value => value.SerializedName)
-                        .Except(enumValues.Select(value => value.SerializedName)).Any();
+                    enumAlreadyExists = !enumValues.Select(value => value.SerializedName).Except(enumWithSameName.Values.Select(value => value.SerializedName)).Any();
                 }
 
-                if (!enumAlreadyExists)
+                if (enumAlreadyExists)
+                {
+                    mt.DiscriminatorEnum = enumWithSameName;
+                }
+                else 
                 {
                     mt.DiscriminatorEnum = cmg.Add(New<EnumType>(new{
-                        Name = nameAlreadyExists ? $"{mt.PolymorphicDiscriminator}{mt.GetInterfaceName()}" :  mt.PolymorphicDiscriminator,
+                        Name = enumWithSameName == null ? mt.PolymorphicDiscriminator : $"{mt.PolymorphicDiscriminator}{mt.GetInterfaceName()}",
                         Values = enumValues,
                     })) as EnumTypeGo;
                 }
