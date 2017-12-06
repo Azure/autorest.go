@@ -47,16 +47,97 @@ type OdataProductResult struct {
 	OdataNextLink     *string    `json:"odata.nextLink,omitempty"`
 }
 
-// OdataProductResultPreparer prepares a request to retrieve the next set of results. It returns
-// nil if no more results exist.
-func (client OdataProductResult) OdataProductResultPreparer() (*http.Request, error) {
-	if client.OdataNextLink == nil || len(to.String(client.OdataNextLink)) <= 0 {
+// OdataProductResultIterator provides access to a complete listing of Product values.
+type OdataProductResultIterator struct {
+	i    int
+	page OdataProductResultPage
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *OdataProductResultIterator) Next() error {
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err := iter.page.Next()
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter OdataProductResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter OdataProductResultIterator) Response() OdataProductResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter OdataProductResultIterator) Value() Product {
+	if !iter.page.NotDone() {
+		return Product{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (opr OdataProductResult) IsEmpty() bool {
+	return opr.Values == nil || len(*opr.Values) == 0
+}
+
+// odataProductResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (opr OdataProductResult) odataProductResultPreparer() (*http.Request, error) {
+	if opr.OdataNextLink == nil || len(to.String(opr.OdataNextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare(&http.Request{},
 		autorest.AsJSON(),
 		autorest.AsGet(),
-		autorest.WithBaseURL(to.String(client.OdataNextLink)))
+		autorest.WithBaseURL(to.String(opr.OdataNextLink)))
+}
+
+// OdataProductResultPage contains a page of Product values.
+type OdataProductResultPage struct {
+	fn  func(OdataProductResult) (OdataProductResult, error)
+	opr OdataProductResult
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *OdataProductResultPage) Next() error {
+	next, err := page.fn(page.opr)
+	if err != nil {
+		return err
+	}
+	page.opr = next
+	return nil
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page OdataProductResultPage) NotDone() bool {
+	return !page.opr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page OdataProductResultPage) Response() OdataProductResult {
+	return page.opr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page OdataProductResultPage) Values() []Product {
+	if page.opr.IsEmpty() {
+		return nil
+	}
+	return *page.opr.Values
 }
 
 // OperationResult
@@ -82,14 +163,95 @@ type ProductResult struct {
 	NextLink          *string    `json:"nextLink,omitempty"`
 }
 
-// ProductResultPreparer prepares a request to retrieve the next set of results. It returns
-// nil if no more results exist.
-func (client ProductResult) ProductResultPreparer() (*http.Request, error) {
-	if client.NextLink == nil || len(to.String(client.NextLink)) <= 0 {
+// ProductResultIterator provides access to a complete listing of Product values.
+type ProductResultIterator struct {
+	i    int
+	page ProductResultPage
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *ProductResultIterator) Next() error {
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err := iter.page.Next()
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter ProductResultIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter ProductResultIterator) Response() ProductResult {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter ProductResultIterator) Value() Product {
+	if !iter.page.NotDone() {
+		return Product{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (pr ProductResult) IsEmpty() bool {
+	return pr.Values == nil || len(*pr.Values) == 0
+}
+
+// productResultPreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (pr ProductResult) productResultPreparer() (*http.Request, error) {
+	if pr.NextLink == nil || len(to.String(pr.NextLink)) < 1 {
 		return nil, nil
 	}
 	return autorest.Prepare(&http.Request{},
 		autorest.AsJSON(),
 		autorest.AsGet(),
-		autorest.WithBaseURL(to.String(client.NextLink)))
+		autorest.WithBaseURL(to.String(pr.NextLink)))
+}
+
+// ProductResultPage contains a page of Product values.
+type ProductResultPage struct {
+	fn func(ProductResult) (ProductResult, error)
+	pr ProductResult
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *ProductResultPage) Next() error {
+	next, err := page.fn(page.pr)
+	if err != nil {
+		return err
+	}
+	page.pr = next
+	return nil
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page ProductResultPage) NotDone() bool {
+	return !page.pr.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page ProductResultPage) Response() ProductResult {
+	return page.pr
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page ProductResultPage) Values() []Product {
+	if page.pr.IsEmpty() {
+		return nil
+	}
+	return *page.pr.Values
 }

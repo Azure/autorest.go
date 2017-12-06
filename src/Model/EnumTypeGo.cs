@@ -33,5 +33,10 @@ namespace AutoRest.Go.Model
         /// Since swagger doesn't let you define a description for enums we make one up.
         /// </summary>
         public string Documentation => $"{Name} enumerates the values for {Name.FixedValue.ToPhrase()}.";
+
+        /// <summary>
+        /// Gets the expression for a zero-initialized enum.
+        /// </summary>
+        public string ZeroInitExpression => "\"\"";
     }
 }

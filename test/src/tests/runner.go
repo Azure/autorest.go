@@ -93,7 +93,7 @@ func runTests(allPass *bool) {
 
 func getReport(ctx context.Context) {
 	var reportClient = report.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport(ctx)
+	res, err := reportClient.GetReport(ctx, "")
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
@@ -102,7 +102,7 @@ func getReport(ctx context.Context) {
 
 func getAzureReport(ctx context.Context) {
 	var reportClient = azurereport.NewWithBaseURI(utils.GetBaseURI())
-	res, err := reportClient.GetReport(ctx)
+	res, err := reportClient.GetReport(ctx, "")
 	if err != nil {
 		fmt.Println("Error:", err)
 	}

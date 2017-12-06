@@ -15,7 +15,7 @@ import (
 
 const (
 	// DefaultBaseURI is the default URI used for the service Dictionarygroup
-	DefaultBaseURI = "http://localhost"
+	DefaultBaseURI = "http://localhost:3000"
 )
 
 // BaseClient is the base client for Dictionarygroup.

@@ -18,7 +18,7 @@
 </text>
 }
 
-func (client @(Model.Owner)) @(Model.MethodSignature) (@Model.MethodReturnSignature()) {
+func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
 @if ((Model.CodeModel as CodeModelGo).ShouldValidate && !Model.ParameterValidations.IsNullOrEmpty())
 {
 <text>
@@ -29,8 +29,29 @@ func (client @(Model.Owner)) @(Model.MethodSignature) (@Model.MethodReturnSignat
 @EmptyLine
 </text>
 }
-
-    req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters(complete: false)))
+@if (Model.IsPageable && !Model.IsLongRunningOperation() && !Model.IsNextMethod)
+{
+    var fnField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().FnFieldName;
+    var nextMethod = Model.NextMethod;
+    if (nextMethod != null)
+    {
+        var returnType = nextMethod.MethodReturnType;
+        var nextLinkField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().NextLink;
+    <text>
+    result.@fnField = func(lastResult @returnType) (@returnType, error) {
+        if lastResult.@nextLinkField == nil || len(to.String(lastResult.@nextLinkField)) < 1 {
+            return @returnType{}, nil
+        }
+        return client.@(nextMethod.Name)( @Model.NextMethodInvocationParameters($"*lastResult.{nextLinkField}") )
+    }
+    </text>
+    }
+    else
+    {
+    @:result.@fnField = client.@(Model.NextMethodName)
+    }
+}
+    req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters()))
     if err != nil {
         err = @(Model.AutorestError("Failure preparing request"))
         return
@@ -41,7 +62,7 @@ func (client @(Model.Owner)) @(Model.MethodSignature) (@Model.MethodReturnSignat
 <text>
     result, err = client.@(Model.SenderMethodName)(req)
     if err != nil {
-        err = @(Model.AutorestError("Failure sending request", "resp", "result.Response()"))
+        err = @(Model.AutorestError("Failure sending request", "result.Response()"))
         return
     }
 </text>
@@ -56,7 +77,7 @@ else
         return
     }
 @EmptyLine
-    result, err = client.@(Model.ResponderMethodName)(resp)
+    @(Model.ResponseAssignTarget), err = client.@(Model.ResponderMethodName)(resp)
     if err != nil {
         err = @(Model.AutorestError("Failure responding to request", "resp"))
     }
@@ -135,25 +156,30 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 }
 
 @{
-    var senderRetType = "*http.Response";
+    var senderRetSig = "*http.Response, error";
     if (Model.IsLongRunningOperation())
     {
-        senderRetType = Model.MethodReturnType;
+        senderRetSig = $"future {Model.MethodReturnType}, err error";
     }
 }
 
 @EmptyLine
 // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
 // http.Response Body if it receives an error.
-func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetType, error) {
+func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
 @if (Model.IsLongRunningOperation())
 {
 <text>
     sender := autorest.DecorateSender(client, @Model.SendDecorators.EmitAsArguments())
-    future := azure.NewFuture(req)
-    _, err := future.Done(sender)
-    f := @(senderRetType){Future: future, req: req}
-    return f, err
+    future.Future = azure.NewFuture(req)
+    future.req = req
+    _, err = future.Done(sender)
+    if err != nil {
+        return
+    }
+    err = autorest.Respond(future.Response(),
+        azure.WithErrorUnlessStatusCode(@(string.Join(",", Model.ResponseCodes.ToArray()))))
+    return
 </text>
 }
 else
@@ -169,6 +195,36 @@ else
 // @(Model.ResponderMethodName) handles the response to the @(Model.Name) request. The method always
 // closes the http.Response Body.
 func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) {
+@if (Model.IsLongRunningOperation() && Model.IsPageable)
+{
+    var pageType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
+<text>
+    result.@(pageType.ResultFieldName), err = client.@(Model.ResponderMethodName.ToCamelCase())(resp)
+    result.@(pageType.FnFieldName) = client.@(Model.NextMethodName)
+</text>
+}
+else
+{
+<text>
+    @if (Model.ReturnValue().Body.IsStreamType())
+    {
+    @:result.Value = &resp.Body
+    }
+    err = autorest.Respond(
+        @(Model.RespondDecorators.EmitAsArguments()))
+
+    @(Model.Response(true))
+</text>
+}
+    return
+}
+
+@if (Model.IsLongRunningOperation() && Model.IsPageable)
+{
+    var pageType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
+<text>
+@EmptyLine
+func (client @(Model.Owner)) @(Model.ResponderMethodName.ToCamelCase())(resp *http.Response) (result @pageType.ContentType.Name, err error) {
     @if (Model.ReturnValue().Body.IsStreamType())
     {
     @:result.Value = &resp.Body
@@ -179,42 +235,50 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     @(Model.Response(true))
     return
 }
+</text>
+}
 
 @if (Model.IsPageable && !Model.NextAlreadyDefined)
 {
-    var lastResTypyeName = Model.ReturnValue().Body.Name;
-    var preparerName = Model.ReturnValue().Body.Cast<CompositeTypeGo>().PreparerMethodName;
+    var preparerName = Model.ReturnValue().Body.Cast<CompositeTypeGo>().UnwrapPageType().PreparerMethodName;
     if (Model.IsLongRunningOperation())
     {
-        lastResTypyeName = Model.ReturnValue().Body.Cast<FutureTypeGo>().ResultTypeName;
-        preparerName = $"{lastResTypyeName}Preparer";
+        preparerName = $"{Model.LastResultsTypeName().ToCamelCase()}Preparer";
     }
 <text>
 @EmptyLine
 // @(Model.NextMethodName) retrieves the next set of results, if any.
-func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @lastResTypyeName) (@Model.MethodReturnSignature()) {
+func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @Model.LastResultsTypeName()) (@Model.NextMethodReturnSignature()) {
     req, err := lastResults.@(preparerName)()
     if err != nil {
-        return result, @(Model.AutorestError("Failure preparing next results request"))
+        return result, @(Model.AutorestError("Failure preparing next results request", null, null, Model.NextMethodName))
     }
     if req == nil {
         return
     }
     @if (Model.IsLongRunningOperation())
     {
-    @:return client.@(Model.SenderMethodName)(req)
+    <text>
+    var resp *http.Response
+    resp, err = autorest.SendWithSender(client, req,
+        autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+    if err != nil {
+        return result, @(Model.AutorestError("Failure sending next results request", "resp", null, Model.NextMethodName))
+    }
+    return client.@(Model.ResponderMethodName.ToCamelCase())(resp)
+    </text>
     }
     else
     {
     <text>
     resp, err := client.@(Model.SenderMethodName)(req)
     if err != nil {
-        @(Model.Response(false))
-        return result, @(Model.AutorestError("Failure sending next results request", "resp"))
+        @(Model.Response(true))
+        return result, @(Model.AutorestError("Failure sending next results request", "resp", null, Model.NextMethodName))
     }
     result, err = client.@(Model.ResponderMethodName)(resp)
     if err != nil {
-        err = @(Model.AutorestError("Failure responding to next results request", "resp"))
+        err = @(Model.AutorestError("Failure responding to next results request", "resp", null, Model.NextMethodName))
     }
     return
     </text>
@@ -223,62 +287,33 @@ func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @lastResTypyeNa
 </text>
 }
 
-@if (Model.IsPageable && !Model.IsNextMethod && Model.ListElement != null)
+@if (Model.IsPageable && !Model.IsNextMethod)
 {
+    var resultTypeName = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().IteratorType.Name;
+    if (Model.IsLongRunningOperation())
+    {
+        resultTypeName = ((LroPagedResponseGo)Model.ReturnType).ListAllReturnType.Name;
+    }
 <text>
 @EmptyLine
-// @(Model.ListCompleteMethodName) gets all elements from the list without paging.
-func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) @(Model.MethodReturnSignatureComplete) {
-    resultChan := make(chan @((Model.ListElement.ModelType as SequenceTypeGo).GetElement))
-    errChan := make(chan error, 1)
-    go func() {
-        defer func() {
-			close(resultChan)
-			close(errChan)
-		}()
-        list, err := client.@(Model.Name)(@(Model.HelperInvocationParameters(complete: false)))
-        if err != nil {
-            errChan @("<-") err
-            return
-        }
-        if list.@(Model.ListElement.Name) != nil {
-            for _, item := range *list.@(Model.ListElement.Name) {
-                select {
-                case @("<-") ctx.Done():
-                    errChan @("<-") ctx.Err()
-                    return
-                case resultChan @("<-") item:
-                    // Intentionally left blank
-                }
-            }
-        }
-        for list.@(Model.NextLink) != nil {
-    @if (Model.NextAlreadyDefined)
+// @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
+func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
+    @if (Model.IsLongRunningOperation())
     {
-          @:list, err = client.@(Model.NextOperationName)(@(Model.NextMethod.HelperInvocationParameters(complete: true)))
+    <text>
+    var future @Model.MethodReturnType
+    future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
+    result.Future = future.Future
+    result.req = future.req
+    </text>
     }
     else
     {
-          @:list, err = client.@(Model.NextMethodName)(list)
+    <text>
+    result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
+    </text>
     }
-            if err != nil {
-                errChan @("<-") err
-                return
-            }
-            if list.@(Model.ListElement.Name) != nil {
-                for _, item := range *list.@(Model.ListElement.Name) {
-                    select {
-                        case @("<-") ctx.Done():
-                            errChan @("<-") ctx.Err()
-                            return
-                        case resultChan @("<-") item:
-                            // Intentionally left blank
-                    }
-                }
-            }
-        }
-    }()
-    return resultChan, errChan
+    return
 }
 </text>
 }

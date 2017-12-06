@@ -180,6 +180,18 @@ namespace AutoRest.Go.Model
                                    ? "{0} == nil || len({0}) == 0"
                                    : "{0} != nil && len({0}) > 0", valueReference);
         }
+
+        /// <summary>
+        /// Returns true if two parameters are semantically equivalent.
+        /// The names match (excluding casing) and the types are identical.
+        /// </summary>
+        /// <param name="lhs">Left-hand side to compare against.</param>
+        /// <param name="rhs">Right-hand side to compare with.</param>
+        /// <returns>True if the two are semantically equal.</returns>
+        public static bool Match(ParameterGo lhs, ParameterGo rhs)
+        {
+            return lhs.Name.EqualsIgnoreCase(rhs.Name) && lhs.ModelTypeName.Equals(rhs.ModelTypeName);
+        }
     }
 
     public static class ParameterGoExtensions

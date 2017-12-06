@@ -18,7 +18,7 @@ import (
 
 const (
 	// DefaultBaseURI is the default URI used for the service Report
-	DefaultBaseURI = "http://localhost"
+	DefaultBaseURI = "http://localhost:3000"
 )
 
 // BaseClient is the base client for Report.
@@ -41,8 +41,11 @@ func NewWithBaseURI(baseURI string) BaseClient {
 }
 
 // GetReport get test coverage report
-func (client BaseClient) GetReport(ctx context.Context) (result SetInt32, err error) {
-	req, err := client.GetReportPreparer(ctx)
+//
+// qualifier is if specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only
+// effect is, that generators that run all tests several times, can distinguish the generated reports.
+func (client BaseClient) GetReport(ctx context.Context, qualifier string) (result SetInt32, err error) {
+	req, err := client.GetReportPreparer(ctx, qualifier)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "report.BaseClient", "GetReport", nil, "Failure preparing request")
 		return
@@ -64,11 +67,17 @@ func (client BaseClient) GetReport(ctx context.Context) (result SetInt32, err er
 }
 
 // GetReportPreparer prepares the GetReport request.
-func (client BaseClient) GetReportPreparer(ctx context.Context) (*http.Request, error) {
+func (client BaseClient) GetReportPreparer(ctx context.Context, qualifier string) (*http.Request, error) {
+	queryParameters := map[string]interface{}{}
+	if len(qualifier) > 0 {
+		queryParameters["qualifier"] = autorest.Encode("query", qualifier)
+	}
+
 	preparer := autorest.CreatePreparer(
 		autorest.AsGet(),
 		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/report"))
+		autorest.WithPath("/report"),
+		autorest.WithQueryParameters(queryParameters))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

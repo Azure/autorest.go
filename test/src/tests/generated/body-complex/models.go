@@ -42,6 +42,8 @@ const (
 	FishtypeSawshark Fishtype = "sawshark"
 	// FishtypeShark specifies the fishtype shark state for fishtype.
 	FishtypeShark Fishtype = "shark"
+	// FishtypeSmartSalmon specifies the fishtype smart salmon state for fishtype.
+	FishtypeSmartSalmon Fishtype = "smart_salmon"
 )
 
 // ArrayWrapper
@@ -102,6 +104,16 @@ func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 
 // AsSalmon is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsSalmon() (*Salmon, bool) {
+	return nil, false
+}
+
+// AsBasicSalmon is the BasicFish implementation for Cookiecuttershark.
+func (c Cookiecuttershark) AsBasicSalmon() (BasicSalmon, bool) {
+	return nil, false
+}
+
+// AsSmartSalmon is the BasicFish implementation for Cookiecuttershark.
+func (c Cookiecuttershark) AsSmartSalmon() (*SmartSalmon, bool) {
 	return nil, false
 }
 
@@ -267,6 +279,8 @@ type Error struct {
 // BasicFish
 type BasicFish interface {
 	AsSalmon() (*Salmon, bool)
+	AsBasicSalmon() (BasicSalmon, bool)
+	AsSmartSalmon() (*SmartSalmon, bool)
 	AsShark() (*Shark, bool)
 	AsBasicShark() (BasicShark, bool)
 	AsSawshark() (*Sawshark, bool)
@@ -294,6 +308,10 @@ func unmarshalBasicFish(body []byte) (BasicFish, error) {
 	switch m["fishtype"] {
 	case string(FishtypeSalmon):
 		var s Salmon
+		err := json.Unmarshal(body, &s)
+		return s, err
+	case string(FishtypeSmartSalmon):
+		var s SmartSalmon
 		err := json.Unmarshal(body, &s)
 		return s, err
 	case string(FishtypeShark):
@@ -350,6 +368,16 @@ func (f Fish) MarshalJSON() ([]byte, error) {
 
 // AsSalmon is the BasicFish implementation for Fish.
 func (f Fish) AsSalmon() (*Salmon, bool) {
+	return nil, false
+}
+
+// AsBasicSalmon is the BasicFish implementation for Fish.
+func (f Fish) AsBasicSalmon() (BasicSalmon, bool) {
+	return nil, false
+}
+
+// AsSmartSalmon is the BasicFish implementation for Fish.
+func (f Fish) AsSmartSalmon() (*SmartSalmon, bool) {
 	return nil, false
 }
 
@@ -487,6 +515,16 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 
 // AsSalmon is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsSalmon() (*Salmon, bool) {
+	return nil, false
+}
+
+// AsBasicSalmon is the BasicFish implementation for Goblinshark.
+func (g Goblinshark) AsBasicSalmon() (BasicSalmon, bool) {
+	return nil, false
+}
+
+// AsSmartSalmon is the BasicFish implementation for Goblinshark.
+func (g Goblinshark) AsSmartSalmon() (*SmartSalmon, bool) {
 	return nil, false
 }
 
@@ -633,14 +671,58 @@ type ReadonlyObj struct {
 	Size              *int32  `json:"size,omitempty"`
 }
 
+// BasicSalmon
+type BasicSalmon interface {
+	AsSmartSalmon() (*SmartSalmon, bool)
+	AsSalmon() (*Salmon, bool)
+}
+
 // Salmon
 type Salmon struct {
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	Fishtype Fishtype     `json:"fishtype,omitempty"`
-	Location *string      `json:"location,omitempty"`
-	Iswild   *bool        `json:"iswild,omitempty"`
+	autorest.Response `json:"-"`
+	Species           *string      `json:"species,omitempty"`
+	Length            *float64     `json:"length,omitempty"`
+	Siblings          *[]BasicFish `json:"siblings,omitempty"`
+	Fishtype          Fishtype     `json:"fishtype,omitempty"`
+	Location          *string      `json:"location,omitempty"`
+	Iswild            *bool        `json:"iswild,omitempty"`
+}
+
+func unmarshalBasicSalmon(body []byte) (BasicSalmon, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["fishtype"] {
+	case string(FishtypeSmartSalmon):
+		var s SmartSalmon
+		err := json.Unmarshal(body, &s)
+		return s, err
+	default:
+		var s Salmon
+		err := json.Unmarshal(body, &s)
+		return s, err
+	}
+}
+func unmarshalBasicSalmonArray(body []byte) ([]BasicSalmon, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	sArray := make([]BasicSalmon, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		s, err := unmarshalBasicSalmon(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		sArray[index] = s
+	}
+	return sArray, nil
 }
 
 // MarshalJSON is the custom marshaler for Salmon.
@@ -657,6 +739,16 @@ func (s Salmon) MarshalJSON() ([]byte, error) {
 // AsSalmon is the BasicFish implementation for Salmon.
 func (s Salmon) AsSalmon() (*Salmon, bool) {
 	return &s, true
+}
+
+// AsBasicSalmon is the BasicFish implementation for Salmon.
+func (s Salmon) AsBasicSalmon() (BasicSalmon, bool) {
+	return &s, true
+}
+
+// AsSmartSalmon is the BasicFish implementation for Salmon.
+func (s Salmon) AsSmartSalmon() (*SmartSalmon, bool) {
+	return nil, false
 }
 
 // AsShark is the BasicFish implementation for Salmon.
@@ -765,6 +857,12 @@ func (s *Salmon) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
+// SalmonModel
+type SalmonModel struct {
+	autorest.Response `json:"-"`
+	Value             *Salmon `json:"value,omitempty"`
+}
+
 // Sawshark
 type Sawshark struct {
 	Species  *string      `json:"species,omitempty"`
@@ -789,6 +887,16 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 
 // AsSalmon is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsSalmon() (*Salmon, bool) {
+	return nil, false
+}
+
+// AsBasicSalmon is the BasicFish implementation for Sawshark.
+func (s Sawshark) AsBasicSalmon() (BasicSalmon, bool) {
+	return nil, false
+}
+
+// AsSmartSalmon is the BasicFish implementation for Sawshark.
+func (s Sawshark) AsSmartSalmon() (*SmartSalmon, bool) {
 	return nil, false
 }
 
@@ -987,6 +1095,16 @@ func (s Shark) AsSalmon() (*Salmon, bool) {
 	return nil, false
 }
 
+// AsBasicSalmon is the BasicFish implementation for Shark.
+func (s Shark) AsBasicSalmon() (BasicSalmon, bool) {
+	return nil, false
+}
+
+// AsSmartSalmon is the BasicFish implementation for Shark.
+func (s Shark) AsSmartSalmon() (*SmartSalmon, bool) {
+	return nil, false
+}
+
 // AsShark is the BasicFish implementation for Shark.
 func (s Shark) AsShark() (*Shark, bool) {
 	return &s, true
@@ -1101,6 +1219,160 @@ type Siamese struct {
 	Color             *string `json:"color,omitempty"`
 	Hates             *[]Dog  `json:"hates,omitempty"`
 	Breed             *string `json:"breed,omitempty"`
+}
+
+// SmartSalmon
+type SmartSalmon struct {
+	Species              *string                             `json:"species,omitempty"`
+	Length               *float64                            `json:"length,omitempty"`
+	Siblings             *[]BasicFish                        `json:"siblings,omitempty"`
+	Fishtype             Fishtype                            `json:"fishtype,omitempty"`
+	Location             *string                             `json:"location,omitempty"`
+	Iswild               *bool                               `json:"iswild,omitempty"`
+	AdditionalProperties *map[string]*map[string]interface{} `json:",omitempty"`
+	CollegeDegree        *string                             `json:"college_degree,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SmartSalmon.
+func (s SmartSalmon) MarshalJSON() ([]byte, error) {
+	s.Fishtype = FishtypeSmartSalmon
+	type Alias SmartSalmon
+	return json.Marshal(&struct {
+		Alias
+	}{
+		Alias: (Alias)(s),
+	})
+}
+
+// AsSalmon is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsSalmon() (*Salmon, bool) {
+	return nil, false
+}
+
+// AsBasicSalmon is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsBasicSalmon() (BasicSalmon, bool) {
+	return &s, true
+}
+
+// AsSmartSalmon is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsSmartSalmon() (*SmartSalmon, bool) {
+	return &s, true
+}
+
+// AsShark is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsShark() (*Shark, bool) {
+	return nil, false
+}
+
+// AsBasicShark is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsBasicShark() (BasicShark, bool) {
+	return nil, false
+}
+
+// AsSawshark is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsSawshark() (*Sawshark, bool) {
+	return nil, false
+}
+
+// AsGoblinshark is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsGoblinshark() (*Goblinshark, bool) {
+	return nil, false
+}
+
+// AsCookiecuttershark is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsCookiecuttershark() (*Cookiecuttershark, bool) {
+	return nil, false
+}
+
+// AsFish is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsFish() (*Fish, bool) {
+	return nil, false
+}
+
+// AsBasicFish is the BasicFish implementation for SmartSalmon.
+func (s SmartSalmon) AsBasicFish() (BasicFish, bool) {
+	return &s, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for SmartSalmon struct.
+func (s *SmartSalmon) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	var v *json.RawMessage
+
+	v = m["college_degree"]
+	if v != nil {
+		var collegeDegree string
+		err = json.Unmarshal(*m["college_degree"], &collegeDegree)
+		if err != nil {
+			return err
+		}
+		s.CollegeDegree = &collegeDegree
+	}
+
+	v = m["location"]
+	if v != nil {
+		var location string
+		err = json.Unmarshal(*m["location"], &location)
+		if err != nil {
+			return err
+		}
+		s.Location = &location
+	}
+
+	v = m["iswild"]
+	if v != nil {
+		var iswild bool
+		err = json.Unmarshal(*m["iswild"], &iswild)
+		if err != nil {
+			return err
+		}
+		s.Iswild = &iswild
+	}
+
+	v = m["species"]
+	if v != nil {
+		var species string
+		err = json.Unmarshal(*m["species"], &species)
+		if err != nil {
+			return err
+		}
+		s.Species = &species
+	}
+
+	v = m["length"]
+	if v != nil {
+		var length float64
+		err = json.Unmarshal(*m["length"], &length)
+		if err != nil {
+			return err
+		}
+		s.Length = &length
+	}
+
+	v = m["siblings"]
+	if v != nil {
+		siblings, err := unmarshalBasicFishArray(*m["siblings"])
+		if err != nil {
+			return err
+		}
+		s.Siblings = &siblings
+	}
+
+	v = m["fishtype"]
+	if v != nil {
+		var fishtype Fishtype
+		err = json.Unmarshal(*m["fishtype"], &fishtype)
+		if err != nil {
+			return err
+		}
+		s.Fishtype = fishtype
+	}
+
+	return nil
 }
 
 // StringWrapper

@@ -199,36 +199,15 @@ namespace AutoRest.Go
                 ctg.SetName(name);
             }
 
-            // Find all methods that returned paged results
-            cmg.Methods.Cast<MethodGo>()
-                .Where(m => m.IsPageable).ToList()
-                .ForEach(m =>
-                {
-                    if (!cmg.PagedTypes.ContainsKey(m.ReturnValue().Body))
-                    {
-                        cmg.PagedTypes.Add(m.ReturnValue().Body, m.NextLink);
-                    }
-
-                    if (!m.NextMethodExists(cmg.Methods.Cast<MethodGo>()))
-                    {
-                        cmg.NextMethodUndefined.Add(m.ReturnValue().Body);
-                    }
-                });
-
-            // Mark all models returned by one or more methods and note any "next link" fields used with paged data
+            // Mark all models returned by one or more methods
             cmg.ModelTypes.Cast<CompositeTypeGo>()
                 .Where(mtm =>
                 {
                     return cmg.Methods.Cast<MethodGo>().Any(m => m.HasReturnValue() && m.ReturnValue().Body.Equals(mtm));
-                }).ToList()
+                })
                 .ForEach(mtm =>
                 {
                     mtm.IsResponseType = true;
-                    if (cmg.PagedTypes.ContainsKey(mtm))
-                    {
-                        mtm.NextLink = CodeNamerGo.Instance.GetPropertyName(cmg.PagedTypes[mtm]);
-                        mtm.PreparerNeeded = cmg.NextMethodUndefined.Contains(mtm);
-                    }
                 });
 
             foreach (var mtm in cmg.ModelTypes)
@@ -285,6 +264,17 @@ namespace AutoRest.Go
                         cmg.Add(ctg);
                         method.ReturnType = new Response(ctg, method.ReturnType.Headers);
                     }
+                }
+
+                if (method.IsPageable && !method.IsNextMethod)
+                {
+                    // for pageable methods replace the return type with a page iterator.
+                    // do this before LROs as you can have pageable operations that are
+                    // long-running and for this case we want the future to return a paged type.
+                    // note that we don't want to do this for the "next methods" that are
+                    // defined explicitly in swagger as they will be used in lieu of
+                    // generating a custom preparer so they must return the underlying type.
+                    cmg.CreatePageableTypeForMethod(method);
                 }
 
                 if (method.IsLongRunningOperation())

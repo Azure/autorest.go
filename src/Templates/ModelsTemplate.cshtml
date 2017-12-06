@@ -11,7 +11,7 @@
     var enums = Model.EnumTypes.Cast<EnumTypeGo>().ToList();
     enums.Sort((lhs, rhs) => lhs.Name.FixedValue.CompareTo(rhs.Name));
 
-    var modelTypes = Model.ModelTypes.Cast<CompositeTypeGo>().Union(Model.FutureTypes).ToList();
+    var modelTypes = Model.ModelTypes.Cast<CompositeTypeGo>().ToList();
     modelTypes.Sort((x, y) => x.Name.Value.CompareTo(y.Name.Value));
 }
 package @Model.Namespace
