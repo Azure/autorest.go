@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/Azure/go-autorest/autorest"
 	chk "gopkg.in/check.v1"
 
 	"tests/acceptancetests/utils"
@@ -154,7 +155,9 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFailure(c *chk.C) {
 	c.Assert(page.NotDone(), chk.Equals, true)
 	err = page.Next()
 	c.Assert(err, chk.NotNil)
-	//c.Assert(page.Response().StatusCode, chk.Equals, http.StatusBadRequest)
+	detErr, ok := err.(autorest.DetailedError)
+	c.Assert(ok, chk.Equals, true)
+	c.Assert(detErr.StatusCode, chk.Equals, http.StatusBadRequest)
 
 	count := 0
 	for iter, err := pagingClient.GetMultiplePagesFailureComplete(context.Background()); err == nil; err = iter.Next() {
@@ -168,7 +171,7 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFailure(c *chk.C) {
 func (s *PagingGroupSuite) TestGetMultiplePagesFailureURI(c *chk.C) {
 	page, err := pagingClient.GetMultiplePagesFailureURI(context.Background())
 	c.Assert(err, chk.IsNil)
-	//c.Assert(*res.NextLink, chk.Equals, "*&*#&$")
+	c.Assert(*page.Response().NextLink, chk.Equals, "*&*#&$")
 	err = page.Next()
 	c.Assert(err, chk.NotNil)
 	c.Assert(err, chk.ErrorMatches, ".*No scheme detected in URL.*")

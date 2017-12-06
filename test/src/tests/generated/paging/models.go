@@ -74,8 +74,8 @@ func (iter OdataProductResultIterator) NotDone() bool {
 	return iter.page.NotDone() && iter.i < len(iter.page.Values())
 }
 
-// Response returns the raw server response.
-func (iter OdataProductResultIterator) Response() autorest.Response {
+// Response returns the raw server response from the last page request.
+func (iter OdataProductResultIterator) Response() OdataProductResult {
 	return iter.page.Response()
 }
 
@@ -128,8 +128,8 @@ func (page OdataProductResultPage) NotDone() bool {
 }
 
 // Response returns the raw server response from the last page request.
-func (page OdataProductResultPage) Response() autorest.Response {
-	return page.opr.Response
+func (page OdataProductResultPage) Response() OdataProductResult {
+	return page.opr
 }
 
 // Values returns the slice of values for the current page or nil if there are no values.
@@ -190,8 +190,8 @@ func (iter ProductResultIterator) NotDone() bool {
 	return iter.page.NotDone() && iter.i < len(iter.page.Values())
 }
 
-// Response returns the raw server response.
-func (iter ProductResultIterator) Response() autorest.Response {
+// Response returns the raw server response from the last page request.
+func (iter ProductResultIterator) Response() ProductResult {
 	return iter.page.Response()
 }
 
@@ -244,8 +244,8 @@ func (page ProductResultPage) NotDone() bool {
 }
 
 // Response returns the raw server response from the last page request.
-func (page ProductResultPage) Response() autorest.Response {
-	return page.pr.Response
+func (page ProductResultPage) Response() ProductResult {
+	return page.pr
 }
 
 // Values returns the slice of values for the current page or nil if there are no values.
