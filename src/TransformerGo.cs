@@ -9,6 +9,7 @@ using AutoRest.Extensions;
 using AutoRest.Go.Model;
 using AutoRest.Go.Properties;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -19,13 +20,6 @@ namespace AutoRest.Go
 {
     public class TransformerGo : CodeModelTransformer<CodeModelGo>
     {
-        private readonly Dictionary<IModelType, IModelType> _normalizedTypes;
-
-        public TransformerGo()
-        {
-            _normalizedTypes = new Dictionary<IModelType, IModelType>();
-        }
-
         public override CodeModelGo TransformCodeModel(CodeModel cm)
         {
             var cmg = cm as CodeModelGo;
@@ -49,10 +43,8 @@ namespace AutoRest.Go
                 foreach (var property in mt.Properties)
                 {
                     // gosdk: For now, inherit Enumerated type names from the composite type field name
-                    if (property.ModelType is EnumTypeGo)
+                    if (property.ModelType is EnumTypeGo enumType)
                     {
-                        var enumType = property.ModelType as EnumTypeGo;
-
                         if (!enumType.IsNamed)
                         {
                             enumType.SetName(property.Name);
@@ -75,54 +67,48 @@ namespace AutoRest.Go
             }
 
             // Add discriminators
-            foreach (var mt in cmg.ModelTypes)
+            foreach (var mt in cmg.ModelTypes.Cast<CompositeTypeGo>())
             {
-                if (mt.IsPolymorphic)
+                if (!mt.IsPolymorphic)
                 {
-                    var values = new List<EnumValue>();
+                    continue;
+                }
 
-                    var baseTypeEnumValue = new EnumValue
+                var enumValues = new List<EnumValue>();
+
+                var baseTypeEnumValue = new EnumValue
+                {
+                    Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(mt.SerializedName)}",
+                    SerializedName = mt.SerializedName
+                };
+
+                enumValues.Add(baseTypeEnumValue);
+
+                foreach (var dt in mt.DerivedTypes)
+                {
+                    var ev = new EnumValue
                     {
-                        Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(mt.SerializedName)}",
-                        SerializedName = mt.SerializedName
+                        Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(dt.SerializedName)}",
+                        SerializedName = dt.SerializedName
                     };
+                    enumValues.Add(ev);
+                }
+                bool nameAlreadyExists = cmg.EnumTypes.Any(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
+                bool enumAlreadyExists = nameAlreadyExists;
 
-                    values.Add(baseTypeEnumValue);
+                if (nameAlreadyExists)
+                {
+                    mt.DiscriminatorEnum = (EnumTypeGo) cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
+                    enumAlreadyExists = !mt.DiscriminatorEnum.Values.Select(value => value.SerializedName)
+                        .Except(enumValues.Select(value => value.SerializedName)).Any();
+                }
 
-                    foreach (var dt in (mt as CompositeTypeGo).DerivedTypes)
-                    {
-                        var ev = new EnumValue
-                        {
-                            Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(dt.SerializedName)}",
-                            SerializedName = dt.SerializedName
-                        };
-                        values.Add(ev);
-                    }
-                    bool nameAlreadyExists = cmg.EnumTypes.Any(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
-                    bool alreadyExists = nameAlreadyExists;
-                    if (nameAlreadyExists)
-                    {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = (cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator)) as EnumTypeGo);
-                        var existingValues = new List<string>();
-                        foreach (var v in cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator)).Values)
-                        {
-                            existingValues.Add(v.SerializedName);
-                        }
-                        foreach (var v in values)
-                        {
-                            if (!existingValues.Any(ev => ev.Equals(v.SerializedName)))
-                            {
-                                alreadyExists = false;
-                            }
-                        }
-                    }
-                    if (!alreadyExists)
-                    {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.Add(New<EnumType>(new{
-                            Name = nameAlreadyExists ? $"{mt.PolymorphicDiscriminator}{mt.Name}" :  mt.PolymorphicDiscriminator,
-                            Values = values,
-                        })) as EnumTypeGo;
-                    }
+                if (!enumAlreadyExists)
+                {
+                    mt.DiscriminatorEnum = cmg.Add(New<EnumType>(new{
+                        Name = nameAlreadyExists ? $"{mt.PolymorphicDiscriminator}{mt.GetInterfaceName()}" :  mt.PolymorphicDiscriminator,
+                        Values = enumValues,
+                    })) as EnumTypeGo;
                 }
             }
 
@@ -154,7 +140,7 @@ namespace AutoRest.Go
             // those enumerated types without conflicts.  do this on a sorted list to ensure consistent naming
             foreach (var em in cmg.EnumTypes.Cast<EnumTypeGo>().OrderBy(etg => etg.Name.Value))
             {
-                if (em.Values.Where(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)).Any())
+                if (em.Values.Any(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)))
                 {
                     foreach (var v in em.Values)
                     {
@@ -210,13 +196,13 @@ namespace AutoRest.Go
                     mtm.IsResponseType = true;
                 });
 
-            foreach (var mtm in cmg.ModelTypes)
+            foreach (var mtm in cmg.ModelTypes.Cast<CompositeTypeGo>())
             {
                 if (mtm.IsPolymorphic)
                 {
-                    foreach (var dt in (mtm as CompositeTypeGo).DerivedTypes)
+                    foreach (var dt in mtm.DerivedTypes)
                     {
-                        (dt as CompositeTypeGo).DiscriminatorEnum = (mtm as CompositeTypeGo).DiscriminatorEnum;
+                        ((CompositeTypeGo) dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
                     }
                 }
                 foreach (var p in mtm.Properties)
