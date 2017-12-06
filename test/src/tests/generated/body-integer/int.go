@@ -10,10 +10,10 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"github.com/Azure/go-autorest/autorest/date"
 	"io/ioutil"
 	"net/http"
-	"tests/pipeline"
 )
 
 // IntClient is the test Infrastructure for AutoRest

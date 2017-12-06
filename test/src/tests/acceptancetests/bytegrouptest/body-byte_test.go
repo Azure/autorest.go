@@ -20,10 +20,7 @@ var _ = chk.Suite(&ByteGroupSuite{})
 var byteClient = getByteClient()
 
 func getByteClient() ByteClient {
-	c := ByteClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewByteClient(utils.NewPipeline())
 }
 
 func (s *ByteGroupSuite) TestGetNonASCII(c *chk.C) {

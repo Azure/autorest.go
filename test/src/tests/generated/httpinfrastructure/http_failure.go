@@ -9,9 +9,9 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"encoding/json"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"io/ioutil"
 	"net/http"
-	"tests/pipeline"
 )
 
 // HTTPFailureClient is the test Infrastructure for AutoRest

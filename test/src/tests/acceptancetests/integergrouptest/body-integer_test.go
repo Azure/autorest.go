@@ -20,10 +20,7 @@ var _ = chk.Suite(&IntegerSuite{})
 var intClient = getIntegerClient()
 
 func getIntegerClient() IntClient {
-	c := IntClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewIntClient(utils.NewPipeline())
 }
 
 func (s *IntegerSuite) TestGetInvalidInt(c *chk.C) {

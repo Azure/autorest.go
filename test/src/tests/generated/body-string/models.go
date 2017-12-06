@@ -41,13 +41,13 @@ func (gb6er GetBase64EncodedResponse) Response() *http.Response {
 	return gb6er.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gb6er GetBase64EncodedResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gb6er GetBase64EncodedResponse) StatusCode() int {
 	return gb6er.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gb6er GetBase64EncodedResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gb6er GetBase64EncodedResponse) Status() string {
 	return gb6er.rawResponse.Status
 }
 
@@ -62,13 +62,13 @@ func (gb6er GetBase64URLEncodedResponse) Response() *http.Response {
 	return gb6er.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gb6er GetBase64URLEncodedResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gb6er GetBase64URLEncodedResponse) StatusCode() int {
 	return gb6er.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gb6er GetBase64URLEncodedResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gb6er GetBase64URLEncodedResponse) Status() string {
 	return gb6er.rawResponse.Status
 }
 
@@ -84,20 +84,20 @@ func (ger GetEmptyResponse) Response() *http.Response {
 	return ger.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (ger GetEmptyResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (ger GetEmptyResponse) StatusCode() int {
 	return ger.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (ger GetEmptyResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (ger GetEmptyResponse) Status() string {
 	return ger.rawResponse.Status
 }
 
 // GetMbcsResponse ...
 type GetMbcsResponse struct {
 	rawResponse *http.Response
-	// Value - Possible values include: '啊齄丂狛狜隣郎隣兀﨩ˊ▇█〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€ '
+	// Value - Possible values include: '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 	Value *string `json:"value,omitempty"`
 }
 
@@ -106,13 +106,13 @@ func (gmr GetMbcsResponse) Response() *http.Response {
 	return gmr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gmr GetMbcsResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gmr GetMbcsResponse) StatusCode() int {
 	return gmr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gmr GetMbcsResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gmr GetMbcsResponse) Status() string {
 	return gmr.rawResponse.Status
 }
 
@@ -128,13 +128,13 @@ func (gner GetNotExpandableResponse) Response() *http.Response {
 	return gner.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gner GetNotExpandableResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gner GetNotExpandableResponse) StatusCode() int {
 	return gner.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gner GetNotExpandableResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gner GetNotExpandableResponse) Status() string {
 	return gner.rawResponse.Status
 }
 
@@ -149,13 +149,13 @@ func (gnpr GetNotProvidedResponse) Response() *http.Response {
 	return gnpr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnpr GetNotProvidedResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnpr GetNotProvidedResponse) StatusCode() int {
 	return gnpr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnpr GetNotProvidedResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnpr GetNotProvidedResponse) Status() string {
 	return gnpr.rawResponse.Status
 }
 
@@ -170,13 +170,13 @@ func (gnb6er GetNullBase64URLEncodedResponse) Response() *http.Response {
 	return gnb6er.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnb6er GetNullBase64URLEncodedResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnb6er GetNullBase64URLEncodedResponse) StatusCode() int {
 	return gnb6er.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnb6er GetNullBase64URLEncodedResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnb6er GetNullBase64URLEncodedResponse) Status() string {
 	return gnb6er.rawResponse.Status
 }
 
@@ -192,13 +192,13 @@ func (gnr GetNullResponse) Response() *http.Response {
 	return gnr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnr GetNullResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) StatusCode() int {
 	return gnr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnr GetNullResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
 
@@ -214,13 +214,13 @@ func (grr GetReferencedResponse) Response() *http.Response {
 	return grr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (grr GetReferencedResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (grr GetReferencedResponse) StatusCode() int {
 	return grr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (grr GetReferencedResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (grr GetReferencedResponse) Status() string {
 	return grr.rawResponse.Status
 }
 
@@ -236,13 +236,13 @@ func (gwr GetWhitespaceResponse) Response() *http.Response {
 	return gwr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gwr GetWhitespaceResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gwr GetWhitespaceResponse) StatusCode() int {
 	return gwr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gwr GetWhitespaceResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gwr GetWhitespaceResponse) Status() string {
 	return gwr.rawResponse.Status
 }
 
@@ -260,12 +260,12 @@ func (rcc RefColorConstant) Response() *http.Response {
 	return rcc.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (rcc RefColorConstant) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (rcc RefColorConstant) StatusCode() int {
 	return rcc.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (rcc RefColorConstant) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (rcc RefColorConstant) Status() string {
 	return rcc.rawResponse.Status
 }

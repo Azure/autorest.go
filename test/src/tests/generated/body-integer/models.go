@@ -28,13 +28,13 @@ func (gir GetInvalidResponse) Response() *http.Response {
 	return gir.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gir GetInvalidResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gir GetInvalidResponse) StatusCode() int {
 	return gir.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gir GetInvalidResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gir GetInvalidResponse) Status() string {
 	return gir.rawResponse.Status
 }
 
@@ -49,13 +49,13 @@ func (giutr GetInvalidUnixTimeResponse) Response() *http.Response {
 	return giutr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (giutr GetInvalidUnixTimeResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (giutr GetInvalidUnixTimeResponse) StatusCode() int {
 	return giutr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (giutr GetInvalidUnixTimeResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (giutr GetInvalidUnixTimeResponse) Status() string {
 	return giutr.rawResponse.Status
 }
 
@@ -70,13 +70,13 @@ func (gnr GetNullResponse) Response() *http.Response {
 	return gnr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnr GetNullResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) StatusCode() int {
 	return gnr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnr GetNullResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
 
@@ -91,13 +91,13 @@ func (gnutr GetNullUnixTimeResponse) Response() *http.Response {
 	return gnutr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnutr GetNullUnixTimeResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnutr GetNullUnixTimeResponse) StatusCode() int {
 	return gnutr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnutr GetNullUnixTimeResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnutr GetNullUnixTimeResponse) Status() string {
 	return gnutr.rawResponse.Status
 }
 
@@ -112,13 +112,13 @@ func (goi3r GetOverflowInt32Response) Response() *http.Response {
 	return goi3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (goi3r GetOverflowInt32Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (goi3r GetOverflowInt32Response) StatusCode() int {
 	return goi3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (goi3r GetOverflowInt32Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (goi3r GetOverflowInt32Response) Status() string {
 	return goi3r.rawResponse.Status
 }
 
@@ -133,13 +133,13 @@ func (goi6r GetOverflowInt64Response) Response() *http.Response {
 	return goi6r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (goi6r GetOverflowInt64Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (goi6r GetOverflowInt64Response) StatusCode() int {
 	return goi6r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (goi6r GetOverflowInt64Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (goi6r GetOverflowInt64Response) Status() string {
 	return goi6r.rawResponse.Status
 }
 
@@ -154,13 +154,13 @@ func (gui3r GetUnderflowInt32Response) Response() *http.Response {
 	return gui3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gui3r GetUnderflowInt32Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gui3r GetUnderflowInt32Response) StatusCode() int {
 	return gui3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gui3r GetUnderflowInt32Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gui3r GetUnderflowInt32Response) Status() string {
 	return gui3r.rawResponse.Status
 }
 
@@ -175,13 +175,13 @@ func (gui6r GetUnderflowInt64Response) Response() *http.Response {
 	return gui6r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gui6r GetUnderflowInt64Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gui6r GetUnderflowInt64Response) StatusCode() int {
 	return gui6r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gui6r GetUnderflowInt64Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gui6r GetUnderflowInt64Response) Status() string {
 	return gui6r.rawResponse.Status
 }
 
@@ -196,12 +196,12 @@ func (gutr GetUnixTimeResponse) Response() *http.Response {
 	return gutr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gutr GetUnixTimeResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gutr GetUnixTimeResponse) StatusCode() int {
 	return gutr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gutr GetUnixTimeResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gutr GetUnixTimeResponse) Status() string {
 	return gutr.rawResponse.Status
 }

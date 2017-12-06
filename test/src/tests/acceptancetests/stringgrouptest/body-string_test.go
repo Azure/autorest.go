@@ -27,17 +27,11 @@ var stringClient = getStringClient()
 var enumClient = getEnumClient()
 
 func getStringClient() StringClient {
-	c := StringClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewStringClient(utils.NewPipeline())
 }
 
 func getEnumClient() EnumClient {
-	c := EnumClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewEnumClient(utils.NewPipeline())
 }
 
 const (

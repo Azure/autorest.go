@@ -19,10 +19,7 @@ var _ = chk.Suite(&BoolGroupSuite{})
 var boolClient = getBooleanClient()
 
 func getBooleanClient() BoolClient {
-	c := BoolClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewBoolClient(utils.NewPipeline())
 }
 
 func (s *BoolGroupSuite) TestGetTrue(c *chk.C) {

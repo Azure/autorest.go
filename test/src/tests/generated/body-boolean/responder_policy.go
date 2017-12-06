@@ -9,8 +9,8 @@ package booleangroup
 import (
 	"context"
 	"encoding/xml"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"io/ioutil"
-	"tests/pipeline"
 )
 
 type responder func(resp pipeline.Response) (result pipeline.Response, err error)
@@ -21,18 +21,18 @@ type responderPolicyFactory struct {
 }
 
 // New creates a responder policy factory.
-func (arpf responderPolicyFactory) New(node pipeline.Node) pipeline.Policy {
-	return responderPolicy{node: node, responder: arpf.responder}
+func (arpf responderPolicyFactory) New(next pipeline.Policy, config *pipeline.Configuration) pipeline.Policy {
+	return responderPolicy{next: next, responder: arpf.responder}
 }
 
 type responderPolicy struct {
-	node      pipeline.Node
+	next      pipeline.Policy
 	responder responder
 }
 
 // Do sends the request to the service and validates/deserializes the HTTP response.
 func (arp responderPolicy) Do(ctx context.Context, request pipeline.Request) (pipeline.Response, error) {
-	resp, err := arp.node.Do(ctx, request)
+	resp, err := arp.next.Do(ctx, request)
 	if err != nil {
 		return resp, err
 	}

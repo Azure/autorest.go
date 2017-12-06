@@ -7,15 +7,15 @@ package bytegroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"net/url"
-	"tests/pipeline"
 )
 
 const (
 	// ServiceVersion specifies the version of the operations used in this package.
 	ServiceVersion = "1.0.0"
 	// DefaultBaseURL is the default URL used for the service Bytegroup
-	DefaultBaseURL = "http://localhost"
+	DefaultBaseURL = "http://localhost:3000"
 )
 
 // ManagementClient is the base client for Bytegroup.

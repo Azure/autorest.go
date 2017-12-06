@@ -27,12 +27,12 @@ func (grr GetReportResponse) Response() *http.Response {
 	return grr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (grr GetReportResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (grr GetReportResponse) StatusCode() int {
 	return grr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (grr GetReportResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (grr GetReportResponse) Status() string {
 	return grr.rawResponse.Status
 }

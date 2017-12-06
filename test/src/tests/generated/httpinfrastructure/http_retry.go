@@ -10,8 +10,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"net/http"
-	"tests/pipeline"
 )
 
 // HTTPRetryClient is the test Infrastructure for AutoRest

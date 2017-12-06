@@ -27,13 +27,13 @@ func (gfr GetFalseResponse) Response() *http.Response {
 	return gfr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gfr GetFalseResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gfr GetFalseResponse) StatusCode() int {
 	return gfr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gfr GetFalseResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gfr GetFalseResponse) Status() string {
 	return gfr.rawResponse.Status
 }
 
@@ -48,13 +48,13 @@ func (gir GetInvalidResponse) Response() *http.Response {
 	return gir.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gir GetInvalidResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gir GetInvalidResponse) StatusCode() int {
 	return gir.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gir GetInvalidResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gir GetInvalidResponse) Status() string {
 	return gir.rawResponse.Status
 }
 
@@ -69,13 +69,13 @@ func (gnr GetNullResponse) Response() *http.Response {
 	return gnr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnr GetNullResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) StatusCode() int {
 	return gnr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnr GetNullResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
 
@@ -90,12 +90,12 @@ func (gtr GetTrueResponse) Response() *http.Response {
 	return gtr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gtr GetTrueResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gtr GetTrueResponse) StatusCode() int {
 	return gtr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gtr GetTrueResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gtr GetTrueResponse) Status() string {
 	return gtr.rawResponse.Status
 }

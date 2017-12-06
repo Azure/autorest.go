@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/cookiejar"
-	"net/url"
 	"strings"
-	"tests/pipeline"
 	"time"
 
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
@@ -21,11 +20,6 @@ func ToDateTimeRFC1123(s string) date.TimeRFC1123 {
 func ToDateTime(s string) date.Time {
 	t, _ := time.Parse(time.RFC3339, strings.ToUpper(s))
 	return date.Time{t}
-}
-
-func GetBaseURI(defaultBaseURI string) url.URL {
-	u, _ := url.Parse(fmt.Sprintf("%s:3000", defaultBaseURI))
-	return *u
 }
 
 func NewPipeline() pipeline.Pipeline {
@@ -45,7 +39,7 @@ func NewPipelineWithRetry() pipeline.Pipeline {
 
 type HTTPSenderWithCookiesFactory struct{}
 
-func (swc HTTPSenderWithCookiesFactory) New(node pipeline.Node) pipeline.Policy {
+func (swc HTTPSenderWithCookiesFactory) New(node pipeline.Policy, config *pipeline.Configuration) pipeline.Policy {
 	j, _ := cookiejar.New(nil)
 	return &HTTPSenderWithCookiesPolicy{
 		sender: &http.Client{
@@ -65,7 +59,7 @@ func (swc HTTPSenderWithCookiesPolicy) Do(ctx context.Context, request pipeline.
 
 type SimpleRetryPolicyFactory struct{}
 
-func (srpf SimpleRetryPolicyFactory) New(node pipeline.Node) pipeline.Policy {
+func (srpf SimpleRetryPolicyFactory) New(node pipeline.Policy, config *pipeline.Configuration) pipeline.Policy {
 	return &SimpleRetryPolicy{
 		node: node,
 		statusCodesForRetry: []int{
@@ -82,7 +76,7 @@ func (srpf SimpleRetryPolicyFactory) New(node pipeline.Node) pipeline.Policy {
 }
 
 type SimpleRetryPolicy struct {
-	node                 pipeline.Node
+	node                 pipeline.Policy
 	statusCodesForRetry  []int
 	attempts             int
 	delayBetweenAttempts time.Duration

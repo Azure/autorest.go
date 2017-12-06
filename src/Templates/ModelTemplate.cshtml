@@ -3,6 +3,7 @@
 @using AutoRest.Go
 @using AutoRest.Go.Model
 @using AutoRest.Go.Templates
+@using System.Linq
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CompositeTypeGo>
 @{
@@ -187,19 +188,29 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
 @EmptyLine
 @if (Model.IsResponseType)
 {
+    var statusCodeFn = "StatusCode";
+    var statusFn = "Status";
+    if (Model.Properties.Where(p => p.Name == statusCodeFn).Any())
+    {
+        statusCodeFn = $"HTTP{statusCodeFn}";
+    }
+    if (Model.Properties.Where(p => p.Name == statusFn).Any())
+    {
+        statusFn = $"HTTP{statusFn}";
+    }
 <text>
 // Response returns the raw HTTP response object.
 func (@shortName @Model.Name) Response() *http.Response {
     return @(shortName).rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (@shortName @Model.Name) HTTPStatusCode() int {
+// @statusCodeFn returns the HTTP status code of the response, e.g. 200.
+func (@shortName @Model.Name) @(statusCodeFn)() int {
     return @(shortName).rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (@shortName @Model.Name) HTTPStatus() string {
+// @statusFn returns the HTTP status message of the response, e.g. "200 OK".
+func (@shortName @Model.Name) @(statusFn)() string {
     return @(shortName).rawResponse.Status
 }
 </text>

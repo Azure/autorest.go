@@ -26,8 +26,8 @@ func (a A) HTTPStatusCode() int {
 	return a.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (a A) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (a A) Status() string {
 	return a.rawResponse.Status
 }
 
@@ -59,8 +59,8 @@ func (e Error) Response() *http.Response {
 	return e.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (e Error) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (e Error) StatusCode() int {
 	return e.rawResponse.StatusCode
 }
 
@@ -80,13 +80,13 @@ func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) 
 	return g2mamcmdde2vr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) StatusCode() int {
 	return g2mamcmdde2vr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) Status() string {
 	return g2mamcmdde2vr.rawResponse.Status
 }
 
@@ -101,13 +101,13 @@ func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) 
 	return g2mamcmdde2vr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) StatusCode() int {
 	return g2mamcmdde2vr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) Status() string {
 	return g2mamcmdde2vr.rawResponse.Status
 }
 
@@ -122,13 +122,13 @@ func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) 
 	return g2mamcmdde4vr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) StatusCode() int {
 	return g2mamcmdde4vr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) Status() string {
 	return g2mamcmdde4vr.rawResponse.Status
 }
 
@@ -143,13 +143,13 @@ func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) 
 	return g2mamcmdde4vr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) StatusCode() int {
 	return g2mamcmdde4vr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) Status() string {
 	return g2mamcmdde4vr.rawResponse.Status
 }
 
@@ -164,13 +164,13 @@ func (g2r Get200Response) Response() *http.Response {
 	return g2r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (g2r Get200Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (g2r Get200Response) StatusCode() int {
 	return g2r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (g2r Get200Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (g2r Get200Response) Status() string {
 	return g2r.rawResponse.Status
 }
 
@@ -185,13 +185,13 @@ func (g3r Get300Response) Response() *http.Response {
 	return g3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (g3r Get300Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (g3r Get300Response) StatusCode() int {
 	return g3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (g3r Get300Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (g3r Get300Response) Status() string {
 	return g3r.rawResponse.Status
 }
 
@@ -211,13 +211,13 @@ func (geer GetEmptyErrorResponse) Response() *http.Response {
 	return geer.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (geer GetEmptyErrorResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (geer GetEmptyErrorResponse) StatusCode() int {
 	return geer.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (geer GetEmptyErrorResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (geer GetEmptyErrorResponse) Status() string {
 	return geer.rawResponse.Status
 }
 
@@ -232,13 +232,13 @@ func (gnmer GetNoModelEmptyResponse) Response() *http.Response {
 	return gnmer.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnmer GetNoModelEmptyResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnmer GetNoModelEmptyResponse) StatusCode() int {
 	return gnmer.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnmer GetNoModelEmptyResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnmer GetNoModelEmptyResponse) Status() string {
 	return gnmer.rawResponse.Status
 }
 
@@ -253,13 +253,13 @@ func (gnmer GetNoModelErrorResponse) Response() *http.Response {
 	return gnmer.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnmer GetNoModelErrorResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnmer GetNoModelErrorResponse) StatusCode() int {
 	return gnmer.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnmer GetNoModelErrorResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnmer GetNoModelErrorResponse) Status() string {
 	return gnmer.rawResponse.Status
 }
 
@@ -273,13 +273,13 @@ func (hrd3r HTTPRedirectsDelete307Response) Response() *http.Response {
 	return hrd3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrd3r HTTPRedirectsDelete307Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrd3r HTTPRedirectsDelete307Response) StatusCode() int {
 	return hrd3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrd3r HTTPRedirectsDelete307Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrd3r HTTPRedirectsDelete307Response) Status() string {
 	return hrd3r.rawResponse.Status
 }
 
@@ -298,13 +298,13 @@ func (hrg3r HTTPRedirectsGet301Response) Response() *http.Response {
 	return hrg3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrg3r HTTPRedirectsGet301Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrg3r HTTPRedirectsGet301Response) StatusCode() int {
 	return hrg3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrg3r HTTPRedirectsGet301Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrg3r HTTPRedirectsGet301Response) Status() string {
 	return hrg3r.rawResponse.Status
 }
 
@@ -323,13 +323,13 @@ func (hrg3r HTTPRedirectsGet302Response) Response() *http.Response {
 	return hrg3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrg3r HTTPRedirectsGet302Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrg3r HTTPRedirectsGet302Response) StatusCode() int {
 	return hrg3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrg3r HTTPRedirectsGet302Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrg3r HTTPRedirectsGet302Response) Status() string {
 	return hrg3r.rawResponse.Status
 }
 
@@ -348,13 +348,13 @@ func (hrg3r HTTPRedirectsGet307Response) Response() *http.Response {
 	return hrg3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrg3r HTTPRedirectsGet307Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrg3r HTTPRedirectsGet307Response) StatusCode() int {
 	return hrg3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrg3r HTTPRedirectsGet307Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrg3r HTTPRedirectsGet307Response) Status() string {
 	return hrg3r.rawResponse.Status
 }
 
@@ -373,13 +373,13 @@ func (hrh3r HTTPRedirectsHead300Response) Response() *http.Response {
 	return hrh3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrh3r HTTPRedirectsHead300Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead300Response) StatusCode() int {
 	return hrh3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrh3r HTTPRedirectsHead300Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead300Response) Status() string {
 	return hrh3r.rawResponse.Status
 }
 
@@ -398,13 +398,13 @@ func (hrh3r HTTPRedirectsHead301Response) Response() *http.Response {
 	return hrh3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrh3r HTTPRedirectsHead301Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead301Response) StatusCode() int {
 	return hrh3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrh3r HTTPRedirectsHead301Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead301Response) Status() string {
 	return hrh3r.rawResponse.Status
 }
 
@@ -423,13 +423,13 @@ func (hrh3r HTTPRedirectsHead302Response) Response() *http.Response {
 	return hrh3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrh3r HTTPRedirectsHead302Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead302Response) StatusCode() int {
 	return hrh3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrh3r HTTPRedirectsHead302Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead302Response) Status() string {
 	return hrh3r.rawResponse.Status
 }
 
@@ -448,13 +448,13 @@ func (hrh3r HTTPRedirectsHead307Response) Response() *http.Response {
 	return hrh3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrh3r HTTPRedirectsHead307Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrh3r HTTPRedirectsHead307Response) StatusCode() int {
 	return hrh3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrh3r HTTPRedirectsHead307Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrh3r HTTPRedirectsHead307Response) Status() string {
 	return hrh3r.rawResponse.Status
 }
 
@@ -473,13 +473,13 @@ func (hrp3r HTTPRedirectsPatch302Response) Response() *http.Response {
 	return hrp3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrp3r HTTPRedirectsPatch302Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPatch302Response) StatusCode() int {
 	return hrp3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrp3r HTTPRedirectsPatch302Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPatch302Response) Status() string {
 	return hrp3r.rawResponse.Status
 }
 
@@ -498,13 +498,13 @@ func (hrp3r HTTPRedirectsPatch307Response) Response() *http.Response {
 	return hrp3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrp3r HTTPRedirectsPatch307Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPatch307Response) StatusCode() int {
 	return hrp3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrp3r HTTPRedirectsPatch307Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPatch307Response) Status() string {
 	return hrp3r.rawResponse.Status
 }
 
@@ -523,13 +523,13 @@ func (hrp3r HTTPRedirectsPost303Response) Response() *http.Response {
 	return hrp3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrp3r HTTPRedirectsPost303Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPost303Response) StatusCode() int {
 	return hrp3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrp3r HTTPRedirectsPost303Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPost303Response) Status() string {
 	return hrp3r.rawResponse.Status
 }
 
@@ -548,13 +548,13 @@ func (hrp3r HTTPRedirectsPost307Response) Response() *http.Response {
 	return hrp3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrp3r HTTPRedirectsPost307Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPost307Response) StatusCode() int {
 	return hrp3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrp3r HTTPRedirectsPost307Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPost307Response) Status() string {
 	return hrp3r.rawResponse.Status
 }
 
@@ -573,13 +573,13 @@ func (hrp3r HTTPRedirectsPut301Response) Response() *http.Response {
 	return hrp3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrp3r HTTPRedirectsPut301Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPut301Response) StatusCode() int {
 	return hrp3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrp3r HTTPRedirectsPut301Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPut301Response) Status() string {
 	return hrp3r.rawResponse.Status
 }
 
@@ -598,13 +598,13 @@ func (hrp3r HTTPRedirectsPut307Response) Response() *http.Response {
 	return hrp3r.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (hrp3r HTTPRedirectsPut307Response) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (hrp3r HTTPRedirectsPut307Response) StatusCode() int {
 	return hrp3r.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (hrp3r HTTPRedirectsPut307Response) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (hrp3r HTTPRedirectsPut307Response) Status() string {
 	return hrp3r.rawResponse.Status
 }
 
