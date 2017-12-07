@@ -46,7 +46,7 @@ type BaseProduct struct {
 	Description *string `json:"base_product_description,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
@@ -67,7 +67,7 @@ type FlattenedProduct struct {
 	*FlattenedProductProperties `json:"properties,omitempty"`
 }
 
-// FlattenedProductProperties
+// FlattenedProductProperties ...
 type FlattenedProductProperties struct {
 	PName *string `json:"p.name,omitempty"`
 	Type  *string `json:"type,omitempty"`
@@ -82,13 +82,13 @@ type GenericURL struct {
 	GenericValue *string `json:"generic_value,omitempty"`
 }
 
-// ListFlattenedProduct
+// ListFlattenedProduct ...
 type ListFlattenedProduct struct {
 	autorest.Response `json:"-"`
 	Value             *[]FlattenedProduct `json:"value,omitempty"`
 }
 
-// ListProductWrapper
+// ListProductWrapper ...
 type ListProductWrapper struct {
 	autorest.Response `json:"-"`
 	Value             *[]ProductWrapper `json:"value,omitempty"`
@@ -107,7 +107,7 @@ type ProductWrapper struct {
 	*WrappedProduct `json:"property,omitempty"`
 }
 
-// Resource
+// Resource ...
 type Resource struct {
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
@@ -120,7 +120,7 @@ type Resource struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// ResourceCollection
+// ResourceCollection ...
 type ResourceCollection struct {
 	autorest.Response     `json:"-"`
 	Productresource       *FlattenedProduct             `json:"productresource,omitempty"`
@@ -128,7 +128,7 @@ type ResourceCollection struct {
 	Dictionaryofresources *map[string]*FlattenedProduct `json:"dictionaryofresources,omitempty"`
 }
 
-// SetFlattenedProduct
+// SetFlattenedProduct ...
 type SetFlattenedProduct struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*FlattenedProduct `json:"value,omitempty"`

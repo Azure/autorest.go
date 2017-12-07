@@ -96,7 +96,7 @@ const (
 	StatusUpdating Status = "Updating"
 )
 
-// CloudError
+// CloudError ...
 type CloudError struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
@@ -2417,14 +2417,14 @@ func (future LROsPutSubResourceFuture) Result(client LROsClient) (sp SubProduct,
 	return
 }
 
-// OperationResult
+// OperationResult ...
 type OperationResult struct {
 	// Status - The status of the request. Possible values include: 'StatusSucceeded', 'StatusFailed', 'StatusCanceled', 'StatusAccepted', 'StatusCreating', 'StatusCreated', 'StatusUpdating', 'StatusUpdated', 'StatusDeleting', 'StatusDeleted', 'StatusOK'
 	Status Status                `json:"status,omitempty"`
 	Error  *OperationResultError `json:"error,omitempty"`
 }
 
-// OperationResultError
+// OperationResultError ...
 type OperationResultError struct {
 	// Code - The error code for an operation failure
 	Code *int32 `json:"code,omitempty"`
@@ -2432,7 +2432,7 @@ type OperationResultError struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// Product
+// Product ...
 type Product struct {
 	autorest.Response `json:"-"`
 	// ID - Resource Id
@@ -2447,14 +2447,14 @@ type Product struct {
 	*ProductProperties `json:"properties,omitempty"`
 }
 
-// ProductProperties
+// ProductProperties ...
 type ProductProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 	// ProvisioningStateValues - Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
-// Resource
+// Resource ...
 type Resource struct {
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
@@ -2467,14 +2467,14 @@ type Resource struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// Sku
+// Sku ...
 type Sku struct {
 	autorest.Response `json:"-"`
 	Name              *string `json:"name,omitempty"`
 	ID                *string `json:"id,omitempty"`
 }
 
-// SubProduct
+// SubProduct ...
 type SubProduct struct {
 	autorest.Response `json:"-"`
 	// ID - Sub Resource Id
@@ -2482,14 +2482,14 @@ type SubProduct struct {
 	*SubProductProperties `json:"properties,omitempty"`
 }
 
-// SubProductProperties
+// SubProductProperties ...
 type SubProductProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 	// ProvisioningStateValues - Possible values include: 'ProvisioningStateValues1Succeeded', 'ProvisioningStateValues1Failed', 'ProvisioningStateValues1Canceled', 'ProvisioningStateValues1Accepted', 'ProvisioningStateValues1Creating', 'ProvisioningStateValues1Created', 'ProvisioningStateValues1Updating', 'ProvisioningStateValues1Updated', 'ProvisioningStateValues1Deleting', 'ProvisioningStateValues1Deleted', 'ProvisioningStateValues1OK'
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
-// SubResource
+// SubResource ...
 type SubResource struct {
 	// ID - Sub Resource Id
 	ID *string `json:"id,omitempty"`

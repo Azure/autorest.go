@@ -40,7 +40,7 @@ const (
 	Updating Status = "Updating"
 )
 
-// OdataProductResult
+// OdataProductResult ...
 type OdataProductResult struct {
 	autorest.Response `json:"-"`
 	Values            *[]Product `json:"values,omitempty"`
@@ -140,24 +140,24 @@ func (page OdataProductResultPage) Values() []Product {
 	return *page.opr.Values
 }
 
-// OperationResult
+// OperationResult ...
 type OperationResult struct {
 	// Status - The status of the request. Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	Status Status `json:"status,omitempty"`
 }
 
-// Product
+// Product ...
 type Product struct {
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
-// ProductProperties
+// ProductProperties ...
 type ProductProperties struct {
 	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
-// ProductResult
+// ProductResult ...
 type ProductResult struct {
 	autorest.Response `json:"-"`
 	Values            *[]Product `json:"values,omitempty"`

@@ -12,103 +12,103 @@ import (
 	"github.com/satori/go.uuid"
 )
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// ListBase64URL
+// ListBase64URL ...
 type ListBase64URL struct {
 	autorest.Response `json:"-"`
 	Value             *[]string `json:"value,omitempty"`
 }
 
-// ListBool
+// ListBool ...
 type ListBool struct {
 	autorest.Response `json:"-"`
 	Value             *[]bool `json:"value,omitempty"`
 }
 
-// ListByteArray
+// ListByteArray ...
 type ListByteArray struct {
 	autorest.Response `json:"-"`
 	Value             *[][]byte `json:"value,omitempty"`
 }
 
-// ListDate
+// ListDate ...
 type ListDate struct {
 	autorest.Response `json:"-"`
 	Value             *[]date.Date `json:"value,omitempty"`
 }
 
-// ListDateTime
+// ListDateTime ...
 type ListDateTime struct {
 	autorest.Response `json:"-"`
 	Value             *[]date.Time `json:"value,omitempty"`
 }
 
-// ListDateTimeRfc1123
+// ListDateTimeRfc1123 ...
 type ListDateTimeRfc1123 struct {
 	autorest.Response `json:"-"`
 	Value             *[]date.TimeRFC1123 `json:"value,omitempty"`
 }
 
-// ListFloat64
+// ListFloat64 ...
 type ListFloat64 struct {
 	autorest.Response `json:"-"`
 	Value             *[]float64 `json:"value,omitempty"`
 }
 
-// ListInt32
+// ListInt32 ...
 type ListInt32 struct {
 	autorest.Response `json:"-"`
 	Value             *[]int32 `json:"value,omitempty"`
 }
 
-// ListInt64
+// ListInt64 ...
 type ListInt64 struct {
 	autorest.Response `json:"-"`
 	Value             *[]int64 `json:"value,omitempty"`
 }
 
-// ListListString
+// ListListString ...
 type ListListString struct {
 	autorest.Response `json:"-"`
 	Value             *[][]string `json:"value,omitempty"`
 }
 
-// ListProduct
+// ListProduct ...
 type ListProduct struct {
 	autorest.Response `json:"-"`
 	Value             *[]Product `json:"value,omitempty"`
 }
 
-// ListSetString
+// ListSetString ...
 type ListSetString struct {
 	autorest.Response `json:"-"`
 	Value             *[]map[string]*string `json:"value,omitempty"`
 }
 
-// ListString
+// ListString ...
 type ListString struct {
 	autorest.Response `json:"-"`
 	Value             *[]string `json:"value,omitempty"`
 }
 
-// ListTimeSpan
+// ListTimeSpan ...
 type ListTimeSpan struct {
 	autorest.Response `json:"-"`
 	Value             *[]string `json:"value,omitempty"`
 }
 
-// ListUUID
+// ListUUID ...
 type ListUUID struct {
 	autorest.Response `json:"-"`
 	Value             *[]uuid.UUID `json:"value,omitempty"`
 }
 
-// Product
+// Product ...
 type Product struct {
 	Integer *int32  `json:"integer,omitempty"`
 	String  *string `json:"string,omitempty"`

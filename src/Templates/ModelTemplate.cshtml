@@ -110,7 +110,14 @@ func (@receiverVar @contentType) @(pageType.PreparerMethodName)() (*http.Request
         }
     }
 <text>
-@WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+@{ 
+    var modelDoc = Model.Documentation.ToSentence();
+    if (string.IsNullOrWhiteSpace(modelDoc))
+    {
+        modelDoc = "...";
+    }
+}
+@WrapComment("// ", $"{Model.Name} {modelDoc}")
 type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())

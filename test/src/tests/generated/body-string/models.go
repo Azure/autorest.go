@@ -22,19 +22,19 @@ const (
 	Redcolor Colors = "red color"
 )
 
-// Base64URL
+// Base64URL ...
 type Base64URL struct {
 	autorest.Response `json:"-"`
 	Value             *string `json:"value,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// RefColorConstant
+// RefColorConstant ...
 type RefColorConstant struct {
 	autorest.Response `json:"-"`
 	// ColorConstant - Referenced Color Constant Description.
@@ -43,7 +43,7 @@ type RefColorConstant struct {
 	Field1 *string `json:"field1,omitempty"`
 }
 
-// StringModel
+// StringModel ...
 type StringModel struct {
 	autorest.Response `json:"-"`
 	// Value - Possible values include: ''

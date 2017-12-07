@@ -10,13 +10,13 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// ByteArray
+// ByteArray ...
 type ByteArray struct {
 	autorest.Response `json:"-"`
 	Value             *[]byte `json:"value,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`

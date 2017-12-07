@@ -34,7 +34,7 @@ type ConstantProduct struct {
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
