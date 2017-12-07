@@ -10,9 +10,9 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"io/ioutil"
 	"net/http"
-	"tests/pipeline"
 )
 
 // StringClient is the test Infrastructure for AutoRest Swagger BAT
@@ -175,7 +175,7 @@ func (client StringClient) getEmptyResponder(resp pipeline.Response) (pipeline.R
 	return result, nil
 }
 
-// GetMbcs get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ▇█〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€ '
+// GetMbcs get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client StringClient) GetMbcs(ctx context.Context) (*GetMbcsResponse, error) {
 	req, err := client.getMbcsPreparer()
 	if err != nil {
@@ -517,7 +517,7 @@ func (client StringClient) putEmptyResponder(resp pipeline.Response) (pipeline.R
 	return resp, err
 }
 
-// PutMbcs set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ▇█〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€ '
+// PutMbcs set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 //
 // stringBody is
 func (client StringClient) PutMbcs(ctx context.Context, stringBody string) (*http.Response, error) {

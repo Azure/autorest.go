@@ -11,37 +11,44 @@ import (
 	"tests/generated/report"
 )
 
+const testServerPath = "../../../node_modules/@microsoft.azure/autorest.testserver"
+
 func main() {
-	server, err := startServer()
+	err := startServer()
 	if err != nil {
-		fmt.Printf("Error! %v\n", err)
+		panic(fmt.Sprintf("Error starting server: %v\n", err))
 	}
 	allPass := true
 	runTests(&allPass)
 	getReport()
 	getAzureReport()
-	server.Kill()
+	err = stopServer()
+	if err != nil {
+		fmt.Printf("Error stopping server: %v\n", err)
+	}
 	if !allPass {
 		fmt.Println("Not all tests passed")
 		os.Exit(1)
 	}
 }
 
-func startServer() (*os.Process, error) {
+func startServer() error {
 	fmt.Println("Go Tests.......")
-	testServerPath := "../../../node_modules/@microsoft.azure/autorest.testserver"
 	install := exec.Command("npm", "install")
 	install.Dir = testServerPath
 	server := exec.Command("npm", "start")
 	server.Dir = testServerPath
 
 	if err := install.Run(); err != nil {
-		return install.Process, err
+		return err
 	}
-	if err := server.Start(); err != nil {
-		return server.Process, err
-	}
-	return server.Process, nil
+	return server.Start()
+}
+
+func stopServer() error {
+	server := exec.Command("npm", "stop")
+	server.Dir = testServerPath
+	return server.Run()
 }
 
 func runTests(allPass *bool) {
@@ -91,8 +98,8 @@ func runTests(allPass *bool) {
 }
 
 func getReport() {
-	var reportClient = report.NewManagementClientWithURL(utils.GetBaseURI(report.DefaultBaseURL), utils.NewPipeline())
-	res, err := reportClient.GetReport(context.Background())
+	var reportClient = report.NewManagementClient(utils.NewPipeline())
+	res, err := reportClient.GetReport(context.Background(), nil)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
@@ -100,8 +107,8 @@ func getReport() {
 }
 
 func getAzureReport() {
-	var reportClient = azurereport.NewManagementClientWithURL(utils.GetBaseURI(report.DefaultBaseURL), utils.NewPipeline())
-	res, err := reportClient.GetReport(context.Background())
+	var reportClient = azurereport.NewManagementClient(utils.NewPipeline())
+	res, err := reportClient.GetReport(context.Background(), nil)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}

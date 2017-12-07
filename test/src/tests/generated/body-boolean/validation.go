@@ -8,10 +8,10 @@ package booleangroup
 
 import (
 	"fmt"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"reflect"
 	"regexp"
 	"strings"
-	"tests/pipeline"
 )
 
 // Constraint stores constraint name, target field name

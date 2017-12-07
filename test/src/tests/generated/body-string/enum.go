@@ -10,9 +10,9 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"io/ioutil"
 	"net/http"
-	"tests/pipeline"
 )
 
 // EnumClient is the test Infrastructure for AutoRest Swagger BAT

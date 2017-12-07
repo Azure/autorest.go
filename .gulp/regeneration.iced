@@ -19,7 +19,7 @@ regenExpected = (opts,done) ->
       "--output-folder=#{outputDir}/#{key}",
       "--license-header=#{if !!opts.header then opts.header else 'MICROSOFT_MIT_NO_VERSION'}",
       "--enable-xml",
-      "--go-pipeline-import=tests/pipeline"
+      "--go-pipeline-import=github.com/Azure/azure-pipeline-go/pipeline"
     ]
 
     for swaggerFile in swaggerFiles

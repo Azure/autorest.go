@@ -30,53 +30,31 @@ var httpServerFailureClient = getHTTPServerFailureClient()
 var httpMultipleResponsesClient = getHTTPMultipleResponsesClient()
 
 func getHTTPSuccessClient() HTTPSuccessClient {
-	c := HTTPSuccessClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewHTTPSuccessClient(utils.NewPipeline())
 }
 
 func getHTTPFailureClient() HTTPFailureClient {
-	c := HTTPFailureClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewHTTPFailureClient(utils.NewPipeline())
 }
 
 func getHTTPClientFailureClient() HTTPClientFailureClient {
-	c := HTTPClientFailureClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewHTTPClientFailureClient(utils.NewPipeline())
 }
 
 func getHTTPRetryClient() HTTPRetryClient {
-	c := HTTPRetryClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipelineWithRetry()),
-	}
-	//c.RetryDuration = 3 * time.Second
-	return c
+	return NewHTTPRetryClient(utils.NewPipelineWithRetry())
 }
 
 func getHTTPRedirectClient() HTTPRedirectsClient {
-	c := HTTPRedirectsClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewHTTPRedirectsClient(utils.NewPipeline())
 }
 
 func getHTTPServerFailureClient() HTTPServerFailureClient {
-	c := HTTPServerFailureClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewHTTPServerFailureClient(utils.NewPipeline())
 }
 
 func getHTTPMultipleResponsesClient() MultipleResponsesClient {
-	c := MultipleResponsesClient{
-		ManagementClient: NewManagementClientWithURL(utils.GetBaseURI(DefaultBaseURL), utils.NewPipeline()),
-	}
-	return c
+	return NewMultipleResponsesClient(utils.NewPipeline())
 }
 
 // HTTP success test
@@ -125,7 +103,7 @@ func (s *HTTPSuite) TestDelete200(c *chk.C) {
 // func (s *HTTPSuite) TestOptions200(c *chk.C) {
 // 	res, err := httpSuccessClient.Options200()
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 //201
@@ -225,13 +203,13 @@ func (s *HTTPSuite) TestHead404(c *chk.C) {
 // func (s *HTTPSuite) TestHead300(c *chk.C) {
 // 	res, err := httpRedirectClient.Head300()
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 // func (s *HTTPSuite) TestGet300(c *chk.C) {
 // 	res, err := httpRedirectClient.Get300()
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 // 301
@@ -239,20 +217,20 @@ func (s *HTTPSuite) TestHead404(c *chk.C) {
 func (s *HTTPSuite) TestHead301(c *chk.C) {
 	res, err := httpRedirectClient.Head301(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 }
 
 func (s *HTTPSuite) TestGet301(c *chk.C) {
 	res, err := httpRedirectClient.Get301(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 }
 
 /* func (s *HTTPSuite) TestPut301(c *chk.C) {
 	b := true
 	res, err := httpRedirectClient.Put301(context.Background(), &b)
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusMovedPermanently)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusMovedPermanently)
 } @fearthecowboy disabled -- change in underlying go behavior */
 
 //302
@@ -260,20 +238,20 @@ func (s *HTTPSuite) TestGet301(c *chk.C) {
 func (s *HTTPSuite) TestHead302(c *chk.C) {
 	res, err := httpRedirectClient.Head302(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 }
 
 func (s *HTTPSuite) TestGet302(c *chk.C) {
 	res, err := httpRedirectClient.Get302(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 }
 
 /* func (s *HTTPSuite) TestPatch302(c *chk.C) {
 	b := true
 	res, err := httpRedirectClient.Patch302(context.Background(), &b)
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusFound)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusFound)
 } @fearthecowboy disabled -- change in underlying go behavior */
 
 //303
@@ -282,7 +260,7 @@ func (s *HTTPSuite) TestPost303(c *chk.C) {
 	b := true
 	res, err := httpRedirectClient.Post303(context.Background(), &b)
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 }
 
 //307
@@ -291,34 +269,34 @@ func (s *HTTPSuite) TestPost303(c *chk.C) {
 func (s *HTTPSuite) TestHead307(c *chk.C) {
 	res, err := httpRedirectClient.Head307(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 }
 
 func (s *HTTPSuite) TestGet307(c *chk.C) {
 	res, err := httpRedirectClient.Get307(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 }
 
 // func (s *HTTPSuite) TestPut307(c *chk.C) {
 // 	b := true
 // 	res, err := httpRedirectClient.Put307(context.Background(), &b)
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 // func (s *HTTPSuite) TestPost307(c *chk.C) {
 // 	b := true
 // 	res, err := httpRedirectClient.Post307(context.Background(), &b)
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 // func (s *HTTPSuite) TestPatch307(c *chk.C) {
 // 	b := true
 // 	res, err := httpRedirectClient.Patch307(context.Background(), &b)
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 // func (s *HTTPSuite) TestDelete307(c *chk.C) {
@@ -326,13 +304,13 @@ func (s *HTTPSuite) TestGet307(c *chk.C) {
 // 	res, err := httpRedirectClient.Delete307(context.Background(), &b)
 // 	// Code does not redirect if its not Get or Head
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 // func (s *HTTPSuite) TestOptions307(c *chk.C) {
 // 	res, err := httpRedirectClient.Options307()
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 // HTTP failure test
@@ -419,7 +397,7 @@ func (s *HTTPSuite) TestDelete400(c *chk.C) {
 // func (s *HTTPSuite) TestOptions400(c *chk.C) {
 // 	res, err := httpClientFailureClient.Options400()
 // 	c.Assert(err, chk.NotNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusBadRequest)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusBadRequest)
 // }
 
 //401
@@ -458,7 +436,7 @@ func (s *HTTPSuite) TestGet403(c *chk.C) {
 // func (s *HTTPSuite) TestOptions403(c *chk.C) {
 // 	res, err := httpClientFailureClient.Options403()
 // 	c.Assert(err, chk.NotNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusForbidden)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusForbidden)
 // }
 
 //404
@@ -557,7 +535,7 @@ func (s *HTTPSuite) TestGet412(c *chk.C) {
 // func (s *HTTPSuite) TestOptions412(c *chk.C) {
 // 	res, err := httpClientFailureClient.Options412()
 // 	c.Assert(err, chk.NotNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusPreconditionFailed)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusPreconditionFailed)
 // }
 
 //413
@@ -666,7 +644,7 @@ func (s *HTTPSuite) TestGet502(c *chk.C) {
 // func (s *HTTPSuite) TestOptions502(c *chk.C) {
 // 	res, err := httpRetryClient.Options502()
 // 	c.Assert(err, chk.IsNil)
-// 	c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+// 	c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 // }
 
 //503
@@ -967,7 +945,7 @@ func (s *HTTPSuite) TestGet200ModelA200Valid(c *chk.C) {
 }
 
 func (s *HTTPSuite) TestGet200ModelA200Invalid(c *chk.C) {
-	//? c.Assert(res.HTTPStatusCode(), chk.IsNil) - VS - c.Assert(res.HTTPStatusCode(), chk.Equals, http.StatusOK)
+	//? c.Assert(res.StatusCode(), chk.IsNil) - VS - c.Assert(res.StatusCode(), chk.Equals, http.StatusOK)
 	res, err := httpMultipleResponsesClient.Get200ModelA200Invalid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res.StatusCode, chk.IsNil)

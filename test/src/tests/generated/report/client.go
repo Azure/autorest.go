@@ -9,17 +9,17 @@ package report
 import (
 	"context"
 	"encoding/json"
+	"github.com/Azure/azure-pipeline-go/pipeline"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"tests/pipeline"
 )
 
 const (
 	// ServiceVersion specifies the version of the operations used in this package.
 	ServiceVersion = "1.0.0"
 	// DefaultBaseURL is the default URL used for the service Report
-	DefaultBaseURL = "http://localhost"
+	DefaultBaseURL = "http://localhost:3000"
 )
 
 // ManagementClient is the base client for Report.
@@ -56,8 +56,11 @@ func (mc ManagementClient) Pipeline() pipeline.Pipeline {
 }
 
 // GetReport get test coverage report
-func (client ManagementClient) GetReport(ctx context.Context) (*GetReportResponse, error) {
-	req, err := client.getReportPreparer()
+//
+// qualifier is if specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only
+// effect is, that generators that run all tests several times, can distinguish the generated reports.
+func (client ManagementClient) GetReport(ctx context.Context, qualifier *string) (*GetReportResponse, error) {
+	req, err := client.getReportPreparer(qualifier)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +72,7 @@ func (client ManagementClient) GetReport(ctx context.Context) (*GetReportRespons
 }
 
 // getReportPreparer prepares the GetReport request.
-func (client ManagementClient) getReportPreparer() (pipeline.Request, error) {
+func (client ManagementClient) getReportPreparer(qualifier *string) (pipeline.Request, error) {
 	u := client.url
 	u.Path = "/report"
 	req, err := pipeline.NewRequest("GET", u, nil)
@@ -77,6 +80,9 @@ func (client ManagementClient) getReportPreparer() (pipeline.Request, error) {
 		return req, pipeline.NewError(err, "failed to create request")
 	}
 	params := req.URL.Query()
+	if qualifier != nil {
+		params.Set("qualifier", *qualifier)
+	}
 	req.URL.RawQuery = params.Encode()
 	return req, nil
 }

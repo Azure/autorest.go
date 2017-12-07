@@ -27,13 +27,13 @@ func (ger GetEmptyResponse) Response() *http.Response {
 	return ger.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (ger GetEmptyResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (ger GetEmptyResponse) StatusCode() int {
 	return ger.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (ger GetEmptyResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (ger GetEmptyResponse) Status() string {
 	return ger.rawResponse.Status
 }
 
@@ -48,13 +48,13 @@ func (gir GetInvalidResponse) Response() *http.Response {
 	return gir.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gir GetInvalidResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gir GetInvalidResponse) StatusCode() int {
 	return gir.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gir GetInvalidResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gir GetInvalidResponse) Status() string {
 	return gir.rawResponse.Status
 }
 
@@ -69,13 +69,13 @@ func (gnar GetNonASCIIResponse) Response() *http.Response {
 	return gnar.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnar GetNonASCIIResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnar GetNonASCIIResponse) StatusCode() int {
 	return gnar.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnar GetNonASCIIResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnar GetNonASCIIResponse) Status() string {
 	return gnar.rawResponse.Status
 }
 
@@ -90,12 +90,12 @@ func (gnr GetNullResponse) Response() *http.Response {
 	return gnr.rawResponse
 }
 
-// HTTPStatusCode returns the HTTP status code of the response, e.g. 200.
-func (gnr GetNullResponse) HTTPStatusCode() int {
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) StatusCode() int {
 	return gnr.rawResponse.StatusCode
 }
 
-// HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (gnr GetNullResponse) HTTPStatus() string {
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
