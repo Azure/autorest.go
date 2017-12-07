@@ -14,33 +14,35 @@ import (
 type ProvisioningStateValues string
 
 const (
-	// Accepted specifies the accepted state for provisioning state values.
+	// Accepted ...
 	Accepted ProvisioningStateValues = "Accepted"
-	// Canceled specifies the canceled state for provisioning state values.
+	// Canceled ...
 	Canceled ProvisioningStateValues = "canceled"
-	// Created specifies the created state for provisioning state values.
+	// Created ...
 	Created ProvisioningStateValues = "Created"
-	// Creating specifies the creating state for provisioning state values.
+	// Creating ...
 	Creating ProvisioningStateValues = "Creating"
-	// Deleted specifies the deleted state for provisioning state values.
+	// Deleted ...
 	Deleted ProvisioningStateValues = "Deleted"
-	// Deleting specifies the deleting state for provisioning state values.
+	// Deleting ...
 	Deleting ProvisioningStateValues = "Deleting"
-	// Failed specifies the failed state for provisioning state values.
+	// Failed ...
 	Failed ProvisioningStateValues = "Failed"
-	// OK specifies the ok state for provisioning state values.
+	// OK ...
 	OK ProvisioningStateValues = "OK"
-	// Succeeded specifies the succeeded state for provisioning state values.
+	// Succeeded ...
 	Succeeded ProvisioningStateValues = "Succeeded"
-	// Updated specifies the updated state for provisioning state values.
+	// Updated ...
 	Updated ProvisioningStateValues = "Updated"
-	// Updating specifies the updating state for provisioning state values.
+	// Updating ...
 	Updating ProvisioningStateValues = "Updating"
 )
 
 // BaseProduct the product documentation.
 type BaseProduct struct {
-	ProductID   *string `json:"base_product_id,omitempty"`
+	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
+	ProductID *string `json:"base_product_id,omitempty"`
+	// Description - Description of product.
 	Description *string `json:"base_product_description,omitempty"`
 }
 
@@ -53,24 +55,30 @@ type Error struct {
 
 // FlattenedProduct flattened product.
 type FlattenedProduct struct {
-	ID                          *string             `json:"id,omitempty"`
-	Type                        *string             `json:"type,omitempty"`
-	Tags                        *map[string]*string `json:"tags,omitempty"`
-	Location                    *string             `json:"location,omitempty"`
-	Name                        *string             `json:"name,omitempty"`
+	// ID - Resource Id
+	ID *string `json:"id,omitempty"`
+	// Type - Resource Type
+	Type *string             `json:"type,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
+	// Location - Resource Location
+	Location *string `json:"location,omitempty"`
+	// Name - Resource Name
+	Name                        *string `json:"name,omitempty"`
 	*FlattenedProductProperties `json:"properties,omitempty"`
 }
 
 // FlattenedProductProperties
 type FlattenedProductProperties struct {
-	PName                   *string                 `json:"p.name,omitempty"`
-	Type                    *string                 `json:"type,omitempty"`
+	PName *string `json:"p.name,omitempty"`
+	Type  *string `json:"type,omitempty"`
+	// ProvisioningStateValues - Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
 }
 
 // GenericURL the Generic URL.
 type GenericURL struct {
+	// GenericValue - Generic URL value.
 	GenericValue *string `json:"generic_value,omitempty"`
 }
 
@@ -88,8 +96,10 @@ type ListProductWrapper struct {
 
 // ProductURL the product URL.
 type ProductURL struct {
+	// GenericValue - Generic URL value.
 	GenericValue *string `json:"generic_value,omitempty"`
-	OdataValue   *string `json:"@odata.value,omitempty"`
+	// OdataValue - URL value.
+	OdataValue *string `json:"@odata.value,omitempty"`
 }
 
 // ProductWrapper the wrapped produc.
@@ -99,11 +109,15 @@ type ProductWrapper struct {
 
 // Resource
 type Resource struct {
-	ID       *string             `json:"id,omitempty"`
-	Type     *string             `json:"type,omitempty"`
-	Tags     *map[string]*string `json:"tags,omitempty"`
-	Location *string             `json:"location,omitempty"`
-	Name     *string             `json:"name,omitempty"`
+	// ID - Resource Id
+	ID *string `json:"id,omitempty"`
+	// Type - Resource Type
+	Type *string             `json:"type,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
+	// Location - Resource Location
+	Location *string `json:"location,omitempty"`
+	// Name - Resource Name
+	Name *string `json:"name,omitempty"`
 }
 
 // ResourceCollection
@@ -122,20 +136,25 @@ type SetFlattenedProduct struct {
 
 // SimpleProduct the product documentation.
 type SimpleProduct struct {
-	autorest.Response        `json:"-"`
-	ProductID                *string `json:"base_product_id,omitempty"`
+	autorest.Response `json:"-"`
+	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
+	ProductID *string `json:"base_product_id,omitempty"`
+	// Description - Description of product.
 	Description              *string `json:"base_product_description,omitempty"`
 	*SimpleProductProperties `json:"details,omitempty"`
 }
 
 // SimpleProductProperties the product documentation.
 type SimpleProductProperties struct {
+	// MaxProductDisplayName - Display name of product.
 	MaxProductDisplayName *string `json:"max_product_display_name,omitempty"`
-	Capacity              *string `json:"max_product_capacity,omitempty"`
-	*ProductURL           `json:"max_product_image,omitempty"`
+	// Capacity - Capacity of product. For example, 4 people.
+	Capacity    *string `json:"max_product_capacity,omitempty"`
+	*ProductURL `json:"max_product_image,omitempty"`
 }
 
 // WrappedProduct the wrapped produc.
 type WrappedProduct struct {
+	// Value - the product value
 	Value *string `json:"value,omitempty"`
 }

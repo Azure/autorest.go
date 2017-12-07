@@ -16,27 +16,27 @@ import (
 type ProvisioningStateValues string
 
 const (
-	// Accepted specifies the accepted state for provisioning state values.
+	// Accepted ...
 	Accepted ProvisioningStateValues = "Accepted"
-	// Canceled specifies the canceled state for provisioning state values.
+	// Canceled ...
 	Canceled ProvisioningStateValues = "canceled"
-	// Created specifies the created state for provisioning state values.
+	// Created ...
 	Created ProvisioningStateValues = "Created"
-	// Creating specifies the creating state for provisioning state values.
+	// Creating ...
 	Creating ProvisioningStateValues = "Creating"
-	// Deleted specifies the deleted state for provisioning state values.
+	// Deleted ...
 	Deleted ProvisioningStateValues = "Deleted"
-	// Deleting specifies the deleting state for provisioning state values.
+	// Deleting ...
 	Deleting ProvisioningStateValues = "Deleting"
-	// Failed specifies the failed state for provisioning state values.
+	// Failed ...
 	Failed ProvisioningStateValues = "Failed"
-	// OK specifies the ok state for provisioning state values.
+	// OK ...
 	OK ProvisioningStateValues = "OK"
-	// Succeeded specifies the succeeded state for provisioning state values.
+	// Succeeded ...
 	Succeeded ProvisioningStateValues = "Succeeded"
-	// Updated specifies the updated state for provisioning state values.
+	// Updated ...
 	Updated ProvisioningStateValues = "Updated"
-	// Updating specifies the updating state for provisioning state values.
+	// Updating ...
 	Updating ProvisioningStateValues = "Updating"
 )
 
@@ -44,37 +44,27 @@ const (
 type ProvisioningStateValues1 string
 
 const (
-	// ProvisioningStateValues1Accepted specifies the provisioning state values 1 accepted state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Accepted ...
 	ProvisioningStateValues1Accepted ProvisioningStateValues1 = "Accepted"
-	// ProvisioningStateValues1Canceled specifies the provisioning state values 1 canceled state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Canceled ...
 	ProvisioningStateValues1Canceled ProvisioningStateValues1 = "canceled"
-	// ProvisioningStateValues1Created specifies the provisioning state values 1 created state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Created ...
 	ProvisioningStateValues1Created ProvisioningStateValues1 = "Created"
-	// ProvisioningStateValues1Creating specifies the provisioning state values 1 creating state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Creating ...
 	ProvisioningStateValues1Creating ProvisioningStateValues1 = "Creating"
-	// ProvisioningStateValues1Deleted specifies the provisioning state values 1 deleted state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Deleted ...
 	ProvisioningStateValues1Deleted ProvisioningStateValues1 = "Deleted"
-	// ProvisioningStateValues1Deleting specifies the provisioning state values 1 deleting state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Deleting ...
 	ProvisioningStateValues1Deleting ProvisioningStateValues1 = "Deleting"
-	// ProvisioningStateValues1Failed specifies the provisioning state values 1 failed state for provisioning state values
-	// 1.
+	// ProvisioningStateValues1Failed ...
 	ProvisioningStateValues1Failed ProvisioningStateValues1 = "Failed"
-	// ProvisioningStateValues1OK specifies the provisioning state values 1ok state for provisioning state values 1.
+	// ProvisioningStateValues1OK ...
 	ProvisioningStateValues1OK ProvisioningStateValues1 = "OK"
-	// ProvisioningStateValues1Succeeded specifies the provisioning state values 1 succeeded state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Succeeded ...
 	ProvisioningStateValues1Succeeded ProvisioningStateValues1 = "Succeeded"
-	// ProvisioningStateValues1Updated specifies the provisioning state values 1 updated state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Updated ...
 	ProvisioningStateValues1Updated ProvisioningStateValues1 = "Updated"
-	// ProvisioningStateValues1Updating specifies the provisioning state values 1 updating state for provisioning state
-	// values 1.
+	// ProvisioningStateValues1Updating ...
 	ProvisioningStateValues1Updating ProvisioningStateValues1 = "Updating"
 )
 
@@ -82,27 +72,27 @@ const (
 type Status string
 
 const (
-	// StatusAccepted specifies the status accepted state for status.
+	// StatusAccepted ...
 	StatusAccepted Status = "Accepted"
-	// StatusCanceled specifies the status canceled state for status.
+	// StatusCanceled ...
 	StatusCanceled Status = "canceled"
-	// StatusCreated specifies the status created state for status.
+	// StatusCreated ...
 	StatusCreated Status = "Created"
-	// StatusCreating specifies the status creating state for status.
+	// StatusCreating ...
 	StatusCreating Status = "Creating"
-	// StatusDeleted specifies the status deleted state for status.
+	// StatusDeleted ...
 	StatusDeleted Status = "Deleted"
-	// StatusDeleting specifies the status deleting state for status.
+	// StatusDeleting ...
 	StatusDeleting Status = "Deleting"
-	// StatusFailed specifies the status failed state for status.
+	// StatusFailed ...
 	StatusFailed Status = "Failed"
-	// StatusOK specifies the status ok state for status.
+	// StatusOK ...
 	StatusOK Status = "OK"
-	// StatusSucceeded specifies the status succeeded state for status.
+	// StatusSucceeded ...
 	StatusSucceeded Status = "Succeeded"
-	// StatusUpdated specifies the status updated state for status.
+	// StatusUpdated ...
 	StatusUpdated Status = "Updated"
-	// StatusUpdating specifies the status updating state for status.
+	// StatusUpdating ...
 	StatusUpdating Status = "Updating"
 )
 
@@ -2429,40 +2419,52 @@ func (future LROsPutSubResourceFuture) Result(client LROsClient) (sp SubProduct,
 
 // OperationResult
 type OperationResult struct {
+	// Status - The status of the request. Possible values include: 'StatusSucceeded', 'StatusFailed', 'StatusCanceled', 'StatusAccepted', 'StatusCreating', 'StatusCreated', 'StatusUpdating', 'StatusUpdated', 'StatusDeleting', 'StatusDeleted', 'StatusOK'
 	Status Status                `json:"status,omitempty"`
 	Error  *OperationResultError `json:"error,omitempty"`
 }
 
 // OperationResultError
 type OperationResultError struct {
-	Code    *int32  `json:"code,omitempty"`
+	// Code - The error code for an operation failure
+	Code *int32 `json:"code,omitempty"`
+	// Message - The detailed arror message
 	Message *string `json:"message,omitempty"`
 }
 
 // Product
 type Product struct {
-	autorest.Response  `json:"-"`
-	ID                 *string             `json:"id,omitempty"`
-	Type               *string             `json:"type,omitempty"`
-	Tags               *map[string]*string `json:"tags,omitempty"`
-	Location           *string             `json:"location,omitempty"`
-	Name               *string             `json:"name,omitempty"`
+	autorest.Response `json:"-"`
+	// ID - Resource Id
+	ID *string `json:"id,omitempty"`
+	// Type - Resource Type
+	Type *string             `json:"type,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
+	// Location - Resource Location
+	Location *string `json:"location,omitempty"`
+	// Name - Resource Name
+	Name               *string `json:"name,omitempty"`
 	*ProductProperties `json:"properties,omitempty"`
 }
 
 // ProductProperties
 type ProductProperties struct {
-	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+	// ProvisioningStateValues - Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
 // Resource
 type Resource struct {
-	ID       *string             `json:"id,omitempty"`
-	Type     *string             `json:"type,omitempty"`
-	Tags     *map[string]*string `json:"tags,omitempty"`
-	Location *string             `json:"location,omitempty"`
-	Name     *string             `json:"name,omitempty"`
+	// ID - Resource Id
+	ID *string `json:"id,omitempty"`
+	// Type - Resource Type
+	Type *string             `json:"type,omitempty"`
+	Tags *map[string]*string `json:"tags,omitempty"`
+	// Location - Resource Location
+	Location *string `json:"location,omitempty"`
+	// Name - Resource Name
+	Name *string `json:"name,omitempty"`
 }
 
 // Sku
@@ -2474,18 +2476,21 @@ type Sku struct {
 
 // SubProduct
 type SubProduct struct {
-	autorest.Response     `json:"-"`
+	autorest.Response `json:"-"`
+	// ID - Sub Resource Id
 	ID                    *string `json:"id,omitempty"`
 	*SubProductProperties `json:"properties,omitempty"`
 }
 
 // SubProductProperties
 type SubProductProperties struct {
-	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+	// ProvisioningStateValues - Possible values include: 'ProvisioningStateValues1Succeeded', 'ProvisioningStateValues1Failed', 'ProvisioningStateValues1Canceled', 'ProvisioningStateValues1Accepted', 'ProvisioningStateValues1Creating', 'ProvisioningStateValues1Created', 'ProvisioningStateValues1Updating', 'ProvisioningStateValues1Updated', 'ProvisioningStateValues1Deleting', 'ProvisioningStateValues1Deleted', 'ProvisioningStateValues1OK'
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
 // SubResource
 type SubResource struct {
+	// ID - Sub Resource Id
 	ID *string `json:"id,omitempty"`
 }

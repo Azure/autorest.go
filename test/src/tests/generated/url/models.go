@@ -10,11 +10,11 @@ package urlgroup
 type URIColor string
 
 const (
-	// Bluecolor specifies the bluecolor state for uri color.
+	// Bluecolor ...
 	Bluecolor URIColor = "blue color"
-	// Greencolor specifies the greencolor state for uri color.
+	// Greencolor ...
 	Greencolor URIColor = "green color"
-	// Redcolor specifies the redcolor state for uri color.
+	// Redcolor ...
 	Redcolor URIColor = "red color"
 )
 

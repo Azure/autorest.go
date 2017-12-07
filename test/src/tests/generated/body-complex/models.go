@@ -16,13 +16,13 @@ import (
 type CMYKColors string
 
 const (
-	// BlacK specifies the blac k state for cmyk colors.
+	// BlacK ...
 	BlacK CMYKColors = "blacK"
-	// Cyan specifies the cyan state for cmyk colors.
+	// Cyan ...
 	Cyan CMYKColors = "cyan"
-	// Magenta specifies the magenta state for cmyk colors.
+	// Magenta ...
 	Magenta CMYKColors = "Magenta"
-	// YELLOW specifies the yellow state for cmyk colors.
+	// YELLOW ...
 	YELLOW CMYKColors = "YELLOW"
 )
 
@@ -30,19 +30,19 @@ const (
 type Fishtype string
 
 const (
-	// FishtypeCookiecuttershark specifies the fishtype cookiecuttershark state for fishtype.
+	// FishtypeCookiecuttershark ...
 	FishtypeCookiecuttershark Fishtype = "cookiecuttershark"
-	// FishtypeFish specifies the fishtype fish state for fishtype.
+	// FishtypeFish ...
 	FishtypeFish Fishtype = "Fish"
-	// FishtypeGoblin specifies the fishtype goblin state for fishtype.
+	// FishtypeGoblin ...
 	FishtypeGoblin Fishtype = "goblin"
-	// FishtypeSalmon specifies the fishtype salmon state for fishtype.
+	// FishtypeSalmon ...
 	FishtypeSalmon Fishtype = "salmon"
-	// FishtypeSawshark specifies the fishtype sawshark state for fishtype.
+	// FishtypeSawshark ...
 	FishtypeSawshark Fishtype = "sawshark"
-	// FishtypeShark specifies the fishtype shark state for fishtype.
+	// FishtypeShark ...
 	FishtypeShark Fishtype = "shark"
-	// FishtypeSmartSalmon specifies the fishtype smart salmon state for fishtype.
+	// FishtypeSmartSalmon ...
 	FishtypeSmartSalmon Fishtype = "smart_salmon"
 )
 
@@ -55,9 +55,12 @@ type ArrayWrapper struct {
 // Basic
 type Basic struct {
 	autorest.Response `json:"-"`
-	ID                *int32     `json:"id,omitempty"`
-	Name              *string    `json:"name,omitempty"`
-	Color             CMYKColors `json:"color,omitempty"`
+	// ID - Basic Id
+	ID *int32 `json:"id,omitempty"`
+	// Name - Name property with a very long description that does not fit on a single line and a line break.
+	Name *string `json:"name,omitempty"`
+	// Color - Possible values include: 'Cyan', 'Magenta', 'YELLOW', 'BlacK'
+	Color CMYKColors `json:"color,omitempty"`
 }
 
 // BooleanWrapper
@@ -86,9 +89,10 @@ type Cookiecuttershark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	Fishtype Fishtype     `json:"fishtype,omitempty"`
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	Fishtype Fishtype   `json:"fishtype,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *date.Time `json:"birthday,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Cookiecuttershark.
@@ -295,7 +299,8 @@ type Fish struct {
 	Species           *string      `json:"species,omitempty"`
 	Length            *float64     `json:"length,omitempty"`
 	Siblings          *[]BasicFish `json:"siblings,omitempty"`
-	Fishtype          Fishtype     `json:"fishtype,omitempty"`
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	Fishtype Fishtype `json:"fishtype,omitempty"`
 }
 
 func unmarshalBasicFish(body []byte) (BasicFish, error) {
@@ -496,10 +501,11 @@ type Goblinshark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	Fishtype Fishtype     `json:"fishtype,omitempty"`
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
-	Jawsize  *int32       `json:"jawsize,omitempty"`
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	Fishtype Fishtype   `json:"fishtype,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *date.Time `json:"birthday,omitempty"`
+	Jawsize  *int32     `json:"jawsize,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Goblinshark.
@@ -683,9 +689,10 @@ type Salmon struct {
 	Species           *string      `json:"species,omitempty"`
 	Length            *float64     `json:"length,omitempty"`
 	Siblings          *[]BasicFish `json:"siblings,omitempty"`
-	Fishtype          Fishtype     `json:"fishtype,omitempty"`
-	Location          *string      `json:"location,omitempty"`
-	Iswild            *bool        `json:"iswild,omitempty"`
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Location *string  `json:"location,omitempty"`
+	Iswild   *bool    `json:"iswild,omitempty"`
 }
 
 func unmarshalBasicSalmon(body []byte) (BasicSalmon, error) {
@@ -868,10 +875,11 @@ type Sawshark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	Fishtype Fishtype     `json:"fishtype,omitempty"`
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
-	Picture  *[]byte      `json:"picture,omitempty"`
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	Fishtype Fishtype   `json:"fishtype,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *date.Time `json:"birthday,omitempty"`
+	Picture  *[]byte    `json:"picture,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Sawshark.
@@ -1029,9 +1037,10 @@ type Shark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	Fishtype Fishtype     `json:"fishtype,omitempty"`
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	Fishtype Fishtype   `json:"fishtype,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *date.Time `json:"birthday,omitempty"`
 }
 
 func unmarshalBasicShark(body []byte) (BasicShark, error) {
@@ -1223,12 +1232,14 @@ type Siamese struct {
 
 // SmartSalmon
 type SmartSalmon struct {
-	Species              *string                             `json:"species,omitempty"`
-	Length               *float64                            `json:"length,omitempty"`
-	Siblings             *[]BasicFish                        `json:"siblings,omitempty"`
-	Fishtype             Fishtype                            `json:"fishtype,omitempty"`
-	Location             *string                             `json:"location,omitempty"`
-	Iswild               *bool                               `json:"iswild,omitempty"`
+	Species  *string      `json:"species,omitempty"`
+	Length   *float64     `json:"length,omitempty"`
+	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Location *string  `json:"location,omitempty"`
+	Iswild   *bool    `json:"iswild,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
 	AdditionalProperties *map[string]*map[string]interface{} `json:",omitempty"`
 	CollegeDegree        *string                             `json:"college_degree,omitempty"`
 }

@@ -258,6 +258,22 @@ namespace AutoRest.Go
             return IsApiVersionPattern.IsMatch(name);
         }
 
+        /// <summary>
+        /// Transforms the specified text body into a comment block.
+        /// If the body contains embedded new-line characters it will be
+        /// broken up into multiple comment-lines.
+        /// </summary>
+        /// <param name="body">The body of text to transform into a comment block.</param>
+        /// <returns>The comment block.</returns>
+        public static string ToCommentBlock(this string body)
+        {
+            if (body.IndexOf('\n') > 0)
+            {
+                body = string.Join("\n// ", body.Split('\n', StringSplitOptions.RemoveEmptyEntries));
+            }
+            return $"// {body}\n";
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////
         //
         // Type Extensions
