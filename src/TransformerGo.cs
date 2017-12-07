@@ -11,6 +11,7 @@ using AutoRest.Go.Properties;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using AutoRest.Extensions.Azure;
@@ -100,7 +101,7 @@ namespace AutoRest.Go
                 }
 
                 var enumAlreadyExists = false;
-                var enumWithSameName = (EnumTypeGo)cmg.EnumTypes.FirstOrDefault(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
+                var enumWithSameName = (EnumTypeGo)cmg.EnumTypes.FirstOrDefault(et => et.Name.EqualsIgnoreCase(CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)));
 
                 if (enumWithSameName != null)
                 {
