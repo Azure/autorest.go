@@ -20,11 +20,40 @@ namespace AutoRest.Go.Model
         public CodeModelGo()
         {
             Version = FormatVersion(Settings.Instance.PackageVersion);
+            SpecifiedUserAgent = Settings.Instance.Host?.GetValue<string>("user-agent").Result;
         }
 
         public string Version { get; }
 
-        public string UserAgent => $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+        public string UserAgent
+        {
+            get
+            {
+                if (SpecifiedUserAgent == null)
+                {
+                    return DefaultUserAgent;
+                }
+                return SpecifiedUserAgent;
+            }
+            set
+            {
+                SpecifiedUserAgent = value;
+            }
+        }
+
+        private string DefaultUserAgent
+        {
+            get
+            {
+                return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+            }
+        }
+
+        private string SpecifiedUserAgent
+        {
+            get;
+            set;
+        }
 
         public string ServiceName => CodeNamerGo.Instance.PascalCase(Namespace ?? string.Empty);
 
@@ -162,6 +191,10 @@ namespace AutoRest.Go.Model
             get
             {
                 var constDeclaration = new List<string>();
+                if (!IsCustomBaseUri)
+                {
+                    constDeclaration.Add($"// DefaultBaseURI is the default URI used for the service {ServiceName}\nDefaultBaseURI = \"{BaseUrl}\"");
+                }
                 foreach (var p in Properties)
                 {
                     if (!p.SerializedName.IsApiVersion() && !p.DefaultValue.FixedValue.IsNullOrEmpty())

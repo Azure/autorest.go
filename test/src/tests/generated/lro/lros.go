@@ -229,7 +229,7 @@ func (client LROsClient) DeleteAsyncNoHeaderInRetrySender(req *http.Request) (fu
 		return
 	}
 	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent, http.StatusAccepted))
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent))
 	return
 }
 
@@ -239,7 +239,7 @@ func (client LROsClient) DeleteAsyncNoHeaderInRetryResponder(resp *http.Response
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent, http.StatusAccepted),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
 	return
@@ -499,7 +499,7 @@ func (client LROsClient) DeleteNoHeaderInRetrySender(req *http.Request) (future 
 		return
 	}
 	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent, http.StatusAccepted))
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent))
 	return
 }
 
@@ -509,7 +509,7 @@ func (client LROsClient) DeleteNoHeaderInRetryResponder(resp *http.Response) (re
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent, http.StatusAccepted),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent),
 		autorest.ByClosing())
 	result.Response = resp
 	return
@@ -721,7 +721,7 @@ func (client LROsClient) Post200WithPayloadSender(req *http.Request) (future LRO
 		return
 	}
 	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusAccepted, http.StatusOK))
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
 	return
 }
 
@@ -731,7 +731,7 @@ func (client LROsClient) Post200WithPayloadResponder(resp *http.Response) (resul
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusAccepted, http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -907,7 +907,7 @@ func (client LROsClient) PostAsyncNoRetrySucceededSender(req *http.Request) (fut
 		return
 	}
 	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusAccepted, http.StatusOK))
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
 	return
 }
 
@@ -917,7 +917,7 @@ func (client LROsClient) PostAsyncNoRetrySucceededResponder(resp *http.Response)
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusAccepted, http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
@@ -1094,7 +1094,7 @@ func (client LROsClient) PostAsyncRetrySucceededSender(req *http.Request) (futur
 		return
 	}
 	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusAccepted, http.StatusOK))
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
 	return
 }
 
@@ -1104,7 +1104,7 @@ func (client LROsClient) PostAsyncRetrySucceededResponder(resp *http.Response) (
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
-		azure.WithErrorUnlessStatusCode(http.StatusAccepted, http.StatusOK),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
 		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
