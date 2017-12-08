@@ -14,35 +14,38 @@ import (
 type Colors string
 
 const (
-	// BlueColor specifies the blue color state for colors.
+	// BlueColor ...
 	BlueColor Colors = "blue_color"
-	// GreenColor specifies the green color state for colors.
+	// GreenColor ...
 	GreenColor Colors = "green-color"
-	// Redcolor specifies the redcolor state for colors.
+	// Redcolor ...
 	Redcolor Colors = "red color"
 )
 
-// Base64URL
+// Base64URL ...
 type Base64URL struct {
 	autorest.Response `json:"-"`
 	Value             *string `json:"value,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// RefColorConstant
+// RefColorConstant ...
 type RefColorConstant struct {
 	autorest.Response `json:"-"`
-	ColorConstant     *string `json:"ColorConstant,omitempty"`
-	Field1            *string `json:"field1,omitempty"`
+	// ColorConstant - Referenced Color Constant Description.
+	ColorConstant *string `json:"ColorConstant,omitempty"`
+	// Field1 - Sample string.
+	Field1 *string `json:"field1,omitempty"`
 }
 
-// StringModel
+// StringModel ...
 type StringModel struct {
 	autorest.Response `json:"-"`
-	Value             *string `json:"value,omitempty"`
+	// Value - Possible values include: ''
+	Value *string `json:"value,omitempty"`
 }

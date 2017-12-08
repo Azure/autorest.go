@@ -14,23 +14,27 @@ import (
 type EnumConst string
 
 const (
-	// ConstantStringAsEnum specifies the constant string as enum state for enum const.
+	// ConstantStringAsEnum ...
 	ConstantStringAsEnum EnumConst = "constant_string_as_enum"
 )
 
 // ChildProduct the product documentation.
 type ChildProduct struct {
+	// ConstProperty - Constant string
 	ConstProperty *string `json:"constProperty,omitempty"`
-	Count         *int32  `json:"count,omitempty"`
+	// Count - Count
+	Count *int32 `json:"count,omitempty"`
 }
 
 // ConstantProduct the product documentation.
 type ConstantProduct struct {
-	ConstProperty  *string `json:"constProperty,omitempty"`
+	// ConstProperty - Constant string
+	ConstProperty *string `json:"constProperty,omitempty"`
+	// ConstProperty2 - Constant string2
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
@@ -40,12 +44,18 @@ type Error struct {
 // Product the product documentation.
 type Product struct {
 	autorest.Response `json:"-"`
-	DisplayNames      *[]string        `json:"display_names,omitempty"`
-	Capacity          *int32           `json:"capacity,omitempty"`
-	Image             *string          `json:"image,omitempty"`
-	Child             *ChildProduct    `json:"child,omitempty"`
-	ConstChild        *ConstantProduct `json:"constChild,omitempty"`
-	ConstInt          *int32           `json:"constInt,omitempty"`
-	ConstString       *string          `json:"constString,omitempty"`
-	ConstStringAsEnum EnumConst        `json:"constStringAsEnum,omitempty"`
+	// DisplayNames - Non required array of unique items from 0 to 6 elements.
+	DisplayNames *[]string `json:"display_names,omitempty"`
+	// Capacity - Non required int betwen 0 and 100 exclusive.
+	Capacity *int32 `json:"capacity,omitempty"`
+	// Image - Image URL representing the product.
+	Image      *string          `json:"image,omitempty"`
+	Child      *ChildProduct    `json:"child,omitempty"`
+	ConstChild *ConstantProduct `json:"constChild,omitempty"`
+	// ConstInt - Constant int
+	ConstInt *int32 `json:"constInt,omitempty"`
+	// ConstString - Constant string
+	ConstString *string `json:"constString,omitempty"`
+	// ConstStringAsEnum - Constant string as Enum. Possible values include: 'ConstantStringAsEnum'
+	ConstStringAsEnum EnumConst `json:"constStringAsEnum,omitempty"`
 }

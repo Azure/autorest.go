@@ -11,13 +11,13 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
-// DateTimeRfc1123
+// DateTimeRfc1123 ...
 type DateTimeRfc1123 struct {
 	autorest.Response `json:"-"`
 	Value             *date.TimeRFC1123 `json:"value,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`

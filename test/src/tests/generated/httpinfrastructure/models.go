@@ -10,48 +10,48 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
-// A
+// A ...
 type A struct {
 	autorest.Response `json:"-"`
 	StatusCode        *string `json:"statusCode,omitempty"`
 }
 
-// B
+// B ...
 type B struct {
 	StatusCode     *string `json:"statusCode,omitempty"`
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
 }
 
-// Bool
+// Bool ...
 type Bool struct {
 	autorest.Response `json:"-"`
 	Value             *bool `json:"value,omitempty"`
 }
 
-// C
+// C ...
 type C struct {
 	HTTPCode *string `json:"httpCode,omitempty"`
 }
 
-// D
+// D ...
 type D struct {
 	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	autorest.Response `json:"-"`
 	Status            *int32  `json:"status,omitempty"`
 	Message           *string `json:"message,omitempty"`
 }
 
-// ListString
+// ListString ...
 type ListString struct {
 	autorest.Response `json:"-"`
 	Value             *[]string `json:"value,omitempty"`
 }
 
-// SetObject
+// SetObject ...
 type SetObject struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]interface{} `json:"value,omitempty"`

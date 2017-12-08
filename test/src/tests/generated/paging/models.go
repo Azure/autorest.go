@@ -16,31 +16,31 @@ import (
 type Status string
 
 const (
-	// Accepted specifies the accepted state for status.
+	// Accepted ...
 	Accepted Status = "Accepted"
-	// Canceled specifies the canceled state for status.
+	// Canceled ...
 	Canceled Status = "canceled"
-	// Created specifies the created state for status.
+	// Created ...
 	Created Status = "Created"
-	// Creating specifies the creating state for status.
+	// Creating ...
 	Creating Status = "Creating"
-	// Deleted specifies the deleted state for status.
+	// Deleted ...
 	Deleted Status = "Deleted"
-	// Deleting specifies the deleting state for status.
+	// Deleting ...
 	Deleting Status = "Deleting"
-	// Failed specifies the failed state for status.
+	// Failed ...
 	Failed Status = "Failed"
-	// OK specifies the ok state for status.
+	// OK ...
 	OK Status = "OK"
-	// Succeeded specifies the succeeded state for status.
+	// Succeeded ...
 	Succeeded Status = "Succeeded"
-	// Updated specifies the updated state for status.
+	// Updated ...
 	Updated Status = "Updated"
-	// Updating specifies the updating state for status.
+	// Updating ...
 	Updating Status = "Updating"
 )
 
-// OdataProductResult
+// OdataProductResult ...
 type OdataProductResult struct {
 	autorest.Response `json:"-"`
 	Values            *[]Product `json:"values,omitempty"`
@@ -140,23 +140,24 @@ func (page OdataProductResultPage) Values() []Product {
 	return *page.opr.Values
 }
 
-// OperationResult
+// OperationResult ...
 type OperationResult struct {
+	// Status - The status of the request. Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	Status Status `json:"status,omitempty"`
 }
 
-// Product
+// Product ...
 type Product struct {
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
-// ProductProperties
+// ProductProperties ...
 type ProductProperties struct {
 	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
-// ProductResult
+// ProductResult ...
 type ProductResult struct {
 	autorest.Response `json:"-"`
 	Values            *[]Product `json:"values,omitempty"`

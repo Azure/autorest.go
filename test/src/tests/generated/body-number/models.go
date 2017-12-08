@@ -11,19 +11,19 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// Decimal
+// Decimal ...
 type Decimal struct {
 	autorest.Response `json:"-"`
 	Value             *decimal.Decimal `json:"value,omitempty"`
 }
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// Float64
+// Float64 ...
 type Float64 struct {
 	autorest.Response `json:"-"`
 	Value             *float64 `json:"value,omitempty"`

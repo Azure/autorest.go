@@ -10,15 +10,15 @@ package headergroup
 type GreyscaleColors string
 
 const (
-	// Black specifies the black state for greyscale colors.
+	// Black ...
 	Black GreyscaleColors = "black"
-	// GREY specifies the grey state for greyscale colors.
+	// GREY ...
 	GREY GreyscaleColors = "GREY"
-	// White specifies the white state for greyscale colors.
+	// White ...
 	White GreyscaleColors = "White"
 )
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`

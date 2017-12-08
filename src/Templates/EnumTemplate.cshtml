@@ -3,10 +3,6 @@
 @using System.Linq
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
-@{
-    var modelName = CodeNamerGo.Instance.CamelCase(Model.Name);
-    var modelPhrase = Model.Name.FixedValue.ToPhrase();
-}
 
 @WrapComment("// ", Model.Documentation)
 type @Model.Name string
@@ -18,8 +14,17 @@ type @Model.Name string
 const (
 @foreach (var v in Model.Values.OrderBy(v => v.Name))
 {
+    var desc = string.Empty;
+    if (string.IsNullOrWhiteSpace(v.Description))
+    {
+        desc = "...";
+    }
+    else
+    {
+        desc = $"- {v.Description}";
+    }
     <text>
-@WrapComment("// ", $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} specifies the {v.Name.ToPhrase()} state for {modelPhrase}.")
+@WrapComment("// ", $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} {desc}")
 @(CodeNamerGo.Instance.GetEnumMemberName(v.Name)) @(Model.Name) = "@(v.SerializedName)"
     </text>
 }

@@ -11,97 +11,97 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// SetBase64URL
+// SetBase64URL ...
 type SetBase64URL struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*string `json:"value,omitempty"`
 }
 
-// SetBool
+// SetBool ...
 type SetBool struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*bool `json:"value,omitempty"`
 }
 
-// SetByteArray
+// SetByteArray ...
 type SetByteArray struct {
 	autorest.Response `json:"-"`
 	Value             *map[string][]byte `json:"value,omitempty"`
 }
 
-// SetDate
+// SetDate ...
 type SetDate struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*date.Date `json:"value,omitempty"`
 }
 
-// SetDateTime
+// SetDateTime ...
 type SetDateTime struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*date.Time `json:"value,omitempty"`
 }
 
-// SetDateTimeRfc1123
+// SetDateTimeRfc1123 ...
 type SetDateTimeRfc1123 struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*date.TimeRFC1123 `json:"value,omitempty"`
 }
 
-// SetFloat64
+// SetFloat64 ...
 type SetFloat64 struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*float64 `json:"value,omitempty"`
 }
 
-// SetInt32
+// SetInt32 ...
 type SetInt32 struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*int32 `json:"value,omitempty"`
 }
 
-// SetInt64
+// SetInt64 ...
 type SetInt64 struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*int64 `json:"value,omitempty"`
 }
 
-// SetListString
+// SetListString ...
 type SetListString struct {
 	autorest.Response `json:"-"`
 	Value             *map[string][]string `json:"value,omitempty"`
 }
 
-// SetSetString
+// SetSetString ...
 type SetSetString struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]map[string]*string `json:"value,omitempty"`
 }
 
-// SetString
+// SetString ...
 type SetString struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*string `json:"value,omitempty"`
 }
 
-// SetTimeSpan
+// SetTimeSpan ...
 type SetTimeSpan struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*string `json:"value,omitempty"`
 }
 
-// SetWidget
+// SetWidget ...
 type SetWidget struct {
 	autorest.Response `json:"-"`
 	Value             *map[string]*Widget `json:"value,omitempty"`
 }
 
-// Widget
+// Widget ...
 type Widget struct {
 	Integer *int32  `json:"integer,omitempty"`
 	String  *string `json:"string,omitempty"`

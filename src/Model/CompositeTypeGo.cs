@@ -242,6 +242,11 @@ namespace AutoRest.Go.Model
             // Emit each property, except for named Enumerated types, as a pointer to the type
             foreach (var property in properties)
             {
+                if (!string.IsNullOrWhiteSpace(property.Documentation))
+                {
+                    indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
+                }
+
                 if (property.ModelType is EnumTypeGo enumType && enumType.IsNamed)
                 {
                     indented.AppendFormat("{0} {1} {2}\n",

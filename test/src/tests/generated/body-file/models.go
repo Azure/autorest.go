@@ -11,13 +11,13 @@ import (
 	"io"
 )
 
-// Error
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// ReadCloser
+// ReadCloser ...
 type ReadCloser struct {
 	autorest.Response `json:"-"`
 	Value             *io.ReadCloser `json:"value,omitempty"`
