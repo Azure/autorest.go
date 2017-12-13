@@ -184,9 +184,9 @@ func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(s
 func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body []byte) error {
     @if (Model.IsWrapperType)
     {
-        if (Model.BaseType is SequenceType)
+        if (Model.BaseType is SequenceTypeGo sequenceType)
         {
-    @:@(((SequenceTypeGo) Model.BaseType).ElementType.Name.FixedValue.ToShortName()), err := unmarshal@((Model.BaseType as SequenceTypeGo).ElementType.GetInterfaceName())Array(body)
+    @:@(sequenceType.ElementType.Name.FixedValue.ToShortName()), err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(body)
         }
         else
         {
@@ -218,7 +218,7 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
     var v *json.RawMessage
         @foreach (var p in Model.AllProperties)
         {
-            if (p.ModelType is DictionaryTypeGo && ((DictionaryTypeGo)p.ModelType).SupportsAdditionalProperties)
+            if (p.ModelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties)
             {
                 // TODO: codegen for this scenario is broken
                 continue;
@@ -227,13 +227,13 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
     @EmptyLine
     v = m["@(p.SerializedName)"]
     if v != nil {
-            @if (p.ModelType is CompositeType && ((CompositeTypeGo) p.ModelType).IsPolymorphic)
+            @if (p.ModelType is CompositeTypeGo compositeType && compositeType.HasInterface)
             {
         @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(p.ModelType.GetInterfaceName())(*m["@(p.SerializedName)"])
             }
-            else if ((p.ModelType as SequenceType)?.ElementType is CompositeType && ((CompositeType) ((SequenceType) p.ModelType).ElementType).IsPolymorphic)
+            else if (p.ModelType is SequenceTypeGo sequenceType && sequenceType.ElementType is CompositeTypeGo elementType && elementType.HasInterface)
             {
-        @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(((SequenceTypeGo) p.ModelType).ElementType.GetInterfaceName())Array(*m["@(p.SerializedName)"])
+        @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(*m["@(p.SerializedName)"])
             }
             else
             {
@@ -245,7 +245,7 @@ func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body 
         if err != nil {
             return err
         }
-            @if ((p.ModelType is CompositeType && ((CompositeTypeGo) p.ModelType).IsPolymorphic) || (p.ModelType is EnumType))
+            @if ((p.ModelType is CompositeTypeGo type && type.HasInterface) || p.ModelType is EnumType)
             {
         @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
             }

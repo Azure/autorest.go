@@ -132,10 +132,10 @@ namespace AutoRest.Go.Model
             {
                 return AllProperties.Any(p =>
                         // polymorphic composite
-                        (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
+                        (p.ModelType is CompositeTypeGo compositeType && compositeType.HasInterface) ||
                         // polymorphic array
-                        (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType &&
-                            ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
+                        (p.ModelType is SequenceType sequenceType && sequenceType.ElementType is CompositeTypeGo elementType &&
+                         elementType.HasInterface));
             }
         }
 
@@ -220,7 +220,7 @@ namespace AutoRest.Go.Model
             }
             if (BaseModelType != null && BaseIsPolymorphic)
             {
-                return (BaseModelType as CompositeTypeGo).IsPolymorphicResponse();
+                return ((CompositeTypeGo) BaseModelType).IsPolymorphicResponse();
             }
             return false;
         }
@@ -255,27 +255,33 @@ namespace AutoRest.Go.Model
                                     property.JsonTag());
 
                 }
-                else if (property.ModelType is DictionaryType)
+                else if (property.ModelType is DictionaryType dictionaryType)
                 {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, (property.ModelType as DictionaryTypeGo).Name, property.JsonTag());
+                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, dictionaryType.Name, property.JsonTag());
                 }
                 else if (property.ModelType.PrimaryType(KnownPrimaryType.Object))
                 {
                     // TODO: I don't think this is the best way to handle object types
                     indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
                 }
-                else if (property.ModelType is CompositeTypeGo && property.ShouldBeFlattened())
+                else if (property.ModelType is CompositeTypeGo compositeType && property.ShouldBeFlattened())
                 {
                     // embed as an anonymous struct.  note that the ordering of this clause is
                     // important, i.e. we don't want to flatten primary types like dictionaries.
                     // Polymorphic fields are implemented as go interfaces and a pointer to an
                     // interface is not implementing the interface.
-                    indented.AppendFormat((property.ModelType as CompositeTypeGo).IsPolymorphic ?
-                        "{0} {1}\n" :
-                        "*{0} {1}\n",
-                            property.ModelType.Name, property.JsonTag());
+
+                    if (compositeType.HasInterface)
+                    {
+                        indented.AppendFormat("{0} {1}\n", property.ModelType.GetInterfaceName(), property.JsonTag());
+                    }
+                    else
+                    {
+                        indented.AppendFormat("*{0} {1}\n", property.ModelType.Name, property.JsonTag());
+                    }
+
                 }
-                else if (property.ModelType is CompositeTypeGo && ((CompositeTypeGo) property.ModelType).IsPolymorphic)
+                else if (property.ModelType is CompositeTypeGo type && type.HasInterface)
                 {
                     indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.JsonTag());
                 }
