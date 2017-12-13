@@ -125,6 +125,12 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 {
 <text>
     @(Model.FormDataMap)
+    @foreach (var p in Model.OptionalFormDataParameters)
+    {
+    @:if @(p.GetEmptyCheck(p.GetParameterName(),false)) {
+    @:@(p.AddToMap("formDataParameters"))
+    @:}
+    }
     @EmptyLine
 </text>
 }

@@ -312,6 +312,8 @@ namespace AutoRest.Go.Model
 
         public IEnumerable<ParameterGo> OptionalQueryParameters => ParametersGo.QueryParameters(false);
 
+        public IEnumerable<ParameterGo> OptionalFormDataParameters => ParametersGo.FormDataParameters(false);
+
         public string QueryMap => QueryParameters.BuildParameterMap("queryParameters");
 
         public string FormDataMap => FormDataParameters.BuildParameterMap("formDataParameters");
