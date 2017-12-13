@@ -867,7 +867,18 @@ func (s *Salmon) UnmarshalJSON(body []byte) error {
 // SalmonModel ...
 type SalmonModel struct {
 	autorest.Response `json:"-"`
-	Value             *Salmon `json:"value,omitempty"`
+	Value             BasicSalmon `json:"value,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for SalmonModel struct.
+func (sm *SalmonModel) UnmarshalJSON(body []byte) error {
+	s, err := unmarshalBasicSalmon(body)
+	if err != nil {
+		return err
+	}
+	sm.Value = s
+
+	return nil
 }
 
 // Sawshark ...
