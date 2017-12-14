@@ -132,10 +132,10 @@ namespace AutoRest.Go.Model
             {
                 return AllProperties.Any(p =>
                         // polymorphic composite
-                        (p.ModelType is CompositeTypeGo compositeType && compositeType.HasInterface) ||
+                        p.ModelType.HasInterface() ||
                         // polymorphic array
-                        (p.ModelType is SequenceType sequenceType && sequenceType.ElementType is CompositeTypeGo elementType &&
-                         elementType.HasInterface));
+                        (p.ModelType is SequenceType sequenceType &&
+                         sequenceType.ElementType.HasInterface()));
             }
         }
 
@@ -179,11 +179,6 @@ namespace AutoRest.Go.Model
         /// Gets if the type is a leaf type in an inheritance chain.
         /// </summary>
         public bool IsLeafType => BaseIsPolymorphic && DerivedTypes.IsNullOrEmpty();
-
-        /// <summary>
-        /// Gets if the type has an interface.
-        /// </summary>
-        public bool HasInterface => IsRootType || (BaseIsPolymorphic && !IsLeafType);
 
         public override Property Add(Property item)
         {
@@ -271,7 +266,7 @@ namespace AutoRest.Go.Model
                     // Polymorphic fields are implemented as go interfaces and a pointer to an
                     // interface is not implementing the interface.
 
-                    if (compositeType.HasInterface)
+                    if (compositeType.HasInterface())
                     {
                         indented.AppendFormat("{0} {1}\n", property.ModelType.GetInterfaceName(), property.JsonTag());
                     }
@@ -281,7 +276,7 @@ namespace AutoRest.Go.Model
                     }
 
                 }
-                else if (property.ModelType is CompositeTypeGo type && type.HasInterface)
+                else if (property.ModelType.HasInterface())
                 {
                     indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.JsonTag());
                 }
