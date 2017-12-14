@@ -19,7 +19,13 @@ Import
 task 'init', "" ,(done)->
   Fail "YOU MUST HAVE NODEJS VERSION GREATER THAN 7.10.0" if semver.lt( process.versions.node , "7.10.0" )
   done()
-  
+
+# Update test dependencies
+task 'updatetestdep', "", [], (done) ->
+  process.env.GOPATH = path.normalize("#{basefolder}/test")
+  await execute "dep ensure -update",          { cwd: './test/src/tests' }, defer code, stderr, stdout
+  done()
+
 # Run language-specific tests:
 task 'test', "", ['regenerate'], (done) ->
   process.env.GOPATH = path.normalize("#{basefolder}/test")
