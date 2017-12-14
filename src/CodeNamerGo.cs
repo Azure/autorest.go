@@ -527,7 +527,8 @@ namespace AutoRest.Go
                 var path = Settings.Instance.Host?.GetValue<string>("go-pipeline-import").Result;
                 if (string.IsNullOrWhiteSpace(path))
                 {
-                    return string.Empty;
+                    // default location
+                    return "github.com/Azure/azure-pipeline-go/pipeline";
                 }
                 return path;
             }
