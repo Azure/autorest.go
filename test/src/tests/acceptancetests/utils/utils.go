@@ -39,7 +39,7 @@ func NewPipelineWithRetry() pipeline.Pipeline {
 
 type HTTPSenderWithCookiesFactory struct{}
 
-func (swc HTTPSenderWithCookiesFactory) New(node pipeline.Policy, config *pipeline.Configuration) pipeline.Policy {
+func (swc HTTPSenderWithCookiesFactory) New(node pipeline.Policy, po *pipeline.PolicyOptions) pipeline.Policy {
 	j, _ := cookiejar.New(nil)
 	return &HTTPSenderWithCookiesPolicy{
 		sender: &http.Client{
@@ -59,7 +59,7 @@ func (swc HTTPSenderWithCookiesPolicy) Do(ctx context.Context, request pipeline.
 
 type SimpleRetryPolicyFactory struct{}
 
-func (srpf SimpleRetryPolicyFactory) New(node pipeline.Policy, config *pipeline.Configuration) pipeline.Policy {
+func (srpf SimpleRetryPolicyFactory) New(node pipeline.Policy, po *pipeline.PolicyOptions) pipeline.Policy {
 	return &SimpleRetryPolicy{
 		node: node,
 		statusCodesForRetry: []int{
