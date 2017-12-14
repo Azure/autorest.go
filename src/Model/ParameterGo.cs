@@ -66,7 +66,7 @@ namespace AutoRest.Go.Model
         public virtual bool IsMethodArgument => !IsClientProperty && !IsAPIVersion;
 
         /// <summary>
-        /// Get Name for parameter for Go map. 
+        /// Get Name for parameter for Go map.
         /// If parameter is client parameter, then return client.<parametername>
         /// </summary>
         /// <returns></returns>
@@ -210,7 +210,7 @@ namespace AutoRest.Go.Model
             builder.Append(mapVariable);
             builder.Append(" := map[string]interface{} {");
 
-            if (parameters.Count() > 0)
+            if (parameters.Any())
             {
                 builder.AppendLine();
                 var indented = new IndentedStringBuilder("  ");
@@ -266,6 +266,11 @@ namespace AutoRest.Go.Model
         public static IEnumerable<ParameterGo> FormDataParameters(this IEnumerable<ParameterGo> parameters)
         {
             return parameters.ByLocation(ParameterLocation.FormData);
+        }
+
+        public static IEnumerable<ParameterGo> FormDataParameters(this IEnumerable<ParameterGo> parameters, bool isRequired)
+        {
+            return parameters.ByLocationAsRequired(ParameterLocation.FormData, isRequired);
         }
 
         public static IEnumerable<ParameterGo> HeaderParameters(this IEnumerable<ParameterGo> parameters)

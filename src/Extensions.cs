@@ -339,17 +339,17 @@ namespace AutoRest.Go
         /// <param name="imports"></param>
         public static void AddImports(this IModelType type, HashSet<string> imports)
         {
-            if (type is DictionaryTypeGo)
+            if (type is DictionaryTypeGo dictionaryType)
             {
-                (type as DictionaryTypeGo).AddImports(imports);
+                dictionaryType.AddImports(imports);
             }
-            else if (type is PrimaryTypeGo)
+            else if (type is PrimaryTypeGo primaryType)
             {
-                (type as PrimaryTypeGo).AddImports(imports);
+                primaryType.AddImports(imports);
             }
-            else if (type is SequenceTypeGo)
+            else
             {
-                (type as SequenceTypeGo).AddImports(imports);
+                (type as SequenceTypeGo)?.AddImports(imports);
             }
         }
 
@@ -357,6 +357,15 @@ namespace AutoRest.Go
         {
             return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType ||
                 (type is CompositeType && (type as CompositeTypeGo).IsPolymorphicResponse()));
+        }
+
+        /// <summary>
+        /// Gets if the type has an interface.
+        /// </summary>
+        public static bool HasInterface(this IModelType type)
+        {
+            return (type is CompositeTypeGo compositeType) &&
+                (compositeType.IsRootType || compositeType.BaseIsPolymorphic && !compositeType.IsLeafType);
         }
 
         /// <summary>
