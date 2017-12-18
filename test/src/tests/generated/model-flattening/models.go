@@ -7,6 +7,7 @@ package modelflatteninggroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 )
 
@@ -53,6 +54,48 @@ type Error struct {
 	*Error  `json:"parentError,omitempty"`
 }
 
+// UnmarshalJSON is the custom unmarshaler for Error struct.
+func (e *Error) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	var v *json.RawMessage
+
+	v = m["status"]
+	if v != nil {
+		var status int32
+		err = json.Unmarshal(*m["status"], &status)
+		if err != nil {
+			return err
+		}
+		e.Status = &status
+	}
+
+	v = m["message"]
+	if v != nil {
+		var message string
+		err = json.Unmarshal(*m["message"], &message)
+		if err != nil {
+			return err
+		}
+		e.Message = &message
+	}
+
+	v = m["parentError"]
+	if v != nil {
+		var parentError Error
+		err = json.Unmarshal(*m["parentError"], &parentError)
+		if err != nil {
+			return err
+		}
+		e.Error = &parentError
+	}
+
+	return nil
+}
+
 // FlattenedProduct flattened product.
 type FlattenedProduct struct {
 	// ID - Resource Id
@@ -65,6 +108,78 @@ type FlattenedProduct struct {
 	// Name - Resource Name
 	Name                        *string `json:"name,omitempty"`
 	*FlattenedProductProperties `json:"properties,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for FlattenedProduct struct.
+func (fp *FlattenedProduct) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	var v *json.RawMessage
+
+	v = m["properties"]
+	if v != nil {
+		var properties FlattenedProductProperties
+		err = json.Unmarshal(*m["properties"], &properties)
+		if err != nil {
+			return err
+		}
+		fp.FlattenedProductProperties = &properties
+	}
+
+	v = m["id"]
+	if v != nil {
+		var ID string
+		err = json.Unmarshal(*m["id"], &ID)
+		if err != nil {
+			return err
+		}
+		fp.ID = &ID
+	}
+
+	v = m["type"]
+	if v != nil {
+		var typeVar string
+		err = json.Unmarshal(*m["type"], &typeVar)
+		if err != nil {
+			return err
+		}
+		fp.Type = &typeVar
+	}
+
+	v = m["tags"]
+	if v != nil {
+		var tags map[string]*string
+		err = json.Unmarshal(*m["tags"], &tags)
+		if err != nil {
+			return err
+		}
+		fp.Tags = &tags
+	}
+
+	v = m["location"]
+	if v != nil {
+		var location string
+		err = json.Unmarshal(*m["location"], &location)
+		if err != nil {
+			return err
+		}
+		fp.Location = &location
+	}
+
+	v = m["name"]
+	if v != nil {
+		var name string
+		err = json.Unmarshal(*m["name"], &name)
+		if err != nil {
+			return err
+		}
+		fp.Name = &name
+	}
+
+	return nil
 }
 
 // FlattenedProductProperties ...
@@ -107,6 +222,28 @@ type ProductWrapper struct {
 	*WrappedProduct `json:"property,omitempty"`
 }
 
+// UnmarshalJSON is the custom unmarshaler for ProductWrapper struct.
+func (pw *ProductWrapper) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	var v *json.RawMessage
+
+	v = m["property"]
+	if v != nil {
+		var property WrappedProduct
+		err = json.Unmarshal(*m["property"], &property)
+		if err != nil {
+			return err
+		}
+		pw.WrappedProduct = &property
+	}
+
+	return nil
+}
+
 // Resource ...
 type Resource struct {
 	// ID - Resource Id
@@ -144,6 +281,48 @@ type SimpleProduct struct {
 	*SimpleProductProperties `json:"details,omitempty"`
 }
 
+// UnmarshalJSON is the custom unmarshaler for SimpleProduct struct.
+func (sp *SimpleProduct) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	var v *json.RawMessage
+
+	v = m["details"]
+	if v != nil {
+		var details SimpleProductProperties
+		err = json.Unmarshal(*m["details"], &details)
+		if err != nil {
+			return err
+		}
+		sp.SimpleProductProperties = &details
+	}
+
+	v = m["base_product_id"]
+	if v != nil {
+		var baseProductID string
+		err = json.Unmarshal(*m["base_product_id"], &baseProductID)
+		if err != nil {
+			return err
+		}
+		sp.ProductID = &baseProductID
+	}
+
+	v = m["base_product_description"]
+	if v != nil {
+		var baseProductDescription string
+		err = json.Unmarshal(*m["base_product_description"], &baseProductDescription)
+		if err != nil {
+			return err
+		}
+		sp.Description = &baseProductDescription
+	}
+
+	return nil
+}
+
 // SimpleProductProperties the product documentation.
 type SimpleProductProperties struct {
 	// MaxProductDisplayName - Display name of product.
@@ -151,6 +330,48 @@ type SimpleProductProperties struct {
 	// Capacity - Capacity of product. For example, 4 people.
 	Capacity    *string `json:"max_product_capacity,omitempty"`
 	*ProductURL `json:"max_product_image,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for SimpleProductProperties struct.
+func (spp *SimpleProductProperties) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	var v *json.RawMessage
+
+	v = m["max_product_display_name"]
+	if v != nil {
+		var maxProductDisplayName string
+		err = json.Unmarshal(*m["max_product_display_name"], &maxProductDisplayName)
+		if err != nil {
+			return err
+		}
+		spp.MaxProductDisplayName = &maxProductDisplayName
+	}
+
+	v = m["max_product_capacity"]
+	if v != nil {
+		var maxProductCapacity string
+		err = json.Unmarshal(*m["max_product_capacity"], &maxProductCapacity)
+		if err != nil {
+			return err
+		}
+		spp.Capacity = &maxProductCapacity
+	}
+
+	v = m["max_product_image"]
+	if v != nil {
+		var maxProductImage ProductURL
+		err = json.Unmarshal(*m["max_product_image"], &maxProductImage)
+		if err != nil {
+			return err
+		}
+		spp.ProductURL = &maxProductImage
+	}
+
+	return nil
 }
 
 // WrappedProduct the wrapped produc.
