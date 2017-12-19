@@ -229,7 +229,7 @@ namespace AutoRest.Go
                     "unsafe",
 
                     // Other reserved names and packages (defined by the base libraries this code uses)
-                    "autorest", "client", "date", "err", "req", "resp", "result", "sender", "to", "validation"
+                    "autorest", "client", "date", "err", "req", "resp", "result", "sender", "to", "validation", "m", "v"
 
                 });
         }
