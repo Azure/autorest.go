@@ -177,7 +177,7 @@ func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(s
 </text>
 }
 
-@if (Model.HasPolymorphicFields)
+@if (Model.HasPolymorphicFields || Model.HasFlattenedFields)
 {
 <text>
 // UnmarshalJSON is the custom unmarshaler for @(Model.Name) struct.

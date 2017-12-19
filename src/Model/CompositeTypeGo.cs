@@ -126,6 +126,9 @@ namespace AutoRest.Go.Model
             }
         }
 
+        /// <summary>
+        /// Gets if there are any polymorphic fields.
+        /// </summary>
         public bool HasPolymorphicFields
         {
             get
@@ -138,6 +141,11 @@ namespace AutoRest.Go.Model
                          sequenceType.ElementType.HasInterface()));
             }
         }
+
+        /// <summary>
+        /// Gets if there are any flattened fields.
+        /// </summary>
+        public bool HasFlattenedFields => Properties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
 
         public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) ?
             CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) :
@@ -194,7 +202,7 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
-            if (IsPolymorphic)
+            if (IsPolymorphic || HasFlattenedFields)
             {
                 imports.Add("\"encoding/json\"");
             }
@@ -215,7 +223,7 @@ namespace AutoRest.Go.Model
             }
             if (BaseModelType != null && BaseIsPolymorphic)
             {
-                return ((CompositeTypeGo) BaseModelType).IsPolymorphicResponse();
+                return ((CompositeTypeGo)BaseModelType).IsPolymorphicResponse();
             }
             return false;
         }
