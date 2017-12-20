@@ -227,7 +227,7 @@ namespace AutoRest.Go
                     // plus flattening does not need to be checked that often
                     if (p.ShouldBeFlattened() && p.ModelType is CompositeTypeGo)
                     {
-                        p.Name = p.ModelType.Name;
+                        p.Name = p.ModelType.HasInterface() ? p.ModelType.GetInterfaceName() : p.ModelType.Name.Value;
                     }
                 }
             }
