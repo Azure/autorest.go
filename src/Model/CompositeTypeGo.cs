@@ -106,6 +106,8 @@ namespace AutoRest.Go.Model
 
         public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
 
+        public PropertyGo AdditionalPropertiesField => AllProperties.FirstOrDefault(p => p.ModelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties);
+
         public bool IsWrapperType { get; }
 
         public IModelType BaseType { get; }
@@ -114,7 +116,6 @@ namespace AutoRest.Go.Model
         {
             get
             {
-
                 var siblingTypes = RootType.DerivedTypes;
 
                 if (RootType.IsPolymorphic)
@@ -258,9 +259,11 @@ namespace AutoRest.Go.Model
                                     property.JsonTag());
 
                 }
-                else if (property.ModelType is DictionaryType dictionaryType)
+                else if (property.ModelType is DictionaryTypeGo dictionaryType)
                 {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, dictionaryType.Name, property.JsonTag());
+                    {
+                        indented.AppendFormat("{0} {1} {2}\n", property.Name, dictionaryType.Name, property.JsonTag(omitEmpty: false));
+                    }
                 }
                 else if (property.ModelType.PrimaryType(KnownPrimaryType.Object))
                 {
@@ -325,6 +328,7 @@ namespace AutoRest.Go.Model
         /// </summary>
         public string ZeroInitExpression => $"{Name}{{}}";
 
+        /// <summary>
         /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
         /// </summary>
         private void AddPolymorphicPropertyIfNecessary()
