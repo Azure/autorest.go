@@ -74,7 +74,7 @@ func runTests(allPass *bool) {
 		"validationgroup",
 		"custombaseurlgroup",
 		"filegroup",
-		// "formdatagroup",
+		"formdatagroup",
 		"paginggroup",
 		"morecustombaseurigroup",
 		"lrogroup",
