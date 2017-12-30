@@ -104,7 +104,7 @@ namespace AutoRest.Go.Model
 
         public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
 
-        public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
+        public string DiscriminatorEnumValue => DiscriminatorEnum?.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName))?.Name;
 
         public PropertyGo AdditionalPropertiesField => AllProperties.FirstOrDefault(p => p.ModelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties);
 
@@ -203,7 +203,7 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
-            if (IsPolymorphic || HasFlattenedFields)
+            if (IsPolymorphic || HasFlattenedFields || AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
             {
                 imports.Add("\"encoding/json\"");
             }
@@ -251,50 +251,7 @@ namespace AutoRest.Go.Model
                     indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
                 }
 
-                if (property.ModelType is EnumTypeGo enumType && enumType.IsNamed)
-                {
-                    indented.AppendFormat("{0} {1} {2}\n",
-                                    property.Name,
-                                    enumType.Name,
-                                    property.JsonTag());
-
-                }
-                else if (property.ModelType is DictionaryTypeGo dictionaryType)
-                {
-                    {
-                        indented.AppendFormat("{0} {1} {2}\n", property.Name, dictionaryType.Name, property.JsonTag(omitEmpty: false));
-                    }
-                }
-                else if (property.ModelType.PrimaryType(KnownPrimaryType.Object))
-                {
-                    // TODO: I don't think this is the best way to handle object types
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
-                }
-                else if (property.ModelType is CompositeTypeGo compositeType && property.ShouldBeFlattened())
-                {
-                    // embed as an anonymous struct.  note that the ordering of this clause is
-                    // important, i.e. we don't want to flatten primary types like dictionaries.
-                    // Polymorphic fields are implemented as go interfaces and a pointer to an
-                    // interface is not implementing the interface.
-
-                    if (compositeType.HasInterface())
-                    {
-                        indented.AppendFormat("{0} {1}\n", property.ModelType.GetInterfaceName(), property.JsonTag());
-                    }
-                    else
-                    {
-                        indented.AppendFormat("*{0} {1}\n", property.ModelType.Name, property.JsonTag());
-                    }
-
-                }
-                else if (property.ModelType.HasInterface())
-                {
-                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.JsonTag());
-                }
-                else
-                {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
-                }
+                indented.AppendLine(property.Field);
             }
 
             return indented.ToString();

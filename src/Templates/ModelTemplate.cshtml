@@ -1,4 +1,5 @@
-﻿@using AutoRest.Go
+﻿@using System.Linq
+@using AutoRest.Go
 @using AutoRest.Core.Model
 @using AutoRest.Go.Model
 @using AutoRest.Go.Templates
@@ -125,21 +126,47 @@ else
     </text>
 }
 
+@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
+{
+    <text>
+        @EmptyLine
+        // MarshalJSON is the custom marshaler for @(Model.Name).
+        func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name))MarshalJSON() ([]byte, error){
+        @if (Model.DiscriminatorEnumValue != null)
+        {
+            <text>
+                @(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(CodeNamerGo.Instance.GetEnumMemberName(Model.DiscriminatorEnumValue))
+            </text>
+        }
+        objectMap := make(map[string]interface{})
+
+        @foreach (var property in Model.AllProperties.Where(p => !string.IsNullOrEmpty(p.SerializedName)))
+        {
+            if (property.IsPointer || property.ModelType is DictionaryTypeGo)
+            {
+                @:if(@(Model.Name.FixedValue.ToShortName()).@(property.Name) != nil) {
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
+                @:}
+            }
+            else
+            {
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
+            }
+        }
+        @if (Model.AdditionalPropertiesField != default(PropertyGo))
+        {
+            @:for k, v := range @(Model.Name.FixedValue.ToShortName()).@(Model.AdditionalPropertiesField.Name) {
+            @:    objectMap[k] = v
+            @:}
+        }
+        return json.Marshal(objectMap)
+        }
+    </text>
+}
+
 @if (Model.BaseIsPolymorphic || Model.IsPolymorphic)
 {
     <text>
-    @EmptyLine
-    // MarshalJSON is the custom marshaler for @(Model.Name).
-    func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name))MarshalJSON() ([]byte, error){
-    @(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(CodeNamerGo.Instance.GetEnumMemberName(Model.DiscriminatorEnumValue))
-    type Alias @(Model.Name)
-    return json.Marshal(&struct {
-    Alias
-    }{
-    Alias: (Alias)(@(Model.Name.FixedValue.ToShortName())),
-    })
-    }
-
     @foreach (var st in Model.SiblingTypes)
     {
         <text>
@@ -259,11 +286,7 @@ else
             if err != nil {
             return err
             }
-            @if (p.ModelType.HasInterface() || p.ModelType is EnumType)
-            {
-                @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.Name))
-            }
-            else if (p.ModelType is DictionaryTypeGo type && type.SupportsAdditionalProperties)
+            @if (p.ModelType is DictionaryTypeGo type && type.SupportsAdditionalProperties)
             {
                 @:if(@(Model.Name.FixedValue.ToShortName()).@(p.Name) == nil) {
                 @: @(Model.Name.FixedValue.ToShortName()).@(p.Name) = make(@(p.ModelType.Name))
@@ -277,7 +300,11 @@ else
                     @:@(Model.Name.FixedValue.ToShortName()).@(p.Name)[k] = &@(CodeNamerGo.Instance.GetVariableName(p.Name))
                 }
             }
-            else
+            else if (!p.IsPointer)
+            {
+                    @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.Name))
+            }
+            else 
             {
                 @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = &@(CodeNamerGo.Instance.GetVariableName(p.Name))
             }

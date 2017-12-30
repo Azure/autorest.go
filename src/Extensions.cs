@@ -3,13 +3,10 @@
 
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
-using AutoRest.Core.Utilities.Collections;
-using AutoRest.Extensions;
 using AutoRest.Go.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace AutoRest.Go
