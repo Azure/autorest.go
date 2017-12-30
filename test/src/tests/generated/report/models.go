@@ -7,6 +7,7 @@ package report
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 )
 
@@ -19,5 +20,14 @@ type Error struct {
 // SetInt32 ...
 type SetInt32 struct {
 	autorest.Response `json:"-"`
-	Value             *map[string]*int32 `json:"value,omitempty"`
+	Value             map[string]*int32 `json:"value"`
+}
+
+// MarshalJSON is the custom marshaler for SetInt32.
+func (si3 SetInt32) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if si3.Value != nil {
+		objectMap["value"] = si3.Value
+	}
+	return json.Marshal(objectMap)
 }

@@ -116,15 +116,15 @@ func getAzureReport(ctx context.Context) {
 	printReport(res.Value, "Azure")
 }
 
-func printReport(res *map[string]*int32, report string) {
+func printReport(res map[string]*int32, report string) {
 	count := 0
-	for key, val := range *res {
+	for key, val := range res {
 		if *val <= 0 {
 			fmt.Println(key, *val)
 			count++
 		}
 	}
-	total := len(*res)
+	total := len(res)
 	fmt.Printf("\nReport:	Passed(%v)  Not Run(%v)\n", total-count, count)
 	fmt.Printf("Go %s Done.......\n\n", report)
 
