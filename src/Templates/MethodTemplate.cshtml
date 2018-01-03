@@ -139,10 +139,14 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 
 @if (Model.BodyParameter != null && !Model.BodyParameter.IsRequired)
 {
+    var bodyParam = string.Format(Model.BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream)
+                                        ? "autorest.WithFile({0})"
+                                        : "autorest.WithJSON({0})",
+                                Model.BodyParameter.Name);
 <text>
     if @(Model.BodyParameter.GetEmptyCheck(Model.BodyParameter.Name, false)) {
         preparer = autorest.DecoratePreparer(preparer,
-                            @(string.Format("autorest.WithJSON({0})", Model.BodyParameter.Name)))
+                            @(bodyParam))
     }
 </text>
 }
