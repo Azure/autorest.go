@@ -18,6 +18,7 @@
     "type": "git",
     "url": "https://github.com/Azure/autorest.go"
   },
+  
   "readme": "https://github.com/Azure/autorest.go/readme.md",
   "keywords": [
     "autorest",
