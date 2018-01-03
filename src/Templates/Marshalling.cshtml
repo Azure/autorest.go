@@ -85,11 +85,7 @@ func (@rec *@ct.Name) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 		panic("size mismatch between @ct.Name and @internalName")
 	}
 	@local := (*@internalName)(unsafe.Pointer(@rec))
-	err := d.DecodeElement(@local, &start)
-	if err != nil {
-		@rec = (*@ct.Name)(unsafe.Pointer(@local))
-	}
-	return err
+	return d.DecodeElement(@local, &start)
 }
 </text>
 }
