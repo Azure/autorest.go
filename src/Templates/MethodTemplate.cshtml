@@ -106,7 +106,7 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 }
 @if (Model.QueryParameters.Any())
 {
-    @if (Model.QueryParameters.Any(p => p.GetParameterName().IsApiVersion())
+    if (Model.QueryParameters.Any(p => p.GetParameterName().IsApiVersion())
         && !Model.LocalParameters.Any(p => p.GetParameterName().IsApiVersion()))
     {
         @:@(string.Format("const APIVersion = \"{0}\"", Model.APIVersion))
@@ -125,6 +125,12 @@ func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParameter
 {
 <text>
     @(Model.FormDataMap)
+    @foreach (var p in Model.OptionalFormDataParameters)
+    {
+    @:if @(p.GetEmptyCheck(p.GetParameterName(),false)) {
+    @:@(p.AddToMap("formDataParameters"))
+    @:}
+    }
     @EmptyLine
 </text>
 }

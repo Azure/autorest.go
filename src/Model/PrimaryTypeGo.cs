@@ -13,18 +13,12 @@ namespace AutoRest.Go.Model
     {
         public PrimaryTypeGo() : base()
         {
-            Name.OnGet += v =>
-            {
-                return ImplementationName;
-            };
+            Name.OnGet += v => ImplementationName;
         }
 
         public PrimaryTypeGo(KnownPrimaryType primaryType) : base(primaryType)
         {
-            Name.OnGet += v =>
-            {
-                return ImplementationName;
-            };
+            Name.OnGet += v => ImplementationName;
         }
 
         /// <summary>
@@ -111,7 +105,7 @@ namespace AutoRest.Go.Model
 
                     case KnownPrimaryType.Object:
                         // TODO: is this the correct way to support object types?
-                        return "map[string]interface{}";
+                        return "interface{}";
 
                     case KnownPrimaryType.UnixTime:
                         return "date.UnixTime";

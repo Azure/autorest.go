@@ -275,7 +275,7 @@ func (s *ComplexGroupSuite) TestPutEmptyArrayComplex(c *chk.C) {
 func (s *ComplexGroupSuite) TestGetEmptyDictionaryComplex(c *chk.C) {
 	res, err := complexDictionaryClient.GetEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(*res.DefaultProgram, chk.DeepEquals, map[string]*string{})
+	c.Assert(res.DefaultProgram, chk.DeepEquals, map[string]*string{})
 }
 
 func (s *ComplexGroupSuite) TestGetNotProvidedDictionaryComplex(c *chk.C) {
@@ -295,11 +295,11 @@ func (s *ComplexGroupSuite) TestGetValidDictionaryComplex(c *chk.C) {
 	dic := map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}
 	res, err := complexDictionaryClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(*res.DefaultProgram, chk.DeepEquals, dic)
+	c.Assert(res.DefaultProgram, chk.DeepEquals, dic)
 }
 
 func (s *ComplexGroupSuite) TestPutEmptyDictionaryComplex(c *chk.C) {
-	_, err := complexDictionaryClient.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]*string{}})
+	_, err := complexDictionaryClient.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: map[string]*string{}})
 	c.Assert(err, chk.IsNil)
 }
 
@@ -428,6 +428,45 @@ var f = Salmon{
 	},
 }
 
+var ss = SmartSalmon{
+	Length:   to.Float64Ptr(1),
+	Iswild:   to.BoolPtr(true),
+	Location: to.StringPtr("alaska"),
+	Species:  to.StringPtr("king"),
+	AdditionalProperties: map[string]interface{}{
+		"additionalProperty1": float64(1),
+		"additionalProperty2": false,
+		"additionalProperty3": "hello",
+		"additionalProperty4": map[string]interface{}{
+			"a": float64(1),
+			"b": float64(2),
+		},
+		"additionalProperty5": []interface{}{float64(1), float64(3)},
+	},
+	Siblings: &[]BasicFish{
+		Shark{
+			Length:   to.Float64Ptr(20),
+			Birthday: &date.Time{time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)},
+			Age:      to.Int32Ptr(6),
+			Species:  to.StringPtr("predator"),
+		},
+		Sawshark{
+			Length:   to.Float64Ptr(10),
+			Birthday: &date.Time{time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)},
+			Age:      to.Int32Ptr(105),
+			Species:  to.StringPtr("dangerous"),
+			Picture:  &[]byte{255, 255, 255, 255, 254},
+		},
+		Goblinshark{
+			Length:   to.Float64Ptr(30),
+			Birthday: &date.Time{time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)},
+			Age:      to.Int32Ptr(1),
+			Species:  to.StringPtr("scary"),
+			Jawsize:  to.Int32Ptr(5),
+		},
+	},
+}
+
 func (s *ComplexGroupSuite) TestGetComplexPolymorphicValid(c *chk.C) {
 	resp, err := complexPolymorphicClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
@@ -437,31 +476,31 @@ func (s *ComplexGroupSuite) TestGetComplexPolymorphicValid(c *chk.C) {
 	c.Assert(b, chk.Equals, true)
 
 	c.Assert(resp.Value, chk.FitsTypeOf, f)
-	c.Assert(*resp.Value.(Salmon).Iswild, chk.Equals, *f.Iswild)
-	c.Assert(*resp.Value.(Salmon).Location, chk.Equals, *f.Location)
-	c.Assert(*resp.Value.(Salmon).Species, chk.Equals, *f.Species)
-	c.Assert(*resp.Value.(Salmon).Length, chk.Equals, *f.Length)
-	c.Assert(*resp.Value.(Salmon).Siblings, chk.HasLen, len(*f.Siblings))
+	c.Assert(*salmon.Iswild, chk.Equals, *f.Iswild)
+	c.Assert(*salmon.Location, chk.Equals, *f.Location)
+	c.Assert(*salmon.Species, chk.Equals, *f.Species)
+	c.Assert(*salmon.Length, chk.Equals, *f.Length)
+	c.Assert(*salmon.Siblings, chk.HasLen, len(*f.Siblings))
 
-	c.Assert((*resp.Value.(Salmon).Siblings)[0], chk.FitsTypeOf, (*f.Siblings)[0].(Shark))
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[0].(Shark).Length, chk.Equals, *(*f.Siblings)[0].(Shark).Length)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[0].(Shark).Birthday, chk.Equals, *(*f.Siblings)[0].(Shark).Birthday)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[0].(Shark).Age, chk.Equals, *(*f.Siblings)[0].(Shark).Age)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[0].(Shark).Species, chk.Equals, *(*f.Siblings)[0].(Shark).Species)
+	c.Assert((*salmon.Siblings)[0], chk.FitsTypeOf, (*f.Siblings)[0].(Shark))
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Length, chk.Equals, *(*f.Siblings)[0].(Shark).Length)
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Birthday, chk.Equals, *(*f.Siblings)[0].(Shark).Birthday)
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Age, chk.Equals, *(*f.Siblings)[0].(Shark).Age)
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Species, chk.Equals, *(*f.Siblings)[0].(Shark).Species)
 
-	c.Assert((*resp.Value.(Salmon).Siblings)[1], chk.FitsTypeOf, (*f.Siblings)[1].(Sawshark))
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[1].(Sawshark).Length, chk.Equals, *(*f.Siblings)[1].(Sawshark).Length)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[1].(Sawshark).Birthday, chk.Equals, *(*f.Siblings)[1].(Sawshark).Birthday)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[1].(Sawshark).Age, chk.Equals, *(*f.Siblings)[1].(Sawshark).Age)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[1].(Sawshark).Species, chk.Equals, *(*f.Siblings)[1].(Sawshark).Species)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[1].(Sawshark).Picture, chk.DeepEquals, *(*f.Siblings)[1].(Sawshark).Picture)
+	c.Assert((*salmon.Siblings)[1], chk.FitsTypeOf, (*f.Siblings)[1].(Sawshark))
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Length, chk.Equals, *(*f.Siblings)[1].(Sawshark).Length)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Birthday, chk.Equals, *(*f.Siblings)[1].(Sawshark).Birthday)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Age, chk.Equals, *(*f.Siblings)[1].(Sawshark).Age)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Species, chk.Equals, *(*f.Siblings)[1].(Sawshark).Species)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Picture, chk.DeepEquals, *(*f.Siblings)[1].(Sawshark).Picture)
 
-	c.Assert((*resp.Value.(Salmon).Siblings)[2], chk.FitsTypeOf, (*f.Siblings)[2].(Goblinshark))
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[2].(Goblinshark).Length, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Length)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[2].(Goblinshark).Birthday, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Birthday)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[2].(Goblinshark).Age, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Age)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[2].(Goblinshark).Species, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Species)
-	c.Assert(*(*resp.Value.(Salmon).Siblings)[2].(Goblinshark).Jawsize, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Jawsize)
+	c.Assert((*salmon.Siblings)[2], chk.FitsTypeOf, (*f.Siblings)[2].(Goblinshark))
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Length, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Length)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Birthday, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Birthday)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Age, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Age)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Species, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Species)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Jawsize, chk.Equals, *(*f.Siblings)[2].(Goblinshark).Jawsize)
 }
 
 func (s *ComplexGroupSuite) TestPutComplexPolymorphismValid(c *chk.C) {
@@ -561,5 +600,53 @@ func (s *ComplexGroupSuite) TestPutComplexPolymorphicRecursive(c *chk.C) {
 		},
 	}
 	_, err := complexPolymorphicRecursiveClient.PutValid(context.Background(), recF)
+	c.Assert(err, chk.IsNil)
+}
+
+func (s *ComplexGroupSuite) TestGetComplexPolymorphicComplicated(c *chk.C) {
+	resp, err := complexPolymorphicClient.GetComplicated(context.Background())
+	c.Assert(err, chk.IsNil)
+
+	salmon, b := resp.Value.AsSmartSalmon()
+	c.Assert(b, chk.Equals, true)
+	c.Assert(*salmon, chk.FitsTypeOf, ss)
+
+	c.Assert(resp.Value, chk.FitsTypeOf, ss)
+	c.Assert(*salmon.Iswild, chk.Equals, *ss.Iswild)
+	c.Assert(*salmon.Location, chk.Equals, *ss.Location)
+	c.Assert(*salmon.Species, chk.Equals, *ss.Species)
+	c.Assert(*salmon.Length, chk.Equals, *ss.Length)
+	c.Assert(*salmon.Siblings, chk.HasLen, len(*ss.Siblings))
+
+	c.Assert((*salmon.Siblings)[0], chk.FitsTypeOf, (*ss.Siblings)[0].(Shark))
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Length, chk.Equals, *(*ss.Siblings)[0].(Shark).Length)
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Birthday, chk.Equals, *(*ss.Siblings)[0].(Shark).Birthday)
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Age, chk.Equals, *(*ss.Siblings)[0].(Shark).Age)
+	c.Assert(*(*salmon.Siblings)[0].(Shark).Species, chk.Equals, *(*ss.Siblings)[0].(Shark).Species)
+
+	c.Assert((*salmon.Siblings)[1], chk.FitsTypeOf, (*ss.Siblings)[1].(Sawshark))
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Length, chk.Equals, *(*ss.Siblings)[1].(Sawshark).Length)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Birthday, chk.Equals, *(*ss.Siblings)[1].(Sawshark).Birthday)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Age, chk.Equals, *(*ss.Siblings)[1].(Sawshark).Age)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Species, chk.Equals, *(*ss.Siblings)[1].(Sawshark).Species)
+	c.Assert(*(*salmon.Siblings)[1].(Sawshark).Picture, chk.DeepEquals, *(*ss.Siblings)[1].(Sawshark).Picture)
+
+	c.Assert((*salmon.Siblings)[2], chk.FitsTypeOf, (*ss.Siblings)[2].(Goblinshark))
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Length, chk.Equals, *(*ss.Siblings)[2].(Goblinshark).Length)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Birthday, chk.Equals, *(*ss.Siblings)[2].(Goblinshark).Birthday)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Age, chk.Equals, *(*ss.Siblings)[2].(Goblinshark).Age)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Species, chk.Equals, *(*ss.Siblings)[2].(Goblinshark).Species)
+	c.Assert(*(*salmon.Siblings)[2].(Goblinshark).Jawsize, chk.Equals, *(*ss.Siblings)[2].(Goblinshark).Jawsize)
+
+	c.Assert(len(salmon.AdditionalProperties), chk.Equals, len(ss.AdditionalProperties))
+	c.Assert(salmon.AdditionalProperties["additionalProperty1"], chk.Equals, ss.AdditionalProperties["additionalProperty1"])
+	c.Assert(salmon.AdditionalProperties["additionalProperty2"], chk.Equals, ss.AdditionalProperties["additionalProperty2"])
+	c.Assert(salmon.AdditionalProperties["additionalProperty3"], chk.Equals, ss.AdditionalProperties["additionalProperty3"])
+	c.Assert(salmon.AdditionalProperties["additionalProperty4"], chk.DeepEquals, ss.AdditionalProperties["additionalProperty4"])
+	c.Assert(salmon.AdditionalProperties["additionalProperty5"], chk.DeepEquals, ss.AdditionalProperties["additionalProperty5"])
+}
+
+func (s *ComplexGroupSuite) TestPutComplexPolymorphicComplicated(c *chk.C) {
+	_, err := complexPolymorphicClient.PutComplicated(context.Background(), ss)
 	c.Assert(err, chk.IsNil)
 }

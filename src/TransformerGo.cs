@@ -112,9 +112,10 @@ namespace AutoRest.Go
                 {
                     mt.DiscriminatorEnum = enumWithSameName;
                 }
-                else 
+                else
                 {
-                    mt.DiscriminatorEnum = cmg.Add(New<EnumType>(new{
+                    mt.DiscriminatorEnum = cmg.Add(New<EnumType>(new
+                    {
                         Name = enumWithSameName == null ? mt.PolymorphicDiscriminator : $"{mt.PolymorphicDiscriminator}{mt.GetInterfaceName()}",
                         Values = enumValues,
                     })) as EnumTypeGo;
@@ -143,6 +144,11 @@ namespace AutoRest.Go
             foreach (var mt in cmg.ModelTypes)
             {
                 topLevelNames.Add(mt.Name);
+            }
+
+            foreach (var em in cmg.EnumTypes)
+            {
+                topLevelNames.Add(em.Name);
             }
 
             // Then, note each enumerated type with one or more conflicting values and collect the values from
@@ -211,7 +217,7 @@ namespace AutoRest.Go
                 {
                     foreach (var dt in mtm.DerivedTypes)
                     {
-                        ((CompositeTypeGo) dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
+                        ((CompositeTypeGo)dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
                     }
                 }
                 foreach (var p in mtm.Properties)
@@ -221,7 +227,7 @@ namespace AutoRest.Go
                     // plus flattening does not need to be checked that often
                     if (p.ShouldBeFlattened() && p.ModelType is CompositeTypeGo)
                     {
-                        p.Name = p.ModelType.Name;
+                        p.Name = p.ModelType.HasInterface() ? p.ModelType.GetInterfaceName() : p.ModelType.Name.Value;
                     }
                 }
             }

@@ -120,7 +120,7 @@ namespace AutoRest.Go.Model
                     .ForEach(p => declarations.Add(string.Format(
                                                         p.IsRequired || p.ModelType.CanBeEmpty()
                                                             ? "{0} {1}"
-                                                            : "{0} *{1}", p.Name, p.ModelType is CompositeTypeGo type && type.HasInterface
+                                                            : "{0} *{1}", p.Name, p.ModelType.HasInterface()
                                                                 ? p.ModelType.GetInterfaceName()
                                                                 : p.ModelType.Name.ToString())));
                 return string.Join(", ", declarations);
@@ -311,6 +311,8 @@ namespace AutoRest.Go.Model
         public IEnumerable<ParameterGo> QueryParameters => ParametersGo.QueryParameters();
 
         public IEnumerable<ParameterGo> OptionalQueryParameters => ParametersGo.QueryParameters(false);
+
+        public IEnumerable<ParameterGo> OptionalFormDataParameters => ParametersGo.FormDataParameters(false);
 
         public string QueryMap => QueryParameters.BuildParameterMap("queryParameters");
 

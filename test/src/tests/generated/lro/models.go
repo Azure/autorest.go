@@ -7,6 +7,7 @@ package lrogroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"net/http"
@@ -166,8 +167,8 @@ func (future LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LRO
 	return
 }
 
-// LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
 	req *http.Request
@@ -198,7 +199,8 @@ func (future LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(cl
 	return
 }
 
-// LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LRORetrysPost202Retry200Future struct {
 	azure.Future
 	req *http.Request
@@ -261,8 +263,8 @@ func (future LRORetrysPostAsyncRelativeRetrySucceededFuture) Result(client LRORe
 	return
 }
 
-// LRORetrysPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LRORetrysPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LRORetrysPut201CreatingSucceeded200Future struct {
 	azure.Future
 	req *http.Request
@@ -357,8 +359,8 @@ func (future LROSADsDelete202NonRetry400Future) Result(client LROSADsClient) (ar
 	return
 }
 
-// LROSADsDelete202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsDelete202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsDelete202RetryInvalidHeaderFuture struct {
 	azure.Future
 	req *http.Request
@@ -421,8 +423,8 @@ func (future LROSADsDelete204SucceededFuture) Result(client LROSADsClient) (ar a
 	return
 }
 
-// LROSADsDeleteAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsDeleteAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsDeleteAsyncRelativeRetry400Future struct {
 	azure.Future
 	req *http.Request
@@ -485,8 +487,8 @@ func (future LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) Result(client L
 	return
 }
 
-// LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
 	req *http.Request
@@ -549,7 +551,8 @@ func (future LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSAD
 	return
 }
 
-// LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsDeleteNonRetry400Future struct {
 	azure.Future
 	req *http.Request
@@ -580,7 +583,8 @@ func (future LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar au
 	return
 }
 
-// LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsPost202NoLocationFuture struct {
 	azure.Future
 	req *http.Request
@@ -643,8 +647,8 @@ func (future LROSADsPost202NonRetry400Future) Result(client LROSADsClient) (ar a
 	return
 }
 
-// LROSADsPost202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsPost202RetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPost202RetryInvalidHeaderFuture struct {
 	azure.Future
 	req *http.Request
@@ -675,8 +679,8 @@ func (future LROSADsPost202RetryInvalidHeaderFuture) Result(client LROSADsClient
 	return
 }
 
-// LROSADsPostAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsPostAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPostAsyncRelativeRetry400Future struct {
 	azure.Future
 	req *http.Request
@@ -739,8 +743,8 @@ func (future LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) Result(client LRO
 	return
 }
 
-// LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
 	req *http.Request
@@ -803,7 +807,8 @@ func (future LROSADsPostAsyncRelativeRetryNoPayloadFuture) Result(client LROSADs
 	return
 }
 
-// LROSADsPostNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROSADsPostNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsPostNonRetry400Future struct {
 	azure.Future
 	req *http.Request
@@ -834,7 +839,8 @@ func (future LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar auto
 	return
 }
 
-// LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsPut200InvalidJSONFuture struct {
 	azure.Future
 	req *http.Request
@@ -929,8 +935,8 @@ func (future LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) Result(client LROS
 	return
 }
 
-// LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
 	req *http.Request
@@ -1057,8 +1063,8 @@ func (future LROSADsPutError201NoProvisioningStatePayloadFuture) Result(client L
 	return
 }
 
-// LROSADsPutNonRetry201Creating400Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsPutNonRetry201Creating400Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPutNonRetry201Creating400Future struct {
 	azure.Future
 	req *http.Request
@@ -1121,7 +1127,8 @@ func (future LROSADsPutNonRetry201Creating400InvalidJSONFuture) Result(client LR
 	return
 }
 
-// LROSADsPutNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROSADsPutNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROSADsPutNonRetry400Future struct {
 	azure.Future
 	req *http.Request
@@ -1280,7 +1287,8 @@ func (future LROsCustomHeaderPutAsyncRetrySucceededFuture) Result(client LROsCus
 	return
 }
 
-// LROsDelete202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsDelete202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsDelete202NoRetry204Future struct {
 	azure.Future
 	req *http.Request
@@ -1311,7 +1319,8 @@ func (future LROsDelete202NoRetry204Future) Result(client LROsClient) (p Product
 	return
 }
 
-// LROsDelete202Retry200Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsDelete202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsDelete202Retry200Future struct {
 	azure.Future
 	req *http.Request
@@ -1342,7 +1351,8 @@ func (future LROsDelete202Retry200Future) Result(client LROsClient) (p Product, 
 	return
 }
 
-// LROsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsDelete204SucceededFuture struct {
 	azure.Future
 	req *http.Request
@@ -1565,8 +1575,8 @@ func (future LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar auto
 	return
 }
 
-// LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
 	req *http.Request
@@ -1661,7 +1671,8 @@ func (future LROsDeleteProvisioning202DeletingFailed200Future) Result(client LRO
 	return
 }
 
-// LROsPost200WithPayloadFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPost200WithPayloadFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPost200WithPayloadFuture struct {
 	azure.Future
 	req *http.Request
@@ -1692,7 +1703,8 @@ func (future LROsPost200WithPayloadFuture) Result(client LROsClient) (s Sku, err
 	return
 }
 
-// LROsPost202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPost202NoRetry204Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPost202NoRetry204Future struct {
 	azure.Future
 	req *http.Request
@@ -1818,7 +1830,8 @@ func (future LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar aut
 	return
 }
 
-// LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPostAsyncRetryFailedFuture struct {
 	azure.Future
 	req *http.Request
@@ -2135,7 +2148,8 @@ func (future LROsPutAsyncNoHeaderInRetryFuture) Result(client LROsClient) (p Pro
 	return
 }
 
-// LROsPutAsyncNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPutAsyncNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutAsyncNonResourceFuture struct {
 	azure.Future
 	req *http.Request
@@ -2230,7 +2244,8 @@ func (future LROsPutAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Pr
 	return
 }
 
-// LROsPutAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPutAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutAsyncRetryFailedFuture struct {
 	azure.Future
 	req *http.Request
@@ -2293,7 +2308,8 @@ func (future LROsPutAsyncRetrySucceededFuture) Result(client LROsClient) (p Prod
 	return
 }
 
-// LROsPutAsyncSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPutAsyncSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutAsyncSubResourceFuture struct {
 	azure.Future
 	req *http.Request
@@ -2324,7 +2340,8 @@ func (future LROsPutAsyncSubResourceFuture) Result(client LROsClient) (sp SubPro
 	return
 }
 
-// LROsPutNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPutNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutNoHeaderInRetryFuture struct {
 	azure.Future
 	req *http.Request
@@ -2438,13 +2455,106 @@ type Product struct {
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
 	// Type - Resource Type
-	Type *string             `json:"type,omitempty"`
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Type *string            `json:"type,omitempty"`
+	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
 	// Name - Resource Name
 	Name               *string `json:"name,omitempty"`
 	*ProductProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Product.
+func (p Product) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if p.ProductProperties != nil {
+		objectMap["properties"] = p.ProductProperties
+	}
+	if p.ID != nil {
+		objectMap["id"] = p.ID
+	}
+	if p.Type != nil {
+		objectMap["type"] = p.Type
+	}
+	if p.Tags != nil {
+		objectMap["tags"] = p.Tags
+	}
+	if p.Location != nil {
+		objectMap["location"] = p.Location
+	}
+	if p.Name != nil {
+		objectMap["name"] = p.Name
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for Product struct.
+func (p *Product) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var productProperties ProductProperties
+				err = json.Unmarshal(*v, &productProperties)
+				if err != nil {
+					return err
+				}
+				p.ProductProperties = &productProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				p.ID = &ID
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				p.Type = &typeVar
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				p.Tags = tags
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				p.Location = &location
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				p.Name = &name
+			}
+		}
+	}
+
+	return nil
 }
 
 // ProductProperties ...
@@ -2459,12 +2569,33 @@ type Resource struct {
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
 	// Type - Resource Type
-	Type *string             `json:"type,omitempty"`
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Type *string            `json:"type,omitempty"`
+	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
 	// Name - Resource Name
 	Name *string `json:"name,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Resource.
+func (r Resource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.ID != nil {
+		objectMap["id"] = r.ID
+	}
+	if r.Type != nil {
+		objectMap["type"] = r.Type
+	}
+	if r.Tags != nil {
+		objectMap["tags"] = r.Tags
+	}
+	if r.Location != nil {
+		objectMap["location"] = r.Location
+	}
+	if r.Name != nil {
+		objectMap["name"] = r.Name
+	}
+	return json.Marshal(objectMap)
 }
 
 // Sku ...
@@ -2480,6 +2611,39 @@ type SubProduct struct {
 	// ID - Sub Resource Id
 	ID                    *string `json:"id,omitempty"`
 	*SubProductProperties `json:"properties,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for SubProduct struct.
+func (sp *SubProduct) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var subProductProperties SubProductProperties
+				err = json.Unmarshal(*v, &subProductProperties)
+				if err != nil {
+					return err
+				}
+				sp.SubProductProperties = &subProductProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				sp.ID = &ID
+			}
+		}
+	}
+
+	return nil
 }
 
 // SubProductProperties ...

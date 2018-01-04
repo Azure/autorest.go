@@ -76,7 +76,7 @@ func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (r
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
 	result.Response = autorest.Response{Response: resp}
 	return
@@ -186,6 +186,61 @@ func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (r
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
 		autorest.ByClosing())
 	result.Response = resp
+	return
+}
+
+// PutMissingDiscriminator put complex types that are polymorphic, omitting the discriminator
+//
+func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
+	req, err := client.PutMissingDiscriminatorPreparer(ctx, complexBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutMissingDiscriminatorSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutMissingDiscriminatorResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutMissingDiscriminatorPreparer prepares the PutMissingDiscriminator request.
+func (client PolymorphismClient) PutMissingDiscriminatorPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsJSON(),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/missingdiscriminator"),
+		autorest.WithJSON(complexBody))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PutMissingDiscriminatorSender sends the PutMissingDiscriminator request. The method will close the
+// http.Response Body if it receives an error.
+func (client PolymorphismClient) PutMissingDiscriminatorSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutMissingDiscriminatorResponder handles the response to the PutMissingDiscriminator request. The method always
+// closes the http.Response Body.
+func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Response) (result SalmonModel, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
 	return
 }
 

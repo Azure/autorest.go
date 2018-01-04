@@ -104,7 +104,9 @@ namespace AutoRest.Go.Model
 
         public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
 
-        public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
+        public string DiscriminatorEnumValue => DiscriminatorEnum?.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName))?.Name;
+
+        public PropertyGo AdditionalPropertiesField => AllProperties.FirstOrDefault(p => p.ModelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties);
 
         public bool IsWrapperType { get; }
 
@@ -114,7 +116,6 @@ namespace AutoRest.Go.Model
         {
             get
             {
-
                 var siblingTypes = RootType.DerivedTypes;
 
                 if (RootType.IsPolymorphic)
@@ -126,18 +127,26 @@ namespace AutoRest.Go.Model
             }
         }
 
+        /// <summary>
+        /// Gets if there are any polymorphic fields.
+        /// </summary>
         public bool HasPolymorphicFields
         {
             get
             {
                 return AllProperties.Any(p =>
                         // polymorphic composite
-                        (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
+                        p.ModelType.HasInterface() ||
                         // polymorphic array
-                        (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType &&
-                            ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
+                        (p.ModelType is SequenceType sequenceType &&
+                         sequenceType.ElementType.HasInterface()));
             }
         }
+
+        /// <summary>
+        /// Gets if there are any flattened fields.
+        /// </summary>
+        public bool HasFlattenedFields => Properties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
 
         public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) ?
             CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) :
@@ -180,11 +189,6 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool IsLeafType => BaseIsPolymorphic && DerivedTypes.IsNullOrEmpty();
 
-        /// <summary>
-        /// Gets if the type has an interface.
-        /// </summary>
-        public bool HasInterface => IsRootType || (BaseIsPolymorphic && !IsLeafType);
-
         public override Property Add(Property item)
         {
             var property = base.Add(item) as PropertyGo;
@@ -199,7 +203,7 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
-            if (IsPolymorphic)
+            if (IsPolymorphic || HasFlattenedFields || AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
             {
                 imports.Add("\"encoding/json\"");
             }
@@ -220,7 +224,7 @@ namespace AutoRest.Go.Model
             }
             if (BaseModelType != null && BaseIsPolymorphic)
             {
-                return (BaseModelType as CompositeTypeGo).IsPolymorphicResponse();
+                return ((CompositeTypeGo)BaseModelType).IsPolymorphicResponse();
             }
             return false;
         }
@@ -247,42 +251,7 @@ namespace AutoRest.Go.Model
                     indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
                 }
 
-                if (property.ModelType is EnumTypeGo enumType && enumType.IsNamed)
-                {
-                    indented.AppendFormat("{0} {1} {2}\n",
-                                    property.Name,
-                                    enumType.Name,
-                                    property.JsonTag());
-
-                }
-                else if (property.ModelType is DictionaryType)
-                {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, (property.ModelType as DictionaryTypeGo).Name, property.JsonTag());
-                }
-                else if (property.ModelType.PrimaryType(KnownPrimaryType.Object))
-                {
-                    // TODO: I don't think this is the best way to handle object types
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
-                }
-                else if (property.ModelType is CompositeTypeGo && property.ShouldBeFlattened())
-                {
-                    // embed as an anonymous struct.  note that the ordering of this clause is
-                    // important, i.e. we don't want to flatten primary types like dictionaries.
-                    // Polymorphic fields are implemented as go interfaces and a pointer to an
-                    // interface is not implementing the interface.
-                    indented.AppendFormat((property.ModelType as CompositeTypeGo).IsPolymorphic ?
-                        "{0} {1}\n" :
-                        "*{0} {1}\n",
-                            property.ModelType.Name, property.JsonTag());
-                }
-                else if (property.ModelType is CompositeTypeGo && ((CompositeTypeGo) property.ModelType).IsPolymorphic)
-                {
-                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.JsonTag());
-                }
-                else
-                {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
-                }
+                indented.AppendLine(property.Field);
             }
 
             return indented.ToString();
@@ -316,6 +285,7 @@ namespace AutoRest.Go.Model
         /// </summary>
         public string ZeroInitExpression => $"{Name}{{}}";
 
+        /// <summary>
         /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
         /// </summary>
         private void AddPolymorphicPropertyIfNecessary()

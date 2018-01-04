@@ -3,13 +3,10 @@
 
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
-using AutoRest.Core.Utilities.Collections;
-using AutoRest.Extensions;
 using AutoRest.Go.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace AutoRest.Go
@@ -26,7 +23,7 @@ namespace AutoRest.Go
 
         private static readonly Regex WordSplitPattern = new Regex(@"(\p{Lu}\p{Ll}+)");
 
-        private static Dictionary<string, string> plural = new Dictionary<string, string>()
+        private static readonly Dictionary<string, string> plural = new Dictionary<string, string>
         {
             { "eventhub", "eventhubs" },
             { "containerservice", "containerservices" }
@@ -70,7 +67,7 @@ namespace AutoRest.Go
         public static bool StartsWithAcronym(this string value)
         {
             string firstWord = value.Trim().Split(' ', '-', '_').First();
-            return firstWord.Length > 1 && firstWord.All(c => char.IsUpper(c));
+            return firstWord.Length > 1 && firstWord.All(char.IsUpper);
         }
 
         /// <summary>
@@ -135,7 +132,7 @@ namespace AutoRest.Go
         }
 
         /// <summary>
-        /// This method checks if MethodGroupName is plural of package name. 
+        /// This method checks if MethodGroupName is plural of package name.
         /// It returns false for packages not listed in dictionary 'plural'.
         /// Example, group EventHubs in package EventHub.
         /// Refactor -> Namer, but also could be used by the CodeModelTransformer
@@ -282,8 +279,7 @@ namespace AutoRest.Go
 
         public static bool IsStreamType(this IModelType body)
         {
-            var r = body as CompositeTypeGo;
-            return r != null && (r.BaseType.PrimaryType(KnownPrimaryType.Stream));
+            return body is CompositeTypeGo r && (r.BaseType.PrimaryType(KnownPrimaryType.Stream));
         }
 
         public static bool PrimaryType(this IModelType type, KnownPrimaryType typeToMatch)
@@ -293,24 +289,18 @@ namespace AutoRest.Go
                 return false;
             }
 
-            PrimaryType primaryType = type as PrimaryType;
-            return primaryType != null && primaryType.KnownPrimaryType == typeToMatch;
+            return type is PrimaryType primaryType && primaryType.KnownPrimaryType == typeToMatch;
         }
 
         public static bool CanBeEmpty(this IModelType type)
         {
-            var dictionaryType = type as DictionaryType;
-            var primaryType = type as PrimaryType;
-            var sequenceType = type as SequenceType;
-            var enumType = type as EnumType;
-
-            return dictionaryType != null
-                || (primaryType != null
+            return type is DictionaryType
+                || (type is PrimaryType primaryType
                  && (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray
                         || primaryType.KnownPrimaryType == KnownPrimaryType.Stream
                         || primaryType.KnownPrimaryType == KnownPrimaryType.String))
-                || sequenceType != null
-                || enumType != null;
+                || type is SequenceType
+                || type is EnumType;
         }
 
         /// <summary>
@@ -321,15 +311,13 @@ namespace AutoRest.Go
         /// <returns>True if the specified type can be null.</returns>
         public static bool CanBeNull(this IModelType type)
         {
-            var dictionaryType = type as DictionaryType;
-            var primaryType = type as PrimaryType;
-            var sequenceType = type as SequenceType;
-
-            return dictionaryType != null
-                || (primaryType != null
-                   && (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray
-                      || primaryType.KnownPrimaryType == KnownPrimaryType.Stream))
-                || sequenceType != null;
+            return 
+                type is DictionaryType
+                || type is SequenceType
+                || (type is PrimaryType primaryType
+                    && (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray
+                        || primaryType.KnownPrimaryType == KnownPrimaryType.Stream
+                        || primaryType.KnownPrimaryType == KnownPrimaryType.Object));
         }
 
         /// <summary>
@@ -339,17 +327,17 @@ namespace AutoRest.Go
         /// <param name="imports"></param>
         public static void AddImports(this IModelType type, HashSet<string> imports)
         {
-            if (type is DictionaryTypeGo)
+            if (type is DictionaryTypeGo dictionaryType)
             {
-                (type as DictionaryTypeGo).AddImports(imports);
+                dictionaryType.AddImports(imports);
             }
-            else if (type is PrimaryTypeGo)
+            else if (type is PrimaryTypeGo primaryType)
             {
-                (type as PrimaryTypeGo).AddImports(imports);
+                primaryType.AddImports(imports);
             }
-            else if (type is SequenceTypeGo)
+            else
             {
-                (type as SequenceTypeGo).AddImports(imports);
+                (type as SequenceTypeGo)?.AddImports(imports);
             }
         }
 
@@ -357,6 +345,15 @@ namespace AutoRest.Go
         {
             return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType ||
                 (type is CompositeType && (type as CompositeTypeGo).IsPolymorphicResponse()));
+        }
+
+        /// <summary>
+        /// Gets if the type has an interface.
+        /// </summary>
+        public static bool HasInterface(this IModelType type)
+        {
+            return (type is CompositeTypeGo compositeType) &&
+                (compositeType.IsRootType || compositeType.BaseIsPolymorphic && !compositeType.IsLeafType);
         }
 
         /// <summary>
@@ -598,14 +595,10 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static bool IsNullValueType(this IModelType t)
         {
-            var dictionaryType = t as DictionaryType;
-            var primaryType = t as PrimaryType;
-            var sequenceType = t as SequenceType;
-
-            return dictionaryType != null
-                || (primaryType != null
+            return t is DictionaryType
+                || (t is PrimaryType primaryType
                    && primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray)
-                || sequenceType != null;
+                || t is SequenceType;
         }
 
         /// <summary>
@@ -615,7 +608,7 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static bool IsBodyParameter(this IVariable p)
         {
-            return p is Parameter && ((Parameter)p).Location == ParameterLocation.Body;
+            return p is Parameter parameter && parameter.Location == ParameterLocation.Body;
         }
 
         /// <summary>
