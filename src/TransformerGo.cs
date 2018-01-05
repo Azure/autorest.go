@@ -213,16 +213,6 @@ namespace AutoRest.Go
                         ((CompositeTypeGo)dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
                     }
                 }
-                foreach (var p in mtm.Properties)
-                {
-                    // Flattened fields are referred to with their type name,
-                    // this name change generates correct custom unmarshalers and validation code,
-                    // plus flattening does not need to be checked that often
-                    if (p.ShouldBeFlattened() && p.ModelType is CompositeTypeGo)
-                    {
-                        p.Name = p.ModelType.HasInterface() ? p.ModelType.GetInterfaceName() : p.ModelType.Name.Value;
-                    }
-                }
             }
         }
 
