@@ -344,9 +344,16 @@ namespace AutoRest.Go.Model
             {
                 var decorators = new List<string>();
 
-                if (BodyParameter != null && !BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                if (BodyParameter != null)
                 {
-                    decorators.Add("autorest.AsJSON()");
+                    if (BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                    {
+                        decorators.Add("autorest.AsOctetStream()");
+                    }
+                    else
+                    {
+                        decorators.Add("autorest.AsJSON()");
+                    }
                 }
 
                 decorators.Add(HTTPMethodDecorator);
