@@ -28,6 +28,10 @@ namespace AutoRest.Go.Model
 
         public CompositeTypeGo()
         {
+            if (string.IsNullOrEmpty(this.Documentation))
+            {
+                this.Documentation = "...";
+            }
         }
 
         public CompositeTypeGo(string name) : base(name)
