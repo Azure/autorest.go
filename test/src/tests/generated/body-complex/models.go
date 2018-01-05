@@ -30,10 +30,6 @@ const (
 type Fishtype string
 
 const (
-	// FishtypeAddobjTest ...
-	FishtypeAddobjTest Fishtype = "addobj_test"
-	// FishtypeAddstringTest ...
-	FishtypeAddstringTest Fishtype = "addstring_test"
 	// FishtypeCookiecuttershark ...
 	FishtypeCookiecuttershark Fishtype = "cookiecuttershark"
 	// FishtypeFish ...
@@ -49,390 +45,6 @@ const (
 	// FishtypeSmartSalmon ...
 	FishtypeSmartSalmon Fishtype = "smart_salmon"
 )
-
-// AddobjTest ...
-type AddobjTest struct {
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
-	Location *string  `json:"location,omitempty"`
-	Iswild   *bool    `json:"iswild,omitempty"`
-	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
-	AdditionalProperties map[string]interface{} `json:""`
-	CollegeDegree        *string                `json:"college_degree,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for AddobjTest.
-func (a AddobjTest) MarshalJSON() ([]byte, error) {
-	a.Fishtype = FishtypeAddobjTest
-	objectMap := make(map[string]interface{})
-	if a.CollegeDegree != nil {
-		objectMap["college_degree"] = a.CollegeDegree
-	}
-	if a.Location != nil {
-		objectMap["location"] = a.Location
-	}
-	if a.Iswild != nil {
-		objectMap["iswild"] = a.Iswild
-	}
-	if a.Species != nil {
-		objectMap["species"] = a.Species
-	}
-	if a.Length != nil {
-		objectMap["length"] = a.Length
-	}
-	if a.Siblings != nil {
-		objectMap["siblings"] = a.Siblings
-	}
-	objectMap["fishtype"] = a.Fishtype
-	for k, v := range a.AdditionalProperties {
-		objectMap[k] = v
-	}
-	return json.Marshal(objectMap)
-}
-
-// AsSalmon is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
-
-// AsBasicSalmon is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsBasicSalmon() (BasicSalmon, bool) {
-	return &a, true
-}
-
-// AsSmartSalmon is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsAddobjTest() (*AddobjTest, bool) {
-	return &a, true
-}
-
-// AsShark is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsShark() (*Shark, bool) {
-	return nil, false
-}
-
-// AsBasicShark is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsBasicShark() (BasicShark, bool) {
-	return nil, false
-}
-
-// AsSawshark is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
-
-// AsGoblinshark is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
-
-// AsCookiecuttershark is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
-
-// AsFish is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsFish() (*Fish, bool) {
-	return nil, false
-}
-
-// AsBasicFish is the BasicFish implementation for AddobjTest.
-func (a AddobjTest) AsBasicFish() (BasicFish, bool) {
-	return &a, true
-}
-
-// UnmarshalJSON is the custom unmarshaler for AddobjTest struct.
-func (a *AddobjTest) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		default:
-			if v != nil {
-				var additionalProperties interface{}
-				err = json.Unmarshal(*v, &additionalProperties)
-				if err != nil {
-					return err
-				}
-				if a.AdditionalProperties == nil {
-					a.AdditionalProperties = make(map[string]interface{})
-				}
-				a.AdditionalProperties[k] = additionalProperties
-			}
-		case "college_degree":
-			if v != nil {
-				var collegeDegree string
-				err = json.Unmarshal(*v, &collegeDegree)
-				if err != nil {
-					return err
-				}
-				a.CollegeDegree = &collegeDegree
-			}
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				a.Location = &location
-			}
-		case "iswild":
-			if v != nil {
-				var iswild bool
-				err = json.Unmarshal(*v, &iswild)
-				if err != nil {
-					return err
-				}
-				a.Iswild = &iswild
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				a.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				a.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				a.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype Fishtype
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				a.Fishtype = fishtype
-			}
-		}
-	}
-
-	return nil
-}
-
-// AddstringTest ...
-type AddstringTest struct {
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
-	Location *string  `json:"location,omitempty"`
-	Iswild   *bool    `json:"iswild,omitempty"`
-	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
-	AdditionalProperties map[string]*string `json:""`
-	CollegeDegree        *string            `json:"college_degree,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for AddstringTest.
-func (a AddstringTest) MarshalJSON() ([]byte, error) {
-	a.Fishtype = FishtypeAddstringTest
-	objectMap := make(map[string]interface{})
-	if a.CollegeDegree != nil {
-		objectMap["college_degree"] = a.CollegeDegree
-	}
-	if a.Location != nil {
-		objectMap["location"] = a.Location
-	}
-	if a.Iswild != nil {
-		objectMap["iswild"] = a.Iswild
-	}
-	if a.Species != nil {
-		objectMap["species"] = a.Species
-	}
-	if a.Length != nil {
-		objectMap["length"] = a.Length
-	}
-	if a.Siblings != nil {
-		objectMap["siblings"] = a.Siblings
-	}
-	objectMap["fishtype"] = a.Fishtype
-	for k, v := range a.AdditionalProperties {
-		objectMap[k] = v
-	}
-	return json.Marshal(objectMap)
-}
-
-// AsSalmon is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsSalmon() (*Salmon, bool) {
-	return nil, false
-}
-
-// AsBasicSalmon is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsBasicSalmon() (BasicSalmon, bool) {
-	return &a, true
-}
-
-// AsSmartSalmon is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsAddstringTest() (*AddstringTest, bool) {
-	return &a, true
-}
-
-// AsAddobjTest is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsAddobjTest() (*AddobjTest, bool) {
-	return nil, false
-}
-
-// AsShark is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsShark() (*Shark, bool) {
-	return nil, false
-}
-
-// AsBasicShark is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsBasicShark() (BasicShark, bool) {
-	return nil, false
-}
-
-// AsSawshark is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsSawshark() (*Sawshark, bool) {
-	return nil, false
-}
-
-// AsGoblinshark is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsGoblinshark() (*Goblinshark, bool) {
-	return nil, false
-}
-
-// AsCookiecuttershark is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsCookiecuttershark() (*Cookiecuttershark, bool) {
-	return nil, false
-}
-
-// AsFish is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsFish() (*Fish, bool) {
-	return nil, false
-}
-
-// AsBasicFish is the BasicFish implementation for AddstringTest.
-func (a AddstringTest) AsBasicFish() (BasicFish, bool) {
-	return &a, true
-}
-
-// UnmarshalJSON is the custom unmarshaler for AddstringTest struct.
-func (a *AddstringTest) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		default:
-			if v != nil {
-				var additionalProperties string
-				err = json.Unmarshal(*v, &additionalProperties)
-				if err != nil {
-					return err
-				}
-				if a.AdditionalProperties == nil {
-					a.AdditionalProperties = make(map[string]*string)
-				}
-				a.AdditionalProperties[k] = &additionalProperties
-			}
-		case "college_degree":
-			if v != nil {
-				var collegeDegree string
-				err = json.Unmarshal(*v, &collegeDegree)
-				if err != nil {
-					return err
-				}
-				a.CollegeDegree = &collegeDegree
-			}
-		case "location":
-			if v != nil {
-				var location string
-				err = json.Unmarshal(*v, &location)
-				if err != nil {
-					return err
-				}
-				a.Location = &location
-			}
-		case "iswild":
-			if v != nil {
-				var iswild bool
-				err = json.Unmarshal(*v, &iswild)
-				if err != nil {
-					return err
-				}
-				a.Iswild = &iswild
-			}
-		case "species":
-			if v != nil {
-				var species string
-				err = json.Unmarshal(*v, &species)
-				if err != nil {
-					return err
-				}
-				a.Species = &species
-			}
-		case "length":
-			if v != nil {
-				var length float64
-				err = json.Unmarshal(*v, &length)
-				if err != nil {
-					return err
-				}
-				a.Length = &length
-			}
-		case "siblings":
-			if v != nil {
-				siblings, err := unmarshalBasicFishArray(*v)
-				if err != nil {
-					return err
-				}
-				a.Siblings = &siblings
-			}
-		case "fishtype":
-			if v != nil {
-				var fishtype Fishtype
-				err = json.Unmarshal(*v, &fishtype)
-				if err != nil {
-					return err
-				}
-				a.Fishtype = fishtype
-			}
-		}
-	}
-
-	return nil
-}
 
 // ArrayWrapper ...
 type ArrayWrapper struct {
@@ -477,7 +89,7 @@ type Cookiecuttershark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype   `json:"fishtype,omitempty"`
 	Age      *int32     `json:"age,omitempty"`
 	Birthday *date.Time `json:"birthday,omitempty"`
@@ -518,16 +130,6 @@ func (c Cookiecuttershark) AsBasicSalmon() (BasicSalmon, bool) {
 
 // AsSmartSalmon is the BasicFish implementation for Cookiecuttershark.
 func (c Cookiecuttershark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for Cookiecuttershark.
-func (c Cookiecuttershark) AsAddobjTest() (*AddobjTest, bool) {
 	return nil, false
 }
 
@@ -696,13 +298,11 @@ type Error struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// BasicFish
+// BasicFish ...
 type BasicFish interface {
 	AsSalmon() (*Salmon, bool)
 	AsBasicSalmon() (BasicSalmon, bool)
 	AsSmartSalmon() (*SmartSalmon, bool)
-	AsAddstringTest() (*AddstringTest, bool)
-	AsAddobjTest() (*AddobjTest, bool)
 	AsShark() (*Shark, bool)
 	AsBasicShark() (BasicShark, bool)
 	AsSawshark() (*Sawshark, bool)
@@ -711,13 +311,13 @@ type BasicFish interface {
 	AsFish() (*Fish, bool)
 }
 
-// Fish
+// Fish ...
 type Fish struct {
 	autorest.Response `json:"-"`
 	Species           *string      `json:"species,omitempty"`
 	Length            *float64     `json:"length,omitempty"`
 	Siblings          *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype `json:"fishtype,omitempty"`
 }
 
@@ -737,14 +337,6 @@ func unmarshalBasicFish(body []byte) (BasicFish, error) {
 		var s SmartSalmon
 		err := json.Unmarshal(body, &s)
 		return s, err
-	case string(FishtypeAddstringTest):
-		var a AddstringTest
-		err := json.Unmarshal(body, &a)
-		return a, err
-	case string(FishtypeAddobjTest):
-		var a AddobjTest
-		err := json.Unmarshal(body, &a)
-		return a, err
 	case string(FishtypeShark):
 		var s Shark
 		err := json.Unmarshal(body, &s)
@@ -815,16 +407,6 @@ func (f Fish) AsBasicSalmon() (BasicSalmon, bool) {
 
 // AsSmartSalmon is the BasicFish implementation for Fish.
 func (f Fish) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for Fish.
-func (f Fish) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for Fish.
-func (f Fish) AsAddobjTest() (*AddobjTest, bool) {
 	return nil, false
 }
 
@@ -942,7 +524,7 @@ type Goblinshark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype   `json:"fishtype,omitempty"`
 	Age      *int32     `json:"age,omitempty"`
 	Birthday *date.Time `json:"birthday,omitempty"`
@@ -987,16 +569,6 @@ func (g Goblinshark) AsBasicSalmon() (BasicSalmon, bool) {
 
 // AsSmartSalmon is the BasicFish implementation for Goblinshark.
 func (g Goblinshark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for Goblinshark.
-func (g Goblinshark) AsAddobjTest() (*AddobjTest, bool) {
 	return nil, false
 }
 
@@ -1139,21 +711,19 @@ type ReadonlyObj struct {
 	Size              *int32  `json:"size,omitempty"`
 }
 
-// BasicSalmon
+// BasicSalmon ...
 type BasicSalmon interface {
 	AsSmartSalmon() (*SmartSalmon, bool)
-	AsAddstringTest() (*AddstringTest, bool)
-	AsAddobjTest() (*AddobjTest, bool)
 	AsSalmon() (*Salmon, bool)
 }
 
-// Salmon
+// Salmon ...
 type Salmon struct {
 	autorest.Response `json:"-"`
 	Species           *string      `json:"species,omitempty"`
 	Length            *float64     `json:"length,omitempty"`
 	Siblings          *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype `json:"fishtype,omitempty"`
 	Location *string  `json:"location,omitempty"`
 	Iswild   *bool    `json:"iswild,omitempty"`
@@ -1171,14 +741,6 @@ func unmarshalBasicSalmon(body []byte) (BasicSalmon, error) {
 		var s SmartSalmon
 		err := json.Unmarshal(body, &s)
 		return s, err
-	case string(FishtypeAddstringTest):
-		var a AddstringTest
-		err := json.Unmarshal(body, &a)
-		return a, err
-	case string(FishtypeAddobjTest):
-		var a AddobjTest
-		err := json.Unmarshal(body, &a)
-		return a, err
 	default:
 		var s Salmon
 		err := json.Unmarshal(body, &s)
@@ -1239,16 +801,6 @@ func (s Salmon) AsBasicSalmon() (BasicSalmon, bool) {
 
 // AsSmartSalmon is the BasicFish implementation for Salmon.
 func (s Salmon) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for Salmon.
-func (s Salmon) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for Salmon.
-func (s Salmon) AsAddobjTest() (*AddobjTest, bool) {
 	return nil, false
 }
 
@@ -1377,7 +929,7 @@ type Sawshark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype   `json:"fishtype,omitempty"`
 	Age      *int32     `json:"age,omitempty"`
 	Birthday *date.Time `json:"birthday,omitempty"`
@@ -1422,16 +974,6 @@ func (s Sawshark) AsBasicSalmon() (BasicSalmon, bool) {
 
 // AsSmartSalmon is the BasicFish implementation for Sawshark.
 func (s Sawshark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for Sawshark.
-func (s Sawshark) AsAddobjTest() (*AddobjTest, bool) {
 	return nil, false
 }
 
@@ -1547,7 +1089,7 @@ func (s *Sawshark) UnmarshalJSON(body []byte) error {
 	return nil
 }
 
-// BasicShark
+// BasicShark ...
 type BasicShark interface {
 	AsSawshark() (*Sawshark, bool)
 	AsGoblinshark() (*Goblinshark, bool)
@@ -1555,12 +1097,12 @@ type BasicShark interface {
 	AsShark() (*Shark, bool)
 }
 
-// Shark
+// Shark ...
 type Shark struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype   `json:"fishtype,omitempty"`
 	Age      *int32     `json:"age,omitempty"`
 	Birthday *date.Time `json:"birthday,omitempty"`
@@ -1646,16 +1188,6 @@ func (s Shark) AsBasicSalmon() (BasicSalmon, bool) {
 
 // AsSmartSalmon is the BasicFish implementation for Shark.
 func (s Shark) AsSmartSalmon() (*SmartSalmon, bool) {
-	return nil, false
-}
-
-// AsAddstringTest is the BasicFish implementation for Shark.
-func (s Shark) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for Shark.
-func (s Shark) AsAddobjTest() (*AddobjTest, bool) {
 	return nil, false
 }
 
@@ -1777,7 +1309,7 @@ type SmartSalmon struct {
 	Species  *string      `json:"species,omitempty"`
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
-	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeAddstringTest', 'FishtypeAddobjTest', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
+	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype `json:"fishtype,omitempty"`
 	Location *string  `json:"location,omitempty"`
 	Iswild   *bool    `json:"iswild,omitempty"`
@@ -1828,16 +1360,6 @@ func (s SmartSalmon) AsBasicSalmon() (BasicSalmon, bool) {
 // AsSmartSalmon is the BasicFish implementation for SmartSalmon.
 func (s SmartSalmon) AsSmartSalmon() (*SmartSalmon, bool) {
 	return &s, true
-}
-
-// AsAddstringTest is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsAddstringTest() (*AddstringTest, bool) {
-	return nil, false
-}
-
-// AsAddobjTest is the BasicFish implementation for SmartSalmon.
-func (s SmartSalmon) AsAddobjTest() (*AddobjTest, bool) {
-	return nil, false
 }
 
 // AsShark is the BasicFish implementation for SmartSalmon.
