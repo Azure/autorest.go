@@ -32,6 +32,10 @@ namespace AutoRest.Go.Model
 
         public CompositeTypeGo(string name) : base(name)
         {
+            if (string.IsNullOrWhiteSpace(Documentation))
+            {
+                Documentation = "...";
+            }
         }
 
         public CompositeTypeGo(IModelType wrappedType)
@@ -39,6 +43,11 @@ namespace AutoRest.Go.Model
             if (!wrappedType.ShouldBeSyntheticType())
             {
                 throw new ArgumentException("{0} is not a valid type for SyntheticType", wrappedType.ToString());
+            }
+
+            if (string.IsNullOrWhiteSpace(Documentation))
+            {
+                Documentation = "...";
             }
 
             // gosdk: Ensure the generated name does not collide with existing type names

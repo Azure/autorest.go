@@ -27,18 +27,8 @@ namespace AutoRest.Go.Model
 
         public string UserAgent
         {
-            get
-            {
-                if (SpecifiedUserAgent == null)
-                {
-                    return DefaultUserAgent;
-                }
-                return SpecifiedUserAgent;
-            }
-            set
-            {
-                SpecifiedUserAgent = value;
-            }
+            get => SpecifiedUserAgent ?? DefaultUserAgent;
+            set => SpecifiedUserAgent = value;
         }
 
         private string DefaultUserAgent
@@ -298,7 +288,7 @@ namespace AutoRest.Go.Model
             var page = new PageTypeGo(method);
             if (ModelTypes.Contains(page))
             {
-                page = ModelTypes.Where(mt => mt.Equals(page)).First().Cast<PageTypeGo>();
+                page = ModelTypes.First(mt => mt.Equals(page)).Cast<PageTypeGo>();
             }
             else
             {
@@ -347,7 +337,7 @@ namespace AutoRest.Go.Model
             // don't create duplicate future types
             if (ModelTypes.Contains(futureType))
             {
-                futureType = ModelTypes.Where(mt => mt.Equals(futureType)).First().Cast<FutureTypeGo>();
+                futureType = ModelTypes.First(mt => mt.Equals(futureType)).Cast<FutureTypeGo>();
             }
             else
             {

@@ -2650,7 +2650,7 @@ func (sp *SubProduct) UnmarshalJSON(body []byte) error {
 type SubProductProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 	// ProvisioningStateValues - Possible values include: 'ProvisioningStateValues1Succeeded', 'ProvisioningStateValues1Failed', 'ProvisioningStateValues1Canceled', 'ProvisioningStateValues1Accepted', 'ProvisioningStateValues1Creating', 'ProvisioningStateValues1Created', 'ProvisioningStateValues1Updating', 'ProvisioningStateValues1Updated', 'ProvisioningStateValues1Deleting', 'ProvisioningStateValues1Deleted', 'ProvisioningStateValues1OK'
-	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
+	ProvisioningStateValues ProvisioningStateValues1 `json:"provisioningStateValues,omitempty"`
 }
 
 // SubResource ...
