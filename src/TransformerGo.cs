@@ -25,6 +25,7 @@ namespace AutoRest.Go
             TransformMethods(cmg);
             SwaggerExtensions.ProcessParameterizedHost(cmg);
             FixStutteringTypeNames(cmg);
+            AssureUniqueNames(cmg);
 
             return cmg;
         }
@@ -115,7 +116,10 @@ namespace AutoRest.Go
                     })) as EnumTypeGo;
                 }
             }
+        }
 
+        private static void AssureUniqueNames(CodeModelGo cmg)
+        {
             // now normalize the names
             // NOTE: this must be done after all enum types have been accounted for
             foreach (var enumType in cmg.EnumTypes)
