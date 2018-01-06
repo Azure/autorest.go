@@ -4,30 +4,48 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
 
-@WrapComment("// ", Model.Documentation)
+@if (Model.Name.Value.Length >= Settings.MaximumCommentColumns)
+{
+    <text>
+        // @Model.Documentation
+    </text>
+}
+else
+{
+    <text>
+        @WrapComment("// ", Model.Documentation)
+    </text>
+}
 type @Model.Name string
 
 @EmptyLine
 @if (Model.Values.Any())
 {
-<text>
-const (
-@foreach (var v in Model.Values.OrderBy(v => v.Name))
-{
-    var desc = string.Empty;
-    if (string.IsNullOrWhiteSpace(v.Description))
-    {
-        desc = "...";
-    }
-    else
-    {
-        desc = $"- {v.Description}";
-    }
     <text>
-@WrapComment("// ", $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} {desc}")
-@(CodeNamerGo.Instance.GetEnumMemberName(v.Name)) @(Model.Name) = "@(v.SerializedName)"
+    const (
+    @foreach (var v in Model.Values.OrderBy(v => v.Name))
+    {
+        var comment = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(v.Description))
+        {
+            comment = $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} ...";
+
+            <text>
+                // @comment
+            </text>
+        }
+        else
+        {
+            comment = $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} {v.Description}";
+            <text>
+            @WrapComment("// ", comment)
+            </text>
+        }
+        <text>
+        @(CodeNamerGo.Instance.GetEnumMemberName(v.Name)) @(Model.Name) = "@(v.SerializedName)"
+        </text>
+    }
+    )
     </text>
-}
-)
-</text>
 }

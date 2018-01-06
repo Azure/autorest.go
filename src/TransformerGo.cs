@@ -183,6 +183,11 @@ namespace AutoRest.Go
             {
                 var name = ctg.Name.FixedValue.TrimPackageName(cmg.Namespace);
 
+                if (string.IsNullOrWhiteSpace(ctg.Documentation))
+                {
+                    ctg.Documentation = "...";
+                }
+
                 // ensure that the candidate name isn't already in use
                 if (name != ctg.Name && cmg.ModelTypes.Any(mt => mt.Name == name))
                 {
