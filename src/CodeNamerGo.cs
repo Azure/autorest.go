@@ -380,7 +380,7 @@ namespace AutoRest.Go
                 case KnownPrimaryType.Boolean:
                     return defaultValue.ToLowerInvariant();
                 case KnownPrimaryType.ByteArray:
-                    return "[]bytearray(\"" + defaultValue + "\")";
+                    return "[]byte(\"" + defaultValue + "\")";
                 default:
                     //TODO: handle imports for package types.
                     break;

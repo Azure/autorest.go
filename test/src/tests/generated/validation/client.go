@@ -44,9 +44,8 @@ func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
 }
 
 // GetWithConstantInPath sends the get with constant in path request.
-//
-func (client BaseClient) GetWithConstantInPath(ctx context.Context, constantParam string) (result autorest.Response, err error) {
-	req, err := client.GetWithConstantInPathPreparer(ctx, constantParam)
+func (client BaseClient) GetWithConstantInPath(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetWithConstantInPathPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "GetWithConstantInPath", nil, "Failure preparing request")
 		return
@@ -68,9 +67,9 @@ func (client BaseClient) GetWithConstantInPath(ctx context.Context, constantPara
 }
 
 // GetWithConstantInPathPreparer prepares the GetWithConstantInPath request.
-func (client BaseClient) GetWithConstantInPathPreparer(ctx context.Context, constantParam string) (*http.Request, error) {
+func (client BaseClient) GetWithConstantInPathPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"constantParam": autorest.Encode("path", constantParam),
+		"constantParam": autorest.Encode("path", "constant"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -101,7 +100,7 @@ func (client BaseClient) GetWithConstantInPathResponder(resp *http.Response) (re
 
 // PostWithConstantInBody sends the post with constant in body request.
 //
-func (client BaseClient) PostWithConstantInBody(ctx context.Context, constantParam string, body *Product) (result Product, err error) {
+func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: body,
 			Constraints: []validation.Constraint{{Target: "body", Name: validation.Null, Rule: false,
@@ -128,7 +127,7 @@ func (client BaseClient) PostWithConstantInBody(ctx context.Context, constantPar
 		return result, validation.NewErrorWithValidationError(err, "validationgroup.BaseClient", "PostWithConstantInBody")
 	}
 
-	req, err := client.PostWithConstantInBodyPreparer(ctx, constantParam, body)
+	req, err := client.PostWithConstantInBodyPreparer(ctx, body)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "PostWithConstantInBody", nil, "Failure preparing request")
 		return
@@ -150,9 +149,9 @@ func (client BaseClient) PostWithConstantInBody(ctx context.Context, constantPar
 }
 
 // PostWithConstantInBodyPreparer prepares the PostWithConstantInBody request.
-func (client BaseClient) PostWithConstantInBodyPreparer(ctx context.Context, constantParam string, body *Product) (*http.Request, error) {
+func (client BaseClient) PostWithConstantInBodyPreparer(ctx context.Context, body *Product) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"constantParam": autorest.Encode("path", constantParam),
+		"constantParam": autorest.Encode("path", "constant"),
 	}
 
 	preparer := autorest.CreatePreparer(

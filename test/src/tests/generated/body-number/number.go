@@ -812,9 +812,8 @@ func (client NumberClient) PutBigDecimalResponder(resp *http.Response) (result a
 }
 
 // PutBigDecimalNegativeDecimal put big decimal value -99999999.99
-//
-func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
-	req, err := client.PutBigDecimalNegativeDecimalPreparer(ctx, numberBody)
+func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalNegativeDecimal", nil, "Failure preparing request")
 		return
@@ -836,13 +835,13 @@ func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, num
 }
 
 // PutBigDecimalNegativeDecimalPreparer prepares the PutBigDecimalNegativeDecimal request.
-func (client NumberClient) PutBigDecimalNegativeDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
+func (client NumberClient) PutBigDecimalNegativeDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/-99999999.99"),
-		autorest.WithJSON(numberBody))
+		autorest.WithJSON(-99999999.99))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -866,9 +865,8 @@ func (client NumberClient) PutBigDecimalNegativeDecimalResponder(resp *http.Resp
 }
 
 // PutBigDecimalPositiveDecimal put big decimal value 99999999.99
-//
-func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
-	req, err := client.PutBigDecimalPositiveDecimalPreparer(ctx, numberBody)
+func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutBigDecimalPositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalPositiveDecimal", nil, "Failure preparing request")
 		return
@@ -890,13 +888,13 @@ func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, num
 }
 
 // PutBigDecimalPositiveDecimalPreparer prepares the PutBigDecimalPositiveDecimal request.
-func (client NumberClient) PutBigDecimalPositiveDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
+func (client NumberClient) PutBigDecimalPositiveDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/99999999.99"),
-		autorest.WithJSON(numberBody))
+		autorest.WithJSON(99999999.99))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -974,9 +972,8 @@ func (client NumberClient) PutBigDoubleResponder(resp *http.Response) (result au
 }
 
 // PutBigDoubleNegativeDecimal put big double value -99999999.99
-//
-func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutBigDoubleNegativeDecimalPreparer(ctx, numberBody)
+func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutBigDoubleNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoubleNegativeDecimal", nil, "Failure preparing request")
 		return
@@ -998,13 +995,13 @@ func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, numb
 }
 
 // PutBigDoubleNegativeDecimalPreparer prepares the PutBigDoubleNegativeDecimal request.
-func (client NumberClient) PutBigDoubleNegativeDecimalPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutBigDoubleNegativeDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/-99999999.99"),
-		autorest.WithJSON(numberBody))
+		autorest.WithJSON(-99999999.99))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -1028,9 +1025,8 @@ func (client NumberClient) PutBigDoubleNegativeDecimalResponder(resp *http.Respo
 }
 
 // PutBigDoublePositiveDecimal put big double value 99999999.99
-//
-func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
-	req, err := client.PutBigDoublePositiveDecimalPreparer(ctx, numberBody)
+func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutBigDoublePositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoublePositiveDecimal", nil, "Failure preparing request")
 		return
@@ -1052,13 +1048,13 @@ func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, numb
 }
 
 // PutBigDoublePositiveDecimalPreparer prepares the PutBigDoublePositiveDecimal request.
-func (client NumberClient) PutBigDoublePositiveDecimalPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
+func (client NumberClient) PutBigDoublePositiveDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/99999999.99"),
-		autorest.WithJSON(numberBody))
+		autorest.WithJSON(99999999.99))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

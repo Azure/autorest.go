@@ -152,16 +152,8 @@ func (client PathsClient) Base64URLResponder(resp *http.Response) (result autore
 }
 
 // ByteEmpty get '' as byte array
-//
-// bytePath is '' as byte array
-func (client PathsClient) ByteEmpty(ctx context.Context, bytePath []byte) (result autorest.Response, err error) {
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: bytePath,
-			Constraints: []validation.Constraint{{Target: "bytePath", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "urlgroup.PathsClient", "ByteEmpty")
-	}
-
-	req, err := client.ByteEmptyPreparer(ctx, bytePath)
+func (client PathsClient) ByteEmpty(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.ByteEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "ByteEmpty", nil, "Failure preparing request")
 		return
@@ -183,9 +175,9 @@ func (client PathsClient) ByteEmpty(ctx context.Context, bytePath []byte) (resul
 }
 
 // ByteEmptyPreparer prepares the ByteEmpty request.
-func (client PathsClient) ByteEmptyPreparer(ctx context.Context, bytePath []byte) (*http.Request, error) {
+func (client PathsClient) ByteEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"bytePath": autorest.Encode("path", bytePath),
+		"bytePath": autorest.Encode("path", []byte("")),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -455,10 +447,8 @@ func (client PathsClient) DateTimeNullResponder(resp *http.Response) (result aut
 }
 
 // DateTimeValid get '2012-01-01T01:01:01Z' as date-time
-//
-// dateTimePath is '2012-01-01T01:01:01Z' as date-time
-func (client PathsClient) DateTimeValid(ctx context.Context, dateTimePath date.Time) (result autorest.Response, err error) {
-	req, err := client.DateTimeValidPreparer(ctx, dateTimePath)
+func (client PathsClient) DateTimeValid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DateTimeValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DateTimeValid", nil, "Failure preparing request")
 		return
@@ -480,9 +470,9 @@ func (client PathsClient) DateTimeValid(ctx context.Context, dateTimePath date.T
 }
 
 // DateTimeValidPreparer prepares the DateTimeValid request.
-func (client PathsClient) DateTimeValidPreparer(ctx context.Context, dateTimePath date.Time) (*http.Request, error) {
+func (client PathsClient) DateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"dateTimePath": autorest.Encode("path", dateTimePath),
+		"dateTimePath": autorest.Encode("path", "2012-01-01T01:01:01Z"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -512,10 +502,8 @@ func (client PathsClient) DateTimeValidResponder(resp *http.Response) (result au
 }
 
 // DateValid get '2012-01-01' as date
-//
-// datePath is '2012-01-01' as date
-func (client PathsClient) DateValid(ctx context.Context, datePath date.Date) (result autorest.Response, err error) {
-	req, err := client.DateValidPreparer(ctx, datePath)
+func (client PathsClient) DateValid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DateValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DateValid", nil, "Failure preparing request")
 		return
@@ -537,9 +525,9 @@ func (client PathsClient) DateValid(ctx context.Context, datePath date.Date) (re
 }
 
 // DateValidPreparer prepares the DateValid request.
-func (client PathsClient) DateValidPreparer(ctx context.Context, datePath date.Date) (*http.Request, error) {
+func (client PathsClient) DateValidPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"datePath": autorest.Encode("path", datePath),
+		"datePath": autorest.Encode("path", "2012-01-01"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -569,10 +557,8 @@ func (client PathsClient) DateValidResponder(resp *http.Response) (result autore
 }
 
 // DoubleDecimalNegative get '-9999999.999' numeric value
-//
-// doublePath is '-9999999.999'numeric value
-func (client PathsClient) DoubleDecimalNegative(ctx context.Context, doublePath float64) (result autorest.Response, err error) {
-	req, err := client.DoubleDecimalNegativePreparer(ctx, doublePath)
+func (client PathsClient) DoubleDecimalNegative(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DoubleDecimalNegativePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DoubleDecimalNegative", nil, "Failure preparing request")
 		return
@@ -594,9 +580,9 @@ func (client PathsClient) DoubleDecimalNegative(ctx context.Context, doublePath 
 }
 
 // DoubleDecimalNegativePreparer prepares the DoubleDecimalNegative request.
-func (client PathsClient) DoubleDecimalNegativePreparer(ctx context.Context, doublePath float64) (*http.Request, error) {
+func (client PathsClient) DoubleDecimalNegativePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"doublePath": autorest.Encode("path", doublePath),
+		"doublePath": autorest.Encode("path", -9999999.999),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -626,10 +612,8 @@ func (client PathsClient) DoubleDecimalNegativeResponder(resp *http.Response) (r
 }
 
 // DoubleDecimalPositive get '9999999.999' numeric value
-//
-// doublePath is '9999999.999'numeric value
-func (client PathsClient) DoubleDecimalPositive(ctx context.Context, doublePath float64) (result autorest.Response, err error) {
-	req, err := client.DoubleDecimalPositivePreparer(ctx, doublePath)
+func (client PathsClient) DoubleDecimalPositive(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DoubleDecimalPositivePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "DoubleDecimalPositive", nil, "Failure preparing request")
 		return
@@ -651,9 +635,9 @@ func (client PathsClient) DoubleDecimalPositive(ctx context.Context, doublePath 
 }
 
 // DoubleDecimalPositivePreparer prepares the DoubleDecimalPositive request.
-func (client PathsClient) DoubleDecimalPositivePreparer(ctx context.Context, doublePath float64) (*http.Request, error) {
+func (client PathsClient) DoubleDecimalPositivePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"doublePath": autorest.Encode("path", doublePath),
+		"doublePath": autorest.Encode("path", 9999999.999),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -797,10 +781,8 @@ func (client PathsClient) EnumValidResponder(resp *http.Response) (result autore
 }
 
 // FloatScientificNegative get '-1.034E-20' numeric value
-//
-// floatPath is '-1.034E-20'numeric value
-func (client PathsClient) FloatScientificNegative(ctx context.Context, floatPath float64) (result autorest.Response, err error) {
-	req, err := client.FloatScientificNegativePreparer(ctx, floatPath)
+func (client PathsClient) FloatScientificNegative(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.FloatScientificNegativePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "FloatScientificNegative", nil, "Failure preparing request")
 		return
@@ -822,9 +804,9 @@ func (client PathsClient) FloatScientificNegative(ctx context.Context, floatPath
 }
 
 // FloatScientificNegativePreparer prepares the FloatScientificNegative request.
-func (client PathsClient) FloatScientificNegativePreparer(ctx context.Context, floatPath float64) (*http.Request, error) {
+func (client PathsClient) FloatScientificNegativePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"floatPath": autorest.Encode("path", floatPath),
+		"floatPath": autorest.Encode("path", -1.034E-20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -854,10 +836,8 @@ func (client PathsClient) FloatScientificNegativeResponder(resp *http.Response) 
 }
 
 // FloatScientificPositive get '1.034E+20' numeric value
-//
-// floatPath is '1.034E+20'numeric value
-func (client PathsClient) FloatScientificPositive(ctx context.Context, floatPath float64) (result autorest.Response, err error) {
-	req, err := client.FloatScientificPositivePreparer(ctx, floatPath)
+func (client PathsClient) FloatScientificPositive(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.FloatScientificPositivePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "FloatScientificPositive", nil, "Failure preparing request")
 		return
@@ -879,9 +859,9 @@ func (client PathsClient) FloatScientificPositive(ctx context.Context, floatPath
 }
 
 // FloatScientificPositivePreparer prepares the FloatScientificPositive request.
-func (client PathsClient) FloatScientificPositivePreparer(ctx context.Context, floatPath float64) (*http.Request, error) {
+func (client PathsClient) FloatScientificPositivePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"floatPath": autorest.Encode("path", floatPath),
+		"floatPath": autorest.Encode("path", 1.034E+20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -911,10 +891,8 @@ func (client PathsClient) FloatScientificPositiveResponder(resp *http.Response) 
 }
 
 // GetBooleanFalse get false Boolean value on path
-//
-// boolPath is false boolean value
-func (client PathsClient) GetBooleanFalse(ctx context.Context, boolPath bool) (result autorest.Response, err error) {
-	req, err := client.GetBooleanFalsePreparer(ctx, boolPath)
+func (client PathsClient) GetBooleanFalse(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetBooleanFalsePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetBooleanFalse", nil, "Failure preparing request")
 		return
@@ -936,9 +914,9 @@ func (client PathsClient) GetBooleanFalse(ctx context.Context, boolPath bool) (r
 }
 
 // GetBooleanFalsePreparer prepares the GetBooleanFalse request.
-func (client PathsClient) GetBooleanFalsePreparer(ctx context.Context, boolPath bool) (*http.Request, error) {
+func (client PathsClient) GetBooleanFalsePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"boolPath": autorest.Encode("path", boolPath),
+		"boolPath": autorest.Encode("path", false),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -968,10 +946,8 @@ func (client PathsClient) GetBooleanFalseResponder(resp *http.Response) (result 
 }
 
 // GetBooleanTrue get true Boolean value on path
-//
-// boolPath is true boolean value
-func (client PathsClient) GetBooleanTrue(ctx context.Context, boolPath bool) (result autorest.Response, err error) {
-	req, err := client.GetBooleanTruePreparer(ctx, boolPath)
+func (client PathsClient) GetBooleanTrue(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetBooleanTruePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetBooleanTrue", nil, "Failure preparing request")
 		return
@@ -993,9 +969,9 @@ func (client PathsClient) GetBooleanTrue(ctx context.Context, boolPath bool) (re
 }
 
 // GetBooleanTruePreparer prepares the GetBooleanTrue request.
-func (client PathsClient) GetBooleanTruePreparer(ctx context.Context, boolPath bool) (*http.Request, error) {
+func (client PathsClient) GetBooleanTruePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"boolPath": autorest.Encode("path", boolPath),
+		"boolPath": autorest.Encode("path", true),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1025,10 +1001,8 @@ func (client PathsClient) GetBooleanTrueResponder(resp *http.Response) (result a
 }
 
 // GetIntNegativeOneMillion get '-1000000' integer value
-//
-// intPath is '-1000000' integer value
-func (client PathsClient) GetIntNegativeOneMillion(ctx context.Context, intPath int32) (result autorest.Response, err error) {
-	req, err := client.GetIntNegativeOneMillionPreparer(ctx, intPath)
+func (client PathsClient) GetIntNegativeOneMillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetIntNegativeOneMillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetIntNegativeOneMillion", nil, "Failure preparing request")
 		return
@@ -1050,9 +1024,9 @@ func (client PathsClient) GetIntNegativeOneMillion(ctx context.Context, intPath 
 }
 
 // GetIntNegativeOneMillionPreparer prepares the GetIntNegativeOneMillion request.
-func (client PathsClient) GetIntNegativeOneMillionPreparer(ctx context.Context, intPath int32) (*http.Request, error) {
+func (client PathsClient) GetIntNegativeOneMillionPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"intPath": autorest.Encode("path", intPath),
+		"intPath": autorest.Encode("path", -1000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1082,10 +1056,8 @@ func (client PathsClient) GetIntNegativeOneMillionResponder(resp *http.Response)
 }
 
 // GetIntOneMillion get '1000000' integer value
-//
-// intPath is '1000000' integer value
-func (client PathsClient) GetIntOneMillion(ctx context.Context, intPath int32) (result autorest.Response, err error) {
-	req, err := client.GetIntOneMillionPreparer(ctx, intPath)
+func (client PathsClient) GetIntOneMillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetIntOneMillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetIntOneMillion", nil, "Failure preparing request")
 		return
@@ -1107,9 +1079,9 @@ func (client PathsClient) GetIntOneMillion(ctx context.Context, intPath int32) (
 }
 
 // GetIntOneMillionPreparer prepares the GetIntOneMillion request.
-func (client PathsClient) GetIntOneMillionPreparer(ctx context.Context, intPath int32) (*http.Request, error) {
+func (client PathsClient) GetIntOneMillionPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"intPath": autorest.Encode("path", intPath),
+		"intPath": autorest.Encode("path", 1000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1139,10 +1111,8 @@ func (client PathsClient) GetIntOneMillionResponder(resp *http.Response) (result
 }
 
 // GetNegativeTenBillion get '-10000000000' 64 bit integer value
-//
-// longPath is '-10000000000' 64 bit integer value
-func (client PathsClient) GetNegativeTenBillion(ctx context.Context, longPath int64) (result autorest.Response, err error) {
-	req, err := client.GetNegativeTenBillionPreparer(ctx, longPath)
+func (client PathsClient) GetNegativeTenBillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetNegativeTenBillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetNegativeTenBillion", nil, "Failure preparing request")
 		return
@@ -1164,9 +1134,9 @@ func (client PathsClient) GetNegativeTenBillion(ctx context.Context, longPath in
 }
 
 // GetNegativeTenBillionPreparer prepares the GetNegativeTenBillion request.
-func (client PathsClient) GetNegativeTenBillionPreparer(ctx context.Context, longPath int64) (*http.Request, error) {
+func (client PathsClient) GetNegativeTenBillionPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"longPath": autorest.Encode("path", longPath),
+		"longPath": autorest.Encode("path", -10000000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1196,10 +1166,8 @@ func (client PathsClient) GetNegativeTenBillionResponder(resp *http.Response) (r
 }
 
 // GetTenBillion get '10000000000' 64 bit integer value
-//
-// longPath is '10000000000' 64 bit integer value
-func (client PathsClient) GetTenBillion(ctx context.Context, longPath int64) (result autorest.Response, err error) {
-	req, err := client.GetTenBillionPreparer(ctx, longPath)
+func (client PathsClient) GetTenBillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetTenBillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "GetTenBillion", nil, "Failure preparing request")
 		return
@@ -1221,9 +1189,9 @@ func (client PathsClient) GetTenBillion(ctx context.Context, longPath int64) (re
 }
 
 // GetTenBillionPreparer prepares the GetTenBillion request.
-func (client PathsClient) GetTenBillionPreparer(ctx context.Context, longPath int64) (*http.Request, error) {
+func (client PathsClient) GetTenBillionPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"longPath": autorest.Encode("path", longPath),
+		"longPath": autorest.Encode("path", 10000000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1253,10 +1221,8 @@ func (client PathsClient) GetTenBillionResponder(resp *http.Response) (result au
 }
 
 // StringEmpty get ''
-//
-// stringPath is '' string value
-func (client PathsClient) StringEmpty(ctx context.Context, stringPath string) (result autorest.Response, err error) {
-	req, err := client.StringEmptyPreparer(ctx, stringPath)
+func (client PathsClient) StringEmpty(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.StringEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringEmpty", nil, "Failure preparing request")
 		return
@@ -1278,9 +1244,9 @@ func (client PathsClient) StringEmpty(ctx context.Context, stringPath string) (r
 }
 
 // StringEmptyPreparer prepares the StringEmpty request.
-func (client PathsClient) StringEmptyPreparer(ctx context.Context, stringPath string) (*http.Request, error) {
+func (client PathsClient) StringEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"stringPath": autorest.Encode("path", stringPath),
+		"stringPath": autorest.Encode("path", ""),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1367,10 +1333,8 @@ func (client PathsClient) StringNullResponder(resp *http.Response) (result autor
 }
 
 // StringUnicode get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-//
-// stringPath is '啊齄丂狛狜隣郎隣兀﨩'multi-byte string value
-func (client PathsClient) StringUnicode(ctx context.Context, stringPath string) (result autorest.Response, err error) {
-	req, err := client.StringUnicodePreparer(ctx, stringPath)
+func (client PathsClient) StringUnicode(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.StringUnicodePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringUnicode", nil, "Failure preparing request")
 		return
@@ -1392,9 +1356,9 @@ func (client PathsClient) StringUnicode(ctx context.Context, stringPath string) 
 }
 
 // StringUnicodePreparer prepares the StringUnicode request.
-func (client PathsClient) StringUnicodePreparer(ctx context.Context, stringPath string) (*http.Request, error) {
+func (client PathsClient) StringUnicodePreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"stringPath": autorest.Encode("path", stringPath),
+		"stringPath": autorest.Encode("path", "啊齄丂狛狜隣郎隣兀﨩"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1424,10 +1388,8 @@ func (client PathsClient) StringUnicodeResponder(resp *http.Response) (result au
 }
 
 // StringURLEncoded get 'begin!*'();:@ &=+$,/?#[]end
-//
-// stringPath is 'begin!*'();:@ &=+$,/?#[]end' url encoded string value
-func (client PathsClient) StringURLEncoded(ctx context.Context, stringPath string) (result autorest.Response, err error) {
-	req, err := client.StringURLEncodedPreparer(ctx, stringPath)
+func (client PathsClient) StringURLEncoded(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.StringURLEncodedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathsClient", "StringURLEncoded", nil, "Failure preparing request")
 		return
@@ -1449,9 +1411,9 @@ func (client PathsClient) StringURLEncoded(ctx context.Context, stringPath strin
 }
 
 // StringURLEncodedPreparer prepares the StringURLEncoded request.
-func (client PathsClient) StringURLEncodedPreparer(ctx context.Context, stringPath string) (*http.Request, error) {
+func (client PathsClient) StringURLEncodedPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"stringPath": autorest.Encode("path", stringPath),
+		"stringPath": autorest.Encode("path", "begin!*'();:@ &=+$,/?#[]end"),
 	}
 
 	preparer := autorest.CreatePreparer(
