@@ -98,6 +98,7 @@ func (e *Error) UnmarshalJSON(body []byte) error {
 
 // FlattenedProduct flattened product.
 type FlattenedProduct struct {
+	*FlattenedProductProperties `json:"properties,omitempty"`
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
 	// Type - Resource Type
@@ -106,8 +107,7 @@ type FlattenedProduct struct {
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
 	// Name - Resource Name
-	Name                        *string `json:"name,omitempty"`
-	*FlattenedProductProperties `json:"properties,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for FlattenedProduct.
@@ -232,10 +232,10 @@ type ListProductWrapper struct {
 
 // ProductURL the product URL.
 type ProductURL struct {
-	// GenericValue - Generic URL value.
-	GenericValue *string `json:"generic_value,omitempty"`
 	// OdataValue - URL value.
 	OdataValue *string `json:"@odata.value,omitempty"`
+	// GenericValue - Generic URL value.
+	GenericValue *string `json:"generic_value,omitempty"`
 }
 
 // ProductWrapper the wrapped produc.
@@ -341,12 +341,12 @@ func (sfp SetFlattenedProduct) MarshalJSON() ([]byte, error) {
 
 // SimpleProduct the product documentation.
 type SimpleProduct struct {
-	autorest.Response `json:"-"`
+	autorest.Response        `json:"-"`
+	*SimpleProductProperties `json:"details,omitempty"`
 	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
 	ProductID *string `json:"base_product_id,omitempty"`
 	// Description - Description of product.
-	Description              *string `json:"base_product_description,omitempty"`
-	*SimpleProductProperties `json:"details,omitempty"`
+	Description *string `json:"base_product_description,omitempty"`
 }
 
 // UnmarshalJSON is the custom unmarshaler for SimpleProduct struct.
