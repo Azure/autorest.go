@@ -340,7 +340,8 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 // PutValidMissingRequired put complex types that are polymorphic, attempting to omit required 'birthday' field - the
 // request should not be allowed from the client
 //
-// complexBody is please attempt put a sawshark that looks like this, the client should not allow this data to be sent:
+// complexBody is please attempt put a sawshark that looks like this, the client should not allow this data to be
+// sent:
 // {
 // "fishtype": "sawshark",
 // "species": "snaggle toothed",

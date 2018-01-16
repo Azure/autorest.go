@@ -21,9 +21,8 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Add imports for the parameter in parameter type.
+        /// Add imports for the parameter model type.
         /// </summary>
-        /// <param name="parameter"></param>
         /// <param name="imports"></param>
         public void AddImports(HashSet<string> imports)
         {
@@ -35,10 +34,11 @@ namespace AutoRest.Go.Model
         /// xyz["abc"] = 123
         /// </summary>
         /// <param name="mapVariable"></param>
+        /// <param name="useDefaultValue"></param>
         /// <returns></returns>
-        public string AddToMap(string mapVariable)
+        public string AddToMap(string mapVariable, bool useDefaultValue = false)
         {
-            return string.Format("{0}[\"{1}\"] = {2}", mapVariable, NameForMap(), ValueForMap());
+            return string.Format("{0}[\"{1}\"] = {2}", mapVariable, NameForMap(), ValueForMap(useDefault: useDefaultValue));
         }
 
         public string GetParameterName()
@@ -109,7 +109,6 @@ namespace AutoRest.Go.Model
 
         /// <summary>
         /// Get Name for parameter for Go map.
-        /// If parameter is client parameter, then return client.<parametername>
         /// </summary>
         /// <returns></returns>
         public string NameForMap()
@@ -128,7 +127,7 @@ namespace AutoRest.Go.Model
         /// Return formatted value string for the parameter.
         /// </summary>
         /// <returns></returns>
-        public string ValueForMap()
+        public string ValueForMap(bool useDefault = false)
         {
             if (IsAPIVersion)
             {
@@ -144,9 +143,20 @@ namespace AutoRest.Go.Model
                 return DefaultValueString;
             }
 
-            var value = IsClientProperty
-                ? "client." + CodeNamerGo.Instance.GetPropertyName(Name.Value)
-                : Name.Value;
+            string value = "";
+
+            if (useDefault)
+            {
+                value = DefaultValue;
+            }
+            else if (IsClientProperty)
+            {
+                value = "client." + CodeNamerGo.Instance.GetPropertyName(Name.Value);
+            }
+            else
+            {
+                value = Name.Value;
+            }
 
             var format = IsRequired || ModelType.CanBeEmpty()
                                           ? "{0}"
@@ -165,9 +175,9 @@ namespace AutoRest.Go.Model
 
         public string GetEmptyCheck(string valueReference, bool asEmpty = true)
         {
-            if (ModelType is PrimaryTypeGo)
+            if (ModelType is PrimaryTypeGo goPrimaryType)
             {
-                return GetPrimaryTypeEmptyCheck(ModelType as PrimaryTypeGo, valueReference, asEmpty);
+                return GetPrimaryTypeEmptyCheck(goPrimaryType, valueReference, asEmpty);
             }
             else if (ModelType is SequenceTypeGo)
             {

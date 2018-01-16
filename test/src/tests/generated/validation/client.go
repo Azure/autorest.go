@@ -188,8 +188,8 @@ func (client BaseClient) PostWithConstantInBodyResponder(resp *http.Response) (r
 
 // ValidationOfBody validates body parameters on the method. See swagger for details.
 //
-// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
-// of 10 from 100 to 1000.
+// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int
+// multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName string, ID int32, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
@@ -294,8 +294,8 @@ func (client BaseClient) ValidationOfBodyResponder(resp *http.Response) (result 
 
 // ValidationOfMethodParameters validates input parameters on the method. See swagger for details.
 //
-// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
-// of 10 from 100 to 1000.
+// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int
+// multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, ID int32) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,

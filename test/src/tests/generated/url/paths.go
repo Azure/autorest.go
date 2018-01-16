@@ -33,7 +33,8 @@ func NewPathsClientWithBaseURI(baseURI string, globalStringPath string, globalSt
 // ArrayCsvInPath get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
 // format
 //
-// arrayPath is an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// arrayPath is an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
+// format
 func (client PathsClient) ArrayCsvInPath(ctx context.Context, arrayPath []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayPath,
