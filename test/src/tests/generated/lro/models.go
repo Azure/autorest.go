@@ -2451,7 +2451,8 @@ type OperationResultError struct {
 
 // Product ...
 type Product struct {
-	autorest.Response `json:"-"`
+	autorest.Response  `json:"-"`
+	*ProductProperties `json:"properties,omitempty"`
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
 	// Type - Resource Type
@@ -2460,8 +2461,7 @@ type Product struct {
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
 	// Name - Resource Name
-	Name               *string `json:"name,omitempty"`
-	*ProductProperties `json:"properties,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Product.
@@ -2607,10 +2607,10 @@ type Sku struct {
 
 // SubProduct ...
 type SubProduct struct {
-	autorest.Response `json:"-"`
-	// ID - Sub Resource Id
-	ID                    *string `json:"id,omitempty"`
+	autorest.Response     `json:"-"`
 	*SubProductProperties `json:"properties,omitempty"`
+	// ID - Sub Resource Id
+	ID *string `json:"id,omitempty"`
 }
 
 // UnmarshalJSON is the custom unmarshaler for SubProduct struct.

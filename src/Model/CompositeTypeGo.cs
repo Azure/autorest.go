@@ -157,12 +157,12 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool HasFlattenedFields => Properties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
 
-        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) ?
-            CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) :
-            (BaseModelType as CompositeTypeGo)?.PolymorphicProperty;
+        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator)
+            ? CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator)
+            : ((CompositeTypeGo)BaseModelType).PolymorphicProperty;
 
         public IEnumerable<PropertyGo> AllProperties => BaseModelType != null ?
-            Properties.Cast<PropertyGo>().Concat((BaseModelType as CompositeTypeGo).AllProperties) :
+            Properties.Cast<PropertyGo>().Concat(((CompositeTypeGo)BaseModelType).AllProperties) :
             Properties.Cast<PropertyGo>();
 
         /// <summary>
@@ -244,12 +244,14 @@ namespace AutoRest.Go.Model
         public virtual string Fields()
         {
             AddPolymorphicPropertyIfNecessary();
-            var indented = new IndentedStringBuilder("    ");
-            var properties = Properties.Cast<PropertyGo>().ToList();
 
-            if (BaseModelType != null)
+            var indented = new IndentedStringBuilder("    ");
+            var properties = AllProperties.ToHashSet();
+
+            if (!IsPolymorphic && RootType.IsPolymorphic)
             {
-                indented.Append(((CompositeTypeGo)BaseModelType).Fields());
+                RootType.AddPolymorphicPropertyIfNecessary();
+                properties.Add((PropertyGo)RootType.PolymorphicDiscriminatorProperty);
             }
 
             // Emit each property, except for named Enumerated types, as a pointer to the type
@@ -297,7 +299,7 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
         /// </summary>
-        private void AddPolymorphicPropertyIfNecessary()
+        internal void AddPolymorphicPropertyIfNecessary()
         {
             if (!string.IsNullOrEmpty(PolymorphicDiscriminator) && Properties.All(p => p.SerializedName != PolymorphicDiscriminator))
             {

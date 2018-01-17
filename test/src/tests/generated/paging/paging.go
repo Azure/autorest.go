@@ -31,8 +31,8 @@ func NewPagingClientWithBaseURI(baseURI string) PagingClient {
 
 // GetMultiplePages a paging operation that includes a nextLink that has 10 pages
 //
-// maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that the
-// server can spend processing the request, in seconds. The default is 30 seconds.
+// maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that
+// the server can spend processing the request, in seconds. The default is 30 seconds.
 func (client PagingClient) GetMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultPage, err error) {
 	result.fn = client.getMultiplePagesNextResults
 	req, err := client.GetMultiplePagesPreparer(ctx, clientRequestID, maxresults, timeout)
@@ -73,6 +73,9 @@ func (client PagingClient) GetMultiplePagesPreparer(ctx context.Context, clientR
 	if timeout != nil {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(timeout)))
+	} else {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("timeout", autorest.String(30)))
 	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
@@ -599,8 +602,9 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(ctx context.Conte
 
 // GetMultiplePagesWithOffset a paging operation that includes a nextLink that has 10 pages
 //
-// offset is offset of return value maxresults is sets the maximum number of items to return in the response. timeout
-// is sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
+// offset is offset of return value maxresults is sets the maximum number of items to return in the response.
+// timeout is sets the maximum time that the server can spend processing the request, in seconds. The default is 30
+// seconds.
 func (client PagingClient) GetMultiplePagesWithOffset(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultPage, err error) {
 	result.fn = client.getMultiplePagesWithOffsetNextResults
 	req, err := client.GetMultiplePagesWithOffsetPreparer(ctx, offset, clientRequestID, maxresults, timeout)
@@ -645,6 +649,9 @@ func (client PagingClient) GetMultiplePagesWithOffsetPreparer(ctx context.Contex
 	if timeout != nil {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(timeout)))
+	} else {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("timeout", autorest.String(30)))
 	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
@@ -698,8 +705,8 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Contex
 
 // GetOdataMultiplePages a paging operation that includes a nextLink in odata format that has 10 pages
 //
-// maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that the
-// server can spend processing the request, in seconds. The default is 30 seconds.
+// maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that
+// the server can spend processing the request, in seconds. The default is 30 seconds.
 func (client PagingClient) GetOdataMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResultPage, err error) {
 	result.fn = client.getOdataMultiplePagesNextResults
 	req, err := client.GetOdataMultiplePagesPreparer(ctx, clientRequestID, maxresults, timeout)
@@ -740,6 +747,9 @@ func (client PagingClient) GetOdataMultiplePagesPreparer(ctx context.Context, cl
 	if timeout != nil {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(timeout)))
+	} else {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("timeout", autorest.String(30)))
 	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }

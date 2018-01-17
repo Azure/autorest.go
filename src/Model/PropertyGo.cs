@@ -58,5 +58,29 @@ namespace AutoRest.Go.Model
                     : $"{this.Name} {fieldType} {jsonTag}";
             }
         }
+
+        /// <summary>
+        /// Determiens if this PropertyGo instance is equal to another.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            if (value is PropertyGo goProperty)
+            {
+                return goProperty.Field == Field;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A 32-bit signed integer hash code.</returns>
+        public override int GetHashCode()
+        {
+            return Field.GetHashCode();
+        }
     }
 }

@@ -18,8 +18,8 @@ type A struct {
 
 // B ...
 type B struct {
-	StatusCode     *string `json:"statusCode,omitempty"`
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
+	StatusCode     *string `json:"statusCode,omitempty"`
 }
 
 // Bool ...
