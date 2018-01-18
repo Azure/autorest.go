@@ -57,9 +57,6 @@ func (s *LROSuite) TestDelete202NoRetry204(c *chk.C) {
 
 	for done, err := future.Done(lrosClient); !done; done, err = future.Done(lrosClient) {
 		c.Assert(err, chk.IsNil)
-		dur, ok := future.GetPollingDelay()
-		c.Assert(ok, chk.Equals, true)
-		time.Sleep(dur)
 	}
 	c.Assert(future.Response().StatusCode, chk.Equals, 204)
 }
@@ -71,22 +68,22 @@ func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
 
 	for done, err := future.Done(lroRetryClient); !done; done, err = future.Done(lroRetryClient) {
 		c.Assert(err, chk.IsNil)
+		if future.Response().StatusCode == http.StatusInternalServerError {
+			continue
+		}
 		dur, ok := future.GetPollingDelay()
 		c.Assert(ok, chk.Equals, true)
 		time.Sleep(dur)
 	}
-	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusInternalServerError)
+	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusOK)
 }
 
 func (s *LROSuite) TestDelete202NonRetry400(c *chk.C) {
 	future, err := lroSADSClient.Delete202NonRetry400(context.Background())
 	c.Assert(err, chk.IsNil)
 
-	for done, err := future.Done(lroSADSClient); !done; done, err = future.Done(lroSADSClient) {
-		c.Assert(err, chk.IsNil)
-		dur, ok := future.GetPollingDelay()
-		c.Assert(ok, chk.Equals, true)
-		time.Sleep(dur)
-	}
+	done, err := future.Done(lroSADSClient)
+	c.Assert(done, chk.Equals, false)
+	c.Assert(err, chk.IsNil)
 	c.Assert(future.Response().StatusCode, chk.Equals, 400)
 }
