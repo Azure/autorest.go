@@ -11,6 +11,8 @@ namespace AutoRest.Go.Model
 {
     public class MethodGroupGo : MethodGroup
     {
+        private static HashSet<string> s_AllNames = new HashSet<string>();
+
         public string ClientName { get; private set; }
         public string Documentation { get; private set; }
         public string PackageName { get; private set; }
@@ -36,6 +38,17 @@ namespace AutoRest.Go.Model
         {
             var originalName = Name.Value;
             Name = Name.Value.TrimPackageName(cmg.Namespace);
+
+            // keep a list of all method group names as trimming the package name
+            // can introduce collisions.  if there's a collision append "Group" to
+            // the name.  unfortunately we can't do this in the namer as we don't
+            // have access to the package name.
+            if (s_AllNames.Contains(Name.Value))
+            {
+                Name += "Group";
+            }
+            s_AllNames.Add(Name.Value);
+
             if (Name != originalName)
             {
                 // fix up the method group names
