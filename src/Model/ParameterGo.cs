@@ -6,6 +6,7 @@ using AutoRest.Core.Model;
 using AutoRest.Extensions;
 using AutoRest.Extensions.Azure;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -86,24 +87,30 @@ namespace AutoRest.Go.Model
                 {
                     return DefaultValue;
                 }
-                else if (ModelType.Cast<PrimaryTypeGo>().KnownFormat.IsDateTime())
+
+                if (ModelType is PrimaryTypeGo primaryType)
+                {
+                    if (primaryType.KnownFormat.IsDateTime())
+                    {
+                        return $"\"{DefaultValue}\"";
+                    }
+                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.Decimal)
+                    {
+                        var asDecimal = decimal.Parse(DefaultValue);
+                        return asDecimal.ToString(CultureInfo.InvariantCulture);
+                    }
+                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.Double)
+                    {
+                        var asDouble = double.Parse(DefaultValue);
+                        return asDouble.ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+                else if (ModelType is EnumTypeGo)
                 {
                     return $"\"{DefaultValue}\"";
                 }
-                else if (ModelType.Cast<PrimaryTypeGo>().KnownPrimaryType == KnownPrimaryType.Decimal)
-                {
-                    var asDecimal = decimal.Parse(DefaultValue);
-                    return asDecimal.ToString();
-                }
-                else if (ModelType.Cast<PrimaryTypeGo>().KnownPrimaryType == KnownPrimaryType.Double)
-                {
-                    var asDouble = double.Parse(DefaultValue);
-                    return asDouble.ToString();
-                }
-                else
-                {
-                    return DefaultValue;
-                }
+
+                return DefaultValue;
             }
         }
 
@@ -136,18 +143,16 @@ namespace AutoRest.Go.Model
 
             if (IsConstant)
             {
-                if (RequiresUrlEncoding())
-                {
-                    return $"autorest.Encode(\"{Location.ToString().ToLower()}\", {DefaultValueString})";
-                }
-                return DefaultValueString;
+                return RequiresUrlEncoding() ? 
+                    $"autorest.Encode(\"{Location.ToString().ToLower()}\", {DefaultValueString})" :
+                    DefaultValueString;
             }
 
             string value = "";
 
             if (useDefault)
             {
-                value = DefaultValue;
+                value = DefaultValueString;
             }
             else if (IsClientProperty)
             {
@@ -158,7 +163,7 @@ namespace AutoRest.Go.Model
                 value = Name.Value;
             }
 
-            var format = IsRequired || ModelType.CanBeEmpty()
+            var format = IsRequired || ModelType.CanBeEmpty() || useDefault
                                           ? "{0}"
                                           : "*{0}";
 
