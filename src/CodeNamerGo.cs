@@ -20,17 +20,17 @@ namespace AutoRest.Go
 
         public virtual IEnumerable<string> AutorestImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
 
-        public virtual IEnumerable<string> StandardImports => new string[] 
-        { 
-            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"), 
+        public virtual IEnumerable<string> StandardImports => new string[]
+        {
+            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"),
             PrimaryTypeGo.GetImportLine(package: "net/http"),
             PrimaryTypeGo.GetImportLine(package: "context")
         };
 
-        public virtual IEnumerable<string> PageableImports => new string[] 
-        { 
-            PrimaryTypeGo.GetImportLine(package: "net/http"), 
-            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to") 
+        public virtual IEnumerable<string> PageableImports => new string[]
+        {
+            PrimaryTypeGo.GetImportLine(package: "net/http"),
+            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to")
         };
 
         public virtual IEnumerable<string> ValidationImport => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
@@ -157,6 +157,9 @@ namespace AutoRest.Go
             statusCodeMap[tooManyRequests] = "http.StatusTooManyRequests";
             statusCodeMap[HttpStatusCode.HttpVersionNotSupported] = "http.StatusHTTPVersionNotSupported";
 
+            // Add the status which are not in the System.Net.HttpStatusCode enumeration
+            statusCodeMap[(HttpStatusCode)207] = "http.StatusMultiStatus";
+
             StatusCodeToGoString = statusCodeMap;
 
             ReservedWords.AddRange(
@@ -167,8 +170,8 @@ namespace AutoRest.Go
                     "case",         "defer",        "go",           "map",          "struct",
                     "chan",         "else",         "goto",         "package",      "switch",
                     "const",        "fallthrough",  "if",           "range",        "type",
-                    "continue",     "for",          "import",       "return",       "var",        
-                
+                    "continue",     "for",          "import",       "return",       "var",
+
                     // Reserved predeclared identifiers -- list retrieved from http://golang.org/ref/spec#Predeclared_identifiers
                     "bool", "byte",
                     "complex64", "complex128",
@@ -266,7 +269,7 @@ namespace AutoRest.Go
             }
 
             return
-                name.Split(new Char[]{'.', '_', '@', '-', ' ', '$'})
+                name.Split(new Char[] { '.', '_', '@', '-', ' ', '$' })
                     .Where(s => !string.IsNullOrEmpty(s))
                     .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
                     .DefaultIfEmpty("")
@@ -335,7 +338,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetTypeName(string name) => 
+        public override string GetTypeName(string name) =>
             string.IsNullOrWhiteSpace(name) ?
             name :
             EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));

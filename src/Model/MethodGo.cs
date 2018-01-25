@@ -332,12 +332,6 @@ namespace AutoRest.Go.Model
                 // Refactor -> generator
                 foreach (var sc in Responses.Keys)
                 {
-                    // Multi status represents partial success for multi resource operations.Given that there are some failures, treating
-                    // this as an error.
-                    if (sc == (HttpStatusCode)207)
-                    {
-                        continue;
-                    }
                     codes.Add(CodeNamerGo.Instance.StatusCodeToGoString[sc]);
                 }
                 return codes;
