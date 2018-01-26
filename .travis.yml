@@ -1,0 +1,17 @@
+language: go
+go:
+  - 1.8.x
+  - 1.9.x
+  - master
+env:
+  - NODE_VERSION="8.9.4" DEP_VERSION="0.4.1"
+before_install:
+  - nvm install $NODE_VERSION
+  - go get -u github.com/golang/dep/cmd/dep
+  - curl -fl -o $GOPATH/dep https://github.com/golang/dep/releases/download/v$DEP_VERSION/dep-linux-amd64 && chmod +x $GOPATH/dep
+install:
+  - sudo apt-get install libunwind8
+  - npm install
+before_script:
+  - npm install -g gulp-cli
+script: gulp testci

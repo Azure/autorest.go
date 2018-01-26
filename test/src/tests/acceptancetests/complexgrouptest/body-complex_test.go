@@ -343,7 +343,7 @@ func (s *ComplexGroupSuite) TestGetValidBasicOperationsComplex(c *chk.C) {
 	c.Assert(err, chk.IsNil)
 
 	c.Assert(*res.ID, chk.Equals, int32(2))
-	c.Assert(*res.Name, chk.Equals, "abc")
+	c.Assert(*res.Name, chk.Equals, "abcdasdasdasdasdsa")
 
 	c.Assert(string(res.Color), chk.Equals, "YELLOW")
 }
