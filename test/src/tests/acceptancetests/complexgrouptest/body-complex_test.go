@@ -330,7 +330,7 @@ func (s *ComplexGroupSuite) TestGetInvalidBasicOperationsComplex(c *chk.C) {
 
 func (s *ComplexGroupSuite) TestGetNotProvidedBasicOperationsComplex(c *chk.C) {
 	res, err := complexBasicOperationsClient.GetNotProvided(context.Background())
-	c.Assert(err, chk.IsNil)
+	c.Assert(*err, chk.IsNil)
 
 	c.Assert(res.ID, chk.IsNil)
 	c.Assert(res.Name, chk.IsNil)
@@ -338,7 +338,7 @@ func (s *ComplexGroupSuite) TestGetNotProvidedBasicOperationsComplex(c *chk.C) {
 	c.Assert(string(res.Color), chk.Equals, "")
 }
 
-func (s *ComplexGroupSuite) TestGetValidBasicOperationsComplex(c *chk.C) {
+funcs (s *ComplexGroupSuite) TestGetValidBasicOperationsComplex(c *chk.C) {
 	res, err := complexBasicOperationsClient.GetValid(context.Background())
 	c.Assert(err, chk.IsNil)
 
