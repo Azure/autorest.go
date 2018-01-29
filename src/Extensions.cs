@@ -650,9 +650,11 @@ namespace AutoRest.Go
         /// </summary>
         private static bool IsValidConstraint(this KeyValuePair<Constraint, string> constraint)
         {
-            // Go's regex engine doesn't support positive or negative lookaheads.
-            // so if the constraint contain either of them we will omit it.
-            if (constraint.Key == Constraint.Pattern && (constraint.Value.Contains("?=") || constraint.Value.Contains("?!")))
+            // Go's regex engine doesn't support positive or negative lookaheads or
+            // lookbehinds, so if the constraint contain any of them we will omit it.
+            if (constraint.Key == Constraint.Pattern &&
+                (constraint.Value.Contains("?=") || constraint.Value.Contains("?!") ||
+                 constraint.Value.Contains("?<=") || constraint.Value.Contains("?<!")))
             {
                 return false;
             }
