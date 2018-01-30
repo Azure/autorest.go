@@ -480,7 +480,9 @@ namespace AutoRest.Go
             List<string> x = new List<string>();
             if (method != HttpMethod.Patch || !p.IsBodyParameter() || isCompositeProperties)
             {
-                x.AddRange(p.Constraints.Select(c => GetConstraint(name, c.Key.ToString(), c.Value)).ToList());
+                x.AddRange(p.Constraints
+                    .Where(c => c.IsValidConstraint())
+                    .Select(c => GetConstraint(name, c.Key.ToString(), c.Value)).ToList());
             }
 
             List<string> y = new List<string>();
@@ -636,10 +638,27 @@ namespace AutoRest.Go
             var value = constraintName == Constraint.Pattern.ToString()
                                           ? $"`{constraintValue}`"
                                           : constraintValue;
+
             return string.Format(chain
                                     ? "\t{{Target: \"{0}\", Name: validation.{1}, Rule: {2} "
                                     : "\t{{Target: \"{0}\", Name: validation.{1}, Rule: {2}, Chain: nil }}",
                                     name, constraintName, value);
+        }
+
+        /// <summary>
+        /// Returns true if the specified constraint can be expressed in Go.
+        /// </summary>
+        private static bool IsValidConstraint(this KeyValuePair<Constraint, string> constraint)
+        {
+            // Go's regex engine doesn't support positive or negative lookaheads or
+            // lookbehinds, so if the constraint contain any of them we will omit it.
+            if (constraint.Key == Constraint.Pattern &&
+                (constraint.Value.Contains("?=") || constraint.Value.Contains("?!") ||
+                 constraint.Value.Contains("?<=") || constraint.Value.Contains("?<!")))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
