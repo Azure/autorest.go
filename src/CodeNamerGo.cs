@@ -34,7 +34,7 @@ namespace AutoRest.Go
         };
 
         public virtual IEnumerable<string> ValidationImport => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
-
+     
         public string[] UserDefinedNames => new string[] {
                                                             "UserAgent",
                                                             "Version",
@@ -97,6 +97,7 @@ namespace AutoRest.Go
             // Create a map from HttpStatusCode to the appropriate Go http.StatusXxxxx string.
             // -- Go does not have constants for the full HttpStatusCode enumeration; this set taken from http://golang.org/pkg/net/http/
             const HttpStatusCode tooManyRequests = (HttpStatusCode)429;
+            const HttpStatusCode failedDependency = (HttpStatusCode)424;
             var statusCodeMap = new Dictionary<HttpStatusCode, string>();
             foreach (var sc in new HttpStatusCode[]{
                 HttpStatusCode.Continue,
@@ -136,6 +137,7 @@ namespace AutoRest.Go
                 HttpStatusCode.UnsupportedMediaType,
                 HttpStatusCode.RequestedRangeNotSatisfiable,
                 HttpStatusCode.ExpectationFailed,
+                failedDependency,
                 tooManyRequests,
 
                 HttpStatusCode.InternalServerError,
@@ -154,6 +156,7 @@ namespace AutoRest.Go
             statusCodeMap[HttpStatusCode.NonAuthoritativeInformation] = "http.StatusNonAuthoritativeInfo";
             statusCodeMap[HttpStatusCode.ProxyAuthenticationRequired] = "http.StatusProxyAuthRequired";
             statusCodeMap[HttpStatusCode.RequestUriTooLong] = "http.StatusRequestURITooLong";
+            statusCodeMap[failedDependency] = "http.StatusFailedDependency";
             statusCodeMap[tooManyRequests] = "http.StatusTooManyRequests";
             statusCodeMap[HttpStatusCode.HttpVersionNotSupported] = "http.StatusHTTPVersionNotSupported";
 
