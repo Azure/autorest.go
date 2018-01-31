@@ -34,7 +34,7 @@ namespace AutoRest.Go
         };
 
         public virtual IEnumerable<string> ValidationImport => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
-     
+
         public string[] UserDefinedNames => new string[] {
                                                             "UserAgent",
                                                             "Version",
