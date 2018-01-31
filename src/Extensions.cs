@@ -314,6 +314,7 @@ namespace AutoRest.Go
             return 
                 type is DictionaryType
                 || type is SequenceType
+                || type is InterfaceTypeGo
                 || (type is PrimaryType primaryType
                     && (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray
                         || primaryType.KnownPrimaryType == KnownPrimaryType.Stream

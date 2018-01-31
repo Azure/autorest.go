@@ -54,5 +54,5 @@ type ListString struct {
 // SetObject ...
 type SetObject struct {
 	autorest.Response `json:"-"`
-	Value             interface{} `json:"value,omitempty"`
+	Value             map[string]interface{} `json:"value,omitempty"`
 }
