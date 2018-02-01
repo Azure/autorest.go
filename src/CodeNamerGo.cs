@@ -489,7 +489,7 @@ namespace AutoRest.Go
                     }
                     else if (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray)
                     {
-                        return "[]bytearray(\"" + defaultValue + "\")";
+                        return "[]byte(\"" + defaultValue + "\")";
                     }
                     else
                     {
