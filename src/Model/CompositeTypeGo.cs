@@ -261,6 +261,15 @@ namespace AutoRest.Go.Model
                 {
                     indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
                 }
+                if (property.Deprecated)
+                {
+                    var message = "This property has been deprecated.";
+                    if (!string.IsNullOrWhiteSpace(property.DeprecationMessage))
+                    {
+                        message = property.DeprecationMessage;
+                    }
+                    indented.Append($"// Deprecated: {message}");
+                }
 
                 indented.AppendLine(property.Field);
             }
