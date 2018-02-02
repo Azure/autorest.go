@@ -33,6 +33,13 @@ namespace AutoRest.Go.Model
             ValueType.AddImports(imports);
         }
 
+        public override IModelType ValueType
+        {
+            // for dictionaries of objects the value type is always the empty interface
+            get => base.ValueType.PrimaryType(KnownPrimaryType.Object) ? InterfaceTypeGo.Instance : base.ValueType;
+            set => base.ValueType = value;
+        }
+
         /// <summary>
         /// Determines whether the specified object is equal to this object based on the ValueType.
         /// </summary>

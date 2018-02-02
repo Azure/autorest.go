@@ -104,8 +104,7 @@ namespace AutoRest.Go.Model
                         return "string";
 
                     case KnownPrimaryType.Object:
-                        // TODO: is this the correct way to support object types?
-                        return "interface{}";
+                        return "map[string]interface{}";
 
                     case KnownPrimaryType.UnixTime:
                         return "date.UnixTime";
