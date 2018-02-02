@@ -43,11 +43,15 @@ namespace AutoRest.Go.Model
             // can introduce collisions.  if there's a collision append "Group" to
             // the name.  unfortunately we can't do this in the namer as we don't
             // have access to the package name.
-            if (s_AllNames.Contains(Name.Value))
+            // NOTE: we must include the API version in the set to support batch
+            //       generation which invokes the generator over multiple API versions.
+            //       if we don't do this we end up with erroneous collisions across
+            //       API versions because the generator isn't recycled per batch.
+            if (s_AllNames.Contains($"{cmg.ApiVersion}_{Name.Value}"))
             {
                 Name += "Group";
             }
-            s_AllNames.Add(Name.Value);
+            s_AllNames.Add($"{cmg.ApiVersion}_{Name.Value}");
 
             if (Name != originalName)
             {
