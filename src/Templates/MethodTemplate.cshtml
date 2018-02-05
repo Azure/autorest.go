@@ -27,6 +27,7 @@
 
 @if (Model.Deprecated)
 {
+    @://
     @:@WrapComment("// Deprecated: ", depMessage)
 }
 func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
@@ -102,6 +103,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     // @(Model.PreparerMethodName) prepares the @(Model.Name) request.
 @if (Model.Deprecated)
 {
+    @://
     @:@WrapComment("// Deprecated: ", depMessage)
 }
     func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParametersSignature)) (*http.Request, error) {
@@ -206,6 +208,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     // http.Response Body if it receives an error.
 @if (Model.Deprecated)
 {
+    @://
     @:@WrapComment("// Deprecated: ", depMessage)
 }
     func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
@@ -238,6 +241,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     // closes the http.Response Body.
 @if (Model.Deprecated)
 {
+    @://
     @:@WrapComment("// Deprecated: ", depMessage)
 }
     func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) {

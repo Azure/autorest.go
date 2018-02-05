@@ -20,6 +20,7 @@
     @WrapComment("// ", $"{Model.GetInterfaceName()} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
+    @://
     @:@WrapComment("// Deprecated: ", depMessage)
     }
     <text>
@@ -39,6 +40,7 @@
     @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
+    @://
     @:@WrapComment("// Deprecated: ", depMessage)
     }
     type @(Model.Name) struct {
