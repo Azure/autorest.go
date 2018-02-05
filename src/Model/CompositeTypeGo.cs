@@ -268,7 +268,7 @@ namespace AutoRest.Go.Model
                     {
                         message = property.DeprecationMessage;
                     }
-                    indented.Append($"// Deprecated: {message}");
+                    indented.Append($"// Deprecated: {message}\n");
                 }
 
                 indented.AppendLine(property.Field);

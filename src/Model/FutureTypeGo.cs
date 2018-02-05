@@ -27,6 +27,10 @@ namespace AutoRest.Go.Model
             ClientTypeName = method.Owner;
             ResultType = method.ReturnValue().Body;
             ResponderMethodName = method.ResponderMethodName;
+            if (method.Deprecated)
+            {
+                DeprecationMessage = "The method for this type has been deprecated.";
+            }
         }
 
         /// <summary>
