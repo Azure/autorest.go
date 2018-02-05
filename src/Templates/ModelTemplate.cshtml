@@ -350,6 +350,7 @@ func (iter @Model.Name) Value() @(itemTypeName) {
     var ftg = Model as FutureTypeGo;
     var resultVar = ftg.ResultTypeName.ToShortName();
     var resultVarTarget = resultVar;
+    var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
     if (ftg.ResultType is IteratorTypeGo)
     {
         resultVarTarget = $"{resultVarTarget}.{ftg.ResultType.Cast<IteratorTypeGo>().PageField}";
@@ -361,22 +362,30 @@ func (future @Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.Re
     var done bool
     done, err = future.Done(client)
     if err != nil {
+        err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Polling failure")
         return
     }
     if !done {
-        return @resultVar, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "asynchronous operation has not completed")
+        return @resultVar, azure.NewAsyncOpIncompleteError("@futureTypeName")
     }
     if future.PollingMethod() == azure.PollingLocation {
         @resultVarTarget, err = client.@(ftg.ResponderMethodName)(future.Response())
+        if err != nil {
+            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Failure responding to request")
+        }
         return
     }
     var resp *http.Response
     resp, err = autorest.SendWithSender(client, autorest.ChangeToGet(future.req),
         autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
     if err != nil {
+        err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", resp, "Failure sending request")
         return
     }
     @resultVarTarget, err = client.@(ftg.ResponderMethodName)(resp)
+    if err != nil {
+        err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", resp, "Failure responding to request")
+    }
     return
 }
 </text>

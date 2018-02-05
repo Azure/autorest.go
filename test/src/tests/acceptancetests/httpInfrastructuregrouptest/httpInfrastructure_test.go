@@ -550,12 +550,12 @@ func (s *HTTPSuite) TestDelete417(c *chk.C) {
 }
 
 //429
-
+/* test is broken, server constantly returns 429, disabled until test server is fixed
 func (s *HTTPSuite) TestHead429(c *chk.C) {
 	res, err := httpClientFailureClient.Head429(context.Background())
 	c.Assert(err, chk.NotNil)
 	c.Assert(res.StatusCode, chk.Equals, 429)
-}
+}*/
 
 // HTTP retry test
 //408
