@@ -8,6 +8,13 @@
 @using AutoRest.Go.Model
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.MethodGo>
+@{
+    var depMessage = "This method has been deprecated.";
+    if (!string.IsNullOrWhiteSpace(Model.DeprecationMessage))
+    {
+        depMessage = Model.DeprecationMessage;
+    }
+}
 
 @WrapComment("// ", Model.Name + " " + Model.Description.ToSentence())
 @if (Model.LocalParameters.Any())
@@ -18,6 +25,11 @@
     </text>
 }
 
+@if (Model.Deprecated)
+{
+    @://
+    @:@WrapComment("// Deprecated: ", depMessage)
+}
 func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
 @if ((Model.CodeModel as CodeModelGo).ShouldValidate && !Model.ParameterValidations.IsNullOrEmpty())
 {
@@ -89,6 +101,11 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
 
     @EmptyLine
     // @(Model.PreparerMethodName) prepares the @(Model.Name) request.
+@if (Model.Deprecated)
+{
+    @://
+    @:@WrapComment("// Deprecated: ", depMessage)
+}
     func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParametersSignature)) (*http.Request, error) {
     @if (Model.IsCustomBaseUri && Model.URLParameters.Any())
     {
@@ -189,6 +206,11 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @EmptyLine
     // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
     // http.Response Body if it receives an error.
+@if (Model.Deprecated)
+{
+    @://
+    @:@WrapComment("// Deprecated: ", depMessage)
+}
     func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
     @if (Model.IsLongRunningOperation())
     {
@@ -217,6 +239,11 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @EmptyLine
     // @(Model.ResponderMethodName) handles the response to the @(Model.Name) request. The method always
     // closes the http.Response Body.
+@if (Model.Deprecated)
+{
+    @://
+    @:@WrapComment("// Deprecated: ", depMessage)
+}
     func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) {
     @if (Model.IsLongRunningOperation() && Model.IsPageable)
     {

@@ -7,9 +7,22 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CompositeTypeGo>
 
+@{
+    var depMessage = "This type has been deprecated.";
+    if (!string.IsNullOrWhiteSpace(Model.DeprecationMessage))
+    {
+        depMessage = Model.DeprecationMessage;
+    }
+}
+
 @if (Model.HasInterface())
 {
     @WrapComment("// ", $"{Model.GetInterfaceName()} {Model.Documentation.ToSentence()}")
+    @if (Model.Deprecated)
+    {
+    @://
+    @:@WrapComment("// Deprecated: ", depMessage)
+    }
     <text>
     type @(Model.GetInterfaceName()) interface {
     @foreach (var dt in Model.DerivedTypes)
@@ -25,6 +38,11 @@
 
     @EmptyLine
     @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+    @if (Model.Deprecated)
+    {
+    @://
+    @:@WrapComment("// Deprecated: ", depMessage)
+    }
     type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -112,6 +130,10 @@ else
     }
     <text>
     @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+    @if (Model.Deprecated)
+    {
+    @:@WrapComment("// Deprecated: ", depMessage)
+    }
     type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())

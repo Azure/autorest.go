@@ -16,6 +16,16 @@ else
         @WrapComment("// ", Model.Documentation)
     </text>
 }
+@if (Model.Deprecated)
+{
+    var message = "This type has been deprecated.";
+    if (!string.IsNullOrWhiteSpace(Model.DeprecationMessage))
+    {
+        message = Model.DeprecationMessage;
+    }
+@://
+@:@WrapComment("// Deprecated: ", message)
+}
 type @Model.Name string
 
 @EmptyLine
