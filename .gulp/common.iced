@@ -475,6 +475,23 @@ task 'fix-line-endings', 'Fixes line endings to file-type appropriate values.', 
     .pipe eol {eolc: 'LF', encoding:'utf8'}
     .pipe destination '.'
 
+task 'get-tag', '!', (done)->
+  if argv.tag 
+    # take the argument if they specified it.
+    global.tag = argv.tag  
+    done()
+  else 
+    # pick up the tag from the pkg.json version entry 
+    global.tag = semver.parse((package_json.version).trim()).prerelease.join(".")
+    if( global.tag ) 
+      return done()
+
+    # grab the git branch name.
+    execute "git rev-parse --abbrev-ref HEAD" , {silent:true}, (c,o,e)->
+      o = "preview" if( o == undefined || o == null || o == "" || o.trim() == 'master')
+      global.tag = o.trim()
+      done();
+
 task 'version-number', '!', (done)->
   if argv.version
     global.version =  argv.version if argv.version
