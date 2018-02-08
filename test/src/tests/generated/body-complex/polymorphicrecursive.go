@@ -140,7 +140,7 @@ func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBo
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphicrecursiveClient", "PutValid")
+		return result, validation.NewError("complexgroup.PolymorphicrecursiveClient", "PutValid", err.Error())
 	}
 
 	req, err := client.PutValidPreparer(ctx, complexBody)

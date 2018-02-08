@@ -244,7 +244,7 @@ func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (resu
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: byteBody,
 			Constraints: []validation.Constraint{{Target: "byteBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "bytegroup.ByteClient", "PutNonASCII")
+		return result, validation.NewError("bytegroup.ByteClient", "PutNonASCII", err.Error())
 	}
 
 	req, err := client.PutNonASCIIPreparer(ctx, byteBody)

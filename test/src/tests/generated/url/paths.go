@@ -39,7 +39,7 @@ func (client PathsClient) ArrayCsvInPath(ctx context.Context, arrayPath []string
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayPath,
 			Constraints: []validation.Constraint{{Target: "arrayPath", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "urlgroup.PathsClient", "ArrayCsvInPath")
+		return result, validation.NewError("urlgroup.PathsClient", "ArrayCsvInPath", err.Error())
 	}
 
 	req, err := client.ArrayCsvInPathPreparer(ctx, arrayPath)
@@ -214,7 +214,7 @@ func (client PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (r
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bytePath,
 			Constraints: []validation.Constraint{{Target: "bytePath", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "urlgroup.PathsClient", "ByteMultiByte")
+		return result, validation.NewError("urlgroup.PathsClient", "ByteMultiByte", err.Error())
 	}
 
 	req, err := client.ByteMultiBytePreparer(ctx, bytePath)
@@ -277,7 +277,7 @@ func (client PathsClient) ByteNull(ctx context.Context, bytePath []byte) (result
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bytePath,
 			Constraints: []validation.Constraint{{Target: "bytePath", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "urlgroup.PathsClient", "ByteNull")
+		return result, validation.NewError("urlgroup.PathsClient", "ByteNull", err.Error())
 	}
 
 	req, err := client.ByteNullPreparer(ctx, bytePath)
