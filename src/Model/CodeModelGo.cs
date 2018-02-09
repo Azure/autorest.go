@@ -15,6 +15,7 @@ namespace AutoRest.Go.Model
 {
     public class CodeModelGo : CodeModel
     {
+        public static readonly string OneVerString = "version.Number";
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
 
         public CodeModelGo()
@@ -31,11 +32,17 @@ namespace AutoRest.Go.Model
             set => SpecifiedUserAgent = value;
         }
 
+        /// <summary>
+        /// Returns true if the --use-onever flag was specified (off by default).
+        /// </summary>
+        public bool UseOneVer => Settings.Instance.Host?.GetValue<bool>("use-onever").Result ?? false;
+
         private string DefaultUserAgent
         {
             get
             {
-                return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+                var verStr = UseOneVer ? $"\" + {OneVerString} + \"" : Version;
+                return $"Azure-SDK-For-Go/{verStr} arm-{Namespace}/{ApiVersion}";
             }
         }
 
