@@ -146,7 +146,7 @@ func (client HeaderClient) ParamByte(ctx context.Context, scenario string, value
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: value,
 			Constraints: []validation.Constraint{{Target: "value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "headergroup.HeaderClient", "ParamByte")
+		return result, validation.NewError("headergroup.HeaderClient", "ParamByte", err.Error())
 	}
 
 	req, err := client.ParamBytePreparer(ctx, scenario, value)

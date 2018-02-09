@@ -301,7 +301,7 @@ func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBo
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: enumStringBody,
 			Constraints: []validation.Constraint{{Target: "enumStringBody.ColorConstant", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "stringgroup.EnumClient", "PutReferencedConstant")
+		return result, validation.NewError("stringgroup.EnumClient", "PutReferencedConstant", err.Error())
 	}
 
 	req, err := client.PutReferencedConstantPreparer(ctx, enumStringBody)

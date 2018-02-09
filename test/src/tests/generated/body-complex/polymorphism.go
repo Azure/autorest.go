@@ -283,7 +283,7 @@ func (client PolymorphismClient) PutValid(ctx context.Context, complexBody Basic
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValid")
+		return result, validation.NewError("complexgroup.PolymorphismClient", "PutValid", err.Error())
 	}
 
 	req, err := client.PutValidPreparer(ctx, complexBody)
@@ -371,7 +371,7 @@ func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, co
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired")
+		return result, validation.NewError("complexgroup.PolymorphismClient", "PutValidMissingRequired", err.Error())
 	}
 
 	req, err := client.PutValidMissingRequiredPreparer(ctx, complexBody)

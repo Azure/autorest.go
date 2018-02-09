@@ -551,7 +551,7 @@ namespace AutoRest.Go.Model
                                  : string.Format("autorest.NewErrorWithError(err, \"{0}.{1}\", \"{2}\", {3}, \"{4}\")", PackageName, Owner, methodName, response, phase);
         }
 
-        public string ValidationError => $"validation.NewErrorWithValidationError(err, \"{PackageName}.{Owner}\",\"{Name}\")";
+        public string ValidationError => $"validation.NewError(\"{PackageName}.{Owner}\", \"{Name}\", err.Error())";
 
         /// <summary>
         /// Check if method has a return response.

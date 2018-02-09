@@ -441,8 +441,17 @@ else
     @resultVarTarget, err = client.@(ftg.ResponderMethodName)(future.Response())
     return
     }
+    var req *http.Request
     var resp *http.Response
-    resp, err = autorest.SendWithSender(client, autorest.ChangeToGet(future.req),
+    if future.PollingURL() != "" {
+        req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+        if err != nil {
+            return
+        }
+    } else {
+        req = autorest.ChangeToGet(future.req)
+    }
+    resp, err = autorest.SendWithSender(client, req,
     autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
     if err != nil {
     return

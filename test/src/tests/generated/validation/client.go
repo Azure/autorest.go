@@ -124,7 +124,7 @@ func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Produ
 					{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil},
 					{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "validationgroup.BaseClient", "PostWithConstantInBody")
+		return result, validation.NewError("validationgroup.BaseClient", "PostWithConstantInBody", err.Error())
 	}
 
 	req, err := client.PostWithConstantInBodyPreparer(ctx, body)
@@ -222,7 +222,7 @@ func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName
 					{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil},
 					{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "validationgroup.BaseClient", "ValidationOfBody")
+		return result, validation.NewError("validationgroup.BaseClient", "ValidationOfBody", err.Error())
 	}
 
 	req, err := client.ValidationOfBodyPreparer(ctx, resourceGroupName, ID, body)
@@ -306,7 +306,7 @@ func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resou
 			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil},
 				{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil},
 				{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "validationgroup.BaseClient", "ValidationOfMethodParameters")
+		return result, validation.NewError("validationgroup.BaseClient", "ValidationOfMethodParameters", err.Error())
 	}
 
 	req, err := client.ValidationOfMethodParametersPreparer(ctx, resourceGroupName, ID)
