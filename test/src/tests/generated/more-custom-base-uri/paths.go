@@ -65,6 +65,8 @@ func (client PathsClient) GetEmptyPreparer(ctx context.Context, vault string, se
 	queryParameters := map[string]interface{}{}
 	if len(keyVersion) > 0 {
 		queryParameters["keyVersion"] = autorest.Encode("query", keyVersion)
+	} else {
+		queryParameters["keyVersion"] = autorest.Encode("query", "v1")
 	}
 
 	preparer := autorest.CreatePreparer(

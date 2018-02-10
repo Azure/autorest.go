@@ -4,9 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"testing"
-	"time"
 
-	"github.com/Azure/go-autorest/autorest/date"
 	chk "gopkg.in/check.v1"
 
 	"tests/acceptancetests/utils"
@@ -53,18 +51,18 @@ func getPathClient() PathsClient {
 //path tests
 
 func (s *URLSuite) TestPathGetBooleanFalse(c *chk.C) {
-	_, err := pathClient.GetBooleanFalse(context.Background(), false)
+	_, err := pathClient.GetBooleanFalse(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathGetBooleanTrue(c *chk.C) {
-	_, err := pathClient.GetBooleanTrue(context.Background(), true)
+	_, err := pathClient.GetBooleanTrue(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 // Path parameter can't be empty or null.
 func (s *URLSuite) TestPathByteEmpty(c *chk.C) {
-	_, err := pathClient.ByteEmpty(context.Background(), []byte{})
+	_, err := pathClient.ByteEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -80,22 +78,22 @@ func (s *URLSuite) TestPathByteMultiByte(c *chk.C) {
 // }
 
 func (s *URLSuite) TestPathDateTimeValid(c *chk.C) {
-	_, err := pathClient.DateTimeValid(context.Background(), utils.ToDateTime("2012-01-01T01:01:01Z"))
+	_, err := pathClient.DateTimeValid(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathDateValid(c *chk.C) {
-	_, err := pathClient.DateValid(context.Background(), date.Date{Time: time.Date(2012, time.January, 1, 0, 0, 0, 0, time.UTC)})
+	_, err := pathClient.DateValid(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathDoubleDecimalNegative(c *chk.C) {
-	_, err := pathClient.DoubleDecimalNegative(context.Background(), -9999999.999)
+	_, err := pathClient.DoubleDecimalNegative(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathDoubleDecimalPositive(c *chk.C) {
-	_, err := pathClient.DoubleDecimalPositive(context.Background(), 9999999.999)
+	_, err := pathClient.DoubleDecimalPositive(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -110,38 +108,38 @@ func (s *URLSuite) TestPathEnumValid(c *chk.C) {
 }
 
 func (s *URLSuite) TestPathFloatScientificNegative(c *chk.C) {
-	_, err := pathClient.FloatScientificNegative(context.Background(), -1.034E-20)
+	_, err := pathClient.FloatScientificNegative(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathFloatScientificPositive(c *chk.C) {
-	_, err := pathClient.FloatScientificPositive(context.Background(), 1.034E+20)
+	_, err := pathClient.FloatScientificPositive(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathGetIntNegativeOneMillion(c *chk.C) {
-	_, err := pathClient.GetIntNegativeOneMillion(context.Background(), -1000000)
+	_, err := pathClient.GetIntNegativeOneMillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathGetIntOneMillion(c *chk.C) {
-	_, err := pathClient.GetIntOneMillion(context.Background(), 1000000)
+	_, err := pathClient.GetIntOneMillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathGetNegativeTenBillion(c *chk.C) {
-	_, err := pathClient.GetNegativeTenBillion(context.Background(), -10000000000)
+	_, err := pathClient.GetNegativeTenBillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestPathGetTenBillion(c *chk.C) {
-	_, err := pathClient.GetTenBillion(context.Background(), 10000000000)
+	_, err := pathClient.GetTenBillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 // Path parameter can't be empty or null.
 func (s *URLSuite) TestPathStringEmpty(c *chk.C) {
-	_, err := pathClient.StringEmpty(context.Background(), "")
+	_, err := pathClient.StringEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -151,7 +149,7 @@ func (s *URLSuite) TestPathStringNull(c *chk.C) {
 }
 
 func (s *URLSuite) TestPathStringURLEncoded(c *chk.C) {
-	_, err := pathClient.StringURLEncoded(context.Background(), "begin!*'();:@ &=+$,/?#[]end")
+	_, err := pathClient.StringURLEncoded(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -201,7 +199,7 @@ func (s *URLSuite) TestQueryArrayStringTsvValid(c *chk.C) {
 
 // Query parameter is required so can't be empty or null.
 func (s *URLSuite) TestQueryByteEmpty(c *chk.C) {
-	_, err := queryClient.ByteEmpty(context.Background(), []byte(""))
+	_, err := queryClient.ByteEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -228,25 +226,22 @@ func (s *URLSuite) TestQueryDateTimeNull(c *chk.C) {
 
 // dont why not working
 func (s *URLSuite) TestQueryDateTimeValid(c *chk.C) {
-	dt := utils.ToDateTime("2012-01-01T01:01:01Z")
-	_, err := queryClient.DateTimeValid(context.Background(), dt)
+	_, err := queryClient.DateTimeValid(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryDateValid(c *chk.C) {
-	_, err := queryClient.DateValid(context.Background(), date.Date{Time: time.Date(2012, time.January, 1, 0, 0, 0, 0, time.UTC)})
+	_, err := queryClient.DateValid(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryDoubleDecimalNegative(c *chk.C) {
-	i := -9999999.999
-	_, err := queryClient.DoubleDecimalNegative(context.Background(), i)
+	_, err := queryClient.DoubleDecimalNegative(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryDoubleDecimalPositive(c *chk.C) {
-	i := 9999999.999
-	_, err := queryClient.DoubleDecimalPositive(context.Background(), i)
+	_, err := queryClient.DoubleDecimalPositive(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -271,26 +266,22 @@ func (s *URLSuite) TestQueryFloatNull(c *chk.C) {
 }
 
 func (s *URLSuite) TestQueryFloatScientificNegative(c *chk.C) {
-	i := -1.034E-20
-	_, err := queryClient.FloatScientificNegative(context.Background(), i)
+	_, err := queryClient.FloatScientificNegative(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryFloatScientificPositive(c *chk.C) {
-	i := 1.034E+20
-	_, err := queryClient.FloatScientificPositive(context.Background(), i)
+	_, err := queryClient.FloatScientificPositive(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryGetBooleanFalse(c *chk.C) {
-	b := false
-	_, err := queryClient.GetBooleanFalse(context.Background(), b)
+	_, err := queryClient.GetBooleanFalse(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryGetBooleanTrue(c *chk.C) {
-	b := true
-	_, err := queryClient.GetBooleanTrue(context.Background(), b)
+	_, err := queryClient.GetBooleanTrue(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -300,14 +291,12 @@ func (s *URLSuite) TestQueryGetBooleanNull(c *chk.C) {
 }
 
 func (s *URLSuite) TestQueryGetIntNegativeOneMillion(c *chk.C) {
-	i := int32(-1000000)
-	_, err := queryClient.GetIntNegativeOneMillion(context.Background(), i)
+	_, err := queryClient.GetIntNegativeOneMillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryGetIntOneMillion(c *chk.C) {
-	i := int32(1000000)
-	_, err := queryClient.GetIntOneMillion(context.Background(), i)
+	_, err := queryClient.GetIntOneMillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -322,20 +311,18 @@ func (s *URLSuite) TestQueryGetLongNull(c *chk.C) {
 }
 
 func (s *URLSuite) TestQueryGetNegativeTenBillion(c *chk.C) {
-	i := int64(-10000000000)
-	_, err := queryClient.GetNegativeTenBillion(context.Background(), i)
+	_, err := queryClient.GetNegativeTenBillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *URLSuite) TestQueryGetTenBillion(c *chk.C) {
-	i := int64(10000000000)
-	_, err := queryClient.GetTenBillion(context.Background(), i)
+	_, err := queryClient.GetTenBillion(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 // Query parameter is required so can't be empty or null.
 func (s *URLSuite) TestQueryStringEmpty(c *chk.C) {
-	_, err := queryClient.StringEmpty(context.Background(), "")
+	_, err := queryClient.StringEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -346,7 +333,7 @@ func (s *URLSuite) TestQueryStringNull(c *chk.C) {
 }
 
 func (s *URLSuite) TestQueryStringURLEncoded(c *chk.C) {
-	_, err := queryClient.StringURLEncoded(context.Background(), "begin!*'();:@ &=+$,/?#[]end")
+	_, err := queryClient.StringURLEncoded(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 

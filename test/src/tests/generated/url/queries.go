@@ -11,7 +11,6 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
-	"github.com/Azure/go-autorest/autorest/validation"
 	"net/http"
 )
 
@@ -393,16 +392,8 @@ func (client QueriesClient) ArrayStringTsvValidResponder(resp *http.Response) (r
 }
 
 // ByteEmpty get '' as byte array
-//
-// byteQuery is '' as byte array
-func (client QueriesClient) ByteEmpty(ctx context.Context, byteQuery []byte) (result autorest.Response, err error) {
-	if err := validation.Validate([]validation.Validation{
-		{TargetValue: byteQuery,
-			Constraints: []validation.Constraint{{Target: "byteQuery", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "urlgroup.QueriesClient", "ByteEmpty")
-	}
-
-	req, err := client.ByteEmptyPreparer(ctx, byteQuery)
+func (client QueriesClient) ByteEmpty(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.ByteEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ByteEmpty", nil, "Failure preparing request")
 		return
@@ -424,9 +415,9 @@ func (client QueriesClient) ByteEmpty(ctx context.Context, byteQuery []byte) (re
 }
 
 // ByteEmptyPreparer prepares the ByteEmpty request.
-func (client QueriesClient) ByteEmptyPreparer(ctx context.Context, byteQuery []byte) (*http.Request, error) {
+func (client QueriesClient) ByteEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"byteQuery": autorest.Encode("query", byteQuery),
+		"byteQuery": autorest.Encode("query", []byte("")),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -693,10 +684,8 @@ func (client QueriesClient) DateTimeNullResponder(resp *http.Response) (result a
 }
 
 // DateTimeValid get '2012-01-01T01:01:01Z' as date-time
-//
-// dateTimeQuery is '2012-01-01T01:01:01Z' as date-time
-func (client QueriesClient) DateTimeValid(ctx context.Context, dateTimeQuery date.Time) (result autorest.Response, err error) {
-	req, err := client.DateTimeValidPreparer(ctx, dateTimeQuery)
+func (client QueriesClient) DateTimeValid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DateTimeValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateTimeValid", nil, "Failure preparing request")
 		return
@@ -718,9 +707,9 @@ func (client QueriesClient) DateTimeValid(ctx context.Context, dateTimeQuery dat
 }
 
 // DateTimeValidPreparer prepares the DateTimeValid request.
-func (client QueriesClient) DateTimeValidPreparer(ctx context.Context, dateTimeQuery date.Time) (*http.Request, error) {
+func (client QueriesClient) DateTimeValidPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"dateTimeQuery": autorest.Encode("query", dateTimeQuery),
+		"dateTimeQuery": autorest.Encode("query", "2012-01-01T01:01:01Z"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -751,10 +740,8 @@ func (client QueriesClient) DateTimeValidResponder(resp *http.Response) (result 
 }
 
 // DateValid get '2012-01-01' as date
-//
-// dateQuery is '2012-01-01' as date
-func (client QueriesClient) DateValid(ctx context.Context, dateQuery date.Date) (result autorest.Response, err error) {
-	req, err := client.DateValidPreparer(ctx, dateQuery)
+func (client QueriesClient) DateValid(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DateValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateValid", nil, "Failure preparing request")
 		return
@@ -776,9 +763,9 @@ func (client QueriesClient) DateValid(ctx context.Context, dateQuery date.Date) 
 }
 
 // DateValidPreparer prepares the DateValid request.
-func (client QueriesClient) DateValidPreparer(ctx context.Context, dateQuery date.Date) (*http.Request, error) {
+func (client QueriesClient) DateValidPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"dateQuery": autorest.Encode("query", dateQuery),
+		"dateQuery": autorest.Encode("query", "2012-01-01"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -809,10 +796,8 @@ func (client QueriesClient) DateValidResponder(resp *http.Response) (result auto
 }
 
 // DoubleDecimalNegative get '-9999999.999' numeric value
-//
-// doubleQuery is '-9999999.999'numeric value
-func (client QueriesClient) DoubleDecimalNegative(ctx context.Context, doubleQuery float64) (result autorest.Response, err error) {
-	req, err := client.DoubleDecimalNegativePreparer(ctx, doubleQuery)
+func (client QueriesClient) DoubleDecimalNegative(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DoubleDecimalNegativePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleDecimalNegative", nil, "Failure preparing request")
 		return
@@ -834,9 +819,9 @@ func (client QueriesClient) DoubleDecimalNegative(ctx context.Context, doubleQue
 }
 
 // DoubleDecimalNegativePreparer prepares the DoubleDecimalNegative request.
-func (client QueriesClient) DoubleDecimalNegativePreparer(ctx context.Context, doubleQuery float64) (*http.Request, error) {
+func (client QueriesClient) DoubleDecimalNegativePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"doubleQuery": autorest.Encode("query", doubleQuery),
+		"doubleQuery": autorest.Encode("query", -9999999.999),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -867,10 +852,8 @@ func (client QueriesClient) DoubleDecimalNegativeResponder(resp *http.Response) 
 }
 
 // DoubleDecimalPositive get '9999999.999' numeric value
-//
-// doubleQuery is '9999999.999'numeric value
-func (client QueriesClient) DoubleDecimalPositive(ctx context.Context, doubleQuery float64) (result autorest.Response, err error) {
-	req, err := client.DoubleDecimalPositivePreparer(ctx, doubleQuery)
+func (client QueriesClient) DoubleDecimalPositive(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.DoubleDecimalPositivePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleDecimalPositive", nil, "Failure preparing request")
 		return
@@ -892,9 +875,9 @@ func (client QueriesClient) DoubleDecimalPositive(ctx context.Context, doubleQue
 }
 
 // DoubleDecimalPositivePreparer prepares the DoubleDecimalPositive request.
-func (client QueriesClient) DoubleDecimalPositivePreparer(ctx context.Context, doubleQuery float64) (*http.Request, error) {
+func (client QueriesClient) DoubleDecimalPositivePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"doubleQuery": autorest.Encode("query", doubleQuery),
+		"doubleQuery": autorest.Encode("query", 9999999.999),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1161,10 +1144,8 @@ func (client QueriesClient) FloatNullResponder(resp *http.Response) (result auto
 }
 
 // FloatScientificNegative get '-1.034E-20' numeric value
-//
-// floatQuery is '-1.034E-20'numeric value
-func (client QueriesClient) FloatScientificNegative(ctx context.Context, floatQuery float64) (result autorest.Response, err error) {
-	req, err := client.FloatScientificNegativePreparer(ctx, floatQuery)
+func (client QueriesClient) FloatScientificNegative(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.FloatScientificNegativePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatScientificNegative", nil, "Failure preparing request")
 		return
@@ -1186,9 +1167,9 @@ func (client QueriesClient) FloatScientificNegative(ctx context.Context, floatQu
 }
 
 // FloatScientificNegativePreparer prepares the FloatScientificNegative request.
-func (client QueriesClient) FloatScientificNegativePreparer(ctx context.Context, floatQuery float64) (*http.Request, error) {
+func (client QueriesClient) FloatScientificNegativePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"floatQuery": autorest.Encode("query", floatQuery),
+		"floatQuery": autorest.Encode("query", -1.034E-20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1219,10 +1200,8 @@ func (client QueriesClient) FloatScientificNegativeResponder(resp *http.Response
 }
 
 // FloatScientificPositive get '1.034E+20' numeric value
-//
-// floatQuery is '1.034E+20'numeric value
-func (client QueriesClient) FloatScientificPositive(ctx context.Context, floatQuery float64) (result autorest.Response, err error) {
-	req, err := client.FloatScientificPositivePreparer(ctx, floatQuery)
+func (client QueriesClient) FloatScientificPositive(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.FloatScientificPositivePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatScientificPositive", nil, "Failure preparing request")
 		return
@@ -1244,9 +1223,9 @@ func (client QueriesClient) FloatScientificPositive(ctx context.Context, floatQu
 }
 
 // FloatScientificPositivePreparer prepares the FloatScientificPositive request.
-func (client QueriesClient) FloatScientificPositivePreparer(ctx context.Context, floatQuery float64) (*http.Request, error) {
+func (client QueriesClient) FloatScientificPositivePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"floatQuery": autorest.Encode("query", floatQuery),
+		"floatQuery": autorest.Encode("query", 1.034E+20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1277,10 +1256,8 @@ func (client QueriesClient) FloatScientificPositiveResponder(resp *http.Response
 }
 
 // GetBooleanFalse get false Boolean value on path
-//
-// boolQuery is false boolean value
-func (client QueriesClient) GetBooleanFalse(ctx context.Context, boolQuery bool) (result autorest.Response, err error) {
-	req, err := client.GetBooleanFalsePreparer(ctx, boolQuery)
+func (client QueriesClient) GetBooleanFalse(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetBooleanFalsePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanFalse", nil, "Failure preparing request")
 		return
@@ -1302,9 +1279,9 @@ func (client QueriesClient) GetBooleanFalse(ctx context.Context, boolQuery bool)
 }
 
 // GetBooleanFalsePreparer prepares the GetBooleanFalse request.
-func (client QueriesClient) GetBooleanFalsePreparer(ctx context.Context, boolQuery bool) (*http.Request, error) {
+func (client QueriesClient) GetBooleanFalsePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"boolQuery": autorest.Encode("query", boolQuery),
+		"boolQuery": autorest.Encode("query", false),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1394,10 +1371,8 @@ func (client QueriesClient) GetBooleanNullResponder(resp *http.Response) (result
 }
 
 // GetBooleanTrue get true Boolean value on path
-//
-// boolQuery is true boolean value
-func (client QueriesClient) GetBooleanTrue(ctx context.Context, boolQuery bool) (result autorest.Response, err error) {
-	req, err := client.GetBooleanTruePreparer(ctx, boolQuery)
+func (client QueriesClient) GetBooleanTrue(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetBooleanTruePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanTrue", nil, "Failure preparing request")
 		return
@@ -1419,9 +1394,9 @@ func (client QueriesClient) GetBooleanTrue(ctx context.Context, boolQuery bool) 
 }
 
 // GetBooleanTruePreparer prepares the GetBooleanTrue request.
-func (client QueriesClient) GetBooleanTruePreparer(ctx context.Context, boolQuery bool) (*http.Request, error) {
+func (client QueriesClient) GetBooleanTruePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"boolQuery": autorest.Encode("query", boolQuery),
+		"boolQuery": autorest.Encode("query", true),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1452,10 +1427,8 @@ func (client QueriesClient) GetBooleanTrueResponder(resp *http.Response) (result
 }
 
 // GetIntNegativeOneMillion get '-1000000' integer value
-//
-// intQuery is '-1000000' integer value
-func (client QueriesClient) GetIntNegativeOneMillion(ctx context.Context, intQuery int32) (result autorest.Response, err error) {
-	req, err := client.GetIntNegativeOneMillionPreparer(ctx, intQuery)
+func (client QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetIntNegativeOneMillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntNegativeOneMillion", nil, "Failure preparing request")
 		return
@@ -1477,9 +1450,9 @@ func (client QueriesClient) GetIntNegativeOneMillion(ctx context.Context, intQue
 }
 
 // GetIntNegativeOneMillionPreparer prepares the GetIntNegativeOneMillion request.
-func (client QueriesClient) GetIntNegativeOneMillionPreparer(ctx context.Context, intQuery int32) (*http.Request, error) {
+func (client QueriesClient) GetIntNegativeOneMillionPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"intQuery": autorest.Encode("query", intQuery),
+		"intQuery": autorest.Encode("query", -1000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1569,10 +1542,8 @@ func (client QueriesClient) GetIntNullResponder(resp *http.Response) (result aut
 }
 
 // GetIntOneMillion get '1000000' integer value
-//
-// intQuery is '1000000' integer value
-func (client QueriesClient) GetIntOneMillion(ctx context.Context, intQuery int32) (result autorest.Response, err error) {
-	req, err := client.GetIntOneMillionPreparer(ctx, intQuery)
+func (client QueriesClient) GetIntOneMillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetIntOneMillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntOneMillion", nil, "Failure preparing request")
 		return
@@ -1594,9 +1565,9 @@ func (client QueriesClient) GetIntOneMillion(ctx context.Context, intQuery int32
 }
 
 // GetIntOneMillionPreparer prepares the GetIntOneMillion request.
-func (client QueriesClient) GetIntOneMillionPreparer(ctx context.Context, intQuery int32) (*http.Request, error) {
+func (client QueriesClient) GetIntOneMillionPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"intQuery": autorest.Encode("query", intQuery),
+		"intQuery": autorest.Encode("query", 1000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1686,10 +1657,8 @@ func (client QueriesClient) GetLongNullResponder(resp *http.Response) (result au
 }
 
 // GetNegativeTenBillion get '-10000000000' 64 bit integer value
-//
-// longQuery is '-10000000000' 64 bit integer value
-func (client QueriesClient) GetNegativeTenBillion(ctx context.Context, longQuery int64) (result autorest.Response, err error) {
-	req, err := client.GetNegativeTenBillionPreparer(ctx, longQuery)
+func (client QueriesClient) GetNegativeTenBillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetNegativeTenBillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetNegativeTenBillion", nil, "Failure preparing request")
 		return
@@ -1711,9 +1680,9 @@ func (client QueriesClient) GetNegativeTenBillion(ctx context.Context, longQuery
 }
 
 // GetNegativeTenBillionPreparer prepares the GetNegativeTenBillion request.
-func (client QueriesClient) GetNegativeTenBillionPreparer(ctx context.Context, longQuery int64) (*http.Request, error) {
+func (client QueriesClient) GetNegativeTenBillionPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"longQuery": autorest.Encode("query", longQuery),
+		"longQuery": autorest.Encode("query", -10000000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1744,10 +1713,8 @@ func (client QueriesClient) GetNegativeTenBillionResponder(resp *http.Response) 
 }
 
 // GetTenBillion get '10000000000' 64 bit integer value
-//
-// longQuery is '10000000000' 64 bit integer value
-func (client QueriesClient) GetTenBillion(ctx context.Context, longQuery int64) (result autorest.Response, err error) {
-	req, err := client.GetTenBillionPreparer(ctx, longQuery)
+func (client QueriesClient) GetTenBillion(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetTenBillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetTenBillion", nil, "Failure preparing request")
 		return
@@ -1769,9 +1736,9 @@ func (client QueriesClient) GetTenBillion(ctx context.Context, longQuery int64) 
 }
 
 // GetTenBillionPreparer prepares the GetTenBillion request.
-func (client QueriesClient) GetTenBillionPreparer(ctx context.Context, longQuery int64) (*http.Request, error) {
+func (client QueriesClient) GetTenBillionPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"longQuery": autorest.Encode("query", longQuery),
+		"longQuery": autorest.Encode("query", 10000000000),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1802,10 +1769,8 @@ func (client QueriesClient) GetTenBillionResponder(resp *http.Response) (result 
 }
 
 // StringEmpty get ''
-//
-// stringQuery is '' string value
-func (client QueriesClient) StringEmpty(ctx context.Context, stringQuery string) (result autorest.Response, err error) {
-	req, err := client.StringEmptyPreparer(ctx, stringQuery)
+func (client QueriesClient) StringEmpty(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.StringEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringEmpty", nil, "Failure preparing request")
 		return
@@ -1827,9 +1792,9 @@ func (client QueriesClient) StringEmpty(ctx context.Context, stringQuery string)
 }
 
 // StringEmptyPreparer prepares the StringEmpty request.
-func (client QueriesClient) StringEmptyPreparer(ctx context.Context, stringQuery string) (*http.Request, error) {
+func (client QueriesClient) StringEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"stringQuery": autorest.Encode("query", stringQuery),
+		"stringQuery": autorest.Encode("query", ""),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1919,10 +1884,8 @@ func (client QueriesClient) StringNullResponder(resp *http.Response) (result aut
 }
 
 // StringUnicode get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-//
-// stringQuery is '啊齄丂狛狜隣郎隣兀﨩'multi-byte string value
-func (client QueriesClient) StringUnicode(ctx context.Context, stringQuery string) (result autorest.Response, err error) {
-	req, err := client.StringUnicodePreparer(ctx, stringQuery)
+func (client QueriesClient) StringUnicode(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.StringUnicodePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringUnicode", nil, "Failure preparing request")
 		return
@@ -1944,9 +1907,9 @@ func (client QueriesClient) StringUnicode(ctx context.Context, stringQuery strin
 }
 
 // StringUnicodePreparer prepares the StringUnicode request.
-func (client QueriesClient) StringUnicodePreparer(ctx context.Context, stringQuery string) (*http.Request, error) {
+func (client QueriesClient) StringUnicodePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"stringQuery": autorest.Encode("query", stringQuery),
+		"stringQuery": autorest.Encode("query", "啊齄丂狛狜隣郎隣兀﨩"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1977,10 +1940,8 @@ func (client QueriesClient) StringUnicodeResponder(resp *http.Response) (result 
 }
 
 // StringURLEncoded get 'begin!*'();:@ &=+$,/?#[]end
-//
-// stringQuery is 'begin!*'();:@ &=+$,/?#[]end' url encoded string value
-func (client QueriesClient) StringURLEncoded(ctx context.Context, stringQuery string) (result autorest.Response, err error) {
-	req, err := client.StringURLEncodedPreparer(ctx, stringQuery)
+func (client QueriesClient) StringURLEncoded(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.StringURLEncodedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringURLEncoded", nil, "Failure preparing request")
 		return
@@ -2002,9 +1963,9 @@ func (client QueriesClient) StringURLEncoded(ctx context.Context, stringQuery st
 }
 
 // StringURLEncodedPreparer prepares the StringURLEncoded request.
-func (client QueriesClient) StringURLEncodedPreparer(ctx context.Context, stringQuery string) (*http.Request, error) {
+func (client QueriesClient) StringURLEncodedPreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"stringQuery": autorest.Encode("query", stringQuery),
+		"stringQuery": autorest.Encode("query", "begin!*'();:@ &=+$,/?#[]end"),
 	}
 
 	preparer := autorest.CreatePreparer(

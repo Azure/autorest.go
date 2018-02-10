@@ -78,17 +78,17 @@ func (s *StringSuite) TestGetWhitespace(c *chk.C) {
 }
 
 func (s *StringSuite) TestPutEmptyString(c *chk.C) {
-	_, err := stringClient.PutEmpty(context.Background(), emptyString)
+	_, err := stringClient.PutEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *StringSuite) TestPutMbcs(c *chk.C) {
-	_, err := stringClient.PutMbcs(context.Background(), multibyteBufferBody)
+	_, err := stringClient.PutMbcs(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *StringSuite) TestPutWhitespace(c *chk.C) {
-	_, err := stringClient.PutWhitespace(context.Background(), whitespaceText)
+	_, err := stringClient.PutWhitespace(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 

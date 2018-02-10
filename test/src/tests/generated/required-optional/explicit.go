@@ -206,7 +206,7 @@ func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bod
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter", Name: validation.Null, Rule: false,
 				Chain: []validation.Constraint{{Target: "bodyParameter.ID", Name: validation.Null, Rule: true, Chain: nil}}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostOptionalClassParameter")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostOptionalClassParameter", err.Error())
 	}
 
 	req, err := client.PostOptionalClassParameterPreparer(ctx, bodyParameter)
@@ -273,7 +273,7 @@ func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, body
 				Chain: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: false,
 					Chain: []validation.Constraint{{Target: "bodyParameter.Value.ID", Name: validation.Null, Rule: true, Chain: nil}}},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostOptionalClassProperty")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostOptionalClassProperty", err.Error())
 	}
 
 	req, err := client.PostOptionalClassPropertyPreparer(ctx, bodyParameter)
@@ -677,7 +677,7 @@ func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, header
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: headerParameter,
 			Constraints: []validation.Constraint{{Target: "headerParameter", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayHeader")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostRequiredArrayHeader", err.Error())
 	}
 
 	req, err := client.PostRequiredArrayHeaderPreparer(ctx, headerParameter)
@@ -738,7 +738,7 @@ func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bod
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayParameter")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostRequiredArrayParameter", err.Error())
 	}
 
 	req, err := client.PostRequiredArrayParameterPreparer(ctx, bodyParameter)
@@ -800,7 +800,7 @@ func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, body
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayProperty")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostRequiredArrayProperty", err.Error())
 	}
 
 	req, err := client.PostRequiredArrayPropertyPreparer(ctx, bodyParameter)
@@ -862,7 +862,7 @@ func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bod
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.ID", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredClassParameter")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostRequiredClassParameter", err.Error())
 	}
 
 	req, err := client.PostRequiredClassParameterPreparer(ctx, bodyParameter)
@@ -925,7 +925,7 @@ func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, body
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true,
 				Chain: []validation.Constraint{{Target: "bodyParameter.Value.ID", Name: validation.Null, Rule: true, Chain: nil}}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredClassProperty")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostRequiredClassProperty", err.Error())
 	}
 
 	req, err := client.PostRequiredClassPropertyPreparer(ctx, bodyParameter)
@@ -1098,7 +1098,7 @@ func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bo
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerProperty")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostRequiredIntegerProperty", err.Error())
 	}
 
 	req, err := client.PostRequiredIntegerPropertyPreparer(ctx, bodyParameter)
@@ -1271,7 +1271,7 @@ func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bod
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
 			Constraints: []validation.Constraint{{Target: "bodyParameter.Value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "optionalgroup.ExplicitClient", "PostRequiredStringProperty")
+		return result, validation.NewError("optionalgroup.ExplicitClient", "PostRequiredStringProperty", err.Error())
 	}
 
 	req, err := client.PostRequiredStringPropertyPreparer(ctx, bodyParameter)

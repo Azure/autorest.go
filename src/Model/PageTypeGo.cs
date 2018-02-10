@@ -41,6 +41,10 @@ namespace AutoRest.Go.Model
             ItemName = CodeNamerGo.Instance.GetPropertyName((string)pageableExtension["itemName"] ?? "value");
 
             IteratorType = new IteratorTypeGo(this);
+            if (method.Deprecated)
+            {
+                DeprecationMessage = "The method for this type has been deprecated.";
+            }
         }
 
         /// <summary>

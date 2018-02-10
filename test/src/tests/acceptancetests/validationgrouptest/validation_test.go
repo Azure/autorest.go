@@ -26,7 +26,7 @@ func getValidationClient() BaseClient {
 }
 
 func (s *ValidationSuite) TestGetWithConstantInPath(c *chk.C) {
-	_, err := validationClient.GetWithConstantInPath(context.Background(), "constant")
+	_, err := validationClient.GetWithConstantInPath(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -43,7 +43,7 @@ func (s *ValidationSuite) TestPostWithConstantInBody(c *chk.C) {
 			ConstProperty2: &constProperty2,
 		},
 	}
-	res, err := validationClient.PostWithConstantInBody(context.Background(), "constant", &p)
+	res, err := validationClient.PostWithConstantInBody(context.Background(), &p)
 	p.Response = res.Response
 	c.Assert(err, chk.IsNil)
 	c.Assert(res, chk.DeepEquals, p)

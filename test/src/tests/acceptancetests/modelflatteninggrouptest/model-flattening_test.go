@@ -41,7 +41,7 @@ func (s *ModelFlatteningSuite) TestGetArray(c *chk.C) {
 		FlattenedProduct{
 			ID:       &id,
 			Location: &loc,
-			Tags:     &map[string]*string{"tag1": &tag1, "tag2": &tag2},
+			Tags:     map[string]*string{"tag1": &tag1, "tag2": &tag2},
 			Name:     &name,
 			Type:     &typ,
 			FlattenedProductProperties: &FlattenedProductProperties{
@@ -66,7 +66,7 @@ func (s *ModelFlatteningSuite) TestGetArray(c *chk.C) {
 func (s *ModelFlatteningSuite) TestGetDictionary(c *chk.C) {
 	res, err := modelflatteningClient.GetDictionary(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(*res.Value, chk.HasLen, 3)
+	c.Assert(res.Value, chk.HasLen, 3)
 
 	id, loc, name, typ := "1", "Building 44", "Resource1", "Microsoft.Web/sites"
 	tag1, tag2 := "value1", "value3"
@@ -74,11 +74,11 @@ func (s *ModelFlatteningSuite) TestGetDictionary(c *chk.C) {
 	id1, loc1, name1 := "2", "Building 44", "Resource2"
 	id2, name2 := "3", "Resource3"
 
-	c.Assert(*res.Value, chk.DeepEquals, map[string]*FlattenedProduct{
+	c.Assert(res.Value, chk.DeepEquals, map[string]*FlattenedProduct{
 		"Product1": &FlattenedProduct{
 			ID:       &id,
 			Location: &loc,
-			Tags:     &map[string]*string{"tag1": &tag1, "tag2": &tag2},
+			Tags:     map[string]*string{"tag1": &tag1, "tag2": &tag2},
 			Name:     &name,
 			Type:     &typ,
 			FlattenedProductProperties: &FlattenedProductProperties{
@@ -115,7 +115,7 @@ func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
 		"Product1": &FlattenedProduct{
 			ID:       &id,
 			Location: &loc,
-			Tags:     &map[string]*string{"tag1": &tag1, "tag2": &tag2},
+			Tags:     map[string]*string{"tag1": &tag1, "tag2": &tag2},
 			Name:     &name,
 			Type:     &typ,
 			FlattenedProductProperties: &FlattenedProductProperties{
@@ -136,7 +136,7 @@ func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
 		},
 	}
 
-	c.Assert(*res.Dictionaryofresources, chk.DeepEquals, dictionaryOfResources)
+	c.Assert(res.Dictionaryofresources, chk.DeepEquals, dictionaryOfResources)
 
 	id4, loc4, name4, typ4 := "4", "Building 44", "Resource4", "Microsoft.Web/sites"
 	provisioningState4, pname4, propty4 := "Succeeded", "Product4", "Flat"
@@ -147,7 +147,7 @@ func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
 		FlattenedProduct{
 			ID:       &id4,
 			Location: &loc4,
-			Tags:     &map[string]*string{"tag1": &tag1, "tag2": &tag2},
+			Tags:     map[string]*string{"tag1": &tag1, "tag2": &tag2},
 			Name:     &name4,
 			Type:     &typ4,
 			FlattenedProductProperties: &FlattenedProductProperties{
@@ -205,7 +205,7 @@ func (s *ModelFlatteningSuite) TestPutArray(c *chk.C) {
 	loc1, loc2, tag1, tag2 := "West US", "Building 44", "value1", "value3"
 	_, err := modelflatteningClient.PutArray(context.Background(), []Resource{
 		Resource{
-			Tags:     &map[string]*string{"tag1": &tag1, "tag2": &tag2},
+			Tags:     map[string]*string{"tag1": &tag1, "tag2": &tag2},
 			Location: &loc1,
 		},
 		Resource{

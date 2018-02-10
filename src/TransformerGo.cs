@@ -2,19 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AutoRest.Core;
-using AutoRest.Core.Logging;
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
 using AutoRest.Extensions;
 using AutoRest.Go.Model;
-using AutoRest.Go.Properties;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using AutoRest.Extensions.Azure;
 using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go
@@ -26,16 +20,17 @@ namespace AutoRest.Go
             var cmg = cm as CodeModelGo;
 
             SwaggerExtensions.ProcessGlobalParameters(cmg);
-            FixStutteringTypeNames(cmg);
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);
             TransformMethods(cmg);
-            AzureExtensions.ProcessParameterizedHost(cmg);
+            SwaggerExtensions.ProcessParameterizedHost(cmg);
+            FixStutteringTypeNames(cmg);
+            AssureUniqueNames(cmg);
 
             return cmg;
         }
 
-        private void TransformEnumTypes(CodeModelGo cmg)
+        private static void TransformEnumTypes(CodeModelGo cmg)
         {
             // fix up any enum types that are missing a name.
             // NOTE: this must be done before the next code block
@@ -57,12 +52,12 @@ namespace AutoRest.Go
             // And add any others with a defined name and value list (but not already located)
             foreach (var mt in cmg.ModelTypes)
             {
-                var namedEnums = mt.Properties.Where(p => p.ModelType is EnumTypeGo && (p.ModelType as EnumTypeGo).IsNamed);
+                var namedEnums = mt.Properties.Where(p => p.ModelType is EnumTypeGo enumType && enumType.IsNamed);
                 foreach (var p in namedEnums)
                 {
                     if (!cmg.EnumTypes.Any(etm => etm.Equals(p.ModelType)))
                     {
-                        cmg.Add(new EnumTypeGo(p.ModelType as EnumType));
+                        cmg.Add(p.ModelType as EnumType);
                     }
                 };
             }
@@ -121,7 +116,10 @@ namespace AutoRest.Go
                     })) as EnumTypeGo;
                 }
             }
+        }
 
+        private static void AssureUniqueNames(CodeModelGo cmg)
+        {
             // now normalize the names
             // NOTE: this must be done after all enum types have been accounted for
             foreach (var enumType in cmg.EnumTypes)
@@ -177,14 +175,18 @@ namespace AutoRest.Go
                     modelList.Add(v);
                 }
             }
-
         }
 
-        private void TransformModelTypes(CodeModelGo cmg)
+        private static void TransformModelTypes(CodeModelGo cmg)
         {
             foreach (var ctg in cmg.ModelTypes.Cast<CompositeTypeGo>())
             {
                 var name = ctg.Name.FixedValue.TrimPackageName(cmg.Namespace);
+
+                if (string.IsNullOrWhiteSpace(ctg.Documentation))
+                {
+                    ctg.Documentation = "...";
+                }
 
                 // ensure that the candidate name isn't already in use
                 if (name != ctg.Name && cmg.ModelTypes.Any(mt => mt.Name == name))
@@ -220,20 +222,10 @@ namespace AutoRest.Go
                         ((CompositeTypeGo)dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
                     }
                 }
-                foreach (var p in mtm.Properties)
-                {
-                    // Flattened fields are referred to with their type name,
-                    // this name change generates correct custom unmarshalers and validation code,
-                    // plus flattening does not need to be checked that often
-                    if (p.ShouldBeFlattened() && p.ModelType is CompositeTypeGo)
-                    {
-                        p.Name = p.ModelType.HasInterface() ? p.ModelType.GetInterfaceName() : p.ModelType.Name.Value;
-                    }
-                }
             }
         }
 
-        private void TransformMethods(CodeModelGo cmg)
+        private static void TransformMethods(CodeModelGo cmg)
         {
             foreach (var mg in cmg.MethodGroups)
             {
@@ -287,7 +279,7 @@ namespace AutoRest.Go
             }
         }
 
-        private void FixStutteringTypeNames(CodeModelGo cmg)
+        private static void FixStutteringTypeNames(CodeModelGo cmg)
         {
             // Trim the package name from exported types; append a suitable qualifier, if needed, to avoid conflicts.
             var exportedTypes = new HashSet<object>();
@@ -297,32 +289,32 @@ namespace AutoRest.Go
 
             var stutteringTypes = exportedTypes
                                     .Where(exported =>
-                                        (exported is IModelType && (exported as IModelType).Name.FixedValue.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)) ||
-                                        (exported is Method && (exported as Method).Name.FixedValue.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)));
+                                        (exported is IModelType modelType && modelType.Name.FixedValue.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)) ||
+                                        (exported is Method method && method.Name.FixedValue.StartsWith(cmg.Namespace, StringComparison.OrdinalIgnoreCase)));
 
             if (stutteringTypes.Any())
             {
                 stutteringTypes.ForEach(exported =>
                     {
-                        var name = exported is IModelType
-                                        ? (exported as IModelType).Name
-                                        : (exported as Method).Name;
+                        var name = exported is IModelType type
+                                        ? type.Name
+                                        : ((Method)exported).Name;
 
                         name = name.Value.TrimPackageName(cmg.Namespace);
 
                         var nameInUse = exportedTypes
-                                            .Any(et => (et is IModelType && (et as IModelType).Name.Equals(name)) || (et is Method && (et as Method).Name.Equals(name)));
-                        if (exported is EnumType)
+                                            .Any(et => (et is IModelType modeltype && modeltype.Name.Equals(name)) || (et is Method methodType && methodType.Name.Equals(name)));
+                        if (exported is EnumType enumType)
                         {
-                            (exported as EnumType).Name.FixedValue = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Enum");
+                            enumType.Name.Value = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Enum");
                         }
-                        else if (exported is CompositeType)
+                        else if (exported is CompositeType compositeType)
                         {
-                            (exported as CompositeType).Name.FixedValue = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Type");
+                            compositeType.Name.Value = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Type");
                         }
-                        else if (exported is Method)
+                        else if (exported is Method methodType)
                         {
-                            (exported as Method).Name.FixedValue = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Method");
+                            methodType.Name.Value = CodeNamerGo.AttachTypeName(name, cmg.Namespace, nameInUse, "Method");
                         }
                     });
             }

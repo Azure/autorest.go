@@ -262,7 +262,7 @@ func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleB
 						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct")
+		return result, validation.NewError("modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct", err.Error())
 	}
 
 	req, err := client.PostFlattenedSimpleProductPreparer(ctx, simpleBodyProduct)
@@ -506,7 +506,7 @@ func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct
 						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.BaseClient", "PutSimpleProduct")
+		return result, validation.NewError("modelflatteninggroup.BaseClient", "PutSimpleProduct", err.Error())
 	}
 
 	req, err := client.PutSimpleProductPreparer(ctx, simpleBodyProduct)
@@ -576,7 +576,7 @@ func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name 
 						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping")
+		return result, validation.NewError("modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping", err.Error())
 	}
 
 	req, err := client.PutSimpleProductWithGroupingPreparer(ctx, name, simpleBodyProduct)

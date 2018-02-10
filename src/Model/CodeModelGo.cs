@@ -15,6 +15,7 @@ namespace AutoRest.Go.Model
 {
     public class CodeModelGo : CodeModel
     {
+        public static readonly string OneVerString = "version.Number";
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
 
         public CodeModelGo()
@@ -27,25 +28,21 @@ namespace AutoRest.Go.Model
 
         public string UserAgent
         {
-            get
-            {
-                if (SpecifiedUserAgent == null)
-                {
-                    return DefaultUserAgent;
-                }
-                return SpecifiedUserAgent;
-            }
-            set
-            {
-                SpecifiedUserAgent = value;
-            }
+            get => SpecifiedUserAgent ?? DefaultUserAgent;
+            set => SpecifiedUserAgent = value;
         }
+
+        /// <summary>
+        /// Returns true if the --use-onever flag was specified (off by default).
+        /// </summary>
+        public bool UseOneVer => Settings.Instance.Host?.GetValue<bool>("use-onever").Result ?? false;
 
         private string DefaultUserAgent
         {
             get
             {
-                return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+                var verStr = UseOneVer ? $"\" + {OneVerString} + \"" : Version;
+                return $"Azure-SDK-For-Go/{verStr} arm-{Namespace}/{ApiVersion}";
             }
         }
 
@@ -298,7 +295,7 @@ namespace AutoRest.Go.Model
             var page = new PageTypeGo(method);
             if (ModelTypes.Contains(page))
             {
-                page = ModelTypes.Where(mt => mt.Equals(page)).First().Cast<PageTypeGo>();
+                page = ModelTypes.First(mt => mt.Equals(page)).Cast<PageTypeGo>();
             }
             else
             {
@@ -347,7 +344,7 @@ namespace AutoRest.Go.Model
             // don't create duplicate future types
             if (ModelTypes.Contains(futureType))
             {
-                futureType = ModelTypes.Where(mt => mt.Equals(futureType)).First().Cast<FutureTypeGo>();
+                futureType = ModelTypes.First(mt => mt.Equals(futureType)).Cast<FutureTypeGo>();
             }
             else
             {

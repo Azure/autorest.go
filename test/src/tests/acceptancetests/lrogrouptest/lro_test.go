@@ -66,6 +66,11 @@ func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
 	c.Assert(err, chk.IsNil)
 	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusAccepted)
 
+	done, err := future.Done(lroRetryClient)
+	c.Assert(done, chk.Equals, false)
+	c.Assert(err, chk.NotNil)
+	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusInternalServerError)
+
 	for done, err := future.Done(lroRetryClient); !done; done, err = future.Done(lroRetryClient) {
 		c.Assert(err, chk.IsNil)
 		if future.Response().StatusCode == http.StatusInternalServerError {
@@ -84,6 +89,6 @@ func (s *LROSuite) TestDelete202NonRetry400(c *chk.C) {
 
 	done, err := future.Done(lroSADSClient)
 	c.Assert(done, chk.Equals, false)
-	c.Assert(err, chk.IsNil)
+	c.Assert(err, chk.NotNil)
 	c.Assert(future.Response().StatusCode, chk.Equals, 400)
 }

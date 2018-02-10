@@ -44,9 +44,8 @@ func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
 }
 
 // GetWithConstantInPath sends the get with constant in path request.
-//
-func (client BaseClient) GetWithConstantInPath(ctx context.Context, constantParam string) (result autorest.Response, err error) {
-	req, err := client.GetWithConstantInPathPreparer(ctx, constantParam)
+func (client BaseClient) GetWithConstantInPath(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.GetWithConstantInPathPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "GetWithConstantInPath", nil, "Failure preparing request")
 		return
@@ -68,9 +67,9 @@ func (client BaseClient) GetWithConstantInPath(ctx context.Context, constantPara
 }
 
 // GetWithConstantInPathPreparer prepares the GetWithConstantInPath request.
-func (client BaseClient) GetWithConstantInPathPreparer(ctx context.Context, constantParam string) (*http.Request, error) {
+func (client BaseClient) GetWithConstantInPathPreparer(ctx context.Context) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"constantParam": autorest.Encode("path", constantParam),
+		"constantParam": autorest.Encode("path", "constant"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -101,7 +100,7 @@ func (client BaseClient) GetWithConstantInPathResponder(resp *http.Response) (re
 
 // PostWithConstantInBody sends the post with constant in body request.
 //
-func (client BaseClient) PostWithConstantInBody(ctx context.Context, constantParam string, body *Product) (result Product, err error) {
+func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: body,
 			Constraints: []validation.Constraint{{Target: "body", Name: validation.Null, Rule: false,
@@ -125,10 +124,10 @@ func (client BaseClient) PostWithConstantInBody(ctx context.Context, constantPar
 					{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil},
 					{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "validationgroup.BaseClient", "PostWithConstantInBody")
+		return result, validation.NewError("validationgroup.BaseClient", "PostWithConstantInBody", err.Error())
 	}
 
-	req, err := client.PostWithConstantInBodyPreparer(ctx, constantParam, body)
+	req, err := client.PostWithConstantInBodyPreparer(ctx, body)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "PostWithConstantInBody", nil, "Failure preparing request")
 		return
@@ -150,9 +149,9 @@ func (client BaseClient) PostWithConstantInBody(ctx context.Context, constantPar
 }
 
 // PostWithConstantInBodyPreparer prepares the PostWithConstantInBody request.
-func (client BaseClient) PostWithConstantInBodyPreparer(ctx context.Context, constantParam string, body *Product) (*http.Request, error) {
+func (client BaseClient) PostWithConstantInBodyPreparer(ctx context.Context, body *Product) (*http.Request, error) {
 	pathParameters := map[string]interface{}{
-		"constantParam": autorest.Encode("path", constantParam),
+		"constantParam": autorest.Encode("path", "constant"),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -189,8 +188,8 @@ func (client BaseClient) PostWithConstantInBodyResponder(resp *http.Response) (r
 
 // ValidationOfBody validates body parameters on the method. See swagger for details.
 //
-// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
-// of 10 from 100 to 1000.
+// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int
+// multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName string, ID int32, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
@@ -223,7 +222,7 @@ func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName
 					{Target: "body.ConstInt", Name: validation.Null, Rule: true, Chain: nil},
 					{Target: "body.ConstString", Name: validation.Null, Rule: true, Chain: nil},
 				}}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "validationgroup.BaseClient", "ValidationOfBody")
+		return result, validation.NewError("validationgroup.BaseClient", "ValidationOfBody", err.Error())
 	}
 
 	req, err := client.ValidationOfBodyPreparer(ctx, resourceGroupName, ID, body)
@@ -295,8 +294,8 @@ func (client BaseClient) ValidationOfBodyResponder(resp *http.Response) (result 
 
 // ValidationOfMethodParameters validates input parameters on the method. See swagger for details.
 //
-// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int multiple
-// of 10 from 100 to 1000.
+// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int
+// multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, ID int32) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
@@ -307,7 +306,7 @@ func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resou
 			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil},
 				{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil},
 				{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "validationgroup.BaseClient", "ValidationOfMethodParameters")
+		return result, validation.NewError("validationgroup.BaseClient", "ValidationOfMethodParameters", err.Error())
 	}
 
 	req, err := client.ValidationOfMethodParametersPreparer(ctx, resourceGroupName, ID)

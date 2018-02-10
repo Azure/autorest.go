@@ -241,8 +241,8 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 
 // PutValid put complex types with array property
 //
-// complexBody is please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps over
-// the lazy dog"
+// complexBody is please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps
+// over the lazy dog"
 func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {

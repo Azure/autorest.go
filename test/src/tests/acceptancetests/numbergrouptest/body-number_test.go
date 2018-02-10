@@ -86,12 +86,12 @@ func (s *NumberSuite) TestPutBigDouble(c *chk.C) {
 }
 
 func (s *NumberSuite) TestPutBigDoubleNegativeDecimal(c *chk.C) {
-	_, err := numberClient.PutBigDoubleNegativeDecimal(context.Background(), -99999999.99)
+	_, err := numberClient.PutBigDoubleNegativeDecimal(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
 func (s *NumberSuite) TestPutBigDoublePositiveDecimal(c *chk.C) {
-	_, err := numberClient.PutBigDoublePositiveDecimal(context.Background(), 99999999.99)
+	_, err := numberClient.PutBigDoublePositiveDecimal(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 

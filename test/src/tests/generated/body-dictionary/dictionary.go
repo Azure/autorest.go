@@ -2646,7 +2646,7 @@ func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutArrayValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutArrayValid", err.Error())
 	}
 
 	req, err := client.PutArrayValidPreparer(ctx, arrayBody)
@@ -2706,7 +2706,7 @@ func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutBooleanTfft")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutBooleanTfft", err.Error())
 	}
 
 	req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
@@ -2767,7 +2767,7 @@ func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[s
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutByteValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutByteValid", err.Error())
 	}
 
 	req, err := client.PutByteValidPreparer(ctx, arrayBody)
@@ -2828,7 +2828,7 @@ func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody ma
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutComplexValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutComplexValid", err.Error())
 	}
 
 	req, err := client.PutComplexValidPreparer(ctx, arrayBody)
@@ -2889,7 +2889,7 @@ func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arra
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateTimeRfc1123Valid", err.Error())
 	}
 
 	req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
@@ -2950,7 +2950,7 @@ func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody m
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDateTimeValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateTimeValid", err.Error())
 	}
 
 	req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
@@ -3010,7 +3010,7 @@ func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[s
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDateValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDateValid", err.Error())
 	}
 
 	req, err := client.PutDateValidPreparer(ctx, arrayBody)
@@ -3071,7 +3071,7 @@ func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDictionaryValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDictionaryValid", err.Error())
 	}
 
 	req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
@@ -3131,7 +3131,7 @@ func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDoubleValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDoubleValid", err.Error())
 	}
 
 	req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
@@ -3191,7 +3191,7 @@ func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody m
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutDurationValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutDurationValid", err.Error())
 	}
 
 	req, err := client.PutDurationValidPreparer(ctx, arrayBody)
@@ -3251,7 +3251,7 @@ func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[strin
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutEmpty")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutEmpty", err.Error())
 	}
 
 	req, err := client.PutEmptyPreparer(ctx, arrayBody)
@@ -3311,7 +3311,7 @@ func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutFloatValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutFloatValid", err.Error())
 	}
 
 	req, err := client.PutFloatValidPreparer(ctx, arrayBody)
@@ -3371,7 +3371,7 @@ func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody ma
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutIntegerValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutIntegerValid", err.Error())
 	}
 
 	req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
@@ -3431,7 +3431,7 @@ func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[s
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutLongValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutLongValid", err.Error())
 	}
 
 	req, err := client.PutLongValidPreparer(ctx, arrayBody)
@@ -3491,7 +3491,7 @@ func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "dictionarygroup.DictionaryClient", "PutStringValid")
+		return result, validation.NewError("dictionarygroup.DictionaryClient", "PutStringValid", err.Error())
 	}
 
 	req, err := client.PutStringValidPreparer(ctx, arrayBody)
