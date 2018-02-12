@@ -32,7 +32,7 @@ func (s *BoolGroupSuite) TestGetTrue(c *chk.C) {
 }
 
 func (s *BoolGroupSuite) TestPutTrue(c *chk.C) {
-	_, err := boolClient.PutTrue(context.Background(), true)
+	_, err := boolClient.PutTrue(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 
@@ -43,7 +43,7 @@ func (s *BoolGroupSuite) TestGetFalse(c *chk.C) {
 }
 
 func (s *BoolGroupSuite) TestPutFalse(c *chk.C) {
-	_, err := boolClient.PutFalse(context.Background(), false)
+	_, err := boolClient.PutFalse(context.Background())
 	c.Assert(err, chk.IsNil)
 }
 

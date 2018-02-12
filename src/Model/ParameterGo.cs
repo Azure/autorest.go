@@ -6,6 +6,7 @@ using AutoRest.Core.Model;
 using AutoRest.Extensions;
 using AutoRest.Extensions.Azure;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -21,9 +22,8 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Add imports for the parameter in parameter type.
+        /// Add imports for the parameter model type.
         /// </summary>
-        /// <param name="parameter"></param>
         /// <param name="imports"></param>
         public void AddImports(HashSet<string> imports)
         {
@@ -35,10 +35,11 @@ namespace AutoRest.Go.Model
         /// xyz["abc"] = 123
         /// </summary>
         /// <param name="mapVariable"></param>
+        /// <param name="useDefaultValue"></param>
         /// <returns></returns>
-        public string AddToMap(string mapVariable)
+        public string AddToMap(string mapVariable, bool useDefaultValue = false)
         {
-            return string.Format("{0}[\"{1}\"] = {2}", mapVariable, NameForMap(), ValueForMap());
+            return string.Format("{0}[\"{1}\"] = {2}", mapVariable, NameForMap(), ValueForMap(useDefault: useDefaultValue));
         }
 
         public string GetParameterName()
@@ -63,11 +64,58 @@ namespace AutoRest.Go.Model
 
         public virtual bool IsAPIVersion => SerializedName.IsApiVersion();
 
-        public virtual bool IsMethodArgument => !IsClientProperty && !IsAPIVersion;
+        public virtual bool IsMethodArgument => !IsClientProperty && !IsAPIVersion && !IsConstant;
+
+        /// <summary>
+        /// Returns a properly formatted DefaultValue string.
+        /// </summary>
+        public string DefaultValueString
+        {
+            // unfortunately the modeler doesn't uniformly wrap default values in double quotes, so
+            // depending on the type's format it might or might not be quoted.  e.g. plain ol' strings
+            // will be double-quoted but a string in date/time format will not.  note that there can
+            // be other "interesting" default values, e.g. []byte(""), so you can't simply check for
+            // the absense of double-quotes and then add them.  right now the only affected type is
+            // date/times, if we find more cases this will need to be updated.
+            get
+            {
+                // another irritant is that the javascript front-end to autorest will
+                // munge certain decimals/doubles, e.g. it will change 1.034E+20 to
+                // 103400000000000000000 which we don't want, so we have to round-trip
+                // these types to get the desired output.
+                if (string.IsNullOrWhiteSpace(DefaultValue))
+                {
+                    return DefaultValue;
+                }
+
+                if (ModelType is PrimaryTypeGo primaryType)
+                {
+                    if (primaryType.KnownFormat.IsDateTime())
+                    {
+                        return $"\"{DefaultValue}\"";
+                    }
+                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.Decimal)
+                    {
+                        var asDecimal = decimal.Parse(DefaultValue);
+                        return asDecimal.ToString(CultureInfo.InvariantCulture);
+                    }
+                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.Double)
+                    {
+                        var asDouble = double.Parse(DefaultValue);
+                        return asDouble.ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+                else if (ModelType is EnumTypeGo)
+                {
+                    return $"\"{DefaultValue}\"";
+                }
+
+                return DefaultValue;
+            }
+        }
 
         /// <summary>
         /// Get Name for parameter for Go map.
-        /// If parameter is client parameter, then return client.<parametername>
         /// </summary>
         /// <returns></returns>
         public string NameForMap()
@@ -86,18 +134,36 @@ namespace AutoRest.Go.Model
         /// Return formatted value string for the parameter.
         /// </summary>
         /// <returns></returns>
-        public string ValueForMap()
+        public string ValueForMap(bool useDefault = false)
         {
             if (IsAPIVersion)
             {
                 return APIVersionName;
             }
 
-            var value = IsClientProperty
-                ? "client." + CodeNamerGo.Instance.GetPropertyName(Name.Value)
-                : Name.Value;
+            if (IsConstant)
+            {
+                return RequiresUrlEncoding() ? 
+                    $"autorest.Encode(\"{Location.ToString().ToLower()}\", {DefaultValueString})" :
+                    DefaultValueString;
+            }
 
-            var format = IsRequired || ModelType.CanBeEmpty()
+            string value = "";
+
+            if (useDefault)
+            {
+                value = DefaultValueString;
+            }
+            else if (IsClientProperty)
+            {
+                value = "client." + CodeNamerGo.Instance.GetPropertyName(Name.Value);
+            }
+            else
+            {
+                value = Name.Value;
+            }
+
+            var format = IsRequired || ModelType.CanBeEmpty() || useDefault
                                           ? "{0}"
                                           : "*{0}";
 
@@ -114,9 +180,9 @@ namespace AutoRest.Go.Model
 
         public string GetEmptyCheck(string valueReference, bool asEmpty = true)
         {
-            if (ModelType is PrimaryTypeGo)
+            if (ModelType is PrimaryTypeGo goPrimaryType)
             {
-                return GetPrimaryTypeEmptyCheck(ModelType as PrimaryTypeGo, valueReference, asEmpty);
+                return GetPrimaryTypeEmptyCheck(goPrimaryType, valueReference, asEmpty);
             }
             else if (ModelType is SequenceTypeGo)
             {
@@ -326,7 +392,7 @@ namespace AutoRest.Go.Model
 
             foreach (var p in parameters)
             {
-                if (p.IsAPIVersion)
+                if (p.IsAPIVersion || p.IsConstant)
                 {
                     continue;
                 }

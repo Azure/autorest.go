@@ -61,36 +61,36 @@ func (e *Error) UnmarshalJSON(body []byte) error {
 	if err != nil {
 		return err
 	}
-	var v *json.RawMessage
-
-	v = m["status"]
-	if v != nil {
-		var status int32
-		err = json.Unmarshal(*m["status"], &status)
-		if err != nil {
-			return err
+	for k, v := range m {
+		switch k {
+		case "status":
+			if v != nil {
+				var status int32
+				err = json.Unmarshal(*v, &status)
+				if err != nil {
+					return err
+				}
+				e.Status = &status
+			}
+		case "message":
+			if v != nil {
+				var message string
+				err = json.Unmarshal(*v, &message)
+				if err != nil {
+					return err
+				}
+				e.Message = &message
+			}
+		case "parentError":
+			if v != nil {
+				var errorVar Error
+				err = json.Unmarshal(*v, &errorVar)
+				if err != nil {
+					return err
+				}
+				e.Error = &errorVar
+			}
 		}
-		e.Status = &status
-	}
-
-	v = m["message"]
-	if v != nil {
-		var message string
-		err = json.Unmarshal(*m["message"], &message)
-		if err != nil {
-			return err
-		}
-		e.Message = &message
-	}
-
-	v = m["parentError"]
-	if v != nil {
-		var parentError Error
-		err = json.Unmarshal(*m["parentError"], &parentError)
-		if err != nil {
-			return err
-		}
-		e.Error = &parentError
 	}
 
 	return nil
@@ -98,16 +98,40 @@ func (e *Error) UnmarshalJSON(body []byte) error {
 
 // FlattenedProduct flattened product.
 type FlattenedProduct struct {
+	*FlattenedProductProperties `json:"properties,omitempty"`
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
 	// Type - Resource Type
-	Type *string             `json:"type,omitempty"`
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Type *string            `json:"type,omitempty"`
+	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
 	// Name - Resource Name
-	Name                        *string `json:"name,omitempty"`
-	*FlattenedProductProperties `json:"properties,omitempty"`
+	Name *string `json:"name,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for FlattenedProduct.
+func (fp FlattenedProduct) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if fp.FlattenedProductProperties != nil {
+		objectMap["properties"] = fp.FlattenedProductProperties
+	}
+	if fp.ID != nil {
+		objectMap["id"] = fp.ID
+	}
+	if fp.Type != nil {
+		objectMap["type"] = fp.Type
+	}
+	if fp.Tags != nil {
+		objectMap["tags"] = fp.Tags
+	}
+	if fp.Location != nil {
+		objectMap["location"] = fp.Location
+	}
+	if fp.Name != nil {
+		objectMap["name"] = fp.Name
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON is the custom unmarshaler for FlattenedProduct struct.
@@ -117,66 +141,63 @@ func (fp *FlattenedProduct) UnmarshalJSON(body []byte) error {
 	if err != nil {
 		return err
 	}
-	var v *json.RawMessage
-
-	v = m["properties"]
-	if v != nil {
-		var properties FlattenedProductProperties
-		err = json.Unmarshal(*m["properties"], &properties)
-		if err != nil {
-			return err
+	for k, v := range m {
+		switch k {
+		case "properties":
+			if v != nil {
+				var flattenedProductProperties FlattenedProductProperties
+				err = json.Unmarshal(*v, &flattenedProductProperties)
+				if err != nil {
+					return err
+				}
+				fp.FlattenedProductProperties = &flattenedProductProperties
+			}
+		case "id":
+			if v != nil {
+				var ID string
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				fp.ID = &ID
+			}
+		case "type":
+			if v != nil {
+				var typeVar string
+				err = json.Unmarshal(*v, &typeVar)
+				if err != nil {
+					return err
+				}
+				fp.Type = &typeVar
+			}
+		case "tags":
+			if v != nil {
+				var tags map[string]*string
+				err = json.Unmarshal(*v, &tags)
+				if err != nil {
+					return err
+				}
+				fp.Tags = tags
+			}
+		case "location":
+			if v != nil {
+				var location string
+				err = json.Unmarshal(*v, &location)
+				if err != nil {
+					return err
+				}
+				fp.Location = &location
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				fp.Name = &name
+			}
 		}
-		fp.FlattenedProductProperties = &properties
-	}
-
-	v = m["id"]
-	if v != nil {
-		var ID string
-		err = json.Unmarshal(*m["id"], &ID)
-		if err != nil {
-			return err
-		}
-		fp.ID = &ID
-	}
-
-	v = m["type"]
-	if v != nil {
-		var typeVar string
-		err = json.Unmarshal(*m["type"], &typeVar)
-		if err != nil {
-			return err
-		}
-		fp.Type = &typeVar
-	}
-
-	v = m["tags"]
-	if v != nil {
-		var tags map[string]*string
-		err = json.Unmarshal(*m["tags"], &tags)
-		if err != nil {
-			return err
-		}
-		fp.Tags = &tags
-	}
-
-	v = m["location"]
-	if v != nil {
-		var location string
-		err = json.Unmarshal(*m["location"], &location)
-		if err != nil {
-			return err
-		}
-		fp.Location = &location
-	}
-
-	v = m["name"]
-	if v != nil {
-		var name string
-		err = json.Unmarshal(*m["name"], &name)
-		if err != nil {
-			return err
-		}
-		fp.Name = &name
 	}
 
 	return nil
@@ -211,10 +232,10 @@ type ListProductWrapper struct {
 
 // ProductURL the product URL.
 type ProductURL struct {
-	// GenericValue - Generic URL value.
-	GenericValue *string `json:"generic_value,omitempty"`
 	// OdataValue - URL value.
 	OdataValue *string `json:"@odata.value,omitempty"`
+	// GenericValue - Generic URL value.
+	GenericValue *string `json:"generic_value,omitempty"`
 }
 
 // ProductWrapper the wrapped produc.
@@ -229,16 +250,18 @@ func (pw *ProductWrapper) UnmarshalJSON(body []byte) error {
 	if err != nil {
 		return err
 	}
-	var v *json.RawMessage
-
-	v = m["property"]
-	if v != nil {
-		var property WrappedProduct
-		err = json.Unmarshal(*m["property"], &property)
-		if err != nil {
-			return err
+	for k, v := range m {
+		switch k {
+		case "property":
+			if v != nil {
+				var wrappedProduct WrappedProduct
+				err = json.Unmarshal(*v, &wrappedProduct)
+				if err != nil {
+					return err
+				}
+				pw.WrappedProduct = &wrappedProduct
+			}
 		}
-		pw.WrappedProduct = &property
 	}
 
 	return nil
@@ -249,36 +272,81 @@ type Resource struct {
 	// ID - Resource Id
 	ID *string `json:"id,omitempty"`
 	// Type - Resource Type
-	Type *string             `json:"type,omitempty"`
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Type *string            `json:"type,omitempty"`
+	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
 	// Name - Resource Name
 	Name *string `json:"name,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for Resource.
+func (r Resource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if r.ID != nil {
+		objectMap["id"] = r.ID
+	}
+	if r.Type != nil {
+		objectMap["type"] = r.Type
+	}
+	if r.Tags != nil {
+		objectMap["tags"] = r.Tags
+	}
+	if r.Location != nil {
+		objectMap["location"] = r.Location
+	}
+	if r.Name != nil {
+		objectMap["name"] = r.Name
+	}
+	return json.Marshal(objectMap)
+}
+
 // ResourceCollection ...
 type ResourceCollection struct {
 	autorest.Response     `json:"-"`
-	Productresource       *FlattenedProduct             `json:"productresource,omitempty"`
-	Arrayofresources      *[]FlattenedProduct           `json:"arrayofresources,omitempty"`
-	Dictionaryofresources *map[string]*FlattenedProduct `json:"dictionaryofresources,omitempty"`
+	Productresource       *FlattenedProduct            `json:"productresource,omitempty"`
+	Arrayofresources      *[]FlattenedProduct          `json:"arrayofresources,omitempty"`
+	Dictionaryofresources map[string]*FlattenedProduct `json:"dictionaryofresources"`
+}
+
+// MarshalJSON is the custom marshaler for ResourceCollection.
+func (rc ResourceCollection) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if rc.Productresource != nil {
+		objectMap["productresource"] = rc.Productresource
+	}
+	if rc.Arrayofresources != nil {
+		objectMap["arrayofresources"] = rc.Arrayofresources
+	}
+	if rc.Dictionaryofresources != nil {
+		objectMap["dictionaryofresources"] = rc.Dictionaryofresources
+	}
+	return json.Marshal(objectMap)
 }
 
 // SetFlattenedProduct ...
 type SetFlattenedProduct struct {
 	autorest.Response `json:"-"`
-	Value             *map[string]*FlattenedProduct `json:"value,omitempty"`
+	Value             map[string]*FlattenedProduct `json:"value"`
+}
+
+// MarshalJSON is the custom marshaler for SetFlattenedProduct.
+func (sfp SetFlattenedProduct) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sfp.Value != nil {
+		objectMap["value"] = sfp.Value
+	}
+	return json.Marshal(objectMap)
 }
 
 // SimpleProduct the product documentation.
 type SimpleProduct struct {
-	autorest.Response `json:"-"`
+	autorest.Response        `json:"-"`
+	*SimpleProductProperties `json:"details,omitempty"`
 	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
 	ProductID *string `json:"base_product_id,omitempty"`
 	// Description - Description of product.
-	Description              *string `json:"base_product_description,omitempty"`
-	*SimpleProductProperties `json:"details,omitempty"`
+	Description *string `json:"base_product_description,omitempty"`
 }
 
 // UnmarshalJSON is the custom unmarshaler for SimpleProduct struct.
@@ -288,36 +356,36 @@ func (sp *SimpleProduct) UnmarshalJSON(body []byte) error {
 	if err != nil {
 		return err
 	}
-	var v *json.RawMessage
-
-	v = m["details"]
-	if v != nil {
-		var details SimpleProductProperties
-		err = json.Unmarshal(*m["details"], &details)
-		if err != nil {
-			return err
+	for k, v := range m {
+		switch k {
+		case "details":
+			if v != nil {
+				var simpleProductProperties SimpleProductProperties
+				err = json.Unmarshal(*v, &simpleProductProperties)
+				if err != nil {
+					return err
+				}
+				sp.SimpleProductProperties = &simpleProductProperties
+			}
+		case "base_product_id":
+			if v != nil {
+				var productID string
+				err = json.Unmarshal(*v, &productID)
+				if err != nil {
+					return err
+				}
+				sp.ProductID = &productID
+			}
+		case "base_product_description":
+			if v != nil {
+				var description string
+				err = json.Unmarshal(*v, &description)
+				if err != nil {
+					return err
+				}
+				sp.Description = &description
+			}
 		}
-		sp.SimpleProductProperties = &details
-	}
-
-	v = m["base_product_id"]
-	if v != nil {
-		var baseProductID string
-		err = json.Unmarshal(*m["base_product_id"], &baseProductID)
-		if err != nil {
-			return err
-		}
-		sp.ProductID = &baseProductID
-	}
-
-	v = m["base_product_description"]
-	if v != nil {
-		var baseProductDescription string
-		err = json.Unmarshal(*m["base_product_description"], &baseProductDescription)
-		if err != nil {
-			return err
-		}
-		sp.Description = &baseProductDescription
 	}
 
 	return nil
@@ -339,36 +407,36 @@ func (spp *SimpleProductProperties) UnmarshalJSON(body []byte) error {
 	if err != nil {
 		return err
 	}
-	var v *json.RawMessage
-
-	v = m["max_product_display_name"]
-	if v != nil {
-		var maxProductDisplayName string
-		err = json.Unmarshal(*m["max_product_display_name"], &maxProductDisplayName)
-		if err != nil {
-			return err
+	for k, v := range m {
+		switch k {
+		case "max_product_display_name":
+			if v != nil {
+				var maxProductDisplayName string
+				err = json.Unmarshal(*v, &maxProductDisplayName)
+				if err != nil {
+					return err
+				}
+				spp.MaxProductDisplayName = &maxProductDisplayName
+			}
+		case "max_product_capacity":
+			if v != nil {
+				var capacity string
+				err = json.Unmarshal(*v, &capacity)
+				if err != nil {
+					return err
+				}
+				spp.Capacity = &capacity
+			}
+		case "max_product_image":
+			if v != nil {
+				var productURL ProductURL
+				err = json.Unmarshal(*v, &productURL)
+				if err != nil {
+					return err
+				}
+				spp.ProductURL = &productURL
+			}
 		}
-		spp.MaxProductDisplayName = &maxProductDisplayName
-	}
-
-	v = m["max_product_capacity"]
-	if v != nil {
-		var maxProductCapacity string
-		err = json.Unmarshal(*m["max_product_capacity"], &maxProductCapacity)
-		if err != nil {
-			return err
-		}
-		spp.Capacity = &maxProductCapacity
-	}
-
-	v = m["max_product_image"]
-	if v != nil {
-		var maxProductImage ProductURL
-		err = json.Unmarshal(*m["max_product_image"], &maxProductImage)
-		if err != nil {
-			return err
-		}
-		spp.ProductURL = &maxProductImage
 	}
 
 	return nil

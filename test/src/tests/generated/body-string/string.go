@@ -500,9 +500,8 @@ func (client StringClient) PutBase64URLEncodedResponder(resp *http.Response) (re
 }
 
 // PutEmpty set string value empty ''
-//
-func (client StringClient) PutEmpty(ctx context.Context, stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutEmptyPreparer(ctx, stringBody)
+func (client StringClient) PutEmpty(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutEmpty", nil, "Failure preparing request")
 		return
@@ -524,13 +523,13 @@ func (client StringClient) PutEmpty(ctx context.Context, stringBody string) (res
 }
 
 // PutEmptyPreparer prepares the PutEmpty request.
-func (client StringClient) PutEmptyPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
+func (client StringClient) PutEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/empty"),
-		autorest.WithJSON(stringBody))
+		autorest.WithJSON(""))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -554,9 +553,8 @@ func (client StringClient) PutEmptyResponder(resp *http.Response) (result autore
 }
 
 // PutMbcs set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-//
-func (client StringClient) PutMbcs(ctx context.Context, stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutMbcsPreparer(ctx, stringBody)
+func (client StringClient) PutMbcs(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutMbcsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutMbcs", nil, "Failure preparing request")
 		return
@@ -578,13 +576,13 @@ func (client StringClient) PutMbcs(ctx context.Context, stringBody string) (resu
 }
 
 // PutMbcsPreparer prepares the PutMbcs request.
-func (client StringClient) PutMbcsPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
+func (client StringClient) PutMbcsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/mbcs"),
-		autorest.WithJSON(stringBody))
+		autorest.WithJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€"))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -667,9 +665,8 @@ func (client StringClient) PutNullResponder(resp *http.Response) (result autores
 
 // PutWhitespace set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good
 // men to come to the aid of their country<tab><space><space>'
-//
-func (client StringClient) PutWhitespace(ctx context.Context, stringBody string) (result autorest.Response, err error) {
-	req, err := client.PutWhitespacePreparer(ctx, stringBody)
+func (client StringClient) PutWhitespace(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutWhitespacePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.StringClient", "PutWhitespace", nil, "Failure preparing request")
 		return
@@ -691,13 +688,13 @@ func (client StringClient) PutWhitespace(ctx context.Context, stringBody string)
 }
 
 // PutWhitespacePreparer prepares the PutWhitespace request.
-func (client StringClient) PutWhitespacePreparer(ctx context.Context, stringBody string) (*http.Request, error) {
+func (client StringClient) PutWhitespacePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/whitespace"),
-		autorest.WithJSON(stringBody))
+		autorest.WithJSON("    Now is the time for all good men to come to the aid of their country    "))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

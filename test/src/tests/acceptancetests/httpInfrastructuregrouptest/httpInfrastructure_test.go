@@ -716,19 +716,25 @@ func (s *HTTPSuite) TestGet200ModelA201ModelC404ModelDDefaultError200Valid(c *ch
 	res, err := httpMultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(res, chk.NotNil)
-	c.Assert((*res.Value)["statusCode"], chk.Equals, strconv.Itoa(http.StatusOK))
+	v, ok := res.Value.(map[string]interface{})
+	c.Assert(ok, chk.Equals, true)
+	c.Assert(v["statusCode"], chk.Equals, strconv.Itoa(http.StatusOK))
 }
 
 func (s *HTTPSuite) TestGet200ModelA201ModelC404ModelDDefaultError201Valid(c *chk.C) {
 	res, err := httpMultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert((*res.Value)["httpCode"], chk.Equals, strconv.Itoa(http.StatusCreated))
+	v, ok := res.Value.(map[string]interface{})
+	c.Assert(ok, chk.Equals, true)
+	c.Assert(v["httpCode"], chk.Equals, strconv.Itoa(http.StatusCreated))
 }
 
 func (s *HTTPSuite) TestGet200ModelA201ModelC404ModelDDefaultError404Valid(c *chk.C) {
 	res, err := httpMultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert((*res.Value)["httpStatusCode"], chk.Equals, strconv.Itoa(http.StatusNotFound))
+	v, ok := res.Value.(map[string]interface{})
+	c.Assert(ok, chk.Equals, true)
+	c.Assert(v["httpStatusCode"], chk.Equals, strconv.Itoa(http.StatusNotFound))
 }
 
 func (s *HTTPSuite) TestGet200ModelA201ModelC404ModelDDefaultError400Valid(c *chk.C) {

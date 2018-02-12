@@ -18,8 +18,8 @@ type A struct {
 
 // B ...
 type B struct {
-	StatusCode     *string `json:"statusCode,omitempty"`
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
+	StatusCode     *string `json:"statusCode,omitempty"`
 }
 
 // Bool ...
@@ -54,5 +54,5 @@ type ListString struct {
 // SetObject ...
 type SetObject struct {
 	autorest.Response `json:"-"`
-	Value             *map[string]interface{} `json:"value,omitempty"`
+	Value             interface{} `json:"value,omitempty"`
 }

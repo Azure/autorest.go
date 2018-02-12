@@ -237,9 +237,8 @@ func (client BoolClient) GetTrueResponder(resp *http.Response) (result BoolModel
 }
 
 // PutFalse set Boolean value false
-//
-func (client BoolClient) PutFalse(ctx context.Context, boolBody bool) (result autorest.Response, err error) {
-	req, err := client.PutFalsePreparer(ctx, boolBody)
+func (client BoolClient) PutFalse(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutFalsePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutFalse", nil, "Failure preparing request")
 		return
@@ -261,13 +260,13 @@ func (client BoolClient) PutFalse(ctx context.Context, boolBody bool) (result au
 }
 
 // PutFalsePreparer prepares the PutFalse request.
-func (client BoolClient) PutFalsePreparer(ctx context.Context, boolBody bool) (*http.Request, error) {
+func (client BoolClient) PutFalsePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/false"),
-		autorest.WithJSON(boolBody))
+		autorest.WithJSON(false))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
@@ -291,9 +290,8 @@ func (client BoolClient) PutFalseResponder(resp *http.Response) (result autorest
 }
 
 // PutTrue set Boolean value true
-//
-func (client BoolClient) PutTrue(ctx context.Context, boolBody bool) (result autorest.Response, err error) {
-	req, err := client.PutTruePreparer(ctx, boolBody)
+func (client BoolClient) PutTrue(ctx context.Context) (result autorest.Response, err error) {
+	req, err := client.PutTruePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutTrue", nil, "Failure preparing request")
 		return
@@ -315,13 +313,13 @@ func (client BoolClient) PutTrue(ctx context.Context, boolBody bool) (result aut
 }
 
 // PutTruePreparer prepares the PutTrue request.
-func (client BoolClient) PutTruePreparer(ctx context.Context, boolBody bool) (*http.Request, error) {
+func (client BoolClient) PutTruePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsJSON(),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/true"),
-		autorest.WithJSON(boolBody))
+		autorest.WithJSON(true))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 

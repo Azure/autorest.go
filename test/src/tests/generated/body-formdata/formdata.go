@@ -31,8 +31,8 @@ func NewFormdataClientWithBaseURI(baseURI string) FormdataClient {
 
 // UploadFile upload file
 //
-// fileContent is file to upload. fileContent will be closed upon successful return. Callers should ensure closure when
-// receiving an error.fileName is file name to upload. Name has to be spelled exactly as written here.
+// fileContent is file to upload. fileContent will be closed upon successful return. Callers should ensure closure
+// when receiving an error.fileName is file name to upload. Name has to be spelled exactly as written here.
 func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadCloser, fileName string) (result ReadCloser, err error) {
 	req, err := client.UploadFilePreparer(ctx, fileContent, fileName)
 	if err != nil {
@@ -91,8 +91,8 @@ func (client FormdataClient) UploadFileResponder(resp *http.Response) (result Re
 
 // UploadFileViaBody upload file
 //
-// fileContent is file to upload. fileContent will be closed upon successful return. Callers should ensure closure when
-// receiving an error.
+// fileContent is file to upload. fileContent will be closed upon successful return. Callers should ensure closure
+// when receiving an error.
 func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadCloser) (result ReadCloser, err error) {
 	req, err := client.UploadFileViaBodyPreparer(ctx, fileContent)
 	if err != nil {

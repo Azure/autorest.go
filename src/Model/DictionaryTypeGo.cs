@@ -40,9 +40,7 @@ namespace AutoRest.Go.Model
         /// <returns>true if the specified object is equal to this object; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
-            var mapType = obj as DictionaryTypeGo;
-
-            if (mapType != null)
+            if (obj is DictionaryTypeGo mapType)
             {
                 return mapType.ValueType == ValueType;
             }

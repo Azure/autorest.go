@@ -32,6 +32,10 @@ namespace AutoRest.Go.Model
 
         public CompositeTypeGo(string name) : base(name)
         {
+            if (string.IsNullOrWhiteSpace(Documentation))
+            {
+                Documentation = "...";
+            }
         }
 
         public CompositeTypeGo(IModelType wrappedType)
@@ -39,6 +43,11 @@ namespace AutoRest.Go.Model
             if (!wrappedType.ShouldBeSyntheticType())
             {
                 throw new ArgumentException("{0} is not a valid type for SyntheticType", wrappedType.ToString());
+            }
+
+            if (string.IsNullOrWhiteSpace(Documentation))
+            {
+                Documentation = "...";
             }
 
             // gosdk: Ensure the generated name does not collide with existing type names
@@ -104,7 +113,9 @@ namespace AutoRest.Go.Model
 
         public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
 
-        public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName)).Name;
+        public string DiscriminatorEnumValue => DiscriminatorEnum?.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName))?.Name;
+
+        public PropertyGo AdditionalPropertiesField => AllProperties.FirstOrDefault(p => p.ModelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties);
 
         public bool IsWrapperType { get; }
 
@@ -114,7 +125,6 @@ namespace AutoRest.Go.Model
         {
             get
             {
-
                 var siblingTypes = RootType.DerivedTypes;
 
                 if (RootType.IsPolymorphic)
@@ -147,12 +157,12 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool HasFlattenedFields => Properties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
 
-        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) ?
-            CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) :
-            (BaseModelType as CompositeTypeGo)?.PolymorphicProperty;
+        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator)
+            ? CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator)
+            : ((CompositeTypeGo)BaseModelType).PolymorphicProperty;
 
         public IEnumerable<PropertyGo> AllProperties => BaseModelType != null ?
-            Properties.Cast<PropertyGo>().Concat((BaseModelType as CompositeTypeGo).AllProperties) :
+            Properties.Cast<PropertyGo>().Concat(((CompositeTypeGo)BaseModelType).AllProperties) :
             Properties.Cast<PropertyGo>();
 
         /// <summary>
@@ -202,7 +212,7 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
-            if (IsPolymorphic || HasFlattenedFields)
+            if (IsPolymorphic || HasFlattenedFields || AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
             {
                 imports.Add("\"encoding/json\"");
             }
@@ -234,12 +244,14 @@ namespace AutoRest.Go.Model
         public virtual string Fields()
         {
             AddPolymorphicPropertyIfNecessary();
-            var indented = new IndentedStringBuilder("    ");
-            var properties = Properties.Cast<PropertyGo>().ToList();
 
-            if (BaseModelType != null)
+            var indented = new IndentedStringBuilder("    ");
+            var properties = AllProperties.ToHashSet();
+
+            if (!IsPolymorphic && RootType.IsPolymorphic)
             {
-                indented.Append(((CompositeTypeGo)BaseModelType).Fields());
+                RootType.AddPolymorphicPropertyIfNecessary();
+                properties.Add((PropertyGo)RootType.PolymorphicDiscriminatorProperty);
             }
 
             // Emit each property, except for named Enumerated types, as a pointer to the type
@@ -249,49 +261,17 @@ namespace AutoRest.Go.Model
                 {
                     indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
                 }
-
-                if (property.ModelType is EnumTypeGo enumType && enumType.IsNamed)
+                if (property.Deprecated)
                 {
-                    indented.AppendFormat("{0} {1} {2}\n",
-                                    property.Name,
-                                    enumType.Name,
-                                    property.JsonTag());
-
-                }
-                else if (property.ModelType is DictionaryType dictionaryType)
-                {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, dictionaryType.Name, property.JsonTag());
-                }
-                else if (property.ModelType.PrimaryType(KnownPrimaryType.Object))
-                {
-                    // TODO: I don't think this is the best way to handle object types
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
-                }
-                else if (property.ModelType is CompositeTypeGo compositeType && property.ShouldBeFlattened())
-                {
-                    // embed as an anonymous struct.  note that the ordering of this clause is
-                    // important, i.e. we don't want to flatten primary types like dictionaries.
-                    // Polymorphic fields are implemented as go interfaces and a pointer to an
-                    // interface is not implementing the interface.
-
-                    if (compositeType.HasInterface())
+                    var message = "This property has been deprecated.";
+                    if (!string.IsNullOrWhiteSpace(property.DeprecationMessage))
                     {
-                        indented.AppendFormat("{0} {1}\n", property.ModelType.GetInterfaceName(), property.JsonTag());
+                        message = property.DeprecationMessage;
                     }
-                    else
-                    {
-                        indented.AppendFormat("*{0} {1}\n", property.ModelType.Name, property.JsonTag());
-                    }
+                    indented.Append($"//\n// Deprecated: {message}\n");
+                }
 
-                }
-                else if (property.ModelType.HasInterface())
-                {
-                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.JsonTag());
-                }
-                else
-                {
-                    indented.AppendFormat("{0} *{1} {2}\n", property.Name, property.ModelType.Name, property.JsonTag());
-                }
+                indented.AppendLine(property.Field);
             }
 
             return indented.ToString();
@@ -325,9 +305,10 @@ namespace AutoRest.Go.Model
         /// </summary>
         public string ZeroInitExpression => $"{Name}{{}}";
 
+        /// <summary>
         /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
         /// </summary>
-        private void AddPolymorphicPropertyIfNecessary()
+        internal void AddPolymorphicPropertyIfNecessary()
         {
             if (!string.IsNullOrEmpty(PolymorphicDiscriminator) && Properties.All(p => p.SerializedName != PolymorphicDiscriminator))
             {

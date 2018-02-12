@@ -283,7 +283,7 @@ func (client PolymorphismClient) PutValid(ctx context.Context, complexBody Basic
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValid")
+		return result, validation.NewError("complexgroup.PolymorphismClient", "PutValid", err.Error())
 	}
 
 	req, err := client.PutValidPreparer(ctx, complexBody)
@@ -340,7 +340,8 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 // PutValidMissingRequired put complex types that are polymorphic, attempting to omit required 'birthday' field - the
 // request should not be allowed from the client
 //
-// complexBody is please attempt put a sawshark that looks like this, the client should not allow this data to be sent:
+// complexBody is please attempt put a sawshark that looks like this, the client should not allow this data to be
+// sent:
 // {
 // "fishtype": "sawshark",
 // "species": "snaggle toothed",
@@ -370,7 +371,7 @@ func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, co
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "complexgroup.PolymorphismClient", "PutValidMissingRequired")
+		return result, validation.NewError("complexgroup.PolymorphismClient", "PutValidMissingRequired", err.Error())
 	}
 
 	req, err := client.PutValidMissingRequiredPreparer(ctx, complexBody)

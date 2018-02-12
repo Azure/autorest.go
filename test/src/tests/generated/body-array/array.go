@@ -2596,7 +2596,7 @@ func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]strin
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutArrayValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutArrayValid", err.Error())
 	}
 
 	req, err := client.PutArrayValidPreparer(ctx, arrayBody)
@@ -2656,7 +2656,7 @@ func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) 
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutBooleanTfft")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutBooleanTfft", err.Error())
 	}
 
 	req, err := client.PutBooleanTfftPreparer(ctx, arrayBody)
@@ -2717,7 +2717,7 @@ func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) 
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutByteValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutByteValid", err.Error())
 	}
 
 	req, err := client.PutByteValidPreparer(ctx, arrayBody)
@@ -2778,7 +2778,7 @@ func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Produ
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutComplexValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutComplexValid", err.Error())
 	}
 
 	req, err := client.PutComplexValidPreparer(ctx, arrayBody)
@@ -2839,7 +2839,7 @@ func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDateTimeRfc1123Valid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutDateTimeRfc1123Valid", err.Error())
 	}
 
 	req, err := client.PutDateTimeRfc1123ValidPreparer(ctx, arrayBody)
@@ -2899,7 +2899,7 @@ func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDateTimeValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutDateTimeValid", err.Error())
 	}
 
 	req, err := client.PutDateTimeValidPreparer(ctx, arrayBody)
@@ -2959,7 +2959,7 @@ func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Dat
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDateValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutDateValid", err.Error())
 	}
 
 	req, err := client.PutDateValidPreparer(ctx, arrayBody)
@@ -3020,7 +3020,7 @@ func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []ma
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDictionaryValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutDictionaryValid", err.Error())
 	}
 
 	req, err := client.PutDictionaryValidPreparer(ctx, arrayBody)
@@ -3080,7 +3080,7 @@ func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float6
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDoubleValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutDoubleValid", err.Error())
 	}
 
 	req, err := client.PutDoubleValidPreparer(ctx, arrayBody)
@@ -3140,7 +3140,7 @@ func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []stri
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutDurationValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutDurationValid", err.Error())
 	}
 
 	req, err := client.PutDurationValidPreparer(ctx, arrayBody)
@@ -3200,7 +3200,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (res
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutEmpty")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutEmpty", err.Error())
 	}
 
 	req, err := client.PutEmptyPreparer(ctx, arrayBody)
@@ -3260,7 +3260,7 @@ func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutFloatValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutFloatValid", err.Error())
 	}
 
 	req, err := client.PutFloatValidPreparer(ctx, arrayBody)
@@ -3320,7 +3320,7 @@ func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutIntegerValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutIntegerValid", err.Error())
 	}
 
 	req, err := client.PutIntegerValidPreparer(ctx, arrayBody)
@@ -3380,7 +3380,7 @@ func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutLongValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutLongValid", err.Error())
 	}
 
 	req, err := client.PutLongValidPreparer(ctx, arrayBody)
@@ -3440,7 +3440,7 @@ func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutStringValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutStringValid", err.Error())
 	}
 
 	req, err := client.PutStringValidPreparer(ctx, arrayBody)
@@ -3501,7 +3501,7 @@ func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUI
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
-		return result, validation.NewErrorWithValidationError(err, "arraygroup.ArrayClient", "PutUUIDValid")
+		return result, validation.NewError("arraygroup.ArrayClient", "PutUUIDValid", err.Error())
 	}
 
 	req, err := client.PutUUIDValidPreparer(ctx, arrayBody)

@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
-using AutoRest.Go;
 using AutoRest.Extensions;
 
 namespace AutoRest.Go.Model
 {
     public class MethodGroupGo : MethodGroup
     {
+        private static HashSet<string> s_AllNames = new HashSet<string>();
+
         public string ClientName { get; private set; }
         public string Documentation { get; private set; }
         public string PackageName { get; private set; }
@@ -38,6 +38,21 @@ namespace AutoRest.Go.Model
         {
             var originalName = Name.Value;
             Name = Name.Value.TrimPackageName(cmg.Namespace);
+
+            // keep a list of all method group names as trimming the package name
+            // can introduce collisions.  if there's a collision append "Group" to
+            // the name.  unfortunately we can't do this in the namer as we don't
+            // have access to the package name.
+            // NOTE: we must include the API version in the set to support batch
+            //       generation which invokes the generator over multiple API versions.
+            //       if we don't do this we end up with erroneous collisions across
+            //       API versions because the generator isn't recycled per batch.
+            if (s_AllNames.Contains($"{cmg.ApiVersion}_{Name.Value}"))
+            {
+                Name += "Group";
+            }
+            s_AllNames.Add($"{cmg.ApiVersion}_{Name.Value}");
+
             if (Name != originalName)
             {
                 // fix up the method group names
