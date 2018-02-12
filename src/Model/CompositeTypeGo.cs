@@ -125,11 +125,11 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var siblingTypes = RootType.DerivedTypes;
+                var siblingTypes = ((CompositeTypeGo)BaseModelType).DerivedTypes;
 
-                if (RootType.IsPolymorphic)
+                if (BaseIsPolymorphic)
                 {
-                    siblingTypes = siblingTypes.ConcatSingleItem(RootType);
+                    siblingTypes = siblingTypes.ConcatSingleItem(BaseModelType);
                 }
 
                 return siblingTypes;
@@ -248,10 +248,10 @@ namespace AutoRest.Go.Model
             var indented = new IndentedStringBuilder("    ");
             var properties = AllProperties.ToHashSet();
 
-            if (!IsPolymorphic && RootType.IsPolymorphic)
+            if (!IsPolymorphic && BaseIsPolymorphic)
             {
-                RootType.AddPolymorphicPropertyIfNecessary();
-                properties.Add((PropertyGo)RootType.PolymorphicDiscriminatorProperty);
+                ((CompositeTypeGo)BaseModelType).AddPolymorphicPropertyIfNecessary();
+                properties.Add((PropertyGo)BaseModelType.PolymorphicDiscriminatorProperty);
             }
 
             // Emit each property, except for named Enumerated types, as a pointer to the type
