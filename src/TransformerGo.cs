@@ -23,11 +23,29 @@ namespace AutoRest.Go
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);
             TransformMethods(cmg);
+            TransformPropertyTypes(cmg);
             SwaggerExtensions.ProcessParameterizedHost(cmg);
             FixStutteringTypeNames(cmg);
             AssureUniqueNames(cmg);
 
             return cmg;
+        }
+
+        private static void TransformPropertyTypes(CodeModelGo cmg)
+        {
+            foreach (var model in cmg.ModelTypes)
+            {
+                foreach (var property in model.Properties)
+                {
+                    // Flattened fields are referred to with their type name,
+                    // this name change generates correct custom unmarshalers and validation code,
+                    // plus flattening does not need to be checked that often
+                    if (property.ShouldBeFlattened() && property.ModelType is CompositeTypeGo)
+                    {
+                        property.Name = property.ModelType.HasInterface() ? property.ModelType.GetInterfaceName() : property.ModelType.Name.Value;
+                    }
+                }
+            }
         }
 
         private static void TransformEnumTypes(CodeModelGo cmg)

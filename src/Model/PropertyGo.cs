@@ -11,20 +11,7 @@ namespace AutoRest.Go.Model
     {
         public PropertyGo()
         {
-            Name.OnGet += v =>
-            {
-                // Flattened fields are referred to with their type name,
-                // this name change generates correct custom unmarshalers and validation code,
-                // plus flattening does not need to be checked that often
-                if (this.ShouldBeFlattened() && ModelType is CompositeTypeGo)
-                {
-                    return ModelType.HasInterface() ? ModelType.GetInterfaceName() : ModelType.Name.Value;
-                }
-                else
-                {
-                    return v;
-                }
-            };
+            Name.OnGet += v => CodeNamerGo.Instance.GetPropertyName(Name.FixedValue);
         }
 
         public string JsonTag(bool omitEmpty = true)
@@ -68,7 +55,7 @@ namespace AutoRest.Go.Model
         {
             if (value is PropertyGo goProperty)
             {
-                return goProperty.Field == Field;
+                return goProperty.Name == Name;
             }
 
             return false;
@@ -80,7 +67,7 @@ namespace AutoRest.Go.Model
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
         {
-            return Field.GetHashCode();
+            return Name.GetHashCode();
         }
     }
 }

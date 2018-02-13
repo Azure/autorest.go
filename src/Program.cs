@@ -64,7 +64,7 @@ namespace AutoRest.Go
 
             // build settings
             var altNamespace = (await GetValue<string[]>("input-file") ?? new[] { "" }).FirstOrDefault()?.Split('/').Last().Split('\\').Last().Split('.').First();
-            
+
             new Settings
             {
                 Namespace = await GetValue("namespace"),
