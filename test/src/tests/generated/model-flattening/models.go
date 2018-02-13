@@ -41,10 +41,10 @@ const (
 
 // BaseProduct the product documentation.
 type BaseProduct struct {
-	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
-	ProductID *string `json:"base_product_id,omitempty"`
-	// Description - Description of product.
-	Description *string `json:"base_product_description,omitempty"`
+	// BaseProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
+	BaseProductID *string `json:"base_product_id,omitempty"`
+	// BaseProductDescription - Description of product.
+	BaseProductDescription *string `json:"base_product_description,omitempty"`
 }
 
 // Error ...
@@ -343,10 +343,10 @@ func (sfp SetFlattenedProduct) MarshalJSON() ([]byte, error) {
 type SimpleProduct struct {
 	autorest.Response        `json:"-"`
 	*SimpleProductProperties `json:"details,omitempty"`
-	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
-	ProductID *string `json:"base_product_id,omitempty"`
-	// Description - Description of product.
-	Description *string `json:"base_product_description,omitempty"`
+	// BaseProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
+	BaseProductID *string `json:"base_product_id,omitempty"`
+	// BaseProductDescription - Description of product.
+	BaseProductDescription *string `json:"base_product_description,omitempty"`
 }
 
 // UnmarshalJSON is the custom unmarshaler for SimpleProduct struct.
@@ -369,21 +369,21 @@ func (sp *SimpleProduct) UnmarshalJSON(body []byte) error {
 			}
 		case "base_product_id":
 			if v != nil {
-				var productID string
-				err = json.Unmarshal(*v, &productID)
+				var baseProductID string
+				err = json.Unmarshal(*v, &baseProductID)
 				if err != nil {
 					return err
 				}
-				sp.ProductID = &productID
+				sp.BaseProductID = &baseProductID
 			}
 		case "base_product_description":
 			if v != nil {
-				var description string
-				err = json.Unmarshal(*v, &description)
+				var baseProductDescription string
+				err = json.Unmarshal(*v, &baseProductDescription)
 				if err != nil {
 					return err
 				}
-				sp.Description = &description
+				sp.BaseProductDescription = &baseProductDescription
 			}
 		}
 	}
@@ -395,9 +395,9 @@ func (sp *SimpleProduct) UnmarshalJSON(body []byte) error {
 type SimpleProductProperties struct {
 	// MaxProductDisplayName - Display name of product.
 	MaxProductDisplayName *string `json:"max_product_display_name,omitempty"`
-	// Capacity - Capacity of product. For example, 4 people.
-	Capacity    *string `json:"max_product_capacity,omitempty"`
-	*ProductURL `json:"max_product_image,omitempty"`
+	// MaxProductCapacity - Capacity of product. For example, 4 people.
+	MaxProductCapacity *string `json:"max_product_capacity,omitempty"`
+	*ProductURL        `json:"max_product_image,omitempty"`
 }
 
 // UnmarshalJSON is the custom unmarshaler for SimpleProductProperties struct.
@@ -420,12 +420,12 @@ func (spp *SimpleProductProperties) UnmarshalJSON(body []byte) error {
 			}
 		case "max_product_capacity":
 			if v != nil {
-				var capacity string
-				err = json.Unmarshal(*v, &capacity)
+				var maxProductCapacity string
+				err = json.Unmarshal(*v, &maxProductCapacity)
 				if err != nil {
 					return err
 				}
-				spp.Capacity = &capacity
+				spp.MaxProductCapacity = &maxProductCapacity
 			}
 		case "max_product_image":
 			if v != nil {

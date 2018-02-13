@@ -259,7 +259,7 @@ func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleB
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
 				Chain: []validation.Constraint{{Target: "simpleBodyProduct.SimpleProductProperties", Name: validation.Null, Rule: false,
 					Chain: []validation.Constraint{{Target: "simpleBodyProduct.SimpleProductProperties.MaxProductDisplayName", Name: validation.Null, Rule: true, Chain: nil},
-						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
+						{Target: "simpleBodyProduct.SimpleProductProperties.MaxProductCapacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
 		return result, validation.NewError("modelflatteninggroup.BaseClient", "PostFlattenedSimpleProduct", err.Error())
@@ -503,7 +503,7 @@ func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
 				Chain: []validation.Constraint{{Target: "simpleBodyProduct.SimpleProductProperties", Name: validation.Null, Rule: false,
 					Chain: []validation.Constraint{{Target: "simpleBodyProduct.SimpleProductProperties.MaxProductDisplayName", Name: validation.Null, Rule: true, Chain: nil},
-						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
+						{Target: "simpleBodyProduct.SimpleProductProperties.MaxProductCapacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
 		return result, validation.NewError("modelflatteninggroup.BaseClient", "PutSimpleProduct", err.Error())
@@ -573,7 +573,7 @@ func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name 
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
 				Chain: []validation.Constraint{{Target: "simpleBodyProduct.SimpleProductProperties", Name: validation.Null, Rule: false,
 					Chain: []validation.Constraint{{Target: "simpleBodyProduct.SimpleProductProperties.MaxProductDisplayName", Name: validation.Null, Rule: true, Chain: nil},
-						{Target: "simpleBodyProduct.SimpleProductProperties.Capacity", Name: validation.Null, Rule: true, Chain: nil},
+						{Target: "simpleBodyProduct.SimpleProductProperties.MaxProductCapacity", Name: validation.Null, Rule: true, Chain: nil},
 					}},
 				}}}}}); err != nil {
 		return result, validation.NewError("modelflatteninggroup.BaseClient", "PutSimpleProductWithGrouping", err.Error())
