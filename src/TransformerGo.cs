@@ -23,10 +23,10 @@ namespace AutoRest.Go
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);
             TransformMethods(cmg);
-            TransformPropertyTypes(cmg);
             SwaggerExtensions.ProcessParameterizedHost(cmg);
             FixStutteringTypeNames(cmg);
             AssureUniqueNames(cmg);
+            TransformPropertyTypes(cmg);
 
             return cmg;
         }

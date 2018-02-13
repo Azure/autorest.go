@@ -11,7 +11,6 @@ namespace AutoRest.Go.Model
     {
         public PropertyGo()
         {
-            Name.OnGet += v => CodeNamerGo.Instance.GetPropertyName(Name.FixedValue);
         }
 
         public string JsonTag(bool omitEmpty = true)
