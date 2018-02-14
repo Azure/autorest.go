@@ -200,7 +200,7 @@ namespace AutoRest.Go.Model
 
         public override Property Add(Property item)
         {
-            var property = base.Add(item) as PropertyGo;
+            var property = base.Add(item);
             AddPolymorphicPropertyIfNecessary();
             return property;
         }
@@ -314,7 +314,7 @@ namespace AutoRest.Go.Model
             {
                 base.Add(New<Property>(new
                 {
-                    Name = CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator),
+                    Name = PolymorphicDiscriminator,
                     SerializedName = PolymorphicDiscriminator,
                     ModelType = DiscriminatorEnum
                 }));
