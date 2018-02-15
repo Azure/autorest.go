@@ -518,6 +518,7 @@ func (client IntClient) putMax32Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -563,6 +564,7 @@ func (client IntClient) putMax64Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -608,6 +610,7 @@ func (client IntClient) putMin32Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -653,6 +656,7 @@ func (client IntClient) putMin64Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -698,5 +702,6 @@ func (client IntClient) putUnixTimeDateResponder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }

@@ -1011,6 +1011,7 @@ func (client MultipleResponsesClient) get202None204NoneDefaultError202NoneRespon
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1046,6 +1047,7 @@ func (client MultipleResponsesClient) get202None204NoneDefaultError204NoneRespon
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1082,6 +1084,7 @@ func (client MultipleResponsesClient) get202None204NoneDefaultError400ValidRespo
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1117,6 +1120,7 @@ func (client MultipleResponsesClient) get202None204NoneDefaultNone202InvalidResp
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1152,6 +1156,7 @@ func (client MultipleResponsesClient) get202None204NoneDefaultNone204NoneRespond
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1187,6 +1192,7 @@ func (client MultipleResponsesClient) get202None204NoneDefaultNone400InvalidResp
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1222,6 +1228,7 @@ func (client MultipleResponsesClient) get202None204NoneDefaultNone400NoneRespond
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1457,6 +1464,7 @@ func (client MultipleResponsesClient) getDefaultNone200InvalidResponder(resp pip
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1492,6 +1500,7 @@ func (client MultipleResponsesClient) getDefaultNone200NoneResponder(resp pipeli
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1527,6 +1536,7 @@ func (client MultipleResponsesClient) getDefaultNone400InvalidResponder(resp pip
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -1562,5 +1572,6 @@ func (client MultipleResponsesClient) getDefaultNone400NoneResponder(resp pipeli
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }

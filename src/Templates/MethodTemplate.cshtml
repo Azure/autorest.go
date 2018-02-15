@@ -149,6 +149,10 @@ func (client @(Model.MethodGroup.ClientName)) @(opIdCamelCase)Responder(resp pip
 	if resp == nil {
 		return nil, err
 	}
+@if (!Model.ReturnType.Body.IsStreamType() && !Model.ReturnValueRequiresUnmarshalling())
+{
+    @:resp.Response().Body.Close()
+}
 @if (Model.ReturnValueRequiresUnmarshalling())
 {
     var unmarshalInto = "result";
