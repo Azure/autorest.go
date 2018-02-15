@@ -267,6 +267,7 @@ func (client BoolClient) putFalseResponder(resp pipeline.Response) (pipeline.Res
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -312,5 +313,6 @@ func (client BoolClient) putTrueResponder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }

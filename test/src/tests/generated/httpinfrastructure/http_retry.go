@@ -67,6 +67,7 @@ func (client HTTPRetryClient) delete503Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -102,6 +103,7 @@ func (client HTTPRetryClient) get502Responder(resp pipeline.Response) (pipeline.
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -137,6 +139,7 @@ func (client HTTPRetryClient) head408Responder(resp pipeline.Response) (pipeline
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -183,6 +186,7 @@ func (client HTTPRetryClient) patch500Responder(resp pipeline.Response) (pipelin
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -229,6 +233,7 @@ func (client HTTPRetryClient) patch504Responder(resp pipeline.Response) (pipelin
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -275,6 +280,7 @@ func (client HTTPRetryClient) post503Responder(resp pipeline.Response) (pipeline
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -321,6 +327,7 @@ func (client HTTPRetryClient) put500Responder(resp pipeline.Response) (pipeline.
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
 
@@ -367,5 +374,6 @@ func (client HTTPRetryClient) put504Responder(resp pipeline.Response) (pipeline.
 	if resp == nil {
 		return nil, err
 	}
+	resp.Response().Body.Close()
 	return resp, err
 }
