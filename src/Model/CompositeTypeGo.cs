@@ -176,7 +176,7 @@ namespace AutoRest.Go.Model
                 {
 
                     CompositeType rootModelType = this;
-                    while (rootModelType.BaseModelType != null && rootModelType.BaseIsPolymorphic)
+                    while (rootModelType.BaseModelType?.BaseIsPolymorphic == true)
                     {
                         rootModelType = rootModelType.BaseModelType;
                     }
