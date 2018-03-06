@@ -18,6 +18,11 @@ const (
 	ConstantStringAsEnum EnumConst = "constant_string_as_enum"
 )
 
+// PossibleEnumConstValues returns an array of possible values for the EnumConst const type.
+func PossibleEnumConstValues() [1]EnumConst {
+	return [1]EnumConst{ConstantStringAsEnum}
+}
+
 // ChildProduct the product documentation.
 type ChildProduct struct {
 	// ConstProperty - Constant string
