@@ -39,6 +39,11 @@ const (
 	Updating ProvisioningStateValues = "Updating"
 )
 
+// PossibleProvisioningStateValuesValues returns an array of possible values for the ProvisioningStateValues const type.
+func PossibleProvisioningStateValuesValues() [11]ProvisioningStateValues {
+	return [11]ProvisioningStateValues{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
+}
+
 // BaseProduct the product documentation.
 type BaseProduct struct {
 	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.

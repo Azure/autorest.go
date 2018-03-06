@@ -40,6 +40,11 @@ const (
 	Updating Status = "Updating"
 )
 
+// PossibleStatusValues returns an array of possible values for the Status const type.
+func PossibleStatusValues() [11]Status {
+	return [11]Status{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
+}
+
 // OdataProductResult ...
 type OdataProductResult struct {
 	autorest.Response `json:"-"`

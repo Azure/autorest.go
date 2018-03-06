@@ -41,6 +41,11 @@ const (
 	Updating ProvisioningStateValues = "Updating"
 )
 
+// PossibleProvisioningStateValuesValues returns an array of possible values for the ProvisioningStateValues const type.
+func PossibleProvisioningStateValuesValues() [11]ProvisioningStateValues {
+	return [11]ProvisioningStateValues{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
+}
+
 // ProvisioningStateValues1 enumerates the values for provisioning state values 1.
 type ProvisioningStateValues1 string
 
@@ -69,6 +74,11 @@ const (
 	ProvisioningStateValues1Updating ProvisioningStateValues1 = "Updating"
 )
 
+// PossibleProvisioningStateValues1Values returns an array of possible values for the ProvisioningStateValues1 const type.
+func PossibleProvisioningStateValues1Values() [11]ProvisioningStateValues1 {
+	return [11]ProvisioningStateValues1{ProvisioningStateValues1Accepted, ProvisioningStateValues1Canceled, ProvisioningStateValues1Created, ProvisioningStateValues1Creating, ProvisioningStateValues1Deleted, ProvisioningStateValues1Deleting, ProvisioningStateValues1Failed, ProvisioningStateValues1OK, ProvisioningStateValues1Succeeded, ProvisioningStateValues1Updated, ProvisioningStateValues1Updating}
+}
+
 // Status enumerates the values for status.
 type Status string
 
@@ -96,6 +106,11 @@ const (
 	// StatusUpdating ...
 	StatusUpdating Status = "Updating"
 )
+
+// PossibleStatusValues returns an array of possible values for the Status const type.
+func PossibleStatusValues() [11]Status {
+	return [11]Status{StatusAccepted, StatusCanceled, StatusCreated, StatusCreating, StatusDeleted, StatusDeleting, StatusFailed, StatusOK, StatusSucceeded, StatusUpdated, StatusUpdating}
+}
 
 // CloudError ...
 type CloudError struct {
