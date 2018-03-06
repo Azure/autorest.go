@@ -141,7 +141,7 @@ else
     </text>
 }
 
-@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
+@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.HasFlattenedFields ||  Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
 {
     <text>
         @EmptyLine
@@ -319,7 +319,7 @@ else
             {
                     @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.Name))
             }
-            else 
+            else
             {
                 @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = &@(CodeNamerGo.Instance.GetVariableName(p.Name))
             }
