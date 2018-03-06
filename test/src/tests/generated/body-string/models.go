@@ -22,6 +22,11 @@ const (
 	Redcolor Colors = "red color"
 )
 
+// PossibleColorsValues returns an array of possible values for the Colors const type.
+func PossibleColorsValues() [3]Colors {
+	return [3]Colors{BlueColor, GreenColor, Redcolor}
+}
+
 // Base64URL ...
 type Base64URL struct {
 	autorest.Response `json:"-"`

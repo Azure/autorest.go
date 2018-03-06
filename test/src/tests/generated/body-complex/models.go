@@ -26,6 +26,11 @@ const (
 	YELLOW CMYKColors = "YELLOW"
 )
 
+// PossibleCMYKColorsValues returns an array of possible values for the CMYKColors const type.
+func PossibleCMYKColorsValues() [4]CMYKColors {
+	return [4]CMYKColors{BlacK, Cyan, Magenta, YELLOW}
+}
+
 // Fishtype enumerates the values for fishtype.
 type Fishtype string
 
@@ -45,6 +50,11 @@ const (
 	// FishtypeSmartSalmon ...
 	FishtypeSmartSalmon Fishtype = "smart_salmon"
 )
+
+// PossibleFishtypeValues returns an array of possible values for the Fishtype const type.
+func PossibleFishtypeValues() [7]Fishtype {
+	return [7]Fishtype{FishtypeCookiecuttershark, FishtypeFish, FishtypeGoblin, FishtypeSalmon, FishtypeSawshark, FishtypeShark, FishtypeSmartSalmon}
+}
 
 // ArrayWrapper ...
 type ArrayWrapper struct {

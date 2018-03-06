@@ -18,6 +18,11 @@ const (
 	Redcolor URIColor = "red color"
 )
 
+// PossibleURIColorValues returns an array of possible values for the URIColor const type.
+func PossibleURIColorValues() [3]URIColor {
+	return [3]URIColor{Bluecolor, Greencolor, Redcolor}
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
