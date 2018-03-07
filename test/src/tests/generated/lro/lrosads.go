@@ -480,7 +480,7 @@ func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Prod
 // Post202NoLocationPreparer prepares the Post202NoLocation request.
 func (client LROSADsClient) Post202NoLocationPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/post/202/nolocation"))
@@ -540,7 +540,7 @@ func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Pro
 // Post202NonRetry400Preparer prepares the Post202NonRetry400 request.
 func (client LROSADsClient) Post202NonRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/post/202/retry/400"))
@@ -601,7 +601,7 @@ func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, produ
 // Post202RetryInvalidHeaderPreparer prepares the Post202RetryInvalidHeader request.
 func (client LROSADsClient) Post202RetryInvalidHeaderPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/post/202/retry/invalidheader"))
@@ -662,7 +662,7 @@ func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, produ
 // PostAsyncRelativeRetry400Preparer prepares the PostAsyncRelativeRetry400 request.
 func (client LROSADsClient) PostAsyncRelativeRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/postasync/retry/400"))
@@ -724,7 +724,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Cont
 // PostAsyncRelativeRetryInvalidHeaderPreparer prepares the PostAsyncRelativeRetryInvalidHeader request.
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/postasync/retry/invalidheader"))
@@ -786,7 +786,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context
 // PostAsyncRelativeRetryInvalidJSONPollingPreparer prepares the PostAsyncRelativeRetryInvalidJSONPolling request.
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/postasync/retry/invalidjsonpolling"))
@@ -848,7 +848,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context,
 // PostAsyncRelativeRetryNoPayloadPreparer prepares the PostAsyncRelativeRetryNoPayload request.
 func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/postasync/retry/nopayload"))
@@ -908,7 +908,7 @@ func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Produc
 // PostNonRetry400Preparer prepares the PostNonRetry400 request.
 func (client LROSADsClient) PostNonRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/post/400"))
@@ -969,7 +969,7 @@ func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Prod
 // Put200InvalidJSONPreparer prepares the Put200InvalidJSON request.
 func (client LROSADsClient) Put200InvalidJSONPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/put/200/invalidjson"))
@@ -1031,7 +1031,7 @@ func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, produc
 // PutAsyncRelativeRetry400Preparer prepares the PutAsyncRelativeRetry400 request.
 func (client LROSADsClient) PutAsyncRelativeRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/putasync/retry/400"))
@@ -1094,7 +1094,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Conte
 // PutAsyncRelativeRetryInvalidHeaderPreparer prepares the PutAsyncRelativeRetryInvalidHeader request.
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/putasync/retry/invalidheader"))
@@ -1157,7 +1157,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.
 // PutAsyncRelativeRetryInvalidJSONPollingPreparer prepares the PutAsyncRelativeRetryInvalidJSONPolling request.
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/putasync/retry/invalidjsonpolling"))
@@ -1220,7 +1220,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, p
 // PutAsyncRelativeRetryNoStatusPreparer prepares the PutAsyncRelativeRetryNoStatus request.
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/putasync/retry/nostatus"))
@@ -1283,7 +1283,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Con
 // PutAsyncRelativeRetryNoStatusPayloadPreparer prepares the PutAsyncRelativeRetryNoStatusPayload request.
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/putasync/retry/nostatuspayload"))
@@ -1345,7 +1345,7 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Co
 // PutError201NoProvisioningStatePayloadPreparer prepares the PutError201NoProvisioningStatePayload request.
 func (client LROSADsClient) PutError201NoProvisioningStatePayloadPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/error/put/201/noprovisioningstatepayload"))
@@ -1407,7 +1407,7 @@ func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, produ
 // PutNonRetry201Creating400Preparer prepares the PutNonRetry201Creating400 request.
 func (client LROSADsClient) PutNonRetry201Creating400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/put/201/creating/400"))
@@ -1469,7 +1469,7 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Con
 // PutNonRetry201Creating400InvalidJSONPreparer prepares the PutNonRetry201Creating400InvalidJSON request.
 func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/put/201/creating/400/invalidjson"))
@@ -1530,7 +1530,7 @@ func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product
 // PutNonRetry400Preparer prepares the PutNonRetry400 request.
 func (client LROSADsClient) PutNonRetry400Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/nonretryerror/put/400"))

@@ -56,7 +56,7 @@ func (client HTTPRedirectsClient) Delete307(ctx context.Context, booleanValue *b
 // Delete307Preparer prepares the Delete307 request.
 func (client HTTPRedirectsClient) Delete307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/307"))
@@ -524,7 +524,7 @@ func (client HTTPRedirectsClient) Patch302(ctx context.Context, booleanValue *bo
 // Patch302Preparer prepares the Patch302 request.
 func (client HTTPRedirectsClient) Patch302Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/302"))
@@ -582,7 +582,7 @@ func (client HTTPRedirectsClient) Patch307(ctx context.Context, booleanValue *bo
 // Patch307Preparer prepares the Patch307 request.
 func (client HTTPRedirectsClient) Patch307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/307"))
@@ -641,7 +641,7 @@ func (client HTTPRedirectsClient) Post303(ctx context.Context, booleanValue *boo
 // Post303Preparer prepares the Post303 request.
 func (client HTTPRedirectsClient) Post303Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/303"))
@@ -699,7 +699,7 @@ func (client HTTPRedirectsClient) Post307(ctx context.Context, booleanValue *boo
 // Post307Preparer prepares the Post307 request.
 func (client HTTPRedirectsClient) Post307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/307"))
@@ -758,7 +758,7 @@ func (client HTTPRedirectsClient) Put301(ctx context.Context, booleanValue *bool
 // Put301Preparer prepares the Put301 request.
 func (client HTTPRedirectsClient) Put301Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/301"))
@@ -816,7 +816,7 @@ func (client HTTPRedirectsClient) Put307(ctx context.Context, booleanValue *bool
 // Put307Preparer prepares the Put307 request.
 func (client HTTPRedirectsClient) Put307Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/redirect/307"))

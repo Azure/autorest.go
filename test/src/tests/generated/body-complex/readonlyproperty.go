@@ -107,7 +107,7 @@ func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody R
 // PutValidPreparer prepares the PutValid request.
 func (client ReadonlypropertyClient) PutValidPreparer(ctx context.Context, complexBody ReadonlyObj) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/readonlyproperty/valid"),

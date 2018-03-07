@@ -264,7 +264,7 @@ func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody Diction
 // PutEmptyPreparer prepares the PutEmpty request.
 func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, complexBody DictionaryWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/empty"),
@@ -320,7 +320,7 @@ func (client DictionaryClient) PutValid(ctx context.Context, complexBody Diction
 // PutValidPreparer prepares the PutValid request.
 func (client DictionaryClient) PutValidPreparer(ctx context.Context, complexBody DictionaryWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/valid"),

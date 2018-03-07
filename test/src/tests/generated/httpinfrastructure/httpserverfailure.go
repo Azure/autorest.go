@@ -56,7 +56,7 @@ func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValu
 // Delete505Preparer prepares the Delete505 request.
 func (client HTTPServerFailureClient) Delete505Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/server/505"))
@@ -219,7 +219,7 @@ func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue 
 // Post505Preparer prepares the Post505 request.
 func (client HTTPServerFailureClient) Post505Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/server/505"))

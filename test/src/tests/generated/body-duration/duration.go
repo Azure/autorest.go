@@ -211,7 +211,7 @@ func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBo
 // PutPositiveDurationPreparer prepares the PutPositiveDuration request.
 func (client DurationClient) PutPositiveDurationPreparer(ctx context.Context, durationBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/duration/positiveduration"),

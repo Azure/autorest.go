@@ -346,14 +346,7 @@ namespace AutoRest.Go.Model
 
                 if (BodyParameter != null)
                 {
-                    if (BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
-                    {
-                        decorators.Add("autorest.AsOctetStream()");
-                    }
-                    else
-                    {
-                        decorators.Add("autorest.AsJSON()");
-                    }
+                    decorators.Add($"autorest.AsContentType(\"{RequestContentType}\")");
                 }
 
                 decorators.Add(HTTPMethodDecorator);

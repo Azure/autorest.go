@@ -420,7 +420,7 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datet
 // PutUtcMaxDateTimePreparer prepares the PutUtcMaxDateTime request.
 func (client Datetimerfc1123Client) PutUtcMaxDateTimePreparer(ctx context.Context, datetimeBody date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/max"),
@@ -474,7 +474,7 @@ func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datet
 // PutUtcMinDateTimePreparer prepares the PutUtcMinDateTime request.
 func (client Datetimerfc1123Client) PutUtcMinDateTimePreparer(ctx context.Context, datetimeBody date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/min"),

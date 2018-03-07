@@ -213,7 +213,7 @@ func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors
 // PutNotExpandablePreparer prepares the PutNotExpandable request.
 func (client EnumClient) PutNotExpandablePreparer(ctx context.Context, stringBody Colors) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/notExpandable"),
@@ -268,7 +268,7 @@ func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Color
 // PutReferencedPreparer prepares the PutReferenced request.
 func (client EnumClient) PutReferencedPreparer(ctx context.Context, enumStringBody Colors) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/Referenced"),
@@ -328,7 +328,7 @@ func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBo
 // PutReferencedConstantPreparer prepares the PutReferencedConstant request.
 func (client EnumClient) PutReferencedConstantPreparer(ctx context.Context, enumStringBody RefColorConstant) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/enum/ReferencedConstant"),
