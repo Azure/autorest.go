@@ -283,7 +283,7 @@ func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter 
 // PutOptionalBodyPreparer prepares the PutOptionalBody request.
 func (client ImplicitClient) PutOptionalBodyPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/implicit/optional/body"))

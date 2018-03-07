@@ -321,7 +321,7 @@ func (client BasicClient) PutValidPreparer(ctx context.Context, complexBody Basi
 	}
 
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/basic/valid"),

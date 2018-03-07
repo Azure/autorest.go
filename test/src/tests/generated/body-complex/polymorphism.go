@@ -162,7 +162,7 @@ func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody
 // PutComplicatedPreparer prepares the PutComplicated request.
 func (client PolymorphismClient) PutComplicatedPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/complicated"),
@@ -216,7 +216,7 @@ func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, co
 // PutMissingDiscriminatorPreparer prepares the PutMissingDiscriminator request.
 func (client PolymorphismClient) PutMissingDiscriminatorPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/missingdiscriminator"),
@@ -310,7 +310,7 @@ func (client PolymorphismClient) PutValid(ctx context.Context, complexBody Basic
 // PutValidPreparer prepares the PutValid request.
 func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/valid"),
@@ -398,7 +398,7 @@ func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, co
 // PutValidMissingRequiredPreparer prepares the PutValidMissingRequired request.
 func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/missingrequired/invalid"),

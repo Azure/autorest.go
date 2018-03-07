@@ -262,7 +262,7 @@ func (client BoolClient) PutFalse(ctx context.Context) (result autorest.Response
 // PutFalsePreparer prepares the PutFalse request.
 func (client BoolClient) PutFalsePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/false"),
@@ -315,7 +315,7 @@ func (client BoolClient) PutTrue(ctx context.Context) (result autorest.Response,
 // PutTruePreparer prepares the PutTrue request.
 func (client BoolClient) PutTruePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/bool/true"),

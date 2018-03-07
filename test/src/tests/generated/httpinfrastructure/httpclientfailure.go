@@ -56,7 +56,7 @@ func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValu
 // Delete400Preparer prepares the Delete400 request.
 func (client HTTPClientFailureClient) Delete400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -115,7 +115,7 @@ func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValu
 // Delete407Preparer prepares the Delete407 request.
 func (client HTTPClientFailureClient) Delete407Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/407"))
@@ -174,7 +174,7 @@ func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValu
 // Delete417Preparer prepares the Delete417 request.
 func (client HTTPClientFailureClient) Delete417Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/417"))
@@ -753,7 +753,7 @@ func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue
 // Patch400Preparer prepares the Patch400 request.
 func (client HTTPClientFailureClient) Patch400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -812,7 +812,7 @@ func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue
 // Patch405Preparer prepares the Patch405 request.
 func (client HTTPClientFailureClient) Patch405Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/405"))
@@ -871,7 +871,7 @@ func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue
 // Patch414Preparer prepares the Patch414 request.
 func (client HTTPClientFailureClient) Patch414Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/414"))
@@ -930,7 +930,7 @@ func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue 
 // Post400Preparer prepares the Post400 request.
 func (client HTTPClientFailureClient) Post400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -989,7 +989,7 @@ func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue 
 // Post406Preparer prepares the Post406 request.
 func (client HTTPClientFailureClient) Post406Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/406"))
@@ -1048,7 +1048,7 @@ func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue 
 // Post415Preparer prepares the Post415 request.
 func (client HTTPClientFailureClient) Post415Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/415"))
@@ -1107,7 +1107,7 @@ func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *
 // Put400Preparer prepares the Put400 request.
 func (client HTTPClientFailureClient) Put400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -1166,7 +1166,7 @@ func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *
 // Put404Preparer prepares the Put404 request.
 func (client HTTPClientFailureClient) Put404Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/404"))
@@ -1225,7 +1225,7 @@ func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *
 // Put409Preparer prepares the Put409 request.
 func (client HTTPClientFailureClient) Put409Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/409"))
@@ -1284,7 +1284,7 @@ func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *
 // Put413Preparer prepares the Put413 request.
 func (client HTTPClientFailureClient) Put413Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/413"))

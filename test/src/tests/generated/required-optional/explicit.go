@@ -112,7 +112,7 @@ func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bod
 // PostOptionalArrayParameterPreparer prepares the PostOptionalArrayParameter request.
 func (client ExplicitClient) PostOptionalArrayParameterPreparer(ctx context.Context, bodyParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/array/parameter"))
@@ -169,7 +169,7 @@ func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, body
 // PostOptionalArrayPropertyPreparer prepares the PostOptionalArrayProperty request.
 func (client ExplicitClient) PostOptionalArrayPropertyPreparer(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/array/property"))
@@ -233,7 +233,7 @@ func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bod
 // PostOptionalClassParameterPreparer prepares the PostOptionalClassParameter request.
 func (client ExplicitClient) PostOptionalClassParameterPreparer(ctx context.Context, bodyParameter *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/class/parameter"))
@@ -300,7 +300,7 @@ func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, body
 // PostOptionalClassPropertyPreparer prepares the PostOptionalClassProperty request.
 func (client ExplicitClient) PostOptionalClassPropertyPreparer(ctx context.Context, bodyParameter *ClassOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/class/property"))
@@ -413,7 +413,7 @@ func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, b
 // PostOptionalIntegerParameterPreparer prepares the PostOptionalIntegerParameter request.
 func (client ExplicitClient) PostOptionalIntegerParameterPreparer(ctx context.Context, bodyParameter *int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/integer/parameter"))
@@ -470,7 +470,7 @@ func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bo
 // PostOptionalIntegerPropertyPreparer prepares the PostOptionalIntegerProperty request.
 func (client ExplicitClient) PostOptionalIntegerPropertyPreparer(ctx context.Context, bodyParameter *IntOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/integer/property"))
@@ -583,7 +583,7 @@ func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bo
 // PostOptionalStringParameterPreparer prepares the PostOptionalStringParameter request.
 func (client ExplicitClient) PostOptionalStringParameterPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/string/parameter"))
@@ -640,7 +640,7 @@ func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bod
 // PostOptionalStringPropertyPreparer prepares the PostOptionalStringProperty request.
 func (client ExplicitClient) PostOptionalStringPropertyPreparer(ctx context.Context, bodyParameter *StringOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/string/property"))
@@ -765,7 +765,7 @@ func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bod
 // PostRequiredArrayParameterPreparer prepares the PostRequiredArrayParameter request.
 func (client ExplicitClient) PostRequiredArrayParameterPreparer(ctx context.Context, bodyParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/array/parameter"),
@@ -827,7 +827,7 @@ func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, body
 // PostRequiredArrayPropertyPreparer prepares the PostRequiredArrayProperty request.
 func (client ExplicitClient) PostRequiredArrayPropertyPreparer(ctx context.Context, bodyParameter ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/array/property"),
@@ -889,7 +889,7 @@ func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bod
 // PostRequiredClassParameterPreparer prepares the PostRequiredClassParameter request.
 func (client ExplicitClient) PostRequiredClassParameterPreparer(ctx context.Context, bodyParameter Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/class/parameter"),
@@ -952,7 +952,7 @@ func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, body
 // PostRequiredClassPropertyPreparer prepares the PostRequiredClassProperty request.
 func (client ExplicitClient) PostRequiredClassPropertyPreparer(ctx context.Context, bodyParameter ClassWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/class/property"),
@@ -1063,7 +1063,7 @@ func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, b
 // PostRequiredIntegerParameterPreparer prepares the PostRequiredIntegerParameter request.
 func (client ExplicitClient) PostRequiredIntegerParameterPreparer(ctx context.Context, bodyParameter int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/integer/parameter"),
@@ -1125,7 +1125,7 @@ func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bo
 // PostRequiredIntegerPropertyPreparer prepares the PostRequiredIntegerProperty request.
 func (client ExplicitClient) PostRequiredIntegerPropertyPreparer(ctx context.Context, bodyParameter IntWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/integer/property"),
@@ -1236,7 +1236,7 @@ func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bo
 // PostRequiredStringParameterPreparer prepares the PostRequiredStringParameter request.
 func (client ExplicitClient) PostRequiredStringParameterPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/string/parameter"),
@@ -1298,7 +1298,7 @@ func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bod
 // PostRequiredStringPropertyPreparer prepares the PostRequiredStringProperty request.
 func (client ExplicitClient) PostRequiredStringPropertyPreparer(ctx context.Context, bodyParameter StringWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/string/property"),

@@ -784,7 +784,7 @@ func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal
 // PutBigDecimalPreparer prepares the PutBigDecimal request.
 func (client NumberClient) PutBigDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/2.5976931e+101"),
@@ -837,7 +837,7 @@ func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (re
 // PutBigDecimalNegativeDecimalPreparer prepares the PutBigDecimalNegativeDecimal request.
 func (client NumberClient) PutBigDecimalNegativeDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/-99999999.99"),
@@ -890,7 +890,7 @@ func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (re
 // PutBigDecimalPositiveDecimalPreparer prepares the PutBigDecimalPositiveDecimal request.
 func (client NumberClient) PutBigDecimalPositiveDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/decimal/99999999.99"),
@@ -944,7 +944,7 @@ func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64)
 // PutBigDoublePreparer prepares the PutBigDouble request.
 func (client NumberClient) PutBigDoublePreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/2.5976931e+101"),
@@ -997,7 +997,7 @@ func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (res
 // PutBigDoubleNegativeDecimalPreparer prepares the PutBigDoubleNegativeDecimal request.
 func (client NumberClient) PutBigDoubleNegativeDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/-99999999.99"),
@@ -1050,7 +1050,7 @@ func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (res
 // PutBigDoublePositiveDecimalPreparer prepares the PutBigDoublePositiveDecimal request.
 func (client NumberClient) PutBigDoublePositiveDecimalPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/double/99999999.99"),
@@ -1104,7 +1104,7 @@ func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) 
 // PutBigFloatPreparer prepares the PutBigFloat request.
 func (client NumberClient) PutBigFloatPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/big/float/3.402823e+20"),
@@ -1158,7 +1158,7 @@ func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decim
 // PutSmallDecimalPreparer prepares the PutSmallDecimal request.
 func (client NumberClient) PutSmallDecimalPreparer(ctx context.Context, numberBody decimal.Decimal) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/decimal/2.5976931e-101"),
@@ -1212,7 +1212,7 @@ func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float6
 // PutSmallDoublePreparer prepares the PutSmallDouble request.
 func (client NumberClient) PutSmallDoublePreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/double/2.5976931e-101"),
@@ -1266,7 +1266,7 @@ func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64
 // PutSmallFloatPreparer prepares the PutSmallFloat request.
 func (client NumberClient) PutSmallFloatPreparer(ctx context.Context, numberBody float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/number/small/float/3.402823e-20"),

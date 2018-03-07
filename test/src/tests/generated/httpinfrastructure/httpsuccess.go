@@ -56,7 +56,7 @@ func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *boo
 // Delete200Preparer prepares the Delete200 request.
 func (client HTTPSuccessClient) Delete200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/200"))
@@ -114,7 +114,7 @@ func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *boo
 // Delete202Preparer prepares the Delete202 request.
 func (client HTTPSuccessClient) Delete202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/202"))
@@ -172,7 +172,7 @@ func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *boo
 // Delete204Preparer prepares the Delete204 request.
 func (client HTTPSuccessClient) Delete204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/204"))
@@ -435,7 +435,7 @@ func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool
 // Patch200Preparer prepares the Patch200 request.
 func (client HTTPSuccessClient) Patch200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/200"))
@@ -493,7 +493,7 @@ func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool
 // Patch202Preparer prepares the Patch202 request.
 func (client HTTPSuccessClient) Patch202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/202"))
@@ -551,7 +551,7 @@ func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool
 // Patch204Preparer prepares the Patch204 request.
 func (client HTTPSuccessClient) Patch204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/204"))
@@ -609,7 +609,7 @@ func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool)
 // Post200Preparer prepares the Post200 request.
 func (client HTTPSuccessClient) Post200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/200"))
@@ -667,7 +667,7 @@ func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool)
 // Post201Preparer prepares the Post201 request.
 func (client HTTPSuccessClient) Post201Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/201"))
@@ -725,7 +725,7 @@ func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool)
 // Post202Preparer prepares the Post202 request.
 func (client HTTPSuccessClient) Post202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/202"))
@@ -783,7 +783,7 @@ func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool)
 // Post204Preparer prepares the Post204 request.
 func (client HTTPSuccessClient) Post204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/204"))
@@ -841,7 +841,7 @@ func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) 
 // Put200Preparer prepares the Put200 request.
 func (client HTTPSuccessClient) Put200Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/200"))
@@ -899,7 +899,7 @@ func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) 
 // Put201Preparer prepares the Put201 request.
 func (client HTTPSuccessClient) Put201Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/201"))
@@ -957,7 +957,7 @@ func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) 
 // Put202Preparer prepares the Put202 request.
 func (client HTTPSuccessClient) Put202Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/202"))
@@ -1015,7 +1015,7 @@ func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) 
 // Put204Preparer prepares the Put204 request.
 func (client HTTPSuccessClient) Put204Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/success/204"))

@@ -2623,7 +2623,7 @@ func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]strin
 // PutArrayValidPreparer prepares the PutArrayValid request.
 func (client ArrayClient) PutArrayValidPreparer(ctx context.Context, arrayBody [][]string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/array/valid"),
@@ -2683,7 +2683,7 @@ func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) 
 // PutBooleanTfftPreparer prepares the PutBooleanTfft request.
 func (client ArrayClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody []bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/boolean/tfft"),
@@ -2744,7 +2744,7 @@ func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) 
 // PutByteValidPreparer prepares the PutByteValid request.
 func (client ArrayClient) PutByteValidPreparer(ctx context.Context, arrayBody [][]byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/byte/valid"),
@@ -2805,7 +2805,7 @@ func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Produ
 // PutComplexValidPreparer prepares the PutComplexValid request.
 func (client ArrayClient) PutComplexValidPreparer(ctx context.Context, arrayBody []Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/complex/valid"),
@@ -2866,7 +2866,7 @@ func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody
 // PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
 func (client ArrayClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody []date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time-rfc1123/valid"),
@@ -2926,7 +2926,7 @@ func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date
 // PutDateTimeValidPreparer prepares the PutDateTimeValid request.
 func (client ArrayClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody []date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date-time/valid"),
@@ -2986,7 +2986,7 @@ func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Dat
 // PutDateValidPreparer prepares the PutDateValid request.
 func (client ArrayClient) PutDateValidPreparer(ctx context.Context, arrayBody []date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/date/valid"),
@@ -3047,7 +3047,7 @@ func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []ma
 // PutDictionaryValidPreparer prepares the PutDictionaryValid request.
 func (client ArrayClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody []map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/dictionary/valid"),
@@ -3107,7 +3107,7 @@ func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float6
 // PutDoubleValidPreparer prepares the PutDoubleValid request.
 func (client ArrayClient) PutDoubleValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/double/0--0.01-1.2e20"),
@@ -3167,7 +3167,7 @@ func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []stri
 // PutDurationValidPreparer prepares the PutDurationValid request.
 func (client ArrayClient) PutDurationValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/duration/valid"),
@@ -3227,7 +3227,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (res
 // PutEmptyPreparer prepares the PutEmpty request.
 func (client ArrayClient) PutEmptyPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/empty"),
@@ -3287,7 +3287,7 @@ func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64
 // PutFloatValidPreparer prepares the PutFloatValid request.
 func (client ArrayClient) PutFloatValidPreparer(ctx context.Context, arrayBody []float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/float/0--0.01-1.2e20"),
@@ -3347,7 +3347,7 @@ func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32
 // PutIntegerValidPreparer prepares the PutIntegerValid request.
 func (client ArrayClient) PutIntegerValidPreparer(ctx context.Context, arrayBody []int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/integer/1.-1.3.300"),
@@ -3407,7 +3407,7 @@ func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (
 // PutLongValidPreparer prepares the PutLongValid request.
 func (client ArrayClient) PutLongValidPreparer(ctx context.Context, arrayBody []int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/long/1.-1.3.300"),
@@ -3467,7 +3467,7 @@ func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string
 // PutStringValidPreparer prepares the PutStringValid request.
 func (client ArrayClient) PutStringValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/string/foo1.foo2.foo3"),
@@ -3528,7 +3528,7 @@ func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUI
 // PutUUIDValidPreparer prepares the PutUUIDValid request.
 func (client ArrayClient) PutUUIDValidPreparer(ctx context.Context, arrayBody []uuid.UUID) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/array/prim/uuid/valid"),
