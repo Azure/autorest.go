@@ -592,7 +592,7 @@ namespace AutoRest.Go.Model
                 // if the nextLinkName field in the swagger has a null value ("nextLinkName": null)
                 // then don't treat this operation as pageable.
                 var pageableExtension = Extensions[AzureExtensions.PageableExtension] as JContainer;
-                return (string)pageableExtension["nextLinkName"] != null;
+                return !string.IsNullOrWhiteSpace((string)pageableExtension["nextLinkName"]);
             }
         }
 
