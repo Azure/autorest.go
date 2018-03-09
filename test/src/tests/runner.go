@@ -14,15 +14,17 @@ import (
 const testServerPath = "../../../node_modules/@microsoft.azure/autorest.testserver"
 
 func main() {
-	err := startServer()
+	srvOut, err := startServer()
 	if err != nil {
 		panic(fmt.Sprintf("Error starting server: %v\n", err))
 	}
 	allPass := true
-	runTests(&allPass)
+	runTests(srvOut, &allPass)
 	getReport(context.Background())
 	getAzureReport(context.Background())
-	err = stopServer()
+	srvOut, err = stopServer()
+	fmt.Println("Stop server output:")
+	fmt.Println(srvOut.String())
 	if err != nil {
 		fmt.Printf("Error stopping server: %v\n", err)
 	}
@@ -32,26 +34,31 @@ func main() {
 	}
 }
 
-func startServer() error {
+func startServer() (*bytes.Buffer, error) {
 	fmt.Println("Go Tests.......")
 	install := exec.Command("npm", "install")
 	install.Dir = testServerPath
 	server := exec.Command("npm", "start")
 	server.Dir = testServerPath
-
+	var b bytes.Buffer
+	server.Stderr = &b
+	server.Stdout = &b
 	if err := install.Run(); err != nil {
-		return err
+		return nil, err
 	}
-	return server.Start()
+	return &b, server.Start()
 }
 
-func stopServer() error {
+func stopServer() (*bytes.Buffer, error) {
 	server := exec.Command("npm", "stop")
 	server.Dir = testServerPath
-	return server.Run()
+	var b bytes.Buffer
+	server.Stderr = &b
+	server.Stdout = &b
+	return &b, server.Run()
 }
 
-func runTests(allPass *bool) {
+func runTests(srvOutput *bytes.Buffer, allPass *bool) {
 	fmt.Println("Run tests")
 	testSuites := []string{
 		"arraygroup",
@@ -88,6 +95,9 @@ func runTests(allPass *bool) {
 		err := tests.Run()
 		fmt.Println(stdout.String())
 		fmt.Println(stderr.String())
+		fmt.Println("Server output:")
+		fmt.Println(srvOutput.String())
+		srvOutput.Reset()
 		if err != nil {
 			fmt.Printf("Error! %v\n", err)
 			*allPass = false
@@ -95,6 +105,7 @@ func runTests(allPass *bool) {
 		if len(stderr.String()) >= 2 && stderr.String()[:2] != "OK" {
 			*allPass = false
 		}
+		fmt.Println("====================================================================================================")
 	}
 }
 
