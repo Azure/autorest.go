@@ -29,6 +29,10 @@ task 'test', "", ['regenerate'], (done) ->
 
 # CI job
 task 'testci', "more", [], (done) ->
+  await execute "go version", defer code, stderr, stdout
+  echo stderr
+  echo stdout
+
   # install latest AutoRest
   await autorest ["--latest"], defer code, stderr, stdout
 
