@@ -56,6 +56,23 @@ func PossibleFishtypeValues() [7]Fishtype {
 	return [7]Fishtype{FishtypeCookiecuttershark, FishtypeFish, FishtypeGoblin, FishtypeSalmon, FishtypeSawshark, FishtypeShark, FishtypeSmartSalmon}
 }
 
+// GoblinSharkColor enumerates the values for goblin shark color.
+type GoblinSharkColor string
+
+const (
+	// Brown ...
+	Brown GoblinSharkColor = "brown"
+	// Gray ...
+	Gray GoblinSharkColor = "gray"
+	// Pink ...
+	Pink GoblinSharkColor = "pink"
+)
+
+// PossibleGoblinSharkColorValues returns an array of possible values for the GoblinSharkColor const type.
+func PossibleGoblinSharkColorValues() [3]GoblinSharkColor {
+	return [3]GoblinSharkColor{Brown, Gray, Pink}
+}
+
 // ArrayWrapper ...
 type ArrayWrapper struct {
 	autorest.Response `json:"-"`
@@ -531,12 +548,14 @@ type FloatWrapper struct {
 
 // Goblinshark ...
 type Goblinshark struct {
-	Jawsize  *int32       `json:"jawsize,omitempty"`
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	Jawsize *int32 `json:"jawsize,omitempty"`
+	// Color - Colors possible. Possible values include: 'Pink', 'Gray', 'Brown'
+	Color    GoblinSharkColor `json:"color,omitempty"`
+	Age      *int32           `json:"age,omitempty"`
+	Birthday *date.Time       `json:"birthday,omitempty"`
+	Species  *string          `json:"species,omitempty"`
+	Length   *float64         `json:"length,omitempty"`
+	Siblings *[]BasicFish     `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype `json:"fishtype,omitempty"`
 }
@@ -548,6 +567,7 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	if g.Jawsize != nil {
 		objectMap["jawsize"] = g.Jawsize
 	}
+	objectMap["color"] = g.Color
 	if g.Age != nil {
 		objectMap["age"] = g.Age
 	}
@@ -634,6 +654,15 @@ func (g *Goblinshark) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				g.Jawsize = &jawsize
+			}
+		case "color":
+			if v != nil {
+				var colorVar GoblinSharkColor
+				err = json.Unmarshal(*v, &colorVar)
+				if err != nil {
+					return err
+				}
+				g.Color = colorVar
 			}
 		case "age":
 			if v != nil {
