@@ -141,7 +141,9 @@ func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 	if c.Siblings != nil {
 		objectMap["siblings"] = c.Siblings
 	}
-	objectMap["fishtype"] = c.Fishtype
+	if c.Fishtype != "" {
+		objectMap["fishtype"] = c.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -418,7 +420,9 @@ func (f Fish) MarshalJSON() ([]byte, error) {
 	if f.Siblings != nil {
 		objectMap["siblings"] = f.Siblings
 	}
-	objectMap["fishtype"] = f.Fishtype
+	if f.Fishtype != "" {
+		objectMap["fishtype"] = f.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -567,7 +571,9 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	if g.Jawsize != nil {
 		objectMap["jawsize"] = g.Jawsize
 	}
-	objectMap["color"] = g.Color
+	if g.Color != "" {
+		objectMap["color"] = g.Color
+	}
 	if g.Age != nil {
 		objectMap["age"] = g.Age
 	}
@@ -583,7 +589,9 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	if g.Siblings != nil {
 		objectMap["siblings"] = g.Siblings
 	}
-	objectMap["fishtype"] = g.Fishtype
+	if g.Fishtype != "" {
+		objectMap["fishtype"] = g.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -824,7 +832,9 @@ func (s Salmon) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -997,7 +1007,9 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -1211,7 +1223,9 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -1379,7 +1393,9 @@ func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	for k, v := range s.AdditionalProperties {
 		objectMap[k] = v
 	}
