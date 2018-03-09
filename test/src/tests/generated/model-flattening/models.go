@@ -59,6 +59,21 @@ type Error struct {
 	*Error  `json:"parentError,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for Error.
+func (e Error) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if e.Status != nil {
+		objectMap["status"] = e.Status
+	}
+	if e.Message != nil {
+		objectMap["message"] = e.Message
+	}
+	if e.Error != nil {
+		objectMap["parentError"] = e.Error
+	}
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON is the custom unmarshaler for Error struct.
 func (e *Error) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
@@ -248,6 +263,15 @@ type ProductWrapper struct {
 	*WrappedProduct `json:"property,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for ProductWrapper.
+func (pw ProductWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if pw.WrappedProduct != nil {
+		objectMap["property"] = pw.WrappedProduct
+	}
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON is the custom unmarshaler for ProductWrapper struct.
 func (pw *ProductWrapper) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
@@ -354,6 +378,21 @@ type SimpleProduct struct {
 	Description *string `json:"base_product_description,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for SimpleProduct.
+func (sp SimpleProduct) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sp.SimpleProductProperties != nil {
+		objectMap["details"] = sp.SimpleProductProperties
+	}
+	if sp.ProductID != nil {
+		objectMap["base_product_id"] = sp.ProductID
+	}
+	if sp.Description != nil {
+		objectMap["base_product_description"] = sp.Description
+	}
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON is the custom unmarshaler for SimpleProduct struct.
 func (sp *SimpleProduct) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
@@ -403,6 +442,21 @@ type SimpleProductProperties struct {
 	// Capacity - Capacity of product. For example, 4 people.
 	Capacity    *string `json:"max_product_capacity,omitempty"`
 	*ProductURL `json:"max_product_image,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SimpleProductProperties.
+func (spp SimpleProductProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if spp.MaxProductDisplayName != nil {
+		objectMap["max_product_display_name"] = spp.MaxProductDisplayName
+	}
+	if spp.Capacity != nil {
+		objectMap["max_product_capacity"] = spp.Capacity
+	}
+	if spp.ProductURL != nil {
+		objectMap["max_product_image"] = spp.ProductURL
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON is the custom unmarshaler for SimpleProductProperties struct.

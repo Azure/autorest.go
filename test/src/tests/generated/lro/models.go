@@ -3869,6 +3869,18 @@ type SubProduct struct {
 	ID *string `json:"id,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for SubProduct.
+func (sp SubProduct) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sp.SubProductProperties != nil {
+		objectMap["properties"] = sp.SubProductProperties
+	}
+	if sp.ID != nil {
+		objectMap["id"] = sp.ID
+	}
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON is the custom unmarshaler for SubProduct struct.
 func (sp *SubProduct) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
