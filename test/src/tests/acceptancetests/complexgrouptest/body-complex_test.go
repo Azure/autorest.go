@@ -647,7 +647,7 @@ func (s *ComplexGroupSuite) TestGetComplexPolymorphicComplicated(c *chk.C) {
 	c.Assert(salmon.AdditionalProperties["additionalProperty5"], chk.DeepEquals, ss.AdditionalProperties["additionalProperty5"])
 }
 
-/*func (s *ComplexGroupSuite) TestPutComplexPolymorphicComplicated(c *chk.C) {
+func (s *ComplexGroupSuite) TestPutComplexPolymorphicComplicated(c *chk.C) {
 	_, err := complexPolymorphicClient.PutComplicated(context.Background(), ss)
 	c.Assert(err, chk.IsNil)
-}*/
+}

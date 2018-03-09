@@ -163,6 +163,12 @@ else
                 @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
                 @:}
             }
+            else if (property.ModelType is EnumTypeGo)
+            {
+                @:if(@(Model.Name.FixedValue.ToShortName()).@(property.Name) != "") {
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
+                @:}
+            }
             else
             {
                 @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
