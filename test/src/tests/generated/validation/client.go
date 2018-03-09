@@ -155,7 +155,7 @@ func (client BaseClient) PostWithConstantInBodyPreparer(ctx context.Context, bod
 	}
 
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/validation/constantsInPath/{constantParam}/value", pathParameters))
@@ -260,7 +260,7 @@ func (client BaseClient) ValidationOfBodyPreparer(ctx context.Context, resourceG
 	}
 
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/fakepath/{subscriptionId}/{resourceGroupName}/{id}", pathParameters),

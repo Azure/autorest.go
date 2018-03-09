@@ -52,7 +52,7 @@ func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, produc
 // Post202Retry200Preparer prepares the Post202Retry200 request.
 func (client LROsCustomHeaderClient) Post202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/customheader/post/202/retry/200"))
@@ -114,7 +114,7 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context
 // PostAsyncRetrySucceededPreparer prepares the PostAsyncRetrySucceeded request.
 func (client LROsCustomHeaderClient) PostAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/customheader/postasync/retry/succeeded"))
@@ -177,7 +177,7 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Cont
 // Put201CreatingSucceeded200Preparer prepares the Put201CreatingSucceeded200 request.
 func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/customheader/put/201/creating/succeeded/200"))
@@ -240,7 +240,7 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context,
 // PutAsyncRetrySucceededPreparer prepares the PutAsyncRetrySucceeded request.
 func (client LROsCustomHeaderClient) PutAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/customheader/putasync/retry/succeeded"))

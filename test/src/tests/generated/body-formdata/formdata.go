@@ -118,7 +118,7 @@ func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent 
 // UploadFileViaBodyPreparer prepares the UploadFileViaBody request.
 func (client FormdataClient) UploadFileViaBodyPreparer(ctx context.Context, fileContent io.ReadCloser) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsOctetStream(),
+		autorest.AsContentType("application/octet-stream"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/formdata/stream/uploadfile"),

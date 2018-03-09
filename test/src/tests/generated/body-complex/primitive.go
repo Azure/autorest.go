@@ -628,7 +628,7 @@ func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWr
 // PutBoolPreparer prepares the PutBool request.
 func (client PrimitiveClient) PutBoolPreparer(ctx context.Context, complexBody BooleanWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/bool"),
@@ -683,7 +683,7 @@ func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapp
 // PutBytePreparer prepares the PutByte request.
 func (client PrimitiveClient) PutBytePreparer(ctx context.Context, complexBody ByteWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/byte"),
@@ -738,7 +738,7 @@ func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapp
 // PutDatePreparer prepares the PutDate request.
 func (client PrimitiveClient) PutDatePreparer(ctx context.Context, complexBody DateWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/date"),
@@ -793,7 +793,7 @@ func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody Datet
 // PutDateTimePreparer prepares the PutDateTime request.
 func (client PrimitiveClient) PutDateTimePreparer(ctx context.Context, complexBody DatetimeWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetime"),
@@ -848,7 +848,7 @@ func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBod
 // PutDateTimeRfc1123Preparer prepares the PutDateTimeRfc1123 request.
 func (client PrimitiveClient) PutDateTimeRfc1123Preparer(ctx context.Context, complexBody Datetimerfc1123Wrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetimerfc1123"),
@@ -903,7 +903,7 @@ func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleW
 // PutDoublePreparer prepares the PutDouble request.
 func (client PrimitiveClient) PutDoublePreparer(ctx context.Context, complexBody DoubleWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/double"),
@@ -958,7 +958,7 @@ func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody Durat
 // PutDurationPreparer prepares the PutDuration request.
 func (client PrimitiveClient) PutDurationPreparer(ctx context.Context, complexBody DurationWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/duration"),
@@ -1013,7 +1013,7 @@ func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWra
 // PutFloatPreparer prepares the PutFloat request.
 func (client PrimitiveClient) PutFloatPreparer(ctx context.Context, complexBody FloatWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/float"),
@@ -1068,7 +1068,7 @@ func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper
 // PutIntPreparer prepares the PutInt request.
 func (client PrimitiveClient) PutIntPreparer(ctx context.Context, complexBody IntWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/integer"),
@@ -1123,7 +1123,7 @@ func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapp
 // PutLongPreparer prepares the PutLong request.
 func (client PrimitiveClient) PutLongPreparer(ctx context.Context, complexBody LongWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/long"),
@@ -1178,7 +1178,7 @@ func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringW
 // PutStringPreparer prepares the PutString request.
 func (client PrimitiveClient) PutStringPreparer(ctx context.Context, complexBody StringWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/string"),

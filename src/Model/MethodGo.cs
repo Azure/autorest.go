@@ -346,14 +346,7 @@ namespace AutoRest.Go.Model
 
                 if (BodyParameter != null)
                 {
-                    if (BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
-                    {
-                        decorators.Add("autorest.AsOctetStream()");
-                    }
-                    else
-                    {
-                        decorators.Add("autorest.AsJSON()");
-                    }
+                    decorators.Add($"autorest.AsContentType(\"{RequestContentType}\")");
                 }
 
                 decorators.Add(HTTPMethodDecorator);
@@ -592,7 +585,7 @@ namespace AutoRest.Go.Model
                 // if the nextLinkName field in the swagger has a null value ("nextLinkName": null)
                 // then don't treat this operation as pageable.
                 var pageableExtension = Extensions[AzureExtensions.PageableExtension] as JContainer;
-                return (string)pageableExtension["nextLinkName"] != null;
+                return !string.IsNullOrWhiteSpace((string)pageableExtension["nextLinkName"]);
             }
         }
 

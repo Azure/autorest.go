@@ -2673,7 +2673,7 @@ func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[
 // PutArrayValidPreparer prepares the PutArrayValid request.
 func (client DictionaryClient) PutArrayValidPreparer(ctx context.Context, arrayBody map[string][]string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/array/valid"),
@@ -2733,7 +2733,7 @@ func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map
 // PutBooleanTfftPreparer prepares the PutBooleanTfft request.
 func (client DictionaryClient) PutBooleanTfftPreparer(ctx context.Context, arrayBody map[string]*bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/boolean/tfft"),
@@ -2794,7 +2794,7 @@ func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[s
 // PutByteValidPreparer prepares the PutByteValid request.
 func (client DictionaryClient) PutByteValidPreparer(ctx context.Context, arrayBody map[string][]byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/byte/valid"),
@@ -2855,7 +2855,7 @@ func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody ma
 // PutComplexValidPreparer prepares the PutComplexValid request.
 func (client DictionaryClient) PutComplexValidPreparer(ctx context.Context, arrayBody map[string]*Widget) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/complex/valid"),
@@ -2916,7 +2916,7 @@ func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arra
 // PutDateTimeRfc1123ValidPreparer prepares the PutDateTimeRfc1123Valid request.
 func (client DictionaryClient) PutDateTimeRfc1123ValidPreparer(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time-rfc1123/valid"),
@@ -2977,7 +2977,7 @@ func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody m
 // PutDateTimeValidPreparer prepares the PutDateTimeValid request.
 func (client DictionaryClient) PutDateTimeValidPreparer(ctx context.Context, arrayBody map[string]*date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date-time/valid"),
@@ -3037,7 +3037,7 @@ func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[s
 // PutDateValidPreparer prepares the PutDateValid request.
 func (client DictionaryClient) PutDateValidPreparer(ctx context.Context, arrayBody map[string]*date.Date) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/date/valid"),
@@ -3098,7 +3098,7 @@ func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody
 // PutDictionaryValidPreparer prepares the PutDictionaryValid request.
 func (client DictionaryClient) PutDictionaryValidPreparer(ctx context.Context, arrayBody map[string]map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/dictionary/valid"),
@@ -3158,7 +3158,7 @@ func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map
 // PutDoubleValidPreparer prepares the PutDoubleValid request.
 func (client DictionaryClient) PutDoubleValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/double/0--0.01-1.2e20"),
@@ -3218,7 +3218,7 @@ func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody m
 // PutDurationValidPreparer prepares the PutDurationValid request.
 func (client DictionaryClient) PutDurationValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/duration/valid"),
@@ -3278,7 +3278,7 @@ func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[strin
 // PutEmptyPreparer prepares the PutEmpty request.
 func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/empty"),
@@ -3338,7 +3338,7 @@ func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[
 // PutFloatValidPreparer prepares the PutFloatValid request.
 func (client DictionaryClient) PutFloatValidPreparer(ctx context.Context, arrayBody map[string]*float64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/float/0--0.01-1.2e20"),
@@ -3398,7 +3398,7 @@ func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody ma
 // PutIntegerValidPreparer prepares the PutIntegerValid request.
 func (client DictionaryClient) PutIntegerValidPreparer(ctx context.Context, arrayBody map[string]*int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/integer/1.-1.3.300"),
@@ -3458,7 +3458,7 @@ func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[s
 // PutLongValidPreparer prepares the PutLongValid request.
 func (client DictionaryClient) PutLongValidPreparer(ctx context.Context, arrayBody map[string]*int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/long/1.-1.3.300"),
@@ -3518,7 +3518,7 @@ func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map
 // PutStringValidPreparer prepares the PutStringValid request.
 func (client DictionaryClient) PutStringValidPreparer(ctx context.Context, arrayBody map[string]*string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/dictionary/prim/string/foo1.foo2.foo3"),

@@ -271,7 +271,7 @@ func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (resu
 // PutNonASCIIPreparer prepares the PutNonASCII request.
 func (client ByteClient) PutNonASCIIPreparer(ctx context.Context, byteBody []byte) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/byte/nonAscii"),

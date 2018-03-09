@@ -167,7 +167,7 @@ func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBo
 // PutValidPreparer prepares the PutValid request.
 func (client PolymorphicrecursiveClient) PutValidPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphicrecursive/valid"),

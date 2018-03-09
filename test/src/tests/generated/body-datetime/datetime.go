@@ -736,7 +736,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Conte
 // PutLocalNegativeOffsetMaxDateTimePreparer prepares the PutLocalNegativeOffsetMaxDateTime request.
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localnegativeoffset"),
@@ -790,7 +790,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Conte
 // PutLocalNegativeOffsetMinDateTimePreparer prepares the PutLocalNegativeOffsetMinDateTime request.
 func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/localnegativeoffset"),
@@ -844,7 +844,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Conte
 // PutLocalPositiveOffsetMaxDateTimePreparer prepares the PutLocalPositiveOffsetMaxDateTime request.
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/localpositiveoffset"),
@@ -898,7 +898,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Conte
 // PutLocalPositiveOffsetMinDateTimePreparer prepares the PutLocalPositiveOffsetMinDateTime request.
 func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/localpositiveoffset"),
@@ -952,7 +952,7 @@ func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody
 // PutUtcMaxDateTimePreparer prepares the PutUtcMaxDateTime request.
 func (client DatetimeClient) PutUtcMaxDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/max/utc"),
@@ -1006,7 +1006,7 @@ func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody
 // PutUtcMinDateTimePreparer prepares the PutUtcMinDateTime request.
 func (client DatetimeClient) PutUtcMinDateTimePreparer(ctx context.Context, datetimeBody date.Time) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetime/min/utc"),

@@ -110,7 +110,7 @@ func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siames
 // PutValidPreparer prepares the PutValid request.
 func (client InheritanceClient) PutValidPreparer(ctx context.Context, complexBody Siamese) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/inheritance/valid"),

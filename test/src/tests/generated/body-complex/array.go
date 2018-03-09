@@ -212,7 +212,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper
 // PutEmptyPreparer prepares the PutEmpty request.
 func (client ArrayClient) PutEmptyPreparer(ctx context.Context, complexBody ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/empty"),
@@ -268,7 +268,7 @@ func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper
 // PutValidPreparer prepares the PutValid request.
 func (client ArrayClient) PutValidPreparer(ctx context.Context, complexBody ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/valid"),

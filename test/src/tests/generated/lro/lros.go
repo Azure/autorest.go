@@ -761,7 +761,7 @@ func (client LROsClient) Post202NoRetry204(ctx context.Context, product *Product
 // Post202NoRetry204Preparer prepares the Post202NoRetry204 request.
 func (client LROsClient) Post202NoRetry204Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/post/202/noretry/204"))
@@ -823,7 +823,7 @@ func (client LROsClient) Post202Retry200(ctx context.Context, product *Product) 
 // Post202Retry200Preparer prepares the Post202Retry200 request.
 func (client LROsClient) Post202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/post/202/retry/200"))
@@ -885,7 +885,7 @@ func (client LROsClient) PostAsyncNoRetrySucceeded(ctx context.Context, product 
 // PostAsyncNoRetrySucceededPreparer prepares the PostAsyncNoRetrySucceeded request.
 func (client LROsClient) PostAsyncNoRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/noretry/succeeded"))
@@ -948,7 +948,7 @@ func (client LROsClient) PostAsyncRetrycanceled(ctx context.Context, product *Pr
 // PostAsyncRetrycanceledPreparer prepares the PostAsyncRetrycanceled request.
 func (client LROsClient) PostAsyncRetrycanceledPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/retry/canceled"))
@@ -1010,7 +1010,7 @@ func (client LROsClient) PostAsyncRetryFailed(ctx context.Context, product *Prod
 // PostAsyncRetryFailedPreparer prepares the PostAsyncRetryFailed request.
 func (client LROsClient) PostAsyncRetryFailedPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/retry/failed"))
@@ -1072,7 +1072,7 @@ func (client LROsClient) PostAsyncRetrySucceeded(ctx context.Context, product *P
 // PostAsyncRetrySucceededPreparer prepares the PostAsyncRetrySucceeded request.
 func (client LROsClient) PostAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/retry/succeeded"))
@@ -1135,7 +1135,7 @@ func (client LROsClient) Put200Acceptedcanceled200(ctx context.Context, product 
 // Put200Acceptedcanceled200Preparer prepares the Put200Acceptedcanceled200 request.
 func (client LROsClient) Put200Acceptedcanceled200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/accepted/canceled/200"))
@@ -1197,7 +1197,7 @@ func (client LROsClient) Put200Succeeded(ctx context.Context, product *Product) 
 // Put200SucceededPreparer prepares the Put200Succeeded request.
 func (client LROsClient) Put200SucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/succeeded"))
@@ -1259,7 +1259,7 @@ func (client LROsClient) Put200SucceededNoState(ctx context.Context, product *Pr
 // Put200SucceededNoStatePreparer prepares the Put200SucceededNoState request.
 func (client LROsClient) Put200SucceededNoStatePreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/succeeded/nostate"))
@@ -1322,7 +1322,7 @@ func (client LROsClient) Put200UpdatingSucceeded204(ctx context.Context, product
 // Put200UpdatingSucceeded204Preparer prepares the Put200UpdatingSucceeded204 request.
 func (client LROsClient) Put200UpdatingSucceeded204Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/updating/succeeded/200"))
@@ -1385,7 +1385,7 @@ func (client LROsClient) Put201CreatingFailed200(ctx context.Context, product *P
 // Put201CreatingFailed200Preparer prepares the Put201CreatingFailed200 request.
 func (client LROsClient) Put201CreatingFailed200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/201/created/failed/200"))
@@ -1448,7 +1448,7 @@ func (client LROsClient) Put201CreatingSucceeded200(ctx context.Context, product
 // Put201CreatingSucceeded200Preparer prepares the Put201CreatingSucceeded200 request.
 func (client LROsClient) Put201CreatingSucceeded200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/201/creating/succeeded/200"))
@@ -1510,7 +1510,7 @@ func (client LROsClient) Put202Retry200(ctx context.Context, product *Product) (
 // Put202Retry200Preparer prepares the Put202Retry200 request.
 func (client LROsClient) Put202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/202/retry/200"))
@@ -1572,7 +1572,7 @@ func (client LROsClient) PutAsyncNoHeaderInRetry(ctx context.Context, product *P
 // PutAsyncNoHeaderInRetryPreparer prepares the PutAsyncNoHeaderInRetry request.
 func (client LROsClient) PutAsyncNoHeaderInRetryPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/noheader/201/200"))
@@ -1633,7 +1633,7 @@ func (client LROsClient) PutAsyncNonResource(ctx context.Context, sku *Sku) (res
 // PutAsyncNonResourcePreparer prepares the PutAsyncNonResource request.
 func (client LROsClient) PutAsyncNonResourcePreparer(ctx context.Context, sku *Sku) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putnonresourceasync/202/200"))
@@ -1696,7 +1696,7 @@ func (client LROsClient) PutAsyncNoRetrycanceled(ctx context.Context, product *P
 // PutAsyncNoRetrycanceledPreparer prepares the PutAsyncNoRetrycanceled request.
 func (client LROsClient) PutAsyncNoRetrycanceledPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/noretry/canceled"))
@@ -1759,7 +1759,7 @@ func (client LROsClient) PutAsyncNoRetrySucceeded(ctx context.Context, product *
 // PutAsyncNoRetrySucceededPreparer prepares the PutAsyncNoRetrySucceeded request.
 func (client LROsClient) PutAsyncNoRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/noretry/succeeded"))
@@ -1822,7 +1822,7 @@ func (client LROsClient) PutAsyncRetryFailed(ctx context.Context, product *Produ
 // PutAsyncRetryFailedPreparer prepares the PutAsyncRetryFailed request.
 func (client LROsClient) PutAsyncRetryFailedPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/retry/failed"))
@@ -1885,7 +1885,7 @@ func (client LROsClient) PutAsyncRetrySucceeded(ctx context.Context, product *Pr
 // PutAsyncRetrySucceededPreparer prepares the PutAsyncRetrySucceeded request.
 func (client LROsClient) PutAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/retry/succeeded"))
@@ -1946,7 +1946,7 @@ func (client LROsClient) PutAsyncSubResource(ctx context.Context, product *SubPr
 // PutAsyncSubResourcePreparer prepares the PutAsyncSubResource request.
 func (client LROsClient) PutAsyncSubResourcePreparer(ctx context.Context, product *SubProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putsubresourceasync/202/200"))
@@ -2008,7 +2008,7 @@ func (client LROsClient) PutNoHeaderInRetry(ctx context.Context, product *Produc
 // PutNoHeaderInRetryPreparer prepares the PutNoHeaderInRetry request.
 func (client LROsClient) PutNoHeaderInRetryPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/noheader/202/200"))
@@ -2069,7 +2069,7 @@ func (client LROsClient) PutNonResource(ctx context.Context, sku *Sku) (result L
 // PutNonResourcePreparer prepares the PutNonResource request.
 func (client LROsClient) PutNonResourcePreparer(ctx context.Context, sku *Sku) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putnonresource/202/200"))
@@ -2130,7 +2130,7 @@ func (client LROsClient) PutSubResource(ctx context.Context, product *SubProduct
 // PutSubResourcePreparer prepares the PutSubResource request.
 func (client LROsClient) PutSubResourcePreparer(ctx context.Context, product *SubProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putsubresource/202/200"))

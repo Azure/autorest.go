@@ -215,7 +215,7 @@ func (client LRORetrysClient) Post202Retry200(ctx context.Context, product *Prod
 // Post202Retry200Preparer prepares the Post202Retry200 request.
 func (client LRORetrysClient) Post202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/retryerror/post/202/retry/200"))
@@ -277,7 +277,7 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceeded(ctx context.Contex
 // PostAsyncRelativeRetrySucceededPreparer prepares the PostAsyncRelativeRetrySucceeded request.
 func (client LRORetrysClient) PostAsyncRelativeRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/retryerror/postasync/retry/succeeded"))
@@ -339,7 +339,7 @@ func (client LRORetrysClient) Put201CreatingSucceeded200(ctx context.Context, pr
 // Put201CreatingSucceeded200Preparer prepares the Put201CreatingSucceeded200 request.
 func (client LRORetrysClient) Put201CreatingSucceeded200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/retryerror/put/201/creating/succeeded/200"))
@@ -402,7 +402,7 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceeded(ctx context.Context
 // PutAsyncRelativeRetrySucceededPreparer prepares the PutAsyncRelativeRetrySucceeded request.
 func (client LRORetrysClient) PutAsyncRelativeRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/retryerror/putasync/retry/succeeded"))
