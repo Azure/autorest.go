@@ -399,5 +399,15 @@ namespace AutoRest.Go.Model
             }
             return futureType;
         }
+
+        /// <summary>
+        /// Returns a Go comment containing the file version of the executing generator.
+        /// </summary>
+        public static string GetGeneratorVersionStamp()
+        {
+            var genDll = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var fileVerInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(genDll);
+            return $"// Go code generator version {fileVerInfo.FileVersion}";
+        }
     }
 }
