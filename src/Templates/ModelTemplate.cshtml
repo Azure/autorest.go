@@ -248,6 +248,10 @@ func (@shortName @Model.Name) Body() io.ReadCloser {
     {
         retSig = headerResp.Type.ModelTypeName;
     }
+    else if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.ByteArray))
+    {
+        retSig = "[]byte";
+    }
 <text>
 // @headerResp.Name returns the value for header @(headerResp.Type.SerializedName).
 func (@shortName @Model.Name) @(headerResp.Name)() @retSig {
@@ -284,6 +288,20 @@ func (@shortName @Model.Name) @(headerResp.Name)() @retSig {
         panic(err)
     }
     return @(headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) ? "int32(i)" : "i")
+    </text>
+    }
+    else if (headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.ByteArray))
+    {
+    <text>
+    s := @retExpr
+    if s == "" {
+        return nil
+    }
+    b, err := base64.StdEncoding.DecodeString(s)
+    if err != nil {
+        panic(err)
+    }
+    return b
     </text>
     }
     else

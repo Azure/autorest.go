@@ -94,10 +94,12 @@ namespace AutoRest.Go.Model
             {
                 var addIoImport = false;
                 var addStrConvImport = false;
-                var addStringsImport = false;
+                var addBase64Import = false;
                 // Create an ordered union of the imports each model requires
                 var imports = new HashSet<string>();
                 imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "reflect"));
+                imports.Add(PrimaryTypeGo.GetImportLine(package: "strings"));
 
                 ModelTypes.Cast<CompositeTypeGo>()
                     .ForEach(mt =>
@@ -114,11 +116,12 @@ namespace AutoRest.Go.Model
                                     addStrConvImport = true;
                                     break;
                                 }
+                                else if (p.ModelType.IsPrimaryType(KnownPrimaryType.ByteArray))
+                                {
+                                    addBase64Import = true;
+                                    break;
+                                }
                             }
-                        }
-                        if (mt.ResponseIncludesMetadata)
-                        {
-                            addStringsImport = true;
                         }
                         if (mt.IsResponseType && mt.IsStreamType())
                         {
@@ -133,9 +136,9 @@ namespace AutoRest.Go.Model
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine(package: "strconv"));
                 }
-                if (addStringsImport)
+                if (addBase64Import)
                 {
-                    imports.Add(PrimaryTypeGo.GetImportLine(package: "strings"));
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "encoding/base64"));
                 }
                 return imports.OrderBy(i => i);
             }

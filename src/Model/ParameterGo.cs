@@ -115,7 +115,7 @@ namespace AutoRest.Go.Model
             var format = this.Format();
 
             var s = CollectionFormat != CollectionFormat.None
-                                  ? $"{format},\"{CollectionFormat.GetSeparator()}\""
+                                  ? $"joinConst({format},\"{CollectionFormat.GetSeparator()}\")"
                                   : $"{format}";
 
             if (emitEncoding)

@@ -8,7 +8,22 @@ package bytegroup
 
 import (
 	"net/http"
+	"reflect"
+	"strings"
 )
+
+// concatenates a slice of const values with the specified separator between each item
+func joinConst(s interface{}, sep string) string {
+	v := reflect.ValueOf(s)
+	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
+		panic("s wasn't a slice or array")
+	}
+	ss := make([]string, 0, v.Len())
+	for i := 0; i < v.Len(); i++ {
+		ss = append(ss, v.Index(i).String())
+	}
+	return strings.Join(ss, sep)
+}
 
 // Error ...
 type Error struct {
