@@ -40,8 +40,8 @@ const (
 )
 
 // PossibleProvisioningStateValuesValues returns an array of possible values for the ProvisioningStateValues const type.
-func PossibleProvisioningStateValuesValues() [11]ProvisioningStateValues {
-	return [11]ProvisioningStateValues{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
+func PossibleProvisioningStateValuesValues() []ProvisioningStateValues {
+	return []ProvisioningStateValues{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
 }
 
 // BaseProduct the product documentation.

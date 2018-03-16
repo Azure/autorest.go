@@ -19,8 +19,8 @@ const (
 )
 
 // PossibleEnumConstValues returns an array of possible values for the EnumConst const type.
-func PossibleEnumConstValues() [1]EnumConst {
-	return [1]EnumConst{ConstantStringAsEnum}
+func PossibleEnumConstValues() []EnumConst {
+	return []EnumConst{ConstantStringAsEnum}
 }
 
 // ChildProduct the product documentation.

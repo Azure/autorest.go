@@ -19,8 +19,8 @@ const (
 )
 
 // PossibleURIColorValues returns an array of possible values for the URIColor const type.
-func PossibleURIColorValues() [3]URIColor {
-	return [3]URIColor{Bluecolor, Greencolor, Redcolor}
+func PossibleURIColorValues() []URIColor {
+	return []URIColor{Bluecolor, Greencolor, Redcolor}
 }
 
 // Error ...
