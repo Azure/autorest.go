@@ -1,0 +1,80 @@
+﻿@using AutoRest.Core.Utilities
+@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
+
+@{
+    var content = new Dictionary<string, IEnumerable<MethodGo>>();
+    var imports = new HashSet<string> { PrimaryTypeGo.GetImportLine(package: "context") };
+
+    if (Model.ClientMethods.Any())
+    {
+        content.Add(Model.BaseClient, Model.ClientMethods.OrderBy(m => m.Name.Value));
+    }
+
+    var methodGroups = Model.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name));
+    if (methodGroups.Any())
+    {
+        foreach (var methodGroup in methodGroups)
+        {
+            content.Add(methodGroup.ClientName, methodGroup.Methods.Cast<MethodGo>().OrderBy(m => m.Name.Value));
+        }
+    }
+
+    var addArImport = false;
+    foreach (var methods in content.Values)
+    {
+        foreach (var method in methods)
+        {
+            foreach (var p in method.Parameters)
+            {
+                p.ModelType.AddImports(imports);
+            }
+            if (method.HasReturnValue())
+            {
+                method.ReturnType.Body.AddImports(imports);
+            }
+            else
+            {
+                addArImport = true;
+            }
+        }
+    }
+
+    var arImport = PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest");
+    if (addArImport && !imports.Contains(arImport))
+    {
+        imports.Add(arImport);
+    }
+}
+
+package @Model.Namespace
+@EmptyLine
+@Header("// ")
+@EmptyLine
+
+import (
+@foreach (var import in imports)
+{
+    @:@(import)
+}
+)
+@EmptyLine
+@foreach (var c in content)
+{
+    <text>
+    // Mock@(c.Key) contains the set of methods on the @(c.Key) type.
+    type Mock@(c.Key) interface {
+    @foreach (var method in c.Value)
+    {
+        @:@(method.Name)(@method.MethodParametersSignature) (@method.MethodReturnSignature())
+    }
+    }
+    @EmptyLine
+    </text>
+}
