@@ -19,8 +19,8 @@ const (
 )
 
 // PossibleGreyscaleColorsValues returns an array of possible values for the GreyscaleColors const type.
-func PossibleGreyscaleColorsValues() [3]GreyscaleColors {
-	return [3]GreyscaleColors{Black, GREY, White}
+func PossibleGreyscaleColorsValues() []GreyscaleColors {
+	return []GreyscaleColors{Black, GREY, White}
 }
 
 // Error ...

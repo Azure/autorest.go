@@ -27,8 +27,8 @@ const (
 )
 
 // PossibleCMYKColorsValues returns an array of possible values for the CMYKColors const type.
-func PossibleCMYKColorsValues() [4]CMYKColors {
-	return [4]CMYKColors{BlacK, Cyan, Magenta, YELLOW}
+func PossibleCMYKColorsValues() []CMYKColors {
+	return []CMYKColors{BlacK, Cyan, Magenta, YELLOW}
 }
 
 // Fishtype enumerates the values for fishtype.
@@ -52,8 +52,8 @@ const (
 )
 
 // PossibleFishtypeValues returns an array of possible values for the Fishtype const type.
-func PossibleFishtypeValues() [7]Fishtype {
-	return [7]Fishtype{FishtypeCookiecuttershark, FishtypeFish, FishtypeGoblin, FishtypeSalmon, FishtypeSawshark, FishtypeShark, FishtypeSmartSalmon}
+func PossibleFishtypeValues() []Fishtype {
+	return []Fishtype{FishtypeCookiecuttershark, FishtypeFish, FishtypeGoblin, FishtypeSalmon, FishtypeSawshark, FishtypeShark, FishtypeSmartSalmon}
 }
 
 // GoblinSharkColor enumerates the values for goblin shark color.
@@ -69,8 +69,8 @@ const (
 )
 
 // PossibleGoblinSharkColorValues returns an array of possible values for the GoblinSharkColor const type.
-func PossibleGoblinSharkColorValues() [3]GoblinSharkColor {
-	return [3]GoblinSharkColor{Brown, Gray, Pink}
+func PossibleGoblinSharkColorValues() []GoblinSharkColor {
+	return []GoblinSharkColor{Brown, Gray, Pink}
 }
 
 // ArrayWrapper ...

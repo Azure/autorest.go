@@ -62,8 +62,8 @@ type @Model.Name string
     }
     )
     // @possibleFuncName returns an array of possible values for the @Model.Name const type.
-    func @(possibleFuncName)() [@(Model.Values.Count)]@Model.Name {
-        return [@(Model.Values.Count)]@(Model.Name){@(string.Join(',', orderedValues))}
+    func @(possibleFuncName)() []@Model.Name {
+        return []@(Model.Name){@(string.Join(',', orderedValues))}
     }
     </text>
 }
