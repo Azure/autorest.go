@@ -39,19 +39,25 @@ namespace AutoRest.Go.Model
             var originalName = Name.Value;
             Name = Name.Value.TrimPackageName(cmg.Namespace);
 
+            // use the API version as the prefix to the group name; this is because
+            // in batch mode the generator isn't recycled per batch so you can end up
+            // with erroneous collisions.  note that for composite packages (web)
+            // there will be no API version so fall back to using the batch tag.
+            var prefix = cmg.ApiVersion;
+            if (string.IsNullOrWhiteSpace(prefix))
+            {
+                prefix = cmg.Tag;
+            }
+
             // keep a list of all method group names as trimming the package name
             // can introduce collisions.  if there's a collision append "Group" to
             // the name.  unfortunately we can't do this in the namer as we don't
             // have access to the package name.
-            // NOTE: we must include the API version in the set to support batch
-            //       generation which invokes the generator over multiple API versions.
-            //       if we don't do this we end up with erroneous collisions across
-            //       API versions because the generator isn't recycled per batch.
-            if (s_AllNames.Contains($"{cmg.ApiVersion}_{Name.Value}"))
+            if (s_AllNames.Contains($"{prefix}_{Name.Value}"))
             {
                 Name += "Group";
             }
-            s_AllNames.Add($"{cmg.ApiVersion}_{Name.Value}");
+            s_AllNames.Add($"{prefix}_{Name.Value}");
 
             if (Name != originalName)
             {
