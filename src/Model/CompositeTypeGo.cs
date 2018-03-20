@@ -18,7 +18,9 @@ namespace AutoRest.Go.Model
     {
         private bool _wrapper;
 
-        // True if the type is returned by a method
+        /// <summary>
+        /// True if the type is returned by a method
+        /// </summary>
         public bool IsResponseType;
 
         // Name of the field containing the URL used to retrieve the next result set
@@ -26,6 +28,8 @@ namespace AutoRest.Go.Model
         public string NextLink;
 
         public bool PreparerNeeded = false;
+
+        public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(c => c.SerializedName.Equals(SerializedName)).Name;
 
         public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
 
@@ -46,7 +50,7 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                return AllProperties.Any(p => 
+                return AllProperties.Any(p =>
                         // polymorphic composite
                         (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
                         // polymorphic array
@@ -57,7 +61,7 @@ namespace AutoRest.Go.Model
 
         public EnumType DiscriminatorEnum;
 
-        public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(c => c.SerializedName.Equals(SerializedName)).Name;
+        private CompositeTypeGo _rootType;
 
         public CompositeTypeGo()
         {
@@ -95,10 +99,12 @@ namespace AutoRest.Go.Model
             if (!wrappedType.IsPrimaryType(KnownPrimaryType.Stream))
             {
                 // add the wrapped type as a property named Value
-                var p = new PropertyGo();
-                p.Name = "Value";
-                p.SerializedName = "value";
-                p.ModelType = wrappedType;
+                var p = new PropertyGo
+                {
+                    Name = "Value",
+                    SerializedName = "value",
+                    ModelType = wrappedType
+                };
                 Add(p);
             }
 
@@ -123,7 +129,7 @@ namespace AutoRest.Go.Model
                     SerializedName = PolymorphicDiscriminator,
                     ModelType = DiscriminatorEnum,
                 }));
-            }            
+            }
         }
 
         public string PolymorphicProperty
@@ -153,6 +159,39 @@ namespace AutoRest.Go.Model
                 return Properties.Cast<PropertyGo>();
             }
         }
+
+        /// <summary>
+        /// Gets the root type of the inheritance chain.
+        /// </summary>
+        public CompositeTypeGo RootType
+        {
+            get
+            {
+                if (_rootType == null)
+                {
+
+                    CompositeType rootModelType = this;
+                    while (rootModelType.BaseModelType?.BaseIsPolymorphic == true)
+                    {
+                        rootModelType = rootModelType.BaseModelType;
+                    }
+
+                    _rootType = rootModelType as CompositeTypeGo;
+                }
+
+                return _rootType;
+            }
+        }
+
+        /// <summary>
+        /// Gets if the type is a root type in an inheritance chain.
+        /// </summary>
+        public bool IsRootType => IsPolymorphic && RootType == this;
+
+        /// <summary>
+        /// Gets if the type is a leaf type in an inheritance chain.
+        /// </summary>
+        public bool IsLeafType => BaseIsPolymorphic && DerivedTypes.IsNullOrEmpty();
 
         public override Property Add(Property item)
         {
@@ -206,7 +245,7 @@ namespace AutoRest.Go.Model
             AddPolymorphicPropertyIfNecessary();
             var indented = new IndentedStringBuilder("    ");
 
-            // check if the XML name matches tyhe type name.
+            // check if the XML name matches the type name.
             // if it doesn't then add an XMLName field.
             if (NeedsXmlNameField)
             {
