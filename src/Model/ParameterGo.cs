@@ -373,7 +373,7 @@ namespace AutoRest.Go.Model
             builder.Append(mapVariable);
             builder.Append(" := map[string]interface{} {");
 
-            if (parameters.Count() > 0)
+            if (parameters.Any())
             {
                 builder.AppendLine();
                 var indented = new IndentedStringBuilder("  ");

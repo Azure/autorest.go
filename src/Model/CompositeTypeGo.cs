@@ -7,6 +7,7 @@ using AutoRest.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoRest.Core.Utilities.Collections;
 using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Go.Model
@@ -16,15 +17,18 @@ namespace AutoRest.Go.Model
     /// </summary>
     public class CompositeTypeGo : CompositeType
     {
-        private bool _wrapper;
+        public EnumType DiscriminatorEnum;
+
+        private CompositeTypeGo _rootType;
 
         /// <summary>
         /// True if the type is returned by a method
         /// </summary>
         public bool IsResponseType;
 
-        // Name of the field containing the URL used to retrieve the next result set
-        // (null or empty if the model is not paged).
+        /// <summary>
+        /// Name of the field containing the URL used to retrieve the next result set (null or empty if the model is not paged).
+        /// </summary>
         public string NextLink;
 
         public bool PreparerNeeded = false;
@@ -37,12 +41,14 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var st = (BaseModelType as CompositeTypeGo).DerivedTypes;
-                if (BaseModelType.BaseModelType != null && BaseModelType.BaseModelType.IsPolymorphic)
+                var siblingTypes = RootType.DerivedTypes;
+
+                if (RootType.IsPolymorphic)
                 {
-                    st = st.Union((BaseModelType as CompositeTypeGo).SiblingTypes);
+                    siblingTypes = siblingTypes.ConcatSingleItem(RootType);
                 }
-                return st;
+
+                return siblingTypes;
             }
         }
 
@@ -51,26 +57,20 @@ namespace AutoRest.Go.Model
             get
             {
                 return AllProperties.Any(p =>
-                        // polymorphic composite
-                        (p.ModelType is CompositeType && (p.ModelType as CompositeTypeGo).IsPolymorphic) ||
+                    // polymorphic composite
+                        p.ModelType.HasInterface() ||
                         // polymorphic array
-                        (p.ModelType is SequenceType && (p.ModelType as SequenceTypeGo).ElementType is CompositeType &&
-                            ((p.ModelType as SequenceTypeGo).ElementType as CompositeType).IsPolymorphic));
+                        (p.ModelType is SequenceType sequenceType &&
+                         sequenceType.ElementType.HasInterface()));
             }
         }
 
-        public EnumType DiscriminatorEnum;
-
-        private CompositeTypeGo _rootType;
-
         public CompositeTypeGo()
         {
-
         }
 
         public CompositeTypeGo(string name) : base(name)
         {
-
         }
 
         public CompositeTypeGo(MethodGo responseToWrap)
@@ -107,8 +107,8 @@ namespace AutoRest.Go.Model
                 };
                 Add(p);
             }
-
-            _wrapper = true;
+            AddPolymorphicPropertyIfNecessary();
+            IsWrapperType = true;
         }
 
         /// <summary>
@@ -119,46 +119,31 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// If PolymorphicDiscriminator is set, makes sure we have a PolymorphicDiscriminator property.
         /// </summary>
-        private void AddPolymorphicPropertyIfNecessary()
+        internal void AddPolymorphicPropertyIfNecessary()
         {
             if (!string.IsNullOrEmpty(PolymorphicDiscriminator) && Properties.All(p => p.SerializedName != PolymorphicDiscriminator))
             {
                 base.Add(New<Property>(new
                 {
-                    Name = CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator),
+                    Name = PolymorphicDiscriminator,
                     SerializedName = PolymorphicDiscriminator,
-                    ModelType = DiscriminatorEnum,
+                    ModelType = DiscriminatorEnum
                 }));
             }
         }
 
-        public string PolymorphicProperty
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(PolymorphicDiscriminator))
-                {
-                    return CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator);
-                }
-                if (BaseModelType != null)
-                {
-                    return (BaseModelType as CompositeTypeGo).PolymorphicProperty;
-                }
-                return null;
-            }
-        }
+        /// <summary>
+        /// Gets if there are any flattened fields.
+        /// </summary>
+        public bool HasFlattenedFields => Properties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
 
-        public IEnumerable<PropertyGo> AllProperties
-        {
-            get
-            {
-                if (BaseModelType != null)
-                {
-                    return Properties.Cast<PropertyGo>().Concat((BaseModelType as CompositeTypeGo).AllProperties);
-                }
-                return Properties.Cast<PropertyGo>();
-            }
-        }
+        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) 
+            ? CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) 
+            : ((CompositeTypeGo) BaseModelType).PolymorphicProperty;
+
+        public IEnumerable<PropertyGo> AllProperties => BaseModelType != null ?
+            Properties.Cast<PropertyGo>().Concat(((CompositeTypeGo) BaseModelType).AllProperties) :
+            Properties.Cast<PropertyGo>();
 
         /// <summary>
         /// Gets the root type of the inheritance chain.
@@ -195,7 +180,7 @@ namespace AutoRest.Go.Model
 
         public override Property Add(Property item)
         {
-            var property = base.Add(item) as PropertyGo;
+            var property = base.Add(item);
             AddPolymorphicPropertyIfNecessary();
             return property;
         }
@@ -267,8 +252,8 @@ namespace AutoRest.Go.Model
                 {
                     indented.AppendFormat("// {0} - {1}\n", property.Name, property.Documentation);
                 }
-                var enumType = property.ModelType as EnumTypeGo;
-                if (enumType != null && enumType.IsNamed)
+
+                if (property.ModelType is EnumTypeGo enumType && enumType.IsNamed)
                 {
                     indented.AppendFormat("{0} {1} {2}\n",
                                     property.Name,
@@ -278,7 +263,7 @@ namespace AutoRest.Go.Model
                 }
                 else if (property.ModelType is DictionaryType)
                 {
-                    var typeName = (property.ModelType as DictionaryTypeGo).Name;
+                    var typeName = ((DictionaryTypeGo) property.ModelType).Name;
                     if (property.IsMetadata)
                     {
                         // use custom type instead of a map[string]string
@@ -302,9 +287,9 @@ namespace AutoRest.Go.Model
                     // use custom type instead of *string
                     indented.Append($"{NextLink} Marker `{CodeModel.ToCodeModelGo().Encoding}:\"{NextLink}\"`");
                 }
-                else if (property.ModelType is CompositeType && (property.ModelType as CompositeTypeGo).IsPolymorphic)
+                else if (property.ModelType is CompositeType && ((CompositeTypeGo) property.ModelType).IsPolymorphic)
                 {
-                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.Name, property.Tag());
+                    indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.Tag());
                 }
                 else
                 {
@@ -331,21 +316,21 @@ namespace AutoRest.Go.Model
             return indented.ToString();
         }
 
-        public bool IsWrapperType => _wrapper;
+        public bool IsWrapperType { get; }
 
-        public IModelType BaseType { get; private set; }
+        public IModelType BaseType { get; }
 
         public IModelType GetElementType(IModelType type)
         {
-            if (type is SequenceTypeGo)
+            if (type is SequenceTypeGo sequenceType)
             {
                 Name += "List";
-                return GetElementType((type as SequenceType).ElementType);
+                return GetElementType(sequenceType.ElementType);
             }
-            else if (type is DictionaryTypeGo)
+            else if (type is DictionaryTypeGo dictionaryType)
             {
                 Name += "Set";
-                return GetElementType(((type as DictionaryTypeGo).ValueType));
+                return GetElementType(dictionaryType.ValueType);
             }
             else
             {
