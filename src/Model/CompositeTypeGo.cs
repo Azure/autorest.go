@@ -33,7 +33,7 @@ namespace AutoRest.Go.Model
 
         public bool PreparerNeeded = false;
 
-        public string DiscriminatorEnumValue => DiscriminatorEnum.Values.FirstOrDefault(c => c.SerializedName.Equals(SerializedName)).Name;
+        public string DiscriminatorEnumValue => DiscriminatorEnum?.Values.FirstOrDefault(v => v.SerializedName.Equals(SerializedName))?.Name;
 
         public IEnumerable<CompositeType> DerivedTypes => CodeModel.ModelTypes.Where(t => t.DerivesFrom(this));
 
