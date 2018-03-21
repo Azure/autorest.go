@@ -193,14 +193,9 @@ namespace AutoRest.Go.Model
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
 
-            if (NeedsXmlNameField)
+            if (IsPolymorphic || HasFlattenedFields || NeedsXmlNameField)
             {
-                imports.Add(PrimaryTypeGo.GetImportLine(package: "encoding/xml"));
-            }
-
-            if (BaseIsPolymorphic && !IsPolymorphic)
-            {
-                imports.Add("\"encoding/json\"");
+                imports.Add($"\"encoding/{this.CodeModel.ToCodeModelGo().Encoding}\"");
                 imports.Add("\"errors\"");
             }
         }
@@ -216,7 +211,7 @@ namespace AutoRest.Go.Model
         {
             if (BaseIsPolymorphic && BaseModelType != null)
             {
-                return (BaseModelType as CompositeTypeGo).IsPolymorphicResponse();
+                return ((CompositeTypeGo) BaseModelType).IsPolymorphicResponse();
             }
             return IsPolymorphic && IsResponseType;
         }
@@ -259,7 +254,6 @@ namespace AutoRest.Go.Model
                                     property.Name,
                                     enumType.Name,
                                     property.Tag());
-
                 }
                 else if (property.ModelType is DictionaryType)
                 {

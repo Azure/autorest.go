@@ -33,7 +33,7 @@ namespace AutoRest.Go.Model
             bool hasParent = false;
             if (Parent is CompositeTypeGo go && !go.IsWrapperType)
             {
-                sb.Append(XmlName);
+                sb.Append(SerializedName);
                 hasParent = true;
             }
 
