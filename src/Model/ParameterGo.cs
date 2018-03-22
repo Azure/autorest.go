@@ -254,12 +254,9 @@ namespace AutoRest.Go.Model
                     return base.ModelType;
                 }
                 // this is a header collection so emit it as a map[string]string
-                return new DictionaryTypeGo() { ValueType = base.ModelType, CodeModel = base.ModelType.CodeModel, SupportsAdditionalProperties = false };
+                return new DictionaryTypeGo { ValueType = base.ModelType, CodeModel = base.ModelType.CodeModel, SupportsAdditionalProperties = false };
             }
-            set
-            {
-                base.ModelType = value;
-            }
+            set => base.ModelType = value;
         }
 
         /// <summary>
@@ -273,17 +270,12 @@ namespace AutoRest.Go.Model
                 throw new Exception($"GetOptionalComparand called on required paramater {Name}");
             }
 
-            if (ModelType is EnumTypeGo)
+            if (!(ModelType is EnumTypeGo et))
             {
-                var et = ModelType as EnumTypeGo;
-                var typeName = et.Name.ToString();
-                if (typeName.EndsWith("Type"))
-                {
-                    typeName = typeName.Substring(0, typeName.Length - 4);
-                }
-                return $"{typeName}None";
+                return "nil";
             }
-            return "nil";
+
+            return $"{et.Name}None";
         }
 
         /// <summary>

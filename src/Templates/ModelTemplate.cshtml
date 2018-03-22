@@ -35,50 +35,6 @@
         @(Model.AddHTTPResponse())
         @(Model.Fields(forMarshaller: false))
         }
-
-        @EmptyLine
-        func unmarshal@(Model.GetInterfaceName())(body []byte) (@(Model.GetInterfaceName()), error){
-        var m map[string]interface{}
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return nil, err
-        }
-        @EmptyLine
-        switch m["@(Model.RootType.PolymorphicDiscriminator)"] {
-        @foreach (var dt in Model.DerivedTypes)
-        {
-            <text>
-            case string(@(CodeNamerGo.Instance.GetEnumMemberName((dt as CompositeTypeGo).DiscriminatorEnumValue))):
-            var @(dt.Name.FixedValue.ToShortName()) @(dt.Name)
-            err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToShortName()))
-            return @(dt.Name.FixedValue.ToShortName()), err
-            </text>
-        }
-        default:
-        var @(Model.Name.FixedValue.ToShortName()) @(Model.Name)
-        err := json.Unmarshal(body, &@(Model.Name.FixedValue.ToShortName()))
-        return @(Model.Name.FixedValue.ToShortName()), err
-        }
-        }
-
-        func unmarshal@(Model.GetInterfaceName())Array(body []byte) ([]@(Model.GetInterfaceName()), error){
-        var rawMessages []*json.RawMessage
-        err := json.Unmarshal(body, &rawMessages)
-        if err != nil {
-        return nil, err
-        }
-        @EmptyLine
-        @(Model.Name.FixedValue.ToShortName())Array := make([]@(Model.GetInterfaceName()), len(rawMessages))
-        @EmptyLine
-        for index, rawMessage := range rawMessages {
-        @(Model.Name.FixedValue.ToShortName()), err := unmarshal@(Model.GetInterfaceName())(*rawMessage)
-        if err != nil {
-        return nil, err
-        }
-        @(Model.Name.FixedValue.ToShortName())Array[index] = @(Model.Name.FixedValue.ToShortName())
-        }
-        return @(Model.Name.FixedValue.ToShortName())Array, nil
-        }
         </text>
 }
 else
@@ -96,142 +52,53 @@ else
     </text>
 }
 
-@if (Model.BaseIsPolymorphic && Model.IsPolymorphic)
+@if (Model.BaseIsPolymorphic || Model.IsPolymorphic)
 {
-    <text>
-        @EmptyLine
-        // MarshalJSON is the custom marshaler for @(Model.Name).
-        func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name))MarshalJSON() ([]byte, error){
-        @(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(Model.DiscriminatorEnumValue)
-        type Alias @(Model.Name)
-        return json.Marshal(&struct {
-        Alias
-        }{
-        Alias: (Alias)(@(Model.Name.FixedValue.ToShortName())),
-        })
-        }
-
-        @foreach (var st in Model.SiblingTypes)
-        {
-            <text>
-            @EmptyLine
-            // As@(st.Name) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
-            func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
-            @if (st.Equals(Model))
-            {
-                @:return &@(Model.Name.FixedValue.ToShortName()), true
-            }
-            else
-            {
-                @:return nil, false
-            }
-                }
-            @if (st.HasInterface())
-            {
-                    @EmptyLine
-                    @:// As@(st.GetInterfaceName()) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
-                    @:func(@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.GetInterfaceName())()(@(st.GetInterfaceName()), bool) {
-                    if (st.Equals(Model) || Model.DerivesFrom(st))
-                    {
-                        @:return &@(Model.Name.FixedValue.ToShortName()), true
-                    }
-                    else
-                    {
-                        @:return nil, false
-                    }
-                    @:}
-                    @EmptyLine
+     foreach (var st in Model.SiblingTypes)
+     {
+         <text>
+             @EmptyLine
+             // As@(st.Name) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
+             func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
+             @if (st.Equals(Model))
+             {
+                 @:return &@(Model.Name.FixedValue.ToShortName()), true
              }
-    </text>
-}
-        </text>
+             else
+             {
+                 @:return nil, false
+             }
+             }
+             @if (st.HasInterface())
+             {
+                 @EmptyLine
+                 @:// As@(st.GetInterfaceName()) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
+                 @:func(@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.GetInterfaceName())()(@(st.GetInterfaceName()), bool) {
+                 if (st.Equals(Model) || Model.DerivesFrom(st))
+                 {
+                     @:return &@(Model.Name.FixedValue.ToShortName()), true
+                 }
+                 else
+                 {
+                     @:return nil, false
+                 }
+                 @:}
+                 @EmptyLine
+             }
+         </text>
+     }
 }
 
-@if (Model.HasPolymorphicFields && Model.HasFlattenedFields)
+
+@if (Model.CodeModel.ShouldGenerateXmlSerialization)
 {
-    <text>
-        // UnmarshalJSON is the custom unmarshaler for @(Model.Name) struct.
-        func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body []byte) error {
-        @if (Model.IsWrapperType)
-        {
-            if (Model.BaseType is SequenceTypeGo sequenceType)
-            {
-                @:@(sequenceType.ElementType.Name.FixedValue.ToShortName()), err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(body)
-            }
-            else
-            {
-                @:@(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.GetInterfaceName())(body)
-            }
-            <text>
-                if err != nil {
-                return err
-                }
-            </text>
-            if (Model.BaseType is SequenceType type)
-            {
-                @:@(Model.Name.FixedValue.ToShortName()).Value = &@type.ElementType.Name.FixedValue.ToShortName()
-            }
-            else
-            {
-                @:@(Model.Name.FixedValue.ToShortName()).Value = @(Model.BaseType.Name.FixedValue.ToShortName())
-            }
-         }
-        else
-        {
-    <text>
-        var m map[string]*json.RawMessage
-        err := json.Unmarshal(body, &m)
-        if err != nil {
-        return err
-        }
-
-        var v *json.RawMessage
-        @foreach (var p in Model.AllProperties)
-        {
-            <text>
-            @EmptyLine
-            v = m["@(p.SerializedName)"]
-                if v != nil {
-            @if (p.ModelType.HasInterface())
-            {
-                    @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(p.ModelType.GetInterfaceName())(*m["@(p.SerializedName)"])
-            }
-            else if (p.ModelType is SequenceTypeGo sequenceType && sequenceType.ElementType.HasInterface())
-            {
-                @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(*m["@(p.SerializedName)"])
-            }
-            else if (p.ModelType is CompositeType && ((CompositeTypeGo) p.ModelType).IsPolymorphic)
-            {
-                @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(p.ModelType.Name)(*m["@(p.SerializedName)"])
-            }
-            else
-            {
-                <text>
-                    var @(CodeNamerGo.Instance.GetVariableName(p.SerializedName)) @(p.ModelType.Name)
-                    err = json.Unmarshal(*m["@(p.SerializedName)"], &@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)))
-                </text>
-            }
-            if err != nil {
-            return err
-            }
-            @if (p.ModelType.HasInterface() || p.ModelType is EnumType)
-            {
-                @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
-            }
-            else
-            {
-                @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = &@(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
-            }
-            }
-            </text>
-        }
-        </text>
-        }
-        @EmptyLine
-        return nil
-        }
-        </text>
+    @(Include(new MarshallingXml(), Model))
 }
+else
+{
+    @(Include(new MarshallingJson(), Model))
+}
+
 @EmptyLine
 @if (Model.IsResponseType)
 {
@@ -371,5 +238,31 @@ else
         }
         return md
         }
+    </text>
+}
+
+@if (Model.IsDateTimeCustomHandlingRequired)
+{
+    var internalName = Model.Name.ToCamelCase();
+    var rec = Model.Name.ToString().ToShortName();
+    var local = $"{rec}2";
+    <text>
+// MarshalXML implements the xml.Marshaler interface for @Model.Name.
+    func (@rec @Model.Name) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+        if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
+            panic("size mismatch between @Model.Name and @internalName")
+        }
+        @local := (*@internalName)(unsafe.Pointer(&@rec))
+        return e.EncodeElement(*@local, start)
+    }
+
+// UnmarshalXML implements the xml.Unmarshaler interface for @Model.Name.
+    func (@rec *@Model.Name) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+        if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
+            panic("size mismatch between @Model.Name and @internalName")
+        }
+        @local := (*@internalName)(unsafe.Pointer(@rec))
+        return d.DecodeElement(@local, &start)
+    }
     </text>
 }

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using AutoRest.Core.Utilities;
 using AutoRest.Core.Model;
 using AutoRest.Extensions;
 using System;
@@ -56,6 +55,11 @@ namespace AutoRest.Go.Model
             return sb.ToString();
 
         }
+
+        /// <summary>
+        ///  Gets if the property should be treated as a pointer
+        /// </summary>
+        public bool IsPointer => !(this.ModelType.HasInterface() || IsRequired || ModelType.CanBeNull() || ModelType is EnumTypeGo);
 
         /// <summary>
         /// Returns true if this property represents custom metadata.

@@ -33,7 +33,7 @@ namespace AutoRest.Go
             }
         }
 
-        public virtual IEnumerable<string> PageableImports => new string[] 
+        public virtual IEnumerable<string> PageableImports => new string[]
         {
             PrimaryTypeGo.GetImportLine(package: "net/http")
         };
@@ -131,8 +131,8 @@ namespace AutoRest.Go
                     "case",         "defer",        "go",           "map",          "struct",
                     "chan",         "else",         "goto",         "package",      "switch",
                     "const",        "fallthrough",  "if",           "range",        "type",
-                    "continue",     "for",          "import",       "return",       "var",        
-                
+                    "continue",     "for",          "import",       "return",       "var",
+
                     // Reserved predeclared identifiers -- list retrieved from http://golang.org/ref/spec#Predeclared_identifiers
                     "bool", "byte",
                     "complex64", "complex128",
@@ -193,7 +193,7 @@ namespace AutoRest.Go
                     "unsafe",
 
                     // Other reserved names and packages (defined by the base libraries this code uses)
-                    "autorest", "client", "date", "err", "req", "resp", "result", "sender", "to", "validation"
+                    "autorest", "client", "date", "err", "req", "resp", "result", "sender", "to", "validation", "e", "d", "start"
 
                 });
         }
@@ -287,7 +287,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetPropertyName(string name) => 
+        public override string GetPropertyName(string name) =>
             string.IsNullOrWhiteSpace(name) ?
             name :
             EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Property"));
@@ -297,7 +297,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetTypeName(string name) => 
+        public override string GetTypeName(string name) =>
             string.IsNullOrWhiteSpace(name) ?
             name :
             EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));
@@ -307,7 +307,7 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetVariableName(string name) => 
+        public override string GetVariableName(string name) =>
             string.IsNullOrWhiteSpace(name) ?
             name :
             EnsureNameCase(GetEscapedReservedName(CamelCase(RemoveInvalidCharacters(name)), "Var"));

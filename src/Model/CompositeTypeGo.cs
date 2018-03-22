@@ -52,18 +52,12 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public bool HasPolymorphicFields
-        {
-            get
-            {
-                return AllProperties.Any(p =>
-                    // polymorphic composite
-                        p.ModelType.HasInterface() ||
-                        // polymorphic array
-                        (p.ModelType is SequenceType sequenceType &&
-                         sequenceType.ElementType.HasInterface()));
-            }
-        }
+        public bool HasPolymorphicFields => 
+            AllProperties.Any(p =>
+                // polymorphic composite
+                p.ModelType.HasInterface() ||
+                // polymorphic array
+                (p.ModelType is SequenceType sequenceType && sequenceType.ElementType.HasInterface()));
 
         public CompositeTypeGo()
         {
@@ -137,8 +131,8 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool HasFlattenedFields => Properties.Any(p => p.ModelType is CompositeTypeGo && p.ShouldBeFlattened());
 
-        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator) 
-            ? CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator) 
+        public string PolymorphicProperty => !string.IsNullOrEmpty(PolymorphicDiscriminator)
+            ? CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator)
             : ((CompositeTypeGo) BaseModelType).PolymorphicProperty;
 
         public IEnumerable<PropertyGo> AllProperties => BaseModelType != null ?
@@ -196,7 +190,13 @@ namespace AutoRest.Go.Model
             if (IsPolymorphic || HasFlattenedFields || NeedsXmlNameField)
             {
                 imports.Add($"\"encoding/{this.CodeModel.ToCodeModelGo().Encoding}\"");
-                imports.Add("\"errors\"");
+            }
+
+            if (IsDateTimeCustomHandlingRequired)
+            {
+                imports.Add($"\"reflect\"");
+                imports.Add($"\"time\"");
+                imports.Add($"\"unsafe\"");
             }
         }
 
@@ -293,7 +293,7 @@ namespace AutoRest.Go.Model
                         property.Name = NextLink;
                     }
 
-                    var deref = property.ModelType.CanBeNull() || property.IsRequired ? string.Empty : "*";
+                    var deref = property.IsPointer ? "*" : string.Empty;
                     var typeName = property.ModelType.Name.ToString();
                     if (forMarshaller && property.ModelType.IsDateTimeType())
                     {
@@ -388,7 +388,7 @@ namespace AutoRest.Go.Model
                     }
                 }
             }
-            respHeaders.Sort((lhs, rhs) => { return string.Compare(lhs.Name, rhs.Name, StringComparison.OrdinalIgnoreCase); });
+            respHeaders.Sort((lhs, rhs) => string.Compare(lhs.Name, rhs.Name, StringComparison.OrdinalIgnoreCase));
             return respHeaders;
         }
 
@@ -420,5 +420,7 @@ namespace AutoRest.Go.Model
                 return false;
             }
         }
+
+        internal bool IsDateTimeCustomHandlingRequired => Properties.Any(p => p.ModelType.IsDateTimeType());
     }
 }

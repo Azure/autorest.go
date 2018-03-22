@@ -7,18 +7,6 @@
 @using System.Linq
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
-package @Model.Namespace
-@EmptyLine
-@Header("// ")
-
-@EmptyLine
-
-import (
-	"encoding/xml"
-	"reflect"
-	"time"
-	"unsafe"
-)
 
 const (
 	rfc3339Format = "2006-01-02T15:04:05.0000000Z07:00"
@@ -59,33 +47,13 @@ func (t *timeRFC3339) UnmarshalText(data []byte) (err error) {
 	return
 }
 
-@foreach (var ct in Model.RequiresMarshallers)
+@foreach (var ct in Model.RequiresDateTimeCustomHandling)
 {
     var internalName = ct.Name.ToCamelCase();
-    var rec = ct.Name.ToString().ToShortName();
-    var local = $"{rec}2";
 <text>
 // internal type used for marshalling
 type @internalName struct {
 	@ct.Fields(true)
-}
-
-// MarshalXML implements the xml.Marshaler interface for @ct.Name.
-func (@rec @ct.Name) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if reflect.TypeOf((*@ct.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
-		panic("size mismatch between @ct.Name and @internalName")
-	}
-	@local := (*@internalName)(unsafe.Pointer(&@rec))
-	return e.EncodeElement(*@local, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaler interface for @ct.Name.
-func (@rec *@ct.Name) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	if reflect.TypeOf((*@ct.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
-		panic("size mismatch between @ct.Name and @internalName")
-	}
-	@local := (*@internalName)(unsafe.Pointer(@rec))
-	return d.DecodeElement(@local, &start)
 }
 </text>
 }

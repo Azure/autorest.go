@@ -141,7 +141,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
+                                        ((PropertyGo)p).IsPointer ? "{0} *{1}" : "{0} {1}",
                                          p.Name.Value.ToSentence(), p.ModelType.Name));
                     }
                 }
@@ -176,7 +176,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
+                                        (((PropertyGo)p).IsPointer ? "{0} *{1}" : "{0} {1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name.Value.ToSentence()));
                     }
                 }
@@ -298,10 +298,10 @@ namespace AutoRest.Go.Model
         public bool UsesETags => ModelTypes.Any(m => m.Properties.Any(p => p.ModelType.IsETagType()));
 
         /// <summary>
-        /// Returns a collection of composite types that require custom marshalling and/or
-        /// unmarshalling. Can be empty if there are no types requriring marshallers.
+        /// Returns a collection of composite types that require datetime handleing in a custom marshaller and/or
+        /// unmarshaller. Can be empty if there are no types requriring marshallers.
         /// </summary>
-        public IEnumerable<CompositeTypeGo> RequiresMarshallers => ModelTypes.Cast<CompositeTypeGo>().Where(m => m.Properties.Any(p => p.ModelType.IsDateTimeType()));
+        public IEnumerable<CompositeTypeGo> RequiresDateTimeCustomHandling=> ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsDateTimeCustomHandlingRequired);
 
         /// <summary>
         /// Returns the encoding type used for serialization (e.g. xml or json).

@@ -1,0 +1,137 @@
+﻿@using AutoRest.Core.Model
+@using AutoRest.Core.Utilities
+@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using System.Collections.Generic
+@using System.Linq
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CompositeTypeGo>
+@EmptyLine
+
+@if (Model.HasInterface())
+{
+    <text>
+        func unmarshal@(Model.GetInterfaceName())(d *xml.Decoder, start xml.StartElement) (@(Model.GetInterfaceName()), error){
+        switch start.Name.Local {
+        @foreach (var dt in Model.DerivedTypes)
+        {
+            <text>
+            case string(@CodeNamerGo.Instance.GetEnumMemberName(((CompositeTypeGo)dt).DiscriminatorEnumValue)):
+            var @(dt.Name.FixedValue.ToShortName()) @(dt.Name)
+            err := d.DecodeElement(&@(dt.Name.FixedValue.ToShortName()), &start)
+            return @(dt.Name.FixedValue.ToShortName()), err
+    </text>
+}
+        default:
+        var @(Model.Name.FixedValue.ToShortName()) @(Model.Name)
+        err := d.DecodeElement(&@(Model.Name.FixedValue.ToShortName()), &start)
+        return @(Model.Name.FixedValue.ToShortName()), err
+        }
+
+        }
+
+        func unmarshal@(Model.GetInterfaceName())Array(d *xml.Decoder, start xml.StartElement) ([]@(Model.GetInterfaceName()), error){
+        @(Model.Name.FixedValue.ToShortName())Array := []@(Model.GetInterfaceName()){}
+
+        for t, err := d.Token(); err == nil; t, err = d.Token() {
+        tt, ok := t.(xml.StartElement)
+        if !ok {
+        continue
+        }
+        @(Model.Name.FixedValue.ToShortName()), err := unmarshal@(Model.GetInterfaceName())(d, tt)
+        if err == nil {
+        @(Model.Name.FixedValue.ToShortName())Array = append(@(Model.Name.FixedValue.ToShortName())Array, @(Model.Name.FixedValue.ToShortName()))
+        }
+        }
+        return @(Model.Name.FixedValue.ToShortName())Array, nil
+        }
+        </text>
+    }
+
+@if (Model.BaseIsPolymorphic || Model.IsPolymorphic)
+{
+    <text>
+        @EmptyLine
+        // MarshalXML is the custom marshaler for @(Model.Name).
+        func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name))MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+        @(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(Model.DiscriminatorEnumValue)
+        type Alias @(Model.Name)
+        return e.EncodeElement(struct {
+        Alias
+        }{
+        Alias: (Alias)(@(Model.Name.FixedValue.ToShortName())),
+        }, start)
+        }
+    </text>
+}
+
+@if (Model.HasPolymorphicFields || Model.HasFlattenedFields)
+{
+    var attrProperties = Model.AllProperties.Where(p => p.XmlIsAttribute);
+    var nonAttrProperties = Model.AllProperties.Where(p => !p.XmlIsAttribute);
+
+    <text>
+        // UnmarshalXML is the custom unmarshaler for @(Model.Name) struct.
+        func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+
+        for _, a := range start.Attr {
+        switch a.Name.Local {
+        @foreach (var p in attrProperties)
+        {
+            <text>
+                case "@p.Name":
+                @if (p.IsPointer)
+                {
+                    @:@(Model.Name.FixedValue.ToShortName()).@p.Name = &a.Value
+                }
+                else
+                {
+                    @:@(Model.Name.FixedValue.ToShortName()).@p.Name = a.Value
+                }
+            </text>
+        }
+        }
+        }
+
+        for t, err := d.Token(); err == nil; t, err = d.Token() {
+        tt, ok := t.(xml.StartElement)
+        if !ok {
+        continue
+        }
+        switch tt.Name.Local {
+        @foreach (var p in nonAttrProperties)
+        {
+            @:case "@p.Name":
+            <text>
+                @if (p.ModelType.HasInterface())
+                {
+                    @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(p.ModelType.GetInterfaceName())(d, tt)
+                    @:if err != nil {
+                    @:    return err
+                    @:}
+                    @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
+                }
+                else if (p.ModelType is SequenceTypeGo sequenceType && sequenceType.ElementType.HasInterface())
+                {
+                    @:@(CodeNamerGo.Instance.GetVariableName(p.SerializedName)), err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(d, tt)
+                    @:if err != nil {
+                    @:    return err
+                    @:}
+                    @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.SerializedName))
+                }
+                else
+                {
+                    @:err := d.DecodeElement(&@(Model.Name.FixedValue.ToShortName()).@p.Name, &tt)
+                    @:if err != nil {
+                    @:    return err
+                    @:}
+                }
+
+            </text>
+        }
+        }
+        }
+            return nil
+        }
+        </text>
+    }

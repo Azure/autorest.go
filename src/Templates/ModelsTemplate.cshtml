@@ -6,75 +6,71 @@
 @using System
 @using System.Collections.Generic
 @using System.Linq
-
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
-
 package @Model.Namespace
 @EmptyLine
 @Header("// ")
-
 @EmptyLine
-
 @if (!Model.ModelImports.IsNullOrEmpty())
 {
-@:import (
+    @:import (
 foreach (var import in Model.ModelImports)
-{
-    @:@(import)
+    {
+        @:@(import)
 }
-@:)    
-@EmptyLine
+    @:)
+    @EmptyLine
 }
-
 @if (Model.UsesETags)
 {
-<text>
-// @CodeNamerGo.Instance.ETagTypeName is an entity tag.
-type @CodeNamerGo.Instance.ETagTypeName string
+    <text>
+        // @CodeNamerGo.Instance.ETagTypeName is an entity tag.
+        type @CodeNamerGo.Instance.ETagTypeName string
 
-const (
-    // ETagNone represents an empty entity tag.
-    ETagNone @CodeNamerGo.Instance.ETagTypeName = ""
-@EmptyLine
-    // ETagAny matches any entity tag.
-    ETagAny @CodeNamerGo.Instance.ETagTypeName = "*"
-)
-</text>
+        const (
+        // ETagNone represents an empty entity tag.
+        ETagNone @CodeNamerGo.Instance.ETagTypeName = ""
+        @EmptyLine
+        // ETagAny matches any entity tag.
+        ETagAny @CodeNamerGo.Instance.ETagTypeName = "*"
+        )
+    </text>
 }
-@if (Model.UsesMetadataType)
+@if (Model.UsesMetadataType && Model.ShouldGenerateXmlSerialization)
 {
-<text>
-// Metadata contains metadata key/value pairs.
-type Metadata map[string]string
-@EmptyLine
-const mdPrefix = "x-ms-meta-"
-@EmptyLine
-const mdPrefixLen = len(mdPrefix)
-@EmptyLine
-// UnmarshalXML implements the xml.Unmarshaler interface for Metadata.
-func (md *Metadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-    tokName := ""
+    <text>
+        // Metadata contains metadata key/value pairs.
+        type Metadata map[string]string
+        @EmptyLine
+        const mdPrefix = "x-ms-meta-"
+        @EmptyLine
+        const mdPrefixLen = len(mdPrefix)
+        @EmptyLine
+        // UnmarshalXML implements the xml.Unmarshaler interface for Metadata.
+        func (md *Metadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+        tokName := ""
 
-    for t, err := d.Token(); err == nil; t, err = d.Token() {
+        for t, err := d.Token(); err == nil; t, err = d.Token() {
         switch tt := t.(type) {
-		case xml.StartElement:
-			tokName = strings.ToLower(tt.Name.Local)
-            break
-		case xml.CharData:
-			if *md == nil {
-                *md = Metadata{}
-            }
-            (*md)[tokName] = string(tt)
+        case xml.StartElement:
+        tokName = strings.ToLower(tt.Name.Local)
+        break
+        case xml.CharData:
+        if *md == nil {
+        *md = Metadata{}
+        }
+        (*md)[tokName] = string(tt)
 
-            break
+        break
 
         }
-    }
-    return nil
+        }
+        return nil
+        }
+    </text>
 }
-</text>
-}
-@if (Model.PagedTypes.Any())
+
+@if (Model.PagedTypes.Any() && Model.ShouldGenerateXmlSerialization)
 {
 <text>
 // Marker represents an opaque value used in paged responses.
@@ -99,6 +95,7 @@ func (m *Marker) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 }
 </text>
 }
+
 // concatenates a slice of const values with the specified separator between each item
 func joinConst(s interface{}, sep string) string {
 	v := reflect.ValueOf(s)
@@ -113,16 +110,21 @@ func joinConst(s interface{}, sep string) string {
 }
 @foreach (var e in Model.Enums)
 {
-<text>
-@(Include(new EnumTemplate(), e))
-@EmptyLine
-</text>
+    <text>
+        @(Include(new EnumTemplate(), e))
+        @EmptyLine
+    </text>
 }
-
 @foreach (var mt in Model.Models)
 {
-<text>
-@(Include(new ModelTemplate(), mt))
-@EmptyLine
-</text>
+    <text>
+        @(Include(new ModelTemplate(), mt))
+        @EmptyLine
+    </text>
+}
+@if (Model.RequiresDateTimeCustomHandling.Any())
+{
+    <text>
+        @(Include(new Marshalling(), Model))
+    </text>
 }
