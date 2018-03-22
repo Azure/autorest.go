@@ -8,11 +8,11 @@ matrix:
   allow_failures:
     - go: master
 env:
-  - NODE_VERSION="8.9.4" DEP_VERSION="0.4.1"
+  - NODE_VERSION="8.9.4"
 before_install:
   - nvm install $NODE_VERSION
-  - curl -L -o $GOPATH/bin/dep https://github.com/golang/dep/releases/download/v$DEP_VERSION/dep-linux-amd64 && chmod +x $GOPATH/bin/dep
 install:
+  - go get -u github.com/golang/dep/cmd/dep
   - sudo apt-get install libunwind8
   - npm install
 before_script:
