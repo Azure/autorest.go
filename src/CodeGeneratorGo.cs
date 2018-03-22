@@ -70,6 +70,7 @@ namespace AutoRest.Go
                 "models",
                 "client",
                 "version",
+                "mocks"
             };
 
             foreach (var methodGroup in codeModel.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name)))
@@ -85,6 +86,10 @@ namespace AutoRest.Go
                 };
                 await Write(methodGroupTemplate, FormatFileName(methodGroup.Name).ToLowerInvariant());
             }
+
+            // mocks for testing
+            var interfacesTemplate = new MocksTemplate { Model = codeModel };
+            await Write(interfacesTemplate, FormatFileName("mocks"));
 
             // Version
             var versionTemplate = new VersionTemplate { Model = codeModel };
