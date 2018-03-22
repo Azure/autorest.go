@@ -29,15 +29,20 @@ func joinConst(s interface{}, sep string) string {
 type ColorsType string
 
 const (
-	// ColorsBlueColor ...
-	ColorsBlueColor ColorsType = "blue_color"
-	// ColorsGreenColor ...
-	ColorsGreenColor ColorsType = "green-color"
-	// ColorsNone represents an empty ColorsType.
-	ColorsNone ColorsType = ""
-	// ColorsRedcolor ...
-	ColorsRedcolor ColorsType = "red color"
+	// BlueColor ...
+	BlueColor ColorsType = "blue_color"
+	// GreenColor ...
+	GreenColor ColorsType = "green-color"
+	// None ColorsNone represents an empty ColorsType.
+	None ColorsType = ""
+	// Redcolor ...
+	Redcolor ColorsType = "red color"
 )
+
+// PossibleColorsTypeValues returns an array of possible values for the ColorsType const type.
+func PossibleColorsTypeValues() []ColorsType {
+	return []ColorsType{BlueColor, GreenColor, None, Redcolor}
+}
 
 // Error ...
 type Error struct {
@@ -91,7 +96,7 @@ func (gb6er GetBase64URLEncodedResponse) Status() string {
 type GetEmptyResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: ''
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
@@ -113,7 +118,7 @@ func (ger GetEmptyResponse) Status() string {
 type GetMbcsResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
@@ -199,7 +204,7 @@ func (gnb6er GetNullBase64URLEncodedResponse) Status() string {
 type GetNullResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: ''
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
@@ -243,7 +248,7 @@ func (grr GetReferencedResponse) Status() string {
 type GetWhitespaceResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: '    Now is the time for all good men to come to the aid of their country    '
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
