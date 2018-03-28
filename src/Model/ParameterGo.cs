@@ -72,13 +72,55 @@ namespace AutoRest.Go.Model
 
         public virtual bool IsAPIHeader => SerializedName.IsApiHeader();
 
-        public virtual bool IsMethodArgument => !IsClientProperty && !IsAPIVersion;
+        public virtual bool IsMethodArgument => !IsClientProperty && !IsAPIVersion && !IsConstant;
 
         public string HeaderCollectionPrefix => Extensions.GetValue<string>(SwaggerExtensions.HeaderCollectionPrefix);
 
         public bool IsHeaderCollection => !string.IsNullOrEmpty(HeaderCollectionPrefix);
 
         public bool IsCustomMetadata => SerializedName.StartsWith("x-ms-meta", StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Returns a properly formatted DefaultValue string.
+        /// </summary>
+        public string DefaultValueString
+        {
+            // unfortunately the modeler doesn't uniformly wrap default values in double quotes, so
+            // depending on the type's format it might or might not be quoted.  e.g. plain ol' strings
+            // will be double-quoted but a string in date/time format will not.  note that there can
+            // be other "interesting" default values, e.g. []byte(""), so you can't simply check for
+            // the absense of double-quotes and then add them.  right now the only affected type is
+            // date/times, if we find more cases this will need to be updated.
+            get
+            {
+                // another irritant is that the javascript front-end to autorest will
+                // munge certain decimals/doubles, e.g. it will change 1.034E+20 to
+                // 103400000000000000000 which we don't want, so we have to round-trip
+                // these types to get the desired output.
+                if (string.IsNullOrWhiteSpace(DefaultValue))
+                {
+                    return DefaultValue;
+                }
+                else if (ModelType.Cast<PrimaryTypeGo>().KnownFormat.IsDateTime())
+                {
+                    return $"\"{DefaultValue}\"";
+                }
+                else if (ModelType.Cast<PrimaryTypeGo>().KnownPrimaryType == KnownPrimaryType.Decimal)
+                {
+                    var asDecimal = decimal.Parse(DefaultValue);
+                    return asDecimal.ToString();
+                }
+                else if (ModelType.Cast<PrimaryTypeGo>().KnownPrimaryType == KnownPrimaryType.Double)
+                {
+                    var asDouble = double.Parse(DefaultValue);
+                    return asDouble.ToString();
+                }
+                else
+                {
+                    return DefaultValue;
+                }
+            }
+        }
 
         /// <summary>
         /// Get Name for parameter for Go map. 
@@ -106,6 +148,15 @@ namespace AutoRest.Go.Model
             if (IsAPIVersion)
             {
                 return APIVersionName;
+            }
+
+            if (IsConstant)
+            {
+                if (RequiresUrlEncoding())
+                {
+                    return $"autorest.Encode(\"{Location.ToString().ToLower()}\", {DefaultValueString})";
+                }
+                return DefaultValueString;
             }
 
             var value = IsClientProperty

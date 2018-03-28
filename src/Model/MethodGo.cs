@@ -329,7 +329,7 @@ namespace AutoRest.Go.Model
                 }
 
                 decorators.Add(HTTPMethodDecorator);
-                if (!this.IsCustomBaseUri)
+                if (!IsCustomBaseUri)
                 {
                     decorators.Add(string.Format("autorest.WithBaseURL(client.BaseURI)"));
                 }
@@ -345,10 +345,16 @@ namespace AutoRest.Go.Model
 
                 if (BodyParameter != null && BodyParameter.IsRequired)
                 {
+                    var bodyParam = BodyParameter.Name;
+                    if (BodyParameter.IsConstant)
+                    {
+                        bodyParam = BodyParameter.DefaultValue;
+                    }
+
                     decorators.Add(string.Format(BodyParameter.ModelType.IsPrimaryType(KnownPrimaryType.Stream) && BodyParameter.Location == ParameterLocation.Body
                                         ? "autorest.WithFile({0})"
                                         : "autorest.WithJSON({0})",
-                                BodyParameter.Name));
+                                bodyParam));
                 }
 
                 if (QueryParameters.Any())
@@ -367,16 +373,22 @@ namespace AutoRest.Go.Model
 
                 if (HeaderParameters.Any())
                 {
-                    foreach (var param in Parameters.Where(p => p.IsRequired && p.Location == ParameterLocation.Header))
+                    foreach (var param in ParametersGo.Where(p => p.IsRequired && p.Location == ParameterLocation.Header))
                     {
-                        if (param.IsClientProperty)
+                        string value;
+                        if (param.IsConstant)
                         {
-                            decorators.Add(string.Format("autorest.WithHeader(\"{0}\",client.{1})", param.SerializedName, param.Name.ToPascalCase().ToString()));
+                            value = param.DefaultValueString;
+                        }
+                        else if (param.IsClientProperty)
+                        {
+                            value = $"client.{param.Name.ToPascalCase()}";
                         }
                         else
                         {
-                            decorators.Add(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))", param.SerializedName, param.Name.ToString()));
+                            value = $"autorest.String({param.Name})";
                         }
+                        decorators.Add($"autorest.WithHeader(\"{param.SerializedName}\", {value})");
                     }
                 }
 
