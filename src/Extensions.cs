@@ -364,6 +364,18 @@ namespace AutoRest.Go
             return (CodeModelGo)codeModel;
         }
 
+        /// <summary>
+        /// Returns true if the format is a date/time.
+        /// </summary>
+        /// <param name="format">The format type to check.</param>
+        /// <returns>True if the format is a date/time.</returns>
+        public static bool IsDateTime(this KnownFormat format)
+        {
+            return format == KnownFormat.date ||
+                format == KnownFormat.date_time ||
+                format == KnownFormat.date_time_rfc1123;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////
         // Validate code
         //
