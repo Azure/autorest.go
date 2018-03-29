@@ -19,12 +19,18 @@
             case string(@CodeNamerGo.Instance.GetEnumMemberName(((CompositeTypeGo)dt).DiscriminatorEnumValue)):
             var @(dt.Name.FixedValue.ToShortName()) @(dt.Name)
             err := d.DecodeElement(&@(dt.Name.FixedValue.ToShortName()), &start)
+            if err == nil {
+            @(dt.Name.FixedValue.ToShortName()).@(Model.DiscriminatorEnum.Name.Value) = @CodeNamerGo.Instance.GetEnumMemberName(((CompositeTypeGo)dt).DiscriminatorEnumValue)
+            }
             return @(dt.Name.FixedValue.ToShortName()), err
     </text>
 }
         default:
         var @(Model.Name.FixedValue.ToShortName()) @(Model.Name)
         err := d.DecodeElement(&@(Model.Name.FixedValue.ToShortName()), &start)
+        if err == nil {
+        @(Model.Name.FixedValue.ToShortName()).@(Model.DiscriminatorEnum.Name.Value) = @CodeNamerGo.Instance.GetEnumMemberName(((CompositeTypeGo)Model).DiscriminatorEnumValue)
+        }
         return @(Model.Name.FixedValue.ToShortName()), err
         }
 
@@ -79,17 +85,17 @@
         @foreach (var p in attrProperties)
         {
             <text>
-                case "@p.Name":
-                @if (p.IsPointer)
-                {
-                    @:@(Model.Name.FixedValue.ToShortName()).@p.Name = &a.Value
-                }
-                else
-                {
-                    @:@(Model.Name.FixedValue.ToShortName()).@p.Name = a.Value
-                }
-            </text>
-        }
+            case "@p.Name":
+            @if (p.IsPointer)
+            {
+                @:@(Model.Name.FixedValue.ToShortName()).@p.Name = &a.Value
+            }
+            else
+            {
+                @:@(Model.Name.FixedValue.ToShortName()).@p.Name = a.Value
+            }
+    </text>
+}
         }
         }
 
@@ -131,7 +137,53 @@
         }
         }
         }
-            return nil
+        return nil
         }
         </text>
     }
+
+@if (Model.ResponseIncludesMetadata)
+{
+    var shortName = Model.Name.ToString().ToShortName();
+
+    <text>
+        // NewMetadata returns user-defined key/value pairs.
+        func(@shortName @Model.Name) NewMetadata() Metadata {
+        md := Metadata{}
+        for k, v := range @(shortName).rawResponse.Header {
+        if len(k) > mdPrefixLen {
+        if prefix := k[0:mdPrefixLen]; strings.EqualFold(prefix, mdPrefix) {
+        md[strings.ToLower(k[mdPrefixLen:])] = v[0]
+        }
+        }
+        }
+        return md
+        }
+    </text>
+}
+
+@if (Model.IsDateTimeCustomHandlingRequired)
+{
+    var internalName = Model.Name.ToCamelCase();
+    var rec = Model.Name.ToString().ToShortName();
+    var local = $"{rec}2";
+    <text>
+        // MarshalXML implements the xml.Marshaler interface for @Model.Name.
+        func (@rec @Model.Name) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+        if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
+        panic("size mismatch between @Model.Name and @internalName")
+        }
+        @local := (*@internalName)(unsafe.Pointer(&@rec))
+        return e.EncodeElement(*@local, start)
+        }
+
+        // UnmarshalXML implements the xml.Unmarshaler interface for @Model.Name.
+        func (@rec *@Model.Name) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+        if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
+        panic("size mismatch between @Model.Name and @internalName")
+        }
+        @local := (*@internalName)(unsafe.Pointer(@rec))
+        return d.DecodeElement(@local, &start)
+        }
+    </text>
+}

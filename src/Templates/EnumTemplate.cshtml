@@ -4,9 +4,6 @@
 @using System.Linq
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
-@{
-    var values = Model.Values.Cast<EnumValueGo>().OrderBy(v => v.Name);
-}
 
 @WrapComment("// ", Model.Documentation)
 type @Model.Name string
