@@ -414,7 +414,7 @@ namespace AutoRest.Go
             }
             else
             {
-                if (p.IsRequired && (p.CheckNull() || isCompositeProperties))
+                if (p.IsRequired && p.CheckNull())
                     y.AddNullValidation(name, p.IsRequired);
             }
             return y;
@@ -478,7 +478,7 @@ namespace AutoRest.Go
             }
             else
             {
-                if (p.IsRequired && (p.CheckNull() || isCompositeProperties))
+                if (p.IsRequired && p.CheckNull())
                     y.AddNullValidation(name, p.IsRequired);
             }
             return y;
