@@ -40,14 +40,19 @@
         @(Model.Name.FixedValue.ToShortName())Array := []@(Model.GetInterfaceName()){}
 
         for t, err := d.Token(); err == nil; t, err = d.Token() {
-        tt, ok := t.(xml.StartElement)
-        if !ok {
-        continue
-        }
-        @(Model.Name.FixedValue.ToShortName()), err := unmarshal@(Model.GetInterfaceName())(d, tt)
+        ttStart, ok := t.(xml.StartElement)
+        if ok {
+        @(Model.Name.FixedValue.ToShortName()), err := unmarshal@(Model.GetInterfaceName())(d, ttStart)
         if err == nil {
         @(Model.Name.FixedValue.ToShortName())Array = append(@(Model.Name.FixedValue.ToShortName())Array, @(Model.Name.FixedValue.ToShortName()))
         }
+        }
+
+        ttEnd, ok := t.(xml.EndElement)
+        if ok && start.End() == ttEnd {
+        break;
+        }
+        continue;
         }
         return @(Model.Name.FixedValue.ToShortName())Array, nil
         }

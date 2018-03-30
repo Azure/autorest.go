@@ -86,10 +86,17 @@ namespace AutoRest.Go
             foreach (var et in cmg.EnumTypes)
             {
                 var e = et as EnumTypeGo;
-                var ev = new EnumValueGo();
-                ev.Name = "None";
-                ev.Description = $"{EnumValueGo.FormatName(e, ev)} represents an empty {e.Name}.";
+                var ev = new EnumValueGo
+                {
+                    Name = "None"
+                };
+                ev.Description = $"represents an empty {e.Name}.";
                 e.Values.Add(ev);
+
+                foreach (var enumValue in et.Values)
+                {
+                    enumValue.Name = EnumValueGo.FormatName((EnumTypeGo)et, (EnumValueGo)enumValue);
+                }
             }
 
             // And add any others with a defined name and value list (but not already located)
@@ -120,9 +127,14 @@ namespace AutoRest.Go
 
                 var enumValues = new List<EnumValue>();
 
-                var baseTypeEnumValue = new EnumValue
+                var typeName = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}";
+                if (typeName.EndsWith("Type"))
                 {
-                    Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(mt.SerializedName)}",
+                    typeName = typeName.Substring(0, typeName.Length - 4);
+                }
+                var baseTypeEnumValue = new EnumValueGo
+                {
+                    Name =  $"{typeName}{CodeNamerGo.Instance.GetTypeName(mt.SerializedName)}",
                     SerializedName = mt.SerializedName
                 };
 
@@ -130,9 +142,9 @@ namespace AutoRest.Go
 
                 foreach (var dt in mt.DerivedTypes)
                 {
-                    var ev = new EnumValue
+                    var ev = new EnumValueGo
                     {
-                        Name = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}{CodeNamerGo.Instance.GetTypeName(dt.SerializedName)}",
+                        Name = $"{typeName}{CodeNamerGo.Instance.GetTypeName(dt.SerializedName)}",
                         SerializedName = dt.SerializedName
                     };
                     enumValues.Add(ev);
@@ -152,7 +164,7 @@ namespace AutoRest.Go
                 }
                 else
                 {
-                    mt.DiscriminatorEnum = cmg.Add(New<EnumType>(new
+                    mt.DiscriminatorEnum = cmg.Add(New<EnumTypeGo>(new
                     {
                         Name = enumWithSameName == null ? mt.PolymorphicDiscriminator : $"{mt.PolymorphicDiscriminator}{mt.GetInterfaceName()}",
                         Values = enumValues,
@@ -167,7 +179,7 @@ namespace AutoRest.Go
             // NOTE: this must be done after all enum types have been accounted for
             foreach (var enumType in cmg.EnumTypes)
             {
-                enumType.SetName(CodeNamerGo.Instance.GetTypeName(enumType.Name.FixedValue));
+                enumType.SetName(CodeNamerGo.Instance.GetTypeName(enumType.Name));
                 foreach (var v in enumType.Values)
                 {
                     v.Name = CodeNamerGo.Instance.GetEnumMemberName(v.Name);

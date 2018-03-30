@@ -18,7 +18,7 @@ namespace AutoRest.Go.Model
             // TODO: ideally the core would set the Parent field to that of the EnumTypeGo
             //       to which this belongs, for now this is how we work around that.
             var parentName = parent.Name.ToString();
-            return $"{parentName.Substring(0, parentName.Length - 4)}{value.Name}";
+            return $"{parentName.Substring(0, parentName.Length - 4)}{value.MemberName}";
         }
     }
 }

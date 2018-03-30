@@ -123,7 +123,7 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Get Name for parameter for Go map. 
+        /// Get Name for parameter for Go map.
         /// If parameter is client parameter, then return client.<parametername>
         /// </summary>
         /// <returns></returns>
@@ -275,7 +275,13 @@ namespace AutoRest.Go.Model
                 return "nil";
             }
 
-            return $"{et.Name}None";
+            var typeName = et.Name.ToString();
+            if (typeName.EndsWith("Type"))
+            {
+                typeName = typeName.Substring(0, typeName.Length - 4);
+            }
+
+            return $"{typeName}None";
         }
 
         /// <summary>
@@ -300,7 +306,7 @@ namespace AutoRest.Go.Model
         /// </summary>
         public static string Format(this ParameterGo parameter)
         {
-            return  parameter.IsPassedByValue() ? "{0}" : "*{0}";
+            return parameter.IsPassedByValue() ? "{0}" : "*{0}";
         }
 
         /// <summary>
@@ -338,7 +344,7 @@ namespace AutoRest.Go.Model
                     // e.g. (*fooparam).Format(rfc339Format)
                     defaultFormat = $"({defaultFormat})";
                 }
-                
+
                 if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
                 {
                     return $"{defaultFormat}.In(gmt).Format(time.RFC1123)";

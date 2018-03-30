@@ -25,23 +25,23 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
-// ColorsType enumerates the values for colors.
+// ColorsType enumerates the values for colors type.
 type ColorsType string
 
 const (
-	// BlueColor ...
-	BlueColor ColorsType = "blue_color"
-	// GreenColor ...
-	GreenColor ColorsType = "green-color"
-	// None ColorsNone represents an empty ColorsType.
-	None ColorsType = ""
-	// Redcolor ...
-	Redcolor ColorsType = "red color"
+	// ColorsBlueColor ...
+	ColorsBlueColor ColorsType = "blue_color"
+	// ColorsGreenColor ...
+	ColorsGreenColor ColorsType = "green-color"
+	// ColorsNone represents an empty ColorsType.
+	ColorsNone ColorsType = ""
+	// ColorsRedcolor ...
+	ColorsRedcolor ColorsType = "red color"
 )
 
 // PossibleColorsTypeValues returns an array of possible values for the ColorsType const type.
 func PossibleColorsTypeValues() []ColorsType {
-	return []ColorsType{BlueColor, GreenColor, None, Redcolor}
+	return []ColorsType{ColorsBlueColor, ColorsGreenColor, ColorsNone, ColorsRedcolor}
 }
 
 // Error ...
@@ -139,7 +139,7 @@ func (gmr GetMbcsResponse) Status() string {
 // GetNotExpandableResponse ...
 type GetNotExpandableResponse struct {
 	rawResponse *http.Response
-	// Value - Possible values include: 'Redcolor', 'GreenColor', 'BlueColor', 'None'
+	// Value - Possible values include: 'ColorsRedcolor', 'ColorsGreenColor', 'ColorsBlueColor', 'ColorsNone'
 	Value ColorsType `json:"value,omitempty"`
 }
 
@@ -225,7 +225,7 @@ func (gnr GetNullResponse) Status() string {
 // GetReferencedResponse ...
 type GetReferencedResponse struct {
 	rawResponse *http.Response
-	// Value - Possible values include: 'Redcolor', 'GreenColor', 'BlueColor', 'None'
+	// Value - Possible values include: 'ColorsRedcolor', 'ColorsGreenColor', 'ColorsBlueColor', 'ColorsNone'
 	Value ColorsType `json:"value,omitempty"`
 }
 
