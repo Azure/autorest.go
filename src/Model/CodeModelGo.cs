@@ -20,7 +20,7 @@ namespace AutoRest.Go.Model
 
         public string Version { get; }
 
-        public string UserAgent => $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
+        public string UserAgent => $"Azure-SDK-For-Go/{Version} {Namespace}/{ApiVersion}";
 
         public CodeModelGo()
         {
