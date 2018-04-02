@@ -20,13 +20,7 @@ namespace AutoRest.Go.Model
 
         public string Version { get; }
 
-        public string UserAgent
-        {
-            get
-            {
-                return $"Azure-SDK-For-Go/{Version} arm-{Namespace}/{ApiVersion}";
-            }
-        }
+        public string UserAgent => $"Azure-SDK-For-Go/{Version} {Namespace}/{ApiVersion}";
 
         public CodeModelGo()
         {
@@ -37,33 +31,19 @@ namespace AutoRest.Go.Model
 
         public override string Namespace
         {
-            get
-            {
-                if (string.IsNullOrEmpty(base.Namespace))
-                {
-                    return base.Namespace;
-                }
-
-                return base.Namespace.ToLowerInvariant();
-            }
-            set
-            {
-                base.Namespace = value;
-            }
+            get => string.IsNullOrEmpty(base.Namespace) ? base.Namespace : base.Namespace.ToLowerInvariant();
+            set => base.Namespace = value;
         }
 
         public string ServiceName => CodeNamer.Instance.PascalCase(Namespace ?? string.Empty);
 
-        public string GetDocumentation()
-        {
-            return $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(Documentation ?? string.Empty).UnwrapAnchorTags()}";
-        }
+        public string GetDocumentation() => $"Package {Namespace} implements the Azure ARM {ServiceName} service API version {ApiVersion}.\n\n{(Documentation ?? string.Empty).UnwrapAnchorTags()}";
 
         public string BaseClient => CodeNamerGo.Instance.ExportClientTypes ? "ManagementClient" : "managementClient";
 
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
-        public string APIType => (string)Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
+        public string APIType => Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
 
         public IEnumerable<string> ClientImports
         {
@@ -71,7 +51,7 @@ namespace AutoRest.Go.Model
             {
                 var imports = new HashSet<string>();
                 imports.UnionWith(CodeNamerGo.Instance.PipelineImports);
-                var clientMg = MethodGroups.Where(mg => string.IsNullOrEmpty(mg.Name)).FirstOrDefault();
+                var clientMg = MethodGroups.FirstOrDefault(mg => string.IsNullOrEmpty(mg.Name));
                 if (clientMg != null)
                 {
                     imports.UnionWith(clientMg.Imports);
@@ -96,10 +76,12 @@ namespace AutoRest.Go.Model
                 var addStrConvImport = false;
                 var addBase64Import = false;
                 // Create an ordered union of the imports each model requires
-                var imports = new HashSet<string>();
-                imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
-                imports.Add(PrimaryTypeGo.GetImportLine(package: "reflect"));
-                imports.Add(PrimaryTypeGo.GetImportLine(package: "strings"));
+                var imports = new HashSet<string>
+                {
+                    PrimaryTypeGo.GetImportLine(package: "net/http"),
+                    PrimaryTypeGo.GetImportLine(package: "reflect"),
+                    PrimaryTypeGo.GetImportLine(package: "strings")
+                };
 
                 ModelTypes.Cast<CompositeTypeGo>()
                     .ForEach(mt =>
@@ -159,7 +141,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
+                                        ((PropertyGo)p).IsPointer ? "{0} *{1}" : "{0} {1}",
                                          p.Name.Value.ToSentence(), p.ModelType.Name));
                     }
                 }
@@ -194,7 +176,7 @@ namespace AutoRest.Go.Model
                     {
                         declarations.Add(
                                 string.Format(
-                                        (p.IsRequired || p.ModelType.CanBeNull() ? "{0} {1}" : "{0} *{1}"),
+                                        (((PropertyGo)p).IsPointer ? "{0} *{1}" : "{0} {1}"),
                                          p.Name.Value.ToSentence(), p.ModelType.Name.Value.ToSentence()));
                     }
                 }
@@ -269,14 +251,9 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public IEnumerable<MethodGo> ClientMethods
-        {
-            get
-            {
+        public IEnumerable<MethodGo> ClientMethods =>
                 // client methods are the ones with no method group
-                return Methods.Cast<MethodGo>().Where(m => string.IsNullOrEmpty(m.MethodGroup.Name));
-            }
-        }
+                Methods.Cast<MethodGo>().Where(m => string.IsNullOrEmpty(m.MethodGroup.Name));
 
         /// FormatVersion normalizes a version string into a SemVer if it resembles one. Otherwise,
         /// it returns the original string unmodified. If version is empty or only comprised of
@@ -313,36 +290,18 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Returns true if any model types contain a metadata property.
         /// </summary>
-        public bool UsesMetadataType
-        {
-            get
-            {
-                return ModelTypes.Where(m => m.Properties.Cast<PropertyGo>().Where(p => p.IsMetadata).Any()).Any();
-            }
-        }
+        public bool UsesMetadataType => ModelTypes.Any(m => m.Properties.Cast<PropertyGo>().Any(p => p.IsMetadata));
 
         /// <summary>
         /// Returns true if any model types contain an Etag property.
         /// </summary>
-        public bool UsesETags
-        {
-            get
-            {
-                return ModelTypes.Where(m => m.Properties.Where(p => p.ModelType.IsETagType()).Any()).Any();
-            }
-        }
+        public bool UsesETags => ModelTypes.Any(m => m.Properties.Any(p => p.ModelType.IsETagType()));
 
         /// <summary>
-        /// Returns a collection of composite types that require custom marshalling and/or
-        /// unmarshalling. Can be empty if there are no types requriring marshallers.
+        /// Returns a collection of composite types that require datetime handleing in a custom marshaller and/or
+        /// unmarshaller. Can be empty if there are no types requriring marshallers.
         /// </summary>
-        public IEnumerable<CompositeTypeGo> RequiresMarshallers
-        {
-            get
-            {
-                return ModelTypes.Cast<CompositeTypeGo>().Where(m => m.Properties.Where(p => p.ModelType.IsDateTimeType()).Any());
-            }
-        }
+        public IEnumerable<CompositeTypeGo> RequiresDateTimeCustomHandling=> ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsDateTimeCustomHandlingRequired);
 
         /// <summary>
         /// Returns the encoding type used for serialization (e.g. xml or json).

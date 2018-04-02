@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using AutoRest.Core.Utilities;
 using AutoRest.Core.Model;
 using AutoRest.Extensions;
 using System;
@@ -13,10 +12,9 @@ namespace AutoRest.Go.Model
     {
         public PropertyGo()
         {
-
         }
 
-        public string Tag()
+        public string Tag(bool omitEmpty = true)
         {
             // don't emit a tag if this property is part of a parameter group (it's not necessary)
             if (Extensions.ContainsKey(SwaggerExtensions.ParameterGroupExtension))
@@ -24,49 +22,72 @@ namespace AutoRest.Go.Model
                 return string.Empty;
             }
 
-            if (Parent.CodeModel.ShouldGenerateXmlSerialization)
+            if (!Parent.CodeModel.ShouldGenerateXmlSerialization)
             {
-                var sb = new StringBuilder("`xml:\"");
-
-                bool hasParent = false;
-                if (Parent is CompositeTypeGo && !((CompositeTypeGo)Parent).IsWrapperType)
-                {
-                    sb.Append(XmlName);
-                    hasParent = true;
-                }
-
-                if (XmlIsWrapped)
-                {
-                    if (hasParent)
-                    {
-                        sb.Append('>');
-                    }
-
-                    var asSequence = ModelType as SequenceTypeGo;
-                    sb.Append(asSequence.ElementXmlName);
-                }
-                else if (XmlIsAttribute)
-                {
-                    sb.Append(",attr");
-                }
-
-                sb.Append("\"`");
-                return sb.ToString();
+                return string.Format("`json:\"{0}{1}\"`", SerializedName, omitEmpty ? ",omitempty" : "");
             }
 
-            return string.Format("`json:\"{0},omitempty\"`", SerializedName);
+            var sb = new StringBuilder("`xml:\"");
+
+            bool hasParent = false;
+            if (Parent is CompositeTypeGo go && !go.IsWrapperType)
+            {
+                sb.Append(XmlName);
+                hasParent = true;
+            }
+
+            if (XmlIsWrapped)
+            {
+                if (hasParent)
+                {
+                    sb.Append('>');
+                }
+
+                var asSequence = ModelType as SequenceTypeGo;
+                sb.Append(asSequence.ElementXmlName);
+            }
+            else if (XmlIsAttribute)
+            {
+                sb.Append(",attr");
+            }
+
+            sb.Append("\"`");
+            return sb.ToString();
+
         }
+
+        /// <summary>
+        ///  Gets if the property should be treated as a pointer
+        /// </summary>
+        public bool IsPointer => !(this.ModelType.HasInterface() || IsRequired || ModelType.CanBeNull() || ModelType is EnumTypeGo);
 
         /// <summary>
         /// Returns true if this property represents custom metadata.
         /// </summary>
-        public bool IsMetadata
+        public bool IsMetadata => string.Compare(Name, "Metadata", StringComparison.OrdinalIgnoreCase) == 0 && ModelType is DictionaryTypeGo;
+
+        /// <summary>
+        /// Determiens if this PropertyGo instance is equal to another.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
         {
-            get
+            if (value is PropertyGo goProperty)
             {
-                // unfortunately we have to use a heuristic
-                return string.Compare(Name, "Metadata", StringComparison.OrdinalIgnoreCase) == 0 && ModelType is DictionaryTypeGo;
+                return goProperty.Name == Name;
             }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A 32-bit signed integer hash code.</returns>
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
         }
     }
 }

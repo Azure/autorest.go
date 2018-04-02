@@ -123,7 +123,7 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Get Name for parameter for Go map. 
+        /// Get Name for parameter for Go map.
         /// If parameter is client parameter, then return client.<parametername>
         /// </summary>
         /// <returns></returns>
@@ -254,12 +254,9 @@ namespace AutoRest.Go.Model
                     return base.ModelType;
                 }
                 // this is a header collection so emit it as a map[string]string
-                return new DictionaryTypeGo() { ValueType = base.ModelType, CodeModel = base.ModelType.CodeModel, SupportsAdditionalProperties = false };
+                return new DictionaryTypeGo { ValueType = base.ModelType, CodeModel = base.ModelType.CodeModel, SupportsAdditionalProperties = false };
             }
-            set
-            {
-                base.ModelType = value;
-            }
+            set => base.ModelType = value;
         }
 
         /// <summary>
@@ -273,17 +270,18 @@ namespace AutoRest.Go.Model
                 throw new Exception($"GetOptionalComparand called on required paramater {Name}");
             }
 
-            if (ModelType is EnumTypeGo)
+            if (!(ModelType is EnumTypeGo et))
             {
-                var et = ModelType as EnumTypeGo;
-                var typeName = et.Name.ToString();
-                if (typeName.EndsWith("Type"))
-                {
-                    typeName = typeName.Substring(0, typeName.Length - 4);
-                }
-                return $"{typeName}None";
+                return "nil";
             }
-            return "nil";
+
+            var typeName = et.Name.ToString();
+            if (typeName.EndsWith("Type"))
+            {
+                typeName = typeName.Substring(0, typeName.Length - 4);
+            }
+
+            return $"{typeName}None";
         }
 
         /// <summary>
@@ -308,7 +306,7 @@ namespace AutoRest.Go.Model
         /// </summary>
         public static string Format(this ParameterGo parameter)
         {
-            return  parameter.IsPassedByValue() ? "{0}" : "*{0}";
+            return parameter.IsPassedByValue() ? "{0}" : "*{0}";
         }
 
         /// <summary>
@@ -346,7 +344,7 @@ namespace AutoRest.Go.Model
                     // e.g. (*fooparam).Format(rfc339Format)
                     defaultFormat = $"({defaultFormat})";
                 }
-                
+
                 if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
                 {
                     return $"{defaultFormat}.In(gmt).Format(time.RFC1123)";
@@ -373,7 +371,7 @@ namespace AutoRest.Go.Model
             builder.Append(mapVariable);
             builder.Append(" := map[string]interface{} {");
 
-            if (parameters.Count() > 0)
+            if (parameters.Any())
             {
                 builder.AppendLine();
                 var indented = new IndentedStringBuilder("  ");

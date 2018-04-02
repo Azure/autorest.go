@@ -43,14 +43,14 @@ const (
 func (s *StringSuite) TestGetEmptyString(c *chk.C) {
 	str, err := stringClient.GetEmpty(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(*str.Value, chk.HasLen, 0)
-	c.Assert(*str.Value, chk.Equals, emptyString)
+	c.Assert(str.Value, chk.HasLen, 0)
+	c.Assert(str.Value, chk.Equals, emptyString)
 }
 
 func (s *StringSuite) TestGetMbcs(c *chk.C) {
 	str, err := stringClient.GetMbcs(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(*str.Value, chk.Equals, multibyteBufferBody)
+	c.Assert(str.Value, chk.Equals, multibyteBufferBody)
 }
 
 func (s *StringSuite) TestGetNotProvided(c *chk.C) {
@@ -62,13 +62,13 @@ func (s *StringSuite) TestGetNotProvided(c *chk.C) {
 func (s *StringSuite) TestGetNullString(c *chk.C) {
 	str, err := stringClient.GetNull(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(str.Value, chk.IsNil)
+	c.Assert(str.Value, chk.Equals, "")
 }
 
 func (s *StringSuite) TestGetWhitespace(c *chk.C) {
 	str, err := stringClient.GetWhitespace(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(*str.Value, chk.Equals, whitespaceText)
+	c.Assert(str.Value, chk.Equals, whitespaceText)
 }
 
 func (s *StringSuite) TestPutEmptyString(c *chk.C) {
@@ -124,7 +124,7 @@ func (s *StringSuite) TestPutWhitespace(c *chk.C) {
 func (s *StringSuite) TestGetNotExpandable(c *chk.C) {
 	str, err := enumClient.GetNotExpandable(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(str.Value, chk.Equals, ColorsRedcolor)
+	c.Assert(str.Value, chk.Equals, Redcolor)
 }
 
 func (s *StringSuite) TestPutNotExpandable(c *chk.C) {

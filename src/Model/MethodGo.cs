@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace AutoRest.Go.Model
 {
@@ -21,13 +22,13 @@ namespace AutoRest.Go.Model
     {
         private const string DefaultResponseType = "http.Response";
 
-        public new MethodGroupGo MethodGroup { get { return (MethodGroupGo)base.MethodGroup; } }
+        public new MethodGroupGo MethodGroup => (MethodGroupGo)base.MethodGroup;
 
         public string PackageName { get; private set; }
 
         public string APIVersion { get; private set; }
 
-        private readonly string lroDescription = " This method may poll for completion. Polling can be canceled by passing the cancel channel argument. " +
+        private const string lroDescription = " This method may poll for completion. Polling can be canceled by passing the cancel channel argument. " +
                                                  "The channel will be used to cancel polling and any outstanding HTTP requests.";
 
         public bool NextAlreadyDefined { get; private set; }
@@ -91,18 +92,18 @@ namespace AutoRest.Go.Model
         }
 
         public string MethodSignature => $"{Name}({MethodParametersSignature(false)})";
-        
+
         public string MethodParametersSignatureComplete
         {
             get
-            {     
+            {
                 var signature = new StringBuilder("(");
                 signature.Append(MethodParametersSignature(false));
                 if (!IsLongRunningOperation())
                 {
                     if (MethodParametersSignature(false).Length > 0)
                     {
-                        signature.Append( ", ");
+                        signature.Append(", ");
                     }
                     signature.Append("cancel <-chan struct{}");
                 }
@@ -151,7 +152,7 @@ namespace AutoRest.Go.Model
             get
             {
                 var body = ReturnType.Body as CompositeTypeGo;
-                return body.Properties.Where(p => p.ModelType is SequenceTypeGo).FirstOrDefault() as PropertyGo;
+                return body.Properties.FirstOrDefault(p => p.ModelType is SequenceTypeGo) as PropertyGo;
             }
         }
 
@@ -162,7 +163,7 @@ namespace AutoRest.Go.Model
         /// </summary>
         public string MethodParametersSignature(bool includeCtx)
         {
-            List<string> declarations = new List<string>();
+            var declarations = new List<string>();
 
             if (includeCtx)
             {
@@ -178,9 +179,12 @@ namespace AutoRest.Go.Model
                     declarations.Add("body io.ReadSeeker");
                     continue;
                 }
+
                 declarations.Add(string.Format(localParam.IsPassedByValue()
                                                         ? "{0} {1}"
-                                                        : "{0} *{1}", localParam.Name, localParam.ModelType.Name));
+                                                        : "{0} *{1}", localParam.Name, localParam.ModelType.HasInterface()
+                                                                                       ? localParam.ModelType.GetInterfaceName()
+                                                                                       : localParam.ModelType.Name.ToString()));
             }
 
             return string.Join(", ", declarations);
@@ -198,24 +202,15 @@ namespace AutoRest.Go.Model
                 {
                     return rv.Body.Name.ToString();
                 }
-                else if (rv.Headers != null)
-                {
-                    return rv.Headers.Name.ToString();
-                }
-                return DefaultResponseType;
+
+                return rv.Headers != null ? rv.Headers.Name.ToString() : DefaultResponseType;
             }
         }
 
         /// <summary>
         /// Returns true if the method return type is the default response.
         /// </summary>
-        public bool IsDefaultResponseType
-        {
-            get
-            {
-                return MethodReturnType == DefaultResponseType;
-            }
-        }
+        public bool IsDefaultResponseType => MethodReturnType == DefaultResponseType;
 
         /// <summary>
         /// Returns the method return signature for this method (e.g. "foo, bar").
@@ -419,14 +414,13 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var decorators = new List<string>();
-                decorators.Add("req");
-                if (RegisterRP)
+                var decorators = new List<string>
                 {
-                    decorators.Add("azure.DoRetryWithRegistration(client.Client)");
-                } else {
-                    decorators.Add("autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)");
-                }
+                    "req",
+                    RegisterRP
+                        ? "azure.DoRetryWithRegistration(client.Client)"
+                        : "autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...)"
+                };
                 if (IsLongRunningOperation())
                 {
                     decorators.Add("azure.DoPollForAsynchronous(client.PollingDelay)");
@@ -439,10 +433,12 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var decorators = new List<string>();
-                decorators.Add("resp");
-                decorators.Add("client.ByInspecting()");
-                decorators.Add(string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray())));
+                var decorators = new List<string>
+                {
+                    "resp",
+                    "client.ByInspecting()",
+                    string.Format("azure.WithErrorUnlessStatusCode({0})", string.Join(",", ResponseCodes.ToArray()))
+                };
 
                 var rvNeedsUnmarshalling = ReturnValueRequiresUnmarshalling();
                 if (rvNeedsUnmarshalling && !ReturnValue().Body.IsStreamType())
@@ -466,15 +462,9 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string Response
-        {
-            get
-            {
-                return HasReturnValue()
-                    ? "result.Response = autorest.Response{Response: resp}"
-                    : "result.Response = resp";
-            }
-        }
+        public string Response => HasReturnValue()
+            ? "result.Response = autorest.Response{Response: resp}"
+            : "result.Response = resp";
 
         /// <summary>
         /// Check if method has a return response.
@@ -510,8 +500,7 @@ namespace AutoRest.Go.Model
                 return false;
             }
 
-            var ctg = ReturnValue().Body as CompositeTypeGo;
-            if (ctg == null)
+            if (!(ReturnValue().Body is CompositeTypeGo ctg))
             {
                 return false;
             }
@@ -540,7 +529,7 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Checks if method has pageable extension (x-ms-pageable) enabled.  
+        /// Checks if method has pageable extension (x-ms-pageable) enabled.
         /// </summary>
         /// <returns></returns>
 
@@ -558,7 +547,7 @@ namespace AutoRest.Go.Model
             string next = NextOperationName;
             if (string.IsNullOrEmpty(next))
             {
-                return false; 
+                return false;
             }
             return methods.Any(m => m.Name.Value.EqualsIgnoreCase(next));
         }
@@ -579,16 +568,10 @@ namespace AutoRest.Go.Model
             }
         }
 
-        public string NextOperationName
-        {
-            get
-            {
-                return NextMethod?.Name.Value;
-            }
-        }
+        public string NextOperationName => NextMethod?.Name.Value;
 
         /// <summary>
-        /// Check if method has long running extension (x-ms-long-running-operation) enabled. 
+        /// Check if method has long running extension (x-ms-long-running-operation) enabled.
         /// </summary>
         /// <returns></returns>
         public bool IsLongRunningOperation()
@@ -626,19 +609,17 @@ namespace AutoRest.Go.Model
                 // Note:
                 // Methods can be paged, even if "nextLinkName" is null
                 // Paged method just means a method returns an array
-                if (Extensions.ContainsKey(AzureExtensions.PageableExtension))
+                if (!Extensions.ContainsKey(AzureExtensions.PageableExtension))
                 {
-                    var pageableExtension = Extensions[AzureExtensions.PageableExtension] as Newtonsoft.Json.Linq.JContainer;
-                    if (pageableExtension != null)
-                    {
-                        var nextLink = (string)pageableExtension["nextLinkName"];
-                        if (!string.IsNullOrEmpty(nextLink))
-                        {
-                            return CodeNamerGo.Instance.GetPropertyName(nextLink);
-                        }
-                    }
+                    return null;
                 }
-                return null;
+                if (!(Extensions[AzureExtensions.PageableExtension] is JContainer pageableExtension))
+                {
+                    return null;
+                }
+
+                var nextLink = (string)pageableExtension["nextLinkName"];
+                return !string.IsNullOrEmpty(nextLink) ? CodeNamerGo.Instance.GetPropertyName(nextLink) : null;
             }
         }
 

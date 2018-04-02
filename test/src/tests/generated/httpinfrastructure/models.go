@@ -70,18 +70,18 @@ type Error struct {
 }
 
 // Response returns the raw HTTP response object.
-func (e Error) Response() *http.Response {
-	return e.rawResponse
+func (eVar Error) Response() *http.Response {
+	return eVar.rawResponse
 }
 
 // StatusCode returns the HTTP status code of the response, e.g. 200.
-func (e Error) StatusCode() int {
-	return e.rawResponse.StatusCode
+func (eVar Error) StatusCode() int {
+	return eVar.rawResponse.StatusCode
 }
 
 // HTTPStatus returns the HTTP status message of the response, e.g. "200 OK".
-func (e Error) HTTPStatus() string {
-	return e.rawResponse.Status
+func (eVar Error) HTTPStatus() string {
+	return eVar.rawResponse.Status
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200ValidResponse ...

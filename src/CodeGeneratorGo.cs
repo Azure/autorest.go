@@ -17,7 +17,6 @@ namespace AutoRest.Go
         private const string ModelsFileName = "models";
         private const string ClientFileName = "client";
         private const string VersionFileName = "version";
-        private const string MarshallingFileName = "marshalling";
         private const string ResponderFileName = "responder_policy";
         private const string ResponseErrorFileName = "response_error";
         private const string ValidationFileName = "validation";
@@ -33,7 +32,6 @@ namespace AutoRest.Go
                 ModelsFileName,
                 ClientFileName,
                 VersionFileName,
-                MarshallingFileName,
                 ResponderFileName,
                 ResponseErrorFileName,
                 ValidationFileName
@@ -100,12 +98,6 @@ namespace AutoRest.Go
             foreach (var template in fixedTemplates)
             {
                 await Write(template.Item1, FormatFileName(template.Item2));
-            }
-
-            if (codeModel.RequiresMarshallers.Any())
-            {
-                var marshallingTemplate = new Marshalling { Model = codeModel };
-                await Write(marshallingTemplate, FormatFileName(MarshallingFileName));
             }
         }
 

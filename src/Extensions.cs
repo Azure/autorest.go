@@ -43,7 +43,7 @@ namespace AutoRest.Go
         }
 
         /// <summary>
-        /// This method changes string to sentence where is make the first word 
+        /// This method changes string to sentence where is make the first word
         /// of sentence to lowercase (unless it is an acronym). The sentence is coming directly from swagger.
         /// </summary>
         /// <param name="value"></param>
@@ -54,15 +54,13 @@ namespace AutoRest.Go
             {
                 return string.Empty;
             }
-            else
+
+            value = value.Trim();
+            if (value.StartsWithAcronym())
             {
-                value = value.Trim();
-                if (value.StartsWithAcronym())
-                {
-                    return value;
-                }                
-                return value.First().ToString().ToLowerInvariant() + (value.Length > 1 ? value.Substring(1) : "");
+                return value;
             }
+            return value.First().ToString().ToLowerInvariant() + (value.Length > 1 ? value.Substring(1) : "");
         }
 
         /// <summary>
@@ -74,7 +72,7 @@ namespace AutoRest.Go
         public static bool StartsWithAcronym(this string value)
         {
             string firstWord = value.Trim().Split(' ', '-', '_').First();
-            return firstWord.Length > 1 && firstWord.All(c => char.IsUpper(c));
+            return firstWord.Length > 1 && firstWord.All(char.IsUpper);
         }
 
         /// <summary>
@@ -126,7 +124,7 @@ namespace AutoRest.Go
         }
 
         /// <summary>
-        /// This method checks if MethodGroupName is plural of package name. 
+        /// This method checks if MethodGroupName is plural of package name.
         /// It returns false for packages not listed in dictionary 'plural'.
         /// Example, group EventHubs in package EventHub.
         /// Refactor -> Namer, but also could be used by the CodeModelTransformer
@@ -296,24 +294,43 @@ namespace AutoRest.Go
         /// <param name="imports"></param>
         public static void AddImports(this IModelType type, HashSet<string> imports)
         {
-            if (type is DictionaryTypeGo)
+            switch (type)
             {
-                (type as DictionaryTypeGo).AddImports(imports);
-            }
-            else if (type is PrimaryTypeGo)
-            {
-                (type as PrimaryTypeGo).AddImports(imports);
-            }
-            else if (type is SequenceTypeGo)
-            {
-                (type as SequenceTypeGo).AddImports(imports);
+                case DictionaryTypeGo dictionaryType:
+                    dictionaryType.AddImports(imports);
+                    break;
+                case PrimaryTypeGo primaryType:
+                    primaryType.AddImports(imports);
+                    break;
+                default:
+                    (type as SequenceTypeGo)?.AddImports(imports);
+                    break;
             }
         }
 
         public static bool ShouldBeSyntheticType(this IModelType type)
-        {            
-            return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType || 
-                (type is CompositeTypeGo && (type as CompositeTypeGo).IsPolymorphicResponse()));
+        {
+            return (type is PrimaryType || type is SequenceType || type is DictionaryType || type is EnumType ||
+                (type is CompositeTypeGo && ((CompositeTypeGo) type).IsPolymorphicResponse()));
+        }
+
+        /// <summary>
+        /// Gets if the type has an interface.
+        /// </summary>
+        public static bool HasInterface(this IModelType type)
+        {
+            return (type is CompositeTypeGo compositeType) &&
+                   (compositeType.IsRootType || compositeType.BaseIsPolymorphic && !compositeType.IsLeafType);
+        }
+
+        /// <summary>
+        /// Gets the interface name for the type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetInterfaceName(this IModelType type)
+        {
+            return $"Basic{type.Name}";
         }
 
         /// <summary>

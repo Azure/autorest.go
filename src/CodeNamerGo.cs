@@ -16,79 +16,27 @@ namespace AutoRest.Go
 {
     public class CodeNamerGo : CodeNamer
     {
-        public new static CodeNamerGo Instance
-        {
-            get
-            {
-                return (CodeNamerGo)CodeNamer.Instance;
-            }
-        }
+        public new static CodeNamerGo Instance => (CodeNamerGo)CodeNamer.Instance;
 
-        public virtual IEnumerable<string> PipelineImports
-        {
-            get
-            {
-                return new string[] { PrimaryTypeGo.GetImportLine(package: PipelineImportPath) };
-            }
-        }
+        public virtual IEnumerable<string> PipelineImports => new [] { PrimaryTypeGo.GetImportLine(package: PipelineImportPath) };
 
         public virtual IEnumerable<string> StandardImports
         {
             get
             {
-                var imports = new List<string>();
-                imports.Add(PrimaryTypeGo.GetImportLine(package: "net/http"));
-                imports.Add(PrimaryTypeGo.GetImportLine(package: "context"));
+                var imports = new List<string>
+                {
+                    PrimaryTypeGo.GetImportLine(package: "net/http"),
+                    PrimaryTypeGo.GetImportLine(package: "context")
+                };
                 return imports;
             }
         }
 
-        public virtual IEnumerable<string> PageableImports => new string[] 
+        public virtual IEnumerable<string> PageableImports => new string[]
         {
             PrimaryTypeGo.GetImportLine(package: "net/http")
         };
-
-        // CommonInitialisms are those "words" within a name that Golint expects to be uppercase.
-        // See https://github.com/golang/lint/blob/master/lint.go for detail.
-        private HashSet<string> CommonInitialisms => new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
-                                                            "Acl",
-                                                            "Api",
-                                                            "Ascii",
-                                                            "Cpu",
-                                                            "Css",
-                                                            "Dns",
-                                                            "Eof",
-                                                            "Guid",
-                                                            "Html",
-                                                            "Http",
-                                                            "Https",
-                                                            "Id",
-                                                            "Ip",
-                                                            "Json",
-                                                            "Lhs",
-                                                            "Qps",
-                                                            "Ram",
-                                                            "Rhs",
-                                                            "Rpc",
-                                                            "Sla",
-                                                            "Smtp",
-                                                            "Sql",
-                                                            "Ssh",
-                                                            "Tcp",
-                                                            "Tls",
-                                                            "Ttl",
-                                                            "Udp",
-                                                            "Ui",
-                                                            "Uid",
-                                                            "Uuid",
-                                                            "Uri",
-                                                            "Url",
-                                                            "Utf8",
-                                                            "Vm",
-                                                            "Xml",
-                                                            "Xsrf",
-                                                            "Xss",
-                                                        };
 
         public string[] UserDefinedNames => new string[] {
                                                             "UserAgent",
@@ -183,8 +131,8 @@ namespace AutoRest.Go
                     "case",         "defer",        "go",           "map",          "struct",
                     "chan",         "else",         "goto",         "package",      "switch",
                     "const",        "fallthrough",  "if",           "range",        "type",
-                    "continue",     "for",          "import",       "return",       "var",        
-                
+                    "continue",     "for",          "import",       "return",       "var",
+
                     // Reserved predeclared identifiers -- list retrieved from http://golang.org/ref/spec#Predeclared_identifiers
                     "bool", "byte",
                     "complex64", "complex128",
@@ -245,7 +193,7 @@ namespace AutoRest.Go
                     "unsafe",
 
                     // Other reserved names and packages (defined by the base libraries this code uses)
-                    "autorest", "client", "date", "err", "req", "resp", "result", "sender", "to", "validation"
+                    "autorest", "client", "date", "err", "req", "resp", "result", "sender", "to", "validation", "e", "d", "start"
 
                 });
         }
@@ -273,7 +221,6 @@ namespace AutoRest.Go
         /// Refactor -> Namer ... Even better if this already exists in the core :D
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="splitter"></param>
         /// <returns>The formatted string</returns>
         public override string PascalCase(string name)
         {
@@ -283,59 +230,39 @@ namespace AutoRest.Go
             }
 
             return
-                name.Split(new Char[]{'.', '_', '@', '-', ' ', '$'})
+                name.Split('.', '_', '@', '-', ' ', '$')
                     .Where(s => !string.IsNullOrEmpty(s))
                     .Select(s => char.ToUpperInvariant(s[0]) + s.Substring(1, s.Length - 1))
                     .DefaultIfEmpty("")
                     .Aggregate(string.Concat);
         }
 
-        public override string GetEnumMemberName(string name)
-        {
-            return EnsureNameCase(base.GetEnumMemberName(name));
-        }
+        public override string GetEnumMemberName(string name) => EnsureNameCase(base.GetEnumMemberName(name));
 
-        public override string GetFieldName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(GetEscapedReservedName(name, "Field"))));
-        }
+        public override string GetFieldName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(RemoveInvalidCharacters(PascalCase(GetEscapedReservedName(name, "Field"))));
 
-        public override string GetInterfaceName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
-        }
+        public override string GetInterfaceName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
 
         /// <summary>
         /// Formats a string for naming a method using Pascal case by default.
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetMethodName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Method"));
-        }
+        public override string GetMethodName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Method"));
 
-        public override string GetMethodGroupName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-
-            return EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
-        }
+        public override string GetMethodGroupName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(RemoveInvalidCharacters(PascalCase(name)));
 
         /// <summary>
         /// Formats a string for naming method parameters using Camel case by default.
@@ -348,7 +275,7 @@ namespace AutoRest.Go
             {
                 return name;
             }
-            if (Extensions.StartsWithAcronym(name))
+            if (name.StartsWithAcronym())
             {
                 return EnsureNameCase(GetEscapedReservedName((RemoveInvalidCharacters(name).ToLower()), "Parameter"));
             }
@@ -360,42 +287,30 @@ namespace AutoRest.Go
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetPropertyName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Property"));
-        }
+        public override string GetPropertyName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Property"));
 
         /// <summary>
         /// Formats a string for naming a Type or Object using Pascal case by default.
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetTypeName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));
-        }
+        public override string GetTypeName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));
 
         /// <summary>
         /// Formats a string for naming a local variable using Camel case by default.
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The formatted string.</returns>
-        public override string GetVariableName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return name;
-            }
-            return EnsureNameCase(GetEscapedReservedName(CamelCase(RemoveInvalidCharacters(name)), "Var"));
-        }
+        public override string GetVariableName(string name) =>
+            string.IsNullOrWhiteSpace(name) ?
+            name :
+            EnsureNameCase(GetEscapedReservedName(CamelCase(RemoveInvalidCharacters(name)), "Var"));
 
         /// <summary>
         /// Converts names the conflict with Go reserved terms by appending the passed appendValue.
@@ -407,12 +322,12 @@ namespace AutoRest.Go
         {
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             if (appendValue == null)
             {
-                throw new ArgumentNullException("appendValue");
+                throw new ArgumentNullException(nameof(appendValue));
             }
 
             // Use case-sensitive comparisons to reduce generated names
@@ -465,38 +380,45 @@ namespace AutoRest.Go
         {
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             }
-            PrimaryType primaryType = type as PrimaryType;
-            if (defaultValue != null)
+            var primaryType = type as PrimaryType;
+
+            if (defaultValue == null)
             {
-                if (type is CompositeType)
-                {
-                    return type.Name + "{}";
-                }
-                else if (primaryType != null)
-                {
-                    if (primaryType.KnownPrimaryType == KnownPrimaryType.String
-                        || primaryType.KnownPrimaryType == KnownPrimaryType.Uuid
-                        || primaryType.KnownPrimaryType == KnownPrimaryType.TimeSpan
-                        || primaryType.IsDateTimeType())
-                    {
-                        return CodeNamer.Instance.QuoteValue(defaultValue);
-                    }
-                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.Boolean)
-                    {
-                        return defaultValue.ToLowerInvariant();
-                    }
-                    else if (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray)
-                    {
-                        return "[]byte(\"" + defaultValue + "\")";
-                    }
-                    else
-                    {
-                        //TODO: handle imports for package types.
-                    }
-                }
+                return null;
             }
+
+            if (type is CompositeType)
+            {
+                return type.Name + "{}";
+            }
+
+            if (primaryType == null)
+            {
+                return defaultValue;
+            }
+
+            if (primaryType.KnownPrimaryType == KnownPrimaryType.String
+                || primaryType.KnownPrimaryType == KnownPrimaryType.Uuid
+                || primaryType.KnownPrimaryType == KnownPrimaryType.TimeSpan
+                || primaryType.IsDateTimeType())
+            {
+                return CodeNamer.Instance.QuoteValue(defaultValue);
+            }
+            else if (primaryType.KnownPrimaryType == KnownPrimaryType.Boolean)
+            {
+                return defaultValue.ToLowerInvariant();
+            }
+            else if (primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray)
+            {
+                return "[]byte(\"" + defaultValue + "\")";
+            }
+            else
+            {
+                //TODO: handle imports for package types.
+            }
+
             return defaultValue;
         }
 
@@ -538,5 +460,47 @@ namespace AutoRest.Go
         /// Gets the type name for the etag type.
         /// </summary>
         public string ETagTypeName => "ETag";
+
+        // CommonInitialisms are those "words" within a name that Golint expects to be uppercase.
+        // See https://github.com/golang/lint/blob/master/lint.go for detail.
+        private HashSet<string> CommonInitialisms => new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
+                                                            "Acl",
+                                                            "Api",
+                                                            "Ascii",
+                                                            "Cpu",
+                                                            "Css",
+                                                            "Dns",
+                                                            "Eof",
+                                                            "Guid",
+                                                            "Html",
+                                                            "Http",
+                                                            "Https",
+                                                            "Id",
+                                                            "Ip",
+                                                            "Json",
+                                                            "Lhs",
+                                                            "Qps",
+                                                            "Ram",
+                                                            "Rhs",
+                                                            "Rpc",
+                                                            "Sla",
+                                                            "Smtp",
+                                                            "Sql",
+                                                            "Ssh",
+                                                            "Tcp",
+                                                            "Tls",
+                                                            "Ttl",
+                                                            "Udp",
+                                                            "Ui",
+                                                            "Uid",
+                                                            "Uuid",
+                                                            "Uri",
+                                                            "Url",
+                                                            "Utf8",
+                                                            "Vm",
+                                                            "Xml",
+                                                            "Xsrf",
+                                                            "Xss",
+                                                        };
     }
 }

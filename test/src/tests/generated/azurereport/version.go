@@ -8,7 +8,7 @@ package azurereport
 
 // UserAgent returns the UserAgent string to use when sending http.Requests.
 func UserAgent() string {
-	return "Azure-SDK-For-Go/0.0.0 arm-azurereport/1.0.0"
+	return "Azure-SDK-For-Go/0.0.0 azurereport/1.0.0"
 }
 
 // Version returns the semantic version (see http://semver.org) of the client.

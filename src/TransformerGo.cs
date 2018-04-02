@@ -33,13 +33,32 @@ namespace AutoRest.Go
             SwaggerExtensions.ProcessGlobalParameters(cmg);
             // Add the current package name as a reserved keyword
             CodeNamerGo.Instance.ReserveNamespace(cm.Namespace);
-            FixStutteringTypeNames(cmg);
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);
             TransformMethods(cmg);
             AzureExtensions.ProcessParameterizedHost(cmg);
+            FixStutteringTypeNames(cmg);
+            AssureUniqueNames(cmg);
+            TransformPropertyTypes(cmg);
 
             return cmg;
+        }
+
+        private static void TransformPropertyTypes(CodeModelGo cmg)
+        {
+            foreach (var model in cmg.ModelTypes)
+            {
+                foreach (var property in model.Properties)
+                {
+                    // Flattened fields are referred to with their type name,
+                    // this name change generates correct custom unmarshalers and validation code,
+                    // plus flattening does not need to be checked that often
+                    if (property.ShouldBeFlattened() && property.ModelType is CompositeTypeGo)
+                    {
+                        property.Name = property.ModelType.HasInterface() ? property.ModelType.GetInterfaceName() : property.ModelType.Name.Value;
+                    }
+                }
+            }
         }
 
         private void TransformEnumTypes(CodeModelGo cmg)
@@ -67,10 +86,17 @@ namespace AutoRest.Go
             foreach (var et in cmg.EnumTypes)
             {
                 var e = et as EnumTypeGo;
-                var ev = new EnumValueGo();
-                ev.Name = "None";
-                ev.Description = $"{EnumValueGo.FormatName(e, ev)} represents an empty {e.Name}.";
+                var ev = new EnumValueGo
+                {
+                    Name = "None"
+                };
+                ev.Description = $"represents an empty {e.Name}.";
                 e.Values.Add(ev);
+
+                foreach (var enumValue in et.Values)
+                {
+                    enumValue.Name = EnumValueGo.FormatName((EnumTypeGo)et, (EnumValueGo)enumValue);
+                }
             }
 
             // And add any others with a defined name and value list (but not already located)
@@ -87,55 +113,121 @@ namespace AutoRest.Go
             }
 
             // Add discriminators
-            foreach (var mt in cmg.ModelTypes)
+            // For all polymorphic types we need an enum with values for all the implementing types.
+            // To do this:
+            // 1. Create an enum with the basic type and all derived types as values.
+            // 2. Check if there is any enum already present that has the same name. If there is, check if it contains all the values of current enum.
+            // 3. If it has the same name and all values of current enum, use it. Otherwise create a new one and use it.
+            foreach (var mt in cmg.ModelTypes.Cast<CompositeTypeGo>())
             {
-                if (mt.IsPolymorphic)
+                if (!mt.IsPolymorphic)
                 {
-                    var values  = new List<EnumValue>();
-                    foreach (var dt in (mt as CompositeTypeGo).DerivedTypes)
+                    continue;
+                }
+
+                var enumValues = new List<EnumValue>();
+
+                var typeName = $"{CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)}";
+                if (typeName.EndsWith("Type"))
+                {
+                    typeName = typeName.Substring(0, typeName.Length - 4);
+                }
+                var baseTypeEnumValue = new EnumValueGo
+                {
+                    Name =  $"{typeName}{CodeNamerGo.Instance.GetTypeName(mt.SerializedName)}",
+                    SerializedName = mt.SerializedName
+                };
+
+                enumValues.Add(baseTypeEnumValue);
+
+                foreach (var dt in mt.DerivedTypes)
+                {
+                    var ev = new EnumValueGo
                     {
-                        var ev = new EnumValueGo();
-                        ev.Name =  string.Format("{0}{1}", CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator),
-                            CodeNamerGo.Instance.GetTypeName(dt.SerializedName));
-                        ev.SerializedName = dt.SerializedName;
-                        values.Add(ev);
-                    }
-                    bool nameAlreadyExists = cmg.EnumTypes.Any(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));
-                    bool alreadyExists = nameAlreadyExists;
-                    if (nameAlreadyExists)
+                        Name = $"{typeName}{CodeNamerGo.Instance.GetTypeName(dt.SerializedName)}",
+                        SerializedName = dt.SerializedName
+                    };
+                    enumValues.Add(ev);
+                }
+
+                var enumAlreadyExists = false;
+                var enumWithSameName = (EnumTypeGo)cmg.EnumTypes.FirstOrDefault(et => et.Name.EqualsIgnoreCase(CodeNamerGo.Instance.GetTypeName(mt.PolymorphicDiscriminator)));
+
+                if (enumWithSameName != null)
+                {
+                    enumAlreadyExists = !enumValues.Select(value => value.SerializedName).Except(enumWithSameName.Values.Select(value => value.SerializedName)).Any();
+                }
+
+                if (enumAlreadyExists)
+                {
+                    mt.DiscriminatorEnum = enumWithSameName;
+                }
+                else
+                {
+                    mt.DiscriminatorEnum = cmg.Add(New<EnumTypeGo>(new
                     {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator));                        
-                        var existingValues = new List<string>();
-                        foreach (var v in cmg.EnumTypes.First(et => et.Name.EqualsIgnoreCase(mt.PolymorphicDiscriminator)).Values)
-                        {
-                            existingValues.Add(v.SerializedName);
-                        }
-                        foreach (var v in values)
-                        {
-                            if (!existingValues.Any(ev => ev.Equals(v.SerializedName)))
-                            {
-                                alreadyExists = false;
-                            }
-                        }
-                    }
-                    if (!alreadyExists)
-                    {
-                        (mt as CompositeTypeGo).DiscriminatorEnum = cmg.Add(New<EnumTypeGo>(new{
-                            Name = nameAlreadyExists ? string.Format("{0}{1}", mt.PolymorphicDiscriminator, mt.Name) :  mt.PolymorphicDiscriminator,
-                            Values = values,
-                    })); 
-                    }
+                        Name = enumWithSameName == null ? mt.PolymorphicDiscriminator : $"{mt.PolymorphicDiscriminator}{mt.GetInterfaceName()}",
+                        Values = enumValues,
+                    })) as EnumTypeGo;
                 }
             }
+        }
 
+        private static void AssureUniqueNames(CodeModelGo cmg)
+        {
             // now normalize the names
             // NOTE: this must be done after all enum types have been accounted for
             foreach (var enumType in cmg.EnumTypes)
             {
-                enumType.SetName(CodeNamer.Instance.GetTypeName(enumType.Name.FixedValue));
+                enumType.SetName(CodeNamerGo.Instance.GetTypeName(enumType.Name));
                 foreach (var v in enumType.Values)
                 {
-                    v.Name = CodeNamer.Instance.GetEnumMemberName(v.Name);
+                    v.Name = CodeNamerGo.Instance.GetEnumMemberName(v.Name);
+                }
+            }
+
+            // Ensure all enumerated type values have the simplest possible unique names
+            // -- The code assumes that all public type names are unique within the client and that the values
+            //    of an enumerated type are unique within that type. To safely promote the enumerated value name
+            //    to the top-level, it must not conflict with other existing types. If it does, prepending the
+            //    value name with the (assumed to be unique) enumerated type name will make it unique.
+
+            // First, collect all type names (since these cannot change)
+            var topLevelNames = new HashSet<string>();
+            foreach (var mt in cmg.ModelTypes)
+            {
+                topLevelNames.Add(mt.Name);
+            }
+
+            foreach (var em in cmg.EnumTypes)
+            {
+                topLevelNames.Add(em.Name);
+            }
+
+            // Then, note each enumerated type with one or more conflicting values and collect the values from
+            // those enumerated types without conflicts.  do this on a sorted list to ensure consistent naming
+            foreach (var em in cmg.EnumTypes.Cast<EnumTypeGo>().OrderBy(etg => etg.Name.Value))
+            {
+                if (em.Values.Any(v => topLevelNames.Contains(v.Name) || CodeNamerGo.Instance.UserDefinedNames.Contains(v.Name)))
+                {
+                    foreach (var v in em.Values)
+                    {
+                        v.Name = em.Name + v.Name;
+                    }
+                }
+                else
+                {
+                    topLevelNames.UnionWith(em.Values.Select(ev => ev.Name));
+                }
+            }
+
+            var modelList = new List<EnumValue>();
+            foreach (var em in cmg.EnumTypes.OrderBy(etg => etg.Name.Value))
+            {
+                foreach (var v in em.Values)
+                {
+                    v.Name = CodeNamerGo.Instance.GetUnique(v.Name, v, cmg.ModelTypes, modelList);
+                    modelList.Add(v);
                 }
             }
         }

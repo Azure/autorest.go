@@ -1,33 +1,50 @@
-﻿@using AutoRest.Go
+﻿@using System.Collections.Generic
+@using AutoRest.Go
 @using AutoRest.Go.Model
 @using System.Linq
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
-@{
-    var values = Model.Values.Cast<EnumValueGo>().OrderBy(v => v.Name);
-}
 
 @WrapComment("// ", Model.Documentation)
 type @Model.Name string
 
+
 @EmptyLine
-@if (values.Any())
+@if (Model.Values.Any())
 {
-<text>
-const (
-    @foreach (var v in values)
-    {
-        var valName = EnumValueGo.FormatName(Model, v);
-        var desc = v.Description;
-        if (string.IsNullOrWhiteSpace(desc))
-        {
-            desc = string.Format("{0} ...", valName);
-        }
+    var possibleFuncName = $"Possible{Model.Name}Values";
+    var orderedValues = new List<string>();
     <text>
-    @WrapComment("// ", desc)
-    @(valName) @(Model.Name) = "@(v.SerializedName)"
+        const (
+        @foreach (var v in Model.Values.OrderBy(v => v.Name))
+        {
+            var comment = string.Empty;
+            var memName = CodeNamerGo.Instance.GetEnumMemberName(v.Name);
+            orderedValues.Add(memName);
+
+            if (string.IsNullOrWhiteSpace(v.Description))
+            {
+                comment = $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} ...";
+
+                <text>
+                    // @comment
+                </text>
+            }
+            else
+            {
+                comment = $"{CodeNamerGo.Instance.GetEnumMemberName(v.Name)} {v.Description}";
+                <text>
+                    @WrapComment("// ", comment)
+                </text>
+            }
+            <text>
+                @(memName) @(Model.Name) = "@(v.SerializedName)"
+            </text>
+        }
+        )
+        // @possibleFuncName returns an array of possible values for the @Model.Name const type.
+        func @(possibleFuncName)() []@Model.Name {
+        return []@(Model.Name){@(string.Join(',', orderedValues))}
+        }
     </text>
-    }
-)
-</text>
 }

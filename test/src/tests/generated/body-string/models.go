@@ -25,7 +25,7 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
-// ColorsType enumerates the values for colors.
+// ColorsType enumerates the values for colors type.
 type ColorsType string
 
 const (
@@ -38,6 +38,11 @@ const (
 	// ColorsRedcolor ...
 	ColorsRedcolor ColorsType = "red color"
 )
+
+// PossibleColorsTypeValues returns an array of possible values for the ColorsType const type.
+func PossibleColorsTypeValues() []ColorsType {
+	return []ColorsType{ColorsBlueColor, ColorsGreenColor, ColorsNone, ColorsRedcolor}
+}
 
 // Error ...
 type Error struct {
@@ -91,7 +96,7 @@ func (gb6er GetBase64URLEncodedResponse) Status() string {
 type GetEmptyResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: ''
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
@@ -113,7 +118,7 @@ func (ger GetEmptyResponse) Status() string {
 type GetMbcsResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
@@ -134,7 +139,7 @@ func (gmr GetMbcsResponse) Status() string {
 // GetNotExpandableResponse ...
 type GetNotExpandableResponse struct {
 	rawResponse *http.Response
-	// Value - Possible values include: 'Redcolor', 'GreenColor', 'BlueColor', 'None'
+	// Value - Possible values include: 'ColorsRedcolor', 'ColorsGreenColor', 'ColorsBlueColor', 'ColorsNone'
 	Value ColorsType `json:"value,omitempty"`
 }
 
@@ -199,7 +204,7 @@ func (gnb6er GetNullBase64URLEncodedResponse) Status() string {
 type GetNullResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: ''
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
@@ -220,7 +225,7 @@ func (gnr GetNullResponse) Status() string {
 // GetReferencedResponse ...
 type GetReferencedResponse struct {
 	rawResponse *http.Response
-	// Value - Possible values include: 'Redcolor', 'GreenColor', 'BlueColor', 'None'
+	// Value - Possible values include: 'ColorsRedcolor', 'ColorsGreenColor', 'ColorsBlueColor', 'ColorsNone'
 	Value ColorsType `json:"value,omitempty"`
 }
 
@@ -243,7 +248,7 @@ func (grr GetReferencedResponse) Status() string {
 type GetWhitespaceResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: '    Now is the time for all good men to come to the aid of their country    '
-	Value *string `json:"value,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
