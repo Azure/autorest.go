@@ -272,11 +272,6 @@ func (client EnumClient) putReferencedResponder(resp pipeline.Response) (pipelin
 // PutReferencedConstant sends value 'green-color' from a constant
 //
 func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*http.Response, error) {
-	if err := validate([]validation{
-		{targetValue: enumStringBody,
-			constraints: []constraint{{target: "enumStringBody.ColorConstant", name: null, rule: true, chain: nil}}}}); err != nil {
-		return nil, err
-	}
 	req, err := client.putReferencedConstantPreparer(enumStringBody)
 	if err != nil {
 		return nil, err
