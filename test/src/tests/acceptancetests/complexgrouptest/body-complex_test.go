@@ -464,6 +464,7 @@ var ss = SmartSalmon{
 			Age:      to.Int32Ptr(1),
 			Species:  to.StringPtr("scary"),
 			Jawsize:  to.Int32Ptr(5),
+			Color:    "pinkish-gray",
 		},
 	},
 }
