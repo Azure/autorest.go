@@ -11,6 +11,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/Azure/azure-pipeline-go/pipeline"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -468,6 +469,7 @@ func (client StringClient) putBase64URLEncodedResponder(resp pipeline.Response) 
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -515,6 +517,7 @@ func (client StringClient) putEmptyResponder(resp pipeline.Response) (pipeline.R
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -562,6 +565,7 @@ func (client StringClient) putMbcsResponder(resp pipeline.Response) (pipeline.Re
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -609,6 +613,7 @@ func (client StringClient) putNullResponder(resp pipeline.Response) (pipeline.Re
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -657,6 +662,7 @@ func (client StringClient) putWhitespaceResponder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }

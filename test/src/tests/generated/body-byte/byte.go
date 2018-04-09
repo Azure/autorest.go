@@ -11,6 +11,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/Azure/azure-pipeline-go/pipeline"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -273,6 +274,7 @@ func (client ByteClient) putNonASCIIResponder(resp pipeline.Response) (pipeline.
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }

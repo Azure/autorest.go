@@ -12,6 +12,7 @@ import (
 	"encoding/json"
 	"github.com/Azure/azure-pipeline-go/pipeline"
 	"github.com/Azure/go-autorest/autorest/date"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -518,6 +519,7 @@ func (client IntClient) putMax32Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -564,6 +566,7 @@ func (client IntClient) putMax64Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -610,6 +613,7 @@ func (client IntClient) putMin32Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -656,6 +660,7 @@ func (client IntClient) putMin64Responder(resp pipeline.Response) (pipeline.Resp
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -702,6 +707,7 @@ func (client IntClient) putUnixTimeDateResponder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }

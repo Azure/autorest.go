@@ -80,7 +80,7 @@ func (client ManagementClient) getReportPreparer(qualifier *string) (pipeline.Re
 		return req, pipeline.NewError(err, "failed to create request")
 	}
 	params := req.URL.Query()
-	if qualifier != nil {
+	if qualifier != nil && len(*qualifier) > 0 {
 		params.Set("qualifier", *qualifier)
 	}
 	req.URL.RawQuery = params.Encode()

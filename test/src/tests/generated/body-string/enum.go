@@ -11,6 +11,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/Azure/azure-pipeline-go/pipeline"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -218,6 +219,7 @@ func (client EnumClient) putNotExpandableResponder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -265,6 +267,7 @@ func (client EnumClient) putReferencedResponder(resp pipeline.Response) (pipelin
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -311,6 +314,7 @@ func (client EnumClient) putReferencedConstantResponder(resp pipeline.Response) 
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }

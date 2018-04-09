@@ -124,10 +124,10 @@ func (s *StringSuite) TestPutWhitespace(c *chk.C) {
 func (s *StringSuite) TestGetNotExpandable(c *chk.C) {
 	str, err := enumClient.GetNotExpandable(context.Background())
 	c.Assert(err, chk.IsNil)
-	c.Assert(str.Value, chk.Equals, Redcolor)
+	c.Assert(str.Value, chk.Equals, ColorsRedcolor)
 }
 
 func (s *StringSuite) TestPutNotExpandable(c *chk.C) {
-	_, err := enumClient.PutNotExpandable(context.Background(), "red color")
+	_, err := enumClient.PutNotExpandable(context.Background(), ColorsRedcolor)
 	c.Assert(err, chk.IsNil)
 }
