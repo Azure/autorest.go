@@ -86,6 +86,14 @@ func (client @(Model.MethodGroup.ClientName)) @(opIdCamelCase)Preparer(@(Model.M
     {
     @:params.Set("@(qp.NameForMap())", @val)
     }
+    else if (qp.ModelType.IsPrimaryType(KnownPrimaryType.String) || qp.CollectionFormat != CollectionFormat.None)
+    {
+    <text>
+    if @qp.Name != @qp.GetOptionalComparand() && len(@qp.Name) > 0 {
+        params.Set("@(qp.NameForMap())", @(val))
+    }
+    </text>
+    }
     else
     {
     <text>
@@ -151,7 +159,10 @@ func (client @(Model.MethodGroup.ClientName)) @(opIdCamelCase)Responder(resp pip
 	}
 @if (!Model.ReturnType.Body.IsStreamType() && !Model.ReturnValueRequiresUnmarshalling())
 {
-    @:resp.Response().Body.Close()
+    <text>
+    io.Copy(ioutil.Discard, resp.Response().Body)
+    resp.Response().Body.Close()
+    </text>
 }
 @if (Model.ReturnValueRequiresUnmarshalling())
 {
