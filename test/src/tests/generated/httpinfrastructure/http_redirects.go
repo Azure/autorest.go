@@ -11,6 +11,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/Azure/azure-pipeline-go/pipeline"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -68,6 +69,7 @@ func (client HTTPRedirectsClient) delete307Responder(resp pipeline.Response) (pi
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsDelete307Response{rawResponse: resp.Response()}, err
 }
@@ -154,6 +156,7 @@ func (client HTTPRedirectsClient) get301Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsGet301Response{rawResponse: resp.Response()}, err
 }
@@ -190,6 +193,7 @@ func (client HTTPRedirectsClient) get302Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsGet302Response{rawResponse: resp.Response()}, err
 }
@@ -226,6 +230,7 @@ func (client HTTPRedirectsClient) get307Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsGet307Response{rawResponse: resp.Response()}, err
 }
@@ -262,6 +267,7 @@ func (client HTTPRedirectsClient) head300Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsHead300Response{rawResponse: resp.Response()}, err
 }
@@ -298,6 +304,7 @@ func (client HTTPRedirectsClient) head301Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsHead301Response{rawResponse: resp.Response()}, err
 }
@@ -334,6 +341,7 @@ func (client HTTPRedirectsClient) head302Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsHead302Response{rawResponse: resp.Response()}, err
 }
@@ -370,6 +378,7 @@ func (client HTTPRedirectsClient) head307Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsHead307Response{rawResponse: resp.Response()}, err
 }
@@ -418,6 +427,7 @@ func (client HTTPRedirectsClient) patch302Responder(resp pipeline.Response) (pip
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsPatch302Response{rawResponse: resp.Response()}, err
 }
@@ -465,6 +475,7 @@ func (client HTTPRedirectsClient) patch307Responder(resp pipeline.Response) (pip
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsPatch307Response{rawResponse: resp.Response()}, err
 }
@@ -513,6 +524,7 @@ func (client HTTPRedirectsClient) post303Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsPost303Response{rawResponse: resp.Response()}, err
 }
@@ -560,6 +572,7 @@ func (client HTTPRedirectsClient) post307Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsPost307Response{rawResponse: resp.Response()}, err
 }
@@ -608,6 +621,7 @@ func (client HTTPRedirectsClient) put301Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsPut301Response{rawResponse: resp.Response()}, err
 }
@@ -655,6 +669,7 @@ func (client HTTPRedirectsClient) put307Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &HTTPRedirectsPut307Response{rawResponse: resp.Response()}, err
 }

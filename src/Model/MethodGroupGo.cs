@@ -74,6 +74,7 @@ namespace AutoRest.Go.Model
             imports.UnionWith(CodeNamerGo.Instance.PipelineImports);
             imports.UnionWith(CodeNamerGo.Instance.StandardImports);
 
+            bool ioImports = false;
             bool marshalImports = false;
             bool unmarshalImports = false;
             cmg.Methods.Where(m => m.Group.Value == Name)
@@ -96,6 +97,10 @@ namespace AutoRest.Go.Model
                     {
                         marshalImports = true;
                     }
+                    if (!mg.ReturnType.Body.IsStreamType() && !mg.ReturnValueRequiresUnmarshalling())
+                    {
+                        ioImports = true;
+                    }
                 });
 
             if (marshalImports || unmarshalImports)
@@ -105,7 +110,7 @@ namespace AutoRest.Go.Model
                 imports.Add(PrimaryTypeGo.GetImportLine(package: $"encoding/{encoding}"));
             }
 
-            if (unmarshalImports)
+            if (unmarshalImports || ioImports)
             {
                 // needed by the responder to read the response body
                 imports.Add(PrimaryTypeGo.GetImportLine(package: "io/ioutil"));
@@ -115,6 +120,12 @@ namespace AutoRest.Go.Model
             {
                 // needed by the preparer to wrap the request body
                 imports.Add(PrimaryTypeGo.GetImportLine(package: "bytes"));
+            }
+
+            if (ioImports)
+            {
+                // needed by the responder to drain the response body
+                imports.Add(PrimaryTypeGo.GetImportLine("io"));
             }
 
             foreach (var p in cmg.Properties)
