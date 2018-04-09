@@ -68,6 +68,7 @@ func (client HTTPSuccessClient) delete200Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -115,6 +116,7 @@ func (client HTTPSuccessClient) delete202Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -162,6 +164,7 @@ func (client HTTPSuccessClient) delete204Responder(resp pipeline.Response) (pipe
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -248,6 +251,7 @@ func (client HTTPSuccessClient) head200Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -284,6 +288,7 @@ func (client HTTPSuccessClient) head204Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -320,6 +325,7 @@ func (client HTTPSuccessClient) head404Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -367,6 +373,7 @@ func (client HTTPSuccessClient) patch200Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -414,6 +421,7 @@ func (client HTTPSuccessClient) patch202Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -461,6 +469,7 @@ func (client HTTPSuccessClient) patch204Responder(resp pipeline.Response) (pipel
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -508,6 +517,7 @@ func (client HTTPSuccessClient) post200Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -555,6 +565,7 @@ func (client HTTPSuccessClient) post201Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -602,6 +613,7 @@ func (client HTTPSuccessClient) post202Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -649,6 +661,7 @@ func (client HTTPSuccessClient) post204Responder(resp pipeline.Response) (pipeli
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -696,6 +709,7 @@ func (client HTTPSuccessClient) put200Responder(resp pipeline.Response) (pipelin
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -743,6 +757,7 @@ func (client HTTPSuccessClient) put201Responder(resp pipeline.Response) (pipelin
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -790,6 +805,7 @@ func (client HTTPSuccessClient) put202Responder(resp pipeline.Response) (pipelin
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
@@ -837,6 +853,7 @@ func (client HTTPSuccessClient) put204Responder(resp pipeline.Response) (pipelin
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }

@@ -273,6 +273,7 @@ func (client ByteClient) putNonASCIIResponder(resp pipeline.Response) (pipeline.
 	if resp == nil {
 		return nil, err
 	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return resp, err
 }
