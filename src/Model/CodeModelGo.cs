@@ -87,18 +87,17 @@ namespace AutoRest.Go.Model
                     .ForEach(mt =>
                     {
                         mt.AddImports(imports);
-                        // include the strconv package if this response type has
-                        // response headers that need to be converted to integers
+                        // add any imports for packages needed to parse/convert response header values
                         if (mt.IsResponseType && mt.ResponseHeaders().Any())
                         {
-                            foreach (var p in mt.Properties)
+                            foreach (var rh in mt.ResponseHeaders())
                             {
-                                if (p.ModelType.IsPrimaryType(KnownPrimaryType.Int) || p.ModelType.IsPrimaryType(KnownPrimaryType.Long))
+                                if (rh.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) || rh.Type.ModelType.IsPrimaryType(KnownPrimaryType.Long))
                                 {
                                     addStrConvImport = true;
                                     break;
                                 }
-                                else if (p.ModelType.IsPrimaryType(KnownPrimaryType.ByteArray))
+                                else if (rh.Type.ModelType.IsPrimaryType(KnownPrimaryType.ByteArray))
                                 {
                                     addBase64Import = true;
                                     break;

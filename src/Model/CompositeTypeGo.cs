@@ -342,7 +342,7 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Represents a response value that comes from an HTTP header.
         /// </summary>
-        public class HeaderResponse
+        public class HeaderResponse : IEquatable<HeaderResponse>
         {
             /// <summary>
             /// Gets the name of the response method.
@@ -358,6 +358,11 @@ namespace AutoRest.Go.Model
             {
                 Name = CodeNamerGo.Instance.GetMethodName(pg.GetClientName());
                 Type = pg;
+            }
+
+            public bool Equals(HeaderResponse other)
+            {
+                return string.CompareOrdinal(Name, other.Name) == 0 && string.CompareOrdinal(Type.Name, other.Type.Name) == 0;
             }
         }
 
@@ -383,7 +388,11 @@ namespace AutoRest.Go.Model
                                 // skip the metadata header as it's handled separately
                                 continue;
                             }
-                            respHeaders.Add(new HeaderResponse(property));
+                            var hr = new HeaderResponse(property);
+                            if (!respHeaders.Contains(hr))
+                            {
+                                respHeaders.Add(hr);
+                            }
                         }
                     }
                 }
