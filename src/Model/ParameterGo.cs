@@ -29,11 +29,22 @@ namespace AutoRest.Go.Model
         public void AddImports(HashSet<string> imports)
         {
             ModelType.AddImports(imports);
-            // we use fmt.Sprintf to format certain header and/or query params, see GetStringFormat in this file
-            if ((Location == Core.Model.ParameterLocation.Header || Location == Core.Model.ParameterLocation.Query) &&
-                !ModelType.IsPrimaryType(KnownPrimaryType.String) && !ModelType.IsDateTimeType())
+            // related to codegen in GetStringFormat() in this file
+            if ((Location == Core.Model.ParameterLocation.Header || Location == Core.Model.ParameterLocation.Query))
             {
-                imports.Add(PrimaryTypeGo.GetImportLine(package: "fmt"));
+                if (ModelType.IsPrimaryType(KnownPrimaryType.Int) || ModelType.IsPrimaryType(KnownPrimaryType.Long) ||
+                    ModelType.IsPrimaryType(KnownPrimaryType.Double))
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "strconv"));
+                }
+                else if (ModelType.IsFormat(KnownFormat.@byte))
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "encoding/base64"));
+                }
+                else if (ModelType.IsPrimaryType(KnownPrimaryType.Boolean) || ModelType is EnumTypeGo)
+                {
+                    imports.Add(PrimaryTypeGo.GetImportLine(package: "fmt"));
+                }
             }
         }
 
@@ -335,6 +346,22 @@ namespace AutoRest.Go.Model
                 }
                 return defaultFormat;
             }
+            else if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.Int))
+            {
+                return $"strconv.FormatInt(int64({defaultFormat}), 10)";
+            }
+            else if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.Long))
+            {
+                return $"strconv.FormatInt({defaultFormat}, 10)";
+            }
+            else if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.Decimal))
+            {
+                return $"{defaultFormat}.String()";
+            }
+            else if (parameter.ModelType.IsPrimaryType(KnownPrimaryType.Double))
+            {
+                return $"strconv.FormatFloat({defaultFormat}, 'f', -1, 64)";
+            }
             else if (parameter.ModelType.IsDateTimeType())
             {
                 if (!parameter.IsRequired)
@@ -350,6 +377,10 @@ namespace AutoRest.Go.Model
                     return $"{defaultFormat}.In(gmt).Format(time.RFC1123)";
                 }
                 return $"{defaultFormat}.Format(rfc3339Format)";
+            }
+            else if (parameter.ModelType.IsFormat(KnownFormat.@byte))
+            {
+                return $"base64.StdEncoding.EncodeToString({defaultFormat})";
             }
             else
             {
