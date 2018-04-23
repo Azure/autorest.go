@@ -393,6 +393,21 @@ namespace AutoRest.Go
                 format == KnownFormat.date_time_rfc1123;
         }
 
+        /// <summary>
+        /// Returns true if the specified type is of the specified format.
+        /// </summary>
+        /// <param name="type">Type to test.</param>
+        /// <param name="format">The format type to check.</param>
+        /// <returns>True if type.KnownFormat == format.</returns>
+        public static bool IsFormat(this IModelType type, KnownFormat format)
+        {
+            if (type is PrimaryTypeGo ptg)
+            {
+                return ptg.KnownFormat == format;
+            }
+            return false;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////
         // Validate code
         //
