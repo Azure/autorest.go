@@ -185,7 +185,6 @@ func (client DurationClient) GetPositiveDurationResponder(resp *http.Response) (
 }
 
 // PutPositiveDuration put a positive duration value
-//
 func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBody string) (result autorest.Response, err error) {
 	req, err := client.PutPositiveDurationPreparer(ctx, durationBody)
 	if err != nil {

@@ -2591,7 +2591,6 @@ func (client ArrayClient) GetUUIDValidResponder(resp *http.Response) (result Lis
 }
 
 // PutArrayValid put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
-//
 func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2651,7 +2650,6 @@ func (client ArrayClient) PutArrayValidResponder(resp *http.Response) (result au
 }
 
 // PutBooleanTfft set array value empty [true, false, false, true]
-//
 func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2712,7 +2710,6 @@ func (client ArrayClient) PutBooleanTfftResponder(resp *http.Response) (result a
 
 // PutByteValid put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in
 // base 64
-//
 func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2773,7 +2770,6 @@ func (client ArrayClient) PutByteValidResponder(resp *http.Response) (result aut
 
 // PutComplexValid put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string':
 // '4'}, {'integer': 5, 'string': '6'}]
-//
 func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Product) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2834,7 +2830,6 @@ func (client ArrayClient) PutComplexValidResponder(resp *http.Response) (result 
 
 // PutDateTimeRfc1123Valid set array value  ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12
 // Oct 1492 10:15:01 GMT']
-//
 func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody []date.TimeRFC1123) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2894,7 +2889,6 @@ func (client ArrayClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) 
 }
 
 // PutDateTimeValid set array value  ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
-//
 func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date.Time) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2954,7 +2948,6 @@ func (client ArrayClient) PutDateTimeValidResponder(resp *http.Response) (result
 }
 
 // PutDateValid set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
-//
 func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Date) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3015,7 +3008,6 @@ func (client ArrayClient) PutDateValidResponder(resp *http.Response) (result aut
 
 // PutDictionaryValid get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3':
 // 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-//
 func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3075,7 +3067,6 @@ func (client ArrayClient) PutDictionaryValidResponder(resp *http.Response) (resu
 }
 
 // PutDoubleValid set array value [0, -0.01, 1.2e20]
-//
 func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3135,7 +3126,6 @@ func (client ArrayClient) PutDoubleValidResponder(resp *http.Response) (result a
 }
 
 // PutDurationValid set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-//
 func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3195,7 +3185,6 @@ func (client ArrayClient) PutDurationValidResponder(resp *http.Response) (result
 }
 
 // PutEmpty set array value empty []
-//
 func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3255,7 +3244,6 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 }
 
 // PutFloatValid set array value [0, -0.01, 1.2e20]
-//
 func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3315,7 +3303,6 @@ func (client ArrayClient) PutFloatValidResponder(resp *http.Response) (result au
 }
 
 // PutIntegerValid set array value empty [1, -1, 3, 300]
-//
 func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3375,7 +3362,6 @@ func (client ArrayClient) PutIntegerValidResponder(resp *http.Response) (result 
 }
 
 // PutLongValid set array value empty [1, -1, 3, 300]
-//
 func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3435,7 +3421,6 @@ func (client ArrayClient) PutLongValidResponder(resp *http.Response) (result aut
 }
 
 // PutStringValid set array value ['foo1', 'foo2', 'foo3']
-//
 func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3496,7 +3481,6 @@ func (client ArrayClient) PutStringValidResponder(resp *http.Response) (result a
 
 // PutUUIDValid set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db',
 // 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
-//
 func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUID) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,

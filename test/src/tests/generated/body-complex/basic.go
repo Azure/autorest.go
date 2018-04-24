@@ -289,8 +289,8 @@ func (client BasicClient) GetValidResponder(resp *http.Response) (result Basic, 
 }
 
 // PutValid please put {id: 2, name: 'abc', color: 'Magenta'}
-//
-// complexBody is please put {id: 2, name: 'abc', color: 'Magenta'}
+// Parameters:
+// complexBody - please put {id: 2, name: 'abc', color: 'Magenta'}
 func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (result autorest.Response, err error) {
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {

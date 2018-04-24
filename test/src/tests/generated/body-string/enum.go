@@ -186,8 +186,6 @@ func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (re
 }
 
 // PutNotExpandable sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
-//
-// stringBody is
 func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors) (result autorest.Response, err error) {
 	req, err := client.PutNotExpandablePreparer(ctx, stringBody)
 	if err != nil {
@@ -241,8 +239,6 @@ func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result 
 }
 
 // PutReferenced sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
-//
-// enumStringBody is
 func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors) (result autorest.Response, err error) {
 	req, err := client.PutReferencedPreparer(ctx, enumStringBody)
 	if err != nil {
@@ -296,7 +292,6 @@ func (client EnumClient) PutReferencedResponder(resp *http.Response) (result aut
 }
 
 // PutReferencedConstant sends value 'green-color' from a constant
-//
 func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: enumStringBody,
