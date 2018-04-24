@@ -446,7 +446,6 @@ func (client StringClient) GetWhitespaceResponder(resp *http.Response) (result S
 }
 
 // PutBase64URLEncoded put value that is base64url encoded
-//
 func (client StringClient) PutBase64URLEncoded(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	req, err := client.PutBase64URLEncodedPreparer(ctx, stringBody)
 	if err != nil {
@@ -606,8 +605,6 @@ func (client StringClient) PutMbcsResponder(resp *http.Response) (result autores
 }
 
 // PutNull set string value null
-//
-// stringBody is
 func (client StringClient) PutNull(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	req, err := client.PutNullPreparer(ctx, stringBody)
 	if err != nil {

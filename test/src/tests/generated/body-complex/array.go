@@ -185,8 +185,8 @@ func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWr
 }
 
 // PutEmpty put complex types with array property which is empty
-//
-// complexBody is please put an empty array
+// Parameters:
+// complexBody - please put an empty array
 func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	req, err := client.PutEmptyPreparer(ctx, complexBody)
 	if err != nil {
@@ -240,9 +240,9 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 }
 
 // PutValid put complex types with array property
-//
-// complexBody is please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps
-// over the lazy dog"
+// Parameters:
+// complexBody - please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox
+// jumps over the lazy dog"
 func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {

@@ -30,9 +30,10 @@ func NewPagingClientWithBaseURI(baseURI string) PagingClient {
 }
 
 // GetMultiplePages a paging operation that includes a nextLink that has 10 pages
-//
-// maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that
-// the server can spend processing the request, in seconds. The default is 30 seconds.
+// Parameters:
+// maxresults - sets the maximum number of items to return in the response.
+// timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
+// 30 seconds.
 func (client PagingClient) GetMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultPage, err error) {
 	result.fn = client.getMultiplePagesNextResults
 	req, err := client.GetMultiplePagesPreparer(ctx, clientRequestID, maxresults, timeout)
@@ -288,8 +289,9 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(ctx context.Contex
 }
 
 // GetMultiplePagesFragmentNextLink a paging operation that doesn't return a full URL, just a fragment
-//
-// APIVersion is sets the api version to use. tenant is sets the tenant to use.
+// Parameters:
+// APIVersion - sets the api version to use.
+// tenant - sets the tenant to use.
 func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultPage, err error) {
 	result.fn = func(lastResult OdataProductResult) (OdataProductResult, error) {
 		if lastResult.OdataNextLink == nil || len(to.String(lastResult.OdataNextLink)) < 1 {
@@ -364,8 +366,9 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.
 
 // GetMultiplePagesFragmentWithGroupingNextLink a paging operation that doesn't return a full URL, just a fragment with
 // parameters grouped
-//
-// APIVersion is sets the api version to use. tenant is sets the tenant to use.
+// Parameters:
+// APIVersion - sets the api version to use.
+// tenant - sets the tenant to use.
 func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultPage, err error) {
 	result.fn = func(lastResult OdataProductResult) (OdataProductResult, error) {
 		if lastResult.OdataNextLink == nil || len(to.String(lastResult.OdataNextLink)) < 1 {
@@ -601,10 +604,11 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(ctx context.Conte
 }
 
 // GetMultiplePagesWithOffset a paging operation that includes a nextLink that has 10 pages
-//
-// offset is offset of return value maxresults is sets the maximum number of items to return in the response.
-// timeout is sets the maximum time that the server can spend processing the request, in seconds. The default is 30
-// seconds.
+// Parameters:
+// offset - offset of return value
+// maxresults - sets the maximum number of items to return in the response.
+// timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
+// 30 seconds.
 func (client PagingClient) GetMultiplePagesWithOffset(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultPage, err error) {
 	result.fn = client.getMultiplePagesWithOffsetNextResults
 	req, err := client.GetMultiplePagesWithOffsetPreparer(ctx, offset, clientRequestID, maxresults, timeout)
@@ -704,9 +708,10 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Contex
 }
 
 // GetOdataMultiplePages a paging operation that includes a nextLink in odata format that has 10 pages
-//
-// maxresults is sets the maximum number of items to return in the response. timeout is sets the maximum time that
-// the server can spend processing the request, in seconds. The default is 30 seconds.
+// Parameters:
+// maxresults - sets the maximum number of items to return in the response.
+// timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
+// 30 seconds.
 func (client PagingClient) GetOdataMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResultPage, err error) {
 	result.fn = client.getOdataMultiplePagesNextResults
 	req, err := client.GetOdataMultiplePagesPreparer(ctx, clientRequestID, maxresults, timeout)
@@ -962,9 +967,10 @@ func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (r
 }
 
 // NextFragment a paging operation that doesn't return a full URL, just a fragment
-//
-// APIVersion is sets the api version to use. tenant is sets the tenant to use. nextLink is next link for list
-// operation.
+// Parameters:
+// APIVersion - sets the api version to use.
+// tenant - sets the tenant to use.
+// nextLink - next link for list operation.
 func (client PagingClient) NextFragment(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
 	req, err := client.NextFragmentPreparer(ctx, APIVersion, tenant, nextLink)
 	if err != nil {
@@ -1027,9 +1033,10 @@ func (client PagingClient) NextFragmentResponder(resp *http.Response) (result Od
 }
 
 // NextFragmentWithGrouping a paging operation that doesn't return a full URL, just a fragment
-//
-// APIVersion is sets the api version to use. tenant is sets the tenant to use. nextLink is next link for list
-// operation.
+// Parameters:
+// APIVersion - sets the api version to use.
+// tenant - sets the tenant to use.
+// nextLink - next link for list operation.
 func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
 	req, err := client.NextFragmentWithGroupingPreparer(ctx, APIVersion, tenant, nextLink)
 	if err != nil {

@@ -41,9 +41,9 @@ func NewWithBaseURI(baseURI string) BaseClient {
 }
 
 // GetReport get test coverage report
-//
-// qualifier is if specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only
-// effect is, that generators that run all tests several times, can distinguish the generated reports.
+// Parameters:
+// qualifier - if specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The
+// only effect is, that generators that run all tests several times, can distinguish the generated reports.
 func (client BaseClient) GetReport(ctx context.Context, qualifier string) (result SetInt32, err error) {
 	req, err := client.GetReportPreparer(ctx, qualifier)
 	if err != nil {

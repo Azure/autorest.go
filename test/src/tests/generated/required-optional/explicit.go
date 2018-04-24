@@ -30,7 +30,6 @@ func NewExplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 }
 
 // PostOptionalArrayHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
-//
 func (client ExplicitClient) PostOptionalArrayHeader(ctx context.Context, headerParameter []string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalArrayHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -86,7 +85,6 @@ func (client ExplicitClient) PostOptionalArrayHeaderResponder(resp *http.Respons
 }
 
 // PostOptionalArrayParameter test explicitly optional array. Please put null.
-//
 func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bodyParameter []string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalArrayParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -143,7 +141,6 @@ func (client ExplicitClient) PostOptionalArrayParameterResponder(resp *http.Resp
 }
 
 // PostOptionalArrayProperty test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
-//
 func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (result autorest.Response, err error) {
 	req, err := client.PostOptionalArrayPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -200,7 +197,6 @@ func (client ExplicitClient) PostOptionalArrayPropertyResponder(resp *http.Respo
 }
 
 // PostOptionalClassParameter test explicitly optional complex object. Please put null.
-//
 func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bodyParameter *Product) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -265,7 +261,6 @@ func (client ExplicitClient) PostOptionalClassParameterResponder(resp *http.Resp
 
 // PostOptionalClassProperty test explicitly optional complex object. Please put a valid class-wrapper with 'value' =
 // null.
-//
 func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, bodyParameter *ClassOptionalWrapper) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -331,7 +326,6 @@ func (client ExplicitClient) PostOptionalClassPropertyResponder(resp *http.Respo
 }
 
 // PostOptionalIntegerHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
-//
 func (client ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, headerParameter *int32) (result autorest.Response, err error) {
 	req, err := client.PostOptionalIntegerHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -387,7 +381,6 @@ func (client ExplicitClient) PostOptionalIntegerHeaderResponder(resp *http.Respo
 }
 
 // PostOptionalIntegerParameter test explicitly optional integer. Please put null.
-//
 func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, bodyParameter *int32) (result autorest.Response, err error) {
 	req, err := client.PostOptionalIntegerParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -444,7 +437,6 @@ func (client ExplicitClient) PostOptionalIntegerParameterResponder(resp *http.Re
 }
 
 // PostOptionalIntegerProperty test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
-//
 func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bodyParameter *IntOptionalWrapper) (result autorest.Response, err error) {
 	req, err := client.PostOptionalIntegerPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -501,7 +493,6 @@ func (client ExplicitClient) PostOptionalIntegerPropertyResponder(resp *http.Res
 }
 
 // PostOptionalStringHeader test explicitly optional string. Please put a header 'headerParameter' => null.
-//
 func (client ExplicitClient) PostOptionalStringHeader(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalStringHeaderPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -557,7 +548,6 @@ func (client ExplicitClient) PostOptionalStringHeaderResponder(resp *http.Respon
 }
 
 // PostOptionalStringParameter test explicitly optional string. Please put null.
-//
 func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalStringParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -614,7 +604,6 @@ func (client ExplicitClient) PostOptionalStringParameterResponder(resp *http.Res
 }
 
 // PostOptionalStringProperty test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
-//
 func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bodyParameter *StringOptionalWrapper) (result autorest.Response, err error) {
 	req, err := client.PostOptionalStringPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -672,7 +661,6 @@ func (client ExplicitClient) PostOptionalStringPropertyResponder(resp *http.Resp
 
 // PostRequiredArrayHeader test explicitly required array. Please put a header 'headerParameter' => null and the client
 // library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: headerParameter,
@@ -733,7 +721,6 @@ func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Respons
 
 // PostRequiredArrayParameter test explicitly required array. Please put null and the client library should throw
 // before the request is sent.
-//
 func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -795,7 +782,6 @@ func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Resp
 
 // PostRequiredArrayProperty test explicitly required array. Please put a valid array-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -857,7 +843,6 @@ func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Respo
 
 // PostRequiredClassParameter test explicitly required complex object. Please put null and the client library should
 // throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -919,7 +904,6 @@ func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Resp
 
 // PostRequiredClassProperty test explicitly required complex object. Please put a valid class-wrapper with 'value' =
 // null and the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -982,7 +966,6 @@ func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Respo
 
 // PostRequiredIntegerHeader test explicitly required integer. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32) (result Error, err error) {
 	req, err := client.PostRequiredIntegerHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -1037,7 +1020,6 @@ func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Respo
 
 // PostRequiredIntegerParameter test explicitly required integer. Please put null and the client library should throw
 // before the request is sent.
-//
 func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32) (result Error, err error) {
 	req, err := client.PostRequiredIntegerParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -1093,7 +1075,6 @@ func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Re
 
 // PostRequiredIntegerProperty test explicitly required integer. Please put a valid int-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -1155,7 +1136,6 @@ func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Res
 
 // PostRequiredStringHeader test explicitly required string. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string) (result Error, err error) {
 	req, err := client.PostRequiredStringHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -1210,7 +1190,6 @@ func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Respon
 
 // PostRequiredStringParameter test explicitly required string. Please put null and the client library should throw
 // before the request is sent.
-//
 func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string) (result Error, err error) {
 	req, err := client.PostRequiredStringParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -1266,7 +1245,6 @@ func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Res
 
 // PostRequiredStringProperty test explicitly required string. Please put a valid string-wrapper with 'value' = null
 // and the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,

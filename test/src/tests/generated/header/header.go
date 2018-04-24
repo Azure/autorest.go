@@ -83,9 +83,9 @@ func (client HeaderClient) CustomRequestIDResponder(resp *http.Response) (result
 
 // ParamBool send a post request with header values "scenario": "true", "value": true or "scenario": "false", "value":
 // false
-//
-// scenario is send a post request with header values "scenario": "true" or "false" value is send a post request
-// with header values true or false
+// Parameters:
+// scenario - send a post request with header values "scenario": "true" or "false"
+// value - send a post request with header values true or false
 func (client HeaderClient) ParamBool(ctx context.Context, scenario string, value bool) (result autorest.Response, err error) {
 	req, err := client.ParamBoolPreparer(ctx, scenario, value)
 	if err != nil {
@@ -139,9 +139,9 @@ func (client HeaderClient) ParamBoolResponder(resp *http.Response) (result autor
 }
 
 // ParamByte send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
-//
-// scenario is send a post request with header values "scenario": "valid" value is send a post request with header
-// values "啊齄丂狛狜隣郎隣兀﨩"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid"
+// value - send a post request with header values "啊齄丂狛狜隣郎隣兀﨩"
 func (client HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: value,
@@ -202,9 +202,9 @@ func (client HeaderClient) ParamByteResponder(resp *http.Response) (result autor
 
 // ParamDate send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min",
 // "value": "0001-01-01"
-//
-// scenario is send a post request with header values "scenario": "valid" or "min" value is send a post request
-// with header values "2010-01-01" or "0001-01-01"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "min"
+// value - send a post request with header values "2010-01-01" or "0001-01-01"
 func (client HeaderClient) ParamDate(ctx context.Context, scenario string, value date.Date) (result autorest.Response, err error) {
 	req, err := client.ParamDatePreparer(ctx, scenario, value)
 	if err != nil {
@@ -259,9 +259,9 @@ func (client HeaderClient) ParamDateResponder(resp *http.Response) (result autor
 
 // ParamDatetime send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or
 // "scenario": "min", "value": "0001-01-01T00:00:00Z"
-//
-// scenario is send a post request with header values "scenario": "valid" or "min" value is send a post request
-// with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "min"
+// value - send a post request with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
 func (client HeaderClient) ParamDatetime(ctx context.Context, scenario string, value date.Time) (result autorest.Response, err error) {
 	req, err := client.ParamDatetimePreparer(ctx, scenario, value)
 	if err != nil {
@@ -316,9 +316,10 @@ func (client HeaderClient) ParamDatetimeResponder(resp *http.Response) (result a
 
 // ParamDatetimeRfc1123 send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56
 // GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
-//
-// scenario is send a post request with header values "scenario": "valid" or "min" value is send a post request
-// with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "min"
+// value - send a post request with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00
+// GMT"
 func (client HeaderClient) ParamDatetimeRfc1123(ctx context.Context, scenario string, value *date.TimeRFC1123) (result autorest.Response, err error) {
 	req, err := client.ParamDatetimeRfc1123Preparer(ctx, scenario, value)
 	if err != nil {
@@ -376,9 +377,9 @@ func (client HeaderClient) ParamDatetimeRfc1123Responder(resp *http.Response) (r
 
 // ParamDouble send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative",
 // "value": -3.0
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post
-// request with header values 7e120 or -3.0
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
+// value - send a post request with header values 7e120 or -3.0
 func (client HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
 	req, err := client.ParamDoublePreparer(ctx, scenario, value)
 	if err != nil {
@@ -432,9 +433,9 @@ func (client HeaderClient) ParamDoubleResponder(resp *http.Response) (result aut
 }
 
 // ParamDuration send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
-//
-// scenario is send a post request with header values "scenario": "valid" value is send a post request with header
-// values "P123DT22H14M12.011S"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid"
+// value - send a post request with header values "P123DT22H14M12.011S"
 func (client HeaderClient) ParamDuration(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
 	req, err := client.ParamDurationPreparer(ctx, scenario, value)
 	if err != nil {
@@ -489,9 +490,9 @@ func (client HeaderClient) ParamDurationResponder(resp *http.Response) (result a
 
 // ParamEnum send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null",
 // "value": null
-//
-// scenario is send a post request with header values "scenario": "valid" or "null" or "empty" value is send a post
-// request with header values 'GREY'
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
+// value - send a post request with header values 'GREY'
 func (client HeaderClient) ParamEnum(ctx context.Context, scenario string, value GreyscaleColors) (result autorest.Response, err error) {
 	req, err := client.ParamEnumPreparer(ctx, scenario, value)
 	if err != nil {
@@ -548,8 +549,8 @@ func (client HeaderClient) ParamEnumResponder(resp *http.Response) (result autor
 }
 
 // ParamExistingKey send a post request with header value "User-Agent": "overwrite"
-//
-// userAgent is send a post request with header value "User-Agent": "overwrite"
+// Parameters:
+// userAgent - send a post request with header value "User-Agent": "overwrite"
 func (client HeaderClient) ParamExistingKey(ctx context.Context, userAgent string) (result autorest.Response, err error) {
 	req, err := client.ParamExistingKeyPreparer(ctx, userAgent)
 	if err != nil {
@@ -603,9 +604,9 @@ func (client HeaderClient) ParamExistingKeyResponder(resp *http.Response) (resul
 
 // ParamFloat send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative",
 // "value": -3.0
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post
-// request with header values 0.07 or -3.0
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
+// value - send a post request with header values 0.07 or -3.0
 func (client HeaderClient) ParamFloat(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
 	req, err := client.ParamFloatPreparer(ctx, scenario, value)
 	if err != nil {
@@ -660,9 +661,9 @@ func (client HeaderClient) ParamFloatResponder(resp *http.Response) (result auto
 
 // ParamInteger send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative",
 // "value": -2
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post
-// request with header values 1 or -2
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
+// value - send a post request with header values 1 or -2
 func (client HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32) (result autorest.Response, err error) {
 	req, err := client.ParamIntegerPreparer(ctx, scenario, value)
 	if err != nil {
@@ -717,9 +718,9 @@ func (client HeaderClient) ParamIntegerResponder(resp *http.Response) (result au
 
 // ParamLong send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative",
 // "value": -2
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative" value is send a post
-// request with header values 105 or -2
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
+// value - send a post request with header values 105 or -2
 func (client HeaderClient) ParamLong(ctx context.Context, scenario string, value int64) (result autorest.Response, err error) {
 	req, err := client.ParamLongPreparer(ctx, scenario, value)
 	if err != nil {
@@ -773,8 +774,8 @@ func (client HeaderClient) ParamLongResponder(resp *http.Response) (result autor
 }
 
 // ParamProtectedKey send a post request with header value "Content-Type": "text/html"
-//
-// contentType is send a post request with header value "Content-Type": "text/html"
+// Parameters:
+// contentType - send a post request with header value "Content-Type": "text/html"
 func (client HeaderClient) ParamProtectedKey(ctx context.Context, contentType string) (result autorest.Response, err error) {
 	req, err := client.ParamProtectedKeyPreparer(ctx, contentType)
 	if err != nil {
@@ -828,9 +829,9 @@ func (client HeaderClient) ParamProtectedKeyResponder(resp *http.Response) (resu
 
 // ParamString send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the
 // lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
-//
-// scenario is send a post request with header values "scenario": "valid" or "null" or "empty" value is send a post
-// request with header values "The quick brown fox jumps over the lazy dog" or null or ""
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
+// value - send a post request with header values "The quick brown fox jumps over the lazy dog" or null or ""
 func (client HeaderClient) ParamString(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
 	req, err := client.ParamStringPreparer(ctx, scenario, value)
 	if err != nil {
@@ -887,8 +888,8 @@ func (client HeaderClient) ParamStringResponder(resp *http.Response) (result aut
 }
 
 // ResponseBool get a response with header value "value": true or false
-//
-// scenario is send a post request with header values "scenario": "true" or "false"
+// Parameters:
+// scenario - send a post request with header values "scenario": "true" or "false"
 func (client HeaderClient) ResponseBool(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseBoolPreparer(ctx, scenario)
 	if err != nil {
@@ -941,8 +942,8 @@ func (client HeaderClient) ResponseBoolResponder(resp *http.Response) (result au
 }
 
 // ResponseByte get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
-//
-// scenario is send a post request with header values "scenario": "valid"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid"
 func (client HeaderClient) ResponseByte(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseBytePreparer(ctx, scenario)
 	if err != nil {
@@ -995,8 +996,8 @@ func (client HeaderClient) ResponseByteResponder(resp *http.Response) (result au
 }
 
 // ResponseDate get a response with header values "2010-01-01" or "0001-01-01"
-//
-// scenario is send a post request with header values "scenario": "valid" or "min"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDate(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseDatePreparer(ctx, scenario)
 	if err != nil {
@@ -1049,8 +1050,8 @@ func (client HeaderClient) ResponseDateResponder(resp *http.Response) (result au
 }
 
 // ResponseDatetime get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
-//
-// scenario is send a post request with header values "scenario": "valid" or "min"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseDatetimePreparer(ctx, scenario)
 	if err != nil {
@@ -1104,8 +1105,8 @@ func (client HeaderClient) ResponseDatetimeResponder(resp *http.Response) (resul
 
 // ResponseDatetimeRfc1123 get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001
 // 00:00:00 GMT"
-//
-// scenario is send a post request with header values "scenario": "valid" or "min"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDatetimeRfc1123(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseDatetimeRfc1123Preparer(ctx, scenario)
 	if err != nil {
@@ -1158,8 +1159,8 @@ func (client HeaderClient) ResponseDatetimeRfc1123Responder(resp *http.Response)
 }
 
 // ResponseDouble get a response with header value "value": 7e120 or -3.0
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative"
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseDoublePreparer(ctx, scenario)
 	if err != nil {
@@ -1212,8 +1213,8 @@ func (client HeaderClient) ResponseDoubleResponder(resp *http.Response) (result 
 }
 
 // ResponseDuration get a response with header values "P123DT22H14M12.011S"
-//
-// scenario is send a post request with header values "scenario": "valid"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid"
 func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseDurationPreparer(ctx, scenario)
 	if err != nil {
@@ -1266,8 +1267,8 @@ func (client HeaderClient) ResponseDurationResponder(resp *http.Response) (resul
 }
 
 // ResponseEnum get a response with header values "GREY" or null
-//
-// scenario is send a post request with header values "scenario": "valid" or "null" or "empty"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseEnumPreparer(ctx, scenario)
 	if err != nil {
@@ -1371,8 +1372,8 @@ func (client HeaderClient) ResponseExistingKeyResponder(resp *http.Response) (re
 }
 
 // ResponseFloat get a response with header value "value": 0.07 or -3.0
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative"
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseFloatPreparer(ctx, scenario)
 	if err != nil {
@@ -1425,8 +1426,8 @@ func (client HeaderClient) ResponseFloatResponder(resp *http.Response) (result a
 }
 
 // ResponseInteger get a response with header value "value": 1 or -2
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative"
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseIntegerPreparer(ctx, scenario)
 	if err != nil {
@@ -1479,8 +1480,8 @@ func (client HeaderClient) ResponseIntegerResponder(resp *http.Response) (result
 }
 
 // ResponseLong get a response with header value "value": 105 or -2
-//
-// scenario is send a post request with header values "scenario": "positive" or "negative"
+// Parameters:
+// scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseLong(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseLongPreparer(ctx, scenario)
 	if err != nil {
@@ -1584,8 +1585,8 @@ func (client HeaderClient) ResponseProtectedKeyResponder(resp *http.Response) (r
 }
 
 // ResponseString get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
-//
-// scenario is send a post request with header values "scenario": "valid" or "null" or "empty"
+// Parameters:
+// scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 func (client HeaderClient) ResponseString(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	req, err := client.ResponseStringPreparer(ctx, scenario)
 	if err != nil {

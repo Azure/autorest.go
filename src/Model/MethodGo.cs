@@ -84,27 +84,21 @@ namespace AutoRest.Go.Model
             RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
         }
 
-        public string ParametersDocumentation
+        /// <summary>
+        /// Returns true if the local parameters contain documentation.
+        /// </summary>
+        public bool AddParamsDoc
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
                 foreach (var parameter in LocalParameters)
                 {
-                    if (!string.IsNullOrEmpty(parameter.Documentation))
+                    if (!string.IsNullOrWhiteSpace(parameter.Documentation.FixedValue))
                     {
-                        sb.Append(parameter.Name);
-                        sb.Append(" is ");
-                        sb.Append(parameter.Documentation.FixedValue.ToSentence());
-                        sb.Append(" ");
-                    }
-                    if (parameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
-                    {
-                        sb.Append(parameter.Name);
-                        sb.Append(" will be closed upon successful return. Callers should ensure closure when receiving an error.");
+                        return true;
                     }
                 }
-                return sb.ToString();
+                return false;
             }
         }
 

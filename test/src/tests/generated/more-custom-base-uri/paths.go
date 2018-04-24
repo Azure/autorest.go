@@ -24,9 +24,11 @@ func NewPathsClient(subscriptionID string) PathsClient {
 }
 
 // GetEmpty get a 200 to test a valid base uri
-//
-// vault is the vault name, e.g. https://myvault secret is secret value. keyName is the key name with value 'key1'.
-// keyVersion is the key version. Default value 'v1'.
+// Parameters:
+// vault - the vault name, e.g. https://myvault
+// secret - secret value.
+// keyName - the key name with value 'key1'.
+// keyVersion - the key version. Default value 'v1'.
 func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, keyVersion string) (result autorest.Response, err error) {
 	req, err := client.GetEmptyPreparer(ctx, vault, secret, keyName, keyVersion)
 	if err != nil {

@@ -257,10 +257,6 @@ namespace AutoRest.Go.Model
             // Emit each property, except for named Enumerated types, as a pointer to the type
             foreach (var property in properties)
             {
-                if (!string.IsNullOrWhiteSpace(property.Documentation))
-                {
-                    indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
-                }
                 if (property.Deprecated)
                 {
                     var message = "This property has been deprecated.";
@@ -268,7 +264,11 @@ namespace AutoRest.Go.Model
                     {
                         message = property.DeprecationMessage;
                     }
-                    indented.Append($"//\n// Deprecated: {message}\n");
+                    indented.Append($"// Deprecated: {message}\n");
+                }
+                if (!string.IsNullOrWhiteSpace(property.Documentation))
+                {
+                    indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
                 }
 
                 indented.AppendLine(property.Field);

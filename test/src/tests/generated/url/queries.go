@@ -30,8 +30,8 @@ func NewQueriesClientWithBaseURI(baseURI string, globalStringPath string, global
 }
 
 // ArrayStringCsvEmpty get an empty array [] of string using the csv-array format
-//
-// arrayQuery is an empty array [] of string using the csv-array format
+// Parameters:
+// arrayQuery - an empty array [] of string using the csv-array format
 func (client QueriesClient) ArrayStringCsvEmpty(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	req, err := client.ArrayStringCsvEmptyPreparer(ctx, arrayQuery)
 	if err != nil {
@@ -89,8 +89,8 @@ func (client QueriesClient) ArrayStringCsvEmptyResponder(resp *http.Response) (r
 }
 
 // ArrayStringCsvNull get a null array of string using the csv-array format
-//
-// arrayQuery is a null array of string using the csv-array format
+// Parameters:
+// arrayQuery - a null array of string using the csv-array format
 func (client QueriesClient) ArrayStringCsvNull(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	req, err := client.ArrayStringCsvNullPreparer(ctx, arrayQuery)
 	if err != nil {
@@ -149,9 +149,9 @@ func (client QueriesClient) ArrayStringCsvNullResponder(resp *http.Response) (re
 
 // ArrayStringCsvValid get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // csv-array format
-//
-// arrayQuery is an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
-// format
+// Parameters:
+// arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
+// csv-array format
 func (client QueriesClient) ArrayStringCsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	req, err := client.ArrayStringCsvValidPreparer(ctx, arrayQuery)
 	if err != nil {
@@ -210,9 +210,9 @@ func (client QueriesClient) ArrayStringCsvValidResponder(resp *http.Response) (r
 
 // ArrayStringPipesValid get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // pipes-array format
-//
-// arrayQuery is an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
-// format
+// Parameters:
+// arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
+// pipes-array format
 func (client QueriesClient) ArrayStringPipesValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	req, err := client.ArrayStringPipesValidPreparer(ctx, arrayQuery)
 	if err != nil {
@@ -271,9 +271,9 @@ func (client QueriesClient) ArrayStringPipesValidResponder(resp *http.Response) 
 
 // ArrayStringSsvValid get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // ssv-array format
-//
-// arrayQuery is an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
-// format
+// Parameters:
+// arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
+// ssv-array format
 func (client QueriesClient) ArrayStringSsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	req, err := client.ArrayStringSsvValidPreparer(ctx, arrayQuery)
 	if err != nil {
@@ -332,9 +332,9 @@ func (client QueriesClient) ArrayStringSsvValidResponder(resp *http.Response) (r
 
 // ArrayStringTsvValid get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // tsv-array format
-//
-// arrayQuery is an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
-// format
+// Parameters:
+// arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
+// tsv-array format
 func (client QueriesClient) ArrayStringTsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	req, err := client.ArrayStringTsvValidPreparer(ctx, arrayQuery)
 	if err != nil {
@@ -448,8 +448,8 @@ func (client QueriesClient) ByteEmptyResponder(resp *http.Response) (result auto
 }
 
 // ByteMultiByte get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-//
-// byteQuery is '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+// Parameters:
+// byteQuery - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 func (client QueriesClient) ByteMultiByte(ctx context.Context, byteQuery []byte) (result autorest.Response, err error) {
 	req, err := client.ByteMultiBytePreparer(ctx, byteQuery)
 	if err != nil {
@@ -507,8 +507,8 @@ func (client QueriesClient) ByteMultiByteResponder(resp *http.Response) (result 
 }
 
 // ByteNull get null as byte array (no query parameters in uri)
-//
-// byteQuery is null as byte array (no query parameters in uri)
+// Parameters:
+// byteQuery - null as byte array (no query parameters in uri)
 func (client QueriesClient) ByteNull(ctx context.Context, byteQuery []byte) (result autorest.Response, err error) {
 	req, err := client.ByteNullPreparer(ctx, byteQuery)
 	if err != nil {
@@ -566,8 +566,8 @@ func (client QueriesClient) ByteNullResponder(resp *http.Response) (result autor
 }
 
 // DateNull get null as date - this should result in no query parameters in uri
-//
-// dateQuery is null as date (no query parameters in uri)
+// Parameters:
+// dateQuery - null as date (no query parameters in uri)
 func (client QueriesClient) DateNull(ctx context.Context, dateQuery *date.Date) (result autorest.Response, err error) {
 	req, err := client.DateNullPreparer(ctx, dateQuery)
 	if err != nil {
@@ -625,8 +625,8 @@ func (client QueriesClient) DateNullResponder(resp *http.Response) (result autor
 }
 
 // DateTimeNull get null as date-time, should result in no query parameters in uri
-//
-// dateTimeQuery is null as date-time (no query parameters)
+// Parameters:
+// dateTimeQuery - null as date-time (no query parameters)
 func (client QueriesClient) DateTimeNull(ctx context.Context, dateTimeQuery *date.Time) (result autorest.Response, err error) {
 	req, err := client.DateTimeNullPreparer(ctx, dateTimeQuery)
 	if err != nil {
@@ -908,8 +908,8 @@ func (client QueriesClient) DoubleDecimalPositiveResponder(resp *http.Response) 
 }
 
 // DoubleNull get null numeric value (no query parameter)
-//
-// doubleQuery is null numeric value
+// Parameters:
+// doubleQuery - null numeric value
 func (client QueriesClient) DoubleNull(ctx context.Context, doubleQuery *float64) (result autorest.Response, err error) {
 	req, err := client.DoubleNullPreparer(ctx, doubleQuery)
 	if err != nil {
@@ -967,8 +967,8 @@ func (client QueriesClient) DoubleNullResponder(resp *http.Response) (result aut
 }
 
 // EnumNull get null (no query parameter in url)
-//
-// enumQuery is null string value
+// Parameters:
+// enumQuery - null string value
 func (client QueriesClient) EnumNull(ctx context.Context, enumQuery URIColor) (result autorest.Response, err error) {
 	req, err := client.EnumNullPreparer(ctx, enumQuery)
 	if err != nil {
@@ -1026,8 +1026,8 @@ func (client QueriesClient) EnumNullResponder(resp *http.Response) (result autor
 }
 
 // EnumValid get using uri with query parameter 'green color'
-//
-// enumQuery is 'green color' enum value
+// Parameters:
+// enumQuery - 'green color' enum value
 func (client QueriesClient) EnumValid(ctx context.Context, enumQuery URIColor) (result autorest.Response, err error) {
 	req, err := client.EnumValidPreparer(ctx, enumQuery)
 	if err != nil {
@@ -1085,8 +1085,8 @@ func (client QueriesClient) EnumValidResponder(resp *http.Response) (result auto
 }
 
 // FloatNull get null numeric value (no query parameter)
-//
-// floatQuery is null numeric value
+// Parameters:
+// floatQuery - null numeric value
 func (client QueriesClient) FloatNull(ctx context.Context, floatQuery *float64) (result autorest.Response, err error) {
 	req, err := client.FloatNullPreparer(ctx, floatQuery)
 	if err != nil {
@@ -1312,8 +1312,8 @@ func (client QueriesClient) GetBooleanFalseResponder(resp *http.Response) (resul
 }
 
 // GetBooleanNull get null Boolean value on query (query string should be absent)
-//
-// boolQuery is null boolean value
+// Parameters:
+// boolQuery - null boolean value
 func (client QueriesClient) GetBooleanNull(ctx context.Context, boolQuery *bool) (result autorest.Response, err error) {
 	req, err := client.GetBooleanNullPreparer(ctx, boolQuery)
 	if err != nil {
@@ -1483,8 +1483,8 @@ func (client QueriesClient) GetIntNegativeOneMillionResponder(resp *http.Respons
 }
 
 // GetIntNull get null integer value (no query parameter)
-//
-// intQuery is null integer value
+// Parameters:
+// intQuery - null integer value
 func (client QueriesClient) GetIntNull(ctx context.Context, intQuery *int32) (result autorest.Response, err error) {
 	req, err := client.GetIntNullPreparer(ctx, intQuery)
 	if err != nil {
@@ -1598,8 +1598,8 @@ func (client QueriesClient) GetIntOneMillionResponder(resp *http.Response) (resu
 }
 
 // GetLongNull get 'null 64 bit integer value (no query param in uri)
-//
-// longQuery is null 64 bit integer value
+// Parameters:
+// longQuery - null 64 bit integer value
 func (client QueriesClient) GetLongNull(ctx context.Context, longQuery *int64) (result autorest.Response, err error) {
 	req, err := client.GetLongNullPreparer(ctx, longQuery)
 	if err != nil {
@@ -1825,8 +1825,8 @@ func (client QueriesClient) StringEmptyResponder(resp *http.Response) (result au
 }
 
 // StringNull get null (no query parameter in url)
-//
-// stringQuery is null string value
+// Parameters:
+// stringQuery - null string value
 func (client QueriesClient) StringNull(ctx context.Context, stringQuery string) (result autorest.Response, err error) {
 	req, err := client.StringNullPreparer(ctx, stringQuery)
 	if err != nil {

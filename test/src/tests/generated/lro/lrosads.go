@@ -459,8 +459,8 @@ func (client LROSADsClient) DeleteNonRetry400Responder(resp *http.Response) (res
 
 // Post202NoLocation long running post request, service returns a 202 to the initial request, without a location
 // header.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Product) (result LROSADsPost202NoLocationFuture, err error) {
 	req, err := client.Post202NoLocationPreparer(ctx, product)
 	if err != nil {
@@ -519,8 +519,8 @@ func (client LROSADsClient) Post202NoLocationResponder(resp *http.Response) (res
 }
 
 // Post202NonRetry400 long running post request, service returns a 202 with a location header
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Product) (result LROSADsPost202NonRetry400Future, err error) {
 	req, err := client.Post202NonRetry400Preparer(ctx, product)
 	if err != nil {
@@ -580,8 +580,8 @@ func (client LROSADsClient) Post202NonRetry400Responder(resp *http.Response) (re
 
 // Post202RetryInvalidHeader long running post request, service returns a 202 to the initial request, with invalid
 // 'Location' and 'Retry-After' headers.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPost202RetryInvalidHeaderFuture, err error) {
 	req, err := client.Post202RetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
@@ -641,8 +641,8 @@ func (client LROSADsClient) Post202RetryInvalidHeaderResponder(resp *http.Respon
 
 // PostAsyncRelativeRetry400 long running post request, service returns a 202 to the initial request Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetry400Future, err error) {
 	req, err := client.PostAsyncRelativeRetry400Preparer(ctx, product)
 	if err != nil {
@@ -703,8 +703,8 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Responder(resp *http.Respon
 // PostAsyncRelativeRetryInvalidHeader long running post request, service returns a 202 to the initial request, with an
 // entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidHeaderFuture, err error) {
 	req, err := client.PostAsyncRelativeRetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
@@ -765,8 +765,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderResponder(resp *h
 // PostAsyncRelativeRetryInvalidJSONPolling long running post request, service returns a 202 to the initial request,
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
 	req, err := client.PostAsyncRelativeRetryInvalidJSONPollingPreparer(ctx, product)
 	if err != nil {
@@ -827,8 +827,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingResponder(re
 // PostAsyncRelativeRetryNoPayload long running post request, service returns a 202 to the initial request, with an
 // entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header
 // for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryNoPayloadFuture, err error) {
 	req, err := client.PostAsyncRelativeRetryNoPayloadPreparer(ctx, product)
 	if err != nil {
@@ -887,8 +887,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadResponder(resp *http.
 }
 
 // PostNonRetry400 long running post request, service returns a 400 with no error body
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Product) (result LROSADsPostNonRetry400Future, err error) {
 	req, err := client.PostNonRetry400Preparer(ctx, product)
 	if err != nil {
@@ -948,8 +948,8 @@ func (client LROSADsClient) PostNonRetry400Responder(resp *http.Response) (resul
 
 // Put200InvalidJSON long running put request, service returns a 200 to the initial request, with an entity that is not
 // a valid json
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Product) (result LROSADsPut200InvalidJSONFuture, err error) {
 	req, err := client.Put200InvalidJSONPreparer(ctx, product)
 	if err != nil {
@@ -1010,8 +1010,8 @@ func (client LROSADsClient) Put200InvalidJSONResponder(resp *http.Response) (res
 
 // PutAsyncRelativeRetry400 long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetry400Future, err error) {
 	req, err := client.PutAsyncRelativeRetry400Preparer(ctx, product)
 	if err != nil {
@@ -1073,8 +1073,8 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Responder(resp *http.Respons
 // PutAsyncRelativeRetryInvalidHeader long running put request, service returns a 200 to the initial request, with an
 // entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidHeaderFuture, err error) {
 	req, err := client.PutAsyncRelativeRetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
@@ -1136,8 +1136,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderResponder(resp *ht
 // PutAsyncRelativeRetryInvalidJSONPolling long running put request, service returns a 200 to the initial request, with
 // an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header
 // for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
 	req, err := client.PutAsyncRelativeRetryInvalidJSONPollingPreparer(ctx, product)
 	if err != nil {
@@ -1199,8 +1199,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingResponder(res
 // PutAsyncRelativeRetryNoStatus long running put request, service returns a 200 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusFuture, err error) {
 	req, err := client.PutAsyncRelativeRetryNoStatusPreparer(ctx, product)
 	if err != nil {
@@ -1262,8 +1262,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusResponder(resp *http.Re
 // PutAsyncRelativeRetryNoStatusPayload long running put request, service returns a 200 to the initial request, with an
 // entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header
 // for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture, err error) {
 	req, err := client.PutAsyncRelativeRetryNoStatusPayloadPreparer(ctx, product)
 	if err != nil {
@@ -1324,8 +1324,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadResponder(resp *
 
 // PutError201NoProvisioningStatePayload long running put request, service returns a 201 to the initial request with no
 // payload
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Context, product *Product) (result LROSADsPutError201NoProvisioningStatePayloadFuture, err error) {
 	req, err := client.PutError201NoProvisioningStatePayloadPreparer(ctx, product)
 	if err != nil {
@@ -1386,8 +1386,8 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadResponder(resp 
 
 // PutNonRetry201Creating400 long running put request, service returns a Product with 'ProvisioningState' = 'Creating'
 // and 201 response code
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400Future, err error) {
 	req, err := client.PutNonRetry201Creating400Preparer(ctx, product)
 	if err != nil {
@@ -1448,8 +1448,8 @@ func (client LROSADsClient) PutNonRetry201Creating400Responder(resp *http.Respon
 
 // PutNonRetry201Creating400InvalidJSON long running put request, service returns a Product with 'ProvisioningState' =
 // 'Creating' and 201 response code
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400InvalidJSONFuture, err error) {
 	req, err := client.PutNonRetry201Creating400InvalidJSONPreparer(ctx, product)
 	if err != nil {
@@ -1509,8 +1509,8 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONResponder(resp *
 }
 
 // PutNonRetry400 long running put request, service returns a 400 to the initial request
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product) (result LROSADsPutNonRetry400Future, err error) {
 	req, err := client.PutNonRetry400Preparer(ctx, product)
 	if err != nil {
