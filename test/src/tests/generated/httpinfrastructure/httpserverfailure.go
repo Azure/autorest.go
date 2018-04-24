@@ -29,8 +29,8 @@ func NewHTTPServerFailureClientWithBaseURI(baseURI string) HTTPServerFailureClie
 }
 
 // Delete505 return 505 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Delete505Preparer(ctx, booleanValue)
 	if err != nil {
@@ -192,8 +192,8 @@ func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (res
 }
 
 // Post505 return 505 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Post505Preparer(ctx, booleanValue)
 	if err != nil {

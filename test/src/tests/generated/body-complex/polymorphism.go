@@ -136,7 +136,6 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 
 // PutComplicated put complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
-//
 func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody BasicSalmon) (result autorest.Response, err error) {
 	req, err := client.PutComplicatedPreparer(ctx, complexBody)
 	if err != nil {
@@ -190,7 +189,6 @@ func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (r
 }
 
 // PutMissingDiscriminator put complex types that are polymorphic, omitting the discriminator
-//
 func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
 	req, err := client.PutMissingDiscriminatorPreparer(ctx, complexBody)
 	if err != nil {
@@ -245,8 +243,8 @@ func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Res
 }
 
 // PutValid put complex types that are polymorphic
-//
-// complexBody is please put a salmon that looks like this:
+// Parameters:
+// complexBody - please put a salmon that looks like this:
 // {
 // 'fishtype':'Salmon',
 // 'location':'alaska',
@@ -339,9 +337,9 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 
 // PutValidMissingRequired put complex types that are polymorphic, attempting to omit required 'birthday' field - the
 // request should not be allowed from the client
-//
-// complexBody is please attempt put a sawshark that looks like this, the client should not allow this data to be
-// sent:
+// Parameters:
+// complexBody - please attempt put a sawshark that looks like this, the client should not allow this data to
+// be sent:
 // {
 // "fishtype": "sawshark",
 // "species": "snaggle toothed",

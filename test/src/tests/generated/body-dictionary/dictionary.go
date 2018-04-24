@@ -2641,7 +2641,6 @@ func (client DictionaryClient) GetStringWithNullResponder(resp *http.Response) (
 }
 
 // PutArrayValid put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-//
 func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2701,7 +2700,6 @@ func (client DictionaryClient) PutArrayValidResponder(resp *http.Response) (resu
 }
 
 // PutBooleanTfft set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
-//
 func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2762,7 +2760,6 @@ func (client DictionaryClient) PutBooleanTfftResponder(resp *http.Response) (res
 
 // PutByteValid put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each
 // elementencoded in base 64
-//
 func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2823,7 +2820,6 @@ func (client DictionaryClient) PutByteValidResponder(resp *http.Response) (resul
 
 // PutComplexValid put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer":
 // 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
-//
 func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2884,7 +2880,6 @@ func (client DictionaryClient) PutComplexValidResponder(resp *http.Response) (re
 
 // PutDateTimeRfc1123Valid set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980
 // 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
-//
 func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -2945,7 +2940,6 @@ func (client DictionaryClient) PutDateTimeRfc1123ValidResponder(resp *http.Respo
 
 // PutDateTimeValid set dictionary value  {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
-//
 func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*date.Time) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3005,7 +2999,6 @@ func (client DictionaryClient) PutDateTimeValidResponder(resp *http.Response) (r
 }
 
 // PutDateValid set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-//
 func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*date.Date) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3066,7 +3059,6 @@ func (client DictionaryClient) PutDateValidResponder(resp *http.Response) (resul
 
 // PutDictionaryValid get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2":
 // "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-//
 func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3126,7 +3118,6 @@ func (client DictionaryClient) PutDictionaryValidResponder(resp *http.Response) 
 }
 
 // PutDoubleValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-//
 func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3186,7 +3177,6 @@ func (client DictionaryClient) PutDoubleValidResponder(resp *http.Response) (res
 }
 
 // PutDurationValid set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-//
 func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3246,7 +3236,6 @@ func (client DictionaryClient) PutDurationValidResponder(resp *http.Response) (r
 }
 
 // PutEmpty set dictionary value empty {}
-//
 func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3306,7 +3295,6 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 }
 
 // PutFloatValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-//
 func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3366,7 +3354,6 @@ func (client DictionaryClient) PutFloatValidResponder(resp *http.Response) (resu
 }
 
 // PutIntegerValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-//
 func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3426,7 +3413,6 @@ func (client DictionaryClient) PutIntegerValidResponder(resp *http.Response) (re
 }
 
 // PutLongValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-//
 func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
@@ -3486,7 +3472,6 @@ func (client DictionaryClient) PutLongValidResponder(resp *http.Response) (resul
 }
 
 // PutStringValid set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-//
 func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,

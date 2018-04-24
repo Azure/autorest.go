@@ -238,8 +238,8 @@ func (client ByteClient) GetNullResponder(resp *http.Response) (result ByteArray
 }
 
 // PutNonASCII put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-//
-// byteBody is base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
+// Parameters:
+// byteBody - base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: byteBody,

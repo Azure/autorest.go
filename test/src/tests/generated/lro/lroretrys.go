@@ -194,8 +194,8 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededResponder
 
 // Post202Retry200 long running post request, service returns a 500, then a 202 to the initial request, with 'Location'
 // and 'Retry-After' headers, Polls return a 200 with a response body after success
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LRORetrysClient) Post202Retry200(ctx context.Context, product *Product) (result LRORetrysPost202Retry200Future, err error) {
 	req, err := client.Post202Retry200Preparer(ctx, product)
 	if err != nil {
@@ -256,8 +256,8 @@ func (client LRORetrysClient) Post202Retry200Responder(resp *http.Response) (res
 // PostAsyncRelativeRetrySucceeded long running post request, service returns a 500, then a 202 to the initial request,
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LRORetrysClient) PostAsyncRelativeRetrySucceeded(ctx context.Context, product *Product) (result LRORetrysPostAsyncRelativeRetrySucceededFuture, err error) {
 	req, err := client.PostAsyncRelativeRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -318,8 +318,8 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceededResponder(resp *htt
 // Put201CreatingSucceeded200 long running put request, service returns a 500, then a 201 to the initial request, with
 // an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’
 // with ProvisioningState=’Succeeded’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LRORetrysClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LRORetrysPut201CreatingSucceeded200Future, err error) {
 	req, err := client.Put201CreatingSucceeded200Preparer(ctx, product)
 	if err != nil {
@@ -381,8 +381,8 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Responder(resp *http.Res
 // PutAsyncRelativeRetrySucceeded long running put request, service returns a 500, then a 200 to the initial request,
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LRORetrysClient) PutAsyncRelativeRetrySucceeded(ctx context.Context, product *Product) (result LRORetrysPutAsyncRelativeRetrySucceededFuture, err error) {
 	req, err := client.PutAsyncRelativeRetrySucceededPreparer(ctx, product)
 	if err != nil {

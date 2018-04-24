@@ -710,7 +710,6 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Resp
 }
 
 // PutLocalNegativeOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00
-//
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	req, err := client.PutLocalNegativeOffsetMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
@@ -764,7 +763,6 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeResponder(resp *ht
 }
 
 // PutLocalNegativeOffsetMinDateTime put min datetime value 0001-01-01T00:00:00-14:00
-//
 func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	req, err := client.PutLocalNegativeOffsetMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
@@ -818,7 +816,6 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *ht
 }
 
 // PutLocalPositiveOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00
-//
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	req, err := client.PutLocalPositiveOffsetMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
@@ -872,7 +869,6 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeResponder(resp *ht
 }
 
 // PutLocalPositiveOffsetMinDateTime put min datetime value 0001-01-01T00:00:00+14:00
-//
 func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	req, err := client.PutLocalPositiveOffsetMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
@@ -926,7 +922,6 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *ht
 }
 
 // PutUtcMaxDateTime put max datetime value 9999-12-31T23:59:59.9999999Z
-//
 func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
@@ -980,7 +975,6 @@ func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (re
 }
 
 // PutUtcMinDateTime put min datetime value 0001-01-01T00:00:00Z
-//
 func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
 	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {

@@ -29,8 +29,8 @@ func NewHTTPRetryClientWithBaseURI(baseURI string) HTTPRetryClient {
 }
 
 // Delete503 return 503 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Delete503Preparer(ctx, booleanValue)
 	if err != nil {
@@ -189,8 +189,8 @@ func (client HTTPRetryClient) Head408Responder(resp *http.Response) (result auto
 }
 
 // Patch500 return 500 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Patch500Preparer(ctx, booleanValue)
 	if err != nil {
@@ -247,8 +247,8 @@ func (client HTTPRetryClient) Patch500Responder(resp *http.Response) (result aut
 }
 
 // Patch504 return 504 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Patch504Preparer(ctx, booleanValue)
 	if err != nil {
@@ -305,8 +305,8 @@ func (client HTTPRetryClient) Patch504Responder(resp *http.Response) (result aut
 }
 
 // Post503 return 503 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Post503Preparer(ctx, booleanValue)
 	if err != nil {
@@ -363,8 +363,8 @@ func (client HTTPRetryClient) Post503Responder(resp *http.Response) (result auto
 }
 
 // Put500 return 500 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put500Preparer(ctx, booleanValue)
 	if err != nil {
@@ -421,8 +421,8 @@ func (client HTTPRetryClient) Put500Responder(resp *http.Response) (result autor
 }
 
 // Put504 return 504 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put504Preparer(ctx, booleanValue)
 	if err != nil {

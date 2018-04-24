@@ -82,8 +82,8 @@ func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) 
 }
 
 // PutValid put complex types that are polymorphic and have recursive references
-//
-// complexBody is please put a salmon that looks like this:
+// Parameters:
+// complexBody - please put a salmon that looks like this:
 // {
 // "fishtype": "salmon",
 // "species": "king",

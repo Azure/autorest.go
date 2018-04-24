@@ -31,8 +31,8 @@ func NewLROsCustomHeaderClientWithBaseURI(baseURI string) LROsCustomHeaderClient
 // Post202Retry200 x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all
 // requests. Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After'
 // headers, Polls return a 200 with a response body after success
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, product *Product) (result LROsCustomHeaderPost202Retry200Future, err error) {
 	req, err := client.Post202Retry200Preparer(ctx, product)
 	if err != nil {
@@ -93,8 +93,8 @@ func (client LROsCustomHeaderClient) Post202Retry200Responder(resp *http.Respons
 // PostAsyncRetrySucceeded x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for
 // all requests. Long running post request, service returns a 202 to the initial request, with an entity that contains
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPostAsyncRetrySucceededFuture, err error) {
 	req, err := client.PostAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -156,8 +156,8 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededResponder(resp *http
 // for all requests. Long running put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LROsCustomHeaderPut201CreatingSucceeded200Future, err error) {
 	req, err := client.Put201CreatingSucceeded200Preparer(ctx, product)
 	if err != nil {
@@ -219,8 +219,8 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Responder(resp *h
 // PutAsyncRetrySucceeded x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for
 // all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPutAsyncRetrySucceededFuture, err error) {
 	req, err := client.PutAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {

@@ -17,12 +17,11 @@
 
 @if (Model.HasInterface())
 {
-    @WrapComment("// ", $"{Model.GetInterfaceName()} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
-    @://
     @:@WrapComment("// Deprecated: ", depMessage)
     }
+    @WrapComment("// ", $"{Model.GetInterfaceName()} {Model.Documentation.ToSentence()}")
     <text>
     type @(Model.GetInterfaceName()) interface {
     @foreach (var dt in Model.DerivedTypes)
@@ -37,12 +36,11 @@
     }
 
     @EmptyLine
-    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
-    @://
     @:@WrapComment("// Deprecated: ", depMessage)
     }
+    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -129,11 +127,11 @@ else
         }
     }
     <text>
-    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
     @:@WrapComment("// Deprecated: ", depMessage)
     }
+    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())

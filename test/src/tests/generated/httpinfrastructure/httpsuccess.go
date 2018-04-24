@@ -29,8 +29,8 @@ func NewHTTPSuccessClientWithBaseURI(baseURI string) HTTPSuccessClient {
 }
 
 // Delete200 delete simple boolean value true returns 200
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Delete200Preparer(ctx, booleanValue)
 	if err != nil {
@@ -87,8 +87,8 @@ func (client HTTPSuccessClient) Delete200Responder(resp *http.Response) (result 
 }
 
 // Delete202 delete true Boolean value in request returns 202 (accepted)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Delete202Preparer(ctx, booleanValue)
 	if err != nil {
@@ -145,8 +145,8 @@ func (client HTTPSuccessClient) Delete202Responder(resp *http.Response) (result 
 }
 
 // Delete204 delete true Boolean value in request returns 204 (no content)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Delete204Preparer(ctx, booleanValue)
 	if err != nil {
@@ -408,8 +408,8 @@ func (client HTTPSuccessClient) Head404Responder(resp *http.Response) (result au
 }
 
 // Patch200 patch true Boolean value in request returning 200
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Patch200Preparer(ctx, booleanValue)
 	if err != nil {
@@ -466,8 +466,8 @@ func (client HTTPSuccessClient) Patch200Responder(resp *http.Response) (result a
 }
 
 // Patch202 patch true Boolean value in request returns 202
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Patch202Preparer(ctx, booleanValue)
 	if err != nil {
@@ -524,8 +524,8 @@ func (client HTTPSuccessClient) Patch202Responder(resp *http.Response) (result a
 }
 
 // Patch204 patch true Boolean value in request returns 204 (no content)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Patch204Preparer(ctx, booleanValue)
 	if err != nil {
@@ -582,8 +582,8 @@ func (client HTTPSuccessClient) Patch204Responder(resp *http.Response) (result a
 }
 
 // Post200 post bollean value true in request that returns a 200
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Post200Preparer(ctx, booleanValue)
 	if err != nil {
@@ -640,8 +640,8 @@ func (client HTTPSuccessClient) Post200Responder(resp *http.Response) (result au
 }
 
 // Post201 post true Boolean value in request returns 201 (Created)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Post201Preparer(ctx, booleanValue)
 	if err != nil {
@@ -698,8 +698,8 @@ func (client HTTPSuccessClient) Post201Responder(resp *http.Response) (result au
 }
 
 // Post202 post true Boolean value in request returns 202 (Accepted)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Post202Preparer(ctx, booleanValue)
 	if err != nil {
@@ -756,8 +756,8 @@ func (client HTTPSuccessClient) Post202Responder(resp *http.Response) (result au
 }
 
 // Post204 post true Boolean value in request returns 204 (no content)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Post204Preparer(ctx, booleanValue)
 	if err != nil {
@@ -814,8 +814,8 @@ func (client HTTPSuccessClient) Post204Responder(resp *http.Response) (result au
 }
 
 // Put200 put boolean value true returning 200 success
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put200Preparer(ctx, booleanValue)
 	if err != nil {
@@ -872,8 +872,8 @@ func (client HTTPSuccessClient) Put200Responder(resp *http.Response) (result aut
 }
 
 // Put201 put true Boolean value in request returns 201
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put201Preparer(ctx, booleanValue)
 	if err != nil {
@@ -930,8 +930,8 @@ func (client HTTPSuccessClient) Put201Responder(resp *http.Response) (result aut
 }
 
 // Put202 put true Boolean value in request returns 202 (Accepted)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put202Preparer(ctx, booleanValue)
 	if err != nil {
@@ -988,8 +988,8 @@ func (client HTTPSuccessClient) Put202Responder(resp *http.Response) (result aut
 }
 
 // Put204 put true Boolean value in request returns 204 (no content)
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put204Preparer(ctx, booleanValue)
 	if err != nil {
