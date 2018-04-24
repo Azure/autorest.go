@@ -200,7 +200,6 @@ func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response
 }
 
 // GetRequiredPath test implicitly required path parameter
-//
 func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result Error, err error) {
 	req, err := client.GetRequiredPathPreparer(ctx, pathParameter)
 	if err != nil {
@@ -257,7 +256,6 @@ func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (resu
 }
 
 // PutOptionalBody test implicitly optional body parameter
-//
 func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	req, err := client.PutOptionalBodyPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -314,7 +312,6 @@ func (client ImplicitClient) PutOptionalBodyResponder(resp *http.Response) (resu
 }
 
 // PutOptionalHeader test implicitly optional header parameter
-//
 func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
 	req, err := client.PutOptionalHeaderPreparer(ctx, queryParameter)
 	if err != nil {
@@ -370,7 +367,6 @@ func (client ImplicitClient) PutOptionalHeaderResponder(resp *http.Response) (re
 }
 
 // PutOptionalQuery test implicitly optional query parameter
-//
 func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
 	req, err := client.PutOptionalQueryPreparer(ctx, queryParameter)
 	if err != nil {

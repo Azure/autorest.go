@@ -740,8 +740,8 @@ func (client LROsClient) Post200WithPayloadResponder(resp *http.Response) (resul
 
 // Post202NoRetry204 long running post request, service returns a 202 to the initial request, with 'Location' header,
 // 204 with noresponse body after success
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Post202NoRetry204(ctx context.Context, product *Product) (result LROsPost202NoRetry204Future, err error) {
 	req, err := client.Post202NoRetry204Preparer(ctx, product)
 	if err != nil {
@@ -802,8 +802,8 @@ func (client LROsClient) Post202NoRetry204Responder(resp *http.Response) (result
 
 // Post202Retry200 long running post request, service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Post202Retry200(ctx context.Context, product *Product) (result LROsPost202Retry200Future, err error) {
 	req, err := client.Post202Retry200Preparer(ctx, product)
 	if err != nil {
@@ -864,8 +864,8 @@ func (client LROsClient) Post202Retry200Responder(resp *http.Response) (result a
 // PostAsyncNoRetrySucceeded long running post request, service returns a 202 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncNoRetrySucceeded(ctx context.Context, product *Product) (result LROsPostAsyncNoRetrySucceededFuture, err error) {
 	req, err := client.PostAsyncNoRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -927,8 +927,8 @@ func (client LROsClient) PostAsyncNoRetrySucceededResponder(resp *http.Response)
 // PostAsyncRetrycanceled long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncRetrycanceled(ctx context.Context, product *Product) (result LROsPostAsyncRetrycanceledFuture, err error) {
 	req, err := client.PostAsyncRetrycanceledPreparer(ctx, product)
 	if err != nil {
@@ -989,8 +989,8 @@ func (client LROsClient) PostAsyncRetrycanceledResponder(resp *http.Response) (r
 // PostAsyncRetryFailed long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncRetryFailed(ctx context.Context, product *Product) (result LROsPostAsyncRetryFailedFuture, err error) {
 	req, err := client.PostAsyncRetryFailedPreparer(ctx, product)
 	if err != nil {
@@ -1051,8 +1051,8 @@ func (client LROsClient) PostAsyncRetryFailedResponder(resp *http.Response) (res
 // PostAsyncRetrySucceeded long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsPostAsyncRetrySucceededFuture, err error) {
 	req, err := client.PostAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -1114,8 +1114,8 @@ func (client LROsClient) PostAsyncRetrySucceededResponder(resp *http.Response) (
 // Put200Acceptedcanceled200 long running put request, service returns a 201 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200Acceptedcanceled200(ctx context.Context, product *Product) (result LROsPut200Acceptedcanceled200Future, err error) {
 	req, err := client.Put200Acceptedcanceled200Preparer(ctx, product)
 	if err != nil {
@@ -1176,8 +1176,8 @@ func (client LROsClient) Put200Acceptedcanceled200Responder(resp *http.Response)
 
 // Put200Succeeded long running put request, service returns a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200Succeeded(ctx context.Context, product *Product) (result LROsPut200SucceededFuture, err error) {
 	req, err := client.Put200SucceededPreparer(ctx, product)
 	if err != nil {
@@ -1238,8 +1238,8 @@ func (client LROsClient) Put200SucceededResponder(resp *http.Response) (result P
 
 // Put200SucceededNoState long running put request, service returns a 200 to the initial request, with an entity that
 // does not contain ProvisioningState=’Succeeded’.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200SucceededNoState(ctx context.Context, product *Product) (result LROsPut200SucceededNoStateFuture, err error) {
 	req, err := client.Put200SucceededNoStatePreparer(ctx, product)
 	if err != nil {
@@ -1301,8 +1301,8 @@ func (client LROsClient) Put200SucceededNoStateResponder(resp *http.Response) (r
 // Put200UpdatingSucceeded204 long running put request, service returns a 201 to the initial request, with an entity
 // that contains ProvisioningState=’Updating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200UpdatingSucceeded204(ctx context.Context, product *Product) (result LROsPut200UpdatingSucceeded204Future, err error) {
 	req, err := client.Put200UpdatingSucceeded204Preparer(ctx, product)
 	if err != nil {
@@ -1364,8 +1364,8 @@ func (client LROsClient) Put200UpdatingSucceeded204Responder(resp *http.Response
 // Put201CreatingFailed200 long running put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Created’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put201CreatingFailed200(ctx context.Context, product *Product) (result LROsPut201CreatingFailed200Future, err error) {
 	req, err := client.Put201CreatingFailed200Preparer(ctx, product)
 	if err != nil {
@@ -1427,8 +1427,8 @@ func (client LROsClient) Put201CreatingFailed200Responder(resp *http.Response) (
 // Put201CreatingSucceeded200 long running put request, service returns a 201 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LROsPut201CreatingSucceeded200Future, err error) {
 	req, err := client.Put201CreatingSucceeded200Preparer(ctx, product)
 	if err != nil {
@@ -1489,8 +1489,8 @@ func (client LROsClient) Put201CreatingSucceeded200Responder(resp *http.Response
 
 // Put202Retry200 long running put request, service returns a 202 to the initial request, with a location header that
 // points to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put202Retry200(ctx context.Context, product *Product) (result LROsPut202Retry200Future, err error) {
 	req, err := client.Put202Retry200Preparer(ctx, product)
 	if err != nil {
@@ -1551,8 +1551,8 @@ func (client LROsClient) Put202Retry200Responder(resp *http.Response) (result Pr
 
 // PutAsyncNoHeaderInRetry long running put request, service returns a 202 to the initial request with
 // Azure-AsyncOperation header. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncNoHeaderInRetry(ctx context.Context, product *Product) (result LROsPutAsyncNoHeaderInRetryFuture, err error) {
 	req, err := client.PutAsyncNoHeaderInRetryPreparer(ctx, product)
 	if err != nil {
@@ -1612,8 +1612,8 @@ func (client LROsClient) PutAsyncNoHeaderInRetryResponder(resp *http.Response) (
 }
 
 // PutAsyncNonResource long running put request with non resource.
-//
-// sku is sku to put
+// Parameters:
+// sku - sku to put
 func (client LROsClient) PutAsyncNonResource(ctx context.Context, sku *Sku) (result LROsPutAsyncNonResourceFuture, err error) {
 	req, err := client.PutAsyncNonResourcePreparer(ctx, sku)
 	if err != nil {
@@ -1675,8 +1675,8 @@ func (client LROsClient) PutAsyncNonResourceResponder(resp *http.Response) (resu
 // PutAsyncNoRetrycanceled long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncNoRetrycanceled(ctx context.Context, product *Product) (result LROsPutAsyncNoRetrycanceledFuture, err error) {
 	req, err := client.PutAsyncNoRetrycanceledPreparer(ctx, product)
 	if err != nil {
@@ -1738,8 +1738,8 @@ func (client LROsClient) PutAsyncNoRetrycanceledResponder(resp *http.Response) (
 // PutAsyncNoRetrySucceeded long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncNoRetrySucceeded(ctx context.Context, product *Product) (result LROsPutAsyncNoRetrySucceededFuture, err error) {
 	req, err := client.PutAsyncNoRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -1801,8 +1801,8 @@ func (client LROsClient) PutAsyncNoRetrySucceededResponder(resp *http.Response) 
 // PutAsyncRetryFailed long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncRetryFailed(ctx context.Context, product *Product) (result LROsPutAsyncRetryFailedFuture, err error) {
 	req, err := client.PutAsyncRetryFailedPreparer(ctx, product)
 	if err != nil {
@@ -1864,8 +1864,8 @@ func (client LROsClient) PutAsyncRetryFailedResponder(resp *http.Response) (resu
 // PutAsyncRetrySucceeded long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsPutAsyncRetrySucceededFuture, err error) {
 	req, err := client.PutAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -1925,8 +1925,8 @@ func (client LROsClient) PutAsyncRetrySucceededResponder(resp *http.Response) (r
 }
 
 // PutAsyncSubResource long running put request with sub resource.
-//
-// product is sub Product to put
+// Parameters:
+// product - sub Product to put
 func (client LROsClient) PutAsyncSubResource(ctx context.Context, product *SubProduct) (result LROsPutAsyncSubResourceFuture, err error) {
 	req, err := client.PutAsyncSubResourcePreparer(ctx, product)
 	if err != nil {
@@ -1987,8 +1987,8 @@ func (client LROsClient) PutAsyncSubResourceResponder(resp *http.Response) (resu
 
 // PutNoHeaderInRetry long running put request, service returns a 202 to the initial request with location header.
 // Subsequent calls to operation status do not contain location header.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutNoHeaderInRetry(ctx context.Context, product *Product) (result LROsPutNoHeaderInRetryFuture, err error) {
 	req, err := client.PutNoHeaderInRetryPreparer(ctx, product)
 	if err != nil {
@@ -2048,8 +2048,8 @@ func (client LROsClient) PutNoHeaderInRetryResponder(resp *http.Response) (resul
 }
 
 // PutNonResource long running put request with non resource.
-//
-// sku is sku to put
+// Parameters:
+// sku - sku to put
 func (client LROsClient) PutNonResource(ctx context.Context, sku *Sku) (result LROsPutNonResourceFuture, err error) {
 	req, err := client.PutNonResourcePreparer(ctx, sku)
 	if err != nil {
@@ -2109,8 +2109,8 @@ func (client LROsClient) PutNonResourceResponder(resp *http.Response) (result Sk
 }
 
 // PutSubResource long running put request with sub resource.
-//
-// product is sub Product to put
+// Parameters:
+// product - sub Product to put
 func (client LROsClient) PutSubResource(ctx context.Context, product *SubProduct) (result LROsPutSubResourceFuture, err error) {
 	req, err := client.PutSubResourcePreparer(ctx, product)
 	if err != nil {

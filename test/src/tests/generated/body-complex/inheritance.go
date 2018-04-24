@@ -81,9 +81,9 @@ func (client InheritanceClient) GetValidResponder(resp *http.Response) (result S
 }
 
 // PutValid put complex types that extend others
-//
-// complexBody is please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs,
-// the 1st one named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
+// Parameters:
+// complexBody - please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2
+// dogs, the 1st one named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
 // food="french fries".
 func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (result autorest.Response, err error) {
 	req, err := client.PutValidPreparer(ctx, complexBody)

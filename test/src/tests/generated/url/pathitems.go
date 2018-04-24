@@ -31,10 +31,11 @@ func NewPathItemsClientWithBaseURI(baseURI string, globalStringPath string, glob
 // GetAllWithValues send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath',
 // localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
-//
-// localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value
-// 'pathItemStringPath' that appears in the path localStringQuery is should contain value 'localStringQuery'
-// pathItemStringQuery is a string value 'pathItemStringQuery' that appears as a query parameter
+// Parameters:
+// localStringPath - should contain value 'localStringPath'
+// pathItemStringPath - a string value 'pathItemStringPath' that appears in the path
+// localStringQuery - should contain value 'localStringQuery'
+// pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	req, err := client.GetAllWithValuesPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
@@ -106,10 +107,11 @@ func (client PathItemsClient) GetAllWithValuesResponder(resp *http.Response) (re
 // GetGlobalAndLocalQueryNull send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath',
 // localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery=null
-//
-// localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value
-// 'pathItemStringPath' that appears in the path localStringQuery is should contain null value pathItemStringQuery
-// is a string value 'pathItemStringQuery' that appears as a query parameter
+// Parameters:
+// localStringPath - should contain value 'localStringPath'
+// pathItemStringPath - a string value 'pathItemStringPath' that appears in the path
+// localStringQuery - should contain null value
+// pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	req, err := client.GetGlobalAndLocalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
@@ -181,10 +183,11 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullResponder(resp *http.Res
 // GetGlobalQueryNull send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath',
 // localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
-//
-// localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value
-// 'pathItemStringPath' that appears in the path localStringQuery is should contain value 'localStringQuery'
-// pathItemStringQuery is a string value 'pathItemStringQuery' that appears as a query parameter
+// Parameters:
+// localStringPath - should contain value 'localStringPath'
+// pathItemStringPath - a string value 'pathItemStringPath' that appears in the path
+// localStringQuery - should contain value 'localStringQuery'
+// pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	req, err := client.GetGlobalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
@@ -256,10 +259,11 @@ func (client PathItemsClient) GetGlobalQueryNullResponder(resp *http.Response) (
 // GetLocalPathItemQueryNull send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath',
 // localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery=null,
 // localStringQuery=null
-//
-// localStringPath is should contain value 'localStringPath' pathItemStringPath is a string value
-// 'pathItemStringPath' that appears in the path localStringQuery is should contain value null pathItemStringQuery
-// is should contain value null
+// Parameters:
+// localStringPath - should contain value 'localStringPath'
+// pathItemStringPath - a string value 'pathItemStringPath' that appears in the path
+// localStringQuery - should contain value null
+// pathItemStringQuery - should contain value null
 func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	req, err := client.GetLocalPathItemQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {

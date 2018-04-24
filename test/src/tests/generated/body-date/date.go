@@ -342,7 +342,6 @@ func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result 
 }
 
 // PutMaxDate put max date value 9999-12-31
-//
 func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	req, err := client.PutMaxDatePreparer(ctx, dateBody)
 	if err != nil {
@@ -396,7 +395,6 @@ func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autore
 }
 
 // PutMinDate put min date value 0000-01-01
-//
 func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	req, err := client.PutMinDatePreparer(ctx, dateBody)
 	if err != nil {

@@ -758,7 +758,6 @@ func (client NumberClient) GetSmallFloatResponder(resp *http.Response) (result F
 }
 
 // PutBigDecimal put big decimal value 2.5976931e+101
-//
 func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
 	req, err := client.PutBigDecimalPreparer(ctx, numberBody)
 	if err != nil {
@@ -918,7 +917,6 @@ func (client NumberClient) PutBigDecimalPositiveDecimalResponder(resp *http.Resp
 }
 
 // PutBigDouble put big double value 2.5976931e+101
-//
 func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	req, err := client.PutBigDoublePreparer(ctx, numberBody)
 	if err != nil {
@@ -1078,7 +1076,6 @@ func (client NumberClient) PutBigDoublePositiveDecimalResponder(resp *http.Respo
 }
 
 // PutBigFloat put big float value 3.402823e+20
-//
 func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	req, err := client.PutBigFloatPreparer(ctx, numberBody)
 	if err != nil {
@@ -1132,7 +1129,6 @@ func (client NumberClient) PutBigFloatResponder(resp *http.Response) (result aut
 }
 
 // PutSmallDecimal put small decimal value 2.5976931e-101
-//
 func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
 	req, err := client.PutSmallDecimalPreparer(ctx, numberBody)
 	if err != nil {
@@ -1186,7 +1182,6 @@ func (client NumberClient) PutSmallDecimalResponder(resp *http.Response) (result
 }
 
 // PutSmallDouble put small double value 2.5976931e-101
-//
 func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	req, err := client.PutSmallDoublePreparer(ctx, numberBody)
 	if err != nil {
@@ -1240,7 +1235,6 @@ func (client NumberClient) PutSmallDoubleResponder(resp *http.Response) (result 
 }
 
 // PutSmallFloat put small float value 3.402823e-20
-//
 func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	req, err := client.PutSmallFloatPreparer(ctx, numberBody)
 	if err != nil {

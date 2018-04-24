@@ -32,8 +32,8 @@ func NewPathsClientWithBaseURI(baseURI string, globalStringPath string, globalSt
 
 // ArrayCsvInPath get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
 // format
-//
-// arrayPath is an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
+// Parameters:
+// arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
 // format
 func (client PathsClient) ArrayCsvInPath(ctx context.Context, arrayPath []string) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
@@ -96,8 +96,8 @@ func (client PathsClient) ArrayCsvInPathResponder(resp *http.Response) (result a
 }
 
 // Base64URL get 'lorem' encoded value as 'bG9yZW0' (base64url)
-//
-// base64URLPath is base64url encoded value
+// Parameters:
+// base64URLPath - base64url encoded value
 func (client PathsClient) Base64URL(ctx context.Context, base64URLPath string) (result autorest.Response, err error) {
 	req, err := client.Base64URLPreparer(ctx, base64URLPath)
 	if err != nil {
@@ -208,8 +208,8 @@ func (client PathsClient) ByteEmptyResponder(resp *http.Response) (result autore
 }
 
 // ByteMultiByte get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-//
-// bytePath is '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+// Parameters:
+// bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 func (client PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bytePath,
@@ -271,8 +271,8 @@ func (client PathsClient) ByteMultiByteResponder(resp *http.Response) (result au
 }
 
 // ByteNull get null as byte array (should throw)
-//
-// bytePath is null as byte array (should throw)
+// Parameters:
+// bytePath - null as byte array (should throw)
 func (client PathsClient) ByteNull(ctx context.Context, bytePath []byte) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bytePath,
@@ -334,8 +334,8 @@ func (client PathsClient) ByteNullResponder(resp *http.Response) (result autores
 }
 
 // DateNull get null as date - this should throw or be unusable on the client side, depending on date representation
-//
-// datePath is null as date (should throw)
+// Parameters:
+// datePath - null as date (should throw)
 func (client PathsClient) DateNull(ctx context.Context, datePath date.Date) (result autorest.Response, err error) {
 	req, err := client.DateNullPreparer(ctx, datePath)
 	if err != nil {
@@ -391,8 +391,8 @@ func (client PathsClient) DateNullResponder(resp *http.Response) (result autores
 }
 
 // DateTimeNull get null as date-time, should be disallowed or throw depending on representation of date-time
-//
-// dateTimePath is null as date-time
+// Parameters:
+// dateTimePath - null as date-time
 func (client PathsClient) DateTimeNull(ctx context.Context, dateTimePath date.Time) (result autorest.Response, err error) {
 	req, err := client.DateTimeNullPreparer(ctx, dateTimePath)
 	if err != nil {
@@ -668,8 +668,8 @@ func (client PathsClient) DoubleDecimalPositiveResponder(resp *http.Response) (r
 }
 
 // EnumNull get null (should throw on the client before the request is sent on wire)
-//
-// enumPath is send null should throw
+// Parameters:
+// enumPath - send null should throw
 func (client PathsClient) EnumNull(ctx context.Context, enumPath URIColor) (result autorest.Response, err error) {
 	req, err := client.EnumNullPreparer(ctx, enumPath)
 	if err != nil {
@@ -725,8 +725,8 @@ func (client PathsClient) EnumNullResponder(resp *http.Response) (result autores
 }
 
 // EnumValid get using uri with 'green color' in path parameter
-//
-// enumPath is send the value green
+// Parameters:
+// enumPath - send the value green
 func (client PathsClient) EnumValid(ctx context.Context, enumPath URIColor) (result autorest.Response, err error) {
 	req, err := client.EnumValidPreparer(ctx, enumPath)
 	if err != nil {
@@ -1277,8 +1277,8 @@ func (client PathsClient) StringEmptyResponder(resp *http.Response) (result auto
 }
 
 // StringNull get null (should throw)
-//
-// stringPath is null string value
+// Parameters:
+// stringPath - null string value
 func (client PathsClient) StringNull(ctx context.Context, stringPath string) (result autorest.Response, err error) {
 	req, err := client.StringNullPreparer(ctx, stringPath)
 	if err != nil {
@@ -1444,8 +1444,8 @@ func (client PathsClient) StringURLEncodedResponder(resp *http.Response) (result
 }
 
 // UnixTimeURL get the date 2016-04-13 encoded value as '1460505600' (Unix time)
-//
-// unixTimeURLPath is unix time encoded value
+// Parameters:
+// unixTimeURLPath - unix time encoded value
 func (client PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath date.UnixTime) (result autorest.Response, err error) {
 	req, err := client.UnixTimeURLPreparer(ctx, unixTimeURLPath)
 	if err != nil {
