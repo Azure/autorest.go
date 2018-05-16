@@ -14,8 +14,8 @@ set -ev
 
 git clone --depth 1 --branch $SPECS_REF -- https://github.com/Azure/azure-rest-api-specs.git $SPECS_LOCATION
 
-for f in $(find $SPECS_LOCATION -iname README.md | grep -v node_modules); do 
-    autorest --go $f
+for f in $(find $SPECS_LOCATION -iname README.md | grep specification); do 
+    autorest --go --multiapi $f
 done
 
 rm -rf $SPECS_LOCATION
