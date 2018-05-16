@@ -16,6 +16,7 @@ before_install:
 install:
   - sudo apt-get install libunwind8
   - npm install
+  - npm install autorest
 before_script:
   - npm install -g gulp-cli
 script: 
