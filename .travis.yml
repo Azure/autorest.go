@@ -7,14 +7,18 @@ go:
 matrix:
   allow_failures:
     - go: master
+  fast_finish: true
 env:
   - NODE_VERSION="8.9.4" DEP_VERSION="0.4.1"
 before_install:
   - nvm install $NODE_VERSION
   - curl -L -o $GOPATH/bin/dep https://github.com/golang/dep/releases/download/v$DEP_VERSION/dep-linux-amd64 && chmod +x $GOPATH/bin/dep
+  - npm install -g autorest
 install:
   - sudo apt-get install libunwind8
   - npm install
 before_script:
   - npm install -g gulp-cli
-script: gulp testci
+script: 
+  - gulp testci
+  - if [[ $TRAVIS_EVENT_TYPE == "cron" ]]; then sh testSpecs.sh master; fi
