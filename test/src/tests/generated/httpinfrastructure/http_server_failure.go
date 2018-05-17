@@ -78,6 +78,7 @@ func (client HTTPServerFailureClient) delete505Responder(resp pipeline.Response)
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -128,6 +129,7 @@ func (client HTTPServerFailureClient) get501Responder(resp pipeline.Response) (p
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -178,6 +180,7 @@ func (client HTTPServerFailureClient) head501Responder(resp pipeline.Response) (
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -239,6 +242,7 @@ func (client HTTPServerFailureClient) post505Responder(resp pipeline.Response) (
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")

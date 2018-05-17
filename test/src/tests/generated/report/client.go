@@ -103,6 +103,7 @@ func (client ManagementClient) getReportResponder(resp pipeline.Response) (pipel
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")

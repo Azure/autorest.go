@@ -68,6 +68,7 @@ func (client ByteClient) getEmptyResponder(resp pipeline.Response) (pipeline.Res
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -118,6 +119,7 @@ func (client ByteClient) getInvalidResponder(resp pipeline.Response) (pipeline.R
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -168,6 +170,7 @@ func (client ByteClient) getNonASCIIResponder(resp pipeline.Response) (pipeline.
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -218,6 +221,7 @@ func (client ByteClient) getNullResponder(resp pipeline.Response) (pipeline.Resp
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")

@@ -69,6 +69,7 @@ func (client IntClient) getInvalidResponder(resp pipeline.Response) (pipeline.Re
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -119,6 +120,7 @@ func (client IntClient) getInvalidUnixTimeResponder(resp pipeline.Response) (pip
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -169,6 +171,7 @@ func (client IntClient) getNullResponder(resp pipeline.Response) (pipeline.Respo
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -219,6 +222,7 @@ func (client IntClient) getNullUnixTimeResponder(resp pipeline.Response) (pipeli
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -269,6 +273,7 @@ func (client IntClient) getOverflowInt32Responder(resp pipeline.Response) (pipel
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -319,6 +324,7 @@ func (client IntClient) getOverflowInt64Responder(resp pipeline.Response) (pipel
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -369,6 +375,7 @@ func (client IntClient) getUnderflowInt32Responder(resp pipeline.Response) (pipe
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -419,6 +426,7 @@ func (client IntClient) getUnderflowInt64Responder(resp pipeline.Response) (pipe
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -469,6 +477,7 @@ func (client IntClient) getUnixTimeResponder(resp pipeline.Response) (pipeline.R
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
