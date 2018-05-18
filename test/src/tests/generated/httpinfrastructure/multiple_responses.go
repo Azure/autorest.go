@@ -67,6 +67,7 @@ func (client MultipleResponsesClient) get200Model201ModelDefaultError200ValidRes
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -118,6 +119,7 @@ func (client MultipleResponsesClient) get200Model201ModelDefaultError201ValidRes
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -169,6 +171,7 @@ func (client MultipleResponsesClient) get200Model201ModelDefaultError400ValidRes
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -219,6 +222,7 @@ func (client MultipleResponsesClient) get200Model204NoModelDefaultError200ValidR
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -269,6 +273,7 @@ func (client MultipleResponsesClient) get200Model204NoModelDefaultError201Invali
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -319,6 +324,7 @@ func (client MultipleResponsesClient) get200Model204NoModelDefaultError202NoneRe
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -369,6 +375,7 @@ func (client MultipleResponsesClient) get200Model204NoModelDefaultError204ValidR
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -420,6 +427,7 @@ func (client MultipleResponsesClient) get200Model204NoModelDefaultError400ValidR
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -470,6 +478,7 @@ func (client MultipleResponsesClient) get200ModelA200InvalidResponder(resp pipel
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -521,6 +530,7 @@ func (client MultipleResponsesClient) get200ModelA200NoneResponder(resp pipeline
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -571,6 +581,7 @@ func (client MultipleResponsesClient) get200ModelA200ValidResponder(resp pipelin
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -621,6 +632,7 @@ func (client MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -671,6 +683,7 @@ func (client MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -722,6 +735,7 @@ func (client MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -772,6 +786,7 @@ func (client MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, &result.Value)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -822,6 +837,7 @@ func (client MultipleResponsesClient) get200ModelA202ValidResponder(resp pipelin
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -872,6 +888,7 @@ func (client MultipleResponsesClient) get200ModelA400InvalidResponder(resp pipel
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -922,6 +939,7 @@ func (client MultipleResponsesClient) get200ModelA400NoneResponder(resp pipeline
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -972,6 +990,7 @@ func (client MultipleResponsesClient) get200ModelA400ValidResponder(resp pipelin
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -1282,6 +1301,7 @@ func (client MultipleResponsesClient) getDefaultModelA200NoneResponder(resp pipe
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -1332,6 +1352,7 @@ func (client MultipleResponsesClient) getDefaultModelA200ValidResponder(resp pip
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -1382,6 +1403,7 @@ func (client MultipleResponsesClient) getDefaultModelA400NoneResponder(resp pipe
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
@@ -1432,6 +1454,7 @@ func (client MultipleResponsesClient) getDefaultModelA400ValidResponder(resp pip
 		return result, NewResponseError(err, resp.Response(), "failed to read response body")
 	}
 	if len(b) > 0 {
+		b = removeBOM(b)
 		err = json.Unmarshal(b, result)
 		if err != nil {
 			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")

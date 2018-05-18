@@ -7,6 +7,7 @@ package httpinfrastructuregroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"bytes"
 	"context"
 	"encoding/xml"
 	"github.com/Azure/azure-pipeline-go/pipeline"
@@ -67,4 +68,10 @@ func validateResponse(resp pipeline.Response, successStatusCodes ...int) error {
 		}
 	}
 	return responseError
+}
+
+// removes any BOM from the byte slice
+func removeBOM(b []byte) []byte {
+	// UTF8
+	return bytes.TrimPrefix(b, []byte("\xef\xbb\xbf"))
 }

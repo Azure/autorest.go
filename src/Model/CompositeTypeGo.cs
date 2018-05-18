@@ -75,15 +75,21 @@ namespace AutoRest.Go.Model
                 throw new ArgumentException("{0} is not a valid type for SyntheticType", wrappedType.ToString());
             }
 
-            // gosdk: Ensure the generated name does not collide with existing type names
+            CodeModel = responseToWrap.CodeModel;
             BaseType = wrappedType;
 
             if (wrappedType.XmlIsWrapped)
             {
-                Name = wrappedType.XmlName;
+                // ensure that the name won't collide with an existing type.
+                // if it does then we'll give it the standard response name.
+                if (!CodeModel.ModelTypes.Where(mt => (mt.Name == wrappedType.XmlName)).Any())
+                {
+                    Name = wrappedType.XmlName;
+                }
                 XmlProperties = wrappedType.XmlProperties;
             }
-            else
+            
+            if (Name == null)
             {
                 Name = $"{responseToWrap.Name}Response";
             }
@@ -189,7 +195,7 @@ namespace AutoRest.Go.Model
 
             if (IsPolymorphic || HasFlattenedFields || NeedsXmlNameField)
             {
-                imports.Add($"\"encoding/{this.CodeModel.ToCodeModelGo().Encoding}\"");
+                imports.Add($"\"encoding/{CodeModel.ToCodeModelGo().Encoding}\"");
             }
 
             if (IsDateTimeCustomHandlingRequired)
@@ -203,7 +209,7 @@ namespace AutoRest.Go.Model
         public string AddHTTPResponse()
         {
             return (IsResponseType || IsWrapperType) ?
-                "autorest.Response `json:\"-\"`\n" :
+                $"autorest.Response `{CodeModel.ToCodeModelGo().Encoding}:\"-\"`\n" :
                 null;
         }
 
