@@ -192,7 +192,7 @@ func (g2r Get200Response) Status() string {
 // Get300Response ...
 type Get300Response struct {
 	rawResponse *http.Response
-	Value       []string `json:"value,omitempty"`
+	Items       []string `json:"items,omitempty"`
 }
 
 // Response returns the raw HTTP response object.
