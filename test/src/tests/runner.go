@@ -54,7 +54,7 @@ func stopServer() error {
 func runTests(allPass *bool) {
 	fmt.Println("Run tests")
 	testSuites := []string{
-		//"arraygroup",
+		"arraygroup",
 		"booleangroup",
 		"bytegroup",
 		//"complexgroup",

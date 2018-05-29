@@ -7,108 +7,1062 @@ package arraygroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/date"
 	uuid "github.com/satori/go.uuid"
+	"net/http"
+	"reflect"
+	"strings"
+	"time"
 )
 
-// Error is
+// concatenates a slice of const values with the specified separator between each item
+func joinConst(s interface{}, sep string) string {
+	v := reflect.ValueOf(s)
+	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
+		panic("s wasn't a slice or array")
+	}
+	ss := make([]string, 0, v.Len())
+	for i := 0; i < v.Len(); i++ {
+		ss = append(ss, v.Index(i).String())
+	}
+	return strings.Join(ss, sep)
+}
+
+// Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// ListBase64URL is
-type ListBase64URL struct {
-	autorest.Response `json:"-"`
-	Value             *[]string `json:"value,omitempty"`
+// GetArrayEmptyResponse ...
+type GetArrayEmptyResponse struct {
+	rawResponse *http.Response
+	Items       [][]string `json:"items,omitempty"`
 }
 
-// ListBool is
-type ListBool struct {
-	autorest.Response `json:"-"`
-	Value             *[]bool `json:"value,omitempty"`
+// Response returns the raw HTTP response object.
+func (gaer GetArrayEmptyResponse) Response() *http.Response {
+	return gaer.rawResponse
 }
 
-// ListByteArray is
-type ListByteArray struct {
-	autorest.Response `json:"-"`
-	Value             *[][]byte `json:"value,omitempty"`
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gaer GetArrayEmptyResponse) StatusCode() int {
+	return gaer.rawResponse.StatusCode
 }
 
-// ListDate is
-type ListDate struct {
-	autorest.Response `json:"-"`
-	Value             *[]date.Date `json:"value,omitempty"`
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gaer GetArrayEmptyResponse) Status() string {
+	return gaer.rawResponse.Status
 }
 
-// ListDateTime is
-type ListDateTime struct {
-	autorest.Response `json:"-"`
-	Value             *[]date.Time `json:"value,omitempty"`
+// GetArrayItemEmptyResponse ...
+type GetArrayItemEmptyResponse struct {
+	rawResponse *http.Response
+	Items       [][]string `json:"items,omitempty"`
 }
 
-// ListDateTimeRfc1123 is
-type ListDateTimeRfc1123 struct {
-	autorest.Response `json:"-"`
-	Value             *[]date.TimeRFC1123 `json:"value,omitempty"`
+// Response returns the raw HTTP response object.
+func (gaier GetArrayItemEmptyResponse) Response() *http.Response {
+	return gaier.rawResponse
 }
 
-// ListFloat64 is
-type ListFloat64 struct {
-	autorest.Response `json:"-"`
-	Value             *[]float64 `json:"value,omitempty"`
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gaier GetArrayItemEmptyResponse) StatusCode() int {
+	return gaier.rawResponse.StatusCode
 }
 
-// ListInt32 is
-type ListInt32 struct {
-	autorest.Response `json:"-"`
-	Value             *[]int32 `json:"value,omitempty"`
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gaier GetArrayItemEmptyResponse) Status() string {
+	return gaier.rawResponse.Status
 }
 
-// ListInt64 is
-type ListInt64 struct {
-	autorest.Response `json:"-"`
-	Value             *[]int64 `json:"value,omitempty"`
+// GetArrayItemNullResponse ...
+type GetArrayItemNullResponse struct {
+	rawResponse *http.Response
+	Items       [][]string `json:"items,omitempty"`
 }
 
-// ListListString is
-type ListListString struct {
-	autorest.Response `json:"-"`
-	Value             *[][]string `json:"value,omitempty"`
+// Response returns the raw HTTP response object.
+func (gainr GetArrayItemNullResponse) Response() *http.Response {
+	return gainr.rawResponse
 }
 
-// ListProduct is
-type ListProduct struct {
-	autorest.Response `json:"-"`
-	Value             *[]Product `json:"value,omitempty"`
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gainr GetArrayItemNullResponse) StatusCode() int {
+	return gainr.rawResponse.StatusCode
 }
 
-// ListSetString is
-type ListSetString struct {
-	autorest.Response `json:"-"`
-	Value             *[]map[string]*string `json:"value,omitempty"`
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gainr GetArrayItemNullResponse) Status() string {
+	return gainr.rawResponse.Status
 }
 
-// ListString is
-type ListString struct {
-	autorest.Response `json:"-"`
-	Value             *[]string `json:"value,omitempty"`
+// GetArrayNullResponse ...
+type GetArrayNullResponse struct {
+	rawResponse *http.Response
+	Items       [][]string `json:"items,omitempty"`
 }
 
-// ListTimeSpan is
-type ListTimeSpan struct {
-	autorest.Response `json:"-"`
-	Value             *[]string `json:"value,omitempty"`
+// Response returns the raw HTTP response object.
+func (ganr GetArrayNullResponse) Response() *http.Response {
+	return ganr.rawResponse
 }
 
-// ListUUID is
-type ListUUID struct {
-	autorest.Response `json:"-"`
-	Value             *[]uuid.UUID `json:"value,omitempty"`
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (ganr GetArrayNullResponse) StatusCode() int {
+	return ganr.rawResponse.StatusCode
 }
 
-// Product is
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (ganr GetArrayNullResponse) Status() string {
+	return ganr.rawResponse.Status
+}
+
+// GetArrayValidResponse ...
+type GetArrayValidResponse struct {
+	rawResponse *http.Response
+	Items       [][]string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gavr GetArrayValidResponse) Response() *http.Response {
+	return gavr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gavr GetArrayValidResponse) StatusCode() int {
+	return gavr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gavr GetArrayValidResponse) Status() string {
+	return gavr.rawResponse.Status
+}
+
+// GetBase64URLResponse ...
+type GetBase64URLResponse struct {
+	rawResponse *http.Response
+	Items       []string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gb6r GetBase64URLResponse) Response() *http.Response {
+	return gb6r.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gb6r GetBase64URLResponse) StatusCode() int {
+	return gb6r.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gb6r GetBase64URLResponse) Status() string {
+	return gb6r.rawResponse.Status
+}
+
+// GetBooleanInvalidNullResponse ...
+type GetBooleanInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       []bool `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gbinr GetBooleanInvalidNullResponse) Response() *http.Response {
+	return gbinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gbinr GetBooleanInvalidNullResponse) StatusCode() int {
+	return gbinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gbinr GetBooleanInvalidNullResponse) Status() string {
+	return gbinr.rawResponse.Status
+}
+
+// GetBooleanInvalidStringResponse ...
+type GetBooleanInvalidStringResponse struct {
+	rawResponse *http.Response
+	Items       []bool `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gbisr GetBooleanInvalidStringResponse) Response() *http.Response {
+	return gbisr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gbisr GetBooleanInvalidStringResponse) StatusCode() int {
+	return gbisr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gbisr GetBooleanInvalidStringResponse) Status() string {
+	return gbisr.rawResponse.Status
+}
+
+// GetBooleanTfftResponse ...
+type GetBooleanTfftResponse struct {
+	rawResponse *http.Response
+	Items       []bool `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gbtr GetBooleanTfftResponse) Response() *http.Response {
+	return gbtr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gbtr GetBooleanTfftResponse) StatusCode() int {
+	return gbtr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gbtr GetBooleanTfftResponse) Status() string {
+	return gbtr.rawResponse.Status
+}
+
+// GetByteInvalidNullResponse ...
+type GetByteInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       [][]byte `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gbinr GetByteInvalidNullResponse) Response() *http.Response {
+	return gbinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gbinr GetByteInvalidNullResponse) StatusCode() int {
+	return gbinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gbinr GetByteInvalidNullResponse) Status() string {
+	return gbinr.rawResponse.Status
+}
+
+// GetByteValidResponse ...
+type GetByteValidResponse struct {
+	rawResponse *http.Response
+	Items       [][]byte `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gbvr GetByteValidResponse) Response() *http.Response {
+	return gbvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gbvr GetByteValidResponse) StatusCode() int {
+	return gbvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gbvr GetByteValidResponse) Status() string {
+	return gbvr.rawResponse.Status
+}
+
+// GetComplexEmptyResponse ...
+type GetComplexEmptyResponse struct {
+	rawResponse *http.Response
+	Items       []Product `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gcer GetComplexEmptyResponse) Response() *http.Response {
+	return gcer.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gcer GetComplexEmptyResponse) StatusCode() int {
+	return gcer.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gcer GetComplexEmptyResponse) Status() string {
+	return gcer.rawResponse.Status
+}
+
+// GetComplexItemEmptyResponse ...
+type GetComplexItemEmptyResponse struct {
+	rawResponse *http.Response
+	Items       []Product `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gcier GetComplexItemEmptyResponse) Response() *http.Response {
+	return gcier.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gcier GetComplexItemEmptyResponse) StatusCode() int {
+	return gcier.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gcier GetComplexItemEmptyResponse) Status() string {
+	return gcier.rawResponse.Status
+}
+
+// GetComplexItemNullResponse ...
+type GetComplexItemNullResponse struct {
+	rawResponse *http.Response
+	Items       []Product `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gcinr GetComplexItemNullResponse) Response() *http.Response {
+	return gcinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gcinr GetComplexItemNullResponse) StatusCode() int {
+	return gcinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gcinr GetComplexItemNullResponse) Status() string {
+	return gcinr.rawResponse.Status
+}
+
+// GetComplexNullResponse ...
+type GetComplexNullResponse struct {
+	rawResponse *http.Response
+	Items       []Product `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gcnr GetComplexNullResponse) Response() *http.Response {
+	return gcnr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gcnr GetComplexNullResponse) StatusCode() int {
+	return gcnr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gcnr GetComplexNullResponse) Status() string {
+	return gcnr.rawResponse.Status
+}
+
+// GetComplexValidResponse ...
+type GetComplexValidResponse struct {
+	rawResponse *http.Response
+	Items       []Product `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gcvr GetComplexValidResponse) Response() *http.Response {
+	return gcvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gcvr GetComplexValidResponse) StatusCode() int {
+	return gcvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gcvr GetComplexValidResponse) Status() string {
+	return gcvr.rawResponse.Status
+}
+
+// GetDateInvalidCharsResponse ...
+type GetDateInvalidCharsResponse struct {
+	rawResponse *http.Response
+	Items       []time.Time `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdicr GetDateInvalidCharsResponse) Response() *http.Response {
+	return gdicr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdicr GetDateInvalidCharsResponse) StatusCode() int {
+	return gdicr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdicr GetDateInvalidCharsResponse) Status() string {
+	return gdicr.rawResponse.Status
+}
+
+// GetDateInvalidNullResponse ...
+type GetDateInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       []time.Time `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdinr GetDateInvalidNullResponse) Response() *http.Response {
+	return gdinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdinr GetDateInvalidNullResponse) StatusCode() int {
+	return gdinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdinr GetDateInvalidNullResponse) Status() string {
+	return gdinr.rawResponse.Status
+}
+
+// GetDateTimeInvalidCharsResponse ...
+type GetDateTimeInvalidCharsResponse struct {
+	rawResponse *http.Response
+	Items       []time.Time `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdticr GetDateTimeInvalidCharsResponse) Response() *http.Response {
+	return gdticr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdticr GetDateTimeInvalidCharsResponse) StatusCode() int {
+	return gdticr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdticr GetDateTimeInvalidCharsResponse) Status() string {
+	return gdticr.rawResponse.Status
+}
+
+// GetDateTimeInvalidNullResponse ...
+type GetDateTimeInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       []time.Time `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdtinr GetDateTimeInvalidNullResponse) Response() *http.Response {
+	return gdtinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdtinr GetDateTimeInvalidNullResponse) StatusCode() int {
+	return gdtinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdtinr GetDateTimeInvalidNullResponse) Status() string {
+	return gdtinr.rawResponse.Status
+}
+
+// GetDateTimeRfc1123ValidResponse ...
+type GetDateTimeRfc1123ValidResponse struct {
+	rawResponse *http.Response
+	Items       []time.Time `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdtr1vr GetDateTimeRfc1123ValidResponse) Response() *http.Response {
+	return gdtr1vr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdtr1vr GetDateTimeRfc1123ValidResponse) StatusCode() int {
+	return gdtr1vr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdtr1vr GetDateTimeRfc1123ValidResponse) Status() string {
+	return gdtr1vr.rawResponse.Status
+}
+
+// GetDateTimeValidResponse ...
+type GetDateTimeValidResponse struct {
+	rawResponse *http.Response
+	Items       []time.Time `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdtvr GetDateTimeValidResponse) Response() *http.Response {
+	return gdtvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdtvr GetDateTimeValidResponse) StatusCode() int {
+	return gdtvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdtvr GetDateTimeValidResponse) Status() string {
+	return gdtvr.rawResponse.Status
+}
+
+// GetDateValidResponse ...
+type GetDateValidResponse struct {
+	rawResponse *http.Response
+	Items       []time.Time `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdvr GetDateValidResponse) Response() *http.Response {
+	return gdvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdvr GetDateValidResponse) StatusCode() int {
+	return gdvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdvr GetDateValidResponse) Status() string {
+	return gdvr.rawResponse.Status
+}
+
+// GetDictionaryEmptyResponse ...
+type GetDictionaryEmptyResponse struct {
+	rawResponse *http.Response
+	Items       []map[string]string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gder GetDictionaryEmptyResponse) Response() *http.Response {
+	return gder.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gder GetDictionaryEmptyResponse) StatusCode() int {
+	return gder.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gder GetDictionaryEmptyResponse) Status() string {
+	return gder.rawResponse.Status
+}
+
+// GetDictionaryItemEmptyResponse ...
+type GetDictionaryItemEmptyResponse struct {
+	rawResponse *http.Response
+	Items       []map[string]string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdier GetDictionaryItemEmptyResponse) Response() *http.Response {
+	return gdier.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdier GetDictionaryItemEmptyResponse) StatusCode() int {
+	return gdier.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdier GetDictionaryItemEmptyResponse) Status() string {
+	return gdier.rawResponse.Status
+}
+
+// GetDictionaryItemNullResponse ...
+type GetDictionaryItemNullResponse struct {
+	rawResponse *http.Response
+	Items       []map[string]string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdinr GetDictionaryItemNullResponse) Response() *http.Response {
+	return gdinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdinr GetDictionaryItemNullResponse) StatusCode() int {
+	return gdinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdinr GetDictionaryItemNullResponse) Status() string {
+	return gdinr.rawResponse.Status
+}
+
+// GetDictionaryNullResponse ...
+type GetDictionaryNullResponse struct {
+	rawResponse *http.Response
+	Items       []map[string]string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdnr GetDictionaryNullResponse) Response() *http.Response {
+	return gdnr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdnr GetDictionaryNullResponse) StatusCode() int {
+	return gdnr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdnr GetDictionaryNullResponse) Status() string {
+	return gdnr.rawResponse.Status
+}
+
+// GetDictionaryValidResponse ...
+type GetDictionaryValidResponse struct {
+	rawResponse *http.Response
+	Items       []map[string]string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdvr GetDictionaryValidResponse) Response() *http.Response {
+	return gdvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdvr GetDictionaryValidResponse) StatusCode() int {
+	return gdvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdvr GetDictionaryValidResponse) Status() string {
+	return gdvr.rawResponse.Status
+}
+
+// GetDoubleInvalidNullResponse ...
+type GetDoubleInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       []float64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdinr GetDoubleInvalidNullResponse) Response() *http.Response {
+	return gdinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdinr GetDoubleInvalidNullResponse) StatusCode() int {
+	return gdinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdinr GetDoubleInvalidNullResponse) Status() string {
+	return gdinr.rawResponse.Status
+}
+
+// GetDoubleInvalidStringResponse ...
+type GetDoubleInvalidStringResponse struct {
+	rawResponse *http.Response
+	Items       []float64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdisr GetDoubleInvalidStringResponse) Response() *http.Response {
+	return gdisr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdisr GetDoubleInvalidStringResponse) StatusCode() int {
+	return gdisr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdisr GetDoubleInvalidStringResponse) Status() string {
+	return gdisr.rawResponse.Status
+}
+
+// GetDoubleValidResponse ...
+type GetDoubleValidResponse struct {
+	rawResponse *http.Response
+	Items       []float64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdvr GetDoubleValidResponse) Response() *http.Response {
+	return gdvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdvr GetDoubleValidResponse) StatusCode() int {
+	return gdvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdvr GetDoubleValidResponse) Status() string {
+	return gdvr.rawResponse.Status
+}
+
+// GetDurationValidResponse ...
+type GetDurationValidResponse struct {
+	rawResponse *http.Response
+	Items       []string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gdvr GetDurationValidResponse) Response() *http.Response {
+	return gdvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gdvr GetDurationValidResponse) StatusCode() int {
+	return gdvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gdvr GetDurationValidResponse) Status() string {
+	return gdvr.rawResponse.Status
+}
+
+// GetEmptyResponse ...
+type GetEmptyResponse struct {
+	rawResponse *http.Response
+	Items       []int32 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (ger GetEmptyResponse) Response() *http.Response {
+	return ger.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (ger GetEmptyResponse) StatusCode() int {
+	return ger.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (ger GetEmptyResponse) Status() string {
+	return ger.rawResponse.Status
+}
+
+// GetFloatInvalidNullResponse ...
+type GetFloatInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       []float64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gfinr GetFloatInvalidNullResponse) Response() *http.Response {
+	return gfinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gfinr GetFloatInvalidNullResponse) StatusCode() int {
+	return gfinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gfinr GetFloatInvalidNullResponse) Status() string {
+	return gfinr.rawResponse.Status
+}
+
+// GetFloatInvalidStringResponse ...
+type GetFloatInvalidStringResponse struct {
+	rawResponse *http.Response
+	Items       []float64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gfisr GetFloatInvalidStringResponse) Response() *http.Response {
+	return gfisr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gfisr GetFloatInvalidStringResponse) StatusCode() int {
+	return gfisr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gfisr GetFloatInvalidStringResponse) Status() string {
+	return gfisr.rawResponse.Status
+}
+
+// GetFloatValidResponse ...
+type GetFloatValidResponse struct {
+	rawResponse *http.Response
+	Items       []float64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gfvr GetFloatValidResponse) Response() *http.Response {
+	return gfvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gfvr GetFloatValidResponse) StatusCode() int {
+	return gfvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gfvr GetFloatValidResponse) Status() string {
+	return gfvr.rawResponse.Status
+}
+
+// GetIntegerValidResponse ...
+type GetIntegerValidResponse struct {
+	rawResponse *http.Response
+	Items       []int32 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (givr GetIntegerValidResponse) Response() *http.Response {
+	return givr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (givr GetIntegerValidResponse) StatusCode() int {
+	return givr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (givr GetIntegerValidResponse) Status() string {
+	return givr.rawResponse.Status
+}
+
+// GetIntInvalidNullResponse ...
+type GetIntInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       []int32 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (giinr GetIntInvalidNullResponse) Response() *http.Response {
+	return giinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (giinr GetIntInvalidNullResponse) StatusCode() int {
+	return giinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (giinr GetIntInvalidNullResponse) Status() string {
+	return giinr.rawResponse.Status
+}
+
+// GetIntInvalidStringResponse ...
+type GetIntInvalidStringResponse struct {
+	rawResponse *http.Response
+	Items       []int32 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (giisr GetIntInvalidStringResponse) Response() *http.Response {
+	return giisr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (giisr GetIntInvalidStringResponse) StatusCode() int {
+	return giisr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (giisr GetIntInvalidStringResponse) Status() string {
+	return giisr.rawResponse.Status
+}
+
+// GetInvalidResponse ...
+type GetInvalidResponse struct {
+	rawResponse *http.Response
+	Items       []int32 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gir GetInvalidResponse) Response() *http.Response {
+	return gir.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gir GetInvalidResponse) StatusCode() int {
+	return gir.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gir GetInvalidResponse) Status() string {
+	return gir.rawResponse.Status
+}
+
+// GetLongInvalidNullResponse ...
+type GetLongInvalidNullResponse struct {
+	rawResponse *http.Response
+	Items       []int64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (glinr GetLongInvalidNullResponse) Response() *http.Response {
+	return glinr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (glinr GetLongInvalidNullResponse) StatusCode() int {
+	return glinr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (glinr GetLongInvalidNullResponse) Status() string {
+	return glinr.rawResponse.Status
+}
+
+// GetLongInvalidStringResponse ...
+type GetLongInvalidStringResponse struct {
+	rawResponse *http.Response
+	Items       []int64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (glisr GetLongInvalidStringResponse) Response() *http.Response {
+	return glisr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (glisr GetLongInvalidStringResponse) StatusCode() int {
+	return glisr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (glisr GetLongInvalidStringResponse) Status() string {
+	return glisr.rawResponse.Status
+}
+
+// GetLongValidResponse ...
+type GetLongValidResponse struct {
+	rawResponse *http.Response
+	Items       []int64 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (glvr GetLongValidResponse) Response() *http.Response {
+	return glvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (glvr GetLongValidResponse) StatusCode() int {
+	return glvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (glvr GetLongValidResponse) Status() string {
+	return glvr.rawResponse.Status
+}
+
+// GetNullResponse ...
+type GetNullResponse struct {
+	rawResponse *http.Response
+	Items       []int32 `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gnr GetNullResponse) Response() *http.Response {
+	return gnr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gnr GetNullResponse) StatusCode() int {
+	return gnr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gnr GetNullResponse) Status() string {
+	return gnr.rawResponse.Status
+}
+
+// GetStringValidResponse ...
+type GetStringValidResponse struct {
+	rawResponse *http.Response
+	Items       []string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gsvr GetStringValidResponse) Response() *http.Response {
+	return gsvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gsvr GetStringValidResponse) StatusCode() int {
+	return gsvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gsvr GetStringValidResponse) Status() string {
+	return gsvr.rawResponse.Status
+}
+
+// GetStringWithInvalidResponse ...
+type GetStringWithInvalidResponse struct {
+	rawResponse *http.Response
+	Items       []string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gswir GetStringWithInvalidResponse) Response() *http.Response {
+	return gswir.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gswir GetStringWithInvalidResponse) StatusCode() int {
+	return gswir.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gswir GetStringWithInvalidResponse) Status() string {
+	return gswir.rawResponse.Status
+}
+
+// GetStringWithNullResponse ...
+type GetStringWithNullResponse struct {
+	rawResponse *http.Response
+	Items       []string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gswnr GetStringWithNullResponse) Response() *http.Response {
+	return gswnr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gswnr GetStringWithNullResponse) StatusCode() int {
+	return gswnr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gswnr GetStringWithNullResponse) Status() string {
+	return gswnr.rawResponse.Status
+}
+
+// GetUUIDInvalidCharsResponse ...
+type GetUUIDInvalidCharsResponse struct {
+	rawResponse *http.Response
+	Items       []uuid.UUID `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (guicr GetUUIDInvalidCharsResponse) Response() *http.Response {
+	return guicr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (guicr GetUUIDInvalidCharsResponse) StatusCode() int {
+	return guicr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (guicr GetUUIDInvalidCharsResponse) Status() string {
+	return guicr.rawResponse.Status
+}
+
+// GetUUIDValidResponse ...
+type GetUUIDValidResponse struct {
+	rawResponse *http.Response
+	Items       []uuid.UUID `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (guvr GetUUIDValidResponse) Response() *http.Response {
+	return guvr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (guvr GetUUIDValidResponse) StatusCode() int {
+	return guvr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (guvr GetUUIDValidResponse) Status() string {
+	return guvr.rawResponse.Status
+}
+
+// Product ...
 type Product struct {
 	Integer *int32  `json:"integer,omitempty"`
 	String  *string `json:"string,omitempty"`

@@ -60,7 +60,7 @@ regenExpected = (opts,done) ->
         return done()
 
 goMappings = {
-  #'body-array':['body-array.json','arraygroup'],
+  'body-array':['body-array.json','arraygroup'],
   'body-boolean':['body-boolean.json', 'booleangroup'],
   'body-byte':['body-byte.json','bytegroup'],
   #'body-complex':['body-complex.json','complexgroup'],

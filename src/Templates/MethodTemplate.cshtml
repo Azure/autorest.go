@@ -170,7 +170,7 @@ func (client @(Model.MethodGroup.ClientName)) @(opIdCamelCase)Responder(resp pip
     var unmarshalInto = "result";
     if (Model.ReturnValueIsWrapperType() && !Model.ReturnValueIsXmlWrapped())
     {
-        unmarshalInto = "&result.Value";
+        unmarshalInto = $"&result.{Model.ReturnValueWrapperTypeFieldName()}";
     }
 <text>
     result:= &@(Model.MethodReturnType){rawResponse: resp.Response()}

@@ -491,6 +491,18 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
+        /// Returns the name of the wrapped field.  If the return value isn't a wrapper type it returns the empty string.
+        /// </summary>
+        public string ReturnValueWrapperTypeFieldName()
+        {
+            if (!ReturnValueIsWrapperType())
+            {
+                return string.Empty;
+            }
+            return ReturnValue().Body.Cast<CompositeTypeGo>().WrappedFieldName;
+        }
+
+        /// <summary>
         /// Returns true if the return type is XML-wrapped.
         /// </summary>
         public bool ReturnValueIsXmlWrapped()
@@ -632,7 +644,12 @@ namespace AutoRest.Go.Model
             {
                 if (BodyParameter.ModelType.XmlIsWrapped)
                 {
-                    return $"{BodyParameter.ModelType.XmlName}{{Value: {BodyParameter.Name}}}";
+                    var fieldName = "Value";
+                    if (BodyParameter.ModelType is SequenceTypeGo)
+                    {
+                        fieldName = "Items";
+                    }
+                    return $"{BodyParameter.ModelType.XmlName}{{{fieldName}: {BodyParameter.Name}}}";
                 }
                 else
                 {

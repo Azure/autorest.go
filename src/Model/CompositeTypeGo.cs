@@ -98,11 +98,18 @@ namespace AutoRest.Go.Model
             // the response.Body field and doesn't provide any value.
             if (!wrappedType.IsPrimaryType(KnownPrimaryType.Stream))
             {
-                // add the wrapped type as a property named Value
+                if (wrappedType is SequenceTypeGo)
+                {
+                    WrappedFieldName = "Items";
+                }
+                else
+                {
+                    WrappedFieldName = "Value";
+                }
                 var p = new PropertyGo
                 {
-                    Name = "Value",
-                    SerializedName = "value",
+                    Name = WrappedFieldName,
+                    SerializedName = WrappedFieldName.ToLowerInvariant(),
                     ModelType = wrappedType
                 };
                 Add(p);
@@ -110,6 +117,11 @@ namespace AutoRest.Go.Model
             AddPolymorphicPropertyIfNecessary();
             IsWrapperType = true;
         }
+
+        /// <summary>
+        /// Gets the name of the field for the wrapped type.  If this isn't a wrapper type it returns null.
+        /// </summary>
+        public string WrappedFieldName { get; }
 
         /// <summary>
         /// Returns true if XML serialization is enabled and the type name doesn't match the specified XML name.
