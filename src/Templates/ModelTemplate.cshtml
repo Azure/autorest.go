@@ -446,10 +446,15 @@ else
     }
     @if (ftg.ResultTypeName == MethodGo.DefaultReturnType)
     {
+        // for default return types (i.e. autorest.Response)
+        // assign the raw HTTP response to the *http.Response field
     @:@(resultVar).Response = future.Response()
     }
     else
     {
+        // modeled return types embed autorest.Resposne as an anonymous field
+        // so in order to assign the raw HTTP response to the *http.Response field
+        // in it we need an extra ".Response" :(
     <text>
     sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
     if @(resultVar).Response.Response, err = future.GetResult(sender); err == nil && @(resultVar).Response.Response.StatusCode != http.StatusNoContent {
