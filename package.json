@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/Azure/autorest.go/blob/master/README.md",
   "devDependencies": {
-    "@microsoft.azure/autorest.testserver": "^2.4.2",
+    "@microsoft.azure/autorest.testserver": "^2.5.12",
     "@microsoft.azure/autorest.modeler": "2.3.47",
     "autorest": "^2.0.4222",
     "coffee-script": "^1.11.1",

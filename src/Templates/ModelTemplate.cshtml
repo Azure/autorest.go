@@ -426,14 +426,14 @@ else
     var resultVar = ftg.ResultTypeName.ToShortName();
     var resultVarTarget = resultVar;
     var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
-    if (ftg.ResultType is IteratorTypeGo)
+    if (ftg.ResultType is IteratorTypeGo itg)
     {
-        resultVarTarget = $"{resultVarTarget}.{ftg.ResultType.Cast<IteratorTypeGo>().PageField}";
+        resultVarTarget = $"{resultVarTarget}.{itg.PageField}";
     }
     <text>
     // Result returns the result of the asynchronous operation.
     // If the operation has not completed it will return an error.
-    func (future @Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
+    func (future *@Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
     var done bool
     done, err = future.Done(client)
     if err != nil {
@@ -441,36 +441,31 @@ else
         return
     }
     if !done {
-        return @resultVar, azure.NewAsyncOpIncompleteError("@futureTypeName")
-    }
-    if future.PollingMethod() == azure.PollingLocation {
-        @resultVarTarget, err = client.@(ftg.ResponderMethodName)(future.Response())
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Failure responding to request")
-        }
+        err = azure.NewAsyncOpIncompleteError("@futureTypeName")
         return
     }
-    var req *http.Request
-    var resp *http.Response
-    if future.PollingURL() != "" {
-        req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+    @if (ftg.ResultTypeName == MethodGo.DefaultReturnType)
+    {
+        // for default return types (i.e. autorest.Response)
+        // assign the raw HTTP response to the *http.Response field
+    @:@(resultVar).Response = future.Response()
+    }
+    else
+    {
+        // modeled return types embed autorest.Resposne as an anonymous field
+        // so in order to assign the raw HTTP response to the *http.Response field
+        // in it we need an extra ".Response" :(
+    <text>
+    sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+    if @(resultVar).Response.Response, err = future.GetResult(sender); err == nil && @(resultVar).Response.Response.StatusCode != http.StatusNoContent {
+        @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVar).Response.Response)
         if err != nil {
-            return
+            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVar).Response.Response, "Failure responding to request")
         }
-    } else {
-        req = autorest.ChangeToGet(future.req)
     }
-    resp, err = autorest.SendWithSender(client, req,
-    autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", resp, "Failure sending request")
-        return
-    }
-    @resultVarTarget, err = client.@(ftg.ResponderMethodName)(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", resp, "Failure responding to request")
+    </text>
     }
     return
-    }
+}
     </text>
 }

@@ -122,12 +122,11 @@ type CloudError struct {
 // operation.
 type LRORetrysDelete202Retry200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LRORetrysDelete202Retry200Future) Result(client LRORetrysClient) (ar autorest.Response, err error) {
+func (future *LRORetrysDelete202Retry200Future) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -135,35 +134,10 @@ func (future LRORetrysDelete202Retry200Future) Result(client LRORetrysClient) (a
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDelete202Retry200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Delete202Retry200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDelete202Retry200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDelete202Retry200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDelete202Retry200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Delete202Retry200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDelete202Retry200Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -171,12 +145,11 @@ func (future LRORetrysDelete202Retry200Future) Result(client LRORetrysClient) (a
 // long-running operation.
 type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (ar autorest.Response, err error) {
+func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -184,35 +157,10 @@ func (future LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LRO
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRelativeRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRelativeRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -220,12 +168,11 @@ func (future LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LRO
 // results of a long-running operation.
 type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(client LRORetrysClient) (p Product, err error) {
+func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(client LRORetrysClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -233,34 +180,15 @@ func (future LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(cl
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.DeleteProvisioning202Accepted200SucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202Accepted200SucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.DeleteProvisioning202Accepted200SucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -269,12 +197,11 @@ func (future LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(cl
 // operation.
 type LRORetrysPost202Retry200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LRORetrysPost202Retry200Future) Result(client LRORetrysClient) (ar autorest.Response, err error) {
+func (future *LRORetrysPost202Retry200Future) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -282,35 +209,10 @@ func (future LRORetrysPost202Retry200Future) Result(client LRORetrysClient) (ar 
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPost202Retry200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Post202Retry200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPost202Retry200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPost202Retry200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPost202Retry200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Post202Retry200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPost202Retry200Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -318,12 +220,11 @@ func (future LRORetrysPost202Retry200Future) Result(client LRORetrysClient) (ar 
 // long-running operation.
 type LRORetrysPostAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LRORetrysPostAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (ar autorest.Response, err error) {
+func (future *LRORetrysPostAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -331,35 +232,10 @@ func (future LRORetrysPostAsyncRelativeRetrySucceededFuture) Result(client LRORe
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRelativeRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRelativeRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -367,12 +243,11 @@ func (future LRORetrysPostAsyncRelativeRetrySucceededFuture) Result(client LRORe
 // long-running operation.
 type LRORetrysPut201CreatingSucceeded200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LRORetrysPut201CreatingSucceeded200Future) Result(client LRORetrysClient) (p Product, err error) {
+func (future *LRORetrysPut201CreatingSucceeded200Future) Result(client LRORetrysClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -380,34 +255,15 @@ func (future LRORetrysPut201CreatingSucceeded200Future) Result(client LRORetrysC
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPut201CreatingSucceeded200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put201CreatingSucceeded200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPut201CreatingSucceeded200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put201CreatingSucceeded200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -416,12 +272,11 @@ func (future LRORetrysPut201CreatingSucceeded200Future) Result(client LRORetrysC
 // long-running operation.
 type LRORetrysPutAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LRORetrysPutAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (p Product, err error) {
+func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -429,34 +284,15 @@ func (future LRORetrysPutAsyncRelativeRetrySucceededFuture) Result(client LRORet
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRelativeRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetrySucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRelativeRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -465,12 +301,11 @@ func (future LRORetrysPutAsyncRelativeRetrySucceededFuture) Result(client LRORet
 // operation.
 type LROSADsDelete202NonRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDelete202NonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDelete202NonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -478,35 +313,10 @@ func (future LROSADsDelete202NonRetry400Future) Result(client LROSADsClient) (ar
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202NonRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Delete202NonRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202NonRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202NonRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202NonRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Delete202NonRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202NonRetry400Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -514,12 +324,11 @@ func (future LROSADsDelete202NonRetry400Future) Result(client LROSADsClient) (ar
 // long-running operation.
 type LROSADsDelete202RetryInvalidHeaderFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDelete202RetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDelete202RetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -527,35 +336,10 @@ func (future LROSADsDelete202RetryInvalidHeaderFuture) Result(client LROSADsClie
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202RetryInvalidHeaderFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Delete202RetryInvalidHeaderResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202RetryInvalidHeaderFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete202RetryInvalidHeaderFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202RetryInvalidHeaderFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Delete202RetryInvalidHeaderResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202RetryInvalidHeaderFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -563,12 +347,11 @@ func (future LROSADsDelete202RetryInvalidHeaderFuture) Result(client LROSADsClie
 // operation.
 type LROSADsDelete204SucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDelete204SucceededFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDelete204SucceededFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -576,35 +359,10 @@ func (future LROSADsDelete204SucceededFuture) Result(client LROSADsClient) (ar a
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete204SucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Delete204SucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete204SucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDelete204SucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete204SucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Delete204SucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete204SucceededFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -612,12 +370,11 @@ func (future LROSADsDelete204SucceededFuture) Result(client LROSADsClient) (ar a
 // long-running operation.
 type LROSADsDeleteAsyncRelativeRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDeleteAsyncRelativeRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDeleteAsyncRelativeRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -625,35 +382,10 @@ func (future LROSADsDeleteAsyncRelativeRetry400Future) Result(client LROSADsClie
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRelativeRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRelativeRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetry400Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -661,12 +393,11 @@ func (future LROSADsDeleteAsyncRelativeRetry400Future) Result(client LROSADsClie
 // long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -674,35 +405,10 @@ func (future LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) Result(client L
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRelativeRetryInvalidHeaderResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRelativeRetryInvalidHeaderResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -710,12 +416,11 @@ func (future LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) Result(client L
 // of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -723,35 +428,10 @@ func (future LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Result(cli
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRelativeRetryInvalidJSONPollingResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRelativeRetryInvalidJSONPollingResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -759,12 +439,11 @@ func (future LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Result(cli
 // long-running operation.
 type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -772,35 +451,10 @@ func (future LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSAD
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRelativeRetryNoStatusResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRelativeRetryNoStatusResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -808,12 +462,11 @@ func (future LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSAD
 // operation.
 type LROSADsDeleteNonRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -821,35 +474,10 @@ func (future LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar au
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteNonRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteNonRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteNonRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsDeleteNonRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteNonRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteNonRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteNonRetry400Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -857,12 +485,11 @@ func (future LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar au
 // operation.
 type LROSADsPost202NoLocationFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPost202NoLocationFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPost202NoLocationFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -870,35 +497,10 @@ func (future LROSADsPost202NoLocationFuture) Result(client LROSADsClient) (ar au
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NoLocationFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Post202NoLocationResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NoLocationFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NoLocationFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NoLocationFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Post202NoLocationResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NoLocationFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -906,12 +508,11 @@ func (future LROSADsPost202NoLocationFuture) Result(client LROSADsClient) (ar au
 // operation.
 type LROSADsPost202NonRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPost202NonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPost202NonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -919,35 +520,10 @@ func (future LROSADsPost202NonRetry400Future) Result(client LROSADsClient) (ar a
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NonRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Post202NonRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NonRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202NonRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NonRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Post202NonRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NonRetry400Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -955,12 +531,11 @@ func (future LROSADsPost202NonRetry400Future) Result(client LROSADsClient) (ar a
 // long-running operation.
 type LROSADsPost202RetryInvalidHeaderFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPost202RetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPost202RetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -968,35 +543,10 @@ func (future LROSADsPost202RetryInvalidHeaderFuture) Result(client LROSADsClient
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202RetryInvalidHeaderFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Post202RetryInvalidHeaderResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202RetryInvalidHeaderFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPost202RetryInvalidHeaderFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202RetryInvalidHeaderFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Post202RetryInvalidHeaderResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202RetryInvalidHeaderFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1004,12 +554,11 @@ func (future LROSADsPost202RetryInvalidHeaderFuture) Result(client LROSADsClient
 // long-running operation.
 type LROSADsPostAsyncRelativeRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPostAsyncRelativeRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPostAsyncRelativeRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1017,35 +566,10 @@ func (future LROSADsPostAsyncRelativeRetry400Future) Result(client LROSADsClient
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRelativeRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRelativeRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetry400Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1053,12 +577,11 @@ func (future LROSADsPostAsyncRelativeRetry400Future) Result(client LROSADsClient
 // long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1066,35 +589,10 @@ func (future LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) Result(client LRO
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRelativeRetryInvalidHeaderResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRelativeRetryInvalidHeaderResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1102,12 +600,11 @@ func (future LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) Result(client LRO
 // of a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1115,35 +612,10 @@ func (future LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) Result(clien
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRelativeRetryInvalidJSONPollingResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRelativeRetryInvalidJSONPollingResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1151,12 +623,11 @@ func (future LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) Result(clien
 // long-running operation.
 type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPostAsyncRelativeRetryNoPayloadFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPostAsyncRelativeRetryNoPayloadFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1164,35 +635,10 @@ func (future LROSADsPostAsyncRelativeRetryNoPayloadFuture) Result(client LROSADs
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRelativeRetryNoPayloadResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRelativeRetryNoPayloadResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1200,12 +646,11 @@ func (future LROSADsPostAsyncRelativeRetryNoPayloadFuture) Result(client LROSADs
 // operation.
 type LROSADsPostNonRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
+func (future *LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1213,35 +658,10 @@ func (future LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar auto
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostNonRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostNonRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostNonRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPostNonRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostNonRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostNonRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostNonRetry400Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1249,12 +669,11 @@ func (future LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar auto
 // operation.
 type LROSADsPut200InvalidJSONFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPut200InvalidJSONFuture) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPut200InvalidJSONFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1262,34 +681,15 @@ func (future LROSADsPut200InvalidJSONFuture) Result(client LROSADsClient) (p Pro
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPut200InvalidJSONFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put200InvalidJSONResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPut200InvalidJSONFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200InvalidJSONResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put200InvalidJSONResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1298,12 +698,11 @@ func (future LROSADsPut200InvalidJSONFuture) Result(client LROSADsClient) (p Pro
 // operation.
 type LROSADsPutAsyncRelativeRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutAsyncRelativeRetry400Future) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutAsyncRelativeRetry400Future) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1311,34 +710,15 @@ func (future LROSADsPutAsyncRelativeRetry400Future) Result(client LROSADsClient)
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRelativeRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetry400Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRelativeRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1347,12 +727,11 @@ func (future LROSADsPutAsyncRelativeRetry400Future) Result(client LROSADsClient)
 // long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1360,34 +739,15 @@ func (future LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) Result(client LROS
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRelativeRetryInvalidHeaderResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryInvalidHeaderResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRelativeRetryInvalidHeaderResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1396,12 +756,11 @@ func (future LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) Result(client LROS
 // a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1409,34 +768,15 @@ func (future LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) Result(client
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRelativeRetryInvalidJSONPollingResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryInvalidJSONPollingResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRelativeRetryInvalidJSONPollingResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1445,12 +785,11 @@ func (future LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) Result(client
 // long-running operation.
 type LROSADsPutAsyncRelativeRetryNoStatusFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutAsyncRelativeRetryNoStatusFuture) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1458,34 +797,15 @@ func (future LROSADsPutAsyncRelativeRetryNoStatusFuture) Result(client LROSADsCl
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRelativeRetryNoStatusResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryNoStatusResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRelativeRetryNoStatusResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1494,12 +814,11 @@ func (future LROSADsPutAsyncRelativeRetryNoStatusFuture) Result(client LROSADsCl
 // long-running operation.
 type LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1507,34 +826,15 @@ func (future LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) Result(client LR
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRelativeRetryNoStatusPayloadResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRelativeRetryNoStatusPayloadResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRelativeRetryNoStatusPayloadResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1543,12 +843,11 @@ func (future LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) Result(client LR
 // long-running operation.
 type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutError201NoProvisioningStatePayloadFuture) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutError201NoProvisioningStatePayloadFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1556,34 +855,15 @@ func (future LROSADsPutError201NoProvisioningStatePayloadFuture) Result(client L
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutError201NoProvisioningStatePayloadResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutError201NoProvisioningStatePayloadResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutError201NoProvisioningStatePayloadResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1592,12 +872,11 @@ func (future LROSADsPutError201NoProvisioningStatePayloadFuture) Result(client L
 // long-running operation.
 type LROSADsPutNonRetry201Creating400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutNonRetry201Creating400Future) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutNonRetry201Creating400Future) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1605,34 +884,15 @@ func (future LROSADsPutNonRetry201Creating400Future) Result(client LROSADsClient
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutNonRetry201Creating400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNonRetry201Creating400Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutNonRetry201Creating400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1641,12 +901,11 @@ func (future LROSADsPutNonRetry201Creating400Future) Result(client LROSADsClient
 // long-running operation.
 type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutNonRetry201Creating400InvalidJSONFuture) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutNonRetry201Creating400InvalidJSONFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1654,34 +913,15 @@ func (future LROSADsPutNonRetry201Creating400InvalidJSONFuture) Result(client LR
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutNonRetry201Creating400InvalidJSONResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNonRetry201Creating400InvalidJSONResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutNonRetry201Creating400InvalidJSONResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1690,12 +930,11 @@ func (future LROSADsPutNonRetry201Creating400InvalidJSONFuture) Result(client LR
 // operation.
 type LROSADsPutNonRetry400Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROSADsPutNonRetry400Future) Result(client LROSADsClient) (p Product, err error) {
+func (future *LROSADsPutNonRetry400Future) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1703,34 +942,15 @@ func (future LROSADsPutNonRetry400Future) Result(client LROSADsClient) (p Produc
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry400Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutNonRetry400Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROSADsPutNonRetry400Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNonRetry400Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutNonRetry400Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1739,12 +959,11 @@ func (future LROSADsPutNonRetry400Future) Result(client LROSADsClient) (p Produc
 // operation.
 type LROsCustomHeaderPost202Retry200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsCustomHeaderPost202Retry200Future) Result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
+func (future *LROsCustomHeaderPost202Retry200Future) Result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1752,35 +971,10 @@ func (future LROsCustomHeaderPost202Retry200Future) Result(client LROsCustomHead
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPost202Retry200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Post202Retry200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPost202Retry200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPost202Retry200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPost202Retry200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Post202Retry200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPost202Retry200Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1788,12 +982,11 @@ func (future LROsCustomHeaderPost202Retry200Future) Result(client LROsCustomHead
 // long-running operation.
 type LROsCustomHeaderPostAsyncRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsCustomHeaderPostAsyncRetrySucceededFuture) Result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
+func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) Result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1801,35 +994,10 @@ func (future LROsCustomHeaderPostAsyncRetrySucceededFuture) Result(client LROsCu
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -1837,12 +1005,11 @@ func (future LROsCustomHeaderPostAsyncRetrySucceededFuture) Result(client LROsCu
 // long-running operation.
 type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsCustomHeaderPut201CreatingSucceeded200Future) Result(client LROsCustomHeaderClient) (p Product, err error) {
+func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) Result(client LROsCustomHeaderClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1850,34 +1017,15 @@ func (future LROsCustomHeaderPut201CreatingSucceeded200Future) Result(client LRO
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put201CreatingSucceeded200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put201CreatingSucceeded200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1886,12 +1034,11 @@ func (future LROsCustomHeaderPut201CreatingSucceeded200Future) Result(client LRO
 // long-running operation.
 type LROsCustomHeaderPutAsyncRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsCustomHeaderPutAsyncRetrySucceededFuture) Result(client LROsCustomHeaderClient) (p Product, err error) {
+func (future *LROsCustomHeaderPutAsyncRetrySucceededFuture) Result(client LROsCustomHeaderClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1899,34 +1046,15 @@ func (future LROsCustomHeaderPutAsyncRetrySucceededFuture) Result(client LROsCus
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRetrySucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1935,12 +1063,11 @@ func (future LROsCustomHeaderPutAsyncRetrySucceededFuture) Result(client LROsCus
 // operation.
 type LROsDelete202NoRetry204Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDelete202NoRetry204Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsDelete202NoRetry204Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1948,34 +1075,15 @@ func (future LROsDelete202NoRetry204Future) Result(client LROsClient) (p Product
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202NoRetry204Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Delete202NoRetry204Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202NoRetry204Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202NoRetry204Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Delete202NoRetry204Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202NoRetry204Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202NoRetry204Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Delete202NoRetry204Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202NoRetry204Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -1984,12 +1092,11 @@ func (future LROsDelete202NoRetry204Future) Result(client LROsClient) (p Product
 // operation.
 type LROsDelete202Retry200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDelete202Retry200Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsDelete202Retry200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -1997,34 +1104,15 @@ func (future LROsDelete202Retry200Future) Result(client LROsClient) (p Product, 
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202Retry200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Delete202Retry200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202Retry200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete202Retry200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Delete202Retry200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202Retry200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202Retry200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Delete202Retry200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202Retry200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2033,12 +1121,11 @@ func (future LROsDelete202Retry200Future) Result(client LROsClient) (p Product, 
 // operation.
 type LROsDelete204SucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDelete204SucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsDelete204SucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2046,35 +1133,10 @@ func (future LROsDelete204SucceededFuture) Result(client LROsClient) (ar autores
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete204SucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Delete204SucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete204SucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDelete204SucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete204SucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Delete204SucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete204SucceededFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2082,12 +1144,11 @@ func (future LROsDelete204SucceededFuture) Result(client LROsClient) (ar autores
 // operation.
 type LROsDeleteAsyncNoHeaderInRetryFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteAsyncNoHeaderInRetryFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsDeleteAsyncNoHeaderInRetryFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2095,35 +1156,10 @@ func (future LROsDeleteAsyncNoHeaderInRetryFuture) Result(client LROsClient) (ar
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncNoHeaderInRetryResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncNoHeaderInRetryResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2131,12 +1167,11 @@ func (future LROsDeleteAsyncNoHeaderInRetryFuture) Result(client LROsClient) (ar
 // operation.
 type LROsDeleteAsyncNoRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteAsyncNoRetrySucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsDeleteAsyncNoRetrySucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2144,35 +1179,10 @@ func (future LROsDeleteAsyncNoRetrySucceededFuture) Result(client LROsClient) (a
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncNoRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncNoRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncNoRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoRetrySucceededFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2180,12 +1190,11 @@ func (future LROsDeleteAsyncNoRetrySucceededFuture) Result(client LROsClient) (a
 // operation.
 type LROsDeleteAsyncRetrycanceledFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteAsyncRetrycanceledFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsDeleteAsyncRetrycanceledFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2193,35 +1202,10 @@ func (future LROsDeleteAsyncRetrycanceledFuture) Result(client LROsClient) (ar a
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrycanceledFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRetrycanceledResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrycanceledFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrycanceledFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrycanceledFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRetrycanceledResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrycanceledFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2229,12 +1213,11 @@ func (future LROsDeleteAsyncRetrycanceledFuture) Result(client LROsClient) (ar a
 // operation.
 type LROsDeleteAsyncRetryFailedFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteAsyncRetryFailedFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsDeleteAsyncRetryFailedFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2242,35 +1225,10 @@ func (future LROsDeleteAsyncRetryFailedFuture) Result(client LROsClient) (ar aut
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetryFailedFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRetryFailedResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetryFailedFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetryFailedFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetryFailedFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRetryFailedResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetryFailedFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2278,12 +1236,11 @@ func (future LROsDeleteAsyncRetryFailedFuture) Result(client LROsClient) (ar aut
 // operation.
 type LROsDeleteAsyncRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteAsyncRetrySucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsDeleteAsyncRetrySucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2291,35 +1248,10 @@ func (future LROsDeleteAsyncRetrySucceededFuture) Result(client LROsClient) (ar 
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteAsyncRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteAsyncRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteAsyncRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrySucceededFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2327,12 +1259,11 @@ func (future LROsDeleteAsyncRetrySucceededFuture) Result(client LROsClient) (ar 
 // operation.
 type LROsDeleteNoHeaderInRetryFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2340,35 +1271,10 @@ func (future LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar auto
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteNoHeaderInRetryFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.DeleteNoHeaderInRetryResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteNoHeaderInRetryFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteNoHeaderInRetryFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteNoHeaderInRetryFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.DeleteNoHeaderInRetryResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteNoHeaderInRetryFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2376,12 +1282,11 @@ func (future LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar auto
 // a long-running operation.
 type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteProvisioning202Accepted200SucceededFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2389,34 +1294,15 @@ func (future LROsDeleteProvisioning202Accepted200SucceededFuture) Result(client 
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.DeleteProvisioning202Accepted200SucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202Accepted200SucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.DeleteProvisioning202Accepted200SucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2425,12 +1311,11 @@ func (future LROsDeleteProvisioning202Accepted200SucceededFuture) Result(client 
 // long-running operation.
 type LROsDeleteProvisioning202Deletingcanceled200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteProvisioning202Deletingcanceled200Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsDeleteProvisioning202Deletingcanceled200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2438,34 +1323,15 @@ func (future LROsDeleteProvisioning202Deletingcanceled200Future) Result(client L
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.DeleteProvisioning202Deletingcanceled200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202Deletingcanceled200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.DeleteProvisioning202Deletingcanceled200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2474,12 +1340,11 @@ func (future LROsDeleteProvisioning202Deletingcanceled200Future) Result(client L
 // long-running operation.
 type LROsDeleteProvisioning202DeletingFailed200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsDeleteProvisioning202DeletingFailed200Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsDeleteProvisioning202DeletingFailed200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2487,34 +1352,15 @@ func (future LROsDeleteProvisioning202DeletingFailed200Future) Result(client LRO
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202DeletingFailed200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.DeleteProvisioning202DeletingFailed200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202DeletingFailed200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsDeleteProvisioning202DeletingFailed200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.DeleteProvisioning202DeletingFailed200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202DeletingFailed200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202DeletingFailed200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.DeleteProvisioning202DeletingFailed200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202DeletingFailed200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2523,12 +1369,11 @@ func (future LROsDeleteProvisioning202DeletingFailed200Future) Result(client LRO
 // operation.
 type LROsPost200WithPayloadFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPost200WithPayloadFuture) Result(client LROsClient) (s Sku, err error) {
+func (future *LROsPost200WithPayloadFuture) Result(client LROsClient) (s Sku, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2536,34 +1381,15 @@ func (future LROsPost200WithPayloadFuture) Result(client LROsClient) (s Sku, err
 		return
 	}
 	if !done {
-		return s, azure.NewAsyncOpIncompleteError("lrogroup.LROsPost200WithPayloadFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		s, err = client.Post200WithPayloadResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost200WithPayloadFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost200WithPayloadFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if s.Response.Response, err = future.GetResult(sender); err == nil && s.Response.Response.StatusCode != http.StatusNoContent {
+		s, err = client.Post200WithPayloadResponder(s.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost200WithPayloadFuture", "Result", s.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost200WithPayloadFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	s, err = client.Post200WithPayloadResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost200WithPayloadFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2572,12 +1398,11 @@ func (future LROsPost200WithPayloadFuture) Result(client LROsClient) (s Sku, err
 // operation.
 type LROsPost202NoRetry204Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPost202NoRetry204Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPost202NoRetry204Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2585,34 +1410,15 @@ func (future LROsPost202NoRetry204Future) Result(client LROsClient) (p Product, 
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202NoRetry204Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Post202NoRetry204Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202NoRetry204Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202NoRetry204Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Post202NoRetry204Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202NoRetry204Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202NoRetry204Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Post202NoRetry204Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202NoRetry204Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2620,12 +1426,11 @@ func (future LROsPost202NoRetry204Future) Result(client LROsClient) (p Product, 
 // LROsPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running operation.
 type LROsPost202Retry200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPost202Retry200Future) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsPost202Retry200Future) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2633,35 +1438,10 @@ func (future LROsPost202Retry200Future) Result(client LROsClient) (ar autorest.R
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202Retry200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.Post202Retry200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202Retry200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPost202Retry200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202Retry200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.Post202Retry200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202Retry200Future", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2669,12 +1449,11 @@ func (future LROsPost202Retry200Future) Result(client LROsClient) (ar autorest.R
 // operation.
 type LROsPostAsyncNoRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPostAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPostAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2682,34 +1461,15 @@ func (future LROsPostAsyncNoRetrySucceededFuture) Result(client LROsClient) (p P
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncNoRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PostAsyncNoRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncNoRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncNoRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostAsyncNoRetrySucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncNoRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncNoRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PostAsyncNoRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncNoRetrySucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2718,12 +1478,11 @@ func (future LROsPostAsyncNoRetrySucceededFuture) Result(client LROsClient) (p P
 // operation.
 type LROsPostAsyncRetrycanceledFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2731,35 +1490,10 @@ func (future LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar aut
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrycanceledFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRetrycanceledResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrycanceledFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrycanceledFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrycanceledFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRetrycanceledResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrycanceledFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2767,12 +1501,11 @@ func (future LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar aut
 // operation.
 type LROsPostAsyncRetryFailedFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPostAsyncRetryFailedFuture) Result(client LROsClient) (ar autorest.Response, err error) {
+func (future *LROsPostAsyncRetryFailedFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2780,35 +1513,10 @@ func (future LROsPostAsyncRetryFailedFuture) Result(client LROsClient) (ar autor
 		return
 	}
 	if !done {
-		return ar, azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetryFailedFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		ar, err = client.PostAsyncRetryFailedResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetryFailedFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetryFailedFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
-		if err != nil {
-			return
-		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetryFailedFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	ar, err = client.PostAsyncRetryFailedResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetryFailedFuture", "Result", resp, "Failure responding to request")
-	}
+	ar.Response = future.Response()
 	return
 }
 
@@ -2816,12 +1524,11 @@ func (future LROsPostAsyncRetryFailedFuture) Result(client LROsClient) (ar autor
 // operation.
 type LROsPostAsyncRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPostAsyncRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPostAsyncRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2829,34 +1536,15 @@ func (future LROsPostAsyncRetrySucceededFuture) Result(client LROsClient) (p Pro
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PostAsyncRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostAsyncRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostAsyncRetrySucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PostAsyncRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrySucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2865,12 +1553,11 @@ func (future LROsPostAsyncRetrySucceededFuture) Result(client LROsClient) (p Pro
 // operation.
 type LROsPut200Acceptedcanceled200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPut200Acceptedcanceled200Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPut200Acceptedcanceled200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2878,34 +1565,15 @@ func (future LROsPut200Acceptedcanceled200Future) Result(client LROsClient) (p P
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200Acceptedcanceled200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put200Acceptedcanceled200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200Acceptedcanceled200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200Acceptedcanceled200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200Acceptedcanceled200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200Acceptedcanceled200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200Acceptedcanceled200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put200Acceptedcanceled200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200Acceptedcanceled200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2913,12 +1581,11 @@ func (future LROsPut200Acceptedcanceled200Future) Result(client LROsClient) (p P
 // LROsPut200SucceededFuture an abstraction for monitoring and retrieving the results of a long-running operation.
 type LROsPut200SucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPut200SucceededFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPut200SucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2926,34 +1593,15 @@ func (future LROsPut200SucceededFuture) Result(client LROsClient) (p Product, er
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put200SucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200SucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put200SucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -2962,12 +1610,11 @@ func (future LROsPut200SucceededFuture) Result(client LROsClient) (p Product, er
 // operation.
 type LROsPut200SucceededNoStateFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPut200SucceededNoStateFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPut200SucceededNoStateFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -2975,34 +1622,15 @@ func (future LROsPut200SucceededNoStateFuture) Result(client LROsClient) (p Prod
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededNoStateFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put200SucceededNoStateResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededNoStateFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200SucceededNoStateFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200SucceededNoStateResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededNoStateFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededNoStateFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put200SucceededNoStateResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededNoStateFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3011,12 +1639,11 @@ func (future LROsPut200SucceededNoStateFuture) Result(client LROsClient) (p Prod
 // operation.
 type LROsPut200UpdatingSucceeded204Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPut200UpdatingSucceeded204Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPut200UpdatingSucceeded204Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3024,34 +1651,15 @@ func (future LROsPut200UpdatingSucceeded204Future) Result(client LROsClient) (p 
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200UpdatingSucceeded204Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put200UpdatingSucceeded204Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200UpdatingSucceeded204Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut200UpdatingSucceeded204Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put200UpdatingSucceeded204Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200UpdatingSucceeded204Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200UpdatingSucceeded204Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put200UpdatingSucceeded204Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200UpdatingSucceeded204Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3060,12 +1668,11 @@ func (future LROsPut200UpdatingSucceeded204Future) Result(client LROsClient) (p 
 // operation.
 type LROsPut201CreatingFailed200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPut201CreatingFailed200Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPut201CreatingFailed200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3073,34 +1680,15 @@ func (future LROsPut201CreatingFailed200Future) Result(client LROsClient) (p Pro
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingFailed200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put201CreatingFailed200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingFailed200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingFailed200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingFailed200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingFailed200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingFailed200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put201CreatingFailed200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingFailed200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3109,12 +1697,11 @@ func (future LROsPut201CreatingFailed200Future) Result(client LROsClient) (p Pro
 // operation.
 type LROsPut201CreatingSucceeded200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPut201CreatingSucceeded200Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPut201CreatingSucceeded200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3122,34 +1709,15 @@ func (future LROsPut201CreatingSucceeded200Future) Result(client LROsClient) (p 
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingSucceeded200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put201CreatingSucceeded200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut201CreatingSucceeded200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put201CreatingSucceeded200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put201CreatingSucceeded200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3157,12 +1725,11 @@ func (future LROsPut201CreatingSucceeded200Future) Result(client LROsClient) (p 
 // LROsPut202Retry200Future an abstraction for monitoring and retrieving the results of a long-running operation.
 type LROsPut202Retry200Future struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPut202Retry200Future) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPut202Retry200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3170,34 +1737,15 @@ func (future LROsPut202Retry200Future) Result(client LROsClient) (p Product, err
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPut202Retry200Future")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.Put202Retry200Responder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut202Retry200Future", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPut202Retry200Future")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.Put202Retry200Responder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPut202Retry200Future", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut202Retry200Future", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.Put202Retry200Responder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut202Retry200Future", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3206,12 +1754,11 @@ func (future LROsPut202Retry200Future) Result(client LROsClient) (p Product, err
 // operation.
 type LROsPutAsyncNoHeaderInRetryFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutAsyncNoHeaderInRetryFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPutAsyncNoHeaderInRetryFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3219,34 +1766,15 @@ func (future LROsPutAsyncNoHeaderInRetryFuture) Result(client LROsClient) (p Pro
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoHeaderInRetryFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncNoHeaderInRetryResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoHeaderInRetryFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoHeaderInRetryFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncNoHeaderInRetryResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoHeaderInRetryFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoHeaderInRetryFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncNoHeaderInRetryResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoHeaderInRetryFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3255,12 +1783,11 @@ func (future LROsPutAsyncNoHeaderInRetryFuture) Result(client LROsClient) (p Pro
 // operation.
 type LROsPutAsyncNonResourceFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutAsyncNonResourceFuture) Result(client LROsClient) (s Sku, err error) {
+func (future *LROsPutAsyncNonResourceFuture) Result(client LROsClient) (s Sku, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3268,34 +1795,15 @@ func (future LROsPutAsyncNonResourceFuture) Result(client LROsClient) (s Sku, er
 		return
 	}
 	if !done {
-		return s, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNonResourceFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		s, err = client.PutAsyncNonResourceResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNonResourceFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNonResourceFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if s.Response.Response, err = future.GetResult(sender); err == nil && s.Response.Response.StatusCode != http.StatusNoContent {
+		s, err = client.PutAsyncNonResourceResponder(s.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNonResourceFuture", "Result", s.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNonResourceFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	s, err = client.PutAsyncNonResourceResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNonResourceFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3304,12 +1812,11 @@ func (future LROsPutAsyncNonResourceFuture) Result(client LROsClient) (s Sku, er
 // operation.
 type LROsPutAsyncNoRetrycanceledFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutAsyncNoRetrycanceledFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPutAsyncNoRetrycanceledFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3317,34 +1824,15 @@ func (future LROsPutAsyncNoRetrycanceledFuture) Result(client LROsClient) (p Pro
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrycanceledFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncNoRetrycanceledResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrycanceledFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrycanceledFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncNoRetrycanceledResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrycanceledFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrycanceledFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncNoRetrycanceledResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrycanceledFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3353,12 +1841,11 @@ func (future LROsPutAsyncNoRetrycanceledFuture) Result(client LROsClient) (p Pro
 // operation.
 type LROsPutAsyncNoRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPutAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3366,34 +1853,15 @@ func (future LROsPutAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Pr
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncNoRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncNoRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncNoRetrySucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncNoRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrySucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3402,12 +1870,11 @@ func (future LROsPutAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Pr
 // operation.
 type LROsPutAsyncRetryFailedFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutAsyncRetryFailedFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPutAsyncRetryFailedFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3415,34 +1882,15 @@ func (future LROsPutAsyncRetryFailedFuture) Result(client LROsClient) (p Product
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetryFailedFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRetryFailedResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetryFailedFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetryFailedFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRetryFailedResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetryFailedFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetryFailedFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRetryFailedResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetryFailedFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3451,12 +1899,11 @@ func (future LROsPutAsyncRetryFailedFuture) Result(client LROsClient) (p Product
 // operation.
 type LROsPutAsyncRetrySucceededFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutAsyncRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPutAsyncRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3464,34 +1911,15 @@ func (future LROsPutAsyncRetrySucceededFuture) Result(client LROsClient) (p Prod
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetrySucceededFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutAsyncRetrySucceededResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetrySucceededFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncRetrySucceededFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutAsyncRetrySucceededResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetrySucceededFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetrySucceededFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutAsyncRetrySucceededResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetrySucceededFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3500,12 +1928,11 @@ func (future LROsPutAsyncRetrySucceededFuture) Result(client LROsClient) (p Prod
 // operation.
 type LROsPutAsyncSubResourceFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutAsyncSubResourceFuture) Result(client LROsClient) (sp SubProduct, err error) {
+func (future *LROsPutAsyncSubResourceFuture) Result(client LROsClient) (sp SubProduct, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3513,34 +1940,15 @@ func (future LROsPutAsyncSubResourceFuture) Result(client LROsClient) (sp SubPro
 		return
 	}
 	if !done {
-		return sp, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncSubResourceFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		sp, err = client.PutAsyncSubResourceResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncSubResourceFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutAsyncSubResourceFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if sp.Response.Response, err = future.GetResult(sender); err == nil && sp.Response.Response.StatusCode != http.StatusNoContent {
+		sp, err = client.PutAsyncSubResourceResponder(sp.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncSubResourceFuture", "Result", sp.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncSubResourceFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	sp, err = client.PutAsyncSubResourceResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncSubResourceFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3549,12 +1957,11 @@ func (future LROsPutAsyncSubResourceFuture) Result(client LROsClient) (sp SubPro
 // operation.
 type LROsPutNoHeaderInRetryFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutNoHeaderInRetryFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPutNoHeaderInRetryFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3562,34 +1969,15 @@ func (future LROsPutNoHeaderInRetryFuture) Result(client LROsClient) (p Product,
 		return
 	}
 	if !done {
-		return p, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNoHeaderInRetryFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		p, err = client.PutNoHeaderInRetryResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNoHeaderInRetryFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNoHeaderInRetryFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PutNoHeaderInRetryResponder(p.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNoHeaderInRetryFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNoHeaderInRetryFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	p, err = client.PutNoHeaderInRetryResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNoHeaderInRetryFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3597,12 +1985,11 @@ func (future LROsPutNoHeaderInRetryFuture) Result(client LROsClient) (p Product,
 // LROsPutNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running operation.
 type LROsPutNonResourceFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutNonResourceFuture) Result(client LROsClient) (s Sku, err error) {
+func (future *LROsPutNonResourceFuture) Result(client LROsClient) (s Sku, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3610,34 +1997,15 @@ func (future LROsPutNonResourceFuture) Result(client LROsClient) (s Sku, err err
 		return
 	}
 	if !done {
-		return s, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNonResourceFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		s, err = client.PutNonResourceResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNonResourceFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutNonResourceFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if s.Response.Response, err = future.GetResult(sender); err == nil && s.Response.Response.StatusCode != http.StatusNoContent {
+		s, err = client.PutNonResourceResponder(s.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNonResourceFuture", "Result", s.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNonResourceFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	s, err = client.PutNonResourceResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNonResourceFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }
@@ -3645,12 +2013,11 @@ func (future LROsPutNonResourceFuture) Result(client LROsClient) (s Sku, err err
 // LROsPutSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running operation.
 type LROsPutSubResourceFuture struct {
 	azure.Future
-	req *http.Request
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future LROsPutSubResourceFuture) Result(client LROsClient) (sp SubProduct, err error) {
+func (future *LROsPutSubResourceFuture) Result(client LROsClient) (sp SubProduct, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
@@ -3658,34 +2025,15 @@ func (future LROsPutSubResourceFuture) Result(client LROsClient) (sp SubProduct,
 		return
 	}
 	if !done {
-		return sp, azure.NewAsyncOpIncompleteError("lrogroup.LROsPutSubResourceFuture")
-	}
-	if future.PollingMethod() == azure.PollingLocation {
-		sp, err = client.PutSubResourceResponder(future.Response())
-		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutSubResourceFuture", "Result", future.Response(), "Failure responding to request")
-		}
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPutSubResourceFuture")
 		return
 	}
-	var req *http.Request
-	var resp *http.Response
-	if future.PollingURL() != "" {
-		req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if sp.Response.Response, err = future.GetResult(sender); err == nil && sp.Response.Response.StatusCode != http.StatusNoContent {
+		sp, err = client.PutSubResourceResponder(sp.Response.Response)
 		if err != nil {
-			return
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPutSubResourceFuture", "Result", sp.Response.Response, "Failure responding to request")
 		}
-	} else {
-		req = autorest.ChangeToGet(future.req)
-	}
-	resp, err = autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutSubResourceFuture", "Result", resp, "Failure sending request")
-		return
-	}
-	sp, err = client.PutSubResourceResponder(resp)
-	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutSubResourceFuture", "Result", resp, "Failure responding to request")
 	}
 	return
 }

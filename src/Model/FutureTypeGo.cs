@@ -53,7 +53,7 @@ namespace AutoRest.Go.Model
 
         public override string Fields()
         {
-            return "    azure.Future\n    req *http.Request";
+            return "    azure.Future";
         }
 
         /// <summary>
