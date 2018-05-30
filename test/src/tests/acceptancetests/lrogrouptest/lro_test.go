@@ -635,6 +635,11 @@ func (s *LROSuite) TestSADsPutNonRetry400(c *chk.C) {
 
 // custom header client
 
+// NOTE: at this time the Go SDK doesn't expose means to include custom headers in LROs.
+//       while you can add it to the initial request by calling the preparer and sender
+//       explicitly (see below) there is no way to include the custom header data in the
+//       LRO polling request.  as a result these tests will all fail so they are empty for now.
+
 func (s *LROSuite) TestCustomHeaderPost202Retry200(c *chk.C) {
 	/*req, err := lroCustomHeaderClient.Post202Retry200Preparer(context.Background(), &lrogroup.Product{})
 	c.Assert(err, chk.IsNil)
