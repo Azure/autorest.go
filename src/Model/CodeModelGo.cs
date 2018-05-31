@@ -142,13 +142,9 @@ namespace AutoRest.Go.Model
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest/azure"));
                     // if any of the futures return the non-default response then we need the net/http package
-                    foreach (var ftg in futureModels)
+                    if (futureModels.Any(fm => !fm.IsDefaultReturnType))
                     {
-                        if (!ftg.IsDefaultReturnType)
-                        {
-                            imports.Add(PrimaryTypeGo.GetImportLine("net/http"));
-                            break;
-                        }
+                        imports.Add(PrimaryTypeGo.GetImportLine("net/http"));
                     }
                 }
                 ModelTypes.Cast<CompositeTypeGo>()
