@@ -361,7 +361,6 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
             var future @Model.MethodReturnType
             future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
             result.Future = future.Future
-            result.req = future.req
             </text>
         }
         else

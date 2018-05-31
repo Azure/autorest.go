@@ -426,9 +426,9 @@ else
     var resultVar = ftg.ResultTypeName.ToShortName();
     var resultVarTarget = resultVar;
     var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
-    if (ftg.ResultType is IteratorTypeGo itg)
+    if (ftg.ResultType is PageTypeGo ptg)
     {
-        resultVarTarget = $"{resultVarTarget}.{itg.PageField}";
+        resultVarTarget = $"{resultVarTarget}.{ptg.ResultFieldName}";
     }
     <text>
     // Result returns the result of the asynchronous operation.
@@ -444,11 +444,11 @@ else
         err = azure.NewAsyncOpIncompleteError("@futureTypeName")
         return
     }
-    @if (ftg.ResultTypeName == MethodGo.DefaultReturnType)
+    @if (ftg.IsDefaultReturnType)
     {
         // for default return types (i.e. autorest.Response)
         // assign the raw HTTP response to the *http.Response field
-    @:@(resultVar).Response = future.Response()
+    @:@(resultVarTarget).Response = future.Response()
     }
     else
     {
@@ -457,10 +457,10 @@ else
         // in it we need an extra ".Response" :(
     <text>
     sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-    if @(resultVar).Response.Response, err = future.GetResult(sender); err == nil && @(resultVar).Response.Response.StatusCode != http.StatusNoContent {
-        @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVar).Response.Response)
+    if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
+        @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
         if err != nil {
-            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVar).Response.Response, "Failure responding to request")
+            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
         }
     }
     </text>

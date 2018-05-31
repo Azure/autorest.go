@@ -84,6 +84,11 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
+        /// Returns true if the result type is the default response type.
+        /// </summary>
+        public bool IsDefaultReturnType => ResultType == null;
+
+        /// <summary>
         /// Gets the name of the responder method associated with this future.
         /// </summary>
         public string ResponderMethodName { get; }
