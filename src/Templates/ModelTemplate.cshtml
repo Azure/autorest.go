@@ -430,6 +430,10 @@ else
     {
         resultVarTarget = $"{resultVarTarget}.{ptg.ResultFieldName}";
     }
+    else if (ftg.ResultType is IteratorTypeGo itg)
+    {
+        resultVarTarget = $"{resultVarTarget}.{itg.PageField}.{itg.PageType.ResultFieldName}";
+    }
     <text>
     // Result returns the result of the asynchronous operation.
     // If the operation has not completed it will return an error.

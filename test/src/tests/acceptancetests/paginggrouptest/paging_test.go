@@ -217,4 +217,14 @@ func (s *PagingGroupSuite) TestGetMultiplePagesLRO(c *chk.C) {
 		count++
 	}
 	c.Assert(count, chk.Equals, 10)
+	// iterator
+	futureIter, err := pagingClient.GetMultiplePagesLROComplete(context.Background(), clientID, nil, nil)
+	c.Assert(err, chk.IsNil)
+	count = 0
+	for iter, err := futureIter.Result(pagingClient); iter.NotDone(); err = iter.Next() {
+		c.Assert(err, chk.IsNil)
+		c.Assert(iter.Value().Properties, chk.NotNil)
+		count++
+	}
+	c.Assert(count, chk.Equals, 10)
 }

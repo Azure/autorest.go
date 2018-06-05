@@ -370,13 +370,14 @@ namespace AutoRest.Go.Model
             }
 
             // this is the future to return from the method
-            var future = GetOrAddFuture(new FutureTypeGo(method));
+            var future = GetOrAddFuture(new FutureTypeGo(method, method.ReturnValue().Body));
 
             // if this is a pageable method create a future type for the
             // "list all" method wrapped in our custom response type
             if (method.IsPageable)
             {
-                var listAllFuture = GetOrAddFuture(new FutureTypeGo(CodeNamerGo.Instance.GetFutureTypeName($"{method.Group}{method.Name}All"), method));
+                var listAllFuture = GetOrAddFuture(new FutureTypeGo(CodeNamerGo.Instance.GetFutureTypeName($"{method.Group}{method.Name}All"), method,
+                    ((PageTypeGo)method.ReturnValue().Body).IteratorType));
                 method.ReturnType = new LroPagedResponseGo(future, listAllFuture, method.ReturnType.Headers);
             }
             else

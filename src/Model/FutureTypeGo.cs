@@ -15,29 +15,13 @@ namespace AutoRest.Go.Model
         /// Creates a new future type for the specified method.
         /// </summary>
         /// <param name="method">The method that will return a future.</param>
-        public FutureTypeGo(MethodGo method) : this(CodeNamerGo.Instance.GetFutureTypeName(method), method)
-        {
-            if (!method.IsLongRunningOperation())
-            {
-                throw new InvalidOperationException($"method {method.Owner}.{method.Name} is not a long-running operation");
-            }
-
-            CodeModel = method.CodeModel;
-            Documentation = "An abstraction for monitoring and retrieving the results of a long-running operation.";
-            ClientTypeName = method.Owner;
-            ResultType = method.ReturnValue().Body;
-            ResponderMethodName = method.ResponderMethodName;
-            if (method.Deprecated)
-            {
-                DeprecationMessage = "The method for this type has been deprecated.";
-            }
-        }
+        public FutureTypeGo(MethodGo method, IModelType resultType) : this(CodeNamerGo.Instance.GetFutureTypeName(method), method, resultType) {}
 
         /// <summary>
         /// Creates a new future type for the specified method using the specified name.
         /// </summary>
         /// <param name="method">The method that will return a future.</param>
-        public FutureTypeGo(string methodName, MethodGo method) : base(methodName)
+        public FutureTypeGo(string methodName, MethodGo method, IModelType resultType) : base(methodName)
         {
             if (!method.IsLongRunningOperation())
             {
@@ -47,8 +31,12 @@ namespace AutoRest.Go.Model
             CodeModel = method.CodeModel;
             Documentation = "An abstraction for monitoring and retrieving the results of a long-running operation.";
             ClientTypeName = method.Owner;
-            ResultType = method.ReturnValue().Body;
+            ResultType = resultType;
             ResponderMethodName = method.ResponderMethodName;
+            if (method.Deprecated)
+            {
+                DeprecationMessage = "The method for this type has been deprecated.";
+            }
         }
 
         public override string Fields()
