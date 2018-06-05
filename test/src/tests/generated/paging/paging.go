@@ -441,6 +441,113 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 	return
 }
 
+// GetMultiplePagesLRO a long-running paging operation that includes a nextLink that has 10 pages
+// Parameters:
+// maxresults - sets the maximum number of items to return in the response.
+// timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
+// 30 seconds.
+func (client PagingClient) GetMultiplePagesLRO(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result PagingGetMultiplePagesLROFuture, err error) {
+	req, err := client.GetMultiplePagesLROPreparer(ctx, clientRequestID, maxresults, timeout)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesLRO", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.GetMultiplePagesLROSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesLRO", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// GetMultiplePagesLROPreparer prepares the GetMultiplePagesLRO request.
+func (client PagingClient) GetMultiplePagesLROPreparer(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/paging/multiple/lro"))
+	if len(clientRequestID) > 0 {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("client-request-id", autorest.String(clientRequestID)))
+	}
+	if maxresults != nil {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("maxresults", autorest.String(maxresults)))
+	}
+	if timeout != nil {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("timeout", autorest.String(timeout)))
+	} else {
+		preparer = autorest.DecoratePreparer(preparer,
+			autorest.WithHeader("timeout", autorest.String(30)))
+	}
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetMultiplePagesLROSender sends the GetMultiplePagesLRO request. The method will close the
+// http.Response Body if it receives an error.
+func (client PagingClient) GetMultiplePagesLROSender(req *http.Request) (future PagingGetMultiplePagesLROFuture, err error) {
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// GetMultiplePagesLROResponder handles the response to the GetMultiplePagesLRO request. The method always
+// closes the http.Response Body.
+func (client PagingClient) GetMultiplePagesLROResponder(resp *http.Response) (result ProductResultPage, err error) {
+	result.pr, err = client.getMultiplePagesLROResponder(resp)
+	result.fn = client.getMultiplePagesLRONextResults
+	return
+}
+
+func (client PagingClient) getMultiplePagesLROResponder(resp *http.Response) (result ProductResult, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// getMultiplePagesLRONextResults retrieves the next set of results, if any.
+func (client PagingClient) getMultiplePagesLRONextResults(lastResults ProductResult) (result ProductResult, err error) {
+	req, err := lastResults.productResultPreparer()
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getMultiplePagesLRONextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getMultiplePagesLRONextResults", resp, "Failure sending next results request")
+	}
+	return client.getMultiplePagesLROResponder(resp)
+}
+
+// GetMultiplePagesLROComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetMultiplePagesLROComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result PagingGetMultiplePagesLROAllFuture, err error) {
+	var future PagingGetMultiplePagesLROFuture
+	future, err = client.GetMultiplePagesLRO(ctx, clientRequestID, maxresults, timeout)
+	result.Future = future.Future
+	return
+}
+
 // GetMultiplePagesRetryFirst a paging operation that fails on the first call with 500 and then retries and then get a
 // response including a nextLink that has 10 pages
 func (client PagingClient) GetMultiplePagesRetryFirst(ctx context.Context) (result ProductResultPage, err error) {

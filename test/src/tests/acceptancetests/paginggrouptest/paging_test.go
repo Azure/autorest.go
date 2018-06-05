@@ -9,7 +9,7 @@ import (
 	chk "gopkg.in/check.v1"
 
 	"tests/acceptancetests/utils"
-	. "tests/generated/paging"
+	"tests/generated/paging"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }
@@ -21,8 +21,8 @@ var _ = chk.Suite(&PagingGroupSuite{})
 var pagingClient = getPagingClient()
 var clientID = "client-id"
 
-func getPagingClient() PagingClient {
-	c := NewPagingClient()
+func getPagingClient() paginggroup.PagingClient {
+	c := paginggroup.NewPagingClient()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
@@ -200,6 +200,20 @@ func (s *PagingGroupSuite) TestGetMultiplePagesFragmentNextLink(c *chk.C) {
 	for iter, err := pagingClient.GetMultiplePagesFragmentNextLinkComplete(context.Background(), "1.6", "test_user"); iter.NotDone(); err = iter.Next() {
 		c.Assert(err, chk.IsNil)
 		c.Assert(iter.Value(), chk.NotNil)
+		count++
+	}
+	c.Assert(count, chk.Equals, 10)
+}
+
+func (s *PagingGroupSuite) TestGetMultiplePagesLRO(c *chk.C) {
+	future, err := pagingClient.GetMultiplePagesLRO(context.Background(), clientID, nil, nil)
+	c.Assert(err, chk.IsNil)
+	err = future.WaitForCompletionRef(context.Background(), pagingClient.Client)
+	c.Assert(err, chk.IsNil)
+	count := 0
+	for page, err := future.Result(pagingClient); page.NotDone(); err = page.Next() {
+		c.Assert(err, chk.IsNil)
+		c.Assert(page.Values(), chk.NotNil)
 		count++
 	}
 	c.Assert(count, chk.Equals, 10)
