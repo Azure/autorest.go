@@ -58,15 +58,17 @@ func (client LROsClient) Delete202NoRetry204Preparer(ctx context.Context) (*http
 // Delete202NoRetry204Sender sends the Delete202NoRetry204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Delete202NoRetry204Sender(req *http.Request) (future LROsDelete202NoRetry204Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -113,15 +115,17 @@ func (client LROsClient) Delete202Retry200Preparer(ctx context.Context) (*http.R
 // Delete202Retry200Sender sends the Delete202Retry200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Delete202Retry200Sender(req *http.Request) (future LROsDelete202Retry200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -167,15 +171,17 @@ func (client LROsClient) Delete204SucceededPreparer(ctx context.Context) (*http.
 // Delete204SucceededSender sends the Delete204Succeeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Delete204SucceededSender(req *http.Request) (future LROsDelete204SucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -221,15 +227,17 @@ func (client LROsClient) DeleteAsyncNoHeaderInRetryPreparer(ctx context.Context)
 // DeleteAsyncNoHeaderInRetrySender sends the DeleteAsyncNoHeaderInRetry request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteAsyncNoHeaderInRetrySender(req *http.Request) (future LROsDeleteAsyncNoHeaderInRetryFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -275,15 +283,17 @@ func (client LROsClient) DeleteAsyncNoRetrySucceededPreparer(ctx context.Context
 // DeleteAsyncNoRetrySucceededSender sends the DeleteAsyncNoRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteAsyncNoRetrySucceededSender(req *http.Request) (future LROsDeleteAsyncNoRetrySucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -329,15 +339,17 @@ func (client LROsClient) DeleteAsyncRetrycanceledPreparer(ctx context.Context) (
 // DeleteAsyncRetrycanceledSender sends the DeleteAsyncRetrycanceled request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteAsyncRetrycanceledSender(req *http.Request) (future LROsDeleteAsyncRetrycanceledFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -383,15 +395,17 @@ func (client LROsClient) DeleteAsyncRetryFailedPreparer(ctx context.Context) (*h
 // DeleteAsyncRetryFailedSender sends the DeleteAsyncRetryFailed request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteAsyncRetryFailedSender(req *http.Request) (future LROsDeleteAsyncRetryFailedFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -437,15 +451,17 @@ func (client LROsClient) DeleteAsyncRetrySucceededPreparer(ctx context.Context) 
 // DeleteAsyncRetrySucceededSender sends the DeleteAsyncRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteAsyncRetrySucceededSender(req *http.Request) (future LROsDeleteAsyncRetrySucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -491,15 +507,17 @@ func (client LROsClient) DeleteNoHeaderInRetryPreparer(ctx context.Context) (*ht
 // DeleteNoHeaderInRetrySender sends the DeleteNoHeaderInRetry request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteNoHeaderInRetrySender(req *http.Request) (future LROsDeleteNoHeaderInRetryFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -546,15 +564,17 @@ func (client LROsClient) DeleteProvisioning202Accepted200SucceededPreparer(ctx c
 // DeleteProvisioning202Accepted200SucceededSender sends the DeleteProvisioning202Accepted200Succeeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteProvisioning202Accepted200SucceededSender(req *http.Request) (future LROsDeleteProvisioning202Accepted200SucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -602,15 +622,17 @@ func (client LROsClient) DeleteProvisioning202Deletingcanceled200Preparer(ctx co
 // DeleteProvisioning202Deletingcanceled200Sender sends the DeleteProvisioning202Deletingcanceled200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteProvisioning202Deletingcanceled200Sender(req *http.Request) (future LROsDeleteProvisioning202Deletingcanceled200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -658,15 +680,17 @@ func (client LROsClient) DeleteProvisioning202DeletingFailed200Preparer(ctx cont
 // DeleteProvisioning202DeletingFailed200Sender sends the DeleteProvisioning202DeletingFailed200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) DeleteProvisioning202DeletingFailed200Sender(req *http.Request) (future LROsDeleteProvisioning202DeletingFailed200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -713,15 +737,17 @@ func (client LROsClient) Post200WithPayloadPreparer(ctx context.Context) (*http.
 // Post200WithPayloadSender sends the Post200WithPayload request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Post200WithPayloadSender(req *http.Request) (future LROsPost200WithPayloadFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -740,8 +766,8 @@ func (client LROsClient) Post200WithPayloadResponder(resp *http.Response) (resul
 
 // Post202NoRetry204 long running post request, service returns a 202 to the initial request, with 'Location' header,
 // 204 with noresponse body after success
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Post202NoRetry204(ctx context.Context, product *Product) (result LROsPost202NoRetry204Future, err error) {
 	req, err := client.Post202NoRetry204Preparer(ctx, product)
 	if err != nil {
@@ -761,7 +787,7 @@ func (client LROsClient) Post202NoRetry204(ctx context.Context, product *Product
 // Post202NoRetry204Preparer prepares the Post202NoRetry204 request.
 func (client LROsClient) Post202NoRetry204Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/post/202/noretry/204"))
@@ -775,15 +801,17 @@ func (client LROsClient) Post202NoRetry204Preparer(ctx context.Context, product 
 // Post202NoRetry204Sender sends the Post202NoRetry204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Post202NoRetry204Sender(req *http.Request) (future LROsPost202NoRetry204Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -802,8 +830,8 @@ func (client LROsClient) Post202NoRetry204Responder(resp *http.Response) (result
 
 // Post202Retry200 long running post request, service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Post202Retry200(ctx context.Context, product *Product) (result LROsPost202Retry200Future, err error) {
 	req, err := client.Post202Retry200Preparer(ctx, product)
 	if err != nil {
@@ -823,7 +851,7 @@ func (client LROsClient) Post202Retry200(ctx context.Context, product *Product) 
 // Post202Retry200Preparer prepares the Post202Retry200 request.
 func (client LROsClient) Post202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/post/202/retry/200"))
@@ -837,15 +865,17 @@ func (client LROsClient) Post202Retry200Preparer(ctx context.Context, product *P
 // Post202Retry200Sender sends the Post202Retry200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Post202Retry200Sender(req *http.Request) (future LROsPost202Retry200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -864,8 +894,8 @@ func (client LROsClient) Post202Retry200Responder(resp *http.Response) (result a
 // PostAsyncNoRetrySucceeded long running post request, service returns a 202 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncNoRetrySucceeded(ctx context.Context, product *Product) (result LROsPostAsyncNoRetrySucceededFuture, err error) {
 	req, err := client.PostAsyncNoRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -885,7 +915,7 @@ func (client LROsClient) PostAsyncNoRetrySucceeded(ctx context.Context, product 
 // PostAsyncNoRetrySucceededPreparer prepares the PostAsyncNoRetrySucceeded request.
 func (client LROsClient) PostAsyncNoRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/noretry/succeeded"))
@@ -899,15 +929,17 @@ func (client LROsClient) PostAsyncNoRetrySucceededPreparer(ctx context.Context, 
 // PostAsyncNoRetrySucceededSender sends the PostAsyncNoRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PostAsyncNoRetrySucceededSender(req *http.Request) (future LROsPostAsyncNoRetrySucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -927,8 +959,8 @@ func (client LROsClient) PostAsyncNoRetrySucceededResponder(resp *http.Response)
 // PostAsyncRetrycanceled long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncRetrycanceled(ctx context.Context, product *Product) (result LROsPostAsyncRetrycanceledFuture, err error) {
 	req, err := client.PostAsyncRetrycanceledPreparer(ctx, product)
 	if err != nil {
@@ -948,7 +980,7 @@ func (client LROsClient) PostAsyncRetrycanceled(ctx context.Context, product *Pr
 // PostAsyncRetrycanceledPreparer prepares the PostAsyncRetrycanceled request.
 func (client LROsClient) PostAsyncRetrycanceledPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/retry/canceled"))
@@ -962,15 +994,17 @@ func (client LROsClient) PostAsyncRetrycanceledPreparer(ctx context.Context, pro
 // PostAsyncRetrycanceledSender sends the PostAsyncRetrycanceled request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PostAsyncRetrycanceledSender(req *http.Request) (future LROsPostAsyncRetrycanceledFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -989,8 +1023,8 @@ func (client LROsClient) PostAsyncRetrycanceledResponder(resp *http.Response) (r
 // PostAsyncRetryFailed long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncRetryFailed(ctx context.Context, product *Product) (result LROsPostAsyncRetryFailedFuture, err error) {
 	req, err := client.PostAsyncRetryFailedPreparer(ctx, product)
 	if err != nil {
@@ -1010,7 +1044,7 @@ func (client LROsClient) PostAsyncRetryFailed(ctx context.Context, product *Prod
 // PostAsyncRetryFailedPreparer prepares the PostAsyncRetryFailed request.
 func (client LROsClient) PostAsyncRetryFailedPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/retry/failed"))
@@ -1024,15 +1058,17 @@ func (client LROsClient) PostAsyncRetryFailedPreparer(ctx context.Context, produ
 // PostAsyncRetryFailedSender sends the PostAsyncRetryFailed request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PostAsyncRetryFailedSender(req *http.Request) (future LROsPostAsyncRetryFailedFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1051,8 +1087,8 @@ func (client LROsClient) PostAsyncRetryFailedResponder(resp *http.Response) (res
 // PostAsyncRetrySucceeded long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PostAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsPostAsyncRetrySucceededFuture, err error) {
 	req, err := client.PostAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -1072,7 +1108,7 @@ func (client LROsClient) PostAsyncRetrySucceeded(ctx context.Context, product *P
 // PostAsyncRetrySucceededPreparer prepares the PostAsyncRetrySucceeded request.
 func (client LROsClient) PostAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/postasync/retry/succeeded"))
@@ -1086,15 +1122,17 @@ func (client LROsClient) PostAsyncRetrySucceededPreparer(ctx context.Context, pr
 // PostAsyncRetrySucceededSender sends the PostAsyncRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PostAsyncRetrySucceededSender(req *http.Request) (future LROsPostAsyncRetrySucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1114,8 +1152,8 @@ func (client LROsClient) PostAsyncRetrySucceededResponder(resp *http.Response) (
 // Put200Acceptedcanceled200 long running put request, service returns a 201 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200Acceptedcanceled200(ctx context.Context, product *Product) (result LROsPut200Acceptedcanceled200Future, err error) {
 	req, err := client.Put200Acceptedcanceled200Preparer(ctx, product)
 	if err != nil {
@@ -1135,7 +1173,7 @@ func (client LROsClient) Put200Acceptedcanceled200(ctx context.Context, product 
 // Put200Acceptedcanceled200Preparer prepares the Put200Acceptedcanceled200 request.
 func (client LROsClient) Put200Acceptedcanceled200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/accepted/canceled/200"))
@@ -1149,15 +1187,17 @@ func (client LROsClient) Put200Acceptedcanceled200Preparer(ctx context.Context, 
 // Put200Acceptedcanceled200Sender sends the Put200Acceptedcanceled200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Put200Acceptedcanceled200Sender(req *http.Request) (future LROsPut200Acceptedcanceled200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1176,8 +1216,8 @@ func (client LROsClient) Put200Acceptedcanceled200Responder(resp *http.Response)
 
 // Put200Succeeded long running put request, service returns a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200Succeeded(ctx context.Context, product *Product) (result LROsPut200SucceededFuture, err error) {
 	req, err := client.Put200SucceededPreparer(ctx, product)
 	if err != nil {
@@ -1197,7 +1237,7 @@ func (client LROsClient) Put200Succeeded(ctx context.Context, product *Product) 
 // Put200SucceededPreparer prepares the Put200Succeeded request.
 func (client LROsClient) Put200SucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/succeeded"))
@@ -1211,15 +1251,17 @@ func (client LROsClient) Put200SucceededPreparer(ctx context.Context, product *P
 // Put200SucceededSender sends the Put200Succeeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Put200SucceededSender(req *http.Request) (future LROsPut200SucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusNoContent))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1238,8 +1280,8 @@ func (client LROsClient) Put200SucceededResponder(resp *http.Response) (result P
 
 // Put200SucceededNoState long running put request, service returns a 200 to the initial request, with an entity that
 // does not contain ProvisioningState=’Succeeded’.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200SucceededNoState(ctx context.Context, product *Product) (result LROsPut200SucceededNoStateFuture, err error) {
 	req, err := client.Put200SucceededNoStatePreparer(ctx, product)
 	if err != nil {
@@ -1259,7 +1301,7 @@ func (client LROsClient) Put200SucceededNoState(ctx context.Context, product *Pr
 // Put200SucceededNoStatePreparer prepares the Put200SucceededNoState request.
 func (client LROsClient) Put200SucceededNoStatePreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/succeeded/nostate"))
@@ -1273,15 +1315,17 @@ func (client LROsClient) Put200SucceededNoStatePreparer(ctx context.Context, pro
 // Put200SucceededNoStateSender sends the Put200SucceededNoState request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Put200SucceededNoStateSender(req *http.Request) (future LROsPut200SucceededNoStateFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1301,8 +1345,8 @@ func (client LROsClient) Put200SucceededNoStateResponder(resp *http.Response) (r
 // Put200UpdatingSucceeded204 long running put request, service returns a 201 to the initial request, with an entity
 // that contains ProvisioningState=’Updating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put200UpdatingSucceeded204(ctx context.Context, product *Product) (result LROsPut200UpdatingSucceeded204Future, err error) {
 	req, err := client.Put200UpdatingSucceeded204Preparer(ctx, product)
 	if err != nil {
@@ -1322,7 +1366,7 @@ func (client LROsClient) Put200UpdatingSucceeded204(ctx context.Context, product
 // Put200UpdatingSucceeded204Preparer prepares the Put200UpdatingSucceeded204 request.
 func (client LROsClient) Put200UpdatingSucceeded204Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/200/updating/succeeded/200"))
@@ -1336,15 +1380,17 @@ func (client LROsClient) Put200UpdatingSucceeded204Preparer(ctx context.Context,
 // Put200UpdatingSucceeded204Sender sends the Put200UpdatingSucceeded204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Put200UpdatingSucceeded204Sender(req *http.Request) (future LROsPut200UpdatingSucceeded204Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1364,8 +1410,8 @@ func (client LROsClient) Put200UpdatingSucceeded204Responder(resp *http.Response
 // Put201CreatingFailed200 long running put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Created’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put201CreatingFailed200(ctx context.Context, product *Product) (result LROsPut201CreatingFailed200Future, err error) {
 	req, err := client.Put201CreatingFailed200Preparer(ctx, product)
 	if err != nil {
@@ -1385,7 +1431,7 @@ func (client LROsClient) Put201CreatingFailed200(ctx context.Context, product *P
 // Put201CreatingFailed200Preparer prepares the Put201CreatingFailed200 request.
 func (client LROsClient) Put201CreatingFailed200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/201/created/failed/200"))
@@ -1399,15 +1445,17 @@ func (client LROsClient) Put201CreatingFailed200Preparer(ctx context.Context, pr
 // Put201CreatingFailed200Sender sends the Put201CreatingFailed200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Put201CreatingFailed200Sender(req *http.Request) (future LROsPut201CreatingFailed200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1427,8 +1475,8 @@ func (client LROsClient) Put201CreatingFailed200Responder(resp *http.Response) (
 // Put201CreatingSucceeded200 long running put request, service returns a 201 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LROsPut201CreatingSucceeded200Future, err error) {
 	req, err := client.Put201CreatingSucceeded200Preparer(ctx, product)
 	if err != nil {
@@ -1448,7 +1496,7 @@ func (client LROsClient) Put201CreatingSucceeded200(ctx context.Context, product
 // Put201CreatingSucceeded200Preparer prepares the Put201CreatingSucceeded200 request.
 func (client LROsClient) Put201CreatingSucceeded200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/201/creating/succeeded/200"))
@@ -1462,15 +1510,17 @@ func (client LROsClient) Put201CreatingSucceeded200Preparer(ctx context.Context,
 // Put201CreatingSucceeded200Sender sends the Put201CreatingSucceeded200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Put201CreatingSucceeded200Sender(req *http.Request) (future LROsPut201CreatingSucceeded200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1489,8 +1539,8 @@ func (client LROsClient) Put201CreatingSucceeded200Responder(resp *http.Response
 
 // Put202Retry200 long running put request, service returns a 202 to the initial request, with a location header that
 // points to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) Put202Retry200(ctx context.Context, product *Product) (result LROsPut202Retry200Future, err error) {
 	req, err := client.Put202Retry200Preparer(ctx, product)
 	if err != nil {
@@ -1510,7 +1560,7 @@ func (client LROsClient) Put202Retry200(ctx context.Context, product *Product) (
 // Put202Retry200Preparer prepares the Put202Retry200 request.
 func (client LROsClient) Put202Retry200Preparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/202/retry/200"))
@@ -1524,15 +1574,17 @@ func (client LROsClient) Put202Retry200Preparer(ctx context.Context, product *Pr
 // Put202Retry200Sender sends the Put202Retry200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) Put202Retry200Sender(req *http.Request) (future LROsPut202Retry200Future, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1551,8 +1603,8 @@ func (client LROsClient) Put202Retry200Responder(resp *http.Response) (result Pr
 
 // PutAsyncNoHeaderInRetry long running put request, service returns a 202 to the initial request with
 // Azure-AsyncOperation header. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncNoHeaderInRetry(ctx context.Context, product *Product) (result LROsPutAsyncNoHeaderInRetryFuture, err error) {
 	req, err := client.PutAsyncNoHeaderInRetryPreparer(ctx, product)
 	if err != nil {
@@ -1572,7 +1624,7 @@ func (client LROsClient) PutAsyncNoHeaderInRetry(ctx context.Context, product *P
 // PutAsyncNoHeaderInRetryPreparer prepares the PutAsyncNoHeaderInRetry request.
 func (client LROsClient) PutAsyncNoHeaderInRetryPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/noheader/201/200"))
@@ -1586,15 +1638,17 @@ func (client LROsClient) PutAsyncNoHeaderInRetryPreparer(ctx context.Context, pr
 // PutAsyncNoHeaderInRetrySender sends the PutAsyncNoHeaderInRetry request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutAsyncNoHeaderInRetrySender(req *http.Request) (future LROsPutAsyncNoHeaderInRetryFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusCreated))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1612,8 +1666,8 @@ func (client LROsClient) PutAsyncNoHeaderInRetryResponder(resp *http.Response) (
 }
 
 // PutAsyncNonResource long running put request with non resource.
-//
-// sku is sku to put
+// Parameters:
+// sku - sku to put
 func (client LROsClient) PutAsyncNonResource(ctx context.Context, sku *Sku) (result LROsPutAsyncNonResourceFuture, err error) {
 	req, err := client.PutAsyncNonResourcePreparer(ctx, sku)
 	if err != nil {
@@ -1633,7 +1687,7 @@ func (client LROsClient) PutAsyncNonResource(ctx context.Context, sku *Sku) (res
 // PutAsyncNonResourcePreparer prepares the PutAsyncNonResource request.
 func (client LROsClient) PutAsyncNonResourcePreparer(ctx context.Context, sku *Sku) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putnonresourceasync/202/200"))
@@ -1647,15 +1701,17 @@ func (client LROsClient) PutAsyncNonResourcePreparer(ctx context.Context, sku *S
 // PutAsyncNonResourceSender sends the PutAsyncNonResource request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutAsyncNonResourceSender(req *http.Request) (future LROsPutAsyncNonResourceFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1675,8 +1731,8 @@ func (client LROsClient) PutAsyncNonResourceResponder(resp *http.Response) (resu
 // PutAsyncNoRetrycanceled long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncNoRetrycanceled(ctx context.Context, product *Product) (result LROsPutAsyncNoRetrycanceledFuture, err error) {
 	req, err := client.PutAsyncNoRetrycanceledPreparer(ctx, product)
 	if err != nil {
@@ -1696,7 +1752,7 @@ func (client LROsClient) PutAsyncNoRetrycanceled(ctx context.Context, product *P
 // PutAsyncNoRetrycanceledPreparer prepares the PutAsyncNoRetrycanceled request.
 func (client LROsClient) PutAsyncNoRetrycanceledPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/noretry/canceled"))
@@ -1710,15 +1766,17 @@ func (client LROsClient) PutAsyncNoRetrycanceledPreparer(ctx context.Context, pr
 // PutAsyncNoRetrycanceledSender sends the PutAsyncNoRetrycanceled request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutAsyncNoRetrycanceledSender(req *http.Request) (future LROsPutAsyncNoRetrycanceledFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1738,8 +1796,8 @@ func (client LROsClient) PutAsyncNoRetrycanceledResponder(resp *http.Response) (
 // PutAsyncNoRetrySucceeded long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncNoRetrySucceeded(ctx context.Context, product *Product) (result LROsPutAsyncNoRetrySucceededFuture, err error) {
 	req, err := client.PutAsyncNoRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -1759,7 +1817,7 @@ func (client LROsClient) PutAsyncNoRetrySucceeded(ctx context.Context, product *
 // PutAsyncNoRetrySucceededPreparer prepares the PutAsyncNoRetrySucceeded request.
 func (client LROsClient) PutAsyncNoRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/noretry/succeeded"))
@@ -1773,15 +1831,17 @@ func (client LROsClient) PutAsyncNoRetrySucceededPreparer(ctx context.Context, p
 // PutAsyncNoRetrySucceededSender sends the PutAsyncNoRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutAsyncNoRetrySucceededSender(req *http.Request) (future LROsPutAsyncNoRetrySucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1801,8 +1861,8 @@ func (client LROsClient) PutAsyncNoRetrySucceededResponder(resp *http.Response) 
 // PutAsyncRetryFailed long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncRetryFailed(ctx context.Context, product *Product) (result LROsPutAsyncRetryFailedFuture, err error) {
 	req, err := client.PutAsyncRetryFailedPreparer(ctx, product)
 	if err != nil {
@@ -1822,7 +1882,7 @@ func (client LROsClient) PutAsyncRetryFailed(ctx context.Context, product *Produ
 // PutAsyncRetryFailedPreparer prepares the PutAsyncRetryFailed request.
 func (client LROsClient) PutAsyncRetryFailedPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/retry/failed"))
@@ -1836,15 +1896,17 @@ func (client LROsClient) PutAsyncRetryFailedPreparer(ctx context.Context, produc
 // PutAsyncRetryFailedSender sends the PutAsyncRetryFailed request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutAsyncRetryFailedSender(req *http.Request) (future LROsPutAsyncRetryFailedFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1864,8 +1926,8 @@ func (client LROsClient) PutAsyncRetryFailedResponder(resp *http.Response) (resu
 // PutAsyncRetrySucceeded long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation
 // status
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsPutAsyncRetrySucceededFuture, err error) {
 	req, err := client.PutAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
@@ -1885,7 +1947,7 @@ func (client LROsClient) PutAsyncRetrySucceeded(ctx context.Context, product *Pr
 // PutAsyncRetrySucceededPreparer prepares the PutAsyncRetrySucceeded request.
 func (client LROsClient) PutAsyncRetrySucceededPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putasync/retry/succeeded"))
@@ -1899,15 +1961,17 @@ func (client LROsClient) PutAsyncRetrySucceededPreparer(ctx context.Context, pro
 // PutAsyncRetrySucceededSender sends the PutAsyncRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutAsyncRetrySucceededSender(req *http.Request) (future LROsPutAsyncRetrySucceededFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1925,8 +1989,8 @@ func (client LROsClient) PutAsyncRetrySucceededResponder(resp *http.Response) (r
 }
 
 // PutAsyncSubResource long running put request with sub resource.
-//
-// product is sub Product to put
+// Parameters:
+// product - sub Product to put
 func (client LROsClient) PutAsyncSubResource(ctx context.Context, product *SubProduct) (result LROsPutAsyncSubResourceFuture, err error) {
 	req, err := client.PutAsyncSubResourcePreparer(ctx, product)
 	if err != nil {
@@ -1946,7 +2010,7 @@ func (client LROsClient) PutAsyncSubResource(ctx context.Context, product *SubPr
 // PutAsyncSubResourcePreparer prepares the PutAsyncSubResource request.
 func (client LROsClient) PutAsyncSubResourcePreparer(ctx context.Context, product *SubProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putsubresourceasync/202/200"))
@@ -1960,15 +2024,17 @@ func (client LROsClient) PutAsyncSubResourcePreparer(ctx context.Context, produc
 // PutAsyncSubResourceSender sends the PutAsyncSubResource request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutAsyncSubResourceSender(req *http.Request) (future LROsPutAsyncSubResourceFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -1987,8 +2053,8 @@ func (client LROsClient) PutAsyncSubResourceResponder(resp *http.Response) (resu
 
 // PutNoHeaderInRetry long running put request, service returns a 202 to the initial request with location header.
 // Subsequent calls to operation status do not contain location header.
-//
-// product is product to put
+// Parameters:
+// product - product to put
 func (client LROsClient) PutNoHeaderInRetry(ctx context.Context, product *Product) (result LROsPutNoHeaderInRetryFuture, err error) {
 	req, err := client.PutNoHeaderInRetryPreparer(ctx, product)
 	if err != nil {
@@ -2008,7 +2074,7 @@ func (client LROsClient) PutNoHeaderInRetry(ctx context.Context, product *Produc
 // PutNoHeaderInRetryPreparer prepares the PutNoHeaderInRetry request.
 func (client LROsClient) PutNoHeaderInRetryPreparer(ctx context.Context, product *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/put/noheader/202/200"))
@@ -2022,15 +2088,17 @@ func (client LROsClient) PutNoHeaderInRetryPreparer(ctx context.Context, product
 // PutNoHeaderInRetrySender sends the PutNoHeaderInRetry request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutNoHeaderInRetrySender(req *http.Request) (future LROsPutNoHeaderInRetryFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -2048,8 +2116,8 @@ func (client LROsClient) PutNoHeaderInRetryResponder(resp *http.Response) (resul
 }
 
 // PutNonResource long running put request with non resource.
-//
-// sku is sku to put
+// Parameters:
+// sku - sku to put
 func (client LROsClient) PutNonResource(ctx context.Context, sku *Sku) (result LROsPutNonResourceFuture, err error) {
 	req, err := client.PutNonResourcePreparer(ctx, sku)
 	if err != nil {
@@ -2069,7 +2137,7 @@ func (client LROsClient) PutNonResource(ctx context.Context, sku *Sku) (result L
 // PutNonResourcePreparer prepares the PutNonResource request.
 func (client LROsClient) PutNonResourcePreparer(ctx context.Context, sku *Sku) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putnonresource/202/200"))
@@ -2083,15 +2151,17 @@ func (client LROsClient) PutNonResourcePreparer(ctx context.Context, sku *Sku) (
 // PutNonResourceSender sends the PutNonResource request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutNonResourceSender(req *http.Request) (future LROsPutNonResourceFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 
@@ -2109,8 +2179,8 @@ func (client LROsClient) PutNonResourceResponder(resp *http.Response) (result Sk
 }
 
 // PutSubResource long running put request with sub resource.
-//
-// product is sub Product to put
+// Parameters:
+// product - sub Product to put
 func (client LROsClient) PutSubResource(ctx context.Context, product *SubProduct) (result LROsPutSubResourceFuture, err error) {
 	req, err := client.PutSubResourcePreparer(ctx, product)
 	if err != nil {
@@ -2130,7 +2200,7 @@ func (client LROsClient) PutSubResource(ctx context.Context, product *SubProduct
 // PutSubResourcePreparer prepares the PutSubResource request.
 func (client LROsClient) PutSubResourcePreparer(ctx context.Context, product *SubProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/lro/putsubresource/202/200"))
@@ -2144,15 +2214,17 @@ func (client LROsClient) PutSubResourcePreparer(ctx context.Context, product *Su
 // PutSubResourceSender sends the PutSubResource request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsClient) PutSubResourceSender(req *http.Request) (future LROsPutSubResourceFuture, err error) {
-	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	future.Future = azure.NewFuture(req)
-	future.req = req
-	_, err = future.Done(sender)
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
-	err = autorest.Respond(future.Response(),
-		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
 	return
 }
 

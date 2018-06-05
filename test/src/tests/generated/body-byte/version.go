@@ -8,7 +8,7 @@ package bytegroup
 
 // UserAgent returns the UserAgent string to use when sending http.Requests.
 func UserAgent() string {
-	return "Azure-SDK-For-Go/0.0.0 arm-bytegroup/1.0.0"
+	return "Azure-SDK-For-Go/0.0.0 bytegroup/1.0.0"
 }
 
 // Version returns the semantic version (see http://semver.org) of the client.

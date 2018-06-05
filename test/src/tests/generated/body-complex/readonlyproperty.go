@@ -81,7 +81,6 @@ func (client ReadonlypropertyClient) GetValidResponder(resp *http.Response) (res
 }
 
 // PutValid put complex types that have readonly properties
-//
 func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (result autorest.Response, err error) {
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
@@ -107,7 +106,7 @@ func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody R
 // PutValidPreparer prepares the PutValid request.
 func (client ReadonlypropertyClient) PutValidPreparer(ctx context.Context, complexBody ReadonlyObj) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/readonlyproperty/valid"),

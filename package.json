@@ -31,11 +31,12 @@
   },
   "homepage": "https://github.com/Azure/autorest.go/blob/master/README.md",
   "devDependencies": {
-    "@microsoft.azure/autorest.testserver": "^2.3.20",
+    "@microsoft.azure/autorest.testserver": "^2.5.13",
     "@microsoft.azure/autorest.modeler": "2.3.47",
     "autorest": "^2.0.4222",
     "coffee-script": "^1.11.1",
     "dotnet-sdk-2.0.0": "^1.4.4",
+    "golang-dep": "*",
     "gulp": "^3.9.1",
     "gulp-filter": "^5.1.0",
     "gulp-line-ending-corrector": "^1.0.1",

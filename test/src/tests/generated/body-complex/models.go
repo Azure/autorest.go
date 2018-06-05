@@ -26,6 +26,11 @@ const (
 	YELLOW CMYKColors = "YELLOW"
 )
 
+// PossibleCMYKColorsValues returns an array of possible values for the CMYKColors const type.
+func PossibleCMYKColorsValues() []CMYKColors {
+	return []CMYKColors{BlacK, Cyan, Magenta, YELLOW}
+}
+
 // Fishtype enumerates the values for fishtype.
 type Fishtype string
 
@@ -45,6 +50,28 @@ const (
 	// FishtypeSmartSalmon ...
 	FishtypeSmartSalmon Fishtype = "smart_salmon"
 )
+
+// PossibleFishtypeValues returns an array of possible values for the Fishtype const type.
+func PossibleFishtypeValues() []Fishtype {
+	return []Fishtype{FishtypeCookiecuttershark, FishtypeFish, FishtypeGoblin, FishtypeSalmon, FishtypeSawshark, FishtypeShark, FishtypeSmartSalmon}
+}
+
+// GoblinSharkColor enumerates the values for goblin shark color.
+type GoblinSharkColor string
+
+const (
+	// Brown ...
+	Brown GoblinSharkColor = "brown"
+	// Gray ...
+	Gray GoblinSharkColor = "gray"
+	// Pink ...
+	Pink GoblinSharkColor = "pink"
+)
+
+// PossibleGoblinSharkColorValues returns an array of possible values for the GoblinSharkColor const type.
+func PossibleGoblinSharkColorValues() []GoblinSharkColor {
+	return []GoblinSharkColor{Brown, Gray, Pink}
+}
 
 // ArrayWrapper ...
 type ArrayWrapper struct {
@@ -114,7 +141,9 @@ func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 	if c.Siblings != nil {
 		objectMap["siblings"] = c.Siblings
 	}
-	objectMap["fishtype"] = c.Fishtype
+	if c.Fishtype != "" {
+		objectMap["fishtype"] = c.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -391,7 +420,9 @@ func (f Fish) MarshalJSON() ([]byte, error) {
 	if f.Siblings != nil {
 		objectMap["siblings"] = f.Siblings
 	}
-	objectMap["fishtype"] = f.Fishtype
+	if f.Fishtype != "" {
+		objectMap["fishtype"] = f.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -521,12 +552,14 @@ type FloatWrapper struct {
 
 // Goblinshark ...
 type Goblinshark struct {
-	Jawsize  *int32       `json:"jawsize,omitempty"`
-	Age      *int32       `json:"age,omitempty"`
-	Birthday *date.Time   `json:"birthday,omitempty"`
-	Species  *string      `json:"species,omitempty"`
-	Length   *float64     `json:"length,omitempty"`
-	Siblings *[]BasicFish `json:"siblings,omitempty"`
+	Jawsize *int32 `json:"jawsize,omitempty"`
+	// Color - Colors possible. Possible values include: 'Pink', 'Gray', 'Brown'
+	Color    GoblinSharkColor `json:"color,omitempty"`
+	Age      *int32           `json:"age,omitempty"`
+	Birthday *date.Time       `json:"birthday,omitempty"`
+	Species  *string          `json:"species,omitempty"`
+	Length   *float64         `json:"length,omitempty"`
+	Siblings *[]BasicFish     `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
 	Fishtype Fishtype `json:"fishtype,omitempty"`
 }
@@ -537,6 +570,9 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if g.Jawsize != nil {
 		objectMap["jawsize"] = g.Jawsize
+	}
+	if g.Color != "" {
+		objectMap["color"] = g.Color
 	}
 	if g.Age != nil {
 		objectMap["age"] = g.Age
@@ -553,7 +589,9 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	if g.Siblings != nil {
 		objectMap["siblings"] = g.Siblings
 	}
-	objectMap["fishtype"] = g.Fishtype
+	if g.Fishtype != "" {
+		objectMap["fishtype"] = g.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -624,6 +662,15 @@ func (g *Goblinshark) UnmarshalJSON(body []byte) error {
 					return err
 				}
 				g.Jawsize = &jawsize
+			}
+		case "color":
+			if v != nil {
+				var colorVar GoblinSharkColor
+				err = json.Unmarshal(*v, &colorVar)
+				if err != nil {
+					return err
+				}
+				g.Color = colorVar
 			}
 		case "age":
 			if v != nil {
@@ -785,7 +832,9 @@ func (s Salmon) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -958,7 +1007,9 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -1172,7 +1223,9 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -1340,7 +1393,9 @@ func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 	if s.Siblings != nil {
 		objectMap["siblings"] = s.Siblings
 	}
-	objectMap["fishtype"] = s.Fishtype
+	if s.Fishtype != "" {
+		objectMap["fishtype"] = s.Fishtype
+	}
 	for k, v := range s.AdditionalProperties {
 		objectMap[k] = v
 	}

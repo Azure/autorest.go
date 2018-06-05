@@ -394,7 +394,6 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimeResponder(resp *ht
 }
 
 // PutUtcMaxDateTime put max datetime value Fri, 31 Dec 9999 23:59:59 GMT
-//
 func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
 	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
@@ -420,7 +419,7 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datet
 // PutUtcMaxDateTimePreparer prepares the PutUtcMaxDateTime request.
 func (client Datetimerfc1123Client) PutUtcMaxDateTimePreparer(ctx context.Context, datetimeBody date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/max"),
@@ -448,7 +447,6 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTimeResponder(resp *http.Respon
 }
 
 // PutUtcMinDateTime put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
-//
 func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
 	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
@@ -474,7 +472,7 @@ func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datet
 // PutUtcMinDateTimePreparer prepares the PutUtcMinDateTime request.
 func (client Datetimerfc1123Client) PutUtcMinDateTimePreparer(ctx context.Context, datetimeBody date.TimeRFC1123) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/datetimerfc1123/min"),

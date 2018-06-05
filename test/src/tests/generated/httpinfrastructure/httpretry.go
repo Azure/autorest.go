@@ -29,8 +29,8 @@ func NewHTTPRetryClientWithBaseURI(baseURI string) HTTPRetryClient {
 }
 
 // Delete503 return 503 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Delete503Preparer(ctx, booleanValue)
 	if err != nil {
@@ -56,7 +56,7 @@ func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool)
 // Delete503Preparer prepares the Delete503 request.
 func (client HTTPRetryClient) Delete503Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/503"))
@@ -189,8 +189,8 @@ func (client HTTPRetryClient) Head408Responder(resp *http.Response) (result auto
 }
 
 // Patch500 return 500 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Patch500Preparer(ctx, booleanValue)
 	if err != nil {
@@ -216,7 +216,7 @@ func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) 
 // Patch500Preparer prepares the Patch500 request.
 func (client HTTPRetryClient) Patch500Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/500"))
@@ -247,8 +247,8 @@ func (client HTTPRetryClient) Patch500Responder(resp *http.Response) (result aut
 }
 
 // Patch504 return 504 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Patch504Preparer(ctx, booleanValue)
 	if err != nil {
@@ -274,7 +274,7 @@ func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) 
 // Patch504Preparer prepares the Patch504 request.
 func (client HTTPRetryClient) Patch504Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/504"))
@@ -305,8 +305,8 @@ func (client HTTPRetryClient) Patch504Responder(resp *http.Response) (result aut
 }
 
 // Post503 return 503 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Post503Preparer(ctx, booleanValue)
 	if err != nil {
@@ -332,7 +332,7 @@ func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (
 // Post503Preparer prepares the Post503 request.
 func (client HTTPRetryClient) Post503Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/503"))
@@ -363,8 +363,8 @@ func (client HTTPRetryClient) Post503Responder(resp *http.Response) (result auto
 }
 
 // Put500 return 500 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put500Preparer(ctx, booleanValue)
 	if err != nil {
@@ -390,7 +390,7 @@ func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (r
 // Put500Preparer prepares the Put500 request.
 func (client HTTPRetryClient) Put500Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/500"))
@@ -421,8 +421,8 @@ func (client HTTPRetryClient) Put500Responder(resp *http.Response) (result autor
 }
 
 // Put504 return 504 status code, then 200 after retry
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	req, err := client.Put504Preparer(ctx, booleanValue)
 	if err != nil {
@@ -448,7 +448,7 @@ func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (r
 // Put504Preparer prepares the Put504 request.
 func (client HTTPRetryClient) Put504Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/retry/504"))

@@ -136,7 +136,6 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 
 // PutComplicated put complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
-//
 func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody BasicSalmon) (result autorest.Response, err error) {
 	req, err := client.PutComplicatedPreparer(ctx, complexBody)
 	if err != nil {
@@ -162,7 +161,7 @@ func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody
 // PutComplicatedPreparer prepares the PutComplicated request.
 func (client PolymorphismClient) PutComplicatedPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/complicated"),
@@ -190,7 +189,6 @@ func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (r
 }
 
 // PutMissingDiscriminator put complex types that are polymorphic, omitting the discriminator
-//
 func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
 	req, err := client.PutMissingDiscriminatorPreparer(ctx, complexBody)
 	if err != nil {
@@ -216,7 +214,7 @@ func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, co
 // PutMissingDiscriminatorPreparer prepares the PutMissingDiscriminator request.
 func (client PolymorphismClient) PutMissingDiscriminatorPreparer(ctx context.Context, complexBody BasicSalmon) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/missingdiscriminator"),
@@ -245,8 +243,8 @@ func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Res
 }
 
 // PutValid put complex types that are polymorphic
-//
-// complexBody is please put a salmon that looks like this:
+// Parameters:
+// complexBody - please put a salmon that looks like this:
 // {
 // 'fishtype':'Salmon',
 // 'location':'alaska',
@@ -310,7 +308,7 @@ func (client PolymorphismClient) PutValid(ctx context.Context, complexBody Basic
 // PutValidPreparer prepares the PutValid request.
 func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/valid"),
@@ -339,9 +337,9 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 
 // PutValidMissingRequired put complex types that are polymorphic, attempting to omit required 'birthday' field - the
 // request should not be allowed from the client
-//
-// complexBody is please attempt put a sawshark that looks like this, the client should not allow this data to be
-// sent:
+// Parameters:
+// complexBody - please attempt put a sawshark that looks like this, the client should not allow this data to
+// be sent:
 // {
 // "fishtype": "sawshark",
 // "species": "snaggle toothed",
@@ -398,7 +396,7 @@ func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, co
 // PutValidMissingRequiredPreparer prepares the PutValidMissingRequired request.
 func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Context, complexBody BasicFish) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/polymorphism/missingrequired/invalid"),

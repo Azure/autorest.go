@@ -84,27 +84,21 @@ namespace AutoRest.Go.Model
             RegisterRP = cmg.APIType.EqualsIgnoreCase("arm") && Url.Split("/").Any(p => p.EqualsIgnoreCase("subscriptions"));
         }
 
-        public string ParametersDocumentation
+        /// <summary>
+        /// Returns true if the local parameters contain documentation.
+        /// </summary>
+        public bool AddParamsDoc
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
                 foreach (var parameter in LocalParameters)
                 {
-                    if (!string.IsNullOrEmpty(parameter.Documentation))
+                    if (!string.IsNullOrWhiteSpace(parameter.Documentation.FixedValue))
                     {
-                        sb.Append(parameter.Name);
-                        sb.Append(" is ");
-                        sb.Append(parameter.Documentation.FixedValue.ToSentence());
-                        sb.Append(" ");
-                    }
-                    if (parameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
-                    {
-                        sb.Append(parameter.Name);
-                        sb.Append(" will be closed upon successful return. Callers should ensure closure when receiving an error.");
+                        return true;
                     }
                 }
-                return sb.ToString();
+                return false;
             }
         }
 
@@ -344,9 +338,9 @@ namespace AutoRest.Go.Model
             {
                 var decorators = new List<string>();
 
-                if (BodyParameter != null && !BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream))
+                if (BodyParameter != null)
                 {
-                    decorators.Add("autorest.AsJSON()");
+                    decorators.Add($"autorest.AsContentType(\"{RequestContentType}\")");
                 }
 
                 decorators.Add(HTTPMethodDecorator);
@@ -585,7 +579,7 @@ namespace AutoRest.Go.Model
                 // if the nextLinkName field in the swagger has a null value ("nextLinkName": null)
                 // then don't treat this operation as pageable.
                 var pageableExtension = Extensions[AzureExtensions.PageableExtension] as JContainer;
-                return (string)pageableExtension["nextLinkName"] != null;
+                return !string.IsNullOrWhiteSpace((string)pageableExtension["nextLinkName"]);
             }
         }
 

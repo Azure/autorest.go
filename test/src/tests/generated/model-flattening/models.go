@@ -39,6 +39,11 @@ const (
 	Updating ProvisioningStateValues = "Updating"
 )
 
+// PossibleProvisioningStateValuesValues returns an array of possible values for the ProvisioningStateValues const type.
+func PossibleProvisioningStateValuesValues() []ProvisioningStateValues {
+	return []ProvisioningStateValues{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
+}
+
 // BaseProduct the product documentation.
 type BaseProduct struct {
 	// ProductID - Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
@@ -52,6 +57,21 @@ type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 	*Error  `json:"parentError,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for Error.
+func (e Error) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if e.Status != nil {
+		objectMap["status"] = e.Status
+	}
+	if e.Message != nil {
+		objectMap["message"] = e.Message
+	}
+	if e.Error != nil {
+		objectMap["parentError"] = e.Error
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON is the custom unmarshaler for Error struct.
@@ -243,6 +263,15 @@ type ProductWrapper struct {
 	*WrappedProduct `json:"property,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for ProductWrapper.
+func (pw ProductWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if pw.WrappedProduct != nil {
+		objectMap["property"] = pw.WrappedProduct
+	}
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON is the custom unmarshaler for ProductWrapper struct.
 func (pw *ProductWrapper) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
@@ -349,6 +378,21 @@ type SimpleProduct struct {
 	Description *string `json:"base_product_description,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for SimpleProduct.
+func (sp SimpleProduct) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if sp.SimpleProductProperties != nil {
+		objectMap["details"] = sp.SimpleProductProperties
+	}
+	if sp.ProductID != nil {
+		objectMap["base_product_id"] = sp.ProductID
+	}
+	if sp.Description != nil {
+		objectMap["base_product_description"] = sp.Description
+	}
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON is the custom unmarshaler for SimpleProduct struct.
 func (sp *SimpleProduct) UnmarshalJSON(body []byte) error {
 	var m map[string]*json.RawMessage
@@ -398,6 +442,21 @@ type SimpleProductProperties struct {
 	// Capacity - Capacity of product. For example, 4 people.
 	Capacity    *string `json:"max_product_capacity,omitempty"`
 	*ProductURL `json:"max_product_image,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for SimpleProductProperties.
+func (spp SimpleProductProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if spp.MaxProductDisplayName != nil {
+		objectMap["max_product_display_name"] = spp.MaxProductDisplayName
+	}
+	if spp.Capacity != nil {
+		objectMap["max_product_capacity"] = spp.Capacity
+	}
+	if spp.ProductURL != nil {
+		objectMap["max_product_image"] = spp.ProductURL
+	}
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON is the custom unmarshaler for SimpleProductProperties struct.

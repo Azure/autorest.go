@@ -22,13 +22,17 @@ task 'init', "" ,(done)->
   
 # Run language-specific tests:
 task 'test', "", ['regenerate'], (done) ->
-  process.env.GOPATH = "#{basefolder}/test"
-  await execute "glide install",          { cwd: './test/src/tests' }, defer code, stderr, stdout
+  process.env.GOPATH = path.normalize("#{basefolder}/test")
+  await execute "dep ensure",          { cwd: './test/src/tests' }, defer code, stderr, stdout
   await execute "go run ./runner.go",     { cwd: './test/src/tests' }, defer code, stderr, stdout
   done();
 
 # CI job
 task 'testci', "more", [], (done) ->
+  await execute "go version", defer code, stderr, stdout
+  echo stderr
+  echo stdout
+
   # install latest AutoRest
   await autorest ["--latest"], defer code, stderr, stdout
 
@@ -47,8 +51,8 @@ task 'testci', "more", [], (done) ->
   throw "Potentially unnoticed regression (see diff above)! Run `npm run regenerate`, then review and commit the changes." if stdout.length + stderr.length > 0
   done()
 
-# update glide.lock
-task 'glideup', "runs `glide up` to update the lock file", [], (done) ->
-  process.env.GOPATH = "#{basefolder}/test"
-  await execute "glide up",          { cwd: './test/src/tests' }, defer code, stderr, stdout
+# Update test dependencies
+task 'updatetestdep', "", [], (done) ->
+  process.env.GOPATH = path.normalize("#{basefolder}/test")
+  await execute "dep ensure -update",          { cwd: './test/src/tests' }, defer code, stderr, stdout
   done()

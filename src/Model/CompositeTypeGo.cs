@@ -176,7 +176,7 @@ namespace AutoRest.Go.Model
                 {
 
                     CompositeType rootModelType = this;
-                    while (rootModelType.BaseModelType != null && rootModelType.BaseIsPolymorphic)
+                    while (rootModelType.BaseModelType?.BaseIsPolymorphic == true)
                     {
                         rootModelType = rootModelType.BaseModelType;
                     }
@@ -200,7 +200,7 @@ namespace AutoRest.Go.Model
 
         public override Property Add(Property item)
         {
-            var property = base.Add(item) as PropertyGo;
+            var property = base.Add(item);
             AddPolymorphicPropertyIfNecessary();
             return property;
         }
@@ -257,10 +257,6 @@ namespace AutoRest.Go.Model
             // Emit each property, except for named Enumerated types, as a pointer to the type
             foreach (var property in properties)
             {
-                if (!string.IsNullOrWhiteSpace(property.Documentation))
-                {
-                    indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
-                }
                 if (property.Deprecated)
                 {
                     var message = "This property has been deprecated.";
@@ -268,7 +264,11 @@ namespace AutoRest.Go.Model
                     {
                         message = property.DeprecationMessage;
                     }
-                    indented.Append($"//\n// Deprecated: {message}\n");
+                    indented.Append($"// Deprecated: {message}\n");
+                }
+                if (!string.IsNullOrWhiteSpace(property.Documentation))
+                {
+                    indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
                 }
 
                 indented.AppendLine(property.Field);
@@ -314,7 +314,7 @@ namespace AutoRest.Go.Model
             {
                 base.Add(New<Property>(new
                 {
-                    Name = CodeNamerGo.Instance.GetPropertyName(PolymorphicDiscriminator),
+                    Name = PolymorphicDiscriminator,
                     SerializedName = PolymorphicDiscriminator,
                     ModelType = DiscriminatorEnum
                 }));

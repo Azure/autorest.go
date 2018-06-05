@@ -53,7 +53,7 @@ namespace AutoRest.Go.Model
 
         public override string Fields()
         {
-            return "    azure.Future\n    req *http.Request";
+            return "    azure.Future";
         }
 
         /// <summary>
@@ -82,6 +82,11 @@ namespace AutoRest.Go.Model
                 return resTypeName;
             }
         }
+
+        /// <summary>
+        /// Returns true if the result type is the default response type.
+        /// </summary>
+        public bool IsDefaultReturnType => ResultType == null;
 
         /// <summary>
         /// Gets the name of the responder method associated with this future.

@@ -30,7 +30,6 @@ func NewExplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 }
 
 // PostOptionalArrayHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
-//
 func (client ExplicitClient) PostOptionalArrayHeader(ctx context.Context, headerParameter []string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalArrayHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -86,7 +85,6 @@ func (client ExplicitClient) PostOptionalArrayHeaderResponder(resp *http.Respons
 }
 
 // PostOptionalArrayParameter test explicitly optional array. Please put null.
-//
 func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bodyParameter []string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalArrayParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -112,7 +110,7 @@ func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bod
 // PostOptionalArrayParameterPreparer prepares the PostOptionalArrayParameter request.
 func (client ExplicitClient) PostOptionalArrayParameterPreparer(ctx context.Context, bodyParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/array/parameter"))
@@ -143,7 +141,6 @@ func (client ExplicitClient) PostOptionalArrayParameterResponder(resp *http.Resp
 }
 
 // PostOptionalArrayProperty test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
-//
 func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (result autorest.Response, err error) {
 	req, err := client.PostOptionalArrayPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -169,7 +166,7 @@ func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, body
 // PostOptionalArrayPropertyPreparer prepares the PostOptionalArrayProperty request.
 func (client ExplicitClient) PostOptionalArrayPropertyPreparer(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/array/property"))
@@ -200,7 +197,6 @@ func (client ExplicitClient) PostOptionalArrayPropertyResponder(resp *http.Respo
 }
 
 // PostOptionalClassParameter test explicitly optional complex object. Please put null.
-//
 func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bodyParameter *Product) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -233,7 +229,7 @@ func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bod
 // PostOptionalClassParameterPreparer prepares the PostOptionalClassParameter request.
 func (client ExplicitClient) PostOptionalClassParameterPreparer(ctx context.Context, bodyParameter *Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/class/parameter"))
@@ -265,7 +261,6 @@ func (client ExplicitClient) PostOptionalClassParameterResponder(resp *http.Resp
 
 // PostOptionalClassProperty test explicitly optional complex object. Please put a valid class-wrapper with 'value' =
 // null.
-//
 func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, bodyParameter *ClassOptionalWrapper) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -300,7 +295,7 @@ func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, body
 // PostOptionalClassPropertyPreparer prepares the PostOptionalClassProperty request.
 func (client ExplicitClient) PostOptionalClassPropertyPreparer(ctx context.Context, bodyParameter *ClassOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/class/property"))
@@ -331,7 +326,6 @@ func (client ExplicitClient) PostOptionalClassPropertyResponder(resp *http.Respo
 }
 
 // PostOptionalIntegerHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
-//
 func (client ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, headerParameter *int32) (result autorest.Response, err error) {
 	req, err := client.PostOptionalIntegerHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -387,7 +381,6 @@ func (client ExplicitClient) PostOptionalIntegerHeaderResponder(resp *http.Respo
 }
 
 // PostOptionalIntegerParameter test explicitly optional integer. Please put null.
-//
 func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, bodyParameter *int32) (result autorest.Response, err error) {
 	req, err := client.PostOptionalIntegerParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -413,7 +406,7 @@ func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, b
 // PostOptionalIntegerParameterPreparer prepares the PostOptionalIntegerParameter request.
 func (client ExplicitClient) PostOptionalIntegerParameterPreparer(ctx context.Context, bodyParameter *int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/integer/parameter"))
@@ -444,7 +437,6 @@ func (client ExplicitClient) PostOptionalIntegerParameterResponder(resp *http.Re
 }
 
 // PostOptionalIntegerProperty test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
-//
 func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bodyParameter *IntOptionalWrapper) (result autorest.Response, err error) {
 	req, err := client.PostOptionalIntegerPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -470,7 +462,7 @@ func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bo
 // PostOptionalIntegerPropertyPreparer prepares the PostOptionalIntegerProperty request.
 func (client ExplicitClient) PostOptionalIntegerPropertyPreparer(ctx context.Context, bodyParameter *IntOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/integer/property"))
@@ -501,7 +493,6 @@ func (client ExplicitClient) PostOptionalIntegerPropertyResponder(resp *http.Res
 }
 
 // PostOptionalStringHeader test explicitly optional string. Please put a header 'headerParameter' => null.
-//
 func (client ExplicitClient) PostOptionalStringHeader(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalStringHeaderPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -557,7 +548,6 @@ func (client ExplicitClient) PostOptionalStringHeaderResponder(resp *http.Respon
 }
 
 // PostOptionalStringParameter test explicitly optional string. Please put null.
-//
 func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	req, err := client.PostOptionalStringParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -583,7 +573,7 @@ func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bo
 // PostOptionalStringParameterPreparer prepares the PostOptionalStringParameter request.
 func (client ExplicitClient) PostOptionalStringParameterPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/string/parameter"))
@@ -614,7 +604,6 @@ func (client ExplicitClient) PostOptionalStringParameterResponder(resp *http.Res
 }
 
 // PostOptionalStringProperty test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
-//
 func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bodyParameter *StringOptionalWrapper) (result autorest.Response, err error) {
 	req, err := client.PostOptionalStringPropertyPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -640,7 +629,7 @@ func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bod
 // PostOptionalStringPropertyPreparer prepares the PostOptionalStringProperty request.
 func (client ExplicitClient) PostOptionalStringPropertyPreparer(ctx context.Context, bodyParameter *StringOptionalWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/optional/string/property"))
@@ -672,7 +661,6 @@ func (client ExplicitClient) PostOptionalStringPropertyResponder(resp *http.Resp
 
 // PostRequiredArrayHeader test explicitly required array. Please put a header 'headerParameter' => null and the client
 // library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: headerParameter,
@@ -733,7 +721,6 @@ func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Respons
 
 // PostRequiredArrayParameter test explicitly required array. Please put null and the client library should throw
 // before the request is sent.
-//
 func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -765,7 +752,7 @@ func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bod
 // PostRequiredArrayParameterPreparer prepares the PostRequiredArrayParameter request.
 func (client ExplicitClient) PostRequiredArrayParameterPreparer(ctx context.Context, bodyParameter []string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/array/parameter"),
@@ -795,7 +782,6 @@ func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Resp
 
 // PostRequiredArrayProperty test explicitly required array. Please put a valid array-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -827,7 +813,7 @@ func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, body
 // PostRequiredArrayPropertyPreparer prepares the PostRequiredArrayProperty request.
 func (client ExplicitClient) PostRequiredArrayPropertyPreparer(ctx context.Context, bodyParameter ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/array/property"),
@@ -857,7 +843,6 @@ func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Respo
 
 // PostRequiredClassParameter test explicitly required complex object. Please put null and the client library should
 // throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -889,7 +874,7 @@ func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bod
 // PostRequiredClassParameterPreparer prepares the PostRequiredClassParameter request.
 func (client ExplicitClient) PostRequiredClassParameterPreparer(ctx context.Context, bodyParameter Product) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/class/parameter"),
@@ -919,7 +904,6 @@ func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Resp
 
 // PostRequiredClassProperty test explicitly required complex object. Please put a valid class-wrapper with 'value' =
 // null and the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -952,7 +936,7 @@ func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, body
 // PostRequiredClassPropertyPreparer prepares the PostRequiredClassProperty request.
 func (client ExplicitClient) PostRequiredClassPropertyPreparer(ctx context.Context, bodyParameter ClassWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/class/property"),
@@ -982,7 +966,6 @@ func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Respo
 
 // PostRequiredIntegerHeader test explicitly required integer. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32) (result Error, err error) {
 	req, err := client.PostRequiredIntegerHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -1037,7 +1020,6 @@ func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Respo
 
 // PostRequiredIntegerParameter test explicitly required integer. Please put null and the client library should throw
 // before the request is sent.
-//
 func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32) (result Error, err error) {
 	req, err := client.PostRequiredIntegerParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -1063,7 +1045,7 @@ func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, b
 // PostRequiredIntegerParameterPreparer prepares the PostRequiredIntegerParameter request.
 func (client ExplicitClient) PostRequiredIntegerParameterPreparer(ctx context.Context, bodyParameter int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/integer/parameter"),
@@ -1093,7 +1075,6 @@ func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Re
 
 // PostRequiredIntegerProperty test explicitly required integer. Please put a valid int-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -1125,7 +1106,7 @@ func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bo
 // PostRequiredIntegerPropertyPreparer prepares the PostRequiredIntegerProperty request.
 func (client ExplicitClient) PostRequiredIntegerPropertyPreparer(ctx context.Context, bodyParameter IntWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/integer/property"),
@@ -1155,7 +1136,6 @@ func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Res
 
 // PostRequiredStringHeader test explicitly required string. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string) (result Error, err error) {
 	req, err := client.PostRequiredStringHeaderPreparer(ctx, headerParameter)
 	if err != nil {
@@ -1210,7 +1190,6 @@ func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Respon
 
 // PostRequiredStringParameter test explicitly required string. Please put null and the client library should throw
 // before the request is sent.
-//
 func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string) (result Error, err error) {
 	req, err := client.PostRequiredStringParameterPreparer(ctx, bodyParameter)
 	if err != nil {
@@ -1236,7 +1215,7 @@ func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bo
 // PostRequiredStringParameterPreparer prepares the PostRequiredStringParameter request.
 func (client ExplicitClient) PostRequiredStringParameterPreparer(ctx context.Context, bodyParameter string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/string/parameter"),
@@ -1266,7 +1245,6 @@ func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Res
 
 // PostRequiredStringProperty test explicitly required string. Please put a valid string-wrapper with 'value' = null
 // and the client library should throw before the request is sent.
-//
 func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper) (result Error, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: bodyParameter,
@@ -1298,7 +1276,7 @@ func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bod
 // PostRequiredStringPropertyPreparer prepares the PostRequiredStringProperty request.
 func (client ExplicitClient) PostRequiredStringPropertyPreparer(ctx context.Context, bodyParameter StringWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/reqopt/requied/string/property"),

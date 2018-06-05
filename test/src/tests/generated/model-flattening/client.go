@@ -251,8 +251,8 @@ func (client BaseClient) GetWrappedArrayResponder(resp *http.Response) (result L
 }
 
 // PostFlattenedSimpleProduct put Flattened Simple Product with client flattening true on the parameter
-//
-// simpleBodyProduct is simple body product to post
+// Parameters:
+// simpleBodyProduct - simple body product to post
 func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
@@ -289,7 +289,7 @@ func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleB
 // PostFlattenedSimpleProductPreparer prepares the PostFlattenedSimpleProduct request.
 func (client BaseClient) PostFlattenedSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/customFlattening"))
@@ -321,8 +321,8 @@ func (client BaseClient) PostFlattenedSimpleProductResponder(resp *http.Response
 }
 
 // PutArray put External Resource as an Array
-//
-// resourceArray is external Resource as an Array to put
+// Parameters:
+// resourceArray - external Resource as an Array to put
 func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
 	req, err := client.PutArrayPreparer(ctx, resourceArray)
 	if err != nil {
@@ -348,7 +348,7 @@ func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource)
 // PutArrayPreparer prepares the PutArray request.
 func (client BaseClient) PutArrayPreparer(ctx context.Context, resourceArray []Resource) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/array"))
@@ -379,8 +379,8 @@ func (client BaseClient) PutArrayResponder(resp *http.Response) (result autorest
 }
 
 // PutDictionary put External Resource as a Dictionary
-//
-// resourceDictionary is external Resource as a Dictionary to put
+// Parameters:
+// resourceDictionary - external Resource as a Dictionary to put
 func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
 	req, err := client.PutDictionaryPreparer(ctx, resourceDictionary)
 	if err != nil {
@@ -406,7 +406,7 @@ func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary m
 // PutDictionaryPreparer prepares the PutDictionary request.
 func (client BaseClient) PutDictionaryPreparer(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/dictionary"))
@@ -437,8 +437,8 @@ func (client BaseClient) PutDictionaryResponder(resp *http.Response) (result aut
 }
 
 // PutResourceCollection put External Resource as a ResourceCollection
-//
-// resourceComplexObject is external Resource as a ResourceCollection to put
+// Parameters:
+// resourceComplexObject - external Resource as a ResourceCollection to put
 func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
 	req, err := client.PutResourceCollectionPreparer(ctx, resourceComplexObject)
 	if err != nil {
@@ -464,7 +464,7 @@ func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComp
 // PutResourceCollectionPreparer prepares the PutResourceCollection request.
 func (client BaseClient) PutResourceCollectionPreparer(ctx context.Context, resourceComplexObject *ResourceCollection) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/resourcecollection"))
@@ -495,8 +495,8 @@ func (client BaseClient) PutResourceCollectionResponder(resp *http.Response) (re
 }
 
 // PutSimpleProduct put Simple Product with client flattening true on the model
-//
-// simpleBodyProduct is simple body product to put
+// Parameters:
+// simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
@@ -533,7 +533,7 @@ func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct
 // PutSimpleProductPreparer prepares the PutSimpleProduct request.
 func (client BaseClient) PutSimpleProductPreparer(ctx context.Context, simpleBodyProduct *SimpleProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/customFlattening"))
@@ -565,8 +565,9 @@ func (client BaseClient) PutSimpleProductResponder(resp *http.Response) (result 
 }
 
 // PutSimpleProductWithGrouping put Simple Product with client flattening true on the model
-//
-// name is product name with value 'groupproduct' simpleBodyProduct is simple body product to put
+// Parameters:
+// name - product name with value 'groupproduct'
+// simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
@@ -607,7 +608,7 @@ func (client BaseClient) PutSimpleProductWithGroupingPreparer(ctx context.Contex
 	}
 
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/model-flatten/customFlattening/parametergrouping/{name}/", pathParameters))
@@ -640,8 +641,8 @@ func (client BaseClient) PutSimpleProductWithGroupingResponder(resp *http.Respon
 
 // PutWrappedArray no need to have a route in Express server for this operation. Used to verify the type flattened is
 // not removed if it's referenced in an array
-//
-// resourceArray is external Resource as an Array to put
+// Parameters:
+// resourceArray - external Resource as an Array to put
 func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
 	req, err := client.PutWrappedArrayPreparer(ctx, resourceArray)
 	if err != nil {
@@ -667,7 +668,7 @@ func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []Wr
 // PutWrappedArrayPreparer prepares the PutWrappedArray request.
 func (client BaseClient) PutWrappedArrayPreparer(ctx context.Context, resourceArray []WrappedProduct) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/model-flatten/wrappedarray"))

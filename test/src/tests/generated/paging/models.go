@@ -8,6 +8,7 @@ package paginggroup
 
 import (
 	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
 	"net/http"
 )
@@ -39,6 +40,11 @@ const (
 	// Updating ...
 	Updating Status = "Updating"
 )
+
+// PossibleStatusValues returns an array of possible values for the Status const type.
+func PossibleStatusValues() []Status {
+	return []Status{Accepted, Canceled, Created, Creating, Deleted, Deleting, Failed, OK, Succeeded, Updated, Updating}
+}
 
 // OdataProductResult ...
 type OdataProductResult struct {
@@ -144,6 +150,64 @@ func (page OdataProductResultPage) Values() []Product {
 type OperationResult struct {
 	// Status - The status of the request. Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	Status Status `json:"status,omitempty"`
+}
+
+// PagingGetMultiplePagesLROAllFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type PagingGetMultiplePagesLROAllFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *PagingGetMultiplePagesLROAllFuture) Result(client PagingClient) (prp ProductResultPage, err error) {
+	var done bool
+	done, err = future.Done(client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROAllFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
+		prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
+type PagingGetMultiplePagesLROFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *PagingGetMultiplePagesLROFuture) Result(client PagingClient) (prp ProductResultPage, err error) {
+	var done bool
+	done, err = future.Done(client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("paginggroup.PagingGetMultiplePagesLROFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if prp.pr.Response.Response, err = future.GetResult(sender); err == nil && prp.pr.Response.Response.StatusCode != http.StatusNoContent {
+		prp, err = client.GetMultiplePagesLROResponder(prp.pr.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", prp.pr.Response.Response, "Failure responding to request")
+		}
+	}
+	return
 }
 
 // Product ...

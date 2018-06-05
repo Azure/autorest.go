@@ -4,6 +4,15 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.EnumTypeGo>
 
+@if (Model.Deprecated)
+{
+    var message = "This type has been deprecated.";
+    if (!string.IsNullOrWhiteSpace(Model.DeprecationMessage))
+    {
+        message = Model.DeprecationMessage;
+    }
+@:@WrapComment("// Deprecated: ", message)
+}
 @if (Model.Name.Value.Length >= Settings.MaximumCommentColumns)
 {
     <text>
@@ -16,26 +25,20 @@ else
         @WrapComment("// ", Model.Documentation)
     </text>
 }
-@if (Model.Deprecated)
-{
-    var message = "This type has been deprecated.";
-    if (!string.IsNullOrWhiteSpace(Model.DeprecationMessage))
-    {
-        message = Model.DeprecationMessage;
-    }
-@://
-@:@WrapComment("// Deprecated: ", message)
-}
 type @Model.Name string
 
 @EmptyLine
 @if (Model.Values.Any())
 {
+    var possibleFuncName = $"Possible{Model.Name}Values";
+    var orderedValues = new List<string>();
     <text>
     const (
     @foreach (var v in Model.Values.OrderBy(v => v.Name))
     {
         var comment = string.Empty;
+        var memName = CodeNamerGo.Instance.GetEnumMemberName(v.Name);
+        orderedValues.Add(memName);
 
         if (string.IsNullOrWhiteSpace(v.Description))
         {
@@ -53,9 +56,13 @@ type @Model.Name string
             </text>
         }
         <text>
-        @(CodeNamerGo.Instance.GetEnumMemberName(v.Name)) @(Model.Name) = "@(v.SerializedName)"
+        @(memName) @(Model.Name) = "@(v.SerializedName)"
         </text>
     }
     )
+    // @possibleFuncName returns an array of possible values for the @Model.Name const type.
+    func @(possibleFuncName)() []@Model.Name {
+        return []@(Model.Name){@(string.Join(',', orderedValues))}
+    }
     </text>
 }

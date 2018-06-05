@@ -37,12 +37,59 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool UseOneVer => Settings.Instance.Host?.GetValue<bool>("use-onever").Result ?? false;
 
+        /// <summary>
+        /// Returns the value passed with the --tag option or null if not specified.
+        /// </summary>
+        public string Tag => Settings.Instance.Host?.GetValue<string>("tag").Result ?? null;
+
+        /// <summary>
+        /// Returns the name of the packages version directory, e.g. "2018-02-01", calculated
+        /// from the value of the output-folder.  Returns null if output-folder wasn't specified.
+        /// </summary>
+        private string PackageVerDir()
+        {
+            var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result;
+            if (string.IsNullOrWhiteSpace(outDir))
+            {
+                return null;
+            }
+
+            // the output-folder is defined in the config file like this:
+            //
+            //   output-folder: $(go-sdk-folder)/services/monitor/mgmt/2017-05-01-preview/insights
+            //
+            // we want the "2017-05-01-preview" portion
+
+            var i = outDir.LastIndexOf('/');
+            var j = outDir.LastIndexOf('/', i - 1);
+            return outDir.Substring(j + 1, i - j - 1);
+        }
+
         private string DefaultUserAgent
         {
             get
             {
                 var verStr = UseOneVer ? $"\" + {OneVerString} + \"" : Version;
-                return $"Azure-SDK-For-Go/{verStr} arm-{Namespace}/{ApiVersion}";
+                var suffix = "";
+
+                // the API version will not be populated for composite packages that span
+                // multiple swaggers.  in that case first try to get the version info from
+                // the output directory of the package.  if that fails then try the tag,
+                // and if that fails just include the package name.
+                if (!string.IsNullOrWhiteSpace(ApiVersion))
+                {
+                    suffix = $"/{ApiVersion}";
+                }
+                else if (!string.IsNullOrWhiteSpace(PackageVerDir()))
+                {
+                    suffix = $"/{PackageVerDir()}";
+                }
+                else if (!string.IsNullOrWhiteSpace(Tag))
+                {
+                    suffix = $"/{Tag}";
+                }
+
+                return $"Azure-SDK-For-Go/{verStr} {Namespace}{suffix}";
             }
         }
 
@@ -90,10 +137,15 @@ namespace AutoRest.Go.Model
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest"));
                 }
-                if (ModelTypes.Any(mt => mt is FutureTypeGo))
+                var futureModels = ModelTypes.Where(mt => mt is FutureTypeGo).Cast<FutureTypeGo>();
+                if (futureModels.Any())
                 {
                     imports.Add(PrimaryTypeGo.GetImportLine("github.com/Azure/go-autorest/autorest/azure"));
-                    imports.Add(PrimaryTypeGo.GetImportLine("net/http"));
+                    // if any of the futures return the non-default response then we need the net/http package
+                    if (futureModels.Any(fm => !fm.IsDefaultReturnType))
+                    {
+                        imports.Add(PrimaryTypeGo.GetImportLine("net/http"));
+                    }
                 }
                 ModelTypes.Cast<CompositeTypeGo>()
                     .ForEach(mt =>

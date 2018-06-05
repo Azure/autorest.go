@@ -498,7 +498,6 @@ func (client IntClient) GetUnixTimeResponder(resp *http.Response) (result UnixTi
 }
 
 // PutMax32 put max int32 value
-//
 func (client IntClient) PutMax32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
 	req, err := client.PutMax32Preparer(ctx, intBody)
 	if err != nil {
@@ -524,7 +523,7 @@ func (client IntClient) PutMax32(ctx context.Context, intBody int32) (result aut
 // PutMax32Preparer prepares the PutMax32 request.
 func (client IntClient) PutMax32Preparer(ctx context.Context, intBody int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/max/32"),
@@ -552,7 +551,6 @@ func (client IntClient) PutMax32Responder(resp *http.Response) (result autorest.
 }
 
 // PutMax64 put max int64 value
-//
 func (client IntClient) PutMax64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
 	req, err := client.PutMax64Preparer(ctx, intBody)
 	if err != nil {
@@ -578,7 +576,7 @@ func (client IntClient) PutMax64(ctx context.Context, intBody int64) (result aut
 // PutMax64Preparer prepares the PutMax64 request.
 func (client IntClient) PutMax64Preparer(ctx context.Context, intBody int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/max/64"),
@@ -606,7 +604,6 @@ func (client IntClient) PutMax64Responder(resp *http.Response) (result autorest.
 }
 
 // PutMin32 put min int32 value
-//
 func (client IntClient) PutMin32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
 	req, err := client.PutMin32Preparer(ctx, intBody)
 	if err != nil {
@@ -632,7 +629,7 @@ func (client IntClient) PutMin32(ctx context.Context, intBody int32) (result aut
 // PutMin32Preparer prepares the PutMin32 request.
 func (client IntClient) PutMin32Preparer(ctx context.Context, intBody int32) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/min/32"),
@@ -660,7 +657,6 @@ func (client IntClient) PutMin32Responder(resp *http.Response) (result autorest.
 }
 
 // PutMin64 put min int64 value
-//
 func (client IntClient) PutMin64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
 	req, err := client.PutMin64Preparer(ctx, intBody)
 	if err != nil {
@@ -686,7 +682,7 @@ func (client IntClient) PutMin64(ctx context.Context, intBody int64) (result aut
 // PutMin64Preparer prepares the PutMin64 request.
 func (client IntClient) PutMin64Preparer(ctx context.Context, intBody int64) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/min/64"),
@@ -714,7 +710,6 @@ func (client IntClient) PutMin64Responder(resp *http.Response) (result autorest.
 }
 
 // PutUnixTimeDate put datetime encoded as Unix time
-//
 func (client IntClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTime) (result autorest.Response, err error) {
 	req, err := client.PutUnixTimeDatePreparer(ctx, intBody)
 	if err != nil {
@@ -740,7 +735,7 @@ func (client IntClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTi
 // PutUnixTimeDatePreparer prepares the PutUnixTimeDate request.
 func (client IntClient) PutUnixTimeDatePreparer(ctx context.Context, intBody date.UnixTime) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/int/unixtime"),

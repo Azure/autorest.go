@@ -29,8 +29,8 @@ func NewHTTPClientFailureClientWithBaseURI(baseURI string) HTTPClientFailureClie
 }
 
 // Delete400 return 400 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Delete400Preparer(ctx, booleanValue)
 	if err != nil {
@@ -56,7 +56,7 @@ func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValu
 // Delete400Preparer prepares the Delete400 request.
 func (client HTTPClientFailureClient) Delete400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -88,8 +88,8 @@ func (client HTTPClientFailureClient) Delete400Responder(resp *http.Response) (r
 }
 
 // Delete407 return 407 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Delete407Preparer(ctx, booleanValue)
 	if err != nil {
@@ -115,7 +115,7 @@ func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValu
 // Delete407Preparer prepares the Delete407 request.
 func (client HTTPClientFailureClient) Delete407Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/407"))
@@ -147,8 +147,8 @@ func (client HTTPClientFailureClient) Delete407Responder(resp *http.Response) (r
 }
 
 // Delete417 return 417 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Delete417Preparer(ctx, booleanValue)
 	if err != nil {
@@ -174,7 +174,7 @@ func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValu
 // Delete417Preparer prepares the Delete417 request.
 func (client HTTPClientFailureClient) Delete417Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsDelete(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/417"))
@@ -726,8 +726,8 @@ func (client HTTPClientFailureClient) Head429Responder(resp *http.Response) (res
 }
 
 // Patch400 return 400 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Patch400Preparer(ctx, booleanValue)
 	if err != nil {
@@ -753,7 +753,7 @@ func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue
 // Patch400Preparer prepares the Patch400 request.
 func (client HTTPClientFailureClient) Patch400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -785,8 +785,8 @@ func (client HTTPClientFailureClient) Patch400Responder(resp *http.Response) (re
 }
 
 // Patch405 return 405 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Patch405Preparer(ctx, booleanValue)
 	if err != nil {
@@ -812,7 +812,7 @@ func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue
 // Patch405Preparer prepares the Patch405 request.
 func (client HTTPClientFailureClient) Patch405Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/405"))
@@ -844,8 +844,8 @@ func (client HTTPClientFailureClient) Patch405Responder(resp *http.Response) (re
 }
 
 // Patch414 return 414 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Patch414Preparer(ctx, booleanValue)
 	if err != nil {
@@ -871,7 +871,7 @@ func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue
 // Patch414Preparer prepares the Patch414 request.
 func (client HTTPClientFailureClient) Patch414Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPatch(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/414"))
@@ -903,8 +903,8 @@ func (client HTTPClientFailureClient) Patch414Responder(resp *http.Response) (re
 }
 
 // Post400 return 400 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Post400Preparer(ctx, booleanValue)
 	if err != nil {
@@ -930,7 +930,7 @@ func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue 
 // Post400Preparer prepares the Post400 request.
 func (client HTTPClientFailureClient) Post400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -962,8 +962,8 @@ func (client HTTPClientFailureClient) Post400Responder(resp *http.Response) (res
 }
 
 // Post406 return 406 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Post406Preparer(ctx, booleanValue)
 	if err != nil {
@@ -989,7 +989,7 @@ func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue 
 // Post406Preparer prepares the Post406 request.
 func (client HTTPClientFailureClient) Post406Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/406"))
@@ -1021,8 +1021,8 @@ func (client HTTPClientFailureClient) Post406Responder(resp *http.Response) (res
 }
 
 // Post415 return 415 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Post415Preparer(ctx, booleanValue)
 	if err != nil {
@@ -1048,7 +1048,7 @@ func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue 
 // Post415Preparer prepares the Post415 request.
 func (client HTTPClientFailureClient) Post415Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/415"))
@@ -1080,8 +1080,8 @@ func (client HTTPClientFailureClient) Post415Responder(resp *http.Response) (res
 }
 
 // Put400 return 400 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Put400Preparer(ctx, booleanValue)
 	if err != nil {
@@ -1107,7 +1107,7 @@ func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *
 // Put400Preparer prepares the Put400 request.
 func (client HTTPClientFailureClient) Put400Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/400"))
@@ -1139,8 +1139,8 @@ func (client HTTPClientFailureClient) Put400Responder(resp *http.Response) (resu
 }
 
 // Put404 return 404 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Put404Preparer(ctx, booleanValue)
 	if err != nil {
@@ -1166,7 +1166,7 @@ func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *
 // Put404Preparer prepares the Put404 request.
 func (client HTTPClientFailureClient) Put404Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/404"))
@@ -1198,8 +1198,8 @@ func (client HTTPClientFailureClient) Put404Responder(resp *http.Response) (resu
 }
 
 // Put409 return 409 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Put409Preparer(ctx, booleanValue)
 	if err != nil {
@@ -1225,7 +1225,7 @@ func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *
 // Put409Preparer prepares the Put409 request.
 func (client HTTPClientFailureClient) Put409Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/409"))
@@ -1257,8 +1257,8 @@ func (client HTTPClientFailureClient) Put409Responder(resp *http.Response) (resu
 }
 
 // Put413 return 413 status code - should be represented in the client as an error
-//
-// booleanValue is simple boolean value true
+// Parameters:
+// booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	req, err := client.Put413Preparer(ctx, booleanValue)
 	if err != nil {
@@ -1284,7 +1284,7 @@ func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *
 // Put413Preparer prepares the Put413 request.
 func (client HTTPClientFailureClient) Put413Preparer(ctx context.Context, booleanValue *bool) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/http/failure/client/413"))

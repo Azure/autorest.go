@@ -185,8 +185,8 @@ func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWr
 }
 
 // PutEmpty put complex types with array property which is empty
-//
-// complexBody is please put an empty array
+// Parameters:
+// complexBody - please put an empty array
 func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	req, err := client.PutEmptyPreparer(ctx, complexBody)
 	if err != nil {
@@ -212,7 +212,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper
 // PutEmptyPreparer prepares the PutEmpty request.
 func (client ArrayClient) PutEmptyPreparer(ctx context.Context, complexBody ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/empty"),
@@ -240,9 +240,9 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 }
 
 // PutValid put complex types with array property
-//
-// complexBody is please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps
-// over the lazy dog"
+// Parameters:
+// complexBody - please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox
+// jumps over the lazy dog"
 func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
@@ -268,7 +268,7 @@ func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper
 // PutValidPreparer prepares the PutValid request.
 func (client ArrayClient) PutValidPreparer(ctx context.Context, complexBody ArrayWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/array/valid"),

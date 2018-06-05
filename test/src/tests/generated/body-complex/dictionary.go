@@ -237,8 +237,8 @@ func (client DictionaryClient) GetValidResponder(resp *http.Response) (result Di
 }
 
 // PutEmpty put complex types with dictionary property which is empty
-//
-// complexBody is please put an empty dictionary
+// Parameters:
+// complexBody - please put an empty dictionary
 func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
 	req, err := client.PutEmptyPreparer(ctx, complexBody)
 	if err != nil {
@@ -264,7 +264,7 @@ func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody Diction
 // PutEmptyPreparer prepares the PutEmpty request.
 func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, complexBody DictionaryWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/empty"),
@@ -292,9 +292,9 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 }
 
 // PutValid put complex types with dictionary property
-//
-// complexBody is please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint", "xls":"excel",
-// "exe":"", "":null
+// Parameters:
+// complexBody - please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint",
+// "xls":"excel", "exe":"", "":null
 func (client DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
@@ -320,7 +320,7 @@ func (client DictionaryClient) PutValid(ctx context.Context, complexBody Diction
 // PutValidPreparer prepares the PutValid request.
 func (client DictionaryClient) PutValidPreparer(ctx context.Context, complexBody DictionaryWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/dictionary/typed/valid"),

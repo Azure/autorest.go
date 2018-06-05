@@ -17,12 +17,11 @@
 
 @if (Model.HasInterface())
 {
-    @WrapComment("// ", $"{Model.GetInterfaceName()} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
-    @://
     @:@WrapComment("// Deprecated: ", depMessage)
     }
+    @WrapComment("// ", $"{Model.GetInterfaceName()} {Model.Documentation.ToSentence()}")
     <text>
     type @(Model.GetInterfaceName()) interface {
     @foreach (var dt in Model.DerivedTypes)
@@ -37,12 +36,11 @@
     }
 
     @EmptyLine
-    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
-    @://
     @:@WrapComment("// Deprecated: ", depMessage)
     }
+    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -129,11 +127,11 @@ else
         }
     }
     <text>
-    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     @if (Model.Deprecated)
     {
     @:@WrapComment("// Deprecated: ", depMessage)
     }
+    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
     type @(Model.Name) struct {
     @(Model.AddHTTPResponse())
     @(Model.Fields())
@@ -141,7 +139,7 @@ else
     </text>
 }
 
-@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
+@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.HasFlattenedFields ||  Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
 {
     <text>
         @EmptyLine
@@ -160,6 +158,12 @@ else
             if (property.IsPointer || property.ModelType is DictionaryTypeGo)
             {
                 @:if(@(Model.Name.FixedValue.ToShortName()).@(property.Name) != nil) {
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
+                @:}
+            }
+            else if (property.ModelType is EnumTypeGo)
+            {
+                @:if(@(Model.Name.FixedValue.ToShortName()).@(property.Name) != "") {
                 @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
                 @:}
             }
@@ -319,7 +323,7 @@ else
             {
                     @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.Name))
             }
-            else 
+            else
             {
                 @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = &@(CodeNamerGo.Instance.GetVariableName(p.Name))
             }
@@ -421,43 +425,47 @@ else
     var ftg = Model as FutureTypeGo;
     var resultVar = ftg.ResultTypeName.ToShortName();
     var resultVarTarget = resultVar;
-    if (ftg.ResultType is IteratorTypeGo)
+    var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
+    if (ftg.ResultType is PageTypeGo ptg)
     {
-        resultVarTarget = $"{resultVarTarget}.{ftg.ResultType.Cast<IteratorTypeGo>().PageField}";
+        resultVarTarget = $"{resultVarTarget}.{ptg.ResultFieldName}";
     }
     <text>
     // Result returns the result of the asynchronous operation.
     // If the operation has not completed it will return an error.
-    func (future @Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
+    func (future *@Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
     var done bool
     done, err = future.Done(client)
     if err != nil {
-    return
+        err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Polling failure")
+        return
     }
     if !done {
-    return @resultVar, autorest.NewError("@(Model.CodeModel.Namespace).@Model.Name", "Result", "asynchronous operation has not completed")
+        err = azure.NewAsyncOpIncompleteError("@futureTypeName")
+        return
     }
-    if future.PollingMethod() == azure.PollingLocation {
-    @resultVarTarget, err = client.@(ftg.ResponderMethodName)(future.Response())
-    return
+    @if (ftg.IsDefaultReturnType)
+    {
+        // for default return types (i.e. autorest.Response)
+        // assign the raw HTTP response to the *http.Response field
+    @:@(resultVarTarget).Response = future.Response()
     }
-    var req *http.Request
-    var resp *http.Response
-    if future.PollingURL() != "" {
-        req, err = http.NewRequest(http.MethodGet, future.PollingURL(), nil)
+    else
+    {
+        // modeled return types embed autorest.Resposne as an anonymous field
+        // so in order to assign the raw HTTP response to the *http.Response field
+        // in it we need an extra ".Response" :(
+    <text>
+    sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+    if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
+        @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
         if err != nil {
-            return
+            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
         }
-    } else {
-        req = autorest.ChangeToGet(future.req)
     }
-    resp, err = autorest.SendWithSender(client, req,
-    autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-    if err != nil {
+    </text>
+    }
     return
-    }
-    @resultVarTarget, err = client.@(ftg.ResponderMethodName)(resp)
-    return
-    }
+}
     </text>
 }

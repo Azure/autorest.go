@@ -99,7 +99,6 @@ func (client BaseClient) GetWithConstantInPathResponder(resp *http.Response) (re
 }
 
 // PostWithConstantInBody sends the post with constant in body request.
-//
 func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: body,
@@ -155,7 +154,7 @@ func (client BaseClient) PostWithConstantInBodyPreparer(ctx context.Context, bod
 	}
 
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/validation/constantsInPath/{constantParam}/value", pathParameters))
@@ -187,9 +186,9 @@ func (client BaseClient) PostWithConstantInBodyResponder(resp *http.Response) (r
 }
 
 // ValidationOfBody validates body parameters on the method. See swagger for details.
-//
-// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int
-// multiple of 10 from 100 to 1000.
+// Parameters:
+// resourceGroupName - required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
+// ID - required int multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName string, ID int32, body *Product) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
@@ -260,7 +259,7 @@ func (client BaseClient) ValidationOfBodyPreparer(ctx context.Context, resourceG
 	}
 
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPathParameters("/fakepath/{subscriptionId}/{resourceGroupName}/{id}", pathParameters),
@@ -293,9 +292,9 @@ func (client BaseClient) ValidationOfBodyResponder(resp *http.Response) (result 
 }
 
 // ValidationOfMethodParameters validates input parameters on the method. See swagger for details.
-//
-// resourceGroupName is required string between 3 and 10 chars with pattern [a-zA-Z0-9]+. ID is required int
-// multiple of 10 from 100 to 1000.
+// Parameters:
+// resourceGroupName - required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
+// ID - required int multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, ID int32) (result Product, err error) {
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,

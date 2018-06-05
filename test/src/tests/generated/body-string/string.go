@@ -446,7 +446,6 @@ func (client StringClient) GetWhitespaceResponder(resp *http.Response) (result S
 }
 
 // PutBase64URLEncoded put value that is base64url encoded
-//
 func (client StringClient) PutBase64URLEncoded(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	req, err := client.PutBase64URLEncodedPreparer(ctx, stringBody)
 	if err != nil {
@@ -472,7 +471,7 @@ func (client StringClient) PutBase64URLEncoded(ctx context.Context, stringBody s
 // PutBase64URLEncodedPreparer prepares the PutBase64URLEncoded request.
 func (client StringClient) PutBase64URLEncodedPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/base64UrlEncoding"),
@@ -525,7 +524,7 @@ func (client StringClient) PutEmpty(ctx context.Context) (result autorest.Respon
 // PutEmptyPreparer prepares the PutEmpty request.
 func (client StringClient) PutEmptyPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/empty"),
@@ -578,7 +577,7 @@ func (client StringClient) PutMbcs(ctx context.Context) (result autorest.Respons
 // PutMbcsPreparer prepares the PutMbcs request.
 func (client StringClient) PutMbcsPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/mbcs"),
@@ -606,8 +605,6 @@ func (client StringClient) PutMbcsResponder(resp *http.Response) (result autores
 }
 
 // PutNull set string value null
-//
-// stringBody is
 func (client StringClient) PutNull(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	req, err := client.PutNullPreparer(ctx, stringBody)
 	if err != nil {
@@ -633,7 +630,7 @@ func (client StringClient) PutNull(ctx context.Context, stringBody string) (resu
 // PutNullPreparer prepares the PutNull request.
 func (client StringClient) PutNullPreparer(ctx context.Context, stringBody string) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/null"))
@@ -690,7 +687,7 @@ func (client StringClient) PutWhitespace(ctx context.Context) (result autorest.R
 // PutWhitespacePreparer prepares the PutWhitespace request.
 func (client StringClient) PutWhitespacePreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/string/whitespace"),

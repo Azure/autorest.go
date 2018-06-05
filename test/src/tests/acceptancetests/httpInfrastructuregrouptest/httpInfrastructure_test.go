@@ -555,8 +555,8 @@ func (s *HTTPSuite) TestHead429(c *chk.C) {
 	res, err := httpClientFailureClient.Head429(context.Background())
 	c.Assert(err, chk.NotNil)
 	c.Assert(res.StatusCode, chk.Equals, 429)
-}
-*/
+}*/
+
 // HTTP retry test
 //408
 

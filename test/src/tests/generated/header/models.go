@@ -18,6 +18,11 @@ const (
 	White GreyscaleColors = "White"
 )
 
+// PossibleGreyscaleColorsValues returns an array of possible values for the GreyscaleColors const type.
+func PossibleGreyscaleColorsValues() []GreyscaleColors {
+	return []GreyscaleColors{Black, GREY, White}
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`

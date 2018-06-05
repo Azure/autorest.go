@@ -601,8 +601,8 @@ func (client PrimitiveClient) GetStringResponder(resp *http.Response) (result St
 }
 
 // PutBool put complex types with bool properties
-//
-// complexBody is please put true and false
+// Parameters:
+// complexBody - please put true and false
 func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (result autorest.Response, err error) {
 	req, err := client.PutBoolPreparer(ctx, complexBody)
 	if err != nil {
@@ -628,7 +628,7 @@ func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWr
 // PutBoolPreparer prepares the PutBool request.
 func (client PrimitiveClient) PutBoolPreparer(ctx context.Context, complexBody BooleanWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/bool"),
@@ -656,8 +656,8 @@ func (client PrimitiveClient) PutBoolResponder(resp *http.Response) (result auto
 }
 
 // PutByte put complex types with byte properties
-//
-// complexBody is please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
+// Parameters:
+// complexBody - please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
 func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper) (result autorest.Response, err error) {
 	req, err := client.PutBytePreparer(ctx, complexBody)
 	if err != nil {
@@ -683,7 +683,7 @@ func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapp
 // PutBytePreparer prepares the PutByte request.
 func (client PrimitiveClient) PutBytePreparer(ctx context.Context, complexBody ByteWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/byte"),
@@ -711,8 +711,8 @@ func (client PrimitiveClient) PutByteResponder(resp *http.Response) (result auto
 }
 
 // PutDate put complex types with date properties
-//
-// complexBody is please put '0001-01-01' and '2016-02-29'
+// Parameters:
+// complexBody - please put '0001-01-01' and '2016-02-29'
 func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (result autorest.Response, err error) {
 	req, err := client.PutDatePreparer(ctx, complexBody)
 	if err != nil {
@@ -738,7 +738,7 @@ func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapp
 // PutDatePreparer prepares the PutDate request.
 func (client PrimitiveClient) PutDatePreparer(ctx context.Context, complexBody DateWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/date"),
@@ -766,8 +766,8 @@ func (client PrimitiveClient) PutDateResponder(resp *http.Response) (result auto
 }
 
 // PutDateTime put complex types with datetime properties
-//
-// complexBody is please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
+// Parameters:
+// complexBody - please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
 func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper) (result autorest.Response, err error) {
 	req, err := client.PutDateTimePreparer(ctx, complexBody)
 	if err != nil {
@@ -793,7 +793,7 @@ func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody Datet
 // PutDateTimePreparer prepares the PutDateTime request.
 func (client PrimitiveClient) PutDateTimePreparer(ctx context.Context, complexBody DatetimeWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetime"),
@@ -821,8 +821,8 @@ func (client PrimitiveClient) PutDateTimeResponder(resp *http.Response) (result 
 }
 
 // PutDateTimeRfc1123 put complex types with datetimeRfc1123 properties
-//
-// complexBody is please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
+// Parameters:
+// complexBody - please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
 func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBody Datetimerfc1123Wrapper) (result autorest.Response, err error) {
 	req, err := client.PutDateTimeRfc1123Preparer(ctx, complexBody)
 	if err != nil {
@@ -848,7 +848,7 @@ func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBod
 // PutDateTimeRfc1123Preparer prepares the PutDateTimeRfc1123 request.
 func (client PrimitiveClient) PutDateTimeRfc1123Preparer(ctx context.Context, complexBody Datetimerfc1123Wrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/datetimerfc1123"),
@@ -876,8 +876,8 @@ func (client PrimitiveClient) PutDateTimeRfc1123Responder(resp *http.Response) (
 }
 
 // PutDouble put complex types with double properties
-//
-// complexBody is please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
+// Parameters:
+// complexBody - please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
 func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (result autorest.Response, err error) {
 	req, err := client.PutDoublePreparer(ctx, complexBody)
 	if err != nil {
@@ -903,7 +903,7 @@ func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleW
 // PutDoublePreparer prepares the PutDouble request.
 func (client PrimitiveClient) PutDoublePreparer(ctx context.Context, complexBody DoubleWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/double"),
@@ -931,8 +931,8 @@ func (client PrimitiveClient) PutDoubleResponder(resp *http.Response) (result au
 }
 
 // PutDuration put complex types with duration properties
-//
-// complexBody is please put 'P123DT22H14M12.011S'
+// Parameters:
+// complexBody - please put 'P123DT22H14M12.011S'
 func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper) (result autorest.Response, err error) {
 	req, err := client.PutDurationPreparer(ctx, complexBody)
 	if err != nil {
@@ -958,7 +958,7 @@ func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody Durat
 // PutDurationPreparer prepares the PutDuration request.
 func (client PrimitiveClient) PutDurationPreparer(ctx context.Context, complexBody DurationWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/duration"),
@@ -986,8 +986,8 @@ func (client PrimitiveClient) PutDurationResponder(resp *http.Response) (result 
 }
 
 // PutFloat put complex types with float properties
-//
-// complexBody is please put 1.05 and -0.003
+// Parameters:
+// complexBody - please put 1.05 and -0.003
 func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (result autorest.Response, err error) {
 	req, err := client.PutFloatPreparer(ctx, complexBody)
 	if err != nil {
@@ -1013,7 +1013,7 @@ func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWra
 // PutFloatPreparer prepares the PutFloat request.
 func (client PrimitiveClient) PutFloatPreparer(ctx context.Context, complexBody FloatWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/float"),
@@ -1041,8 +1041,8 @@ func (client PrimitiveClient) PutFloatResponder(resp *http.Response) (result aut
 }
 
 // PutInt put complex types with integer properties
-//
-// complexBody is please put -1 and 2
+// Parameters:
+// complexBody - please put -1 and 2
 func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper) (result autorest.Response, err error) {
 	req, err := client.PutIntPreparer(ctx, complexBody)
 	if err != nil {
@@ -1068,7 +1068,7 @@ func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper
 // PutIntPreparer prepares the PutInt request.
 func (client PrimitiveClient) PutIntPreparer(ctx context.Context, complexBody IntWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/integer"),
@@ -1096,8 +1096,8 @@ func (client PrimitiveClient) PutIntResponder(resp *http.Response) (result autor
 }
 
 // PutLong put complex types with long properties
-//
-// complexBody is please put 1099511627775 and -999511627788
+// Parameters:
+// complexBody - please put 1099511627775 and -999511627788
 func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (result autorest.Response, err error) {
 	req, err := client.PutLongPreparer(ctx, complexBody)
 	if err != nil {
@@ -1123,7 +1123,7 @@ func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapp
 // PutLongPreparer prepares the PutLong request.
 func (client PrimitiveClient) PutLongPreparer(ctx context.Context, complexBody LongWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/long"),
@@ -1151,8 +1151,8 @@ func (client PrimitiveClient) PutLongResponder(resp *http.Response) (result auto
 }
 
 // PutString put complex types with string properties
-//
-// complexBody is please put 'goodrequest', '', and null
+// Parameters:
+// complexBody - please put 'goodrequest', '', and null
 func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (result autorest.Response, err error) {
 	req, err := client.PutStringPreparer(ctx, complexBody)
 	if err != nil {
@@ -1178,7 +1178,7 @@ func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringW
 // PutStringPreparer prepares the PutString request.
 func (client PrimitiveClient) PutStringPreparer(ctx context.Context, complexBody StringWrapper) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
-		autorest.AsJSON(),
+		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
 		autorest.WithBaseURL(client.BaseURI),
 		autorest.WithPath("/complex/primitive/string"),

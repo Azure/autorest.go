@@ -24,8 +24,8 @@ func NewPathsClient() PathsClient {
 }
 
 // GetEmpty get a 200 to test a valid base uri
-//
-// accountName is account Name
+// Parameters:
+// accountName - account Name
 func (client PathsClient) GetEmpty(ctx context.Context, accountName string) (result autorest.Response, err error) {
 	req, err := client.GetEmptyPreparer(ctx, accountName)
 	if err != nil {
