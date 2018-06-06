@@ -173,7 +173,7 @@ func (future *PagingGetMultiplePagesLROAllFuture) Result(client PagingClient) (p
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if pri.page.pr.Response.Response, err = future.GetResult(sender); err == nil && pri.page.pr.Response.Response.StatusCode != http.StatusNoContent {
-		pri, err = client.GetMultiplePagesLROResponder(pri.page.pr.Response.Response)
+		pri.page, err = client.GetMultiplePagesLROResponder(pri.page.pr.Response.Response)
 		if err != nil {
 			err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", pri.page.pr.Response.Response, "Failure responding to request")
 		}

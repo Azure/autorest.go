@@ -424,6 +424,7 @@ else
 {
     var ftg = Model as FutureTypeGo;
     var resultVar = ftg.ResultTypeName.ToShortName();
+    var resultResp = resultVar;
     var resultVarTarget = resultVar;
     var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
     if (ftg.ResultType is PageTypeGo ptg)
@@ -433,6 +434,7 @@ else
     else if (ftg.ResultType is IteratorTypeGo itg)
     {
         resultVarTarget = $"{resultVarTarget}.{itg.PageField}.{itg.PageType.ResultFieldName}";
+        resultResp = $"{resultResp}.{itg.PageField}";
     }
     <text>
     // Result returns the result of the asynchronous operation.
@@ -462,7 +464,7 @@ else
     <text>
     sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
     if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
-        @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
+        @resultResp, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
         if err != nil {
             err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
         }
