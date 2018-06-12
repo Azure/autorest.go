@@ -50,9 +50,8 @@ namespace AutoRest.Go.Model
                 {
                     sb.Append('>');
                 }
-
                 var asSequence = ModelType as SequenceTypeGo;
-                sb.Append(asSequence.ElementXmlName);
+                sb.Append(asSequence.GetElement);
             }
             else if (XmlIsAttribute)
             {
