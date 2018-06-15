@@ -1549,30 +1549,59 @@ func (future *LROsPostAsyncRetrySucceededFuture) Result(client LROsClient) (p Pr
 	return
 }
 
-// LROsPostFinalLocationGetFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
-type LROsPostFinalLocationGetFuture struct {
+// LROsPostDoubleHeadersFinalAzureHeaderGetFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
 	azure.Future
 }
 
 // Result returns the result of the asynchronous operation.
 // If the operation has not completed it will return an error.
-func (future *LROsPostFinalLocationGetFuture) Result(client LROsClient) (p Product, err error) {
+func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
 	done, err = future.Done(client)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostFinalLocationGetFuture", "Result", future.Response(), "Polling failure")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture", "Result", future.Response(), "Polling failure")
 		return
 	}
 	if !done {
-		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostFinalLocationGetFuture")
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture")
 		return
 	}
 	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
-		p, err = client.PostFinalLocationGetResponder(p.Response.Response)
+		p, err = client.PostDoubleHeadersFinalAzureHeaderGetResponder(p.Response.Response)
 		if err != nil {
-			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostFinalLocationGetFuture", "Result", p.Response.Response, "Failure responding to request")
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture", "Result", p.Response.Response, "Failure responding to request")
+		}
+	}
+	return
+}
+
+// LROsPostDoubleHeadersFinalLocationGetFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
+type LROsPostDoubleHeadersFinalLocationGetFuture struct {
+	azure.Future
+}
+
+// Result returns the result of the asynchronous operation.
+// If the operation has not completed it will return an error.
+func (future *LROsPostDoubleHeadersFinalLocationGetFuture) Result(client LROsClient) (p Product, err error) {
+	var done bool
+	done, err = future.Done(client)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture", "Result", future.Response(), "Polling failure")
+		return
+	}
+	if !done {
+		err = azure.NewAsyncOpIncompleteError("lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture")
+		return
+	}
+	sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if p.Response.Response, err = future.GetResult(sender); err == nil && p.Response.Response.StatusCode != http.StatusNoContent {
+		p, err = client.PostDoubleHeadersFinalLocationGetResponder(p.Response.Response)
+		if err != nil {
+			err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture", "Result", p.Response.Response, "Failure responding to request")
 		}
 	}
 	return

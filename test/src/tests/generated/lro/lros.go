@@ -1149,36 +1149,37 @@ func (client LROsClient) PostAsyncRetrySucceededResponder(resp *http.Response) (
 	return
 }
 
-// PostFinalLocationGet long running post request, service returns a 202 to the initial request with both Location and
-// Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
-func (client LROsClient) PostFinalLocationGet(ctx context.Context) (result LROsPostFinalLocationGetFuture, err error) {
-	req, err := client.PostFinalLocationGetPreparer(ctx)
+// PostDoubleHeadersFinalAzureHeaderGet long running post request, service returns a 202 to the initial request with
+// both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final
+// object
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGet(ctx context.Context) (result LROsPostDoubleHeadersFinalAzureHeaderGetFuture, err error) {
+	req, err := client.PostDoubleHeadersFinalAzureHeaderGetPreparer(ctx)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostFinalLocationGet", nil, "Failure preparing request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostDoubleHeadersFinalAzureHeaderGet", nil, "Failure preparing request")
 		return
 	}
 
-	result, err = client.PostFinalLocationGetSender(req)
+	result, err = client.PostDoubleHeadersFinalAzureHeaderGetSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostFinalLocationGet", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostDoubleHeadersFinalAzureHeaderGet", result.Response(), "Failure sending request")
 		return
 	}
 
 	return
 }
 
-// PostFinalLocationGetPreparer prepares the PostFinalLocationGet request.
-func (client LROsClient) PostFinalLocationGetPreparer(ctx context.Context) (*http.Request, error) {
+// PostDoubleHeadersFinalAzureHeaderGetPreparer prepares the PostDoubleHeadersFinalAzureHeaderGet request.
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetPreparer(ctx context.Context) (*http.Request, error) {
 	preparer := autorest.CreatePreparer(
 		autorest.AsPost(),
 		autorest.WithBaseURL(client.BaseURI),
-		autorest.WithPath("/lro/LROPostFinalLocationGet"))
+		autorest.WithPath("/lro/LROPostDoubleHeadersFinalAzureHeaderGet"))
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
 
-// PostFinalLocationGetSender sends the PostFinalLocationGet request. The method will close the
+// PostDoubleHeadersFinalAzureHeaderGetSender sends the PostDoubleHeadersFinalAzureHeaderGet request. The method will close the
 // http.Response Body if it receives an error.
-func (client LROsClient) PostFinalLocationGetSender(req *http.Request) (future LROsPostFinalLocationGetFuture, err error) {
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetSender(req *http.Request) (future LROsPostDoubleHeadersFinalAzureHeaderGetFuture, err error) {
 	var resp *http.Response
 	resp, err = autorest.SendWithSender(client, req,
 		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
@@ -1193,9 +1194,66 @@ func (client LROsClient) PostFinalLocationGetSender(req *http.Request) (future L
 	return
 }
 
-// PostFinalLocationGetResponder handles the response to the PostFinalLocationGet request. The method always
+// PostDoubleHeadersFinalAzureHeaderGetResponder handles the response to the PostDoubleHeadersFinalAzureHeaderGet request. The method always
 // closes the http.Response Body.
-func (client LROsClient) PostFinalLocationGetResponder(resp *http.Response) (result Product, err error) {
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetResponder(resp *http.Response) (result Product, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// PostDoubleHeadersFinalLocationGet long running post request, service returns a 202 to the initial request with both
+// Location and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
+func (client LROsClient) PostDoubleHeadersFinalLocationGet(ctx context.Context) (result LROsPostDoubleHeadersFinalLocationGetFuture, err error) {
+	req, err := client.PostDoubleHeadersFinalLocationGetPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostDoubleHeadersFinalLocationGet", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.PostDoubleHeadersFinalLocationGetSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostDoubleHeadersFinalLocationGet", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// PostDoubleHeadersFinalLocationGetPreparer prepares the PostDoubleHeadersFinalLocationGet request.
+func (client LROsClient) PostDoubleHeadersFinalLocationGetPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/lro/LROPostDoubleHeadersFinalLocationGet"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PostDoubleHeadersFinalLocationGetSender sends the PostDoubleHeadersFinalLocationGet request. The method will close the
+// http.Response Body if it receives an error.
+func (client LROsClient) PostDoubleHeadersFinalLocationGetSender(req *http.Request) (future LROsPostDoubleHeadersFinalLocationGetFuture, err error) {
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// PostDoubleHeadersFinalLocationGetResponder handles the response to the PostDoubleHeadersFinalLocationGet request. The method always
+// closes the http.Response Body.
+func (client LROsClient) PostDoubleHeadersFinalLocationGetResponder(resp *http.Response) (result Product, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
