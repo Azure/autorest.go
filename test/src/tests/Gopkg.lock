@@ -11,8 +11,8 @@
     "autorest/to",
     "autorest/validation"
   ]
-  revision = "aa2a4534ab680e938d933870f58f23f77e0e208e"
-  version = "v10.9.0"
+  revision = "f04d503958a4fe854c1b41667c73f8813c9dd9c3"
+  version = "v10.11.2"
 
 [[projects]]
   name = "github.com/dgrijalva/jwt-go"
@@ -41,6 +41,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1acc242dfe17f51d49d3477e977271b5bd1bd54f3f7d7f32db1b28009f612acf"
+  inputs-digest = "18f1b6ccb84fa98feb280b3051d8e2a7a977d27eaac32fa872c65bef26e8f888"
   solver-name = "gps-cdcl"
   solver-version = 1

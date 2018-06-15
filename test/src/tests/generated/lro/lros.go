@@ -1149,6 +1149,63 @@ func (client LROsClient) PostAsyncRetrySucceededResponder(resp *http.Response) (
 	return
 }
 
+// PostFinalLocationGet long running post request, service returns a 202 to the initial request with both Location and
+// Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
+func (client LROsClient) PostFinalLocationGet(ctx context.Context) (result LROsPostFinalLocationGetFuture, err error) {
+	req, err := client.PostFinalLocationGetPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostFinalLocationGet", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.PostFinalLocationGetSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostFinalLocationGet", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// PostFinalLocationGetPreparer prepares the PostFinalLocationGet request.
+func (client LROsClient) PostFinalLocationGetPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/lro/LROPostFinalLocationGet"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PostFinalLocationGetSender sends the PostFinalLocationGet request. The method will close the
+// http.Response Body if it receives an error.
+func (client LROsClient) PostFinalLocationGetSender(req *http.Request) (future LROsPostFinalLocationGetFuture, err error) {
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// PostFinalLocationGetResponder handles the response to the PostFinalLocationGet request. The method always
+// closes the http.Response Body.
+func (client LROsClient) PostFinalLocationGetResponder(resp *http.Response) (result Product, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // Put200Acceptedcanceled200 long running put request, service returns a 201 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
