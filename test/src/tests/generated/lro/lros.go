@@ -1207,6 +1207,64 @@ func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetResponder(resp *htt
 	return
 }
 
+// PostDoubleHeadersFinalAzureHeaderGetDefault long running post request, service returns a 202 to the initial request
+// with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the
+// final object if you support initial Autorest behavior.
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context) (result LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture, err error) {
+	req, err := client.PostDoubleHeadersFinalAzureHeaderGetDefaultPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostDoubleHeadersFinalAzureHeaderGetDefault", nil, "Failure preparing request")
+		return
+	}
+
+	result, err = client.PostDoubleHeadersFinalAzureHeaderGetDefaultSender(req)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "lrogroup.LROsClient", "PostDoubleHeadersFinalAzureHeaderGetDefault", result.Response(), "Failure sending request")
+		return
+	}
+
+	return
+}
+
+// PostDoubleHeadersFinalAzureHeaderGetDefaultPreparer prepares the PostDoubleHeadersFinalAzureHeaderGetDefault request.
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetDefaultPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsPost(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/lro/LROPostDoubleHeadersFinalAzureHeaderGetDefault"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PostDoubleHeadersFinalAzureHeaderGetDefaultSender sends the PostDoubleHeadersFinalAzureHeaderGetDefault request. The method will close the
+// http.Response Body if it receives an error.
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetDefaultSender(req *http.Request) (future LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture, err error) {
+	var resp *http.Response
+	resp, err = autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	if err != nil {
+		return
+	}
+	err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted))
+	if err != nil {
+		return
+	}
+	future.Future, err = azure.NewFutureFromResponse(resp)
+	return
+}
+
+// PostDoubleHeadersFinalAzureHeaderGetDefaultResponder handles the response to the PostDoubleHeadersFinalAzureHeaderGetDefault request. The method always
+// closes the http.Response Body.
+func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetDefaultResponder(resp *http.Response) (result Product, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK, http.StatusAccepted),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // PostDoubleHeadersFinalLocationGet long running post request, service returns a 202 to the initial request with both
 // Location and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
 func (client LROsClient) PostDoubleHeadersFinalLocationGet(ctx context.Context) (result LROsPostDoubleHeadersFinalLocationGetFuture, err error) {
