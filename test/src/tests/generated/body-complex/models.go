@@ -73,6 +73,34 @@ func PossibleGoblinSharkColorValues() []GoblinSharkColor {
 	return []GoblinSharkColor{Brown, Gray, Pink}
 }
 
+// Kind enumerates the values for kind.
+type Kind string
+
+const (
+	// KindKind1 ...
+	KindKind1 Kind = "Kind1"
+	// KindMyBaseType ...
+	KindMyBaseType Kind = "MyBaseType"
+)
+
+// PossibleKindValues returns an array of possible values for the Kind const type.
+func PossibleKindValues() []Kind {
+	return []Kind{KindKind1, KindMyBaseType}
+}
+
+// MyKind enumerates the values for my kind.
+type MyKind string
+
+const (
+	// Kind1 ...
+	Kind1 MyKind = "Kind1"
+)
+
+// PossibleMyKindValues returns an array of possible values for the MyKind const type.
+func PossibleMyKindValues() []MyKind {
+	return []MyKind{Kind1}
+}
+
 // ArrayWrapper ...
 type ArrayWrapper struct {
 	autorest.Response `json:"-"`
@@ -743,6 +771,196 @@ type LongWrapper struct {
 	autorest.Response `json:"-"`
 	Field1            *int64 `json:"field1,omitempty"`
 	Field2            *int64 `json:"field2,omitempty"`
+}
+
+// MyBaseHelperType ...
+type MyBaseHelperType struct {
+	PropBH1 *string `json:"propBH1,omitempty"`
+}
+
+// BasicMyBaseType ...
+type BasicMyBaseType interface {
+	AsMyDerivedType() (*MyDerivedType, bool)
+	AsMyBaseType() (*MyBaseType, bool)
+}
+
+// MyBaseType ...
+type MyBaseType struct {
+	autorest.Response `json:"-"`
+	PropB1            *string `json:"propB1,omitempty"`
+	*MyBaseHelperType `json:"helper,omitempty"`
+	// Kind - Possible values include: 'KindMyBaseType', 'KindKind1'
+	Kind Kind `json:"kind,omitempty"`
+}
+
+func unmarshalBasicMyBaseType(body []byte) (BasicMyBaseType, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["kind"] {
+	case string(KindKind1):
+		var mdt MyDerivedType
+		err := json.Unmarshal(body, &mdt)
+		return mdt, err
+	default:
+		var mbt MyBaseType
+		err := json.Unmarshal(body, &mbt)
+		return mbt, err
+	}
+}
+func unmarshalBasicMyBaseTypeArray(body []byte) ([]BasicMyBaseType, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	mbtArray := make([]BasicMyBaseType, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		mbt, err := unmarshalBasicMyBaseType(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		mbtArray[index] = mbt
+	}
+	return mbtArray, nil
+}
+
+// MarshalJSON is the custom marshaler for MyBaseType.
+func (mbt MyBaseType) MarshalJSON() ([]byte, error) {
+	mbt.Kind = KindMyBaseType
+	objectMap := make(map[string]interface{})
+	if mbt.PropB1 != nil {
+		objectMap["propB1"] = mbt.PropB1
+	}
+	if mbt.MyBaseHelperType != nil {
+		objectMap["helper"] = mbt.MyBaseHelperType
+	}
+	if mbt.Kind != "" {
+		objectMap["kind"] = mbt.Kind
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsMyDerivedType is the BasicMyBaseType implementation for MyBaseType.
+func (mbt MyBaseType) AsMyDerivedType() (*MyDerivedType, bool) {
+	return nil, false
+}
+
+// AsMyBaseType is the BasicMyBaseType implementation for MyBaseType.
+func (mbt MyBaseType) AsMyBaseType() (*MyBaseType, bool) {
+	return &mbt, true
+}
+
+// AsBasicMyBaseType is the BasicMyBaseType implementation for MyBaseType.
+func (mbt MyBaseType) AsBasicMyBaseType() (BasicMyBaseType, bool) {
+	return &mbt, true
+}
+
+// UnmarshalJSON is the custom unmarshaler for MyBaseType struct.
+func (mbt *MyBaseType) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "propB1":
+			if v != nil {
+				var propB1 string
+				err = json.Unmarshal(*v, &propB1)
+				if err != nil {
+					return err
+				}
+				mbt.PropB1 = &propB1
+			}
+		case "helper":
+			if v != nil {
+				var myBaseHelperType MyBaseHelperType
+				err = json.Unmarshal(*v, &myBaseHelperType)
+				if err != nil {
+					return err
+				}
+				mbt.MyBaseHelperType = &myBaseHelperType
+			}
+		case "kind":
+			if v != nil {
+				var kind Kind
+				err = json.Unmarshal(*v, &kind)
+				if err != nil {
+					return err
+				}
+				mbt.Kind = kind
+			}
+		}
+	}
+
+	return nil
+}
+
+// MyBaseTypeModel ...
+type MyBaseTypeModel struct {
+	autorest.Response `json:"-"`
+	Value             BasicMyBaseType `json:"value,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for MyBaseTypeModel struct.
+func (mbtm *MyBaseTypeModel) UnmarshalJSON(body []byte) error {
+	mbt, err := unmarshalBasicMyBaseType(body)
+	if err != nil {
+		return err
+	}
+	mbtm.Value = mbt
+
+	return nil
+}
+
+// MyDerivedType ...
+type MyDerivedType struct {
+	PropD1            *string `json:"propD1,omitempty"`
+	PropB1            *string `json:"propB1,omitempty"`
+	*MyBaseHelperType `json:"helper,omitempty"`
+	// Kind - Possible values include: 'KindMyBaseType', 'KindKind1'
+	Kind Kind `json:"kind,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for MyDerivedType.
+func (mdt MyDerivedType) MarshalJSON() ([]byte, error) {
+	mdt.Kind = KindKind1
+	objectMap := make(map[string]interface{})
+	if mdt.PropD1 != nil {
+		objectMap["propD1"] = mdt.PropD1
+	}
+	if mdt.PropB1 != nil {
+		objectMap["propB1"] = mdt.PropB1
+	}
+	if mdt.MyBaseHelperType != nil {
+		objectMap["helper"] = mdt.MyBaseHelperType
+	}
+	if mdt.Kind != "" {
+		objectMap["kind"] = mdt.Kind
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsMyDerivedType is the BasicMyBaseType implementation for MyDerivedType.
+func (mdt MyDerivedType) AsMyDerivedType() (*MyDerivedType, bool) {
+	return &mdt, true
+}
+
+// AsMyBaseType is the BasicMyBaseType implementation for MyDerivedType.
+func (mdt MyDerivedType) AsMyBaseType() (*MyBaseType, bool) {
+	return nil, false
+}
+
+// AsBasicMyBaseType is the BasicMyBaseType implementation for MyDerivedType.
+func (mdt MyDerivedType) AsBasicMyBaseType() (BasicMyBaseType, bool) {
+	return &mdt, true
 }
 
 // Pet ...
