@@ -19,7 +19,12 @@ Import
 task 'init', "" ,(done)->
   Fail "YOU MUST HAVE NODEJS VERSION GREATER THAN 7.10.0" if semver.lt( process.versions.node , "7.10.0" )
   done()
-  
+
+task 'install_common',"", (done) ->
+  # global.verbose = true
+  execute "npm install",{cwd:"#{basefolder}/autorest.common", silent:false }, done
+
+
 # Run language-specific tests:
 task 'test', "", ['regenerate'], (done) ->
   process.env.GOPATH = path.normalize("#{basefolder}/test")
