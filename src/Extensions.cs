@@ -635,9 +635,25 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static string GetConstraint(string name, string constraintName, string constraintValue, bool chain = false)
         {
-            var value = constraintName == Constraint.Pattern.ToString()
-                                          ? $"`{constraintValue}`"
-                                          : constraintValue;
+            var value = constraintValue;
+            if (constraintName == Constraint.Pattern.ToString())
+            {
+                value = $"`{constraintValue}`";
+            }
+            else if (constraintName == Constraint.InclusiveMaximum.ToString())
+            {
+                // swagger spec states that InclusiveMaximum should be an integer
+                // however the validation code supports int64 and float64.  to be
+                // on the safe side handle both cases here.
+                if (constraintValue.IndexOf('.') > -1)
+                {
+                    value = $"float64({constraintValue})";
+                }
+                else
+                {
+                    value = $"int64({constraintValue})";
+                }
+            }
 
             return string.Format(chain
                                     ? "\t{{Target: \"{0}\", Name: validation.{1}, Rule: {2} "

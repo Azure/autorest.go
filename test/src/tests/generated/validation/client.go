@@ -196,7 +196,7 @@ func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 3, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `[a-zA-Z0-9]+`, Chain: nil}}},
 		{TargetValue: ID,
-			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil},
+			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: int64(1000), Chain: nil},
 				{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil},
 				{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil}}},
 		{TargetValue: body,
@@ -302,7 +302,7 @@ func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resou
 				{Target: "resourceGroupName", Name: validation.MinLength, Rule: 3, Chain: nil},
 				{Target: "resourceGroupName", Name: validation.Pattern, Rule: `[a-zA-Z0-9]+`, Chain: nil}}},
 		{TargetValue: ID,
-			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: 1000, Chain: nil},
+			Constraints: []validation.Constraint{{Target: "ID", Name: validation.InclusiveMaximum, Rule: int64(1000), Chain: nil},
 				{Target: "ID", Name: validation.InclusiveMinimum, Rule: 100, Chain: nil},
 				{Target: "ID", Name: validation.MultipleOf, Rule: 10, Chain: nil}}}}); err != nil {
 		return result, validation.NewError("validationgroup.BaseClient", "ValidationOfMethodParameters", err.Error())
