@@ -9,8 +9,36 @@ namespace AutoRest.Go.Model
 {
     public class PropertyGo : Property
     {
+        private const string Base64UrlDoc = "a URL-encoded base64 string";
+
         public PropertyGo()
         {
+        }
+
+        /// <summary>
+        /// Gets or sets the documentation.
+        /// </summary>
+        public new Fixable<string> Documentation
+        {
+            get
+            {
+                if (ModelType is PrimaryTypeGo ptg && ptg.KnownFormat == KnownFormat.base64url)
+                {
+                    // we don't properly support the base64url type so add some extra
+                    // docs stating that the type should be a URL-encoded base64 string.
+                    // NOTE: once proper support is added remove this code.
+                    if (base.Documentation.IsNullOrEmpty())
+                    {
+                        return Base64UrlDoc;
+                    }
+                    else
+                    {
+                        return $"{base.Documentation} ({Base64UrlDoc})";
+                    }
+                }
+                return base.Documentation;
+            }
+            set { base.Documentation = value; }
         }
 
         public string JsonTag(bool omitEmpty = true)

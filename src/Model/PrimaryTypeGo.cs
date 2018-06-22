@@ -64,7 +64,7 @@ namespace AutoRest.Go.Model
                 switch (KnownPrimaryType)
                 {
                     case KnownPrimaryType.Base64Url:
-                        // TODO: add support
+                        // TODO: add support (once support is added remove the new definition for Documentation in PropertyGo.cs)
                         return "string";
 
                     case KnownPrimaryType.ByteArray:

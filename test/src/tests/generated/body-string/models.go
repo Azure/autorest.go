@@ -30,7 +30,8 @@ func PossibleColorsValues() []Colors {
 // Base64URL ...
 type Base64URL struct {
 	autorest.Response `json:"-"`
-	Value             *string `json:"value,omitempty"`
+	// Value - a URL-encoded base64 string
+	Value *string `json:"value,omitempty"`
 }
 
 // Error ...
