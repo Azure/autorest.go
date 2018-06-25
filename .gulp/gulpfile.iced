@@ -26,6 +26,11 @@ task 'updatetestdep', "", [], (done) ->
   await execute "dep ensure -update",          { cwd: './test/src/tests' }, defer code, stderr, stdout
   done()
 
+task 'install_common',"", (done) ->
+  # global.verbose = true
+  execute "npm install",{cwd:"#{basefolder}/autorest.common", silent:false }, done
+
+
 # Run language-specific tests:
 task 'test', "", ['regenerate'], (done) ->
   process.env.GOPATH = path.normalize("#{basefolder}/test")
