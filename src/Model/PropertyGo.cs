@@ -32,15 +32,7 @@ namespace AutoRest.Go.Model
             bool hasParent = false;
             if (Parent is CompositeTypeGo go && !go.IsWrapperType)
             {
-                // This extra check is necessary because of https://github.com/Azure/autorest/issues/2889
-                if (this.IsPolymorphicDiscriminator)
-                {
-                    sb.Append(SerializedName);
-                }
-                else
-                {
-                    sb.Append(XmlName);
-                }
+                sb.Append(XmlName);
                 hasParent = true;
             }
 
@@ -51,7 +43,7 @@ namespace AutoRest.Go.Model
                     sb.Append('>');
                 }
                 var asSequence = ModelType as SequenceTypeGo;
-                sb.Append(asSequence.GetElement);
+                sb.Append(asSequence.ElementType.XmlName);
             }
             else if (XmlIsAttribute)
             {
