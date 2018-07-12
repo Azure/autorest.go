@@ -156,7 +156,32 @@ namespace AutoRest.Go.Model
             }
             else if (IsClientProperty)
             {
-                value = "client." + CodeNamerGo.Instance.GetPropertyName(Name.Value);
+                var propName = CodeNamerGo.Instance.GetPropertyName(Name.Value);
+                // verify that the calculated name matches the property name
+                bool found = false;
+                foreach (var clientProp in Method.CodeModel.Properties)
+                {
+                    // prefer an exact match
+                    if (clientProp.Name == propName)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    // didn't find an exact match, find the closest match.  we hit this case if
+                    // the front-end decided to add a suffix (e.g. '1') to the client property name.
+                    foreach (var clientProp in Method.CodeModel.Properties)
+                    {
+                        if (clientProp.Name.ToString().IndexOf(propName) > -1)
+                        {
+                            propName = clientProp.Name;
+                            break;
+                        }
+                    }
+                }
+                value = "client." + propName;
             }
             else
             {
