@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AutoRest.Go.Model
 {
@@ -156,7 +157,18 @@ namespace AutoRest.Go.Model
             }
             else if (IsClientProperty)
             {
-                value = "client." + CodeNamerGo.Instance.GetPropertyName(Name.Value);
+                var propName = CodeNamerGo.Instance.GetPropertyName(Name.Value);
+
+                // verify that the calculated name matches the property name
+                bool found = Method.CodeModel.Properties.Any(clientProp => clientProp.Name == propName);
+
+                // didn't find an exact match, find the closest match.  we hit this case if
+                // the front-end decided to add a suffix (e.g. '1') to the client property name.
+                if (!found)
+                {
+                    propName = Method.CodeModel.Properties.First(clientProp => Regex.IsMatch(clientProp.Name, $"{propName}\\d")).Name;
+                }
+                value = $"client.{propName}";
             }
             else
             {
