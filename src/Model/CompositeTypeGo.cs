@@ -205,16 +205,25 @@ namespace AutoRest.Go.Model
         {
             Properties.ForEach(p => p.ModelType.AddImports(imports));
 
-            if (IsPolymorphic || HasFlattenedFields || NeedsXmlNameField)
+            if (IsPolymorphic || HasFlattenedFields || NeedsXmlNameField || IsDateTimeCustomHandlingRequired || IsBase64EncodingRequired)
             {
                 imports.Add($"\"encoding/{CodeModel.ToCodeModelGo().Encoding}\"");
             }
 
-            if (IsDateTimeCustomHandlingRequired)
+            if (IsDateTimeCustomHandlingRequired || IsBase64EncodingRequired)
             {
                 imports.Add($"\"reflect\"");
-                imports.Add($"\"time\"");
                 imports.Add($"\"unsafe\"");
+            }
+
+            if (IsDateTimeCustomHandlingRequired)
+            {
+                imports.Add($"\"time\"");
+            }
+
+            if (IsBase64EncodingRequired)
+            {
+                imports.Add("\"encoding/base64\"");
             }
         }
 
@@ -302,6 +311,11 @@ namespace AutoRest.Go.Model
                 else if (property.ModelType is CompositeType && ((CompositeTypeGo) property.ModelType).IsPolymorphic)
                 {
                     indented.AppendFormat("{0} {1} {2}\n", property.Name, property.ModelType.GetInterfaceName(), property.Tag());
+                }
+                else if (forMarshaller && property.ModelType.IsPrimaryType(KnownPrimaryType.ByteArray))
+                {
+                    // use custom type that converts base64 encoded content
+                    indented.Append($"{property.Name} base64Encoded {property.Tag()}\n");
                 }
                 else
                 {
@@ -449,5 +463,7 @@ namespace AutoRest.Go.Model
         }
 
         internal bool IsDateTimeCustomHandlingRequired => Properties.Any(p => p.ModelType.IsDateTimeType());
+
+        internal bool IsBase64EncodingRequired => Properties.Any(p => p.ModelType.IsPrimaryType(KnownPrimaryType.ByteArray));
     }
 }
