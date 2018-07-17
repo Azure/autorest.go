@@ -1721,6 +1721,57 @@ func (client ArrayClient) getEmptyResponder(resp pipeline.Response) (pipeline.Re
 	return result, nil
 }
 
+// GetEnumValid get enum array value ['foo1', 'foo2', 'foo3']
+func (client ArrayClient) GetEnumValid(ctx context.Context) (*GetEnumValidResponse, error) {
+	req, err := client.getEnumValidPreparer()
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.getEnumValidResponder}, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp.(*GetEnumValidResponse), err
+}
+
+// getEnumValidPreparer prepares the GetEnumValid request.
+func (client ArrayClient) getEnumValidPreparer() (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/array/prim/enum/foo1.foo2.foo3"
+	req, err := pipeline.NewRequest("GET", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	return req, nil
+}
+
+// getEnumValidResponder handles the response to the GetEnumValid request.
+func (client ArrayClient) getEnumValidResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	result := &GetEnumValidResponse{rawResponse: resp.Response()}
+	if err != nil {
+		return result, err
+	}
+	defer resp.Response().Body.Close()
+	b, err := ioutil.ReadAll(resp.Response().Body)
+	if err != nil {
+		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+	}
+	if len(b) > 0 {
+		b = removeBOM(b)
+		err = json.Unmarshal(b, &result.Items)
+		if err != nil {
+			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
+		}
+	}
+	return result, nil
+}
+
 // GetFloatInvalidNull get float array value [0.0, null, -1.2e20]
 func (client ArrayClient) GetFloatInvalidNull(ctx context.Context) (*GetFloatInvalidNullResponse, error) {
 	req, err := client.getFloatInvalidNullPreparer()
@@ -2264,6 +2315,57 @@ func (client ArrayClient) getNullResponder(resp pipeline.Response) (pipeline.Res
 		return nil, err
 	}
 	result := &GetNullResponse{rawResponse: resp.Response()}
+	if err != nil {
+		return result, err
+	}
+	defer resp.Response().Body.Close()
+	b, err := ioutil.ReadAll(resp.Response().Body)
+	if err != nil {
+		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+	}
+	if len(b) > 0 {
+		b = removeBOM(b)
+		err = json.Unmarshal(b, &result.Items)
+		if err != nil {
+			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
+		}
+	}
+	return result, nil
+}
+
+// GetStringEnumValid get enum array value ['foo1', 'foo2', 'foo3']
+func (client ArrayClient) GetStringEnumValid(ctx context.Context) (*GetStringEnumValidResponse, error) {
+	req, err := client.getStringEnumValidPreparer()
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.getStringEnumValidResponder}, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp.(*GetStringEnumValidResponse), err
+}
+
+// getStringEnumValidPreparer prepares the GetStringEnumValid request.
+func (client ArrayClient) getStringEnumValidPreparer() (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/array/prim/string-enum/foo1.foo2.foo3"
+	req, err := pipeline.NewRequest("GET", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	return req, nil
+}
+
+// getStringEnumValidResponder handles the response to the GetStringEnumValid request.
+func (client ArrayClient) getStringEnumValidResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	result := &GetStringEnumValidResponse{rawResponse: resp.Response()}
 	if err != nil {
 		return result, err
 	}
@@ -3114,6 +3216,58 @@ func (client ArrayClient) putEmptyResponder(resp pipeline.Response) (pipeline.Re
 	return resp, err
 }
 
+// PutEnumValid set array value ['foo1', 'foo2', 'foo3']
+//
+func (client ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnumType) (*http.Response, error) {
+	if err := validate([]validation{
+		{targetValue: arrayBody,
+			constraints: []constraint{{target: "arrayBody", name: null, rule: true, chain: nil}}}}); err != nil {
+		return nil, err
+	}
+	req, err := client.putEnumValidPreparer(arrayBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.putEnumValidResponder}, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Response(), err
+}
+
+// putEnumValidPreparer prepares the PutEnumValid request.
+func (client ArrayClient) putEnumValidPreparer(arrayBody []FooEnumType) (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/array/prim/enum/foo1.foo2.foo3"
+	req, err := pipeline.NewRequest("PUT", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	b, err := json.Marshal(arrayBody)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to marshal request body")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	err = req.SetBody(bytes.NewReader(b))
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to set request body")
+	}
+	return req, nil
+}
+
+// putEnumValidResponder handles the response to the PutEnumValid request.
+func (client ArrayClient) putEnumValidResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
+	resp.Response().Body.Close()
+	return resp, err
+}
+
 // PutFloatValid set array value [0, -0.01, 1.2e20]
 //
 func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64) (*http.Response, error) {
@@ -3261,6 +3415,58 @@ func (client ArrayClient) putLongValidPreparer(arrayBody []int64) (pipeline.Requ
 
 // putLongValidResponder handles the response to the PutLongValid request.
 func (client ArrayClient) putLongValidResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	io.Copy(ioutil.Discard, resp.Response().Body)
+	resp.Response().Body.Close()
+	return resp, err
+}
+
+// PutStringEnumValid set array value ['foo1', 'foo2', 'foo3']
+//
+func (client ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []string) (*http.Response, error) {
+	if err := validate([]validation{
+		{targetValue: arrayBody,
+			constraints: []constraint{{target: "arrayBody", name: null, rule: true, chain: nil}}}}); err != nil {
+		return nil, err
+	}
+	req, err := client.putStringEnumValidPreparer(arrayBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.putStringEnumValidResponder}, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Response(), err
+}
+
+// putStringEnumValidPreparer prepares the PutStringEnumValid request.
+func (client ArrayClient) putStringEnumValidPreparer(arrayBody []string) (pipeline.Request, error) {
+	u := client.url
+	u.Path = "/array/prim/string-enum/foo1.foo2.foo3"
+	req, err := pipeline.NewRequest("PUT", u, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	req.URL.RawQuery = params.Encode()
+	b, err := json.Marshal(arrayBody)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to marshal request body")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	err = req.SetBody(bytes.NewReader(b))
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to set request body")
+	}
+	return req, nil
+}
+
+// putStringEnumValidResponder handles the response to the PutStringEnumValid request.
+func (client ArrayClient) putStringEnumValidResponder(resp pipeline.Response) (pipeline.Response, error) {
 	err := validateResponse(resp, http.StatusOK)
 	if resp == nil {
 		return nil, err
