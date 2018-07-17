@@ -8,6 +8,9 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
 
+@if (Model.ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsDateTimeCustomHandlingRequired).Any())
+{
+<text>
 const (
 	rfc3339Format = "2006-01-02T15:04:05.0000000Z07:00"
 )
@@ -46,8 +49,33 @@ func (t *timeRFC3339) UnmarshalText(data []byte) (err error) {
 	t.Time, err = time.Parse(rfc3339Format, string(data))
 	return
 }
+</text>
+}
+@if (Model.ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsBase64EncodingRequired).Any())
+{
+<text>
+// internal type used for marshalling base64 encoded strings
+type base64Encoded struct {
+	b []byte
+}
 
-@foreach (var ct in Model.RequiresDateTimeCustomHandling)
+// MarshalText implements the encoding.TextMarshaler interface for base64Encoded.
+func (c base64Encoded) MarshalText() ([]byte, error) {
+	return []byte(base64.StdEncoding.EncodeToString(c.b)), nil
+}
+
+// UnmarshalText implements the encoding.TextUnmarshaler interface for base64Encoded.
+func (c *base64Encoded) UnmarshalText(data []byte) error {
+	b, err := base64.StdEncoding.DecodeString(string(data))
+	if err != nil {
+		return err
+	}
+	c.b = b
+	return nil
+}
+</text>
+}
+@foreach (var ct in Model.RequiresCustomMarshalling)
 {
     var internalName = ct.Name.ToCamelCase();
 <text>

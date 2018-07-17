@@ -27,6 +27,25 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+// FooEnumType enumerates the values for foo enum type.
+type FooEnumType string
+
+const (
+	// FooEnumFoo1 ...
+	FooEnumFoo1 FooEnumType = "foo1"
+	// FooEnumFoo2 ...
+	FooEnumFoo2 FooEnumType = "foo2"
+	// FooEnumFoo3 ...
+	FooEnumFoo3 FooEnumType = "foo3"
+	// FooEnumNone represents an empty FooEnumType.
+	FooEnumNone FooEnumType = ""
+)
+
+// PossibleFooEnumTypeValues returns an array of possible values for the FooEnumType const type.
+func PossibleFooEnumTypeValues() []FooEnumType {
+	return []FooEnumType{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3, FooEnumNone}
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
@@ -726,6 +745,27 @@ func (ger GetEmptyResponse) Status() string {
 	return ger.rawResponse.Status
 }
 
+// GetEnumValidResponse ...
+type GetEnumValidResponse struct {
+	rawResponse *http.Response
+	Items       []FooEnumType `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gevr GetEnumValidResponse) Response() *http.Response {
+	return gevr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gevr GetEnumValidResponse) StatusCode() int {
+	return gevr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gevr GetEnumValidResponse) Status() string {
+	return gevr.rawResponse.Status
+}
+
 // GetFloatInvalidNullResponse ...
 type GetFloatInvalidNullResponse struct {
 	rawResponse *http.Response
@@ -955,6 +995,27 @@ func (gnr GetNullResponse) StatusCode() int {
 // Status returns the HTTP status message of the response, e.g. "200 OK".
 func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
+}
+
+// GetStringEnumValidResponse ...
+type GetStringEnumValidResponse struct {
+	rawResponse *http.Response
+	Items       []string `json:"items,omitempty"`
+}
+
+// Response returns the raw HTTP response object.
+func (gsevr GetStringEnumValidResponse) Response() *http.Response {
+	return gsevr.rawResponse
+}
+
+// StatusCode returns the HTTP status code of the response, e.g. 200.
+func (gsevr GetStringEnumValidResponse) StatusCode() int {
+	return gsevr.rawResponse.StatusCode
+}
+
+// Status returns the HTTP status message of the response, e.g. "200 OK".
+func (gsevr GetStringEnumValidResponse) Status() string {
+	return gsevr.rawResponse.Status
 }
 
 // GetStringValidResponse ...

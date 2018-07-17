@@ -167,7 +167,7 @@
     </text>
 }
 
-@if (Model.IsDateTimeCustomHandlingRequired)
+@if (Model.IsDateTimeCustomHandlingRequired || Model.IsBase64EncodingRequired)
 {
     var internalName = Model.Name.ToCamelCase();
     var rec = Model.Name.ToString().ToShortName();

@@ -300,7 +300,8 @@ namespace AutoRest.Go.Model
         /// Returns a collection of composite types that require datetime handleing in a custom marshaller and/or
         /// unmarshaller. Can be empty if there are no types requriring marshallers.
         /// </summary>
-        public IEnumerable<CompositeTypeGo> RequiresDateTimeCustomHandling=> ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsDateTimeCustomHandlingRequired);
+        public IEnumerable<CompositeTypeGo> RequiresCustomMarshalling=> ModelTypes.Cast<CompositeTypeGo>().Where(
+            m => m.IsDateTimeCustomHandlingRequired || m.IsBase64EncodingRequired);
 
         /// <summary>
         /// Returns the encoding type used for serialization (e.g. xml or json).

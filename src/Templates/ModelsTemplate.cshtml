@@ -122,7 +122,7 @@ func joinConst(s interface{}, sep string) string {
         @EmptyLine
     </text>
 }
-@if (Model.RequiresDateTimeCustomHandling.Any())
+@if (Model.RequiresCustomMarshalling.Any())
 {
     <text>
         @(Include(new Marshalling(), Model))
