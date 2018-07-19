@@ -1757,6 +1757,58 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ListInt
 	return
 }
 
+// GetEnumValid get enum array value ['foo1', 'foo2', 'foo3']
+func (client ArrayClient) GetEnumValid(ctx context.Context) (result ListString, err error) {
+	req, err := client.GetEnumValidPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetEnumValidSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetEnumValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetEnumValid", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetEnumValidPreparer prepares the GetEnumValid request.
+func (client ArrayClient) GetEnumValidPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/array/prim/enum/foo1.foo2.foo3"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetEnumValidSender sends the GetEnumValid request. The method will close the
+// http.Response Body if it receives an error.
+func (client ArrayClient) GetEnumValidSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetEnumValidResponder handles the response to the GetEnumValid request. The method always
+// closes the http.Response Body.
+func (client ArrayClient) GetEnumValidResponder(resp *http.Response) (result ListString, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetFloatInvalidNull get float array value [0.0, null, -1.2e20]
 func (client ArrayClient) GetFloatInvalidNull(ctx context.Context) (result ListFloat64, err error) {
 	req, err := client.GetFloatInvalidNullPreparer(ctx)
@@ -2319,6 +2371,58 @@ func (client ArrayClient) GetNullSender(req *http.Request) (*http.Response, erro
 // GetNullResponder handles the response to the GetNull request. The method always
 // closes the http.Response Body.
 func (client ArrayClient) GetNullResponder(resp *http.Response) (result ListInt32, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result.Value),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// GetStringEnumValid get enum array value ['foo1', 'foo2', 'foo3']
+func (client ArrayClient) GetStringEnumValid(ctx context.Context) (result ListString, err error) {
+	req, err := client.GetStringEnumValidPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetStringEnumValidSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetStringEnumValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "GetStringEnumValid", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetStringEnumValidPreparer prepares the GetStringEnumValid request.
+func (client ArrayClient) GetStringEnumValidPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/array/prim/string-enum/foo1.foo2.foo3"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetStringEnumValidSender sends the GetStringEnumValid request. The method will close the
+// http.Response Body if it receives an error.
+func (client ArrayClient) GetStringEnumValidSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetStringEnumValidResponder handles the response to the GetStringEnumValid request. The method always
+// closes the http.Response Body.
+func (client ArrayClient) GetStringEnumValidResponder(resp *http.Response) (result ListString, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
@@ -3243,6 +3347,65 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 	return
 }
 
+// PutEnumValid set array value ['foo1', 'foo2', 'foo3']
+func (client ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum) (result autorest.Response, err error) {
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: arrayBody,
+			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("arraygroup.ArrayClient", "PutEnumValid", err.Error())
+	}
+
+	req, err := client.PutEnumValidPreparer(ctx, arrayBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutEnumValidSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutEnumValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutEnumValid", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutEnumValidPreparer prepares the PutEnumValid request.
+func (client ArrayClient) PutEnumValidPreparer(ctx context.Context, arrayBody []FooEnum) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/array/prim/enum/foo1.foo2.foo3"),
+		autorest.WithJSON(arrayBody))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PutEnumValidSender sends the PutEnumValid request. The method will close the
+// http.Response Body if it receives an error.
+func (client ArrayClient) PutEnumValidSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutEnumValidResponder handles the response to the PutEnumValid request. The method always
+// closes the http.Response Body.
+func (client ArrayClient) PutEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
 // PutFloatValid set array value [0, -0.01, 1.2e20]
 func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
 	if err := validation.Validate([]validation.Validation{
@@ -3411,6 +3574,65 @@ func (client ArrayClient) PutLongValidSender(req *http.Request) (*http.Response,
 // PutLongValidResponder handles the response to the PutLongValid request. The method always
 // closes the http.Response Body.
 func (client ArrayClient) PutLongValidResponder(resp *http.Response) (result autorest.Response, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByClosing())
+	result.Response = resp
+	return
+}
+
+// PutStringEnumValid set array value ['foo1', 'foo2', 'foo3']
+func (client ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
+	if err := validation.Validate([]validation.Validation{
+		{TargetValue: arrayBody,
+			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
+		return result, validation.NewError("arraygroup.ArrayClient", "PutStringEnumValid", err.Error())
+	}
+
+	req, err := client.PutStringEnumValidPreparer(ctx, arrayBody)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.PutStringEnumValidSender(req)
+	if err != nil {
+		result.Response = resp
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.PutStringEnumValidResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "arraygroup.ArrayClient", "PutStringEnumValid", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// PutStringEnumValidPreparer prepares the PutStringEnumValid request.
+func (client ArrayClient) PutStringEnumValidPreparer(ctx context.Context, arrayBody []string) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/array/prim/string-enum/foo1.foo2.foo3"),
+		autorest.WithJSON(arrayBody))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// PutStringEnumValidSender sends the PutStringEnumValid request. The method will close the
+// http.Response Body if it receives an error.
+func (client ArrayClient) PutStringEnumValidSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// PutStringEnumValidResponder handles the response to the PutStringEnumValid request. The method always
+// closes the http.Response Body.
+func (client ArrayClient) PutStringEnumValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
