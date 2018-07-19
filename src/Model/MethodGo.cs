@@ -396,7 +396,7 @@ namespace AutoRest.Go.Model
                         }
                         else if (param.IsClientProperty)
                         {
-                            value = $"client.{param.Name.ToPascalCase()}";
+                            value = param.GetClientPropertryName();
                         }
                         else
                         {
