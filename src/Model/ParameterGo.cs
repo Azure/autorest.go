@@ -52,7 +52,7 @@ namespace AutoRest.Go.Model
             }
             else if (IsClientProperty)
             {
-                retval = "client." + Name.Value.Capitalize();
+                retval = GetClientPropertryName();
             }
             else
             {
@@ -157,18 +157,7 @@ namespace AutoRest.Go.Model
             }
             else if (IsClientProperty)
             {
-                var propName = CodeNamerGo.Instance.GetPropertyName(Name.Value);
-
-                // verify that the calculated name matches the property name
-                bool found = Method.CodeModel.Properties.Any(clientProp => clientProp.Name == propName);
-
-                // didn't find an exact match, find the closest match.  we hit this case if
-                // the front-end decided to add a suffix (e.g. '1') to the client property name.
-                if (!found)
-                {
-                    propName = Method.CodeModel.Properties.First(clientProp => Regex.IsMatch(clientProp.Name, $"{propName}\\d")).Name;
-                }
-                value = $"client.{propName}";
+                value = GetClientPropertryName();
             }
             else
             {
@@ -269,6 +258,25 @@ namespace AutoRest.Go.Model
         public static bool Match(ParameterGo lhs, ParameterGo rhs)
         {
             return lhs.Name.EqualsIgnoreCase(rhs.Name) && lhs.ModelTypeName.Equals(rhs.ModelTypeName);
+        }
+
+        /// <summary>
+        /// Returns a properly formatted client variable (e.g. client.SomeField).
+        /// </summary>
+        internal string GetClientPropertryName()
+        {
+            var propName = CodeNamerGo.Instance.GetPropertyName(Name.Value);
+
+            // verify that the calculated name matches the property name
+            bool found = Method.CodeModel.Properties.Any(clientProp => clientProp.Name == propName);
+
+            // didn't find an exact match, find the closest match.  we hit this case if
+            // the front-end decided to add a suffix (e.g. '1') to the client property name.
+            if (!found)
+            {
+                propName = Method.CodeModel.Properties.First(clientProp => Regex.IsMatch(clientProp.Name, $"{propName}\\d")).Name;
+            }
+            return $"client.{propName}";
         }
     }
 
@@ -411,7 +419,7 @@ namespace AutoRest.Go.Model
 
                 var name = !p.IsClientProperty
                         ? p.Name.Value
-                        : "client." + p.Name.Value.Capitalize();
+                        : p.GetClientPropertryName();
 
                 List<string> x = new List<string>();
                 if (p.ModelType is CompositeType)
