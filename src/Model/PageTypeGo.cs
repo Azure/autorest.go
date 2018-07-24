@@ -28,8 +28,9 @@ namespace AutoRest.Go.Model
 
             CodeModel = method.CodeModel;
             ContentType = (CompositeTypeGo)method.ReturnType.Body;
-            ElementType = ContentType.Properties.Where(p => p.ModelType is SequenceTypeGo).FirstOrDefault().ModelType.Cast<SequenceTypeGo>().ElementType;
-            Documentation = $"Contains a page of {ElementType.Name} values.";
+            ElementType = ContentType.Properties.FirstOrDefault(p => p.ModelType is SequenceTypeGo).ModelType.Cast<SequenceTypeGo>().ElementType;
+
+            Documentation = $"Contains a page of {ReturnTypeName} values.";
             PreparerNeeded = !method.NextMethodExists(CodeModel.Methods.Cast<MethodGo>());
 
             var pageableExtension = method.Extensions[AzureExtensions.PageableExtension] as Newtonsoft.Json.Linq.JContainer;
@@ -72,6 +73,11 @@ namespace AutoRest.Go.Model
         /// Gets the element type, i.e. the type in the arrary.
         /// </summary>
         public IModelType ElementType { get; }
+
+        /// <summary>
+        /// Gets the page's return type name.
+        /// </summary>
+        public string ReturnTypeName => ElementType.HasInterface() ? ElementType.GetInterfaceName() : ElementType.Name.Value;
 
         /// <summary>
         /// Gets the name of the preparer method used to prepare the request for retrieving the next page of results.
