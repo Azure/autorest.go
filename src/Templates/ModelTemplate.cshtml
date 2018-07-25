@@ -380,7 +380,7 @@ else
 @if (Model is IteratorTypeGo iterType)
 {
     var itemType = iterType.PageType.ElementType;
-    var itemTypeName = iterType.PageType.ElementType.Name;
+    var itemTypeName = iterType.PageType.ReturnTypeName;
     <text>
     // Next advances to the next value.  If there was an error making
     // the request the iterator does not advance and the error is returned.
