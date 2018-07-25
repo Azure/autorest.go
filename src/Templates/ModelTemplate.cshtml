@@ -344,7 +344,6 @@ else
 @if (Model is PageTypeGo modelPageType)
 {
     var itemName = modelPageType.ItemName;
-    var itemType = modelPageType.ElementType.Name;
     <text>
     @EmptyLine
     // Next advances to the next page of values.  If there was an error making
@@ -369,7 +368,7 @@ else
     }
 
     // Values returns the slice of values for the current page or nil if there are no values.
-    func (page @Model.Name) Values() []@(itemType) {
+    func (page @Model.Name) Values() []@(modelPageType.ReturnTypeName) {
     if page.@(modelPageType.ResultFieldName).IsEmpty() {
     return nil
     }
