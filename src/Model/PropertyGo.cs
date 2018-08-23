@@ -32,7 +32,21 @@ namespace AutoRest.Go.Model
             bool hasParent = false;
             if (Parent is CompositeTypeGo go && !go.IsWrapperType)
             {
-                sb.Append(XmlName);
+                if (ModelType is SequenceTypeGo stg && !XmlIsWrapped)
+                {
+                    // for unwrapped XML arrays use the XML name from the array's element type
+                    sb.Append(stg.ElementType.XmlName);
+                }
+                else if (ModelType is CompositeTypeGo && ModelType.XmlProperties != null && !string.IsNullOrWhiteSpace(ModelType.XmlProperties.Name))
+                {
+                    // if a composite type defines an XML name use that instead of the field name in the containing type
+                    sb.Append(ModelType.XmlProperties.Name);
+                }
+                else
+                {
+                    // use the XML name from the containing type
+                    sb.Append(XmlName);
+                }
                 hasParent = true;
             }
 
