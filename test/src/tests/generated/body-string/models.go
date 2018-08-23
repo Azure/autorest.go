@@ -56,7 +56,7 @@ type Error struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// GetBase64EncodedResponse ...
+// GetBase64EncodedResponse - Wraps the response from the StringClient.GetBase64Encoded method.
 type GetBase64EncodedResponse struct {
 	rawResponse *http.Response
 	Value       *string `json:"value,omitempty"`
@@ -77,7 +77,7 @@ func (gb6er GetBase64EncodedResponse) Status() string {
 	return gb6er.rawResponse.Status
 }
 
-// GetBase64URLEncodedResponse ...
+// GetBase64URLEncodedResponse - Wraps the response from the StringClient.GetBase64URLEncoded method.
 type GetBase64URLEncodedResponse struct {
 	rawResponse *http.Response
 	Value       *string `json:"value,omitempty"`
@@ -98,7 +98,7 @@ func (gb6er GetBase64URLEncodedResponse) Status() string {
 	return gb6er.rawResponse.Status
 }
 
-// GetEmptyResponse ...
+// GetEmptyResponse - Wraps the response from the StringClient.GetEmpty method.
 type GetEmptyResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: ''
@@ -120,7 +120,7 @@ func (ger GetEmptyResponse) Status() string {
 	return ger.rawResponse.Status
 }
 
-// GetMbcsResponse ...
+// GetMbcsResponse - Wraps the response from the StringClient.GetMbcs method.
 type GetMbcsResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
@@ -142,7 +142,7 @@ func (gmr GetMbcsResponse) Status() string {
 	return gmr.rawResponse.Status
 }
 
-// GetNotExpandableResponse ...
+// GetNotExpandableResponse - Wraps the response from the EnumClient.GetNotExpandable method.
 type GetNotExpandableResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: 'ColorsRedcolor', 'ColorsGreenColor', 'ColorsBlueColor', 'ColorsNone'
@@ -164,7 +164,7 @@ func (gner GetNotExpandableResponse) Status() string {
 	return gner.rawResponse.Status
 }
 
-// GetNotProvidedResponse ...
+// GetNotProvidedResponse - Wraps the response from the StringClient.GetNotProvided method.
 type GetNotProvidedResponse struct {
 	rawResponse *http.Response
 	Value       *string `json:"value,omitempty"`
@@ -185,7 +185,7 @@ func (gnpr GetNotProvidedResponse) Status() string {
 	return gnpr.rawResponse.Status
 }
 
-// GetNullBase64URLEncodedResponse ...
+// GetNullBase64URLEncodedResponse - Wraps the response from the StringClient.GetNullBase64URLEncoded method.
 type GetNullBase64URLEncodedResponse struct {
 	rawResponse *http.Response
 	Value       *string `json:"value,omitempty"`
@@ -206,7 +206,7 @@ func (gnb6er GetNullBase64URLEncodedResponse) Status() string {
 	return gnb6er.rawResponse.Status
 }
 
-// GetNullResponse ...
+// GetNullResponse - Wraps the response from the StringClient.GetNull method.
 type GetNullResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: ''
@@ -228,7 +228,7 @@ func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
 
-// GetReferencedResponse ...
+// GetReferencedResponse - Wraps the response from the EnumClient.GetReferenced method.
 type GetReferencedResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: 'ColorsRedcolor', 'ColorsGreenColor', 'ColorsBlueColor', 'ColorsNone'
@@ -250,7 +250,7 @@ func (grr GetReferencedResponse) Status() string {
 	return grr.rawResponse.Status
 }
 
-// GetWhitespaceResponse ...
+// GetWhitespaceResponse - Wraps the response from the StringClient.GetWhitespace method.
 type GetWhitespaceResponse struct {
 	rawResponse *http.Response
 	// Value - Possible values include: '    Now is the time for all good men to come to the aid of their country    '

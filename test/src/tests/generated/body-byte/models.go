@@ -41,7 +41,7 @@ type Error struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// GetEmptyResponse ...
+// GetEmptyResponse - Wraps the response from the ByteClient.GetEmpty method.
 type GetEmptyResponse struct {
 	rawResponse *http.Response
 	Value       []byte `json:"value,omitempty"`
@@ -80,7 +80,7 @@ func (ger GetEmptyResponse) Status() string {
 	return ger.rawResponse.Status
 }
 
-// GetInvalidResponse ...
+// GetInvalidResponse - Wraps the response from the ByteClient.GetInvalid method.
 type GetInvalidResponse struct {
 	rawResponse *http.Response
 	Value       []byte `json:"value,omitempty"`
@@ -119,7 +119,7 @@ func (gir GetInvalidResponse) Status() string {
 	return gir.rawResponse.Status
 }
 
-// GetNonASCIIResponse ...
+// GetNonASCIIResponse - Wraps the response from the ByteClient.GetNonASCII method.
 type GetNonASCIIResponse struct {
 	rawResponse *http.Response
 	Value       []byte `json:"value,omitempty"`
@@ -158,7 +158,7 @@ func (gnar GetNonASCIIResponse) Status() string {
 	return gnar.rawResponse.Status
 }
 
-// GetNullResponse ...
+// GetNullResponse - Wraps the response from the ByteClient.GetNull method.
 type GetNullResponse struct {
 	rawResponse *http.Response
 	Value       []byte `json:"value,omitempty"`

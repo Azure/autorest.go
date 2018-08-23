@@ -37,7 +37,7 @@ type Error struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// GetReportResponse ...
+// GetReportResponse - Wraps the response from the ManagementClient.GetReport method.
 type GetReportResponse struct {
 	rawResponse *http.Response
 	Value       map[string]int32 `json:"value,omitempty"`
