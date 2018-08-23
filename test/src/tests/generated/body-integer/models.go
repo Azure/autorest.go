@@ -26,6 +26,12 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`

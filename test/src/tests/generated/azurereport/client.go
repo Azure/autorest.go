@@ -100,7 +100,7 @@ func (client ManagementClient) getReportResponder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)

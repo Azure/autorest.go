@@ -65,7 +65,7 @@ func (client ByteClient) getEmptyResponder(resp pipeline.Response) (pipeline.Res
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -116,7 +116,7 @@ func (client ByteClient) getInvalidResponder(resp pipeline.Response) (pipeline.R
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -167,7 +167,7 @@ func (client ByteClient) getNonASCIIResponder(resp pipeline.Response) (pipeline.
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -218,7 +218,7 @@ func (client ByteClient) getNullResponder(resp pipeline.Response) (pipeline.Resp
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)

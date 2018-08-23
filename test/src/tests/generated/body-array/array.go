@@ -67,7 +67,7 @@ func (client ArrayClient) getArrayEmptyResponder(resp pipeline.Response) (pipeli
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -118,7 +118,7 @@ func (client ArrayClient) getArrayItemEmptyResponder(resp pipeline.Response) (pi
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -169,7 +169,7 @@ func (client ArrayClient) getArrayItemNullResponder(resp pipeline.Response) (pip
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -220,7 +220,7 @@ func (client ArrayClient) getArrayNullResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -271,7 +271,7 @@ func (client ArrayClient) getArrayValidResponder(resp pipeline.Response) (pipeli
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -323,7 +323,7 @@ func (client ArrayClient) getBase64URLResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -374,7 +374,7 @@ func (client ArrayClient) getBooleanInvalidNullResponder(resp pipeline.Response)
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -425,7 +425,7 @@ func (client ArrayClient) getBooleanInvalidStringResponder(resp pipeline.Respons
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -476,7 +476,7 @@ func (client ArrayClient) getBooleanTfftResponder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -527,7 +527,7 @@ func (client ArrayClient) getByteInvalidNullResponder(resp pipeline.Response) (p
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -579,7 +579,7 @@ func (client ArrayClient) getByteValidResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -630,7 +630,7 @@ func (client ArrayClient) getComplexEmptyResponder(resp pipeline.Response) (pipe
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -682,7 +682,7 @@ func (client ArrayClient) getComplexItemEmptyResponder(resp pipeline.Response) (
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -734,7 +734,7 @@ func (client ArrayClient) getComplexItemNullResponder(resp pipeline.Response) (p
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -785,7 +785,7 @@ func (client ArrayClient) getComplexNullResponder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -837,7 +837,7 @@ func (client ArrayClient) getComplexValidResponder(resp pipeline.Response) (pipe
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -888,7 +888,7 @@ func (client ArrayClient) getDateInvalidCharsResponder(resp pipeline.Response) (
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -939,7 +939,7 @@ func (client ArrayClient) getDateInvalidNullResponder(resp pipeline.Response) (p
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -990,7 +990,7 @@ func (client ArrayClient) getDateTimeInvalidCharsResponder(resp pipeline.Respons
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1041,7 +1041,7 @@ func (client ArrayClient) getDateTimeInvalidNullResponder(resp pipeline.Response
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1093,7 +1093,7 @@ func (client ArrayClient) getDateTimeRfc1123ValidResponder(resp pipeline.Respons
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1145,7 +1145,7 @@ func (client ArrayClient) getDateTimeValidResponder(resp pipeline.Response) (pip
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1196,7 +1196,7 @@ func (client ArrayClient) getDateValidResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1247,7 +1247,7 @@ func (client ArrayClient) getDictionaryEmptyResponder(resp pipeline.Response) (p
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1299,7 +1299,7 @@ func (client ArrayClient) getDictionaryItemEmptyResponder(resp pipeline.Response
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1351,7 +1351,7 @@ func (client ArrayClient) getDictionaryItemNullResponder(resp pipeline.Response)
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1402,7 +1402,7 @@ func (client ArrayClient) getDictionaryNullResponder(resp pipeline.Response) (pi
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1454,7 +1454,7 @@ func (client ArrayClient) getDictionaryValidResponder(resp pipeline.Response) (p
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1505,7 +1505,7 @@ func (client ArrayClient) getDoubleInvalidNullResponder(resp pipeline.Response) 
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1556,7 +1556,7 @@ func (client ArrayClient) getDoubleInvalidStringResponder(resp pipeline.Response
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1607,7 +1607,7 @@ func (client ArrayClient) getDoubleValidResponder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1658,7 +1658,7 @@ func (client ArrayClient) getDurationValidResponder(resp pipeline.Response) (pip
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1709,7 +1709,7 @@ func (client ArrayClient) getEmptyResponder(resp pipeline.Response) (pipeline.Re
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1760,7 +1760,7 @@ func (client ArrayClient) getEnumValidResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1811,7 +1811,7 @@ func (client ArrayClient) getFloatInvalidNullResponder(resp pipeline.Response) (
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1862,7 +1862,7 @@ func (client ArrayClient) getFloatInvalidStringResponder(resp pipeline.Response)
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1913,7 +1913,7 @@ func (client ArrayClient) getFloatValidResponder(resp pipeline.Response) (pipeli
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -1964,7 +1964,7 @@ func (client ArrayClient) getIntegerValidResponder(resp pipeline.Response) (pipe
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2015,7 +2015,7 @@ func (client ArrayClient) getIntInvalidNullResponder(resp pipeline.Response) (pi
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2066,7 +2066,7 @@ func (client ArrayClient) getIntInvalidStringResponder(resp pipeline.Response) (
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2117,7 +2117,7 @@ func (client ArrayClient) getInvalidResponder(resp pipeline.Response) (pipeline.
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2168,7 +2168,7 @@ func (client ArrayClient) getLongInvalidNullResponder(resp pipeline.Response) (p
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2219,7 +2219,7 @@ func (client ArrayClient) getLongInvalidStringResponder(resp pipeline.Response) 
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2270,7 +2270,7 @@ func (client ArrayClient) getLongValidResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2321,7 +2321,7 @@ func (client ArrayClient) getNullResponder(resp pipeline.Response) (pipeline.Res
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2372,7 +2372,7 @@ func (client ArrayClient) getStringEnumValidResponder(resp pipeline.Response) (p
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2423,7 +2423,7 @@ func (client ArrayClient) getStringValidResponder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2474,7 +2474,7 @@ func (client ArrayClient) getStringWithInvalidResponder(resp pipeline.Response) 
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2525,7 +2525,7 @@ func (client ArrayClient) getStringWithNullResponder(resp pipeline.Response) (pi
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2576,7 +2576,7 @@ func (client ArrayClient) getUUIDInvalidCharsResponder(resp pipeline.Response) (
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -2628,7 +2628,7 @@ func (client ArrayClient) getUUIDValidResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)

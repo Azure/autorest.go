@@ -27,6 +27,12 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // FooEnumType enumerates the values for foo enum type.
 type FooEnumType string
 

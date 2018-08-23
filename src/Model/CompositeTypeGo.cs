@@ -212,6 +212,7 @@ namespace AutoRest.Go.Model
 
             if (IsDateTimeCustomHandlingRequired || IsBase64EncodingRequired)
             {
+                imports.Add("\"errors\"");
                 imports.Add($"\"reflect\"");
                 imports.Add($"\"unsafe\"");
             }

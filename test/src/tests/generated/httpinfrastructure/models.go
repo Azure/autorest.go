@@ -25,6 +25,12 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // A ...
 type A struct {
 	rawResponse *http.Response
