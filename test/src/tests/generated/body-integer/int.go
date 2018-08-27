@@ -66,7 +66,7 @@ func (client IntClient) getInvalidResponder(resp pipeline.Response) (pipeline.Re
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -117,7 +117,7 @@ func (client IntClient) getInvalidUnixTimeResponder(resp pipeline.Response) (pip
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -168,7 +168,7 @@ func (client IntClient) getNullResponder(resp pipeline.Response) (pipeline.Respo
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -219,7 +219,7 @@ func (client IntClient) getNullUnixTimeResponder(resp pipeline.Response) (pipeli
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -270,7 +270,7 @@ func (client IntClient) getOverflowInt32Responder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -321,7 +321,7 @@ func (client IntClient) getOverflowInt64Responder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -372,7 +372,7 @@ func (client IntClient) getUnderflowInt32Responder(resp pipeline.Response) (pipe
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -423,7 +423,7 @@ func (client IntClient) getUnderflowInt64Responder(resp pipeline.Response) (pipe
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -474,7 +474,7 @@ func (client IntClient) getUnixTimeResponder(resp pipeline.Response) (pipeline.R
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)

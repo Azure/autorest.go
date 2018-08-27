@@ -108,6 +108,14 @@ func joinConst(s interface{}, sep string) string {
 	}
 	return strings.Join(ss, sep)
 }
+
+@EmptyLine
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+@EmptyLine
 @foreach (var e in Model.Enums)
 {
     <text>

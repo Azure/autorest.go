@@ -25,13 +25,19 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// GetFalseResponse ...
+// GetFalseResponse - Wraps the response from the BoolClient.GetFalse method.
 type GetFalseResponse struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`
@@ -52,7 +58,7 @@ func (gfr GetFalseResponse) Status() string {
 	return gfr.rawResponse.Status
 }
 
-// GetInvalidResponse ...
+// GetInvalidResponse - Wraps the response from the BoolClient.GetInvalid method.
 type GetInvalidResponse struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`
@@ -73,7 +79,7 @@ func (gir GetInvalidResponse) Status() string {
 	return gir.rawResponse.Status
 }
 
-// GetNullResponse ...
+// GetNullResponse - Wraps the response from the BoolClient.GetNull method.
 type GetNullResponse struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`
@@ -94,7 +100,7 @@ func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
 
-// GetTrueResponse ...
+// GetTrueResponse - Wraps the response from the BoolClient.GetTrue method.
 type GetTrueResponse struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`

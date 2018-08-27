@@ -25,6 +25,12 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // A ...
 type A struct {
 	rawResponse *http.Response
@@ -84,7 +90,8 @@ func (eVar Error) HTTPStatus() string {
 	return eVar.rawResponse.Status
 }
 
-// Get200ModelA201ModelC404ModelDDefaultError200ValidResponse ...
+// Get200ModelA201ModelC404ModelDDefaultError200ValidResponse - Wraps the response from the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
 type Get200ModelA201ModelC404ModelDDefaultError200ValidResponse struct {
 	rawResponse *http.Response
 	Value       map[string]interface{} `json:"value,omitempty"`
@@ -105,7 +112,8 @@ func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError200ValidResponse) 
 	return g2mamcmdde2vr.rawResponse.Status
 }
 
-// Get200ModelA201ModelC404ModelDDefaultError201ValidResponse ...
+// Get200ModelA201ModelC404ModelDDefaultError201ValidResponse - Wraps the response from the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
 type Get200ModelA201ModelC404ModelDDefaultError201ValidResponse struct {
 	rawResponse *http.Response
 	Value       map[string]interface{} `json:"value,omitempty"`
@@ -126,7 +134,8 @@ func (g2mamcmdde2vr Get200ModelA201ModelC404ModelDDefaultError201ValidResponse) 
 	return g2mamcmdde2vr.rawResponse.Status
 }
 
-// Get200ModelA201ModelC404ModelDDefaultError400ValidResponse ...
+// Get200ModelA201ModelC404ModelDDefaultError400ValidResponse - Wraps the response from the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
 type Get200ModelA201ModelC404ModelDDefaultError400ValidResponse struct {
 	rawResponse *http.Response
 	Value       map[string]interface{} `json:"value,omitempty"`
@@ -147,7 +156,8 @@ func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError400ValidResponse) 
 	return g2mamcmdde4vr.rawResponse.Status
 }
 
-// Get200ModelA201ModelC404ModelDDefaultError404ValidResponse ...
+// Get200ModelA201ModelC404ModelDDefaultError404ValidResponse - Wraps the response from the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
 type Get200ModelA201ModelC404ModelDDefaultError404ValidResponse struct {
 	rawResponse *http.Response
 	Value       map[string]interface{} `json:"value,omitempty"`
@@ -168,7 +178,7 @@ func (g2mamcmdde4vr Get200ModelA201ModelC404ModelDDefaultError404ValidResponse) 
 	return g2mamcmdde4vr.rawResponse.Status
 }
 
-// Get200Response ...
+// Get200Response - Wraps the response from the HTTPSuccessClient.Get200 method.
 type Get200Response struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`
@@ -189,7 +199,7 @@ func (g2r Get200Response) Status() string {
 	return g2r.rawResponse.Status
 }
 
-// Get300Response ...
+// Get300Response - Wraps the response from the HTTPRedirectsClient.Get300 method.
 type Get300Response struct {
 	rawResponse *http.Response
 	Items       []string `json:"items,omitempty"`
@@ -215,7 +225,7 @@ func (g3r Get300Response) Location() string {
 	return string(g3r.rawResponse.Header.Get("Location"))
 }
 
-// GetEmptyErrorResponse ...
+// GetEmptyErrorResponse - Wraps the response from the HTTPFailureClient.GetEmptyError method.
 type GetEmptyErrorResponse struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`
@@ -236,7 +246,7 @@ func (geer GetEmptyErrorResponse) Status() string {
 	return geer.rawResponse.Status
 }
 
-// GetNoModelEmptyResponse ...
+// GetNoModelEmptyResponse - Wraps the response from the HTTPFailureClient.GetNoModelEmpty method.
 type GetNoModelEmptyResponse struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`
@@ -257,7 +267,7 @@ func (gnmer GetNoModelEmptyResponse) Status() string {
 	return gnmer.rawResponse.Status
 }
 
-// GetNoModelErrorResponse ...
+// GetNoModelErrorResponse - Wraps the response from the HTTPFailureClient.GetNoModelError method.
 type GetNoModelErrorResponse struct {
 	rawResponse *http.Response
 	Value       *bool `json:"value,omitempty"`

@@ -182,9 +182,7 @@ else
             return time.Time{}
             }
             t, err := time.Parse(@formatAs, s)
-            if err != nil {
-            panic(err)
-            }
+            validateError(err)
             return t
         </text>
     }
@@ -197,9 +195,7 @@ else
             return -1
             }
             i, err := strconv.ParseInt(s, 10, @bitSize)
-            if err != nil {
-            panic(err)
-            }
+            validateError(err)
             return @(headerResp.Type.ModelType.IsPrimaryType(KnownPrimaryType.Int) ? "int32(i)" : "i")
         </text>
     }
@@ -211,9 +207,7 @@ else
             return nil
             }
             b, err := base64.StdEncoding.DecodeString(s)
-            if err != nil {
-            panic(err)
-            }
+            validateError(err)
             return b
         </text>
     }

@@ -25,13 +25,19 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// GetReportResponse ...
+// GetReportResponse - Wraps the response from the ManagementClient.GetReport method.
 type GetReportResponse struct {
 	rawResponse *http.Response
 	Value       map[string]int32 `json:"value,omitempty"`

@@ -65,7 +65,7 @@ func (client EnumClient) getNotExpandableResponder(resp pipeline.Response) (pipe
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -116,7 +116,7 @@ func (client EnumClient) getReferencedResponder(resp pipeline.Response) (pipelin
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -167,7 +167,7 @@ func (client EnumClient) getReferencedConstantResponder(resp pipeline.Response) 
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)

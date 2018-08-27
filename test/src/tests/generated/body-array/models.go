@@ -27,6 +27,12 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // FooEnumType enumerates the values for foo enum type.
 type FooEnumType string
 
@@ -52,7 +58,7 @@ type Error struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// GetArrayEmptyResponse ...
+// GetArrayEmptyResponse - Wraps the response from the ArrayClient.GetArrayEmpty method.
 type GetArrayEmptyResponse struct {
 	rawResponse *http.Response
 	Items       [][]string `json:"items,omitempty"`
@@ -73,7 +79,7 @@ func (gaer GetArrayEmptyResponse) Status() string {
 	return gaer.rawResponse.Status
 }
 
-// GetArrayItemEmptyResponse ...
+// GetArrayItemEmptyResponse - Wraps the response from the ArrayClient.GetArrayItemEmpty method.
 type GetArrayItemEmptyResponse struct {
 	rawResponse *http.Response
 	Items       [][]string `json:"items,omitempty"`
@@ -94,7 +100,7 @@ func (gaier GetArrayItemEmptyResponse) Status() string {
 	return gaier.rawResponse.Status
 }
 
-// GetArrayItemNullResponse ...
+// GetArrayItemNullResponse - Wraps the response from the ArrayClient.GetArrayItemNull method.
 type GetArrayItemNullResponse struct {
 	rawResponse *http.Response
 	Items       [][]string `json:"items,omitempty"`
@@ -115,7 +121,7 @@ func (gainr GetArrayItemNullResponse) Status() string {
 	return gainr.rawResponse.Status
 }
 
-// GetArrayNullResponse ...
+// GetArrayNullResponse - Wraps the response from the ArrayClient.GetArrayNull method.
 type GetArrayNullResponse struct {
 	rawResponse *http.Response
 	Items       [][]string `json:"items,omitempty"`
@@ -136,7 +142,7 @@ func (ganr GetArrayNullResponse) Status() string {
 	return ganr.rawResponse.Status
 }
 
-// GetArrayValidResponse ...
+// GetArrayValidResponse - Wraps the response from the ArrayClient.GetArrayValid method.
 type GetArrayValidResponse struct {
 	rawResponse *http.Response
 	Items       [][]string `json:"items,omitempty"`
@@ -157,7 +163,7 @@ func (gavr GetArrayValidResponse) Status() string {
 	return gavr.rawResponse.Status
 }
 
-// GetBase64URLResponse ...
+// GetBase64URLResponse - Wraps the response from the ArrayClient.GetBase64URL method.
 type GetBase64URLResponse struct {
 	rawResponse *http.Response
 	Items       []string `json:"items,omitempty"`
@@ -178,7 +184,7 @@ func (gb6r GetBase64URLResponse) Status() string {
 	return gb6r.rawResponse.Status
 }
 
-// GetBooleanInvalidNullResponse ...
+// GetBooleanInvalidNullResponse - Wraps the response from the ArrayClient.GetBooleanInvalidNull method.
 type GetBooleanInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       []bool `json:"items,omitempty"`
@@ -199,7 +205,7 @@ func (gbinr GetBooleanInvalidNullResponse) Status() string {
 	return gbinr.rawResponse.Status
 }
 
-// GetBooleanInvalidStringResponse ...
+// GetBooleanInvalidStringResponse - Wraps the response from the ArrayClient.GetBooleanInvalidString method.
 type GetBooleanInvalidStringResponse struct {
 	rawResponse *http.Response
 	Items       []bool `json:"items,omitempty"`
@@ -220,7 +226,7 @@ func (gbisr GetBooleanInvalidStringResponse) Status() string {
 	return gbisr.rawResponse.Status
 }
 
-// GetBooleanTfftResponse ...
+// GetBooleanTfftResponse - Wraps the response from the ArrayClient.GetBooleanTfft method.
 type GetBooleanTfftResponse struct {
 	rawResponse *http.Response
 	Items       []bool `json:"items,omitempty"`
@@ -241,7 +247,7 @@ func (gbtr GetBooleanTfftResponse) Status() string {
 	return gbtr.rawResponse.Status
 }
 
-// GetByteInvalidNullResponse ...
+// GetByteInvalidNullResponse - Wraps the response from the ArrayClient.GetByteInvalidNull method.
 type GetByteInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       [][]byte `json:"items,omitempty"`
@@ -262,7 +268,7 @@ func (gbinr GetByteInvalidNullResponse) Status() string {
 	return gbinr.rawResponse.Status
 }
 
-// GetByteValidResponse ...
+// GetByteValidResponse - Wraps the response from the ArrayClient.GetByteValid method.
 type GetByteValidResponse struct {
 	rawResponse *http.Response
 	Items       [][]byte `json:"items,omitempty"`
@@ -283,7 +289,7 @@ func (gbvr GetByteValidResponse) Status() string {
 	return gbvr.rawResponse.Status
 }
 
-// GetComplexEmptyResponse ...
+// GetComplexEmptyResponse - Wraps the response from the ArrayClient.GetComplexEmpty method.
 type GetComplexEmptyResponse struct {
 	rawResponse *http.Response
 	Items       []Product `json:"items,omitempty"`
@@ -304,7 +310,7 @@ func (gcer GetComplexEmptyResponse) Status() string {
 	return gcer.rawResponse.Status
 }
 
-// GetComplexItemEmptyResponse ...
+// GetComplexItemEmptyResponse - Wraps the response from the ArrayClient.GetComplexItemEmpty method.
 type GetComplexItemEmptyResponse struct {
 	rawResponse *http.Response
 	Items       []Product `json:"items,omitempty"`
@@ -325,7 +331,7 @@ func (gcier GetComplexItemEmptyResponse) Status() string {
 	return gcier.rawResponse.Status
 }
 
-// GetComplexItemNullResponse ...
+// GetComplexItemNullResponse - Wraps the response from the ArrayClient.GetComplexItemNull method.
 type GetComplexItemNullResponse struct {
 	rawResponse *http.Response
 	Items       []Product `json:"items,omitempty"`
@@ -346,7 +352,7 @@ func (gcinr GetComplexItemNullResponse) Status() string {
 	return gcinr.rawResponse.Status
 }
 
-// GetComplexNullResponse ...
+// GetComplexNullResponse - Wraps the response from the ArrayClient.GetComplexNull method.
 type GetComplexNullResponse struct {
 	rawResponse *http.Response
 	Items       []Product `json:"items,omitempty"`
@@ -367,7 +373,7 @@ func (gcnr GetComplexNullResponse) Status() string {
 	return gcnr.rawResponse.Status
 }
 
-// GetComplexValidResponse ...
+// GetComplexValidResponse - Wraps the response from the ArrayClient.GetComplexValid method.
 type GetComplexValidResponse struct {
 	rawResponse *http.Response
 	Items       []Product `json:"items,omitempty"`
@@ -388,7 +394,7 @@ func (gcvr GetComplexValidResponse) Status() string {
 	return gcvr.rawResponse.Status
 }
 
-// GetDateInvalidCharsResponse ...
+// GetDateInvalidCharsResponse - Wraps the response from the ArrayClient.GetDateInvalidChars method.
 type GetDateInvalidCharsResponse struct {
 	rawResponse *http.Response
 	Items       []time.Time `json:"items,omitempty"`
@@ -409,7 +415,7 @@ func (gdicr GetDateInvalidCharsResponse) Status() string {
 	return gdicr.rawResponse.Status
 }
 
-// GetDateInvalidNullResponse ...
+// GetDateInvalidNullResponse - Wraps the response from the ArrayClient.GetDateInvalidNull method.
 type GetDateInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       []time.Time `json:"items,omitempty"`
@@ -430,7 +436,7 @@ func (gdinr GetDateInvalidNullResponse) Status() string {
 	return gdinr.rawResponse.Status
 }
 
-// GetDateTimeInvalidCharsResponse ...
+// GetDateTimeInvalidCharsResponse - Wraps the response from the ArrayClient.GetDateTimeInvalidChars method.
 type GetDateTimeInvalidCharsResponse struct {
 	rawResponse *http.Response
 	Items       []time.Time `json:"items,omitempty"`
@@ -451,7 +457,7 @@ func (gdticr GetDateTimeInvalidCharsResponse) Status() string {
 	return gdticr.rawResponse.Status
 }
 
-// GetDateTimeInvalidNullResponse ...
+// GetDateTimeInvalidNullResponse - Wraps the response from the ArrayClient.GetDateTimeInvalidNull method.
 type GetDateTimeInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       []time.Time `json:"items,omitempty"`
@@ -472,7 +478,7 @@ func (gdtinr GetDateTimeInvalidNullResponse) Status() string {
 	return gdtinr.rawResponse.Status
 }
 
-// GetDateTimeRfc1123ValidResponse ...
+// GetDateTimeRfc1123ValidResponse - Wraps the response from the ArrayClient.GetDateTimeRfc1123Valid method.
 type GetDateTimeRfc1123ValidResponse struct {
 	rawResponse *http.Response
 	Items       []time.Time `json:"items,omitempty"`
@@ -493,7 +499,7 @@ func (gdtr1vr GetDateTimeRfc1123ValidResponse) Status() string {
 	return gdtr1vr.rawResponse.Status
 }
 
-// GetDateTimeValidResponse ...
+// GetDateTimeValidResponse - Wraps the response from the ArrayClient.GetDateTimeValid method.
 type GetDateTimeValidResponse struct {
 	rawResponse *http.Response
 	Items       []time.Time `json:"items,omitempty"`
@@ -514,7 +520,7 @@ func (gdtvr GetDateTimeValidResponse) Status() string {
 	return gdtvr.rawResponse.Status
 }
 
-// GetDateValidResponse ...
+// GetDateValidResponse - Wraps the response from the ArrayClient.GetDateValid method.
 type GetDateValidResponse struct {
 	rawResponse *http.Response
 	Items       []time.Time `json:"items,omitempty"`
@@ -535,7 +541,7 @@ func (gdvr GetDateValidResponse) Status() string {
 	return gdvr.rawResponse.Status
 }
 
-// GetDictionaryEmptyResponse ...
+// GetDictionaryEmptyResponse - Wraps the response from the ArrayClient.GetDictionaryEmpty method.
 type GetDictionaryEmptyResponse struct {
 	rawResponse *http.Response
 	Items       []map[string]string `json:"items,omitempty"`
@@ -556,7 +562,7 @@ func (gder GetDictionaryEmptyResponse) Status() string {
 	return gder.rawResponse.Status
 }
 
-// GetDictionaryItemEmptyResponse ...
+// GetDictionaryItemEmptyResponse - Wraps the response from the ArrayClient.GetDictionaryItemEmpty method.
 type GetDictionaryItemEmptyResponse struct {
 	rawResponse *http.Response
 	Items       []map[string]string `json:"items,omitempty"`
@@ -577,7 +583,7 @@ func (gdier GetDictionaryItemEmptyResponse) Status() string {
 	return gdier.rawResponse.Status
 }
 
-// GetDictionaryItemNullResponse ...
+// GetDictionaryItemNullResponse - Wraps the response from the ArrayClient.GetDictionaryItemNull method.
 type GetDictionaryItemNullResponse struct {
 	rawResponse *http.Response
 	Items       []map[string]string `json:"items,omitempty"`
@@ -598,7 +604,7 @@ func (gdinr GetDictionaryItemNullResponse) Status() string {
 	return gdinr.rawResponse.Status
 }
 
-// GetDictionaryNullResponse ...
+// GetDictionaryNullResponse - Wraps the response from the ArrayClient.GetDictionaryNull method.
 type GetDictionaryNullResponse struct {
 	rawResponse *http.Response
 	Items       []map[string]string `json:"items,omitempty"`
@@ -619,7 +625,7 @@ func (gdnr GetDictionaryNullResponse) Status() string {
 	return gdnr.rawResponse.Status
 }
 
-// GetDictionaryValidResponse ...
+// GetDictionaryValidResponse - Wraps the response from the ArrayClient.GetDictionaryValid method.
 type GetDictionaryValidResponse struct {
 	rawResponse *http.Response
 	Items       []map[string]string `json:"items,omitempty"`
@@ -640,7 +646,7 @@ func (gdvr GetDictionaryValidResponse) Status() string {
 	return gdvr.rawResponse.Status
 }
 
-// GetDoubleInvalidNullResponse ...
+// GetDoubleInvalidNullResponse - Wraps the response from the ArrayClient.GetDoubleInvalidNull method.
 type GetDoubleInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       []float64 `json:"items,omitempty"`
@@ -661,7 +667,7 @@ func (gdinr GetDoubleInvalidNullResponse) Status() string {
 	return gdinr.rawResponse.Status
 }
 
-// GetDoubleInvalidStringResponse ...
+// GetDoubleInvalidStringResponse - Wraps the response from the ArrayClient.GetDoubleInvalidString method.
 type GetDoubleInvalidStringResponse struct {
 	rawResponse *http.Response
 	Items       []float64 `json:"items,omitempty"`
@@ -682,7 +688,7 @@ func (gdisr GetDoubleInvalidStringResponse) Status() string {
 	return gdisr.rawResponse.Status
 }
 
-// GetDoubleValidResponse ...
+// GetDoubleValidResponse - Wraps the response from the ArrayClient.GetDoubleValid method.
 type GetDoubleValidResponse struct {
 	rawResponse *http.Response
 	Items       []float64 `json:"items,omitempty"`
@@ -703,7 +709,7 @@ func (gdvr GetDoubleValidResponse) Status() string {
 	return gdvr.rawResponse.Status
 }
 
-// GetDurationValidResponse ...
+// GetDurationValidResponse - Wraps the response from the ArrayClient.GetDurationValid method.
 type GetDurationValidResponse struct {
 	rawResponse *http.Response
 	Items       []string `json:"items,omitempty"`
@@ -724,7 +730,7 @@ func (gdvr GetDurationValidResponse) Status() string {
 	return gdvr.rawResponse.Status
 }
 
-// GetEmptyResponse ...
+// GetEmptyResponse - Wraps the response from the ArrayClient.GetEmpty method.
 type GetEmptyResponse struct {
 	rawResponse *http.Response
 	Items       []int32 `json:"items,omitempty"`
@@ -745,7 +751,7 @@ func (ger GetEmptyResponse) Status() string {
 	return ger.rawResponse.Status
 }
 
-// GetEnumValidResponse ...
+// GetEnumValidResponse - Wraps the response from the ArrayClient.GetEnumValid method.
 type GetEnumValidResponse struct {
 	rawResponse *http.Response
 	Items       []FooEnumType `json:"items,omitempty"`
@@ -766,7 +772,7 @@ func (gevr GetEnumValidResponse) Status() string {
 	return gevr.rawResponse.Status
 }
 
-// GetFloatInvalidNullResponse ...
+// GetFloatInvalidNullResponse - Wraps the response from the ArrayClient.GetFloatInvalidNull method.
 type GetFloatInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       []float64 `json:"items,omitempty"`
@@ -787,7 +793,7 @@ func (gfinr GetFloatInvalidNullResponse) Status() string {
 	return gfinr.rawResponse.Status
 }
 
-// GetFloatInvalidStringResponse ...
+// GetFloatInvalidStringResponse - Wraps the response from the ArrayClient.GetFloatInvalidString method.
 type GetFloatInvalidStringResponse struct {
 	rawResponse *http.Response
 	Items       []float64 `json:"items,omitempty"`
@@ -808,7 +814,7 @@ func (gfisr GetFloatInvalidStringResponse) Status() string {
 	return gfisr.rawResponse.Status
 }
 
-// GetFloatValidResponse ...
+// GetFloatValidResponse - Wraps the response from the ArrayClient.GetFloatValid method.
 type GetFloatValidResponse struct {
 	rawResponse *http.Response
 	Items       []float64 `json:"items,omitempty"`
@@ -829,7 +835,7 @@ func (gfvr GetFloatValidResponse) Status() string {
 	return gfvr.rawResponse.Status
 }
 
-// GetIntegerValidResponse ...
+// GetIntegerValidResponse - Wraps the response from the ArrayClient.GetIntegerValid method.
 type GetIntegerValidResponse struct {
 	rawResponse *http.Response
 	Items       []int32 `json:"items,omitempty"`
@@ -850,7 +856,7 @@ func (givr GetIntegerValidResponse) Status() string {
 	return givr.rawResponse.Status
 }
 
-// GetIntInvalidNullResponse ...
+// GetIntInvalidNullResponse - Wraps the response from the ArrayClient.GetIntInvalidNull method.
 type GetIntInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       []int32 `json:"items,omitempty"`
@@ -871,7 +877,7 @@ func (giinr GetIntInvalidNullResponse) Status() string {
 	return giinr.rawResponse.Status
 }
 
-// GetIntInvalidStringResponse ...
+// GetIntInvalidStringResponse - Wraps the response from the ArrayClient.GetIntInvalidString method.
 type GetIntInvalidStringResponse struct {
 	rawResponse *http.Response
 	Items       []int32 `json:"items,omitempty"`
@@ -892,7 +898,7 @@ func (giisr GetIntInvalidStringResponse) Status() string {
 	return giisr.rawResponse.Status
 }
 
-// GetInvalidResponse ...
+// GetInvalidResponse - Wraps the response from the ArrayClient.GetInvalid method.
 type GetInvalidResponse struct {
 	rawResponse *http.Response
 	Items       []int32 `json:"items,omitempty"`
@@ -913,7 +919,7 @@ func (gir GetInvalidResponse) Status() string {
 	return gir.rawResponse.Status
 }
 
-// GetLongInvalidNullResponse ...
+// GetLongInvalidNullResponse - Wraps the response from the ArrayClient.GetLongInvalidNull method.
 type GetLongInvalidNullResponse struct {
 	rawResponse *http.Response
 	Items       []int64 `json:"items,omitempty"`
@@ -934,7 +940,7 @@ func (glinr GetLongInvalidNullResponse) Status() string {
 	return glinr.rawResponse.Status
 }
 
-// GetLongInvalidStringResponse ...
+// GetLongInvalidStringResponse - Wraps the response from the ArrayClient.GetLongInvalidString method.
 type GetLongInvalidStringResponse struct {
 	rawResponse *http.Response
 	Items       []int64 `json:"items,omitempty"`
@@ -955,7 +961,7 @@ func (glisr GetLongInvalidStringResponse) Status() string {
 	return glisr.rawResponse.Status
 }
 
-// GetLongValidResponse ...
+// GetLongValidResponse - Wraps the response from the ArrayClient.GetLongValid method.
 type GetLongValidResponse struct {
 	rawResponse *http.Response
 	Items       []int64 `json:"items,omitempty"`
@@ -976,7 +982,7 @@ func (glvr GetLongValidResponse) Status() string {
 	return glvr.rawResponse.Status
 }
 
-// GetNullResponse ...
+// GetNullResponse - Wraps the response from the ArrayClient.GetNull method.
 type GetNullResponse struct {
 	rawResponse *http.Response
 	Items       []int32 `json:"items,omitempty"`
@@ -997,7 +1003,7 @@ func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
 
-// GetStringEnumValidResponse ...
+// GetStringEnumValidResponse - Wraps the response from the ArrayClient.GetStringEnumValid method.
 type GetStringEnumValidResponse struct {
 	rawResponse *http.Response
 	Items       []string `json:"items,omitempty"`
@@ -1018,7 +1024,7 @@ func (gsevr GetStringEnumValidResponse) Status() string {
 	return gsevr.rawResponse.Status
 }
 
-// GetStringValidResponse ...
+// GetStringValidResponse - Wraps the response from the ArrayClient.GetStringValid method.
 type GetStringValidResponse struct {
 	rawResponse *http.Response
 	Items       []string `json:"items,omitempty"`
@@ -1039,7 +1045,7 @@ func (gsvr GetStringValidResponse) Status() string {
 	return gsvr.rawResponse.Status
 }
 
-// GetStringWithInvalidResponse ...
+// GetStringWithInvalidResponse - Wraps the response from the ArrayClient.GetStringWithInvalid method.
 type GetStringWithInvalidResponse struct {
 	rawResponse *http.Response
 	Items       []string `json:"items,omitempty"`
@@ -1060,7 +1066,7 @@ func (gswir GetStringWithInvalidResponse) Status() string {
 	return gswir.rawResponse.Status
 }
 
-// GetStringWithNullResponse ...
+// GetStringWithNullResponse - Wraps the response from the ArrayClient.GetStringWithNull method.
 type GetStringWithNullResponse struct {
 	rawResponse *http.Response
 	Items       []string `json:"items,omitempty"`
@@ -1081,7 +1087,7 @@ func (gswnr GetStringWithNullResponse) Status() string {
 	return gswnr.rawResponse.Status
 }
 
-// GetUUIDInvalidCharsResponse ...
+// GetUUIDInvalidCharsResponse - Wraps the response from the ArrayClient.GetUUIDInvalidChars method.
 type GetUUIDInvalidCharsResponse struct {
 	rawResponse *http.Response
 	Items       []uuid.UUID `json:"items,omitempty"`
@@ -1102,7 +1108,7 @@ func (guicr GetUUIDInvalidCharsResponse) Status() string {
 	return guicr.rawResponse.Status
 }
 
-// GetUUIDValidResponse ...
+// GetUUIDValidResponse - Wraps the response from the ArrayClient.GetUUIDValid method.
 type GetUUIDValidResponse struct {
 	rawResponse *http.Response
 	Items       []uuid.UUID `json:"items,omitempty"`

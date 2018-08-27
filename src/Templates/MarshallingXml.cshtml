@@ -176,7 +176,7 @@
         // MarshalXML implements the xml.Marshaler interface for @Model.Name.
         func (@rec @Model.Name) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
         if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
-        panic("size mismatch between @Model.Name and @internalName")
+        validateError(errors.New("size mismatch between @Model.Name and @internalName"))
         }
         @local := (*@internalName)(unsafe.Pointer(&@rec))
         return e.EncodeElement(*@local, start)
@@ -185,7 +185,7 @@
         // UnmarshalXML implements the xml.Unmarshaler interface for @Model.Name.
         func (@rec *@Model.Name) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
         if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
-        panic("size mismatch between @Model.Name and @internalName")
+        validateError(errors.New("size mismatch between @Model.Name and @internalName"))
         }
         @local := (*@internalName)(unsafe.Pointer(@rec))
         return d.DecodeElement(@local, &start)

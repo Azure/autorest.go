@@ -26,13 +26,19 @@ func joinConst(s interface{}, sep string) string {
 	return strings.Join(ss, sep)
 }
 
+func validateError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
-// GetInvalidResponse ...
+// GetInvalidResponse - Wraps the response from the IntClient.GetInvalid method.
 type GetInvalidResponse struct {
 	rawResponse *http.Response
 	Value       *int32 `json:"value,omitempty"`
@@ -53,7 +59,7 @@ func (gir GetInvalidResponse) Status() string {
 	return gir.rawResponse.Status
 }
 
-// GetInvalidUnixTimeResponse ...
+// GetInvalidUnixTimeResponse - Wraps the response from the IntClient.GetInvalidUnixTime method.
 type GetInvalidUnixTimeResponse struct {
 	rawResponse *http.Response
 	Value       *date.UnixTime `json:"value,omitempty"`
@@ -74,7 +80,7 @@ func (giutr GetInvalidUnixTimeResponse) Status() string {
 	return giutr.rawResponse.Status
 }
 
-// GetNullResponse ...
+// GetNullResponse - Wraps the response from the IntClient.GetNull method.
 type GetNullResponse struct {
 	rawResponse *http.Response
 	Value       *int32 `json:"value,omitempty"`
@@ -95,7 +101,7 @@ func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
 }
 
-// GetNullUnixTimeResponse ...
+// GetNullUnixTimeResponse - Wraps the response from the IntClient.GetNullUnixTime method.
 type GetNullUnixTimeResponse struct {
 	rawResponse *http.Response
 	Value       *date.UnixTime `json:"value,omitempty"`
@@ -116,7 +122,7 @@ func (gnutr GetNullUnixTimeResponse) Status() string {
 	return gnutr.rawResponse.Status
 }
 
-// GetOverflowInt32Response ...
+// GetOverflowInt32Response - Wraps the response from the IntClient.GetOverflowInt32 method.
 type GetOverflowInt32Response struct {
 	rawResponse *http.Response
 	Value       *int32 `json:"value,omitempty"`
@@ -137,7 +143,7 @@ func (goi3r GetOverflowInt32Response) Status() string {
 	return goi3r.rawResponse.Status
 }
 
-// GetOverflowInt64Response ...
+// GetOverflowInt64Response - Wraps the response from the IntClient.GetOverflowInt64 method.
 type GetOverflowInt64Response struct {
 	rawResponse *http.Response
 	Value       *int64 `json:"value,omitempty"`
@@ -158,7 +164,7 @@ func (goi6r GetOverflowInt64Response) Status() string {
 	return goi6r.rawResponse.Status
 }
 
-// GetUnderflowInt32Response ...
+// GetUnderflowInt32Response - Wraps the response from the IntClient.GetUnderflowInt32 method.
 type GetUnderflowInt32Response struct {
 	rawResponse *http.Response
 	Value       *int32 `json:"value,omitempty"`
@@ -179,7 +185,7 @@ func (gui3r GetUnderflowInt32Response) Status() string {
 	return gui3r.rawResponse.Status
 }
 
-// GetUnderflowInt64Response ...
+// GetUnderflowInt64Response - Wraps the response from the IntClient.GetUnderflowInt64 method.
 type GetUnderflowInt64Response struct {
 	rawResponse *http.Response
 	Value       *int64 `json:"value,omitempty"`
@@ -200,7 +206,7 @@ func (gui6r GetUnderflowInt64Response) Status() string {
 	return gui6r.rawResponse.Status
 }
 
-// GetUnixTimeResponse ...
+// GetUnixTimeResponse - Wraps the response from the IntClient.GetUnixTime method.
 type GetUnixTimeResponse struct {
 	rawResponse *http.Response
 	Value       *date.UnixTime `json:"value,omitempty"`

@@ -101,6 +101,10 @@ namespace AutoRest.Go.Model
                     {
                         ioImports = true;
                     }
+                    if (mg.ReturnType.Body is CompositeTypeGo ctg && ctg.IsWrapperType)
+                    {
+                        ctg.Documentation = $"Wraps the response from the {ClientName}.{mg.Name} method.";
+                    }
                 });
 
             if (marshalImports || unmarshalImports)

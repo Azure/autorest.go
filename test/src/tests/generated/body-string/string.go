@@ -65,7 +65,7 @@ func (client StringClient) getBase64EncodedResponder(resp pipeline.Response) (pi
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -116,7 +116,7 @@ func (client StringClient) getBase64URLEncodedResponder(resp pipeline.Response) 
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -167,7 +167,7 @@ func (client StringClient) getEmptyResponder(resp pipeline.Response) (pipeline.R
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -218,7 +218,7 @@ func (client StringClient) getMbcsResponder(resp pipeline.Response) (pipeline.Re
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -269,7 +269,7 @@ func (client StringClient) getNotProvidedResponder(resp pipeline.Response) (pipe
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -320,7 +320,7 @@ func (client StringClient) getNullResponder(resp pipeline.Response) (pipeline.Re
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -371,7 +371,7 @@ func (client StringClient) getNullBase64URLEncodedResponder(resp pipeline.Respon
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
@@ -423,7 +423,7 @@ func (client StringClient) getWhitespaceResponder(resp pipeline.Response) (pipel
 	defer resp.Response().Body.Close()
 	b, err := ioutil.ReadAll(resp.Response().Body)
 	if err != nil {
-		return result, NewResponseError(err, resp.Response(), "failed to read response body")
+		return result, err
 	}
 	if len(b) > 0 {
 		b = removeBOM(b)
