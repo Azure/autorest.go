@@ -580,9 +580,7 @@ func (s *LROSuite) TestSADsPutAsyncRelativeRetry400(c *chk.C) {
 }
 
 func (s *LROSuite) TestSADsPutAsyncRelativeRetryInvalidHeader(c *chk.C) {
-	future, err := lroSADSClient.PutAsyncRelativeRetryInvalidHeader(context.Background(), &lrogroup.Product{})
-	c.Assert(err, chk.IsNil)
-	err = future.WaitForCompletionRef(context.Background(), lroSADSClient.Client)
+	_, err := lroSADSClient.PutAsyncRelativeRetryInvalidHeader(context.Background(), &lrogroup.Product{})
 	c.Assert(err, chk.NotNil)
 }
 
