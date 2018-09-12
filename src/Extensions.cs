@@ -114,21 +114,28 @@ namespace AutoRest.Go
         /// Creates a string from the first letter in each word.
         /// E.g. "SomeTypeName" would generate the string "stn".
         /// </summary>
-        public static string ToShortName(this string longName)
+        /// <param name="scope">Provide an instance to ensure variable names are unique within a given scope.</param>
+        public static string ToVariableName(this string longName, VariableScopeProvider scope = null)
         {
             var initials = from word in longName.ToWords()
                            select word[0];
             var acronym = string.Concat(initials).ToLowerInvariant();
-            return CodeNamerGo.Instance.GetVariableName(acronym);
+            var name = CodeNamerGo.Instance.GetVariableName(acronym);
+            if (scope != null)
+            {
+                name = scope.GetVariableName(name);
+            }
+            return name;
         }
 
         /// <summary>
         /// Creates a string from the first letter in each word.
         /// E.g. "SomeTypeName" would generate the string "stn".
         /// </summary>
-        public static string ToShortName(this Fixable<string> longName)
+        /// <param name="scope">Provide an instance to ensure variable names are unique within a given scope.</param>
+        public static string ToVariableName(this Fixable<string> longName, VariableScopeProvider scope = null)
         {
-            return longName.ToString().ToShortName();
+            return longName.ToString().ToVariableName(scope);
         }
 
         /// <summary>

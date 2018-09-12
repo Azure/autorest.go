@@ -59,15 +59,15 @@
     {
         <text>
         case string(@(CodeNamerGo.Instance.GetEnumMemberName((dt as CompositeTypeGo).DiscriminatorEnumValue))):
-        var @(dt.Name.FixedValue.ToShortName()) @(dt.Name)
-        err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToShortName()))
-        return @(dt.Name.FixedValue.ToShortName()), err
+        var @(dt.Name.FixedValue.ToVariableName()) @(dt.Name)
+        err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToVariableName()))
+        return @(dt.Name.FixedValue.ToVariableName()), err
         </text>
     }
     default:
-    var @(Model.Name.FixedValue.ToShortName()) @(Model.Name)
-    err := json.Unmarshal(body, &@(Model.Name.FixedValue.ToShortName()))
-    return @(Model.Name.FixedValue.ToShortName()), err
+    var @(Model.Name.FixedValue.ToVariableName()) @(Model.Name)
+    err := json.Unmarshal(body, &@(Model.Name.FixedValue.ToVariableName()))
+    return @(Model.Name.FixedValue.ToVariableName()), err
     }
     }
 
@@ -78,16 +78,16 @@
     return nil, err
     }
     @EmptyLine
-    @(Model.Name.FixedValue.ToShortName())Array := make([]@(Model.GetInterfaceName()), len(rawMessages))
+    @(Model.Name.FixedValue.ToVariableName())Array := make([]@(Model.GetInterfaceName()), len(rawMessages))
     @EmptyLine
     for index, rawMessage := range rawMessages {
-    @(Model.Name.FixedValue.ToShortName()), err := unmarshal@(Model.GetInterfaceName())(*rawMessage)
+    @(Model.Name.FixedValue.ToVariableName()), err := unmarshal@(Model.GetInterfaceName())(*rawMessage)
     if err != nil {
     return nil, err
     }
-    @(Model.Name.FixedValue.ToShortName())Array[index] = @(Model.Name.FixedValue.ToShortName())
+    @(Model.Name.FixedValue.ToVariableName())Array[index] = @(Model.Name.FixedValue.ToVariableName())
     }
-    return @(Model.Name.FixedValue.ToShortName())Array, nil
+    return @(Model.Name.FixedValue.ToVariableName())Array, nil
     }
     </text>
 }
@@ -98,7 +98,7 @@ else
         var pageType = Model as PageTypeGo;
         var itemName = pageType.ItemName;
         var contentType = pageType.ContentType.Name;
-        var receiverVar = contentType.FixedValue.ToShortName();
+        var receiverVar = contentType.FixedValue.ToVariableName();
 
         <text>
         @EmptyLine
@@ -144,11 +144,11 @@ else
     <text>
         @EmptyLine
         // MarshalJSON is the custom marshaler for @(Model.Name).
-        func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name))MarshalJSON() ([]byte, error){
+        func (@(Model.Name.FixedValue.ToVariableName()) @(Model.Name))MarshalJSON() ([]byte, error){
         @if (Model.DiscriminatorEnumValue != null)
         {
             <text>
-                @(Model.Name.FixedValue.ToShortName()).@(Model.PolymorphicProperty) = @(CodeNamerGo.Instance.GetEnumMemberName(Model.DiscriminatorEnumValue))
+                @(Model.Name.FixedValue.ToVariableName()).@(Model.PolymorphicProperty) = @(CodeNamerGo.Instance.GetEnumMemberName(Model.DiscriminatorEnumValue))
             </text>
         }
         objectMap := make(map[string]interface{})
@@ -157,24 +157,24 @@ else
         {
             if (property.IsPointer || property.ModelType is DictionaryTypeGo)
             {
-                @:if(@(Model.Name.FixedValue.ToShortName()).@(property.Name) != nil) {
-                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
+                @:if(@(Model.Name.FixedValue.ToVariableName()).@(property.Name) != nil) {
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToVariableName()).@(property.Name)
                 @:}
             }
             else if (property.ModelType is EnumTypeGo)
             {
-                @:if(@(Model.Name.FixedValue.ToShortName()).@(property.Name) != "") {
-                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
+                @:if(@(Model.Name.FixedValue.ToVariableName()).@(property.Name) != "") {
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToVariableName()).@(property.Name)
                 @:}
             }
             else
             {
-                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToShortName()).@(property.Name)
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToVariableName()).@(property.Name)
             }
         }
         @if (Model.AdditionalPropertiesField != default(PropertyGo))
         {
-            @:for k, v := range @(Model.Name.FixedValue.ToShortName()).@(Model.AdditionalPropertiesField.Name) {
+            @:for k, v := range @(Model.Name.FixedValue.ToVariableName()).@(Model.AdditionalPropertiesField.Name) {
             @:    objectMap[k] = v
             @:}
         }
@@ -191,10 +191,10 @@ else
         <text>
         @EmptyLine
         // As@(st.Name) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
-        func (@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
+        func (@(Model.Name.FixedValue.ToVariableName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
         @if (st.Equals(Model))
         {
-            @:return &@(Model.Name.FixedValue.ToShortName()), true
+            @:return &@(Model.Name.FixedValue.ToVariableName()), true
         }
         else
         {
@@ -206,10 +206,10 @@ else
         {
             @EmptyLine
             @:// As@(st.GetInterfaceName()) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
-            @:func(@(Model.Name.FixedValue.ToShortName()) @(Model.Name)) As@(st.GetInterfaceName())()(@(st.GetInterfaceName()), bool) {
+            @:func(@(Model.Name.FixedValue.ToVariableName()) @(Model.Name)) As@(st.GetInterfaceName())()(@(st.GetInterfaceName()), bool) {
             if (st.Equals(Model) || Model.DerivesFrom(st))
             {
-                @:return &@(Model.Name.FixedValue.ToShortName()), true
+                @:return &@(Model.Name.FixedValue.ToVariableName()), true
             }
             else
             {
@@ -225,18 +225,23 @@ else
 
 @if (Model.HasPolymorphicFields || Model.HasFlattenedFields)
 {
+    var vsp = new VariableScopeProvider();
+    var receiverVar = Model.Name.FixedValue.ToVariableName(vsp);
     <text>
     // UnmarshalJSON is the custom unmarshaler for @(Model.Name) struct.
-    func (@(Model.Name.FixedValue.ToShortName()) *@(Model.Name)) UnmarshalJSON(body []byte) error {
+    func (@receiverVar *@(Model.Name)) UnmarshalJSON(@(vsp.GetVariableName("body")) []byte) error {
     @if (Model.IsWrapperType)
     {
+        string varName;
         if (Model.BaseType is SequenceTypeGo sequenceType)
         {
-            @:@(sequenceType.ElementType.Name.FixedValue.ToShortName()), err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(body)
+            varName = sequenceType.ElementType.Name.FixedValue.ToVariableName(vsp);
+            @:@varName, err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(body)
         }
         else
         {
-            @:@(Model.BaseType.Name.FixedValue.ToShortName()), err := unmarshal@(Model.BaseType.GetInterfaceName())(body)
+            varName = Model.BaseType.Name.FixedValue.ToVariableName(vsp);
+            @:@varName, err := unmarshal@(Model.BaseType.GetInterfaceName())(body)
         }
         <text>
         if err != nil {
@@ -245,11 +250,11 @@ else
         </text>
         if (Model.BaseType is SequenceType type)
         {
-            @:@(Model.Name.FixedValue.ToShortName()).Value = &@type.ElementType.Name.FixedValue.ToShortName()
+            @:@(receiverVar).Value = &@varName
         }
         else
         {
-            @:@(Model.Name.FixedValue.ToShortName()).Value = @(Model.BaseType.Name.FixedValue.ToShortName())
+            @:@(receiverVar).Value = @varName
         }
     }
     else
@@ -266,6 +271,7 @@ else
         switch k {
         @foreach (var p in Model.AllProperties)
         {
+            var varName = CodeNamerGo.Instance.GetVariableName(p.Name, vsp);
             if (!string.IsNullOrEmpty(p.SerializedName))
             {
                 <text>
@@ -289,17 +295,17 @@ else
             if v != nil {
             @if (modelType.HasInterface())
             {
-                @:@(CodeNamerGo.Instance.GetVariableName(p.Name)), err := unmarshal@(modelType.GetInterfaceName())(*v)
+                @:@varName, err := unmarshal@(modelType.GetInterfaceName())(*v)
             }
             else if (modelType is SequenceTypeGo sequenceType && sequenceType.ElementType.HasInterface())
             {
-                @:@(CodeNamerGo.Instance.GetVariableName(p.Name)), err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(*v)
+                @:@varName, err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(*v)
             }
             else
             {
                 <text>
-                var @(CodeNamerGo.Instance.GetVariableName(p.Name)) @(modelType.Name)
-                err = json.Unmarshal(*v, &@(CodeNamerGo.Instance.GetVariableName(p.Name)))
+                var @varName @(modelType.Name)
+                err = json.Unmarshal(*v, &@varName)
                 </text>
             }
             if err != nil {
@@ -307,25 +313,25 @@ else
             }
             @if (p.ModelType is DictionaryTypeGo type && type.SupportsAdditionalProperties)
             {
-                @:if(@(Model.Name.FixedValue.ToShortName()).@(p.Name) == nil) {
-                @: @(Model.Name.FixedValue.ToShortName()).@(p.Name) = make(@(p.ModelType.Name))
+                @:if(@(receiverVar).@(p.Name) == nil) {
+                @: @(receiverVar).@(p.Name) = make(@(p.ModelType.Name))
                 @:}
                 if (type.ValueType.CanBeNull())
                 {
-                    @:@(Model.Name.FixedValue.ToShortName()).@(p.Name)[k] = @(CodeNamerGo.Instance.GetVariableName(p.Name))
+                    @:@(receiverVar).@(p.Name)[k] = @varName
                 }
                 else
                 {
-                    @:@(Model.Name.FixedValue.ToShortName()).@(p.Name)[k] = &@(CodeNamerGo.Instance.GetVariableName(p.Name))
+                    @:@(receiverVar).@(p.Name)[k] = &@varName
                 }
             }
             else if (!p.IsPointer)
             {
-                    @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = @(CodeNamerGo.Instance.GetVariableName(p.Name))
+                    @:@(receiverVar).@(p.Name) = @varName
             }
             else
             {
-                @:@(Model.Name.FixedValue.ToShortName()).@(p.Name) = &@(CodeNamerGo.Instance.GetVariableName(p.Name))
+                @:@(receiverVar).@(p.Name) = &@varName
             }
             }
 
@@ -422,7 +428,7 @@ else
 @if (Model is FutureTypeGo)
 {
     var ftg = Model as FutureTypeGo;
-    var resultVar = ftg.ResultTypeName.ToShortName();
+    var resultVar = ftg.ResultTypeName.ToVariableName();
     var resultVarTarget = resultVar;
     var futureTypeName = $"{Model.CodeModel.Namespace}.{Model.Name}";
     if (ftg.ResultType is PageTypeGo ptg)

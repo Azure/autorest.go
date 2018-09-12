@@ -356,6 +356,15 @@ namespace AutoRest.Go
             name :
             EnsureNameCase(GetEscapedReservedName(CamelCase(RemoveInvalidCharacters(name)), "Var"));
 
+        /// <summary>
+        /// Formats a string for naming a local variable using Camel case by default.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="scope">Used to ensure variable names are unique within a given scope.</param>
+        /// <returns>The formatted string.</returns>
+        public string GetVariableName(string name, VariableScopeProvider scope) =>
+            scope.GetVariableName(GetVariableName(name));
+
         public override string EscapeDefaultValue(string defaultValue, IModelType type)
         {
             if (type == null)
