@@ -329,3 +329,57 @@ func (client PetsClient) CreateAPTrueResponder(resp *http.Response) (result PetA
 	result.Response = autorest.Response{Response: resp}
 	return
 }
+
+// CreateCatAPTrue create a CatAPTrue which contains more properties than what is defined.
+func (client PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue) (result CatAPTrue, err error) {
+	req, err := client.CreateCatAPTruePreparer(ctx, createParameters)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateCatAPTrue", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.CreateCatAPTrueSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateCatAPTrue", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.CreateCatAPTrueResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateCatAPTrue", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// CreateCatAPTruePreparer prepares the CreateCatAPTrue request.
+func (client PetsClient) CreateCatAPTruePreparer(ctx context.Context, createParameters CatAPTrue) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsContentType("application/json; charset=utf-8"),
+		autorest.AsPut(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/additionalProperties/true-subclass"),
+		autorest.WithJSON(createParameters))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// CreateCatAPTrueSender sends the CreateCatAPTrue request. The method will close the
+// http.Response Body if it receives an error.
+func (client PetsClient) CreateCatAPTrueSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// CreateCatAPTrueResponder handles the response to the CreateCatAPTrue request. The method always
+// closes the http.Response Body.
+func (client PetsClient) CreateCatAPTrueResponder(resp *http.Response) (result CatAPTrue, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}

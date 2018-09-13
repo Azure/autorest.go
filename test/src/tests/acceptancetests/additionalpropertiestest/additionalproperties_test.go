@@ -122,3 +122,21 @@ func (s *AdditionalPropertiesSuite) TestCreateAPTrue(c *chk.C) {
 	c.Assert(res.AdditionalProperties, chk.HasLen, 2)
 	c.Assert(res.AdditionalProperties, chk.DeepEquals, addlProps)
 }
+
+func (s *AdditionalPropertiesSuite) TestCreateCatAPTrue(c *chk.C) {
+	addlProps := map[string]interface{}{
+		"birthdate": "2017-12-13T02:29:51Z",
+		"complexProperty": map[string]interface{}{
+			"color": "Red",
+		},
+	}
+	res, err := petsClient.CreateCatAPTrue(context.Background(), addlprops.CatAPTrue{
+		ID:                   to.Int32Ptr(1),
+		Name:                 to.StringPtr("Lisa"),
+		Friendly:             to.BoolPtr(true),
+		AdditionalProperties: addlProps,
+	})
+	c.Assert(err, chk.IsNil)
+	c.Assert(res.AdditionalProperties, chk.HasLen, 2)
+	c.Assert(res.AdditionalProperties, chk.DeepEquals, addlProps)
+}

@@ -11,6 +11,101 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
+// CatAPTrue ...
+type CatAPTrue struct {
+	autorest.Response `json:"-"`
+	Friendly          *bool `json:"friendly,omitempty"`
+	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
+	AdditionalProperties map[string]interface{} `json:""`
+	ID                   *int32                 `json:"id,omitempty"`
+	Name                 *string                `json:"name,omitempty"`
+	Status               *bool                  `json:"status,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for CatAPTrue.
+func (cat CatAPTrue) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	if cat.Friendly != nil {
+		objectMap["friendly"] = cat.Friendly
+	}
+	if cat.ID != nil {
+		objectMap["id"] = cat.ID
+	}
+	if cat.Name != nil {
+		objectMap["name"] = cat.Name
+	}
+	if cat.Status != nil {
+		objectMap["status"] = cat.Status
+	}
+	for k, v := range cat.AdditionalProperties {
+		objectMap[k] = v
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON is the custom unmarshaler for CatAPTrue struct.
+func (cat *CatAPTrue) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "friendly":
+			if v != nil {
+				var friendly bool
+				err = json.Unmarshal(*v, &friendly)
+				if err != nil {
+					return err
+				}
+				cat.Friendly = &friendly
+			}
+		default:
+			if v != nil {
+				var additionalProperties interface{}
+				err = json.Unmarshal(*v, &additionalProperties)
+				if err != nil {
+					return err
+				}
+				if cat.AdditionalProperties == nil {
+					cat.AdditionalProperties = make(map[string]interface{})
+				}
+				cat.AdditionalProperties[k] = additionalProperties
+			}
+		case "id":
+			if v != nil {
+				var ID int32
+				err = json.Unmarshal(*v, &ID)
+				if err != nil {
+					return err
+				}
+				cat.ID = &ID
+			}
+		case "name":
+			if v != nil {
+				var name string
+				err = json.Unmarshal(*v, &name)
+				if err != nil {
+					return err
+				}
+				cat.Name = &name
+			}
+		case "status":
+			if v != nil {
+				var status bool
+				err = json.Unmarshal(*v, &status)
+				if err != nil {
+					return err
+				}
+				cat.Status = &status
+			}
+		}
+	}
+
+	return nil
+}
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`
