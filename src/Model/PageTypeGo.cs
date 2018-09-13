@@ -97,7 +97,7 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Gets the name of the results field.
         /// </summary>
-        public string ResultFieldName => ContentType.Name.ToShortName();
+        public string ResultFieldName => ContentType.Name.ToVariableName();
 
         public override string Fields()
         {
