@@ -49,18 +49,12 @@ type GetEmptyResponse struct {
 
 // MarshalJSON implements the json.Marshaler interface for GetEmptyResponse.
 func (ger GetEmptyResponse) MarshalJSON() ([]byte, error) {
-	if reflect.TypeOf((*GetEmptyResponse)(nil)).Elem().Size() != reflect.TypeOf((*getEmptyResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetEmptyResponse and getEmptyResponse"))
-	}
 	ger2 := (*getEmptyResponse)(unsafe.Pointer(&ger))
 	return json.Marshal(*ger2)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for GetEmptyResponse.
 func (ger *GetEmptyResponse) UnmarshalJSON(b []byte) error {
-	if reflect.TypeOf((*GetEmptyResponse)(nil)).Elem().Size() != reflect.TypeOf((*getEmptyResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetEmptyResponse and getEmptyResponse"))
-	}
 	ger2 := (*getEmptyResponse)(unsafe.Pointer(ger))
 	return json.Unmarshal(b, ger2)
 }
@@ -88,18 +82,12 @@ type GetInvalidResponse struct {
 
 // MarshalJSON implements the json.Marshaler interface for GetInvalidResponse.
 func (gir GetInvalidResponse) MarshalJSON() ([]byte, error) {
-	if reflect.TypeOf((*GetInvalidResponse)(nil)).Elem().Size() != reflect.TypeOf((*getInvalidResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetInvalidResponse and getInvalidResponse"))
-	}
 	gir2 := (*getInvalidResponse)(unsafe.Pointer(&gir))
 	return json.Marshal(*gir2)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for GetInvalidResponse.
 func (gir *GetInvalidResponse) UnmarshalJSON(b []byte) error {
-	if reflect.TypeOf((*GetInvalidResponse)(nil)).Elem().Size() != reflect.TypeOf((*getInvalidResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetInvalidResponse and getInvalidResponse"))
-	}
 	gir2 := (*getInvalidResponse)(unsafe.Pointer(gir))
 	return json.Unmarshal(b, gir2)
 }
@@ -127,18 +115,12 @@ type GetNonASCIIResponse struct {
 
 // MarshalJSON implements the json.Marshaler interface for GetNonASCIIResponse.
 func (gnar GetNonASCIIResponse) MarshalJSON() ([]byte, error) {
-	if reflect.TypeOf((*GetNonASCIIResponse)(nil)).Elem().Size() != reflect.TypeOf((*getNonASCIIResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetNonASCIIResponse and getNonASCIIResponse"))
-	}
 	gnar2 := (*getNonASCIIResponse)(unsafe.Pointer(&gnar))
 	return json.Marshal(*gnar2)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for GetNonASCIIResponse.
 func (gnar *GetNonASCIIResponse) UnmarshalJSON(b []byte) error {
-	if reflect.TypeOf((*GetNonASCIIResponse)(nil)).Elem().Size() != reflect.TypeOf((*getNonASCIIResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetNonASCIIResponse and getNonASCIIResponse"))
-	}
 	gnar2 := (*getNonASCIIResponse)(unsafe.Pointer(gnar))
 	return json.Unmarshal(b, gnar2)
 }
@@ -166,18 +148,12 @@ type GetNullResponse struct {
 
 // MarshalJSON implements the json.Marshaler interface for GetNullResponse.
 func (gnr GetNullResponse) MarshalJSON() ([]byte, error) {
-	if reflect.TypeOf((*GetNullResponse)(nil)).Elem().Size() != reflect.TypeOf((*getNullResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetNullResponse and getNullResponse"))
-	}
 	gnr2 := (*getNullResponse)(unsafe.Pointer(&gnr))
 	return json.Marshal(*gnr2)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for GetNullResponse.
 func (gnr *GetNullResponse) UnmarshalJSON(b []byte) error {
-	if reflect.TypeOf((*GetNullResponse)(nil)).Elem().Size() != reflect.TypeOf((*getNullResponse)(nil)).Elem().Size() {
-		validateError(errors.New("size mismatch between GetNullResponse and getNullResponse"))
-	}
 	gnr2 := (*getNullResponse)(unsafe.Pointer(gnr))
 	return json.Unmarshal(b, gnr2)
 }
@@ -195,6 +171,21 @@ func (gnr GetNullResponse) StatusCode() int {
 // Status returns the HTTP status message of the response, e.g. "200 OK".
 func (gnr GetNullResponse) Status() string {
 	return gnr.rawResponse.Status
+}
+
+func init() {
+	if reflect.TypeOf((*GetNullResponse)(nil)).Elem().Size() != reflect.TypeOf((*getNullResponse)(nil)).Elem().Size() {
+		validateError(errors.New("size mismatch between GetNullResponse and getNullResponse"))
+	}
+	if reflect.TypeOf((*GetEmptyResponse)(nil)).Elem().Size() != reflect.TypeOf((*getEmptyResponse)(nil)).Elem().Size() {
+		validateError(errors.New("size mismatch between GetEmptyResponse and getEmptyResponse"))
+	}
+	if reflect.TypeOf((*GetNonASCIIResponse)(nil)).Elem().Size() != reflect.TypeOf((*getNonASCIIResponse)(nil)).Elem().Size() {
+		validateError(errors.New("size mismatch between GetNonASCIIResponse and getNonASCIIResponse"))
+	}
+	if reflect.TypeOf((*GetInvalidResponse)(nil)).Elem().Size() != reflect.TypeOf((*getInvalidResponse)(nil)).Elem().Size() {
+		validateError(errors.New("size mismatch between GetInvalidResponse and getInvalidResponse"))
+	}
 }
 
 // internal type used for marshalling base64 encoded strings
@@ -219,20 +210,24 @@ func (c *base64Encoded) UnmarshalText(data []byte) error {
 
 // internal type used for marshalling
 type getNullResponse struct {
-	Value base64Encoded `json:"value,omitempty"`
+	rawResponse *http.Response
+	Value       base64Encoded `json:"value,omitempty"`
 }
 
 // internal type used for marshalling
 type getEmptyResponse struct {
-	Value base64Encoded `json:"value,omitempty"`
+	rawResponse *http.Response
+	Value       base64Encoded `json:"value,omitempty"`
 }
 
 // internal type used for marshalling
 type getNonASCIIResponse struct {
-	Value base64Encoded `json:"value,omitempty"`
+	rawResponse *http.Response
+	Value       base64Encoded `json:"value,omitempty"`
 }
 
 // internal type used for marshalling
 type getInvalidResponse struct {
-	Value base64Encoded `json:"value,omitempty"`
+	rawResponse *http.Response
+	Value       base64Encoded `json:"value,omitempty"`
 }

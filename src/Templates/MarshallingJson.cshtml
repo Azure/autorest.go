@@ -166,18 +166,12 @@ else
 <text>
     // MarshalJSON implements the json.Marshaler interface for @Model.Name.
     func (@rec @Model.Name) MarshalJSON() ([]byte, error) {
-        if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
-            validateError(errors.New("size mismatch between @Model.Name and @internalName"))
-        }
         @local := (*@internalName)(unsafe.Pointer(&@rec))
         return json.Marshal(*@local)
     }
 
     // UnmarshalJSON implements the json.Unmarshaler interface for @Model.Name.
     func (@rec *@Model.Name) UnmarshalJSON(b []byte) error {
-        if reflect.TypeOf((*@Model.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
-            validateError(errors.New("size mismatch between @Model.Name and @internalName"))
-        }
         @local := (*@internalName)(unsafe.Pointer(@rec))
         return json.Unmarshal(b, @local)
     }
