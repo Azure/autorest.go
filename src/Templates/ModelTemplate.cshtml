@@ -223,7 +223,7 @@ else
     </text>
 }
 
-@if (Model.HasPolymorphicFields || Model.HasFlattenedFields)
+@if (Model.NeedsCustomMarshalling)
 {
     var vsp = new VariableScopeProvider();
     var receiverVar = Model.Name.FixedValue.ToVariableName(vsp);

@@ -54,6 +54,7 @@ regenExpected = (opts,done) ->
         return done()
 
 goMappings = {
+  'additional-properties':['additionalProperties.json', 'additionalproperties'],
   'body-array':['body-array.json','arraygroup'],
   'body-boolean':['body-boolean.json', 'booleangroup'],
   'body-byte':['body-byte.json','bytegroup'],

@@ -61,6 +61,7 @@ func stopServer() (*bytes.Buffer, error) {
 func runTests(srvOutput *bytes.Buffer, allPass *bool) {
 	fmt.Println("Run tests")
 	testSuites := []string{
+		"additionalproperties",
 		"arraygroup",
 		"booleangroup",
 		"bytegroup",
