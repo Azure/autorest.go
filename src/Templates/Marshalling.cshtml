@@ -8,6 +8,22 @@
 
 @inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
 
+@if (Model.ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsDateTimeCustomHandlingRequired || m.IsBase64EncodingRequired).Any())
+{
+<text>
+func init() {
+@foreach (var ctg in Model.ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsDateTimeCustomHandlingRequired || m.IsBase64EncodingRequired))
+{
+	var internalName = ctg.Name.ToCamelCase();
+<text>
+	if reflect.TypeOf((*@ctg.Name)(nil)).Elem().Size() != reflect.TypeOf((*@internalName)(nil)).Elem().Size() {
+		validateError(errors.New("size mismatch between @ctg.Name and @internalName"))
+	}
+</text>
+}
+}
+</text>
+}
 @if (Model.ModelTypes.Cast<CompositeTypeGo>().Where(m => m.IsDateTimeCustomHandlingRequired).Any())
 {
 <text>
@@ -81,6 +97,10 @@ func (c *base64Encoded) UnmarshalText(data []byte) error {
 <text>
 // internal type used for marshalling
 type @internalName struct {
+    @if (ct.IsResponseType)
+    {
+    @:rawResponse *http.Response
+    }
 	@ct.Fields(true)
 }
 </text>
