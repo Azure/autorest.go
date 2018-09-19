@@ -22,6 +22,9 @@ namespace AutoRest.Go
             SwaggerExtensions.ProcessGlobalParameters(cmg);
             TransformEnumTypes(cmg);
             TransformModelTypes(cmg);
+            // FixUpPolymorphicTypes can generate new enum types so to avoid
+            // name collisions call it after transforming enums and models
+            FixUpPolymorphicTypes(cmg);
             TransformMethods(cmg);
             SwaggerExtensions.ProcessParameterizedHost(cmg);
             FixStutteringTypeNames(cmg);
@@ -79,7 +82,10 @@ namespace AutoRest.Go
                     }
                 };
             }
+        }
 
+        private static void FixUpPolymorphicTypes(CodeModelGo cmg)
+        {
             // Add discriminators
             // For all polymorphic types we need an enum with values for all the implementing types.
             // To do this:
@@ -132,6 +138,17 @@ namespace AutoRest.Go
                         Name = enumWithSameName == null ? mt.PolymorphicDiscriminator : $"{mt.PolymorphicDiscriminator}{mt.GetInterfaceName()}",
                         Values = enumValues,
                     })) as EnumTypeGo;
+                }
+            }
+
+            foreach (var mtm in cmg.ModelTypes.Cast<CompositeTypeGo>())
+            {
+                if (mtm.IsPolymorphic)
+                {
+                    foreach (var dt in mtm.DerivedTypes)
+                    {
+                        ((CompositeTypeGo)dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
+                    }
                 }
             }
         }
@@ -230,17 +247,6 @@ namespace AutoRest.Go
                 {
                     mtm.IsResponseType = true;
                 });
-
-            foreach (var mtm in cmg.ModelTypes.Cast<CompositeTypeGo>())
-            {
-                if (mtm.IsPolymorphic)
-                {
-                    foreach (var dt in mtm.DerivedTypes)
-                    {
-                        ((CompositeTypeGo)dt).DiscriminatorEnum = mtm.DiscriminatorEnum;
-                    }
-                }
-            }
         }
 
         private static void TransformMethods(CodeModelGo cmg)
