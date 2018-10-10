@@ -36,6 +36,19 @@ namespace AutoRest.Go
         /// <returns></returns>
         public override async Task Generate(CodeModel cm)
         {
+            // if preview-chk:true is specified verify that preview swagger is output under a preview subdirectory.
+            // this is a bit of a hack until we have proper support for this in the swagger->sdk bot so it's opt-in.
+            if (Settings.Instance.Host.GetValue<bool>("preview-chk").Result)
+            {
+                const string previewSubdir = "/preview/";
+                var files = await Settings.Instance.Host.GetValue<string[]>("input-file");
+                // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
+                if (files.All(file => file.IndexOf(previewSubdir) > -1) &&
+                    Settings.Instance.Host.GetValue<string>("output-folder").Result.IndexOf(previewSubdir) == -1)
+                {
+                    throw new InvalidOperationException($"codegen for preview swagger {files[0]} must be under a preview subdirectory");
+                }
+            }
 
             var codeModel = cm as CodeModelGo;
             if (codeModel == null)
