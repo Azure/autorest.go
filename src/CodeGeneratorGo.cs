@@ -42,8 +42,8 @@ namespace AutoRest.Go
             {
                 const string previewSubdir = "/preview/";
                 var files = await Settings.Instance.Host.GetValue<string[]>("input-file");
-                // skip validation for composite builds as we don't have a well-defined model for mixed preview/stable swaggers
-                if (files.Length == 1 && files[0].IndexOf(previewSubdir) > -1 &&
+                // only evaluate composite builds if all swaggers are preview as we don't have a well-defined model for mixed preview/stable swaggers
+                if (files.All(file => file.IndexOf(previewSubdir) > -1) &&
                     Settings.Instance.Host.GetValue<string>("output-folder").Result.IndexOf(previewSubdir) == -1)
                 {
                     throw new InvalidOperationException($"codegen for preview swagger {files[0]} must be under a preview subdirectory");
