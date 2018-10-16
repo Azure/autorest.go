@@ -227,10 +227,6 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         if err != nil {
             return
         }
-        err = autorest.Respond(resp, azure.WithErrorUnlessStatusCode(@(string.Join(",", Model.ResponseCodes.ToArray()))))
-        if err != nil {
-            return
-        }
         future.Future, err = azure.NewFutureFromResponse(resp)
         return
         </text>
