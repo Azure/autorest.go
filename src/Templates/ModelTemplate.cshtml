@@ -19,127 +19,127 @@
 {
     @if (Model.Deprecated)
     {
-    @:@WrapComment("// Deprecated: ", depMessage)
+        @:@WrapComment("// Deprecated: ", depMessage)
     }
     @WrapComment("// ", $"{Model.GetInterfaceName()} {Model.Documentation.ToSentence()}")
     <text>
-    type @(Model.GetInterfaceName()) interface {
-    @foreach (var dt in Model.DerivedTypes)
-    {
-        @:As@(dt.Name) () (*@(dt.Name), bool)
-        if (dt.HasInterface())
+        type @(Model.GetInterfaceName()) interface {
+        @foreach (var dt in Model.DerivedTypes)
         {
-            @:As@(dt.GetInterfaceName()) () (@(dt.GetInterfaceName()), bool)
+            @:As@(dt.Name) () (*@(dt.Name), bool)
+            if (dt.HasInterface())
+            {
+                @:As@(dt.GetInterfaceName()) () (@(dt.GetInterfaceName()), bool)
+            }
         }
-    }
-    As@(Model.Name) () (*@(Model.Name), bool)
-    }
+        As@(Model.Name) () (*@(Model.Name), bool)
+        }
 
-    @EmptyLine
-    @if (Model.Deprecated)
-    {
-    @:@WrapComment("// Deprecated: ", depMessage)
-    }
-    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
-    type @(Model.Name) struct {
-    @(Model.AddHTTPResponse())
-    @(Model.Fields())
-    }
-
-    @EmptyLine
-    func unmarshal@(Model.GetInterfaceName())(body []byte) (@(Model.GetInterfaceName()), error){
-    var m map[string]interface{}
-    err := json.Unmarshal(body, &m)
-    if err != nil {
-    return nil, err
-    }
-    @EmptyLine
-    switch m["@(Model.RootType.PolymorphicDiscriminator)"] {
-    @foreach (var dt in Model.DerivedTypes)
-    {
-        <text>
-        case string(@(CodeNamerGo.Instance.GetEnumMemberName((dt as CompositeTypeGo).DiscriminatorEnumValue))):
-        var @(dt.Name.FixedValue.ToVariableName()) @(dt.Name)
-        err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToVariableName()))
-        return @(dt.Name.FixedValue.ToVariableName()), err
-        </text>
-    }
-    default:
-    var @(Model.Name.FixedValue.ToVariableName()) @(Model.Name)
-    err := json.Unmarshal(body, &@(Model.Name.FixedValue.ToVariableName()))
-    return @(Model.Name.FixedValue.ToVariableName()), err
-    }
-    }
-
-    func unmarshal@(Model.GetInterfaceName())Array(body []byte) ([]@(Model.GetInterfaceName()), error){
-    var rawMessages []*json.RawMessage
-    err := json.Unmarshal(body, &rawMessages)
-    if err != nil {
-    return nil, err
-    }
-    @EmptyLine
-    @(Model.Name.FixedValue.ToVariableName())Array := make([]@(Model.GetInterfaceName()), len(rawMessages))
-    @EmptyLine
-    for index, rawMessage := range rawMessages {
-    @(Model.Name.FixedValue.ToVariableName()), err := unmarshal@(Model.GetInterfaceName())(*rawMessage)
-    if err != nil {
-    return nil, err
-    }
-    @(Model.Name.FixedValue.ToVariableName())Array[index] = @(Model.Name.FixedValue.ToVariableName())
-    }
-    return @(Model.Name.FixedValue.ToVariableName())Array, nil
-    }
-    </text>
-}
-else
-{
-    if (Model is PageTypeGo)
-    {
-        var pageType = Model as PageTypeGo;
-        var itemName = pageType.ItemName;
-        var contentType = pageType.ContentType.Name;
-        var receiverVar = contentType.FixedValue.ToVariableName();
-
-        <text>
         @EmptyLine
-        // IsEmpty returns true if the ListResult contains no values.
-        func (@receiverVar @contentType) IsEmpty() bool {
-        return @(receiverVar).@itemName == nil || len(*@(receiverVar).@itemName) == 0
+        @if (Model.Deprecated)
+        {
+            @:@WrapComment("// Deprecated: ", depMessage)
+        }
+        @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+        type @(Model.Name) struct {
+        @(Model.AddHTTPResponse())
+        @(Model.Fields())
+        }
+
+        @EmptyLine
+        func unmarshal@(Model.GetInterfaceName())(body []byte) (@(Model.GetInterfaceName()), error){
+        var m map[string]interface{}
+        err := json.Unmarshal(body, &m)
+        if err != nil {
+        return nil, err
         }
         @EmptyLine
-        </text>
-        if (pageType.PreparerNeeded)
+        switch m["@(Model.RootType.PolymorphicDiscriminator)"] {
+        @foreach (var dt in Model.DerivedTypes)
         {
             <text>
-            // @(pageType.PreparerMethodName) prepares a request to retrieve the next set of results.
-            // It returns nil if no more results exist.
-            func (@receiverVar @contentType) @(pageType.PreparerMethodName)() (*http.Request, error) {
-            if @(receiverVar).@(pageType.NextLink) == nil || len(to.String(@(receiverVar).@(pageType.NextLink))) < 1 {
-            return nil, nil
-            }
-            return autorest.Prepare(&http.Request{},
-            autorest.AsJSON(),
-            autorest.AsGet(),
-            autorest.WithBaseURL(to.String( @(receiverVar).@(pageType.NextLink))));
-            }
-            @EmptyLine
-            </text>
-        }
-    }
-    <text>
-    @if (Model.Deprecated)
-    {
-    @:@WrapComment("// Deprecated: ", depMessage)
-    }
-    @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
-    type @(Model.Name) struct {
-    @(Model.AddHTTPResponse())
-    @(Model.Fields())
-    }
+            case string(@(CodeNamerGo.Instance.GetEnumMemberName((dt as CompositeTypeGo).DiscriminatorEnumValue))):
+            var @(dt.Name.FixedValue.ToVariableName()) @(dt.Name)
+            err := json.Unmarshal(body, &@(dt.Name.FixedValue.ToVariableName()))
+            return @(dt.Name.FixedValue.ToVariableName()), err
     </text>
 }
+        default:
+        var @(Model.Name.FixedValue.ToVariableName()) @(Model.Name)
+        err := json.Unmarshal(body, &@(Model.Name.FixedValue.ToVariableName()))
+        return @(Model.Name.FixedValue.ToVariableName()), err
+        }
+        }
 
-@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.HasFlattenedFields ||  Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
+        func unmarshal@(Model.GetInterfaceName())Array(body []byte) ([]@(Model.GetInterfaceName()), error){
+        var rawMessages []*json.RawMessage
+        err := json.Unmarshal(body, &rawMessages)
+        if err != nil {
+        return nil, err
+        }
+        @EmptyLine
+        @(Model.Name.FixedValue.ToVariableName())Array := make([]@(Model.GetInterfaceName()), len(rawMessages))
+        @EmptyLine
+        for index, rawMessage := range rawMessages {
+        @(Model.Name.FixedValue.ToVariableName()), err := unmarshal@(Model.GetInterfaceName())(*rawMessage)
+        if err != nil {
+        return nil, err
+        }
+        @(Model.Name.FixedValue.ToVariableName())Array[index] = @(Model.Name.FixedValue.ToVariableName())
+        }
+        return @(Model.Name.FixedValue.ToVariableName())Array, nil
+        }
+        </text>
+    }
+    else
+    {
+        if (Model is PageTypeGo)
+        {
+            var pageType = Model as PageTypeGo;
+            var itemName = pageType.ItemName;
+            var contentType = pageType.ContentType.Name;
+            var receiverVar = contentType.FixedValue.ToVariableName();
+
+            <text>
+                @EmptyLine
+                // IsEmpty returns true if the ListResult contains no values.
+                func (@receiverVar @contentType) IsEmpty() bool {
+                return @(receiverVar).@itemName == nil || len(*@(receiverVar).@itemName) == 0
+                }
+                @EmptyLine
+            </text>
+            if (pageType.PreparerNeeded)
+            {
+                <text>
+                    // @(pageType.PreparerMethodName) prepares a request to retrieve the next set of results.
+                    // It returns nil if no more results exist.
+                    func (@receiverVar @contentType) @(pageType.PreparerMethodName)(ctx context.Context) (*http.Request, error) {
+                    if @(receiverVar).@(pageType.NextLink) == nil || len(to.String(@(receiverVar).@(pageType.NextLink))) < 1 {
+                    return nil, nil
+                    }
+                    return autorest.Prepare((&http.Request{}).WithContext(ctx),
+                    autorest.AsJSON(),
+                    autorest.AsGet(),
+                    autorest.WithBaseURL(to.String( @(receiverVar).@(pageType.NextLink))));
+                    }
+                    @EmptyLine
+                </text>
+            }
+        }
+        <text>
+            @if (Model.Deprecated)
+            {
+                @:@WrapComment("// Deprecated: ", depMessage)
+            }
+            @WrapComment("// ", $"{Model.Name} {Model.Documentation.ToSentence()}")
+            type @(Model.Name) struct {
+            @(Model.AddHTTPResponse())
+            @(Model.Fields())
+            }
+        </text>
+    }
+
+@if (Model.BaseIsPolymorphic || Model.IsPolymorphic || Model.HasFlattenedFields || Model.AllProperties.Any(p => p.ModelType is DictionaryTypeGo))
 {
     <text>
         @EmptyLine
@@ -148,9 +148,9 @@ else
         @if (Model.DiscriminatorEnumValue != null)
         {
             <text>
-                @(Model.Name.FixedValue.ToVariableName()).@(Model.PolymorphicProperty) = @(CodeNamerGo.Instance.GetEnumMemberName(Model.DiscriminatorEnumValue))
-            </text>
-        }
+            @(Model.Name.FixedValue.ToVariableName()).@(Model.PolymorphicProperty) = @(CodeNamerGo.Instance.GetEnumMemberName(Model.DiscriminatorEnumValue))
+    </text>
+}
         objectMap := make(map[string]interface{})
 
         @foreach (var property in Model.AllProperties.Where(p => !string.IsNullOrEmpty(p.SerializedName)))
@@ -180,34 +180,19 @@ else
         }
         return json.Marshal(objectMap)
         }
-    </text>
-}
+        </text>
+    }
 
 @if (Model.BaseIsPolymorphic || Model.IsPolymorphic)
 {
     <text>
-    @foreach (var st in Model.SiblingTypes)
-    {
-        <text>
-        @EmptyLine
-        // As@(st.Name) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
-        func (@(Model.Name.FixedValue.ToVariableName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
-        @if (st.Equals(Model))
+        @foreach (var st in Model.SiblingTypes)
         {
-            @:return &@(Model.Name.FixedValue.ToVariableName()), true
-        }
-        else
-        {
-            @:return nil, false
-        }
-        }
-
-        @if (st.HasInterface())
-        {
+            <text>
             @EmptyLine
-            @:// As@(st.GetInterfaceName()) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
-            @:func(@(Model.Name.FixedValue.ToVariableName()) @(Model.Name)) As@(st.GetInterfaceName())()(@(st.GetInterfaceName()), bool) {
-            if (st.Equals(Model) || Model.DerivesFrom(st))
+            // As@(st.Name) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
+            func (@(Model.Name.FixedValue.ToVariableName()) @(Model.Name)) As@(st.Name)() (*@(st.Name), bool) {
+            @if (st.Equals(Model))
             {
                 @:return &@(Model.Name.FixedValue.ToVariableName()), true
             }
@@ -215,51 +200,66 @@ else
             {
                 @:return nil, false
             }
-            @:}
-            @EmptyLine
-        }
-        </text>
-    }
+            }
+
+            @if (st.HasInterface())
+            {
+                @EmptyLine
+                @:// As@(st.GetInterfaceName()) is the @(Model.RootType.GetInterfaceName()) implementation for @(Model.Name).
+                @:func(@(Model.Name.FixedValue.ToVariableName()) @(Model.Name)) As@(st.GetInterfaceName())()(@(st.GetInterfaceName()), bool) {
+                if (st.Equals(Model) || Model.DerivesFrom(st))
+                {
+                    @:return &@(Model.Name.FixedValue.ToVariableName()), true
+                }
+                else
+                {
+                    @:return nil, false
+                }
+                @:}
+                @EmptyLine
+            }
     </text>
 }
+        </text>
+    }
 
 @if (Model.NeedsCustomMarshalling)
 {
     var vsp = new VariableScopeProvider();
     var receiverVar = Model.Name.FixedValue.ToVariableName(vsp);
     <text>
-    // UnmarshalJSON is the custom unmarshaler for @(Model.Name) struct.
-    func (@receiverVar *@(Model.Name)) UnmarshalJSON(@(vsp.GetVariableName("body")) []byte) error {
-    @if (Model.IsWrapperType)
+        // UnmarshalJSON is the custom unmarshaler for @(Model.Name) struct.
+        func (@receiverVar *@(Model.Name)) UnmarshalJSON(@(vsp.GetVariableName("body")) []byte) error {
+        @if (Model.IsWrapperType)
+        {
+            string varName;
+            if (Model.BaseType is SequenceTypeGo sequenceType)
+            {
+                varName = sequenceType.ElementType.Name.FixedValue.ToVariableName(vsp);
+                @:@varName, err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(body)
+            }
+            else
+            {
+                varName = Model.BaseType.Name.FixedValue.ToVariableName(vsp);
+                @:@varName, err := unmarshal@(Model.BaseType.GetInterfaceName())(body)
+            }
+            <text>
+            if err != nil {
+            return err
+            }
+    </text>
+    if (Model.BaseType is SequenceType type)
     {
-        string varName;
-        if (Model.BaseType is SequenceTypeGo sequenceType)
-        {
-            varName = sequenceType.ElementType.Name.FixedValue.ToVariableName(vsp);
-            @:@varName, err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(body)
-        }
-        else
-        {
-            varName = Model.BaseType.Name.FixedValue.ToVariableName(vsp);
-            @:@varName, err := unmarshal@(Model.BaseType.GetInterfaceName())(body)
-        }
-        <text>
-        if err != nil {
-        return err
-        }
-        </text>
-        if (Model.BaseType is SequenceType type)
-        {
-            @:@(receiverVar).Value = &@varName
-        }
-        else
-        {
-            @:@(receiverVar).Value = @varName
-        }
+        @:@(receiverVar).Value = &@varName
     }
     else
     {
-        <text>
+        @:@(receiverVar).Value = @varName
+    }
+}
+else
+{
+    <text>
         var m map[string]*json.RawMessage
         err := json.Unmarshal(body, &m)
         if err != nil {
@@ -276,110 +276,117 @@ else
             {
                 <text>
                 case "@(p.SerializedName)":
-                </text>
-            }
-            else
-            {
-                <text>
-                default:
-                </text>
-            }
+    </text>
+}
+else
+{
+    <text>
+        default:
+    </text>
+}
 
-            var modelType = p.ModelType;
+var modelType = p.ModelType;
 
-            if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties)
-            {
-                modelType = dictionaryType.ValueType;
-            }
-            <text>
-            if v != nil {
-            @if (modelType.HasInterface())
-            {
-                @:@varName, err := unmarshal@(modelType.GetInterfaceName())(*v)
-            }
-            else if (modelType is SequenceTypeGo sequenceType && sequenceType.ElementType.HasInterface())
-            {
-                @:@varName, err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(*v)
-            }
-            else
-            {
-                <text>
-                var @varName @(modelType.Name)
-                err = json.Unmarshal(*v, &@varName)
-                </text>
-            }
-            if err != nil {
-            return err
-            }
-            @if (p.ModelType is DictionaryTypeGo type && type.SupportsAdditionalProperties)
-            {
-                @:if(@(receiverVar).@(p.Name) == nil) {
-                @: @(receiverVar).@(p.Name) = make(@(p.ModelType.Name))
-                @:}
-                if (type.ValueType.CanBeNull())
-                {
-                    @:@(receiverVar).@(p.Name)[k] = @varName
-                }
-                else
-                {
-                    @:@(receiverVar).@(p.Name)[k] = &@varName
-                }
-            }
-            else if (!p.IsPointer)
-            {
-                    @:@(receiverVar).@(p.Name) = @varName
-            }
-            else
-            {
-                @:@(receiverVar).@(p.Name) = &@varName
-            }
-            }
-
-            </text>
+if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties)
+{
+    modelType = dictionaryType.ValueType;
+}
+<text>
+    if v != nil {
+    @if (modelType.HasInterface())
+    {
+        @:@varName, err := unmarshal@(modelType.GetInterfaceName())(*v)
+    }
+    else if (modelType is SequenceTypeGo sequenceType && sequenceType.ElementType.HasInterface())
+    {
+        @:@varName, err := unmarshal@(sequenceType.ElementType.GetInterfaceName())Array(*v)
+    }
+    else
+    {
+        <text>
+        var @varName @(modelType.Name)
+        err = json.Unmarshal(*v, &@varName)
+</text>
+}
+    if err != nil {
+    return err
+    }
+    @if (p.ModelType is DictionaryTypeGo type && type.SupportsAdditionalProperties)
+    {
+        @:if(@(receiverVar).@(p.Name) == nil) {
+        @: @(receiverVar).@(p.Name) = make(@(p.ModelType.Name))
+        @:}
+        if (type.ValueType.CanBeNull())
+        {
+            @:@(receiverVar).@(p.Name)[k] = @varName
         }
+        else
+        {
+            @:@(receiverVar).@(p.Name)[k] = &@varName
+        }
+    }
+    else if (!p.IsPointer)
+    {
+        @:@(receiverVar).@(p.Name) = @varName
+    }
+    else
+    {
+        @:@(receiverVar).@(p.Name) = &@varName
+    }
+    }
+
+    </text>
+}
         }
         }
         </text>
     }
-    @EmptyLine
-    return nil
+        @EmptyLine
+        return nil
+        }
+        </text>
     }
-    </text>
-}
 
 @if (Model is PageTypeGo modelPageType)
 {
     var itemName = modelPageType.ItemName;
     <text>
-    @EmptyLine
-    // Next advances to the next page of values.  If there was an error making
-    // the request the page does not advance and the error is returned.
-    func (page * @Model.Name) Next() error {
-    next, err := page.@(modelPageType.FnFieldName)(page.@modelPageType.ResultFieldName)
-    if err != nil {
-    return err
-    }
-    page.@modelPageType.ResultFieldName = next
-    return nil
-    }
+        @EmptyLine
+        // NextWithContext advances to the next page of values.  If there was an error making
+        // the request the page does not advance and the error is returned.
+        func (page * @Model.Name) NextWithContext(ctx context.Context) error {
+        next, err := page.@(modelPageType.FnFieldName)(ctx, page.@modelPageType.ResultFieldName)
+        if err != nil {
+        return err
+        }
+        page.@modelPageType.ResultFieldName = next
+        return nil
+        }
+        @EmptyLine
+        // Next advances to the next page of values.  If there was an error making
+        // the request the page does not advance and the error is returned.
+        @WrapComment("// Deprecated: ", "Use NextWithContext() instead.")
+        func (page * @Model.Name) Next() error {
+        return page.NextWithContext(context.Background())
+        }
 
-    // NotDone returns true if the page enumeration should be started or is not yet complete.
-    func (page @Model.Name) NotDone() bool {
-    return !page.@(modelPageType.ResultFieldName).IsEmpty()
-    }
+        // NotDone returns true if the page enumeration should be started or is not yet complete.
+        func (page @Model.Name) NotDone() bool {
+        return !page.@(modelPageType.ResultFieldName).IsEmpty()
+        }
 
-    // Response returns the raw server response from the last page request.
-    func (page @Model.Name) Response() @modelPageType.ContentType.Name {
-    return page.@modelPageType.ResultFieldName
-    }
+        // Response returns the raw server response from the last page request.
+        func (page @Model.Name) Response() @modelPageType.ContentType.Name {
+        return page.@modelPageType.ResultFieldName
+        }
 
-    // Values returns the slice of values for the current page or nil if there are no values.
-    func (page @Model.Name) Values() []@(modelPageType.ReturnTypeName) {
-    if page.@(modelPageType.ResultFieldName).IsEmpty() {
-    return nil
-    }
-    return *page.@(modelPageType.ResultFieldName).@itemName
-    }
+        // Values returns the slice of values for the current page or nil if there are no values.
+        func (page @Model.Name) Values() []@(modelPageType.ReturnTypeName) {
+        if page.@(modelPageType.ResultFieldName).IsEmpty() {
+        return nil
+        }
+        return *page.@(modelPageType.ResultFieldName).@itemName
+        }
     </text>
 }
 
@@ -388,40 +395,46 @@ else
     var itemType = iterType.PageType.ElementType;
     var itemTypeName = iterType.PageType.ReturnTypeName;
     <text>
-    // Next advances to the next value.  If there was an error making
-    // the request the iterator does not advance and the error is returned.
-    func (iter * @Model.Name) Next() error {
-    iter.@iterType.IndexField++
-    if iter.@iterType.IndexField < len(iter. @(iterType.PageField).Values()) {
-    return nil
-    }
-    err := iter.@(iterType.PageField).Next()
-    if err != nil {
-    iter. @iterType.IndexField--
-    return err
-    }
-    iter.@iterType.IndexField = 0
-    return nil
-    }
+        // NextWithContext advances to the next value.  If there was an error making
+        // the request the iterator does not advance and the error is returned.
+        func (iter * @Model.Name) NextWithContext(ctx context.Context) error {
+        iter.@iterType.IndexField++
+        if iter.@iterType.IndexField < len(iter. @(iterType.PageField).Values()) {
+        return nil
+        }
+        err := iter.@(iterType.PageField).NextWithContext(ctx)
+        if err != nil {
+        iter. @iterType.IndexField--
+        return err
+        }
+        iter.@iterType.IndexField = 0
+        return nil
+        }
 
-    // NotDone returns true if the enumeration should be started or is not yet complete.
-    func (iter @Model.Name) NotDone() bool {
-    return iter.@(iterType.PageField).NotDone() && iter.@iterType.IndexField < len(iter. @(iterType.PageField).Values())
-    }
+        // Next advances to the next value.  If there was an error making
+        // the request the iterator does not advance and the error is returned.
+        @WrapComment("// Deprecated: ", "Use NextWithContext() instead.")
+        func (iter * @Model.Name) Next() error {
+        return iter.NextWithContext(context.Background())
+        }
+        // NotDone returns true if the enumeration should be started or is not yet complete.
+        func (iter @Model.Name) NotDone() bool {
+        return iter.@(iterType.PageField).NotDone() && iter.@iterType.IndexField < len(iter. @(iterType.PageField).Values())
+        }
 
-    // Response returns the raw server response from the last page request.
-    func (iter @Model.Name) Response() @iterType.PageType.ContentType.Name {
-    return iter.@(iterType.PageField).Response()
-    }
+        // Response returns the raw server response from the last page request.
+        func (iter @Model.Name) Response() @iterType.PageType.ContentType.Name {
+        return iter.@(iterType.PageField).Response()
+        }
 
-    // Value returns the current value or a zero-initialized value if the
-    // iterator has advanced beyond the end of the collection.
-    func (iter @Model.Name) Value() @(itemTypeName) {
-    if !iter.@(iterType.PageField).NotDone() {
-    return @itemType.GetZeroInitExpression()
-    }
-    return iter.@(iterType.PageField).Values()[iter.@iterType.IndexField]
-    }
+        // Value returns the current value or a zero-initialized value if the
+        // iterator has advanced beyond the end of the collection.
+        func (iter @Model.Name) Value() @(itemTypeName) {
+        if !iter.@(iterType.PageField).NotDone() {
+        return @itemType.GetZeroInitExpression()
+        }
+        return iter.@(iterType.PageField).Values()[iter.@iterType.IndexField]
+        }
     </text>
 }
 
@@ -436,41 +449,41 @@ else
         resultVarTarget = $"{resultVarTarget}.{ptg.ResultFieldName}";
     }
     <text>
-    // Result returns the result of the asynchronous operation.
-    // If the operation has not completed it will return an error.
-    func (future *@Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
-    var done bool
-    done, err = future.Done(client)
-    if err != nil {
+        // Result returns the result of the asynchronous operation.
+        // If the operation has not completed it will return an error.
+        func (future *@Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
+        var done bool
+        done, err = future.Done(client)
+        if err != nil {
         err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Polling failure")
         return
-    }
-    if !done {
+        }
+        if !done {
         err = azure.NewAsyncOpIncompleteError("@futureTypeName")
         return
-    }
-    @if (ftg.IsDefaultReturnType)
-    {
-        // for default return types (i.e. autorest.Response)
-        // assign the raw HTTP response to the *http.Response field
-    @:@(resultVarTarget).Response = future.Response()
-    }
-    else
-    {
-        // modeled return types embed autorest.Resposne as an anonymous field
-        // so in order to assign the raw HTTP response to the *http.Response field
-        // in it we need an extra ".Response" :(
-    <text>
-    sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-    if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
-        @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
-        if err != nil {
-            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
         }
-    }
+        @if (ftg.IsDefaultReturnType)
+        {
+            // for default return types (i.e. autorest.Response)
+            // assign the raw HTTP response to the *http.Response field
+            @:@(resultVarTarget).Response = future.Response()
+        }
+        else
+        {
+            // modeled return types embed autorest.Resposne as an anonymous field
+            // so in order to assign the raw HTTP response to the *http.Response field
+            // in it we need an extra ".Response" :(
+            <text>
+            sender := autorest.DecorateSender(client, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            if @(resultVarTarget).Response.Response, err = future.GetResult(sender); err == nil && @(resultVarTarget).Response.Response.StatusCode != http.StatusNoContent {
+            @resultVar, err = client.@(ftg.ResponderMethodName)(@(resultVarTarget).Response.Response)
+            if err != nil {
+            err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", @(resultVarTarget).Response.Response, "Failure responding to request")
+            }
+            }
     </text>
+}
+        return
+        }
+        </text>
     }
-    return
-}
-    </text>
-}

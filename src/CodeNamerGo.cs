@@ -32,6 +32,7 @@ namespace AutoRest.Go
         public virtual IEnumerable<string> PageableImports => new string[]
         {
             PrimaryTypeGo.GetImportLine(package: "net/http"),
+            PrimaryTypeGo.GetImportLine(package: "context"),
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to")
         };
 

@@ -319,8 +319,8 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         <text>
             @EmptyLine
             // @(Model.NextMethodName) retrieves the next set of results, if any.
-            func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @Model.LastResultsTypeName()) (@Model.NextMethodReturnSignature()) {
-            req, err := lastResults.@(preparerName)()
+            func (client @(Model.Owner)) @(Model.NextMethodName)(ctx context.Context, lastResults @Model.LastResultsTypeName()) (@Model.NextMethodReturnSignature()) {
+            req, err := lastResults.@(preparerName)(ctx)
             if err != nil {
             return result, @(Model.AutorestError("Failure preparing next results request", null, null, Model.NextMethodName))
             }
@@ -356,34 +356,34 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     }
             }
             </text>
-        }
+}
 
-    @if (Model.IsPageable && !Model.IsNextMethod)
+@if (Model.IsPageable && !Model.IsNextMethod)
+{
+    var resultTypeName = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().IteratorType.Name;
+    if (Model.IsLongRunningOperation())
     {
-        var resultTypeName = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().IteratorType.Name;
-        if (Model.IsLongRunningOperation())
-        {
-            resultTypeName = ((LroPagedResponseGo)Model.ReturnType).ListAllReturnType.Name;
-        }
-        <text>
-            @EmptyLine
-            // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
-            func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
-            @if (Model.IsLongRunningOperation())
-            {
-                <text>
-                var future @Model.MethodReturnType
-                future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
-                result.Future = future.Future
-        </text>
+        resultTypeName = ((LroPagedResponseGo)Model.ReturnType).ListAllReturnType.Name;
+    }
+    <text>
+    @EmptyLine
+    // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
+    func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
+    @if (Model.IsLongRunningOperation())
+    {
+    <text>
+        var future @Model.MethodReturnType
+        future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
+        result.Future = future.Future
+    </text>
     }
     else
     {
-        <text>
-            result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
-        </text>
+    <text>
+        result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
+    </text>
     }
-            return
-            }
-            </text>
-        }
+        return
+    }
+    </text>
+}
