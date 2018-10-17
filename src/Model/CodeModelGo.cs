@@ -106,6 +106,15 @@ namespace AutoRest.Go.Model
 
         public string APIType => Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
 
+        public string PackageFqdn
+        {
+            get
+            {
+                var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result;
+                return outDir.ToLowerInvariant().Substring(outDir.IndexOf("services"));
+            }
+        }
+
         public IEnumerable<string> ClientImports
         {
             get
@@ -303,7 +312,7 @@ namespace AutoRest.Go.Model
 
         /// FormatVersion normalizes a version string into a SemVer if it resembles one. Otherwise,
         /// it returns the original string unmodified. If version is empty or only comprised of
-        /// whitespace, 
+        /// whitespace,
         public static string FormatVersion(string version)
         {
 

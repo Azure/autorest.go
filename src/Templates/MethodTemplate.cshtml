@@ -35,38 +35,56 @@
 }
 
 func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
-@if ((Model.CodeModel as CodeModelGo).ShouldValidate && !Model.ParameterValidations.IsNullOrEmpty())
-{
-    <text>
-    if err := validation.Validate([]validation.Validation{
-    @(Model.ParameterValidations)}); err != nil {
-    return result, @(Model.ValidationError)
-    }
-    @EmptyLine
-    </text>
-}
-@if (Model.IsPageable && !Model.IsLongRunningOperation() && !Model.IsNextMethod)
-{
-    var fnField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().FnFieldName;
-    var nextMethod = Model.NextMethod;
-    if (nextMethod != null)
+    ctx = tracing.StartSpan(ctx, "@(Model.Fqdn)")
+    defer func() {
+    @if (Model.IsLongRunningOperation())
     {
-        var returnType = nextMethod.MethodReturnType;
-        var nextLinkField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().NextLink;
         <text>
-        result.@fnField = func(lastResult @returnType) (@returnType, error) {
-        if lastResult.@nextLinkField == nil || len(to.String(lastResult.@nextLinkField)) < 1 {
-        return @returnType{}, nil
-        }
-        return client.@(nextMethod.Name)( @Model.NextMethodInvocationParameters($"*lastResult.{nextLinkField}") )
-        }
+            sc := -1
+            if @(Model.ResponseAssignTarget).Response() != nil {
+            sc = @(Model.ResponseAssignTarget).Response().StatusCode
+            }
         </text>
     }
     else
     {
-        @:result.@fnField = client.@(Model.NextMethodName)
+        <text>sc := @(Model.ResponseAssignTarget).StatusCode</text>
     }
-}
+
+    tracing.EndSpan(ctx, sc, err)
+    }()
+    @if ((Model.CodeModel as CodeModelGo).ShouldValidate && !Model.ParameterValidations.IsNullOrEmpty())
+    {
+        <text>
+            if err := validation.Validate([]validation.Validation{
+            @(Model.ParameterValidations)}); err != nil {
+            return result, @(Model.ValidationError)
+            }
+            @EmptyLine
+        </text>
+    }
+    @if (Model.IsPageable && !Model.IsLongRunningOperation() && !Model.IsNextMethod)
+    {
+        var fnField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().FnFieldName;
+        var nextMethod = Model.NextMethod;
+        if (nextMethod != null)
+        {
+            var returnType = nextMethod.MethodReturnType;
+            var nextLinkField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().NextLink;
+            <text>
+                result.@fnField = func(lastResult @returnType) (@returnType, error) {
+                if lastResult.@nextLinkField == nil || len(to.String(lastResult.@nextLinkField)) < 1 {
+                return @returnType{}, nil
+                }
+                return client.@(nextMethod.Name)( @Model.NextMethodInvocationParameters($"*lastResult.{nextLinkField}") )
+                }
+            </text>
+        }
+        else
+        {
+            @:result.@fnField = client.@(Model.NextMethodName)
+        }
+    }
     req, err := client.@(Model.PreparerMethodName)(@(Model.HelperInvocationParameters()))
     if err != nil {
     err = @(Model.AutorestError("Failure preparing request"))
@@ -76,27 +94,27 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @if (Model.IsLongRunningOperation())
     {
         <text>
-        result, err = client.@(Model.SenderMethodName)(req)
-        if err != nil {
-        err = @(Model.AutorestError("Failure sending request", "result.Response()"))
-        return
-        }
+            result, err = client.@(Model.SenderMethodName)(req)
+            if err != nil {
+            err = @(Model.AutorestError("Failure sending request", "result.Response()"))
+            return
+            }
         </text>
     }
     else
     {
         <text>
-        resp, err := client.@(Model.SenderMethodName)(req)
-        if err != nil {
-        @(Model.Response(false))
-        err = @(Model.AutorestError("Failure sending request", "resp"))
-        return
-        }
-        @EmptyLine
-        @(Model.ResponseAssignTarget), err = client.@(Model.ResponderMethodName)(resp)
-        if err != nil {
-        err = @(Model.AutorestError("Failure responding to request", "resp"))
-        }
+            resp, err := client.@(Model.SenderMethodName)(req)
+            if err != nil {
+            @(Model.Response(false))
+            err = @(Model.AutorestError("Failure sending request", "resp"))
+            return
+            }
+            @EmptyLine
+            @(Model.ResponseAssignTarget), err = client.@(Model.ResponderMethodName)(resp)
+            if err != nil {
+            err = @(Model.AutorestError("Failure responding to request", "resp"))
+            }
         </text>
     }
     @EmptyLine
@@ -104,24 +122,24 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     }
 
     @EmptyLine
-@if (Model.Deprecated)
-{
-    @:@WrapComment("// Deprecated: ", depMessage)
-}
+    @if (Model.Deprecated)
+    {
+        @:@WrapComment("// Deprecated: ", depMessage)
+    }
     // @(Model.PreparerMethodName) prepares the @(Model.Name) request.
     func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParametersSignature)) (*http.Request, error) {
     @if (Model.IsCustomBaseUri && Model.URLParameters.Any())
     {
         <text>
-        @(Model.URLMap)
-        @EmptyLine
+            @(Model.URLMap)
+            @EmptyLine
         </text>
     }
     @if (Model.PathParameters.Any())
     {
         <text>
-        @(Model.PathMap)
-        @EmptyLine
+            @(Model.PathMap)
+            @EmptyLine
         </text>
     }
     @if (Model.QueryParameters.Any())
@@ -138,7 +156,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
             @:@(p.AddToMap("queryParameters"))
             if (p.DefaultValue.Value != null)
             {
-            @:} else {
+                @:} else {
                 @:@(p.AddToMap("queryParameters", useDefaultValue: true))
             }
             @:}
@@ -149,53 +167,53 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @if (Model.FormDataParameters.Any())
     {
         <text>
-        @(Model.FormDataMap)
-        @foreach (var p in Model.OptionalFormDataParameters)
-        {
-            @:if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
-            @:@(p.AddToMap("formDataParameters"))
-            if (p.DefaultValue.Value != null)
+            @(Model.FormDataMap)
+            @foreach (var p in Model.OptionalFormDataParameters)
             {
-                @:} else {
-                @:@(p.AddToMap("formDataParameters", useDefaultValue: true))
+                @:if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
+                @:@(p.AddToMap("formDataParameters"))
+                if (p.DefaultValue.Value != null)
+                {
+                    @:} else {
+                    @:@(p.AddToMap("formDataParameters", useDefaultValue: true))
+                }
+                @:}
             }
-            @:}
-        }
-        @EmptyLine
+            @EmptyLine
         </text>
     }
     preparer := autorest.CreatePreparer(
     @(Model.PrepareDecorators.EmitAsArguments()))
 
-@if (Model.BodyParameter != null && !Model.BodyParameter.IsRequired)
-{
-    var bodyParam = string.Format(Model.BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream)
-                                        ? "autorest.WithFile({0})"
-                                        : "autorest.WithJSON({0})",
-                                Model.BodyParameter.Name);
-<text>
-    if @(Model.BodyParameter.GetEmptyCheck(Model.BodyParameter.Name, false)) {
-        preparer = autorest.DecoratePreparer(preparer,
-                            @(bodyParam))
+    @if (Model.BodyParameter != null && !Model.BodyParameter.IsRequired)
+    {
+        var bodyParam = string.Format(Model.BodyParameter.ModelType.PrimaryType(KnownPrimaryType.Stream)
+                                            ? "autorest.WithFile({0})"
+                                            : "autorest.WithJSON({0})",
+                                    Model.BodyParameter.Name);
+        <text>
+            if @(Model.BodyParameter.GetEmptyCheck(Model.BodyParameter.Name, false)) {
+            preparer = autorest.DecoratePreparer(preparer,
+            @(bodyParam))
+            }
+        </text>
     }
-</text>
-}
 
     @foreach (var p in Model.OptionalHeaderParameters)
     {
         <text>
-        if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
-        preparer = autorest.DecoratePreparer(preparer,
-        @(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
-              p.SerializedName, p.GetParameterName())))
-         @if (p.DefaultValue.Value != null)
-         {
-             @: } else {
-             @:preparer = autorest.DecoratePreparer(preparer,
-             @:@(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
-                 p.SerializedName, p.DefaultValueString)))
-         }
-        }
+            if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
+            preparer = autorest.DecoratePreparer(preparer,
+            @(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
+                                  p.SerializedName, p.GetParameterName())))
+            @if (p.DefaultValue.Value != null)
+            {
+                @: } else {
+                @:preparer = autorest.DecoratePreparer(preparer,
+                @:@(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
+                            p.SerializedName, p.DefaultValueString)))
+            }
+            }
         </text>
     }
 
@@ -211,40 +229,40 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     }
 
     @EmptyLine
-@if (Model.Deprecated)
-{
-    @:@WrapComment("// Deprecated: ", depMessage)
-}
+    @if (Model.Deprecated)
+    {
+        @:@WrapComment("// Deprecated: ", depMessage)
+    }
     // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
     // http.Response Body if it receives an error.
     func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
     @if (Model.IsLongRunningOperation())
     {
         <text>
-        var resp *http.Response
-        resp, err = autorest.SendWithSender(client, req,
+            var resp *http.Response
+            resp, err = autorest.SendWithSender(client, req,
             @(Model.SendDecorators.EmitAsArguments()))
-        if err != nil {
+            if err != nil {
             return
-        }
-        future.Future, err = azure.NewFutureFromResponse(resp)
-        return
+            }
+            future.Future, err = azure.NewFutureFromResponse(resp)
+            return
         </text>
     }
     else
     {
         <text>
-        return autorest.SendWithSender(client, req,
-        @(Model.SendDecorators.EmitAsArguments()))
+            return autorest.SendWithSender(client, req,
+            @(Model.SendDecorators.EmitAsArguments()))
         </text>
     }
     }
 
     @EmptyLine
-@if (Model.Deprecated)
-{
-    @:@WrapComment("// Deprecated: ", depMessage)
-}
+    @if (Model.Deprecated)
+    {
+        @:@WrapComment("// Deprecated: ", depMessage)
+    }
     // @(Model.ResponderMethodName) handles the response to the @(Model.Name) request. The method always
     // closes the http.Response Body.
     func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) {
@@ -252,21 +270,21 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     {
         var pageType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
         <text>
-        result.@(pageType.ResultFieldName), err = client.@(Model.ResponderMethodName.ToCamelCase())(resp)
-        result.@(pageType.FnFieldName) = client.@(Model.NextMethodName)
+            result.@(pageType.ResultFieldName), err = client.@(Model.ResponderMethodName.ToCamelCase())(resp)
+            result.@(pageType.FnFieldName) = client.@(Model.NextMethodName)
         </text>
     }
     else
     {
         <text>
-        @if (Model.ReturnValue().Body.IsStreamType())
-        {
-            @:result.Value = &resp.Body
-        }
-        err = autorest.Respond(
-        @(Model.RespondDecorators.EmitAsArguments()))
+            @if (Model.ReturnValue().Body.IsStreamType())
+            {
+                @:result.Value = &resp.Body
+            }
+            err = autorest.Respond(
+            @(Model.RespondDecorators.EmitAsArguments()))
 
-        @(Model.Response(true))
+            @(Model.Response(true))
         </text>
     }
     return
@@ -276,18 +294,18 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     {
         var pageType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
         <text>
-        @EmptyLine
-        func (client @(Model.Owner)) @(Model.ResponderMethodName.ToCamelCase())(resp *http.Response) (result @pageType.ContentType.Name, err error) {
-        @if (Model.ReturnValue().Body.IsStreamType())
-        {
-            @:result.Value = &resp.Body
-        }
-        err = autorest.Respond(
-        @(Model.RespondDecorators.EmitAsArguments()))
+            @EmptyLine
+            func (client @(Model.Owner)) @(Model.ResponderMethodName.ToCamelCase())(resp *http.Response) (result @pageType.ContentType.Name, err error) {
+            @if (Model.ReturnValue().Body.IsStreamType())
+            {
+                @:result.Value = &resp.Body
+            }
+            err = autorest.Respond(
+            @(Model.RespondDecorators.EmitAsArguments()))
 
-        @(Model.Response(true))
-        return
-        }
+            @(Model.Response(true))
+            return
+            }
         </text>
     }
 
@@ -299,31 +317,31 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
             preparerName = $"{Model.LastResultsTypeName().ToCamelCase()}Preparer";
         }
         <text>
-        @EmptyLine
-        // @(Model.NextMethodName) retrieves the next set of results, if any.
-        func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @Model.LastResultsTypeName()) (@Model.NextMethodReturnSignature()) {
-        req, err := lastResults.@(preparerName)()
-        if err != nil {
-        return result, @(Model.AutorestError("Failure preparing next results request", null, null, Model.NextMethodName))
-        }
-        if req == nil {
-        return
-        }
-        @if (Model.IsLongRunningOperation())
-        {
-            <text>
-            var resp *http.Response
-            resp, err = autorest.SendWithSender(client, req,
-            autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+            @EmptyLine
+            // @(Model.NextMethodName) retrieves the next set of results, if any.
+            func (client @(Model.Owner)) @(Model.NextMethodName)(lastResults @Model.LastResultsTypeName()) (@Model.NextMethodReturnSignature()) {
+            req, err := lastResults.@(preparerName)()
             if err != nil {
-            return result, @(Model.AutorestError("Failure sending next results request", "resp", null, Model.NextMethodName))
+            return result, @(Model.AutorestError("Failure preparing next results request", null, null, Model.NextMethodName))
             }
-            return client.@(Model.ResponderMethodName.ToCamelCase())(resp)
-            </text>
-        }
-        else
-        {
-            <text>
+            if req == nil {
+            return
+            }
+            @if (Model.IsLongRunningOperation())
+            {
+                <text>
+                var resp *http.Response
+                resp, err = autorest.SendWithSender(client, req,
+                autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                if err != nil {
+                return result, @(Model.AutorestError("Failure sending next results request", "resp", null, Model.NextMethodName))
+                }
+                return client.@(Model.ResponderMethodName.ToCamelCase())(resp)
+        </text>
+    }
+    else
+    {
+        <text>
             resp, err := client.@(Model.SenderMethodName)(req)
             if err != nil {
             @(Model.Response(true))
@@ -334,11 +352,11 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
             err = @(Model.AutorestError("Failure responding to next results request", "resp", null, Model.NextMethodName))
             }
             return
-            </text>
-        }
-        }
         </text>
     }
+            }
+            </text>
+        }
 
     @if (Model.IsPageable && !Model.IsNextMethod)
     {
@@ -348,24 +366,24 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
             resultTypeName = ((LroPagedResponseGo)Model.ReturnType).ListAllReturnType.Name;
         }
         <text>
-        @EmptyLine
-        // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
-        func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
-        @if (Model.IsLongRunningOperation())
-        {
-            <text>
-            var future @Model.MethodReturnType
-            future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
-            result.Future = future.Future
-            </text>
-        }
-        else
-        {
-            <text>
-            result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
-            </text>
-        }
-        return
-        }
+            @EmptyLine
+            // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
+            func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
+            @if (Model.IsLongRunningOperation())
+            {
+                <text>
+                var future @Model.MethodReturnType
+                future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
+                result.Future = future.Future
         </text>
     }
+    else
+    {
+        <text>
+            result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
+        </text>
+    }
+            return
+            }
+            </text>
+        }

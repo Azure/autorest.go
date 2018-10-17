@@ -89,6 +89,8 @@ namespace AutoRest.Go.Model
             var imports = new HashSet<string>();
             imports.UnionWith(CodeNamerGo.Instance.AutorestImports);
             imports.UnionWith(CodeNamerGo.Instance.StandardImports);
+            imports.UnionWith(CodeNamerGo.Instance.TracingImports);
+
 
             cmg.Methods.Where(m => m.Group.Value == Name)
                 .ForEach(m =>
@@ -96,7 +98,7 @@ namespace AutoRest.Go.Model
                     var mg = m as MethodGo;
                     if ((CodeModel as CodeModelGo).ShouldValidate && !mg.ParameterValidations.IsNullOrEmpty())
                     {
-                        imports.UnionWith(CodeNamerGo.Instance.ValidationImport);
+                        imports.UnionWith(CodeNamerGo.Instance.ValidationImports);
                     }
                     mg.ParametersGo.ForEach(p => p.AddImports(imports));
                     if (mg.HasReturnValue() && !mg.ReturnValue().Body.PrimaryType(KnownPrimaryType.Stream))
