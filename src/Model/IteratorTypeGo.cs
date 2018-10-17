@@ -22,7 +22,9 @@ namespace AutoRest.Go.Model
         public IteratorTypeGo(PageTypeGo pageType) : base(CodeNamerGo.Instance.GetIteratorTypeName(pageType))
         {
             PageType = pageType;
+            CodeModel = pageType.CodeModel;
             Documentation = $"Provides access to a complete listing of {PageType.ElementType.Name} values.";
+            AdvancerFqdn = $"{(CodeModel as CodeModelGo).PackageFqdn}/{Name}.NextWithContext";
         }
 
         /// <summary>
@@ -34,6 +36,11 @@ namespace AutoRest.Go.Model
         /// Gets the name of the indexer field used to track the current value.
         /// </summary>
         public string IndexField => "i";
+
+        /// <summary>
+        /// The fully qualified name for the advancer method.
+        /// </summary>
+        public string AdvancerFqdn { get; private set; }
 
         /// <summary>
         /// Gets the name of the page field that contains the current page of values.

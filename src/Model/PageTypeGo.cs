@@ -46,6 +46,8 @@ namespace AutoRest.Go.Model
             {
                 DeprecationMessage = "The method for this type has been deprecated.";
             }
+
+            AdvancerFqdn = $"{(CodeModel as CodeModelGo).PackageFqdn}/{Name}.NextWithContext";
         }
 
         /// <summary>
@@ -98,6 +100,11 @@ namespace AutoRest.Go.Model
         /// Gets the name of the results field.
         /// </summary>
         public string ResultFieldName => ContentType.Name.ToVariableName();
+
+        /// <summary>
+        /// The fully qualified name for the advancer method.
+        /// </summary>
+        public string AdvancerFqdn { get; private set; }
 
         public override string Fields()
         {

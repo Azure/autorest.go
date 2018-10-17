@@ -361,6 +361,8 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
 @if (Model.IsPageable && !Model.IsNextMethod)
 {
     var resultTypeName = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().IteratorType.Name;
+    var pageType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
+
     if (Model.IsLongRunningOperation())
     {
         resultTypeName = ((LroPagedResponseGo)Model.ReturnType).ListAllReturnType.Name;
@@ -369,6 +371,24 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @EmptyLine
     // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
     func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
+        ctx = tracing.StartSpan(ctx, "@(Model.Fqdn)")
+        defer func() {
+        @if (Model.IsLongRunningOperation())
+        {
+        <text>
+            sc := -1
+            if result.@(Model.ResponseAssignTarget).Response() != nil {
+            sc = result.@(Model.ResponseAssignTarget).Response().StatusCode
+        }
+        </text>
+        }
+        else
+        {
+            <text>sc := result.page.@(pageType.ResultFieldName).StatusCode</text>
+        }
+
+            tracing.EndSpan(ctx, sc, err)
+        }()
     @if (Model.IsLongRunningOperation())
     {
     <text>
