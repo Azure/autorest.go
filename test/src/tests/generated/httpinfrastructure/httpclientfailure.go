@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -32,6 +33,11 @@ func NewHTTPClientFailureClientWithBaseURI(baseURI string) HTTPClientFailureClie
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Delete400")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Delete400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete400", nil, "Failure preparing request")
@@ -91,6 +97,11 @@ func (client HTTPClientFailureClient) Delete400Responder(resp *http.Response) (r
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Delete407")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Delete407Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete407", nil, "Failure preparing request")
@@ -150,6 +161,11 @@ func (client HTTPClientFailureClient) Delete407Responder(resp *http.Response) (r
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Delete417")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Delete417Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Delete417", nil, "Failure preparing request")
@@ -207,6 +223,11 @@ func (client HTTPClientFailureClient) Delete417Responder(resp *http.Response) (r
 
 // Get400 return 400 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get400(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Get400")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Get400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get400", nil, "Failure preparing request")
@@ -259,6 +280,11 @@ func (client HTTPClientFailureClient) Get400Responder(resp *http.Response) (resu
 
 // Get402 return 402 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get402(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Get402")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Get402Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get402", nil, "Failure preparing request")
@@ -311,6 +337,11 @@ func (client HTTPClientFailureClient) Get402Responder(resp *http.Response) (resu
 
 // Get403 return 403 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get403(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Get403")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Get403Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get403", nil, "Failure preparing request")
@@ -363,6 +394,11 @@ func (client HTTPClientFailureClient) Get403Responder(resp *http.Response) (resu
 
 // Get411 return 411 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get411(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Get411")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Get411Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get411", nil, "Failure preparing request")
@@ -415,6 +451,11 @@ func (client HTTPClientFailureClient) Get411Responder(resp *http.Response) (resu
 
 // Get412 return 412 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get412(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Get412")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Get412Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get412", nil, "Failure preparing request")
@@ -467,6 +508,11 @@ func (client HTTPClientFailureClient) Get412Responder(resp *http.Response) (resu
 
 // Get416 return 416 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get416(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Get416")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Get416Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Get416", nil, "Failure preparing request")
@@ -519,6 +565,11 @@ func (client HTTPClientFailureClient) Get416Responder(resp *http.Response) (resu
 
 // Head400 return 400 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head400(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Head400")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Head400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head400", nil, "Failure preparing request")
@@ -571,6 +622,11 @@ func (client HTTPClientFailureClient) Head400Responder(resp *http.Response) (res
 
 // Head401 return 401 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head401(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Head401")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Head401Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head401", nil, "Failure preparing request")
@@ -623,6 +679,11 @@ func (client HTTPClientFailureClient) Head401Responder(resp *http.Response) (res
 
 // Head410 return 410 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head410(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Head410")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Head410Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head410", nil, "Failure preparing request")
@@ -675,6 +736,11 @@ func (client HTTPClientFailureClient) Head410Responder(resp *http.Response) (res
 
 // Head429 return 429 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head429(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Head429")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Head429Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Head429", nil, "Failure preparing request")
@@ -729,6 +795,11 @@ func (client HTTPClientFailureClient) Head429Responder(resp *http.Response) (res
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Patch400")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Patch400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch400", nil, "Failure preparing request")
@@ -788,6 +859,11 @@ func (client HTTPClientFailureClient) Patch400Responder(resp *http.Response) (re
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Patch405")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Patch405Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch405", nil, "Failure preparing request")
@@ -847,6 +923,11 @@ func (client HTTPClientFailureClient) Patch405Responder(resp *http.Response) (re
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Patch414")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Patch414Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Patch414", nil, "Failure preparing request")
@@ -906,6 +987,11 @@ func (client HTTPClientFailureClient) Patch414Responder(resp *http.Response) (re
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Post400")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Post400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post400", nil, "Failure preparing request")
@@ -965,6 +1051,11 @@ func (client HTTPClientFailureClient) Post400Responder(resp *http.Response) (res
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Post406")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Post406Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post406", nil, "Failure preparing request")
@@ -1024,6 +1115,11 @@ func (client HTTPClientFailureClient) Post406Responder(resp *http.Response) (res
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Post415")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Post415Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Post415", nil, "Failure preparing request")
@@ -1083,6 +1179,11 @@ func (client HTTPClientFailureClient) Post415Responder(resp *http.Response) (res
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Put400")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Put400Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put400", nil, "Failure preparing request")
@@ -1142,6 +1243,11 @@ func (client HTTPClientFailureClient) Put400Responder(resp *http.Response) (resu
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Put404")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Put404Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put404", nil, "Failure preparing request")
@@ -1201,6 +1307,11 @@ func (client HTTPClientFailureClient) Put404Responder(resp *http.Response) (resu
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Put409")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Put409Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put409", nil, "Failure preparing request")
@@ -1260,6 +1371,11 @@ func (client HTTPClientFailureClient) Put409Responder(resp *http.Response) (resu
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *bool) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPClientFailureClient.Put413")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.Put413Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPClientFailureClient", "Put413", nil, "Failure preparing request")

@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,11 @@ func NewFilesClientWithBaseURI(baseURI string) FilesClient {
 
 // GetEmptyFile get empty file
 func (client FilesClient) GetEmptyFile(ctx context.Context) (result ReadCloser, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-file/FilesClient.GetEmptyFile")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetEmptyFilePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetEmptyFile", nil, "Failure preparing request")
@@ -81,6 +87,11 @@ func (client FilesClient) GetEmptyFileResponder(resp *http.Response) (result Rea
 
 // GetFile get file
 func (client FilesClient) GetFile(ctx context.Context) (result ReadCloser, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-file/FilesClient.GetFile")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetFilePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetFile", nil, "Failure preparing request")
@@ -132,6 +143,11 @@ func (client FilesClient) GetFileResponder(resp *http.Response) (result ReadClos
 
 // GetFileLarge get a large file
 func (client FilesClient) GetFileLarge(ctx context.Context) (result ReadCloser, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-file/FilesClient.GetFileLarge")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetFileLargePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "filegroup.FilesClient", "GetFileLarge", nil, "Failure preparing request")

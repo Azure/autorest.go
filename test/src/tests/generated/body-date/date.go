@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,11 @@ func NewDateClientWithBaseURI(baseURI string) DateClient {
 
 // GetInvalidDate get invalid date value
 func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetInvalidDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetInvalidDate", nil, "Failure preparing request")
@@ -83,6 +89,11 @@ func (client DateClient) GetInvalidDateResponder(resp *http.Response) (result Da
 
 // GetMaxDate get max date value 9999-12-31
 func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetMaxDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetMaxDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMaxDate", nil, "Failure preparing request")
@@ -135,6 +146,11 @@ func (client DateClient) GetMaxDateResponder(resp *http.Response) (result DateMo
 
 // GetMinDate get min date value 0000-01-01
 func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetMinDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetMinDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetMinDate", nil, "Failure preparing request")
@@ -187,6 +203,11 @@ func (client DateClient) GetMinDateResponder(resp *http.Response) (result DateMo
 
 // GetNull get null date value
 func (client DateClient) GetNull(ctx context.Context) (result DateModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetNull", nil, "Failure preparing request")
@@ -239,6 +260,11 @@ func (client DateClient) GetNullResponder(resp *http.Response) (result DateModel
 
 // GetOverflowDate get overflow date value
 func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetOverflowDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetOverflowDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetOverflowDate", nil, "Failure preparing request")
@@ -291,6 +317,11 @@ func (client DateClient) GetOverflowDateResponder(resp *http.Response) (result D
 
 // GetUnderflowDate get underflow date value
 func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetUnderflowDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUnderflowDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "GetUnderflowDate", nil, "Failure preparing request")
@@ -343,6 +374,11 @@ func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result 
 
 // PutMaxDate put max date value 9999-12-31
 func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.PutMaxDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutMaxDatePreparer(ctx, dateBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMaxDate", nil, "Failure preparing request")
@@ -396,6 +432,11 @@ func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autore
 
 // PutMinDate put min date value 0000-01-01
 func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.PutMinDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutMinDatePreparer(ctx, dateBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dategroup.DateClient", "PutMinDate", nil, "Failure preparing request")

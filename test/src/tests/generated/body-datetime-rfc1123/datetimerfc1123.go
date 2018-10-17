@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,11 @@ func NewDatetimerfc1123ClientWithBaseURI(baseURI string) Datetimerfc1123Client {
 
 // GetInvalid get invalid datetime value
 func (client Datetimerfc1123Client) GetInvalid(ctx context.Context) (result DateTimeRfc1123, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetInvalid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetInvalid", nil, "Failure preparing request")
@@ -83,6 +89,11 @@ func (client Datetimerfc1123Client) GetInvalidResponder(resp *http.Response) (re
 
 // GetNull get null datetime value
 func (client Datetimerfc1123Client) GetNull(ctx context.Context) (result DateTimeRfc1123, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetNull", nil, "Failure preparing request")
@@ -135,6 +146,11 @@ func (client Datetimerfc1123Client) GetNullResponder(resp *http.Response) (resul
 
 // GetOverflow get overflow datetime value
 func (client Datetimerfc1123Client) GetOverflow(ctx context.Context) (result DateTimeRfc1123, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetOverflow")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetOverflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetOverflow", nil, "Failure preparing request")
@@ -187,6 +203,11 @@ func (client Datetimerfc1123Client) GetOverflowResponder(resp *http.Response) (r
 
 // GetUnderflow get underflow datetime value
 func (client Datetimerfc1123Client) GetUnderflow(ctx context.Context) (result DateTimeRfc1123, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUnderflow")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUnderflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUnderflow", nil, "Failure preparing request")
@@ -239,6 +260,11 @@ func (client Datetimerfc1123Client) GetUnderflowResponder(resp *http.Response) (
 
 // GetUtcLowercaseMaxDateTime get max datetime value fri, 31 dec 9999 23:59:59 gmt
 func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUtcLowercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUtcLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcLowercaseMaxDateTime", nil, "Failure preparing request")
@@ -291,6 +317,11 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimeResponder(resp *ht
 
 // GetUtcMinDateTime get min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 func (client Datetimerfc1123Client) GetUtcMinDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUtcMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUtcMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcMinDateTime", nil, "Failure preparing request")
@@ -343,6 +374,11 @@ func (client Datetimerfc1123Client) GetUtcMinDateTimeResponder(resp *http.Respon
 
 // GetUtcUppercaseMaxDateTime get max datetime value FRI, 31 DEC 9999 23:59:59 GMT
 func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUtcUppercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUtcUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "GetUtcUppercaseMaxDateTime", nil, "Failure preparing request")
@@ -395,6 +431,11 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimeResponder(resp *ht
 
 // PutUtcMaxDateTime put max datetime value Fri, 31 Dec 9999 23:59:59 GMT
 func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.PutUtcMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "PutUtcMaxDateTime", nil, "Failure preparing request")
@@ -448,6 +489,11 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTimeResponder(resp *http.Respon
 
 // PutUtcMinDateTime put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.PutUtcMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimerfc1123group.Datetimerfc1123Client", "PutUtcMinDateTime", nil, "Failure preparing request")

@@ -110,8 +110,21 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result;
-                return outDir.ToLowerInvariant().Substring(outDir.IndexOf("services"));
+                var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result.ToLowerInvariant();
+                var packageFqdnIndex = outDir.IndexOf("services");
+                if (packageFqdnIndex == -1)
+                {
+                    packageFqdnIndex = outDir.IndexOf("generated");
+                }
+                if (packageFqdnIndex == -1)
+                {
+                    packageFqdnIndex = outDir.IndexOf(ServiceName);
+                }
+                if (packageFqdnIndex == -1)
+                {
+                    return ServiceName;
+                }
+                return outDir.Substring(packageFqdnIndex);
             }
         }
 

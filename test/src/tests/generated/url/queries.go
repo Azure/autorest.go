@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -33,6 +34,11 @@ func NewQueriesClientWithBaseURI(baseURI string, globalStringPath string, global
 // Parameters:
 // arrayQuery - an empty array [] of string using the csv-array format
 func (client QueriesClient) ArrayStringCsvEmpty(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringCsvEmpty")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ArrayStringCsvEmptyPreparer(ctx, arrayQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringCsvEmpty", nil, "Failure preparing request")
@@ -92,6 +98,11 @@ func (client QueriesClient) ArrayStringCsvEmptyResponder(resp *http.Response) (r
 // Parameters:
 // arrayQuery - a null array of string using the csv-array format
 func (client QueriesClient) ArrayStringCsvNull(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringCsvNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ArrayStringCsvNullPreparer(ctx, arrayQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringCsvNull", nil, "Failure preparing request")
@@ -153,6 +164,11 @@ func (client QueriesClient) ArrayStringCsvNullResponder(resp *http.Response) (re
 // arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // csv-array format
 func (client QueriesClient) ArrayStringCsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringCsvValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ArrayStringCsvValidPreparer(ctx, arrayQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringCsvValid", nil, "Failure preparing request")
@@ -214,6 +230,11 @@ func (client QueriesClient) ArrayStringCsvValidResponder(resp *http.Response) (r
 // arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // pipes-array format
 func (client QueriesClient) ArrayStringPipesValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringPipesValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ArrayStringPipesValidPreparer(ctx, arrayQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringPipesValid", nil, "Failure preparing request")
@@ -275,6 +296,11 @@ func (client QueriesClient) ArrayStringPipesValidResponder(resp *http.Response) 
 // arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // ssv-array format
 func (client QueriesClient) ArrayStringSsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringSsvValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ArrayStringSsvValidPreparer(ctx, arrayQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringSsvValid", nil, "Failure preparing request")
@@ -336,6 +362,11 @@ func (client QueriesClient) ArrayStringSsvValidResponder(resp *http.Response) (r
 // arrayQuery - an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the
 // tsv-array format
 func (client QueriesClient) ArrayStringTsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringTsvValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ArrayStringTsvValidPreparer(ctx, arrayQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ArrayStringTsvValid", nil, "Failure preparing request")
@@ -393,6 +424,11 @@ func (client QueriesClient) ArrayStringTsvValidResponder(resp *http.Response) (r
 
 // ByteEmpty get '' as byte array
 func (client QueriesClient) ByteEmpty(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ByteEmpty")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ByteEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ByteEmpty", nil, "Failure preparing request")
@@ -451,6 +487,11 @@ func (client QueriesClient) ByteEmptyResponder(resp *http.Response) (result auto
 // Parameters:
 // byteQuery - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 func (client QueriesClient) ByteMultiByte(ctx context.Context, byteQuery []byte) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ByteMultiByte")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ByteMultiBytePreparer(ctx, byteQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ByteMultiByte", nil, "Failure preparing request")
@@ -510,6 +551,11 @@ func (client QueriesClient) ByteMultiByteResponder(resp *http.Response) (result 
 // Parameters:
 // byteQuery - null as byte array (no query parameters in uri)
 func (client QueriesClient) ByteNull(ctx context.Context, byteQuery []byte) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ByteNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ByteNullPreparer(ctx, byteQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "ByteNull", nil, "Failure preparing request")
@@ -569,6 +615,11 @@ func (client QueriesClient) ByteNullResponder(resp *http.Response) (result autor
 // Parameters:
 // dateQuery - null as date (no query parameters in uri)
 func (client QueriesClient) DateNull(ctx context.Context, dateQuery *date.Date) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.DateNullPreparer(ctx, dateQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateNull", nil, "Failure preparing request")
@@ -628,6 +679,11 @@ func (client QueriesClient) DateNullResponder(resp *http.Response) (result autor
 // Parameters:
 // dateTimeQuery - null as date-time (no query parameters)
 func (client QueriesClient) DateTimeNull(ctx context.Context, dateTimeQuery *date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateTimeNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.DateTimeNullPreparer(ctx, dateTimeQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateTimeNull", nil, "Failure preparing request")
@@ -685,6 +741,11 @@ func (client QueriesClient) DateTimeNullResponder(resp *http.Response) (result a
 
 // DateTimeValid get '2012-01-01T01:01:01Z' as date-time
 func (client QueriesClient) DateTimeValid(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateTimeValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.DateTimeValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateTimeValid", nil, "Failure preparing request")
@@ -741,6 +802,11 @@ func (client QueriesClient) DateTimeValidResponder(resp *http.Response) (result 
 
 // DateValid get '2012-01-01' as date
 func (client QueriesClient) DateValid(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.DateValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DateValid", nil, "Failure preparing request")
@@ -797,6 +863,11 @@ func (client QueriesClient) DateValidResponder(resp *http.Response) (result auto
 
 // DoubleDecimalNegative get '-9999999.999' numeric value
 func (client QueriesClient) DoubleDecimalNegative(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DoubleDecimalNegative")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.DoubleDecimalNegativePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleDecimalNegative", nil, "Failure preparing request")
@@ -853,6 +924,11 @@ func (client QueriesClient) DoubleDecimalNegativeResponder(resp *http.Response) 
 
 // DoubleDecimalPositive get '9999999.999' numeric value
 func (client QueriesClient) DoubleDecimalPositive(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DoubleDecimalPositive")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.DoubleDecimalPositivePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleDecimalPositive", nil, "Failure preparing request")
@@ -911,6 +987,11 @@ func (client QueriesClient) DoubleDecimalPositiveResponder(resp *http.Response) 
 // Parameters:
 // doubleQuery - null numeric value
 func (client QueriesClient) DoubleNull(ctx context.Context, doubleQuery *float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DoubleNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.DoubleNullPreparer(ctx, doubleQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "DoubleNull", nil, "Failure preparing request")
@@ -970,6 +1051,11 @@ func (client QueriesClient) DoubleNullResponder(resp *http.Response) (result aut
 // Parameters:
 // enumQuery - null string value
 func (client QueriesClient) EnumNull(ctx context.Context, enumQuery URIColor) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.EnumNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.EnumNullPreparer(ctx, enumQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "EnumNull", nil, "Failure preparing request")
@@ -1029,6 +1115,11 @@ func (client QueriesClient) EnumNullResponder(resp *http.Response) (result autor
 // Parameters:
 // enumQuery - 'green color' enum value
 func (client QueriesClient) EnumValid(ctx context.Context, enumQuery URIColor) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.EnumValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.EnumValidPreparer(ctx, enumQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "EnumValid", nil, "Failure preparing request")
@@ -1088,6 +1179,11 @@ func (client QueriesClient) EnumValidResponder(resp *http.Response) (result auto
 // Parameters:
 // floatQuery - null numeric value
 func (client QueriesClient) FloatNull(ctx context.Context, floatQuery *float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.FloatNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.FloatNullPreparer(ctx, floatQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatNull", nil, "Failure preparing request")
@@ -1145,6 +1241,11 @@ func (client QueriesClient) FloatNullResponder(resp *http.Response) (result auto
 
 // FloatScientificNegative get '-1.034E-20' numeric value
 func (client QueriesClient) FloatScientificNegative(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.FloatScientificNegative")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.FloatScientificNegativePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatScientificNegative", nil, "Failure preparing request")
@@ -1201,6 +1302,11 @@ func (client QueriesClient) FloatScientificNegativeResponder(resp *http.Response
 
 // FloatScientificPositive get '1.034E+20' numeric value
 func (client QueriesClient) FloatScientificPositive(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.FloatScientificPositive")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.FloatScientificPositivePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "FloatScientificPositive", nil, "Failure preparing request")
@@ -1257,6 +1363,11 @@ func (client QueriesClient) FloatScientificPositiveResponder(resp *http.Response
 
 // GetBooleanFalse get false Boolean value on path
 func (client QueriesClient) GetBooleanFalse(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetBooleanFalse")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBooleanFalsePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanFalse", nil, "Failure preparing request")
@@ -1315,6 +1426,11 @@ func (client QueriesClient) GetBooleanFalseResponder(resp *http.Response) (resul
 // Parameters:
 // boolQuery - null boolean value
 func (client QueriesClient) GetBooleanNull(ctx context.Context, boolQuery *bool) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetBooleanNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBooleanNullPreparer(ctx, boolQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanNull", nil, "Failure preparing request")
@@ -1372,6 +1488,11 @@ func (client QueriesClient) GetBooleanNullResponder(resp *http.Response) (result
 
 // GetBooleanTrue get true Boolean value on path
 func (client QueriesClient) GetBooleanTrue(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetBooleanTrue")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBooleanTruePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetBooleanTrue", nil, "Failure preparing request")
@@ -1428,6 +1549,11 @@ func (client QueriesClient) GetBooleanTrueResponder(resp *http.Response) (result
 
 // GetIntNegativeOneMillion get '-1000000' integer value
 func (client QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetIntNegativeOneMillion")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetIntNegativeOneMillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntNegativeOneMillion", nil, "Failure preparing request")
@@ -1486,6 +1612,11 @@ func (client QueriesClient) GetIntNegativeOneMillionResponder(resp *http.Respons
 // Parameters:
 // intQuery - null integer value
 func (client QueriesClient) GetIntNull(ctx context.Context, intQuery *int32) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetIntNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetIntNullPreparer(ctx, intQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntNull", nil, "Failure preparing request")
@@ -1543,6 +1674,11 @@ func (client QueriesClient) GetIntNullResponder(resp *http.Response) (result aut
 
 // GetIntOneMillion get '1000000' integer value
 func (client QueriesClient) GetIntOneMillion(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetIntOneMillion")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetIntOneMillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetIntOneMillion", nil, "Failure preparing request")
@@ -1601,6 +1737,11 @@ func (client QueriesClient) GetIntOneMillionResponder(resp *http.Response) (resu
 // Parameters:
 // longQuery - null 64 bit integer value
 func (client QueriesClient) GetLongNull(ctx context.Context, longQuery *int64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetLongNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetLongNullPreparer(ctx, longQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetLongNull", nil, "Failure preparing request")
@@ -1658,6 +1799,11 @@ func (client QueriesClient) GetLongNullResponder(resp *http.Response) (result au
 
 // GetNegativeTenBillion get '-10000000000' 64 bit integer value
 func (client QueriesClient) GetNegativeTenBillion(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetNegativeTenBillion")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNegativeTenBillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetNegativeTenBillion", nil, "Failure preparing request")
@@ -1714,6 +1860,11 @@ func (client QueriesClient) GetNegativeTenBillionResponder(resp *http.Response) 
 
 // GetTenBillion get '10000000000' 64 bit integer value
 func (client QueriesClient) GetTenBillion(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetTenBillion")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetTenBillionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "GetTenBillion", nil, "Failure preparing request")
@@ -1770,6 +1921,11 @@ func (client QueriesClient) GetTenBillionResponder(resp *http.Response) (result 
 
 // StringEmpty get ''
 func (client QueriesClient) StringEmpty(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringEmpty")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.StringEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringEmpty", nil, "Failure preparing request")
@@ -1828,6 +1984,11 @@ func (client QueriesClient) StringEmptyResponder(resp *http.Response) (result au
 // Parameters:
 // stringQuery - null string value
 func (client QueriesClient) StringNull(ctx context.Context, stringQuery string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.StringNullPreparer(ctx, stringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringNull", nil, "Failure preparing request")
@@ -1885,6 +2046,11 @@ func (client QueriesClient) StringNullResponder(resp *http.Response) (result aut
 
 // StringUnicode get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 func (client QueriesClient) StringUnicode(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringUnicode")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.StringUnicodePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringUnicode", nil, "Failure preparing request")
@@ -1941,6 +2107,11 @@ func (client QueriesClient) StringUnicodeResponder(resp *http.Response) (result 
 
 // StringURLEncoded get 'begin!*'();:@ &=+$,/?#[]end
 func (client QueriesClient) StringURLEncoded(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringURLEncoded")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.StringURLEncodedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.QueriesClient", "StringURLEncoded", nil, "Failure preparing request")

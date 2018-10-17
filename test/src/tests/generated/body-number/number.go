@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"github.com/shopspring/decimal"
 	"net/http"
 )
@@ -31,6 +32,11 @@ func NewNumberClientWithBaseURI(baseURI string) NumberClient {
 
 // GetBigDecimal get big decimal value 2.5976931e+101
 func (client NumberClient) GetBigDecimal(ctx context.Context) (result Decimal, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBigDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimal", nil, "Failure preparing request")
@@ -83,6 +89,11 @@ func (client NumberClient) GetBigDecimalResponder(resp *http.Response) (result D
 
 // GetBigDecimalNegativeDecimal get big decimal value -99999999.99
 func (client NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context) (result Decimal, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDecimalNegativeDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBigDecimalNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalNegativeDecimal", nil, "Failure preparing request")
@@ -135,6 +146,11 @@ func (client NumberClient) GetBigDecimalNegativeDecimalResponder(resp *http.Resp
 
 // GetBigDecimalPositiveDecimal get big decimal value 99999999.99
 func (client NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context) (result Decimal, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDecimalPositiveDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBigDecimalPositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDecimalPositiveDecimal", nil, "Failure preparing request")
@@ -187,6 +203,11 @@ func (client NumberClient) GetBigDecimalPositiveDecimalResponder(resp *http.Resp
 
 // GetBigDouble get big double value 2.5976931e+101
 func (client NumberClient) GetBigDouble(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDouble")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBigDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDouble", nil, "Failure preparing request")
@@ -239,6 +260,11 @@ func (client NumberClient) GetBigDoubleResponder(resp *http.Response) (result Fl
 
 // GetBigDoubleNegativeDecimal get big double value -99999999.99
 func (client NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDoubleNegativeDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBigDoubleNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDoubleNegativeDecimal", nil, "Failure preparing request")
@@ -291,6 +317,11 @@ func (client NumberClient) GetBigDoubleNegativeDecimalResponder(resp *http.Respo
 
 // GetBigDoublePositiveDecimal get big double value 99999999.99
 func (client NumberClient) GetBigDoublePositiveDecimal(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDoublePositiveDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBigDoublePositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigDoublePositiveDecimal", nil, "Failure preparing request")
@@ -343,6 +374,11 @@ func (client NumberClient) GetBigDoublePositiveDecimalResponder(resp *http.Respo
 
 // GetBigFloat get big float value 3.402823e+20
 func (client NumberClient) GetBigFloat(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigFloat")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetBigFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetBigFloat", nil, "Failure preparing request")
@@ -395,6 +431,11 @@ func (client NumberClient) GetBigFloatResponder(resp *http.Response) (result Flo
 
 // GetInvalidDecimal get invalid decimal Number value
 func (client NumberClient) GetInvalidDecimal(ctx context.Context) (result Decimal, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetInvalidDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDecimal", nil, "Failure preparing request")
@@ -447,6 +488,11 @@ func (client NumberClient) GetInvalidDecimalResponder(resp *http.Response) (resu
 
 // GetInvalidDouble get invalid double Number value
 func (client NumberClient) GetInvalidDouble(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetInvalidDouble")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidDouble", nil, "Failure preparing request")
@@ -499,6 +545,11 @@ func (client NumberClient) GetInvalidDoubleResponder(resp *http.Response) (resul
 
 // GetInvalidFloat get invalid float Number value
 func (client NumberClient) GetInvalidFloat(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetInvalidFloat")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetInvalidFloat", nil, "Failure preparing request")
@@ -551,6 +602,11 @@ func (client NumberClient) GetInvalidFloatResponder(resp *http.Response) (result
 
 // GetNull get null Number value
 func (client NumberClient) GetNull(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetNull", nil, "Failure preparing request")
@@ -603,6 +659,11 @@ func (client NumberClient) GetNullResponder(resp *http.Response) (result Float64
 
 // GetSmallDecimal get small decimal value 2.5976931e-101
 func (client NumberClient) GetSmallDecimal(ctx context.Context) (result Decimal, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetSmallDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetSmallDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDecimal", nil, "Failure preparing request")
@@ -655,6 +716,11 @@ func (client NumberClient) GetSmallDecimalResponder(resp *http.Response) (result
 
 // GetSmallDouble get big double value 2.5976931e-101
 func (client NumberClient) GetSmallDouble(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetSmallDouble")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetSmallDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallDouble", nil, "Failure preparing request")
@@ -707,6 +773,11 @@ func (client NumberClient) GetSmallDoubleResponder(resp *http.Response) (result 
 
 // GetSmallFloat get big double value 3.402823e-20
 func (client NumberClient) GetSmallFloat(ctx context.Context) (result Float64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetSmallFloat")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetSmallFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "GetSmallFloat", nil, "Failure preparing request")
@@ -759,6 +830,11 @@ func (client NumberClient) GetSmallFloatResponder(resp *http.Response) (result F
 
 // PutBigDecimal put big decimal value 2.5976931e+101
 func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutBigDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimal", nil, "Failure preparing request")
@@ -812,6 +888,11 @@ func (client NumberClient) PutBigDecimalResponder(resp *http.Response) (result a
 
 // PutBigDecimalNegativeDecimal put big decimal value -99999999.99
 func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDecimalNegativeDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutBigDecimalNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalNegativeDecimal", nil, "Failure preparing request")
@@ -865,6 +946,11 @@ func (client NumberClient) PutBigDecimalNegativeDecimalResponder(resp *http.Resp
 
 // PutBigDecimalPositiveDecimal put big decimal value 99999999.99
 func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDecimalPositiveDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutBigDecimalPositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDecimalPositiveDecimal", nil, "Failure preparing request")
@@ -918,6 +1004,11 @@ func (client NumberClient) PutBigDecimalPositiveDecimalResponder(resp *http.Resp
 
 // PutBigDouble put big double value 2.5976931e+101
 func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDouble")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutBigDoublePreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDouble", nil, "Failure preparing request")
@@ -971,6 +1062,11 @@ func (client NumberClient) PutBigDoubleResponder(resp *http.Response) (result au
 
 // PutBigDoubleNegativeDecimal put big double value -99999999.99
 func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDoubleNegativeDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutBigDoubleNegativeDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoubleNegativeDecimal", nil, "Failure preparing request")
@@ -1024,6 +1120,11 @@ func (client NumberClient) PutBigDoubleNegativeDecimalResponder(resp *http.Respo
 
 // PutBigDoublePositiveDecimal put big double value 99999999.99
 func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDoublePositiveDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutBigDoublePositiveDecimalPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigDoublePositiveDecimal", nil, "Failure preparing request")
@@ -1077,6 +1178,11 @@ func (client NumberClient) PutBigDoublePositiveDecimalResponder(resp *http.Respo
 
 // PutBigFloat put big float value 3.402823e+20
 func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigFloat")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutBigFloatPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutBigFloat", nil, "Failure preparing request")
@@ -1130,6 +1236,11 @@ func (client NumberClient) PutBigFloatResponder(resp *http.Response) (result aut
 
 // PutSmallDecimal put small decimal value 2.5976931e-101
 func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutSmallDecimal")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutSmallDecimalPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDecimal", nil, "Failure preparing request")
@@ -1183,6 +1294,11 @@ func (client NumberClient) PutSmallDecimalResponder(resp *http.Response) (result
 
 // PutSmallDouble put small double value 2.5976931e-101
 func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutSmallDouble")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutSmallDoublePreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallDouble", nil, "Failure preparing request")
@@ -1236,6 +1352,11 @@ func (client NumberClient) PutSmallDoubleResponder(resp *http.Response) (result 
 
 // PutSmallFloat put small float value 3.402823e-20
 func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutSmallFloat")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutSmallFloatPreparer(ctx, numberBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "numbergroup.NumberClient", "PutSmallFloat", nil, "Failure preparing request")

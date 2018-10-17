@@ -14,6 +14,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -45,6 +46,11 @@ func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
 
 // GetWithConstantInPath sends the get with constant in path request.
 func (client BaseClient) GetWithConstantInPath(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.GetWithConstantInPath")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetWithConstantInPathPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "validationgroup.BaseClient", "GetWithConstantInPath", nil, "Failure preparing request")
@@ -100,6 +106,11 @@ func (client BaseClient) GetWithConstantInPathResponder(resp *http.Response) (re
 
 // PostWithConstantInBody sends the post with constant in body request.
 func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Product) (result Product, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.PostWithConstantInBody")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: body,
 			Constraints: []validation.Constraint{{Target: "body", Name: validation.Null, Rule: false,
@@ -190,6 +201,11 @@ func (client BaseClient) PostWithConstantInBodyResponder(resp *http.Response) (r
 // resourceGroupName - required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // ID - required int multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName string, ID int32, body *Product) (result Product, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.ValidationOfBody")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil},
@@ -296,6 +312,11 @@ func (client BaseClient) ValidationOfBodyResponder(resp *http.Response) (result 
 // resourceGroupName - required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // ID - required int multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, ID int32) (result Product, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.ValidationOfMethodParameters")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: resourceGroupName,
 			Constraints: []validation.Constraint{{Target: "resourceGroupName", Name: validation.MaxLength, Rule: 10, Chain: nil},

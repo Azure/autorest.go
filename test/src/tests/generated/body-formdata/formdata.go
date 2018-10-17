@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"io"
 	"net/http"
 )
@@ -34,6 +35,11 @@ func NewFormdataClientWithBaseURI(baseURI string) FormdataClient {
 // fileContent - file to upload.
 // fileName - file name to upload. Name has to be spelled exactly as written here.
 func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadCloser, fileName string) (result ReadCloser, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-formdata/FormdataClient.UploadFile")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.UploadFilePreparer(ctx, fileContent, fileName)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "formdatagroup.FormdataClient", "UploadFile", nil, "Failure preparing request")
@@ -93,6 +99,11 @@ func (client FormdataClient) UploadFileResponder(resp *http.Response) (result Re
 // Parameters:
 // fileContent - file to upload.
 func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadCloser) (result ReadCloser, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-formdata/FormdataClient.UploadFileViaBody")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.UploadFileViaBodyPreparer(ctx, fileContent)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "formdatagroup.FormdataClient", "UploadFileViaBody", nil, "Failure preparing request")

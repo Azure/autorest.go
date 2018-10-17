@@ -7,9 +7,11 @@ package paginggroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -59,20 +61,32 @@ type OdataProductResultIterator struct {
 	page OdataProductResultPage
 }
 
-// Next advances to the next value.  If there was an error making
+// NextWithContext advances to the next value.  If there was an error making
 // the request the iterator does not advance and the error is returned.
-func (iter *OdataProductResultIterator) Next() error {
+func (iter *OdataProductResultIterator) NextWithContext(ctx context.Context) (err error) {
+	ctx = tracing.StartSpan(ctx, "generated/paging/OdataProductResultIterator.NextWithContext")
+	defer func() {
+		sc := iter.Response().StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	iter.i++
 	if iter.i < len(iter.page.Values()) {
 		return nil
 	}
-	err := iter.page.Next()
+	err = iter.page.NextWithContext(ctx)
 	if err != nil {
 		iter.i--
 		return err
 	}
 	iter.i = 0
 	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *OdataProductResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
 }
 
 // NotDone returns true if the enumeration should be started or is not yet complete.
@@ -101,11 +115,11 @@ func (opr OdataProductResult) IsEmpty() bool {
 
 // odataProductResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
-func (opr OdataProductResult) odataProductResultPreparer() (*http.Request, error) {
+func (opr OdataProductResult) odataProductResultPreparer(ctx context.Context) (*http.Request, error) {
 	if opr.OdataNextLink == nil || len(to.String(opr.OdataNextLink)) < 1 {
 		return nil, nil
 	}
-	return autorest.Prepare(&http.Request{},
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
 		autorest.AsJSON(),
 		autorest.AsGet(),
 		autorest.WithBaseURL(to.String(opr.OdataNextLink)))
@@ -113,19 +127,31 @@ func (opr OdataProductResult) odataProductResultPreparer() (*http.Request, error
 
 // OdataProductResultPage contains a page of Product values.
 type OdataProductResultPage struct {
-	fn  func(OdataProductResult) (OdataProductResult, error)
+	fn  func(context.Context, OdataProductResult) (OdataProductResult, error)
 	opr OdataProductResult
 }
 
-// Next advances to the next page of values.  If there was an error making
+// NextWithContext advances to the next page of values.  If there was an error making
 // the request the page does not advance and the error is returned.
-func (page *OdataProductResultPage) Next() error {
-	next, err := page.fn(page.opr)
+func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err error) {
+	ctx = tracing.StartSpan(ctx, "generated/paging/OdataProductResultPage.NextWithContext")
+	defer func() {
+		sc := page.opr.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
+	next, err := page.fn(ctx, page.opr)
 	if err != nil {
 		return err
 	}
 	page.opr = next
 	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *OdataProductResultPage) Next() error {
+	return page.NextWithContext(context.Background())
 }
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.
@@ -152,8 +178,8 @@ type OperationResult struct {
 	Status Status `json:"status,omitempty"`
 }
 
-// PagingGetMultiplePagesLROAllFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// PagingGetMultiplePagesLROAllFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type PagingGetMultiplePagesLROAllFuture struct {
 	azure.Future
 }
@@ -181,8 +207,8 @@ func (future *PagingGetMultiplePagesLROAllFuture) Result(client PagingClient) (p
 	return
 }
 
-// PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// PagingGetMultiplePagesLROFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type PagingGetMultiplePagesLROFuture struct {
 	azure.Future
 }
@@ -234,20 +260,32 @@ type ProductResultIterator struct {
 	page ProductResultPage
 }
 
-// Next advances to the next value.  If there was an error making
+// NextWithContext advances to the next value.  If there was an error making
 // the request the iterator does not advance and the error is returned.
-func (iter *ProductResultIterator) Next() error {
+func (iter *ProductResultIterator) NextWithContext(ctx context.Context) (err error) {
+	ctx = tracing.StartSpan(ctx, "generated/paging/ProductResultIterator.NextWithContext")
+	defer func() {
+		sc := iter.Response().StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	iter.i++
 	if iter.i < len(iter.page.Values()) {
 		return nil
 	}
-	err := iter.page.Next()
+	err = iter.page.NextWithContext(ctx)
 	if err != nil {
 		iter.i--
 		return err
 	}
 	iter.i = 0
 	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *ProductResultIterator) Next() error {
+	return iter.NextWithContext(context.Background())
 }
 
 // NotDone returns true if the enumeration should be started or is not yet complete.
@@ -276,11 +314,11 @@ func (pr ProductResult) IsEmpty() bool {
 
 // productResultPreparer prepares a request to retrieve the next set of results.
 // It returns nil if no more results exist.
-func (pr ProductResult) productResultPreparer() (*http.Request, error) {
+func (pr ProductResult) productResultPreparer(ctx context.Context) (*http.Request, error) {
 	if pr.NextLink == nil || len(to.String(pr.NextLink)) < 1 {
 		return nil, nil
 	}
-	return autorest.Prepare(&http.Request{},
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
 		autorest.AsJSON(),
 		autorest.AsGet(),
 		autorest.WithBaseURL(to.String(pr.NextLink)))
@@ -288,19 +326,31 @@ func (pr ProductResult) productResultPreparer() (*http.Request, error) {
 
 // ProductResultPage contains a page of Product values.
 type ProductResultPage struct {
-	fn func(ProductResult) (ProductResult, error)
+	fn func(context.Context, ProductResult) (ProductResult, error)
 	pr ProductResult
 }
 
-// Next advances to the next page of values.  If there was an error making
+// NextWithContext advances to the next page of values.  If there was an error making
 // the request the page does not advance and the error is returned.
-func (page *ProductResultPage) Next() error {
-	next, err := page.fn(page.pr)
+func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) {
+	ctx = tracing.StartSpan(ctx, "generated/paging/ProductResultPage.NextWithContext")
+	defer func() {
+		sc := page.pr.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
+	next, err := page.fn(ctx, page.pr)
 	if err != nil {
 		return err
 	}
 	page.pr = next
 	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *ProductResultPage) Next() error {
+	return page.NextWithContext(context.Background())
 }
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.

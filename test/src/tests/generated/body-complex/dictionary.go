@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,11 @@ func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 
 // GetEmpty get complex types with dictionary property which is empty
 func (client DictionaryClient) GetEmpty(ctx context.Context) (result DictionaryWrapper, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-complex/DictionaryClient.GetEmpty")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetEmpty", nil, "Failure preparing request")
@@ -82,6 +88,11 @@ func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result Di
 
 // GetNotProvided get complex types with dictionary property while server doesn't provide a response payload
 func (client DictionaryClient) GetNotProvided(ctx context.Context) (result DictionaryWrapper, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-complex/DictionaryClient.GetNotProvided")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNotProvidedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetNotProvided", nil, "Failure preparing request")
@@ -134,6 +145,11 @@ func (client DictionaryClient) GetNotProvidedResponder(resp *http.Response) (res
 
 // GetNull get complex types with dictionary property which is null
 func (client DictionaryClient) GetNull(ctx context.Context) (result DictionaryWrapper, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-complex/DictionaryClient.GetNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetNull", nil, "Failure preparing request")
@@ -186,6 +202,11 @@ func (client DictionaryClient) GetNullResponder(resp *http.Response) (result Dic
 
 // GetValid get complex types with dictionary property
 func (client DictionaryClient) GetValid(ctx context.Context) (result DictionaryWrapper, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-complex/DictionaryClient.GetValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "GetValid", nil, "Failure preparing request")
@@ -240,6 +261,11 @@ func (client DictionaryClient) GetValidResponder(resp *http.Response) (result Di
 // Parameters:
 // complexBody - please put an empty dictionary
 func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-complex/DictionaryClient.PutEmpty")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutEmptyPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "PutEmpty", nil, "Failure preparing request")
@@ -296,6 +322,11 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 // complexBody - please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint",
 // "xls":"excel", "exe":"", "":null
 func (client DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-complex/DictionaryClient.PutValid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.DictionaryClient", "PutValid", nil, "Failure preparing request")

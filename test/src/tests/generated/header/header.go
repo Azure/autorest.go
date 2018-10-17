@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -32,6 +33,11 @@ func NewHeaderClientWithBaseURI(baseURI string) HeaderClient {
 
 // CustomRequestID send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func (client HeaderClient) CustomRequestID(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.CustomRequestID")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.CustomRequestIDPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "CustomRequestID", nil, "Failure preparing request")
@@ -87,6 +93,11 @@ func (client HeaderClient) CustomRequestIDResponder(resp *http.Response) (result
 // scenario - send a post request with header values "scenario": "true" or "false"
 // value - send a post request with header values true or false
 func (client HeaderClient) ParamBool(ctx context.Context, scenario string, value bool) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamBool")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamBoolPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamBool", nil, "Failure preparing request")
@@ -143,6 +154,11 @@ func (client HeaderClient) ParamBoolResponder(resp *http.Response) (result autor
 // scenario - send a post request with header values "scenario": "valid"
 // value - send a post request with header values "啊齄丂狛狜隣郎隣兀﨩"
 func (client HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamByte")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: value,
 			Constraints: []validation.Constraint{{Target: "value", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -206,6 +222,11 @@ func (client HeaderClient) ParamByteResponder(resp *http.Response) (result autor
 // scenario - send a post request with header values "scenario": "valid" or "min"
 // value - send a post request with header values "2010-01-01" or "0001-01-01"
 func (client HeaderClient) ParamDate(ctx context.Context, scenario string, value date.Date) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamDatePreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDate", nil, "Failure preparing request")
@@ -263,6 +284,11 @@ func (client HeaderClient) ParamDateResponder(resp *http.Response) (result autor
 // scenario - send a post request with header values "scenario": "valid" or "min"
 // value - send a post request with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
 func (client HeaderClient) ParamDatetime(ctx context.Context, scenario string, value date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamDatetime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamDatetimePreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDatetime", nil, "Failure preparing request")
@@ -321,6 +347,11 @@ func (client HeaderClient) ParamDatetimeResponder(resp *http.Response) (result a
 // value - send a post request with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00
 // GMT"
 func (client HeaderClient) ParamDatetimeRfc1123(ctx context.Context, scenario string, value *date.TimeRFC1123) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamDatetimeRfc1123")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamDatetimeRfc1123Preparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDatetimeRfc1123", nil, "Failure preparing request")
@@ -381,6 +412,11 @@ func (client HeaderClient) ParamDatetimeRfc1123Responder(resp *http.Response) (r
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 // value - send a post request with header values 7e120 or -3.0
 func (client HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamDouble")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamDoublePreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDouble", nil, "Failure preparing request")
@@ -437,6 +473,11 @@ func (client HeaderClient) ParamDoubleResponder(resp *http.Response) (result aut
 // scenario - send a post request with header values "scenario": "valid"
 // value - send a post request with header values "P123DT22H14M12.011S"
 func (client HeaderClient) ParamDuration(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamDuration")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamDurationPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamDuration", nil, "Failure preparing request")
@@ -494,6 +535,11 @@ func (client HeaderClient) ParamDurationResponder(resp *http.Response) (result a
 // scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 // value - send a post request with header values 'GREY'
 func (client HeaderClient) ParamEnum(ctx context.Context, scenario string, value GreyscaleColors) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamEnum")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamEnumPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamEnum", nil, "Failure preparing request")
@@ -552,6 +598,11 @@ func (client HeaderClient) ParamEnumResponder(resp *http.Response) (result autor
 // Parameters:
 // userAgent - send a post request with header value "User-Agent": "overwrite"
 func (client HeaderClient) ParamExistingKey(ctx context.Context, userAgent string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamExistingKey")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamExistingKeyPreparer(ctx, userAgent)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamExistingKey", nil, "Failure preparing request")
@@ -608,6 +659,11 @@ func (client HeaderClient) ParamExistingKeyResponder(resp *http.Response) (resul
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 // value - send a post request with header values 0.07 or -3.0
 func (client HeaderClient) ParamFloat(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamFloat")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamFloatPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamFloat", nil, "Failure preparing request")
@@ -665,6 +721,11 @@ func (client HeaderClient) ParamFloatResponder(resp *http.Response) (result auto
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 // value - send a post request with header values 1 or -2
 func (client HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamInteger")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamIntegerPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamInteger", nil, "Failure preparing request")
@@ -722,6 +783,11 @@ func (client HeaderClient) ParamIntegerResponder(resp *http.Response) (result au
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 // value - send a post request with header values 105 or -2
 func (client HeaderClient) ParamLong(ctx context.Context, scenario string, value int64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamLong")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamLongPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamLong", nil, "Failure preparing request")
@@ -777,6 +843,11 @@ func (client HeaderClient) ParamLongResponder(resp *http.Response) (result autor
 // Parameters:
 // contentType - send a post request with header value "Content-Type": "text/html"
 func (client HeaderClient) ParamProtectedKey(ctx context.Context, contentType string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamProtectedKey")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamProtectedKeyPreparer(ctx, contentType)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamProtectedKey", nil, "Failure preparing request")
@@ -833,6 +904,11 @@ func (client HeaderClient) ParamProtectedKeyResponder(resp *http.Response) (resu
 // scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 // value - send a post request with header values "The quick brown fox jumps over the lazy dog" or null or ""
 func (client HeaderClient) ParamString(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ParamString")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ParamStringPreparer(ctx, scenario, value)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ParamString", nil, "Failure preparing request")
@@ -891,6 +967,11 @@ func (client HeaderClient) ParamStringResponder(resp *http.Response) (result aut
 // Parameters:
 // scenario - send a post request with header values "scenario": "true" or "false"
 func (client HeaderClient) ResponseBool(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseBool")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseBoolPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseBool", nil, "Failure preparing request")
@@ -945,6 +1026,11 @@ func (client HeaderClient) ResponseBoolResponder(resp *http.Response) (result au
 // Parameters:
 // scenario - send a post request with header values "scenario": "valid"
 func (client HeaderClient) ResponseByte(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseByte")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseBytePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseByte", nil, "Failure preparing request")
@@ -999,6 +1085,11 @@ func (client HeaderClient) ResponseByteResponder(resp *http.Response) (result au
 // Parameters:
 // scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDate(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseDatePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDate", nil, "Failure preparing request")
@@ -1053,6 +1144,11 @@ func (client HeaderClient) ResponseDateResponder(resp *http.Response) (result au
 // Parameters:
 // scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseDatetime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseDatetimePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDatetime", nil, "Failure preparing request")
@@ -1108,6 +1204,11 @@ func (client HeaderClient) ResponseDatetimeResponder(resp *http.Response) (resul
 // Parameters:
 // scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDatetimeRfc1123(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseDatetimeRfc1123")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseDatetimeRfc1123Preparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDatetimeRfc1123", nil, "Failure preparing request")
@@ -1162,6 +1263,11 @@ func (client HeaderClient) ResponseDatetimeRfc1123Responder(resp *http.Response)
 // Parameters:
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseDouble")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseDoublePreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDouble", nil, "Failure preparing request")
@@ -1216,6 +1322,11 @@ func (client HeaderClient) ResponseDoubleResponder(resp *http.Response) (result 
 // Parameters:
 // scenario - send a post request with header values "scenario": "valid"
 func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseDuration")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseDurationPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseDuration", nil, "Failure preparing request")
@@ -1270,6 +1381,11 @@ func (client HeaderClient) ResponseDurationResponder(resp *http.Response) (resul
 // Parameters:
 // scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseEnum")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseEnumPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseEnum", nil, "Failure preparing request")
@@ -1322,6 +1438,11 @@ func (client HeaderClient) ResponseEnumResponder(resp *http.Response) (result au
 
 // ResponseExistingKey get a response with header value "User-Agent": "overwrite"
 func (client HeaderClient) ResponseExistingKey(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseExistingKey")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseExistingKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseExistingKey", nil, "Failure preparing request")
@@ -1375,6 +1496,11 @@ func (client HeaderClient) ResponseExistingKeyResponder(resp *http.Response) (re
 // Parameters:
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseFloat")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseFloatPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseFloat", nil, "Failure preparing request")
@@ -1429,6 +1555,11 @@ func (client HeaderClient) ResponseFloatResponder(resp *http.Response) (result a
 // Parameters:
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseInteger")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseIntegerPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseInteger", nil, "Failure preparing request")
@@ -1483,6 +1614,11 @@ func (client HeaderClient) ResponseIntegerResponder(resp *http.Response) (result
 // Parameters:
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseLong(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseLong")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseLongPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseLong", nil, "Failure preparing request")
@@ -1535,6 +1671,11 @@ func (client HeaderClient) ResponseLongResponder(resp *http.Response) (result au
 
 // ResponseProtectedKey get a response with header value "Content-Type": "text/html"
 func (client HeaderClient) ResponseProtectedKey(ctx context.Context) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseProtectedKey")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseProtectedKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseProtectedKey", nil, "Failure preparing request")
@@ -1588,6 +1729,11 @@ func (client HeaderClient) ResponseProtectedKeyResponder(resp *http.Response) (r
 // Parameters:
 // scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 func (client HeaderClient) ResponseString(ctx context.Context, scenario string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/header/HeaderClient.ResponseString")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.ResponseStringPreparer(ctx, scenario)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "headergroup.HeaderClient", "ResponseString", nil, "Failure preparing request")

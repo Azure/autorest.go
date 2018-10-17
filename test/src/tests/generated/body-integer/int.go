@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,11 @@ func NewIntClientWithBaseURI(baseURI string) IntClient {
 
 // GetInvalid get invalid Int value
 func (client IntClient) GetInvalid(ctx context.Context) (result Int32, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetInvalid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetInvalid", nil, "Failure preparing request")
@@ -83,6 +89,11 @@ func (client IntClient) GetInvalidResponder(resp *http.Response) (result Int32, 
 
 // GetInvalidUnixTime get invalid Unix time value
 func (client IntClient) GetInvalidUnixTime(ctx context.Context) (result UnixTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetInvalidUnixTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidUnixTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetInvalidUnixTime", nil, "Failure preparing request")
@@ -135,6 +146,11 @@ func (client IntClient) GetInvalidUnixTimeResponder(resp *http.Response) (result
 
 // GetNull get null Int value
 func (client IntClient) GetNull(ctx context.Context) (result Int32, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetNull", nil, "Failure preparing request")
@@ -187,6 +203,11 @@ func (client IntClient) GetNullResponder(resp *http.Response) (result Int32, err
 
 // GetNullUnixTime get null Unix time value
 func (client IntClient) GetNullUnixTime(ctx context.Context) (result UnixTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetNullUnixTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNullUnixTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetNullUnixTime", nil, "Failure preparing request")
@@ -239,6 +260,11 @@ func (client IntClient) GetNullUnixTimeResponder(resp *http.Response) (result Un
 
 // GetOverflowInt32 get overflow Int32 value
 func (client IntClient) GetOverflowInt32(ctx context.Context) (result Int32, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetOverflowInt32")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetOverflowInt32Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetOverflowInt32", nil, "Failure preparing request")
@@ -291,6 +317,11 @@ func (client IntClient) GetOverflowInt32Responder(resp *http.Response) (result I
 
 // GetOverflowInt64 get overflow Int64 value
 func (client IntClient) GetOverflowInt64(ctx context.Context) (result Int64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetOverflowInt64")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetOverflowInt64Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetOverflowInt64", nil, "Failure preparing request")
@@ -343,6 +374,11 @@ func (client IntClient) GetOverflowInt64Responder(resp *http.Response) (result I
 
 // GetUnderflowInt32 get underflow Int32 value
 func (client IntClient) GetUnderflowInt32(ctx context.Context) (result Int32, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetUnderflowInt32")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUnderflowInt32Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetUnderflowInt32", nil, "Failure preparing request")
@@ -395,6 +431,11 @@ func (client IntClient) GetUnderflowInt32Responder(resp *http.Response) (result 
 
 // GetUnderflowInt64 get underflow Int64 value
 func (client IntClient) GetUnderflowInt64(ctx context.Context) (result Int64, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetUnderflowInt64")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUnderflowInt64Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetUnderflowInt64", nil, "Failure preparing request")
@@ -447,6 +488,11 @@ func (client IntClient) GetUnderflowInt64Responder(resp *http.Response) (result 
 
 // GetUnixTime get datetime encoded as Unix time value
 func (client IntClient) GetUnixTime(ctx context.Context) (result UnixTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetUnixTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUnixTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "GetUnixTime", nil, "Failure preparing request")
@@ -499,6 +545,11 @@ func (client IntClient) GetUnixTimeResponder(resp *http.Response) (result UnixTi
 
 // PutMax32 put max int32 value
 func (client IntClient) PutMax32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMax32")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutMax32Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMax32", nil, "Failure preparing request")
@@ -552,6 +603,11 @@ func (client IntClient) PutMax32Responder(resp *http.Response) (result autorest.
 
 // PutMax64 put max int64 value
 func (client IntClient) PutMax64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMax64")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutMax64Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMax64", nil, "Failure preparing request")
@@ -605,6 +661,11 @@ func (client IntClient) PutMax64Responder(resp *http.Response) (result autorest.
 
 // PutMin32 put min int32 value
 func (client IntClient) PutMin32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMin32")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutMin32Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMin32", nil, "Failure preparing request")
@@ -658,6 +719,11 @@ func (client IntClient) PutMin32Responder(resp *http.Response) (result autorest.
 
 // PutMin64 put min int64 value
 func (client IntClient) PutMin64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMin64")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutMin64Preparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutMin64", nil, "Failure preparing request")
@@ -711,6 +777,11 @@ func (client IntClient) PutMin64Responder(resp *http.Response) (result autorest.
 
 // PutUnixTimeDate put datetime encoded as Unix time
 func (client IntClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTime) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutUnixTimeDate")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutUnixTimeDatePreparer(ctx, intBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "integergroup.IntClient", "PutUnixTimeDate", nil, "Failure preparing request")

@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,11 @@ func NewEnumClientWithBaseURI(baseURI string) EnumClient {
 
 // GetNotExpandable get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.GetNotExpandable")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNotExpandablePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetNotExpandable", nil, "Failure preparing request")
@@ -83,6 +89,11 @@ func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result 
 
 // GetReferenced get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.GetReferenced")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetReferencedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferenced", nil, "Failure preparing request")
@@ -135,6 +146,11 @@ func (client EnumClient) GetReferencedResponder(resp *http.Response) (result Str
 
 // GetReferencedConstant get value 'green-color' from the constant.
 func (client EnumClient) GetReferencedConstant(ctx context.Context) (result RefColorConstant, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.GetReferencedConstant")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetReferencedConstantPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "GetReferencedConstant", nil, "Failure preparing request")
@@ -187,6 +203,11 @@ func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (re
 
 // PutNotExpandable sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.PutNotExpandable")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutNotExpandablePreparer(ctx, stringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutNotExpandable", nil, "Failure preparing request")
@@ -240,6 +261,11 @@ func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result 
 
 // PutReferenced sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.PutReferenced")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutReferencedPreparer(ctx, enumStringBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "stringgroup.EnumClient", "PutReferenced", nil, "Failure preparing request")
@@ -293,6 +319,11 @@ func (client EnumClient) PutReferencedResponder(resp *http.Response) (result aut
 
 // PutReferencedConstant sends value 'green-color' from a constant
 func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.PutReferencedConstant")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: enumStringBody,
 			Constraints: []validation.Constraint{{Target: "enumStringBody.ColorConstant", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {

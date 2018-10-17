@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,11 @@ func NewDatetimeClientWithBaseURI(baseURI string) DatetimeClient {
 
 // GetInvalid get invalid datetime value
 func (client DatetimeClient) GetInvalid(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetInvalid")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetInvalid", nil, "Failure preparing request")
@@ -84,6 +90,11 @@ func (client DatetimeClient) GetInvalidResponder(resp *http.Response) (result Da
 // GetLocalNegativeOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetLowercaseMaxDateTime", nil, "Failure preparing request")
@@ -136,6 +147,11 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeResponder
 
 // GetLocalNegativeOffsetMinDateTime get min datetime value 0001-01-01T00:00:00-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetLocalNegativeOffsetMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetLocalNegativeOffsetMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetMinDateTime", nil, "Failure preparing request")
@@ -189,6 +205,11 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeResponder(resp *ht
 // GetLocalNegativeOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalNegativeOffsetUppercaseMaxDateTime", nil, "Failure preparing request")
@@ -242,6 +263,11 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeResponder
 // GetLocalPositiveOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetLowercaseMaxDateTime", nil, "Failure preparing request")
@@ -294,6 +320,11 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeResponder
 
 // GetLocalPositiveOffsetMinDateTime get min datetime value 0001-01-01T00:00:00+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetLocalPositiveOffsetMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetLocalPositiveOffsetMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetMinDateTime", nil, "Failure preparing request")
@@ -347,6 +378,11 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeResponder(resp *ht
 // GetLocalPositiveOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetLocalPositiveOffsetUppercaseMaxDateTime", nil, "Failure preparing request")
@@ -399,6 +435,11 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeResponder
 
 // GetNull get null datetime value
 func (client DatetimeClient) GetNull(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetNull")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetNull", nil, "Failure preparing request")
@@ -451,6 +492,11 @@ func (client DatetimeClient) GetNullResponder(resp *http.Response) (result DateT
 
 // GetOverflow get overflow datetime value
 func (client DatetimeClient) GetOverflow(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetOverflow")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetOverflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetOverflow", nil, "Failure preparing request")
@@ -503,6 +549,11 @@ func (client DatetimeClient) GetOverflowResponder(resp *http.Response) (result D
 
 // GetUnderflow get underflow datetime value
 func (client DatetimeClient) GetUnderflow(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetUnderflow")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUnderflowPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUnderflow", nil, "Failure preparing request")
@@ -555,6 +606,11 @@ func (client DatetimeClient) GetUnderflowResponder(resp *http.Response) (result 
 
 // GetUtcLowercaseMaxDateTime get max datetime value 9999-12-31t23:59:59.9999999z
 func (client DatetimeClient) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetUtcLowercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUtcLowercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcLowercaseMaxDateTime", nil, "Failure preparing request")
@@ -607,6 +663,11 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTimeResponder(resp *http.Resp
 
 // GetUtcMinDateTime get min datetime value 0001-01-01T00:00:00Z
 func (client DatetimeClient) GetUtcMinDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetUtcMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUtcMinDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcMinDateTime", nil, "Failure preparing request")
@@ -659,6 +720,11 @@ func (client DatetimeClient) GetUtcMinDateTimeResponder(resp *http.Response) (re
 
 // GetUtcUppercaseMaxDateTime get max datetime value 9999-12-31T23:59:59.9999999Z
 func (client DatetimeClient) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.GetUtcUppercaseMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetUtcUppercaseMaxDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "GetUtcUppercaseMaxDateTime", nil, "Failure preparing request")
@@ -711,6 +777,11 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Resp
 
 // PutLocalNegativeOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.PutLocalNegativeOffsetMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutLocalNegativeOffsetMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMaxDateTime", nil, "Failure preparing request")
@@ -764,6 +835,11 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeResponder(resp *ht
 
 // PutLocalNegativeOffsetMinDateTime put min datetime value 0001-01-01T00:00:00-14:00
 func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.PutLocalNegativeOffsetMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutLocalNegativeOffsetMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalNegativeOffsetMinDateTime", nil, "Failure preparing request")
@@ -817,6 +893,11 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *ht
 
 // PutLocalPositiveOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.PutLocalPositiveOffsetMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutLocalPositiveOffsetMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMaxDateTime", nil, "Failure preparing request")
@@ -870,6 +951,11 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeResponder(resp *ht
 
 // PutLocalPositiveOffsetMinDateTime put min datetime value 0001-01-01T00:00:00+14:00
 func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.PutLocalPositiveOffsetMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutLocalPositiveOffsetMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutLocalPositiveOffsetMinDateTime", nil, "Failure preparing request")
@@ -923,6 +1009,11 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *ht
 
 // PutUtcMaxDateTime put max datetime value 9999-12-31T23:59:59.9999999Z
 func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.PutUtcMaxDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMaxDateTime", nil, "Failure preparing request")
@@ -976,6 +1067,11 @@ func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (re
 
 // PutUtcMinDateTime put min datetime value 0001-01-01T00:00:00Z
 func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/body-datetime/DatetimeClient.PutUtcMinDateTime")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "datetimegroup.DatetimeClient", "PutUtcMinDateTime", nil, "Failure preparing request")

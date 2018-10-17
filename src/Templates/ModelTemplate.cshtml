@@ -354,10 +354,10 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         @EmptyLine
         // NextWithContext advances to the next page of values.  If there was an error making
         // the request the page does not advance and the error is returned.
-        func (page * @Model.Name) NextWithContext(ctx context.Context) error {
+        func (page * @Model.Name) NextWithContext(ctx context.Context) (err error) {
             ctx = tracing.StartSpan(ctx, "@(modelPageType.AdvancerFqdn)")
             defer func() {
-                sc := next.StatusCode
+                sc := page.@(modelPageType.ResultFieldName).StatusCode
                 tracing.EndSpan(ctx, sc, err)
             }()
         next, err := page.@(modelPageType.FnFieldName)(ctx, page.@modelPageType.ResultFieldName)
@@ -402,7 +402,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
     <text>
         // NextWithContext advances to the next value.  If there was an error making
         // the request the iterator does not advance and the error is returned.
-        func (iter * @Model.Name) NextWithContext(ctx context.Context) error {
+        func (iter * @Model.Name) NextWithContext(ctx context.Context) (err error) {
             ctx = tracing.StartSpan(ctx, "@(iterType.AdvancerFqdn)")
             defer func() {
                 sc := iter.Response().StatusCode
@@ -412,7 +412,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         if iter.@iterType.IndexField < len(iter. @(iterType.PageField).Values()) {
         return nil
         }
-        err := iter.@(iterType.PageField).NextWithContext(ctx)
+        err = iter.@(iterType.PageField).NextWithContext(ctx)
         if err != nil {
         iter. @iterType.IndexField--
         return err

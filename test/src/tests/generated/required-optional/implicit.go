@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,11 @@ func NewImplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 
 // GetOptionalGlobalQuery test implicitly optional query parameter
 func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetOptionalGlobalQuery")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetOptionalGlobalQueryPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetOptionalGlobalQuery", nil, "Failure preparing request")
@@ -88,6 +94,11 @@ func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response
 
 // GetRequiredGlobalPath test implicitly required path parameter
 func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetRequiredGlobalPath")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetRequiredGlobalPathPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalPath", nil, "Failure preparing request")
@@ -144,6 +155,11 @@ func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response)
 
 // GetRequiredGlobalQuery test implicitly required query parameter
 func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetRequiredGlobalQuery")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetRequiredGlobalQueryPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalQuery", nil, "Failure preparing request")
@@ -201,6 +217,11 @@ func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response
 
 // GetRequiredPath test implicitly required path parameter
 func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result Error, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetRequiredPath")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.GetRequiredPathPreparer(ctx, pathParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredPath", nil, "Failure preparing request")
@@ -257,6 +278,11 @@ func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (resu
 
 // PutOptionalBody test implicitly optional body parameter
 func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.PutOptionalBody")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutOptionalBodyPreparer(ctx, bodyParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalBody", nil, "Failure preparing request")
@@ -313,6 +339,11 @@ func (client ImplicitClient) PutOptionalBodyResponder(resp *http.Response) (resu
 
 // PutOptionalHeader test implicitly optional header parameter
 func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.PutOptionalHeader")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutOptionalHeaderPreparer(ctx, queryParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalHeader", nil, "Failure preparing request")
@@ -368,6 +399,11 @@ func (client ImplicitClient) PutOptionalHeaderResponder(resp *http.Response) (re
 
 // PutOptionalQuery test implicitly optional query parameter
 func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
+	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.PutOptionalQuery")
+	defer func() {
+		sc := result.StatusCode
+		tracing.EndSpan(ctx, sc, err)
+	}()
 	req, err := client.PutOptionalQueryPreparer(ctx, queryParameter)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "PutOptionalQuery", nil, "Failure preparing request")
