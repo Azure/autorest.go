@@ -26,13 +26,15 @@ namespace AutoRest.Go
         {
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"),
             PrimaryTypeGo.GetImportLine(package: "net/http"),
-            PrimaryTypeGo.GetImportLine(package: "context")
+            PrimaryTypeGo.GetImportLine(package: "context"),
+            PrimaryTypeGo.GetImportLine(package: "fmt")
         };
 
         public virtual IEnumerable<string> PageableImports => new string[]
         {
             PrimaryTypeGo.GetImportLine(package: "net/http"),
             PrimaryTypeGo.GetImportLine(package: "context"),
+            PrimaryTypeGo.GetImportLine(package: "fmt"),
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/tracing"),
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to")
         };

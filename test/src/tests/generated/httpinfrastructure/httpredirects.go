@@ -8,6 +8,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,14 +34,18 @@ func NewHTTPRedirectsClientWithBaseURI(baseURI string) HTTPRedirectsClient {
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Delete307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Delete307")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Delete307", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Delete307", nil, "Failure preparing request")
@@ -97,14 +102,18 @@ func (client HTTPRedirectsClient) Delete307Responder(resp *http.Response) (resul
 
 // Get300 return 300 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Get300(ctx context.Context) (result ListString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Get300")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get300", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Get300Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get300", nil, "Failure preparing request")
@@ -157,14 +166,18 @@ func (client HTTPRedirectsClient) Get300Responder(resp *http.Response) (result L
 
 // Get301 return 301 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Get301(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Get301")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get301", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Get301Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get301", nil, "Failure preparing request")
@@ -216,14 +229,18 @@ func (client HTTPRedirectsClient) Get301Responder(resp *http.Response) (result a
 
 // Get302 return 302 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Get302(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Get302")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get302", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Get302Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get302", nil, "Failure preparing request")
@@ -275,14 +292,18 @@ func (client HTTPRedirectsClient) Get302Responder(resp *http.Response) (result a
 
 // Get307 redirect get with 307, resulting in a 200 success
 func (client HTTPRedirectsClient) Get307(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Get307")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get307", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Get307Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Get307", nil, "Failure preparing request")
@@ -334,14 +355,18 @@ func (client HTTPRedirectsClient) Get307Responder(resp *http.Response) (result a
 
 // Head300 return 300 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Head300(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Head300")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head300", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head300Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head300", nil, "Failure preparing request")
@@ -393,14 +418,18 @@ func (client HTTPRedirectsClient) Head300Responder(resp *http.Response) (result 
 
 // Head301 return 301 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Head301(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Head301")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head301", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head301Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head301", nil, "Failure preparing request")
@@ -452,14 +481,18 @@ func (client HTTPRedirectsClient) Head301Responder(resp *http.Response) (result 
 
 // Head302 return 302 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Head302(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Head302")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head302", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head302Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head302", nil, "Failure preparing request")
@@ -511,14 +544,18 @@ func (client HTTPRedirectsClient) Head302Responder(resp *http.Response) (result 
 
 // Head307 redirect with 307, resulting in a 200 success
 func (client HTTPRedirectsClient) Head307(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Head307")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head307", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head307Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Head307", nil, "Failure preparing request")
@@ -573,14 +610,18 @@ func (client HTTPRedirectsClient) Head307Responder(resp *http.Response) (result 
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Patch302(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Patch302")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Patch302", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Patch302Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Patch302", nil, "Failure preparing request")
@@ -639,14 +680,18 @@ func (client HTTPRedirectsClient) Patch302Responder(resp *http.Response) (result
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Patch307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Patch307")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Patch307", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Patch307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Patch307", nil, "Failure preparing request")
@@ -706,14 +751,18 @@ func (client HTTPRedirectsClient) Patch307Responder(resp *http.Response) (result
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Post303(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Post303")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Post303", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post303Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Post303", nil, "Failure preparing request")
@@ -772,14 +821,18 @@ func (client HTTPRedirectsClient) Post303Responder(resp *http.Response) (result 
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Post307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Post307")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Post307", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Post307", nil, "Failure preparing request")
@@ -839,14 +892,18 @@ func (client HTTPRedirectsClient) Post307Responder(resp *http.Response) (result 
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Put301(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Put301")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Put301", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put301Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Put301", nil, "Failure preparing request")
@@ -905,14 +962,18 @@ func (client HTTPRedirectsClient) Put301Responder(resp *http.Response) (result a
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Put307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRedirectsClient.Put307")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Put307", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put307Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRedirectsClient", "Put307", nil, "Failure preparing request")

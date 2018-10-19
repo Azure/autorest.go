@@ -31,6 +31,10 @@ foreach (var import in Model.ModelImports)
 @EmptyLine
 }
 
+// The package's fully qualified name.
+const fqdn = "@(Model.PackageFqdn)"
+@EmptyLine
+
 @foreach (var e in enums)
 {
 @:@(Include(new EnumTemplate(), e))

@@ -11,6 +11,7 @@ package modelflatteninggroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -44,14 +45,18 @@ func NewWithBaseURI(baseURI string) BaseClient {
 
 // GetArray get External Resource as an Array
 func (client BaseClient) GetArray(ctx context.Context) (result ListFlattenedProduct, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetArray")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetArray", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetArrayPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetArray", nil, "Failure preparing request")
@@ -104,14 +109,18 @@ func (client BaseClient) GetArrayResponder(resp *http.Response) (result ListFlat
 
 // GetDictionary get External Resource as a Dictionary
 func (client BaseClient) GetDictionary(ctx context.Context) (result SetFlattenedProduct, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetDictionary")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetDictionary", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDictionaryPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetDictionary", nil, "Failure preparing request")
@@ -164,14 +173,18 @@ func (client BaseClient) GetDictionaryResponder(resp *http.Response) (result Set
 
 // GetResourceCollection get External Resource as a ResourceCollection
 func (client BaseClient) GetResourceCollection(ctx context.Context) (result ResourceCollection, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetResourceCollection")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetResourceCollection", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetResourceCollectionPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetResourceCollection", nil, "Failure preparing request")
@@ -225,14 +238,18 @@ func (client BaseClient) GetResourceCollectionResponder(resp *http.Response) (re
 // GetWrappedArray no need to have a route in Express server for this operation. Used to verify the type flattened is
 // not removed if it's referenced in an array
 func (client BaseClient) GetWrappedArray(ctx context.Context) (result ListProductWrapper, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetWrappedArray")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetWrappedArray", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetWrappedArrayPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "GetWrappedArray", nil, "Failure preparing request")
@@ -287,14 +304,18 @@ func (client BaseClient) GetWrappedArrayResponder(resp *http.Response) (result L
 // Parameters:
 // simpleBodyProduct - simple body product to post
 func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PostFlattenedSimpleProduct")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PostFlattenedSimpleProduct", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -365,14 +386,18 @@ func (client BaseClient) PostFlattenedSimpleProductResponder(resp *http.Response
 // Parameters:
 // resourceArray - external Resource as an Array to put
 func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutArray")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutArray", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutArrayPreparer(ctx, resourceArray)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutArray", nil, "Failure preparing request")
@@ -431,14 +456,18 @@ func (client BaseClient) PutArrayResponder(resp *http.Response) (result autorest
 // Parameters:
 // resourceDictionary - external Resource as a Dictionary to put
 func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutDictionary")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutDictionary", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutDictionaryPreparer(ctx, resourceDictionary)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutDictionary", nil, "Failure preparing request")
@@ -497,14 +526,18 @@ func (client BaseClient) PutDictionaryResponder(resp *http.Response) (result aut
 // Parameters:
 // resourceComplexObject - external Resource as a ResourceCollection to put
 func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutResourceCollection")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutResourceCollection", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutResourceCollectionPreparer(ctx, resourceComplexObject)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutResourceCollection", nil, "Failure preparing request")
@@ -563,14 +596,18 @@ func (client BaseClient) PutResourceCollectionResponder(resp *http.Response) (re
 // Parameters:
 // simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutSimpleProduct")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutSimpleProduct", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -642,14 +679,18 @@ func (client BaseClient) PutSimpleProductResponder(resp *http.Response) (result 
 // name - product name with value 'groupproduct'
 // simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutSimpleProductWithGrouping")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutSimpleProductWithGrouping", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: simpleBodyProduct,
 			Constraints: []validation.Constraint{{Target: "simpleBodyProduct", Name: validation.Null, Rule: false,
@@ -725,14 +766,18 @@ func (client BaseClient) PutSimpleProductWithGroupingResponder(resp *http.Respon
 // Parameters:
 // resourceArray - external Resource as an Array to put
 func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutWrappedArray")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutWrappedArray", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutWrappedArrayPreparer(ctx, resourceArray)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "modelflatteninggroup.BaseClient", "PutWrappedArray", nil, "Failure preparing request")

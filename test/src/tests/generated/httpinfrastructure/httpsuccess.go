@@ -8,6 +8,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,14 +34,18 @@ func NewHTTPSuccessClientWithBaseURI(baseURI string) HTTPSuccessClient {
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Delete200")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Delete200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete200", nil, "Failure preparing request")
@@ -99,14 +104,18 @@ func (client HTTPSuccessClient) Delete200Responder(resp *http.Response) (result 
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Delete202")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Delete202", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete202", nil, "Failure preparing request")
@@ -165,14 +174,18 @@ func (client HTTPSuccessClient) Delete202Responder(resp *http.Response) (result 
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Delete204")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Delete204", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Delete204", nil, "Failure preparing request")
@@ -229,14 +242,18 @@ func (client HTTPSuccessClient) Delete204Responder(resp *http.Response) (result 
 
 // Get200 get 200 success
 func (client HTTPSuccessClient) Get200(ctx context.Context) (result Bool, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Get200")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Get200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Get200Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Get200", nil, "Failure preparing request")
@@ -289,14 +306,18 @@ func (client HTTPSuccessClient) Get200Responder(resp *http.Response) (result Boo
 
 // Head200 return 200 status code if successful
 func (client HTTPSuccessClient) Head200(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Head200")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Head200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head200Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head200", nil, "Failure preparing request")
@@ -348,14 +369,18 @@ func (client HTTPSuccessClient) Head200Responder(resp *http.Response) (result au
 
 // Head204 return 204 status code if successful
 func (client HTTPSuccessClient) Head204(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Head204")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Head204", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head204Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head204", nil, "Failure preparing request")
@@ -407,14 +432,18 @@ func (client HTTPSuccessClient) Head204Responder(resp *http.Response) (result au
 
 // Head404 return 404 status code
 func (client HTTPSuccessClient) Head404(ctx context.Context) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Head404")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Head404", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head404Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Head404", nil, "Failure preparing request")
@@ -468,14 +497,18 @@ func (client HTTPSuccessClient) Head404Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Patch200")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Patch200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Patch200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch200", nil, "Failure preparing request")
@@ -534,14 +567,18 @@ func (client HTTPSuccessClient) Patch200Responder(resp *http.Response) (result a
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Patch202")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Patch202", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Patch202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch202", nil, "Failure preparing request")
@@ -600,14 +637,18 @@ func (client HTTPSuccessClient) Patch202Responder(resp *http.Response) (result a
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Patch204")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Patch204", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Patch204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Patch204", nil, "Failure preparing request")
@@ -666,14 +707,18 @@ func (client HTTPSuccessClient) Patch204Responder(resp *http.Response) (result a
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post200")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post200", nil, "Failure preparing request")
@@ -732,14 +777,18 @@ func (client HTTPSuccessClient) Post200Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post201")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post201", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post201Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post201", nil, "Failure preparing request")
@@ -798,14 +847,18 @@ func (client HTTPSuccessClient) Post201Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post202")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post202", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post202", nil, "Failure preparing request")
@@ -864,14 +917,18 @@ func (client HTTPSuccessClient) Post202Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post204")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post204", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Post204", nil, "Failure preparing request")
@@ -930,14 +987,18 @@ func (client HTTPSuccessClient) Post204Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put200")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put200Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put200", nil, "Failure preparing request")
@@ -996,14 +1057,18 @@ func (client HTTPSuccessClient) Put200Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put201")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put201", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put201Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put201", nil, "Failure preparing request")
@@ -1062,14 +1127,18 @@ func (client HTTPSuccessClient) Put201Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put202")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put202", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put202Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put202", nil, "Failure preparing request")
@@ -1128,14 +1197,18 @@ func (client HTTPSuccessClient) Put202Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put204")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put204", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put204Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPSuccessClient", "Put204", nil, "Failure preparing request")

@@ -24,7 +24,6 @@ namespace AutoRest.Go.Model
             PageType = pageType;
             CodeModel = pageType.CodeModel;
             Documentation = $"Provides access to a complete listing of {PageType.ElementType.Name} values.";
-            AdvancerFqdn = $"{(CodeModel as CodeModelGo).PackageFqdn}/{Name}.NextWithContext";
         }
 
         /// <summary>
@@ -38,9 +37,9 @@ namespace AutoRest.Go.Model
         public string IndexField => "i";
 
         /// <summary>
-        /// The fully qualified name for the advancer method.
+        /// The qualified name for the advancer method.
         /// </summary>
-        public string AdvancerFqdn { get; private set; }
+        public string AdvancerQualifiedName => $"{Name}.NextWithContext";
 
         /// <summary>
         /// Gets the name of the page field that contains the current page of values.

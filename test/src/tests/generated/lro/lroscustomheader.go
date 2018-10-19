@@ -8,6 +8,7 @@ package lrogroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -35,14 +36,18 @@ func NewLROsCustomHeaderClientWithBaseURI(baseURI string) LROsCustomHeaderClient
 // Parameters:
 // product - product to put
 func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, product *Product) (result LROsCustomHeaderPost202Retry200Future, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/lro/LROsCustomHeaderClient.Post202Retry200")
-	defer func() {
-		sc := -1
-		if result.Response() != nil {
-			sc = result.Response().StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.Post202Retry200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post202Retry200Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Post202Retry200", nil, "Failure preparing request")
@@ -103,14 +108,18 @@ func (client LROsCustomHeaderClient) Post202Retry200Responder(resp *http.Respons
 // Parameters:
 // product - product to put
 func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPostAsyncRetrySucceededFuture, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/lro/LROsCustomHeaderClient.PostAsyncRetrySucceeded")
-	defer func() {
-		sc := -1
-		if result.Response() != nil {
-			sc = result.Response().StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.PostAsyncRetrySucceeded", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PostAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PostAsyncRetrySucceeded", nil, "Failure preparing request")
@@ -172,14 +181,18 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededResponder(resp *http
 // Parameters:
 // product - product to put
 func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LROsCustomHeaderPut201CreatingSucceeded200Future, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/lro/LROsCustomHeaderClient.Put201CreatingSucceeded200")
-	defer func() {
-		sc := -1
-		if result.Response() != nil {
-			sc = result.Response().StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.Put201CreatingSucceeded200", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put201CreatingSucceeded200Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "Put201CreatingSucceeded200", nil, "Failure preparing request")
@@ -241,14 +254,18 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Responder(resp *h
 // Parameters:
 // product - product to put
 func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPutAsyncRetrySucceededFuture, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/lro/LROsCustomHeaderClient.PutAsyncRetrySucceeded")
-	defer func() {
-		sc := -1
-		if result.Response() != nil {
-			sc = result.Response().StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.PutAsyncRetrySucceeded", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutAsyncRetrySucceededPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderClient", "PutAsyncRetrySucceeded", nil, "Failure preparing request")

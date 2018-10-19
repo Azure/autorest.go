@@ -11,6 +11,9 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/body-datetime-rfc1123"
+
 // DateTimeRfc1123 ...
 type DateTimeRfc1123 struct {
 	autorest.Response `json:"-"`

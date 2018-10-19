@@ -11,6 +11,7 @@ package report
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -46,14 +47,18 @@ func NewWithBaseURI(baseURI string) BaseClient {
 // qualifier - if specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The
 // only effect is, that generators that run all tests several times, can distinguish the generated reports.
 func (client BaseClient) GetReport(ctx context.Context, qualifier string) (result SetInt32, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/report/BaseClient.GetReport")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetReport", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetReportPreparer(ctx, qualifier)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "report.BaseClient", "GetReport", nil, "Failure preparing request")

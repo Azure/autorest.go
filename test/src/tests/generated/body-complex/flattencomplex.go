@@ -8,6 +8,7 @@ package complexgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -31,14 +32,18 @@ func NewFlattencomplexClientWithBaseURI(baseURI string) FlattencomplexClient {
 
 // GetValid sends the get valid request.
 func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseTypeModel, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-complex/FlattencomplexClient.GetValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FlattencomplexClient.GetValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.FlattencomplexClient", "GetValid", nil, "Failure preparing request")

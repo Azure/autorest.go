@@ -13,6 +13,9 @@ import (
 	"net/http"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/lro"
+
 // ProvisioningStateValues enumerates the values for provisioning state values.
 type ProvisioningStateValues string
 

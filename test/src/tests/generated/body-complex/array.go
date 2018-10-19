@@ -8,6 +8,7 @@ package complexgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -31,14 +32,18 @@ func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 
 // GetEmpty get complex types with array property which is empty
 func (client ArrayClient) GetEmpty(ctx context.Context) (result ArrayWrapper, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.GetEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetEmpty", nil, "Failure preparing request")
@@ -91,14 +96,18 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ArrayWr
 
 // GetNotProvided get complex types with array property while server doesn't provide a response payload
 func (client ArrayClient) GetNotProvided(ctx context.Context) (result ArrayWrapper, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.GetNotProvided")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetNotProvided", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNotProvidedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetNotProvided", nil, "Failure preparing request")
@@ -151,14 +160,18 @@ func (client ArrayClient) GetNotProvidedResponder(resp *http.Response) (result A
 
 // GetValid get complex types with array property
 func (client ArrayClient) GetValid(ctx context.Context) (result ArrayWrapper, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.GetValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "GetValid", nil, "Failure preparing request")
@@ -213,14 +226,18 @@ func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWr
 // Parameters:
 // complexBody - please put an empty array
 func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.PutEmpty")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.PutEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutEmptyPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "PutEmpty", nil, "Failure preparing request")
@@ -277,14 +294,18 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 // complexBody - please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox
 // jumps over the lazy dog"
 func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.PutValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.PutValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ArrayClient", "PutValid", nil, "Failure preparing request")

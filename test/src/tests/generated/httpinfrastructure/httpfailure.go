@@ -8,6 +8,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -31,14 +32,18 @@ func NewHTTPFailureClientWithBaseURI(baseURI string) HTTPFailureClient {
 
 // GetEmptyError get empty error form server
 func (client HTTPFailureClient) GetEmptyError(ctx context.Context) (result Bool, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPFailureClient.GetEmptyError")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetEmptyError", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetEmptyErrorPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetEmptyError", nil, "Failure preparing request")
@@ -91,14 +96,18 @@ func (client HTTPFailureClient) GetEmptyErrorResponder(resp *http.Response) (res
 
 // GetNoModelEmpty get empty response from server
 func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (result Bool, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPFailureClient.GetNoModelEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetNoModelEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNoModelEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetNoModelEmpty", nil, "Failure preparing request")
@@ -151,14 +160,18 @@ func (client HTTPFailureClient) GetNoModelEmptyResponder(resp *http.Response) (r
 
 // GetNoModelError get empty error form server
 func (client HTTPFailureClient) GetNoModelError(ctx context.Context) (result Bool, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPFailureClient.GetNoModelError")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetNoModelError", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNoModelErrorPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPFailureClient", "GetNoModelError", nil, "Failure preparing request")

@@ -11,6 +11,9 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/body-date"
+
 // DateModel ...
 type DateModel struct {
 	autorest.Response `json:"-"`

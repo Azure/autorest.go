@@ -35,9 +35,12 @@
 }
 
 func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
-    ctx = tracing.StartSpan(ctx, "@(Model.Fqdn)")
-    defer func() {
-    sc := -1
+    // Not necessary to perform this check as nothing will be instrumented if it is false, but
+    // adding it to avoid any potential perf issue.
+    if tracing.IsEnabled() {
+        ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/@(Model.QualifiedName)", fqdn))
+        defer func() {
+            sc := -1
     @if (Model.IsLongRunningOperation())
     {
         <text>
@@ -57,8 +60,9 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         </text>
     }
 
-    tracing.EndSpan(ctx, sc, err)
-    }()
+            tracing.EndSpan(ctx, sc, err)
+        }()
+    }
     @if ((Model.CodeModel as CodeModelGo).ShouldValidate && !Model.ParameterValidations.IsNullOrEmpty())
     {
         <text>
@@ -377,29 +381,34 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     @EmptyLine
     // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
     func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
-    ctx = tracing.StartSpan(ctx, "@(Model.Fqdn)")
-    defer func() {
-        sc := -1
+    // Not necessary to perform this check as nothing will be instrumented if it is false, but
+    // adding it to avoid any potential perf issue.
+        if tracing.IsEnabled() {
+            ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/@(Model.QualifiedName)", fqdn))
+
+            defer func() {
+                sc := -1
 
     @if (Model.IsLongRunningOperation())
     {
         <text>
-        if result.Response() != nil {
-            sc = result.Response().StatusCode
-        }
+                if result.Response() != nil {
+                    sc = result.Response().StatusCode
+                }
         </text>
     }
     else
     {
         <text>
-        if result.Response().Response.Response != nil {
-            sc = result.page.Response().Response.Response.StatusCode
-        }
+                if result.Response().Response.Response != nil {
+                    sc = result.page.Response().Response.Response.StatusCode
+                }
         </text>
     }
 
-        tracing.EndSpan(ctx, sc, err)
-    }()
+                tracing.EndSpan(ctx, sc, err)
+            }()
+     }
     @if (Model.IsLongRunningOperation())
     {
         <text>

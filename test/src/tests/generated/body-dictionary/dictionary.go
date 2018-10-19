@@ -8,6 +8,7 @@ package dictionarygroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -33,14 +34,18 @@ func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 
 // GetArrayEmpty get an empty dictionary {}
 func (client DictionaryClient) GetArrayEmpty(ctx context.Context) (result SetListString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetArrayEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetArrayEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayEmpty", nil, "Failure preparing request")
@@ -93,14 +98,18 @@ func (client DictionaryClient) GetArrayEmptyResponder(resp *http.Response) (resu
 
 // GetArrayItemEmpty get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
 func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context) (result SetListString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayItemEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetArrayItemEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetArrayItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemEmpty", nil, "Failure preparing request")
@@ -153,14 +162,18 @@ func (client DictionaryClient) GetArrayItemEmptyResponder(resp *http.Response) (
 
 // GetArrayItemNull get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
 func (client DictionaryClient) GetArrayItemNull(ctx context.Context) (result SetListString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayItemNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetArrayItemNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetArrayItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayItemNull", nil, "Failure preparing request")
@@ -213,14 +226,18 @@ func (client DictionaryClient) GetArrayItemNullResponder(resp *http.Response) (r
 
 // GetArrayNull get a null array
 func (client DictionaryClient) GetArrayNull(ctx context.Context) (result SetListString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetArrayNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetArrayNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayNull", nil, "Failure preparing request")
@@ -273,14 +290,18 @@ func (client DictionaryClient) GetArrayNullResponder(resp *http.Response) (resul
 
 // GetArrayValid get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 func (client DictionaryClient) GetArrayValid(ctx context.Context) (result SetListString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetArrayValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetArrayValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetArrayValid", nil, "Failure preparing request")
@@ -334,14 +355,18 @@ func (client DictionaryClient) GetArrayValidResponder(resp *http.Response) (resu
 // GetBase64URL get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string",
 // "2": "Lorem ipsum"}
 func (client DictionaryClient) GetBase64URL(ctx context.Context) (result SetBase64URL, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBase64URL")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetBase64URL", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetBase64URLPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBase64URL", nil, "Failure preparing request")
@@ -394,14 +419,18 @@ func (client DictionaryClient) GetBase64URLResponder(resp *http.Response) (resul
 
 // GetBooleanInvalidNull get boolean dictionary value {"0": true, "1": null, "2": false }
 func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context) (result SetBool, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBooleanInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetBooleanInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetBooleanInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidNull", nil, "Failure preparing request")
@@ -454,14 +483,18 @@ func (client DictionaryClient) GetBooleanInvalidNullResponder(resp *http.Respons
 
 // GetBooleanInvalidString get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
 func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context) (result SetBool, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBooleanInvalidString")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetBooleanInvalidString", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetBooleanInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanInvalidString", nil, "Failure preparing request")
@@ -514,14 +547,18 @@ func (client DictionaryClient) GetBooleanInvalidStringResponder(resp *http.Respo
 
 // GetBooleanTfft get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
 func (client DictionaryClient) GetBooleanTfft(ctx context.Context) (result SetBool, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBooleanTfft")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetBooleanTfft", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetBooleanTfftPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetBooleanTfft", nil, "Failure preparing request")
@@ -574,14 +611,18 @@ func (client DictionaryClient) GetBooleanTfftResponder(resp *http.Response) (res
 
 // GetByteInvalidNull get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 func (client DictionaryClient) GetByteInvalidNull(ctx context.Context) (result SetByteArray, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetByteInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetByteInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetByteInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteInvalidNull", nil, "Failure preparing request")
@@ -635,14 +676,18 @@ func (client DictionaryClient) GetByteInvalidNullResponder(resp *http.Response) 
 // GetByteValid get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each
 // item encoded in base64
 func (client DictionaryClient) GetByteValid(ctx context.Context) (result SetByteArray, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetByteValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetByteValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetByteValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetByteValid", nil, "Failure preparing request")
@@ -695,14 +740,18 @@ func (client DictionaryClient) GetByteValidResponder(resp *http.Response) (resul
 
 // GetComplexEmpty get empty dictionary of complex type {}
 func (client DictionaryClient) GetComplexEmpty(ctx context.Context) (result SetWidget, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetComplexEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetComplexEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexEmpty", nil, "Failure preparing request")
@@ -756,14 +805,18 @@ func (client DictionaryClient) GetComplexEmptyResponder(resp *http.Response) (re
 // GetComplexItemEmpty get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {},
 // "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context) (result SetWidget, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexItemEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetComplexItemEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetComplexItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemEmpty", nil, "Failure preparing request")
@@ -817,14 +870,18 @@ func (client DictionaryClient) GetComplexItemEmptyResponder(resp *http.Response)
 // GetComplexItemNull get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null,
 // "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) GetComplexItemNull(ctx context.Context) (result SetWidget, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexItemNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetComplexItemNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetComplexItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexItemNull", nil, "Failure preparing request")
@@ -877,14 +934,18 @@ func (client DictionaryClient) GetComplexItemNullResponder(resp *http.Response) 
 
 // GetComplexNull get dictionary of complex type null value
 func (client DictionaryClient) GetComplexNull(ctx context.Context) (result SetWidget, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetComplexNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetComplexNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexNull", nil, "Failure preparing request")
@@ -938,14 +999,18 @@ func (client DictionaryClient) GetComplexNullResponder(resp *http.Response) (res
 // GetComplexValid get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
 // "string": "4"}, "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) GetComplexValid(ctx context.Context) (result SetWidget, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetComplexValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetComplexValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetComplexValid", nil, "Failure preparing request")
@@ -998,14 +1063,18 @@ func (client DictionaryClient) GetComplexValidResponder(resp *http.Response) (re
 
 // GetDateInvalidChars get date dictionary value {"0": "2011-03-22", "1": "date"}
 func (client DictionaryClient) GetDateInvalidChars(ctx context.Context) (result SetDate, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateInvalidChars")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDateInvalidChars", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateInvalidCharsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidChars", nil, "Failure preparing request")
@@ -1058,14 +1127,18 @@ func (client DictionaryClient) GetDateInvalidCharsResponder(resp *http.Response)
 
 // GetDateInvalidNull get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 func (client DictionaryClient) GetDateInvalidNull(ctx context.Context) (result SetDate, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDateInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateInvalidNull", nil, "Failure preparing request")
@@ -1118,14 +1191,18 @@ func (client DictionaryClient) GetDateInvalidNullResponder(resp *http.Response) 
 
 // GetDateTimeInvalidChars get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
 func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context) (result SetDateTime, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeInvalidChars")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDateTimeInvalidChars", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidChars", nil, "Failure preparing request")
@@ -1178,14 +1255,18 @@ func (client DictionaryClient) GetDateTimeInvalidCharsResponder(resp *http.Respo
 
 // GetDateTimeInvalidNull get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
 func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context) (result SetDateTime, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDateTimeInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateTimeInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeInvalidNull", nil, "Failure preparing request")
@@ -1239,14 +1320,18 @@ func (client DictionaryClient) GetDateTimeInvalidNullResponder(resp *http.Respon
 // GetDateTimeRfc1123Valid get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02
 // Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 func (client DictionaryClient) GetDateTimeRfc1123Valid(ctx context.Context) (result SetDateTimeRfc1123, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeRfc1123Valid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDateTimeRfc1123Valid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeRfc1123Valid", nil, "Failure preparing request")
@@ -1300,14 +1385,18 @@ func (client DictionaryClient) GetDateTimeRfc1123ValidResponder(resp *http.Respo
 // GetDateTimeValid get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
 func (client DictionaryClient) GetDateTimeValid(ctx context.Context) (result SetDateTime, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDateTimeValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateTimeValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateTimeValid", nil, "Failure preparing request")
@@ -1360,14 +1449,18 @@ func (client DictionaryClient) GetDateTimeValidResponder(resp *http.Response) (r
 
 // GetDateValid get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 func (client DictionaryClient) GetDateValid(ctx context.Context) (result SetDate, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDateValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDateValid", nil, "Failure preparing request")
@@ -1420,14 +1513,18 @@ func (client DictionaryClient) GetDateValidResponder(resp *http.Response) (resul
 
 // GetDictionaryEmpty get an dictionaries of dictionaries of type <string, string> with value {}
 func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context) (result SetSetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDictionaryEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDictionaryEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryEmpty", nil, "Failure preparing request")
@@ -1481,14 +1578,18 @@ func (client DictionaryClient) GetDictionaryEmptyResponder(resp *http.Response) 
 // GetDictionaryItemEmpty get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one",
 // "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context) (result SetSetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryItemEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDictionaryItemEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDictionaryItemEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemEmpty", nil, "Failure preparing request")
@@ -1542,14 +1643,18 @@ func (client DictionaryClient) GetDictionaryItemEmptyResponder(resp *http.Respon
 // GetDictionaryItemNull get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one",
 // "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context) (result SetSetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryItemNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDictionaryItemNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDictionaryItemNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryItemNull", nil, "Failure preparing request")
@@ -1602,14 +1707,18 @@ func (client DictionaryClient) GetDictionaryItemNullResponder(resp *http.Respons
 
 // GetDictionaryNull get an dictionaries of dictionaries with value null
 func (client DictionaryClient) GetDictionaryNull(ctx context.Context) (result SetSetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDictionaryNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDictionaryNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryNull", nil, "Failure preparing request")
@@ -1663,14 +1772,18 @@ func (client DictionaryClient) GetDictionaryNullResponder(resp *http.Response) (
 // GetDictionaryValid get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2":
 // "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) GetDictionaryValid(ctx context.Context) (result SetSetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDictionaryValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDictionaryValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDictionaryValid", nil, "Failure preparing request")
@@ -1723,14 +1836,18 @@ func (client DictionaryClient) GetDictionaryValidResponder(resp *http.Response) 
 
 // GetDoubleInvalidNull get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context) (result SetFloat64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDoubleInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDoubleInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDoubleInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidNull", nil, "Failure preparing request")
@@ -1783,14 +1900,18 @@ func (client DictionaryClient) GetDoubleInvalidNullResponder(resp *http.Response
 
 // GetDoubleInvalidString get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context) (result SetFloat64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDoubleInvalidString")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDoubleInvalidString", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDoubleInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleInvalidString", nil, "Failure preparing request")
@@ -1843,14 +1964,18 @@ func (client DictionaryClient) GetDoubleInvalidStringResponder(resp *http.Respon
 
 // GetDoubleValid get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) GetDoubleValid(ctx context.Context) (result SetFloat64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDoubleValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDoubleValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDoubleValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDoubleValid", nil, "Failure preparing request")
@@ -1903,14 +2028,18 @@ func (client DictionaryClient) GetDoubleValidResponder(resp *http.Response) (res
 
 // GetDurationValid get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func (client DictionaryClient) GetDurationValid(ctx context.Context) (result SetTimeSpan, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDurationValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetDurationValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDurationValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetDurationValid", nil, "Failure preparing request")
@@ -1963,14 +2092,18 @@ func (client DictionaryClient) GetDurationValidResponder(resp *http.Response) (r
 
 // GetEmpty get empty dictionary value {}
 func (client DictionaryClient) GetEmpty(ctx context.Context) (result SetInt32, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetEmpty")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmpty", nil, "Failure preparing request")
@@ -2023,14 +2156,18 @@ func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result Se
 
 // GetEmptyStringKey get Dictionary with key as empty string
 func (client DictionaryClient) GetEmptyStringKey(ctx context.Context) (result SetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetEmptyStringKey")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetEmptyStringKey", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetEmptyStringKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetEmptyStringKey", nil, "Failure preparing request")
@@ -2083,14 +2220,18 @@ func (client DictionaryClient) GetEmptyStringKeyResponder(resp *http.Response) (
 
 // GetFloatInvalidNull get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context) (result SetFloat64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetFloatInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetFloatInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetFloatInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidNull", nil, "Failure preparing request")
@@ -2143,14 +2284,18 @@ func (client DictionaryClient) GetFloatInvalidNullResponder(resp *http.Response)
 
 // GetFloatInvalidString get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 func (client DictionaryClient) GetFloatInvalidString(ctx context.Context) (result SetFloat64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetFloatInvalidString")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetFloatInvalidString", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetFloatInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatInvalidString", nil, "Failure preparing request")
@@ -2203,14 +2348,18 @@ func (client DictionaryClient) GetFloatInvalidStringResponder(resp *http.Respons
 
 // GetFloatValid get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) GetFloatValid(ctx context.Context) (result SetFloat64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetFloatValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetFloatValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetFloatValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetFloatValid", nil, "Failure preparing request")
@@ -2263,14 +2412,18 @@ func (client DictionaryClient) GetFloatValidResponder(resp *http.Response) (resu
 
 // GetIntegerValid get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) GetIntegerValid(ctx context.Context) (result SetInt32, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetIntegerValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetIntegerValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetIntegerValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntegerValid", nil, "Failure preparing request")
@@ -2323,14 +2476,18 @@ func (client DictionaryClient) GetIntegerValidResponder(resp *http.Response) (re
 
 // GetIntInvalidNull get integer dictionary value {"0": 1, "1": null, "2": 0}
 func (client DictionaryClient) GetIntInvalidNull(ctx context.Context) (result SetInt32, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetIntInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetIntInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetIntInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidNull", nil, "Failure preparing request")
@@ -2383,14 +2540,18 @@ func (client DictionaryClient) GetIntInvalidNullResponder(resp *http.Response) (
 
 // GetIntInvalidString get integer dictionary value {"0": 1, "1": "integer", "2": 0}
 func (client DictionaryClient) GetIntInvalidString(ctx context.Context) (result SetInt32, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetIntInvalidString")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetIntInvalidString", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetIntInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetIntInvalidString", nil, "Failure preparing request")
@@ -2443,14 +2604,18 @@ func (client DictionaryClient) GetIntInvalidStringResponder(resp *http.Response)
 
 // GetInvalid get invalid Dictionary value
 func (client DictionaryClient) GetInvalid(ctx context.Context) (result SetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetInvalid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetInvalid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetInvalid", nil, "Failure preparing request")
@@ -2503,14 +2668,18 @@ func (client DictionaryClient) GetInvalidResponder(resp *http.Response) (result 
 
 // GetLongInvalidNull get long dictionary value {"0": 1, "1": null, "2": 0}
 func (client DictionaryClient) GetLongInvalidNull(ctx context.Context) (result SetInt64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetLongInvalidNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetLongInvalidNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetLongInvalidNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidNull", nil, "Failure preparing request")
@@ -2563,14 +2732,18 @@ func (client DictionaryClient) GetLongInvalidNullResponder(resp *http.Response) 
 
 // GetLongInvalidString get long dictionary value {"0": 1, "1": "integer", "2": 0}
 func (client DictionaryClient) GetLongInvalidString(ctx context.Context) (result SetInt64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetLongInvalidString")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetLongInvalidString", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetLongInvalidStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongInvalidString", nil, "Failure preparing request")
@@ -2623,14 +2796,18 @@ func (client DictionaryClient) GetLongInvalidStringResponder(resp *http.Response
 
 // GetLongValid get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) GetLongValid(ctx context.Context) (result SetInt64, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetLongValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetLongValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetLongValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetLongValid", nil, "Failure preparing request")
@@ -2683,14 +2860,18 @@ func (client DictionaryClient) GetLongValidResponder(resp *http.Response) (resul
 
 // GetNull get null dictionary value
 func (client DictionaryClient) GetNull(ctx context.Context) (result SetInt32, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNull", nil, "Failure preparing request")
@@ -2743,14 +2924,18 @@ func (client DictionaryClient) GetNullResponder(resp *http.Response) (result Set
 
 // GetNullKey get Dictionary with null key
 func (client DictionaryClient) GetNullKey(ctx context.Context) (result SetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetNullKey")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetNullKey", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNullKeyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullKey", nil, "Failure preparing request")
@@ -2803,14 +2988,18 @@ func (client DictionaryClient) GetNullKeyResponder(resp *http.Response) (result 
 
 // GetNullValue get Dictionary with null value
 func (client DictionaryClient) GetNullValue(ctx context.Context) (result SetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetNullValue")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetNullValue", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNullValuePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetNullValue", nil, "Failure preparing request")
@@ -2863,14 +3052,18 @@ func (client DictionaryClient) GetNullValueResponder(resp *http.Response) (resul
 
 // GetStringValid get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 func (client DictionaryClient) GetStringValid(ctx context.Context) (result SetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetStringValid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetStringValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetStringValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringValid", nil, "Failure preparing request")
@@ -2923,14 +3116,18 @@ func (client DictionaryClient) GetStringValidResponder(resp *http.Response) (res
 
 // GetStringWithInvalid get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
 func (client DictionaryClient) GetStringWithInvalid(ctx context.Context) (result SetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetStringWithInvalid")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetStringWithInvalid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetStringWithInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithInvalid", nil, "Failure preparing request")
@@ -2983,14 +3180,18 @@ func (client DictionaryClient) GetStringWithInvalidResponder(resp *http.Response
 
 // GetStringWithNull get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
 func (client DictionaryClient) GetStringWithNull(ctx context.Context) (result SetString, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetStringWithNull")
-	defer func() {
-		sc := -1
-		if result.Response.Response != nil {
-			sc = result.Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetStringWithNull", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetStringWithNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "dictionarygroup.DictionaryClient", "GetStringWithNull", nil, "Failure preparing request")
@@ -3043,14 +3244,18 @@ func (client DictionaryClient) GetStringWithNullResponder(resp *http.Response) (
 
 // PutArrayValid put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutArrayValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutArrayValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3110,14 +3315,18 @@ func (client DictionaryClient) PutArrayValidResponder(resp *http.Response) (resu
 
 // PutBooleanTfft set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
 func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutBooleanTfft")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutBooleanTfft", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3178,14 +3387,18 @@ func (client DictionaryClient) PutBooleanTfftResponder(resp *http.Response) (res
 // PutByteValid put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each
 // elementencoded in base 64
 func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutByteValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutByteValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3246,14 +3459,18 @@ func (client DictionaryClient) PutByteValidResponder(resp *http.Response) (resul
 // PutComplexValid put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer":
 // 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
 func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutComplexValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutComplexValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3314,14 +3531,18 @@ func (client DictionaryClient) PutComplexValidResponder(resp *http.Response) (re
 // PutDateTimeRfc1123Valid set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980
 // 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDateTimeRfc1123Valid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutDateTimeRfc1123Valid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3382,14 +3603,18 @@ func (client DictionaryClient) PutDateTimeRfc1123ValidResponder(resp *http.Respo
 // PutDateTimeValid set dictionary value  {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
 func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*date.Time) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDateTimeValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutDateTimeValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3449,14 +3674,18 @@ func (client DictionaryClient) PutDateTimeValidResponder(resp *http.Response) (r
 
 // PutDateValid set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*date.Date) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDateValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutDateValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3517,14 +3746,18 @@ func (client DictionaryClient) PutDateValidResponder(resp *http.Response) (resul
 // PutDictionaryValid get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2":
 // "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDictionaryValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutDictionaryValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3584,14 +3817,18 @@ func (client DictionaryClient) PutDictionaryValidResponder(resp *http.Response) 
 
 // PutDoubleValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDoubleValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutDoubleValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3651,14 +3888,18 @@ func (client DictionaryClient) PutDoubleValidResponder(resp *http.Response) (res
 
 // PutDurationValid set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDurationValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutDurationValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3718,14 +3959,18 @@ func (client DictionaryClient) PutDurationValidResponder(resp *http.Response) (r
 
 // PutEmpty set dictionary value empty {}
 func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutEmpty")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutEmpty", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3785,14 +4030,18 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 
 // PutFloatValid set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutFloatValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutFloatValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3852,14 +4101,18 @@ func (client DictionaryClient) PutFloatValidResponder(resp *http.Response) (resu
 
 // PutIntegerValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutIntegerValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutIntegerValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3919,14 +4172,18 @@ func (client DictionaryClient) PutIntegerValidResponder(resp *http.Response) (re
 
 // PutLongValid set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutLongValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutLongValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -3986,14 +4243,18 @@ func (client DictionaryClient) PutLongValidResponder(resp *http.Response) (resul
 
 // PutStringValid set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
-	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutStringValid")
-	defer func() {
-		sc := -1
-		if result.Response != nil {
-			sc = result.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutStringValid", fqdn))
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: arrayBody,
 			Constraints: []validation.Constraint{{Target: "arrayBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {

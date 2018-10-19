@@ -8,12 +8,16 @@ package paginggroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
 	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
+
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/paging"
 
 // Status enumerates the values for status.
 type Status string
@@ -64,14 +68,18 @@ type OdataProductResultIterator struct {
 // NextWithContext advances to the next value.  If there was an error making
 // the request the iterator does not advance and the error is returned.
 func (iter *OdataProductResultIterator) NextWithContext(ctx context.Context) (err error) {
-	ctx = tracing.StartSpan(ctx, "generated/paging/OdataProductResultIterator.NextWithContext")
-	defer func() {
-		sc := -1
-		if iter.Response().Response.Response != nil {
-			sc = iter.Response().Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/OdataProductResultIterator.NextWithContext", fqdn))
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	iter.i++
 	if iter.i < len(iter.page.Values()) {
 		return nil
@@ -137,14 +145,18 @@ type OdataProductResultPage struct {
 // NextWithContext advances to the next page of values.  If there was an error making
 // the request the page does not advance and the error is returned.
 func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err error) {
-	ctx = tracing.StartSpan(ctx, "generated/paging/OdataProductResultPage.NextWithContext")
-	defer func() {
-		sc := -1
-		if page.Response().Response.Response != nil {
-			sc = page.Response().Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/OdataProductResultPage.NextWithContext", fqdn))
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	next, err := page.fn(ctx, page.opr)
 	if err != nil {
 		return err
@@ -269,14 +281,18 @@ type ProductResultIterator struct {
 // NextWithContext advances to the next value.  If there was an error making
 // the request the iterator does not advance and the error is returned.
 func (iter *ProductResultIterator) NextWithContext(ctx context.Context) (err error) {
-	ctx = tracing.StartSpan(ctx, "generated/paging/ProductResultIterator.NextWithContext")
-	defer func() {
-		sc := -1
-		if iter.Response().Response.Response != nil {
-			sc = iter.Response().Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ProductResultIterator.NextWithContext", fqdn))
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	iter.i++
 	if iter.i < len(iter.page.Values()) {
 		return nil
@@ -342,14 +358,18 @@ type ProductResultPage struct {
 // NextWithContext advances to the next page of values.  If there was an error making
 // the request the page does not advance and the error is returned.
 func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) {
-	ctx = tracing.StartSpan(ctx, "generated/paging/ProductResultPage.NextWithContext")
-	defer func() {
-		sc := -1
-		if page.Response().Response.Response != nil {
-			sc = page.Response().Response.Response.StatusCode
-		}
-		tracing.EndSpan(ctx, sc, err)
-	}()
+	// Not necessary to perform this check as nothing will be instrumented if it is false, but
+	// adding it to avoid any potential perf issue.
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ProductResultPage.NextWithContext", fqdn))
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	next, err := page.fn(ctx, page.pr)
 	if err != nil {
 		return err

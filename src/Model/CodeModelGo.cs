@@ -7,6 +7,7 @@ using AutoRest.Core.Utilities;
 using AutoRest.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,6 +18,7 @@ namespace AutoRest.Go.Model
     {
         public static readonly string OneVerString = "version.Number";
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
+        private const string sdkFqdnPrefix = "github.com/Azure/azure-sdk-for-go";
 
         public CodeModelGo()
         {
@@ -110,21 +112,21 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result.ToLowerInvariant();
-                var packageFqdnIndex = outDir.IndexOf("services");
-                if (packageFqdnIndex == -1)
+                var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result.ToLowerInvariant().Replace("\\", "/");
+                var sdkPath = Settings.Instance.Host?.GetValue<string>("go-sdk-folder").Result?.ToLowerInvariant().Replace("\\", "/").Trim();
+
+                if (!string.IsNullOrEmpty(sdkPath))
                 {
-                    packageFqdnIndex = outDir.IndexOf("generated");
+                    return $"{sdkFqdnPrefix}/{outDir.Split(sdkPath, StringSplitOptions.None).Last()}";
                 }
-                if (packageFqdnIndex == -1)
+                else if (!Path.IsPathRooted(outDir))
                 {
-                    packageFqdnIndex = outDir.IndexOf(ServiceName);
+                    return outDir;
                 }
-                if (packageFqdnIndex == -1)
+                else
                 {
-                    return ServiceName;
+                    return outDir.Substring(Path.GetPathRoot(outDir).Length);
                 }
-                return outDir.Substring(packageFqdnIndex);
             }
         }
 
