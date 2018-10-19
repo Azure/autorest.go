@@ -36,7 +36,7 @@ func (client Datetimerfc1123Client) GetInvalid(ctx context.Context) (result Date
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -96,7 +96,7 @@ func (client Datetimerfc1123Client) GetNull(ctx context.Context) (result DateTim
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -156,7 +156,7 @@ func (client Datetimerfc1123Client) GetOverflow(ctx context.Context) (result Dat
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -216,7 +216,7 @@ func (client Datetimerfc1123Client) GetUnderflow(ctx context.Context) (result Da
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -276,7 +276,7 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -336,7 +336,7 @@ func (client Datetimerfc1123Client) GetUtcMinDateTime(ctx context.Context) (resu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -396,7 +396,7 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -456,7 +456,7 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datet
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -517,7 +517,7 @@ func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datet
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

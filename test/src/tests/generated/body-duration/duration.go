@@ -35,7 +35,7 @@ func (client DurationClient) GetInvalid(ctx context.Context) (result TimeSpan, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -95,7 +95,7 @@ func (client DurationClient) GetNull(ctx context.Context) (result TimeSpan, err 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -155,7 +155,7 @@ func (client DurationClient) GetPositiveDuration(ctx context.Context) (result Ti
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -215,7 +215,7 @@ func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

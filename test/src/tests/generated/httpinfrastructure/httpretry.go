@@ -37,7 +37,7 @@ func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -101,7 +101,7 @@ func (client HTTPRetryClient) Get502(ctx context.Context) (result autorest.Respo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -160,7 +160,7 @@ func (client HTTPRetryClient) Head408(ctx context.Context) (result autorest.Resp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -221,7 +221,7 @@ func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -287,7 +287,7 @@ func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -353,7 +353,7 @@ func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -419,7 +419,7 @@ func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -485,7 +485,7 @@ func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

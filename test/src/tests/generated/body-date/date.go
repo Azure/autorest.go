@@ -36,7 +36,7 @@ func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -96,7 +96,7 @@ func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -156,7 +156,7 @@ func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -216,7 +216,7 @@ func (client DateClient) GetNull(ctx context.Context) (result DateModel, err err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -276,7 +276,7 @@ func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -336,7 +336,7 @@ func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -396,7 +396,7 @@ func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -457,7 +457,7 @@ func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

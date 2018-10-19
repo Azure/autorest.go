@@ -39,7 +39,7 @@ func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.Read
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -106,7 +106,7 @@ func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

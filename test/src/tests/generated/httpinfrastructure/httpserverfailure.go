@@ -37,7 +37,7 @@ func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -102,7 +102,7 @@ func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -162,7 +162,7 @@ func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -224,7 +224,7 @@ func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

@@ -50,7 +50,7 @@ func (client BaseClient) GetWithConstantInPath(ctx context.Context) (result auto
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -113,7 +113,7 @@ func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Produ
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -211,7 +211,7 @@ func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -325,7 +325,7 @@ func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resou
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

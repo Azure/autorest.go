@@ -35,7 +35,7 @@ func (client BoolClient) GetFalse(ctx context.Context) (result BoolModel, err er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -95,7 +95,7 @@ func (client BoolClient) GetInvalid(ctx context.Context) (result BoolModel, err 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -155,7 +155,7 @@ func (client BoolClient) GetNull(ctx context.Context) (result BoolModel, err err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -215,7 +215,7 @@ func (client BoolClient) GetTrue(ctx context.Context) (result BoolModel, err err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -275,7 +275,7 @@ func (client BoolClient) PutFalse(ctx context.Context) (result autorest.Response
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -336,7 +336,7 @@ func (client BoolClient) PutTrue(ctx context.Context) (result autorest.Response,
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

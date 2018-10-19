@@ -358,8 +358,8 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
             ctx = tracing.StartSpan(ctx, "@(modelPageType.AdvancerFqdn)")
             defer func() {
                 sc := -1
-                if iter.Response().Response.Response != nil {
-                    sc = page.Response().StatusCode
+                if page.Response().Response.Response != nil {
+                    sc = page.Response().Response.Response.StatusCode
                 }
                 tracing.EndSpan(ctx, sc, err)
             }()
@@ -410,7 +410,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
             defer func() {
                 sc := -1
                 if iter.Response().Response.Response != nil {
-                    sc = iter.Response().StatusCode
+                    sc = iter.Response().Response.Response.StatusCode
                 }
                 tracing.EndSpan(ctx, sc, err)
             }()

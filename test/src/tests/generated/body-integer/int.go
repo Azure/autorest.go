@@ -36,7 +36,7 @@ func (client IntClient) GetInvalid(ctx context.Context) (result Int32, err error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -96,7 +96,7 @@ func (client IntClient) GetInvalidUnixTime(ctx context.Context) (result UnixTime
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -156,7 +156,7 @@ func (client IntClient) GetNull(ctx context.Context) (result Int32, err error) {
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -216,7 +216,7 @@ func (client IntClient) GetNullUnixTime(ctx context.Context) (result UnixTime, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -276,7 +276,7 @@ func (client IntClient) GetOverflowInt32(ctx context.Context) (result Int32, err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -336,7 +336,7 @@ func (client IntClient) GetOverflowInt64(ctx context.Context) (result Int64, err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -396,7 +396,7 @@ func (client IntClient) GetUnderflowInt32(ctx context.Context) (result Int32, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -456,7 +456,7 @@ func (client IntClient) GetUnderflowInt64(ctx context.Context) (result Int64, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -516,7 +516,7 @@ func (client IntClient) GetUnixTime(ctx context.Context) (result UnixTime, err e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -576,7 +576,7 @@ func (client IntClient) PutMax32(ctx context.Context, intBody int32) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -637,7 +637,7 @@ func (client IntClient) PutMax64(ctx context.Context, intBody int64) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -698,7 +698,7 @@ func (client IntClient) PutMin32(ctx context.Context, intBody int32) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -759,7 +759,7 @@ func (client IntClient) PutMin64(ctx context.Context, intBody int64) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -820,7 +820,7 @@ func (client IntClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTi
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

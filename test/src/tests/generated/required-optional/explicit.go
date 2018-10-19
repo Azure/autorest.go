@@ -36,7 +36,7 @@ func (client ExplicitClient) PostOptionalArrayHeader(ctx context.Context, header
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -99,7 +99,7 @@ func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bod
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -163,7 +163,7 @@ func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, body
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -227,7 +227,7 @@ func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bod
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -299,7 +299,7 @@ func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, body
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -372,7 +372,7 @@ func (client ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, head
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -435,7 +435,7 @@ func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, b
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -499,7 +499,7 @@ func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -563,7 +563,7 @@ func (client ExplicitClient) PostOptionalStringHeader(ctx context.Context, bodyP
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -626,7 +626,7 @@ func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -690,7 +690,7 @@ func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bod
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -755,7 +755,7 @@ func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, header
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -823,7 +823,7 @@ func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bod
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -892,7 +892,7 @@ func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, body
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -961,7 +961,7 @@ func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bod
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1030,7 +1030,7 @@ func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, body
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1100,7 +1100,7 @@ func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, head
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1162,7 +1162,7 @@ func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, b
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1225,7 +1225,7 @@ func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bo
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1294,7 +1294,7 @@ func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, heade
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1356,7 +1356,7 @@ func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bo
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1419,7 +1419,7 @@ func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bod
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

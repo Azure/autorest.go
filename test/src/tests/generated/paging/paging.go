@@ -40,7 +40,7 @@ func (client PagingClient) GetMultiplePages(ctx context.Context, clientRequestID
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -137,7 +137,7 @@ func (client PagingClient) GetMultiplePagesComplete(ctx context.Context, clientR
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -151,7 +151,7 @@ func (client PagingClient) GetMultiplePagesFailure(ctx context.Context) (result 
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -233,7 +233,7 @@ func (client PagingClient) GetMultiplePagesFailureComplete(ctx context.Context) 
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -247,7 +247,7 @@ func (client PagingClient) GetMultiplePagesFailureURI(ctx context.Context) (resu
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -329,7 +329,7 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(ctx context.Contex
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -346,11 +346,11 @@ func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context,
 	defer func() {
 		sc := -1
 		if result.opr.Response.Response != nil {
-			sc = result.opr.StatusCode
+			sc = result.opr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
-	result.fn = func(lastResult OdataProductResult) (OdataProductResult, error) {
+	result.fn = func(ctx context.Context, lastResult OdataProductResult) (OdataProductResult, error) {
 		if lastResult.OdataNextLink == nil || len(to.String(lastResult.OdataNextLink)) < 1 {
 			return OdataProductResult{}, nil
 		}
@@ -421,7 +421,7 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -439,11 +439,11 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx cont
 	defer func() {
 		sc := -1
 		if result.opr.Response.Response != nil {
-			sc = result.opr.StatusCode
+			sc = result.opr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
-	result.fn = func(lastResult OdataProductResult) (OdataProductResult, error) {
+	result.fn = func(ctx context.Context, lastResult OdataProductResult) (OdataProductResult, error) {
 		if lastResult.OdataNextLink == nil || len(to.String(lastResult.OdataNextLink)) < 1 {
 			return OdataProductResult{}, nil
 		}
@@ -514,7 +514,7 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -531,8 +531,8 @@ func (client PagingClient) GetMultiplePagesLRO(ctx context.Context, clientReques
 	ctx = tracing.StartSpan(ctx, "generated/paging/PagingClient.GetMultiplePagesLRO")
 	defer func() {
 		sc := -1
-		if result.pr.Response() != nil {
-			sc = result.pr.Response().StatusCode
+		if result.Response() != nil {
+			sc = result.Response().StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -630,8 +630,8 @@ func (client PagingClient) GetMultiplePagesLROComplete(ctx context.Context, clie
 	ctx = tracing.StartSpan(ctx, "generated/paging/PagingClient.GetMultiplePagesLRO")
 	defer func() {
 		sc := -1
-		if result.result.pr.Response() != nil {
-			sc = result.result.pr.Response().StatusCode
+		if result.Response() != nil {
+			sc = result.Response().StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -648,7 +648,7 @@ func (client PagingClient) GetMultiplePagesRetryFirst(ctx context.Context) (resu
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -730,7 +730,7 @@ func (client PagingClient) GetMultiplePagesRetryFirstComplete(ctx context.Contex
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -745,7 +745,7 @@ func (client PagingClient) GetMultiplePagesRetrySecond(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -827,7 +827,7 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -846,7 +846,7 @@ func (client PagingClient) GetMultiplePagesWithOffset(ctx context.Context, offse
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -947,7 +947,7 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Contex
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -965,7 +965,7 @@ func (client PagingClient) GetOdataMultiplePages(ctx context.Context, clientRequ
 	defer func() {
 		sc := -1
 		if result.opr.Response.Response != nil {
-			sc = result.opr.StatusCode
+			sc = result.opr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1062,7 +1062,7 @@ func (client PagingClient) GetOdataMultiplePagesComplete(ctx context.Context, cl
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1076,7 +1076,7 @@ func (client PagingClient) GetSinglePages(ctx context.Context) (result ProductRe
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1158,7 +1158,7 @@ func (client PagingClient) GetSinglePagesComplete(ctx context.Context) (result P
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1172,7 +1172,7 @@ func (client PagingClient) GetSinglePagesFailure(ctx context.Context) (result Pr
 	defer func() {
 		sc := -1
 		if result.pr.Response.Response != nil {
-			sc = result.pr.StatusCode
+			sc = result.pr.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1254,7 +1254,7 @@ func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (r
 	defer func() {
 		sc := -1
 		if result.Response().Response.Response != nil {
-			sc = result.page.Response().StatusCode
+			sc = result.page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1272,7 +1272,7 @@ func (client PagingClient) NextFragment(ctx context.Context, APIVersion string, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1346,7 +1346,7 @@ func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, APIVers
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

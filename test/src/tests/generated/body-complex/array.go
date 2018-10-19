@@ -35,7 +35,7 @@ func (client ArrayClient) GetEmpty(ctx context.Context) (result ArrayWrapper, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -95,7 +95,7 @@ func (client ArrayClient) GetNotProvided(ctx context.Context) (result ArrayWrapp
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -155,7 +155,7 @@ func (client ArrayClient) GetValid(ctx context.Context) (result ArrayWrapper, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -217,7 +217,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -281,7 +281,7 @@ func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

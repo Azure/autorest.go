@@ -38,7 +38,7 @@ func (client QueriesClient) ArrayStringCsvEmpty(ctx context.Context, arrayQuery 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -105,7 +105,7 @@ func (client QueriesClient) ArrayStringCsvNull(ctx context.Context, arrayQuery [
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -174,7 +174,7 @@ func (client QueriesClient) ArrayStringCsvValid(ctx context.Context, arrayQuery 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -243,7 +243,7 @@ func (client QueriesClient) ArrayStringPipesValid(ctx context.Context, arrayQuer
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -312,7 +312,7 @@ func (client QueriesClient) ArrayStringSsvValid(ctx context.Context, arrayQuery 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -381,7 +381,7 @@ func (client QueriesClient) ArrayStringTsvValid(ctx context.Context, arrayQuery 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -446,7 +446,7 @@ func (client QueriesClient) ByteEmpty(ctx context.Context) (result autorest.Resp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -512,7 +512,7 @@ func (client QueriesClient) ByteMultiByte(ctx context.Context, byteQuery []byte)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -579,7 +579,7 @@ func (client QueriesClient) ByteNull(ctx context.Context, byteQuery []byte) (res
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -646,7 +646,7 @@ func (client QueriesClient) DateNull(ctx context.Context, dateQuery *date.Date) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -713,7 +713,7 @@ func (client QueriesClient) DateTimeNull(ctx context.Context, dateTimeQuery *dat
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -778,7 +778,7 @@ func (client QueriesClient) DateTimeValid(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -842,7 +842,7 @@ func (client QueriesClient) DateValid(ctx context.Context) (result autorest.Resp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -906,7 +906,7 @@ func (client QueriesClient) DoubleDecimalNegative(ctx context.Context) (result a
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -970,7 +970,7 @@ func (client QueriesClient) DoubleDecimalPositive(ctx context.Context) (result a
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1036,7 +1036,7 @@ func (client QueriesClient) DoubleNull(ctx context.Context, doubleQuery *float64
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1103,7 +1103,7 @@ func (client QueriesClient) EnumNull(ctx context.Context, enumQuery URIColor) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1170,7 +1170,7 @@ func (client QueriesClient) EnumValid(ctx context.Context, enumQuery URIColor) (
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1237,7 +1237,7 @@ func (client QueriesClient) FloatNull(ctx context.Context, floatQuery *float64) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1302,7 +1302,7 @@ func (client QueriesClient) FloatScientificNegative(ctx context.Context) (result
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1366,7 +1366,7 @@ func (client QueriesClient) FloatScientificPositive(ctx context.Context) (result
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1430,7 +1430,7 @@ func (client QueriesClient) GetBooleanFalse(ctx context.Context) (result autores
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1496,7 +1496,7 @@ func (client QueriesClient) GetBooleanNull(ctx context.Context, boolQuery *bool)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1561,7 +1561,7 @@ func (client QueriesClient) GetBooleanTrue(ctx context.Context) (result autorest
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1625,7 +1625,7 @@ func (client QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (resul
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1691,7 +1691,7 @@ func (client QueriesClient) GetIntNull(ctx context.Context, intQuery *int32) (re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1756,7 +1756,7 @@ func (client QueriesClient) GetIntOneMillion(ctx context.Context) (result autore
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1822,7 +1822,7 @@ func (client QueriesClient) GetLongNull(ctx context.Context, longQuery *int64) (
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1887,7 +1887,7 @@ func (client QueriesClient) GetNegativeTenBillion(ctx context.Context) (result a
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1951,7 +1951,7 @@ func (client QueriesClient) GetTenBillion(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2015,7 +2015,7 @@ func (client QueriesClient) StringEmpty(ctx context.Context) (result autorest.Re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2081,7 +2081,7 @@ func (client QueriesClient) StringNull(ctx context.Context, stringQuery string) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2146,7 +2146,7 @@ func (client QueriesClient) StringUnicode(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2210,7 +2210,7 @@ func (client QueriesClient) StringURLEncoded(ctx context.Context) (result autore
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

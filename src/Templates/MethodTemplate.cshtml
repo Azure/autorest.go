@@ -41,8 +41,8 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @if (Model.IsLongRunningOperation())
     {
         <text>
-            if @(Model.ResponseAssignTarget).Response() != nil {
-                sc = @(Model.ResponseAssignTarget).Response().StatusCode
+            if result.Response() != nil {
+                sc = result.Response().StatusCode
             }
         </text>
     }
@@ -52,7 +52,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         <text>
             
             if @(rawResponse) != nil {
-                sc = @(Model.ResponseAssignTarget).StatusCode
+                sc = @(rawResponse).StatusCode
             }
         </text>
     }
@@ -78,7 +78,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
             var returnType = nextMethod.MethodReturnType;
             var nextLinkField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().NextLink;
             <text>
-                result.@fnField = func(lastResult @returnType) (@returnType, error) {
+                result.@fnField = func(ctx context.Context, lastResult @returnType) (@returnType, error) {
                 if lastResult.@nextLinkField == nil || len(to.String(lastResult.@nextLinkField)) < 1 {
                 return @returnType{}, nil
                 }
@@ -384,8 +384,8 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     @if (Model.IsLongRunningOperation())
     {
         <text>
-        if result.@(Model.ResponseAssignTarget).Response() != nil {
-            sc = result.@(Model.ResponseAssignTarget).Response().StatusCode
+        if result.Response() != nil {
+            sc = result.Response().StatusCode
         }
         </text>
     }
@@ -393,7 +393,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     {
         <text>
         if result.Response().Response.Response != nil {
-            sc = result.page.Response().StatusCode
+            sc = result.page.Response().Response.Response.StatusCode
         }
         </text>
     }

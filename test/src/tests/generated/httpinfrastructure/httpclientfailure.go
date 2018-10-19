@@ -37,7 +37,7 @@ func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -104,7 +104,7 @@ func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -171,7 +171,7 @@ func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -236,7 +236,7 @@ func (client HTTPClientFailureClient) Get400(ctx context.Context) (result Error,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -296,7 +296,7 @@ func (client HTTPClientFailureClient) Get402(ctx context.Context) (result Error,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -356,7 +356,7 @@ func (client HTTPClientFailureClient) Get403(ctx context.Context) (result Error,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -416,7 +416,7 @@ func (client HTTPClientFailureClient) Get411(ctx context.Context) (result Error,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -476,7 +476,7 @@ func (client HTTPClientFailureClient) Get412(ctx context.Context) (result Error,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -536,7 +536,7 @@ func (client HTTPClientFailureClient) Get416(ctx context.Context) (result Error,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -596,7 +596,7 @@ func (client HTTPClientFailureClient) Head400(ctx context.Context) (result Error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -656,7 +656,7 @@ func (client HTTPClientFailureClient) Head401(ctx context.Context) (result Error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -716,7 +716,7 @@ func (client HTTPClientFailureClient) Head410(ctx context.Context) (result Error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -776,7 +776,7 @@ func (client HTTPClientFailureClient) Head429(ctx context.Context) (result Error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -838,7 +838,7 @@ func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -905,7 +905,7 @@ func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -972,7 +972,7 @@ func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1039,7 +1039,7 @@ func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1106,7 +1106,7 @@ func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1173,7 +1173,7 @@ func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1240,7 +1240,7 @@ func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1307,7 +1307,7 @@ func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1374,7 +1374,7 @@ func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1441,7 +1441,7 @@ func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

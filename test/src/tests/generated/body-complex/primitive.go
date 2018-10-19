@@ -35,7 +35,7 @@ func (client PrimitiveClient) GetBool(ctx context.Context) (result BooleanWrappe
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -95,7 +95,7 @@ func (client PrimitiveClient) GetByte(ctx context.Context) (result ByteWrapper, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -155,7 +155,7 @@ func (client PrimitiveClient) GetDate(ctx context.Context) (result DateWrapper, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -215,7 +215,7 @@ func (client PrimitiveClient) GetDateTime(ctx context.Context) (result DatetimeW
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -275,7 +275,7 @@ func (client PrimitiveClient) GetDateTimeRfc1123(ctx context.Context) (result Da
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -335,7 +335,7 @@ func (client PrimitiveClient) GetDouble(ctx context.Context) (result DoubleWrapp
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -395,7 +395,7 @@ func (client PrimitiveClient) GetDuration(ctx context.Context) (result DurationW
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -455,7 +455,7 @@ func (client PrimitiveClient) GetFloat(ctx context.Context) (result FloatWrapper
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -515,7 +515,7 @@ func (client PrimitiveClient) GetInt(ctx context.Context) (result IntWrapper, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -575,7 +575,7 @@ func (client PrimitiveClient) GetLong(ctx context.Context) (result LongWrapper, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -635,7 +635,7 @@ func (client PrimitiveClient) GetString(ctx context.Context) (result StringWrapp
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -697,7 +697,7 @@ func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWr
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -760,7 +760,7 @@ func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -823,7 +823,7 @@ func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -886,7 +886,7 @@ func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody Datet
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -949,7 +949,7 @@ func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBod
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1012,7 +1012,7 @@ func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleW
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1075,7 +1075,7 @@ func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody Durat
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1138,7 +1138,7 @@ func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWra
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1201,7 +1201,7 @@ func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1264,7 +1264,7 @@ func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1327,7 +1327,7 @@ func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringW
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

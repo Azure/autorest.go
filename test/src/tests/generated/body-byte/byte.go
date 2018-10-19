@@ -36,7 +36,7 @@ func (client ByteClient) GetEmpty(ctx context.Context) (result ByteArray, err er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -96,7 +96,7 @@ func (client ByteClient) GetInvalid(ctx context.Context) (result ByteArray, err 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -156,7 +156,7 @@ func (client ByteClient) GetNonASCII(ctx context.Context) (result ByteArray, err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -216,7 +216,7 @@ func (client ByteClient) GetNull(ctx context.Context) (result ByteArray, err err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -278,7 +278,7 @@ func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (resu
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

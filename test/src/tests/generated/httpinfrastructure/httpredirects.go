@@ -37,7 +37,7 @@ func (client HTTPRedirectsClient) Delete307(ctx context.Context, booleanValue *b
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -101,7 +101,7 @@ func (client HTTPRedirectsClient) Get300(ctx context.Context) (result ListString
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -161,7 +161,7 @@ func (client HTTPRedirectsClient) Get301(ctx context.Context) (result autorest.R
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -220,7 +220,7 @@ func (client HTTPRedirectsClient) Get302(ctx context.Context) (result autorest.R
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -279,7 +279,7 @@ func (client HTTPRedirectsClient) Get307(ctx context.Context) (result autorest.R
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -338,7 +338,7 @@ func (client HTTPRedirectsClient) Head300(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -397,7 +397,7 @@ func (client HTTPRedirectsClient) Head301(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -456,7 +456,7 @@ func (client HTTPRedirectsClient) Head302(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -515,7 +515,7 @@ func (client HTTPRedirectsClient) Head307(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -577,7 +577,7 @@ func (client HTTPRedirectsClient) Patch302(ctx context.Context, booleanValue *bo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -643,7 +643,7 @@ func (client HTTPRedirectsClient) Patch307(ctx context.Context, booleanValue *bo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -710,7 +710,7 @@ func (client HTTPRedirectsClient) Post303(ctx context.Context, booleanValue *boo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -776,7 +776,7 @@ func (client HTTPRedirectsClient) Post307(ctx context.Context, booleanValue *boo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -843,7 +843,7 @@ func (client HTTPRedirectsClient) Put301(ctx context.Context, booleanValue *bool
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -909,7 +909,7 @@ func (client HTTPRedirectsClient) Put307(ctx context.Context, booleanValue *bool
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

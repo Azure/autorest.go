@@ -35,7 +35,7 @@ func (client BasicClient) GetEmpty(ctx context.Context) (result Basic, err error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -95,7 +95,7 @@ func (client BasicClient) GetInvalid(ctx context.Context) (result Basic, err err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -155,7 +155,7 @@ func (client BasicClient) GetNotProvided(ctx context.Context) (result Basic, err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -215,7 +215,7 @@ func (client BasicClient) GetNull(ctx context.Context) (result Basic, err error)
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -275,7 +275,7 @@ func (client BasicClient) GetValid(ctx context.Context) (result Basic, err error
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -337,7 +337,7 @@ func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (resu
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

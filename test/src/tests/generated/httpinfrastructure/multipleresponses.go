@@ -35,7 +35,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ct
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -96,7 +96,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ct
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -157,7 +157,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ct
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -217,7 +217,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -277,7 +277,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -337,7 +337,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None(c
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -397,7 +397,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -458,7 +458,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -518,7 +518,7 @@ func (client MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -579,7 +579,7 @@ func (client MultipleResponsesClient) Get200ModelA200None(ctx context.Context) (
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -639,7 +639,7 @@ func (client MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context) 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -699,7 +699,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -759,7 +759,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -820,7 +820,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -880,7 +880,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -940,7 +940,7 @@ func (client MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context) 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1000,7 +1000,7 @@ func (client MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1060,7 +1060,7 @@ func (client MultipleResponsesClient) Get200ModelA400None(ctx context.Context) (
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1120,7 +1120,7 @@ func (client MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context) 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1180,7 +1180,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx c
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1239,7 +1239,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx c
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1299,7 +1299,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1358,7 +1358,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1417,7 +1417,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx co
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1476,7 +1476,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1535,7 +1535,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx co
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1594,7 +1594,7 @@ func (client MultipleResponsesClient) GetDefaultModelA200None(ctx context.Contex
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1654,7 +1654,7 @@ func (client MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1714,7 +1714,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Contex
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1774,7 +1774,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1834,7 +1834,7 @@ func (client MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1893,7 +1893,7 @@ func (client MultipleResponsesClient) GetDefaultNone200None(ctx context.Context)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1952,7 +1952,7 @@ func (client MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2011,7 +2011,7 @@ func (client MultipleResponsesClient) GetDefaultNone400None(ctx context.Context)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

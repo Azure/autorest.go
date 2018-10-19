@@ -35,7 +35,7 @@ func (client InheritanceClient) GetValid(ctx context.Context) (result Siamese, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -99,7 +99,7 @@ func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siames
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

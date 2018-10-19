@@ -37,7 +37,7 @@ func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *boo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -103,7 +103,7 @@ func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *boo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -169,7 +169,7 @@ func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *boo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -233,7 +233,7 @@ func (client HTTPSuccessClient) Get200(ctx context.Context) (result Bool, err er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -293,7 +293,7 @@ func (client HTTPSuccessClient) Head200(ctx context.Context) (result autorest.Re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -352,7 +352,7 @@ func (client HTTPSuccessClient) Head204(ctx context.Context) (result autorest.Re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -411,7 +411,7 @@ func (client HTTPSuccessClient) Head404(ctx context.Context) (result autorest.Re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -472,7 +472,7 @@ func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -538,7 +538,7 @@ func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -604,7 +604,7 @@ func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -670,7 +670,7 @@ func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -736,7 +736,7 @@ func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -802,7 +802,7 @@ func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -868,7 +868,7 @@ func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -934,7 +934,7 @@ func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1000,7 +1000,7 @@ func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1066,7 +1066,7 @@ func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1132,7 +1132,7 @@ func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

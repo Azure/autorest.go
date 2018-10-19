@@ -37,7 +37,7 @@ func (client HeaderClient) CustomRequestID(ctx context.Context) (result autorest
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -100,7 +100,7 @@ func (client HeaderClient) ParamBool(ctx context.Context, scenario string, value
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -164,7 +164,7 @@ func (client HeaderClient) ParamByte(ctx context.Context, scenario string, value
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -235,7 +235,7 @@ func (client HeaderClient) ParamDate(ctx context.Context, scenario string, value
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -300,7 +300,7 @@ func (client HeaderClient) ParamDatetime(ctx context.Context, scenario string, v
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -366,7 +366,7 @@ func (client HeaderClient) ParamDatetimeRfc1123(ctx context.Context, scenario st
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -434,7 +434,7 @@ func (client HeaderClient) ParamDouble(ctx context.Context, scenario string, val
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -498,7 +498,7 @@ func (client HeaderClient) ParamDuration(ctx context.Context, scenario string, v
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -563,7 +563,7 @@ func (client HeaderClient) ParamEnum(ctx context.Context, scenario string, value
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -629,7 +629,7 @@ func (client HeaderClient) ParamExistingKey(ctx context.Context, userAgent strin
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -693,7 +693,7 @@ func (client HeaderClient) ParamFloat(ctx context.Context, scenario string, valu
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -758,7 +758,7 @@ func (client HeaderClient) ParamInteger(ctx context.Context, scenario string, va
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -823,7 +823,7 @@ func (client HeaderClient) ParamLong(ctx context.Context, scenario string, value
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -886,7 +886,7 @@ func (client HeaderClient) ParamProtectedKey(ctx context.Context, contentType st
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -950,7 +950,7 @@ func (client HeaderClient) ParamString(ctx context.Context, scenario string, val
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1016,7 +1016,7 @@ func (client HeaderClient) ResponseBool(ctx context.Context, scenario string) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1078,7 +1078,7 @@ func (client HeaderClient) ResponseByte(ctx context.Context, scenario string) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1140,7 +1140,7 @@ func (client HeaderClient) ResponseDate(ctx context.Context, scenario string) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1202,7 +1202,7 @@ func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1265,7 +1265,7 @@ func (client HeaderClient) ResponseDatetimeRfc1123(ctx context.Context, scenario
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1327,7 +1327,7 @@ func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1389,7 +1389,7 @@ func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1451,7 +1451,7 @@ func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1511,7 +1511,7 @@ func (client HeaderClient) ResponseExistingKey(ctx context.Context) (result auto
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1572,7 +1572,7 @@ func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string) (
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1634,7 +1634,7 @@ func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1696,7 +1696,7 @@ func (client HeaderClient) ResponseLong(ctx context.Context, scenario string) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1756,7 +1756,7 @@ func (client HeaderClient) ResponseProtectedKey(ctx context.Context) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1817,7 +1817,7 @@ func (client HeaderClient) ResponseString(ctx context.Context, scenario string) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

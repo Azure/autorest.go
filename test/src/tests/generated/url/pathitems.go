@@ -42,7 +42,7 @@ func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringP
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -126,7 +126,7 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, lo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -210,7 +210,7 @@ func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStrin
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -294,7 +294,7 @@ func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, loc
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

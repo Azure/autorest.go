@@ -36,7 +36,7 @@ func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringMod
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -96,7 +96,7 @@ func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -156,7 +156,7 @@ func (client EnumClient) GetReferencedConstant(ctx context.Context) (result RefC
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -216,7 +216,7 @@ func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -277,7 +277,7 @@ func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Color
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -338,7 +338,7 @@ func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBo
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

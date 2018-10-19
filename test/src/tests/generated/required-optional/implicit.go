@@ -35,7 +35,7 @@ func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -101,7 +101,7 @@ func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -165,7 +165,7 @@ func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -230,7 +230,7 @@ func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -294,7 +294,7 @@ func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -358,7 +358,7 @@ func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParamet
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -421,7 +421,7 @@ func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParamete
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

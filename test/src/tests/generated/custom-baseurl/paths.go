@@ -32,7 +32,7 @@ func (client PathsClient) GetEmpty(ctx context.Context, accountName string) (res
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

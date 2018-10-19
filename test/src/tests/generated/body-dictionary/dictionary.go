@@ -37,7 +37,7 @@ func (client DictionaryClient) GetArrayEmpty(ctx context.Context) (result SetLis
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -97,7 +97,7 @@ func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context) (result Se
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -157,7 +157,7 @@ func (client DictionaryClient) GetArrayItemNull(ctx context.Context) (result Set
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -217,7 +217,7 @@ func (client DictionaryClient) GetArrayNull(ctx context.Context) (result SetList
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -277,7 +277,7 @@ func (client DictionaryClient) GetArrayValid(ctx context.Context) (result SetLis
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -338,7 +338,7 @@ func (client DictionaryClient) GetBase64URL(ctx context.Context) (result SetBase
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -398,7 +398,7 @@ func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context) (resul
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -458,7 +458,7 @@ func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -518,7 +518,7 @@ func (client DictionaryClient) GetBooleanTfft(ctx context.Context) (result SetBo
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -578,7 +578,7 @@ func (client DictionaryClient) GetByteInvalidNull(ctx context.Context) (result S
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -639,7 +639,7 @@ func (client DictionaryClient) GetByteValid(ctx context.Context) (result SetByte
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -699,7 +699,7 @@ func (client DictionaryClient) GetComplexEmpty(ctx context.Context) (result SetW
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -760,7 +760,7 @@ func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context) (result 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -821,7 +821,7 @@ func (client DictionaryClient) GetComplexItemNull(ctx context.Context) (result S
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -881,7 +881,7 @@ func (client DictionaryClient) GetComplexNull(ctx context.Context) (result SetWi
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -942,7 +942,7 @@ func (client DictionaryClient) GetComplexValid(ctx context.Context) (result SetW
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1002,7 +1002,7 @@ func (client DictionaryClient) GetDateInvalidChars(ctx context.Context) (result 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1062,7 +1062,7 @@ func (client DictionaryClient) GetDateInvalidNull(ctx context.Context) (result S
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1122,7 +1122,7 @@ func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1182,7 +1182,7 @@ func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context) (resu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1243,7 +1243,7 @@ func (client DictionaryClient) GetDateTimeRfc1123Valid(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1304,7 +1304,7 @@ func (client DictionaryClient) GetDateTimeValid(ctx context.Context) (result Set
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1364,7 +1364,7 @@ func (client DictionaryClient) GetDateValid(ctx context.Context) (result SetDate
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1424,7 +1424,7 @@ func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context) (result S
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1485,7 +1485,7 @@ func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context) (resu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1546,7 +1546,7 @@ func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context) (resul
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1606,7 +1606,7 @@ func (client DictionaryClient) GetDictionaryNull(ctx context.Context) (result Se
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1667,7 +1667,7 @@ func (client DictionaryClient) GetDictionaryValid(ctx context.Context) (result S
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1727,7 +1727,7 @@ func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context) (result
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1787,7 +1787,7 @@ func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context) (resu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1847,7 +1847,7 @@ func (client DictionaryClient) GetDoubleValid(ctx context.Context) (result SetFl
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1907,7 +1907,7 @@ func (client DictionaryClient) GetDurationValid(ctx context.Context) (result Set
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1967,7 +1967,7 @@ func (client DictionaryClient) GetEmpty(ctx context.Context) (result SetInt32, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2027,7 +2027,7 @@ func (client DictionaryClient) GetEmptyStringKey(ctx context.Context) (result Se
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2087,7 +2087,7 @@ func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context) (result 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2147,7 +2147,7 @@ func (client DictionaryClient) GetFloatInvalidString(ctx context.Context) (resul
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2207,7 +2207,7 @@ func (client DictionaryClient) GetFloatValid(ctx context.Context) (result SetFlo
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2267,7 +2267,7 @@ func (client DictionaryClient) GetIntegerValid(ctx context.Context) (result SetI
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2327,7 +2327,7 @@ func (client DictionaryClient) GetIntInvalidNull(ctx context.Context) (result Se
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2387,7 +2387,7 @@ func (client DictionaryClient) GetIntInvalidString(ctx context.Context) (result 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2447,7 +2447,7 @@ func (client DictionaryClient) GetInvalid(ctx context.Context) (result SetString
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2507,7 +2507,7 @@ func (client DictionaryClient) GetLongInvalidNull(ctx context.Context) (result S
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2567,7 +2567,7 @@ func (client DictionaryClient) GetLongInvalidString(ctx context.Context) (result
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2627,7 +2627,7 @@ func (client DictionaryClient) GetLongValid(ctx context.Context) (result SetInt6
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2687,7 +2687,7 @@ func (client DictionaryClient) GetNull(ctx context.Context) (result SetInt32, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2747,7 +2747,7 @@ func (client DictionaryClient) GetNullKey(ctx context.Context) (result SetString
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2807,7 +2807,7 @@ func (client DictionaryClient) GetNullValue(ctx context.Context) (result SetStri
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2867,7 +2867,7 @@ func (client DictionaryClient) GetStringValid(ctx context.Context) (result SetSt
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2927,7 +2927,7 @@ func (client DictionaryClient) GetStringWithInvalid(ctx context.Context) (result
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2987,7 +2987,7 @@ func (client DictionaryClient) GetStringWithNull(ctx context.Context) (result Se
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3047,7 +3047,7 @@ func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3114,7 +3114,7 @@ func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3182,7 +3182,7 @@ func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[s
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3250,7 +3250,7 @@ func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody ma
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3318,7 +3318,7 @@ func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arra
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3386,7 +3386,7 @@ func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody m
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3453,7 +3453,7 @@ func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[s
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3521,7 +3521,7 @@ func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3588,7 +3588,7 @@ func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3655,7 +3655,7 @@ func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody m
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3722,7 +3722,7 @@ func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[strin
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3789,7 +3789,7 @@ func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3856,7 +3856,7 @@ func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody ma
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3923,7 +3923,7 @@ func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[s
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3990,7 +3990,7 @@ func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

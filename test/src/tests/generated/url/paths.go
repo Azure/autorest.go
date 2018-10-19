@@ -41,7 +41,7 @@ func (client PathsClient) ArrayCsvInPath(ctx context.Context, arrayPath []string
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -112,7 +112,7 @@ func (client PathsClient) Base64URL(ctx context.Context, base64URLPath string) (
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -175,7 +175,7 @@ func (client PathsClient) ByteEmpty(ctx context.Context) (result autorest.Respon
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -240,7 +240,7 @@ func (client PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (r
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -311,7 +311,7 @@ func (client PathsClient) ByteNull(ctx context.Context, bytePath []byte) (result
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -382,7 +382,7 @@ func (client PathsClient) DateNull(ctx context.Context, datePath date.Date) (res
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -447,7 +447,7 @@ func (client PathsClient) DateTimeNull(ctx context.Context, dateTimePath date.Ti
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -510,7 +510,7 @@ func (client PathsClient) DateTimeValid(ctx context.Context) (result autorest.Re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -573,7 +573,7 @@ func (client PathsClient) DateValid(ctx context.Context) (result autorest.Respon
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -636,7 +636,7 @@ func (client PathsClient) DoubleDecimalNegative(ctx context.Context) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -699,7 +699,7 @@ func (client PathsClient) DoubleDecimalPositive(ctx context.Context) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -764,7 +764,7 @@ func (client PathsClient) EnumNull(ctx context.Context, enumPath URIColor) (resu
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -829,7 +829,7 @@ func (client PathsClient) EnumValid(ctx context.Context, enumPath URIColor) (res
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -892,7 +892,7 @@ func (client PathsClient) FloatScientificNegative(ctx context.Context) (result a
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -955,7 +955,7 @@ func (client PathsClient) FloatScientificPositive(ctx context.Context) (result a
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1018,7 +1018,7 @@ func (client PathsClient) GetBooleanFalse(ctx context.Context) (result autorest.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1081,7 +1081,7 @@ func (client PathsClient) GetBooleanTrue(ctx context.Context) (result autorest.R
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1144,7 +1144,7 @@ func (client PathsClient) GetIntNegativeOneMillion(ctx context.Context) (result 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1207,7 +1207,7 @@ func (client PathsClient) GetIntOneMillion(ctx context.Context) (result autorest
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1270,7 +1270,7 @@ func (client PathsClient) GetNegativeTenBillion(ctx context.Context) (result aut
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1333,7 +1333,7 @@ func (client PathsClient) GetTenBillion(ctx context.Context) (result autorest.Re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1396,7 +1396,7 @@ func (client PathsClient) StringEmpty(ctx context.Context) (result autorest.Resp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1461,7 +1461,7 @@ func (client PathsClient) StringNull(ctx context.Context, stringPath string) (re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1524,7 +1524,7 @@ func (client PathsClient) StringUnicode(ctx context.Context) (result autorest.Re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1587,7 +1587,7 @@ func (client PathsClient) StringURLEncoded(ctx context.Context) (result autorest
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1652,7 +1652,7 @@ func (client PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath date.
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

@@ -48,7 +48,7 @@ func (client BaseClient) GetArray(ctx context.Context) (result ListFlattenedProd
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -108,7 +108,7 @@ func (client BaseClient) GetDictionary(ctx context.Context) (result SetFlattened
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -168,7 +168,7 @@ func (client BaseClient) GetResourceCollection(ctx context.Context) (result Reso
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -229,7 +229,7 @@ func (client BaseClient) GetWrappedArray(ctx context.Context) (result ListProduc
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -291,7 +291,7 @@ func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleB
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -369,7 +369,7 @@ func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -435,7 +435,7 @@ func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary m
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -501,7 +501,7 @@ func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComp
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -567,7 +567,7 @@ func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -646,7 +646,7 @@ func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -729,7 +729,7 @@ func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []Wr
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

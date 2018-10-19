@@ -36,7 +36,7 @@ func (client PetsClient) CreateAPInProperties(ctx context.Context, createParamet
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -104,7 +104,7 @@ func (client PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, c
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -173,7 +173,7 @@ func (client PetsClient) CreateAPObject(ctx context.Context, createParameters Pe
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -241,7 +241,7 @@ func (client PetsClient) CreateAPString(ctx context.Context, createParameters Pe
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -309,7 +309,7 @@ func (client PetsClient) CreateAPTrue(ctx context.Context, createParameters PetA
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -377,7 +377,7 @@ func (client PetsClient) CreateCatAPTrue(ctx context.Context, createParameters C
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

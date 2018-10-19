@@ -38,7 +38,7 @@ func (client ArrayClient) GetArrayEmpty(ctx context.Context) (result ListListStr
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -98,7 +98,7 @@ func (client ArrayClient) GetArrayItemEmpty(ctx context.Context) (result ListLis
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -158,7 +158,7 @@ func (client ArrayClient) GetArrayItemNull(ctx context.Context) (result ListList
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -218,7 +218,7 @@ func (client ArrayClient) GetArrayNull(ctx context.Context) (result ListListStri
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -278,7 +278,7 @@ func (client ArrayClient) GetArrayValid(ctx context.Context) (result ListListStr
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -339,7 +339,7 @@ func (client ArrayClient) GetBase64URL(ctx context.Context) (result ListBase64UR
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -399,7 +399,7 @@ func (client ArrayClient) GetBooleanInvalidNull(ctx context.Context) (result Lis
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -459,7 +459,7 @@ func (client ArrayClient) GetBooleanInvalidString(ctx context.Context) (result L
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -519,7 +519,7 @@ func (client ArrayClient) GetBooleanTfft(ctx context.Context) (result ListBool, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -579,7 +579,7 @@ func (client ArrayClient) GetByteInvalidNull(ctx context.Context) (result ListBy
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -640,7 +640,7 @@ func (client ArrayClient) GetByteValid(ctx context.Context) (result ListByteArra
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -700,7 +700,7 @@ func (client ArrayClient) GetComplexEmpty(ctx context.Context) (result ListProdu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -761,7 +761,7 @@ func (client ArrayClient) GetComplexItemEmpty(ctx context.Context) (result ListP
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -822,7 +822,7 @@ func (client ArrayClient) GetComplexItemNull(ctx context.Context) (result ListPr
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -882,7 +882,7 @@ func (client ArrayClient) GetComplexNull(ctx context.Context) (result ListProduc
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -943,7 +943,7 @@ func (client ArrayClient) GetComplexValid(ctx context.Context) (result ListProdu
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1003,7 +1003,7 @@ func (client ArrayClient) GetDateInvalidChars(ctx context.Context) (result ListD
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1063,7 +1063,7 @@ func (client ArrayClient) GetDateInvalidNull(ctx context.Context) (result ListDa
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1123,7 +1123,7 @@ func (client ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (result L
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1183,7 +1183,7 @@ func (client ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (result Li
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1244,7 +1244,7 @@ func (client ArrayClient) GetDateTimeRfc1123Valid(ctx context.Context) (result L
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1305,7 +1305,7 @@ func (client ArrayClient) GetDateTimeValid(ctx context.Context) (result ListDate
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1365,7 +1365,7 @@ func (client ArrayClient) GetDateValid(ctx context.Context) (result ListDate, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1425,7 +1425,7 @@ func (client ArrayClient) GetDictionaryEmpty(ctx context.Context) (result ListSe
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1486,7 +1486,7 @@ func (client ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (result Li
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1547,7 +1547,7 @@ func (client ArrayClient) GetDictionaryItemNull(ctx context.Context) (result Lis
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1607,7 +1607,7 @@ func (client ArrayClient) GetDictionaryNull(ctx context.Context) (result ListSet
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1668,7 +1668,7 @@ func (client ArrayClient) GetDictionaryValid(ctx context.Context) (result ListSe
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1728,7 +1728,7 @@ func (client ArrayClient) GetDoubleInvalidNull(ctx context.Context) (result List
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1788,7 +1788,7 @@ func (client ArrayClient) GetDoubleInvalidString(ctx context.Context) (result Li
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1848,7 +1848,7 @@ func (client ArrayClient) GetDoubleValid(ctx context.Context) (result ListFloat6
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1908,7 +1908,7 @@ func (client ArrayClient) GetDurationValid(ctx context.Context) (result ListTime
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1968,7 +1968,7 @@ func (client ArrayClient) GetEmpty(ctx context.Context) (result ListInt32, err e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2028,7 +2028,7 @@ func (client ArrayClient) GetEnumValid(ctx context.Context) (result ListString, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2088,7 +2088,7 @@ func (client ArrayClient) GetFloatInvalidNull(ctx context.Context) (result ListF
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2148,7 +2148,7 @@ func (client ArrayClient) GetFloatInvalidString(ctx context.Context) (result Lis
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2208,7 +2208,7 @@ func (client ArrayClient) GetFloatValid(ctx context.Context) (result ListFloat64
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2268,7 +2268,7 @@ func (client ArrayClient) GetIntegerValid(ctx context.Context) (result ListInt32
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2328,7 +2328,7 @@ func (client ArrayClient) GetIntInvalidNull(ctx context.Context) (result ListInt
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2388,7 +2388,7 @@ func (client ArrayClient) GetIntInvalidString(ctx context.Context) (result ListI
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2448,7 +2448,7 @@ func (client ArrayClient) GetInvalid(ctx context.Context) (result ListInt32, err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2508,7 +2508,7 @@ func (client ArrayClient) GetLongInvalidNull(ctx context.Context) (result ListIn
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2568,7 +2568,7 @@ func (client ArrayClient) GetLongInvalidString(ctx context.Context) (result List
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2628,7 +2628,7 @@ func (client ArrayClient) GetLongValid(ctx context.Context) (result ListInt64, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2688,7 +2688,7 @@ func (client ArrayClient) GetNull(ctx context.Context) (result ListInt32, err er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2748,7 +2748,7 @@ func (client ArrayClient) GetStringEnumValid(ctx context.Context) (result ListSt
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2808,7 +2808,7 @@ func (client ArrayClient) GetStringValid(ctx context.Context) (result ListString
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2868,7 +2868,7 @@ func (client ArrayClient) GetStringWithInvalid(ctx context.Context) (result List
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2928,7 +2928,7 @@ func (client ArrayClient) GetStringWithNull(ctx context.Context) (result ListStr
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -2988,7 +2988,7 @@ func (client ArrayClient) GetUUIDInvalidChars(ctx context.Context) (result ListU
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3049,7 +3049,7 @@ func (client ArrayClient) GetUUIDValid(ctx context.Context) (result ListUUID, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3109,7 +3109,7 @@ func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]strin
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3176,7 +3176,7 @@ func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3244,7 +3244,7 @@ func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3312,7 +3312,7 @@ func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Produ
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3380,7 +3380,7 @@ func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3447,7 +3447,7 @@ func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3514,7 +3514,7 @@ func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Dat
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3582,7 +3582,7 @@ func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []ma
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3649,7 +3649,7 @@ func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float6
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3716,7 +3716,7 @@ func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []stri
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3783,7 +3783,7 @@ func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (res
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3850,7 +3850,7 @@ func (client ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3917,7 +3917,7 @@ func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -3984,7 +3984,7 @@ func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -4051,7 +4051,7 @@ func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -4118,7 +4118,7 @@ func (client ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []st
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -4185,7 +4185,7 @@ func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -4253,7 +4253,7 @@ func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUI
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

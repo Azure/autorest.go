@@ -68,7 +68,7 @@ func (iter *OdataProductResultIterator) NextWithContext(ctx context.Context) (er
 	defer func() {
 		sc := -1
 		if iter.Response().Response.Response != nil {
-			sc = iter.Response().StatusCode
+			sc = iter.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -140,8 +140,8 @@ func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err er
 	ctx = tracing.StartSpan(ctx, "generated/paging/OdataProductResultPage.NextWithContext")
 	defer func() {
 		sc := -1
-		if iter.Response().Response.Response != nil {
-			sc = page.Response().StatusCode
+		if page.Response().Response.Response != nil {
+			sc = page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -273,7 +273,7 @@ func (iter *ProductResultIterator) NextWithContext(ctx context.Context) (err err
 	defer func() {
 		sc := -1
 		if iter.Response().Response.Response != nil {
-			sc = iter.Response().StatusCode
+			sc = iter.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -345,8 +345,8 @@ func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) 
 	ctx = tracing.StartSpan(ctx, "generated/paging/ProductResultPage.NextWithContext")
 	defer func() {
 		sc := -1
-		if iter.Response().Response.Response != nil {
-			sc = page.Response().StatusCode
+		if page.Response().Response.Response != nil {
+			sc = page.Response().Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

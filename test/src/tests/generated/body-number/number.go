@@ -36,7 +36,7 @@ func (client NumberClient) GetBigDecimal(ctx context.Context) (result Decimal, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -96,7 +96,7 @@ func (client NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context) (re
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -156,7 +156,7 @@ func (client NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context) (re
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -216,7 +216,7 @@ func (client NumberClient) GetBigDouble(ctx context.Context) (result Float64, er
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -276,7 +276,7 @@ func (client NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -336,7 +336,7 @@ func (client NumberClient) GetBigDoublePositiveDecimal(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -396,7 +396,7 @@ func (client NumberClient) GetBigFloat(ctx context.Context) (result Float64, err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -456,7 +456,7 @@ func (client NumberClient) GetInvalidDecimal(ctx context.Context) (result Decima
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -516,7 +516,7 @@ func (client NumberClient) GetInvalidDouble(ctx context.Context) (result Float64
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -576,7 +576,7 @@ func (client NumberClient) GetInvalidFloat(ctx context.Context) (result Float64,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -636,7 +636,7 @@ func (client NumberClient) GetNull(ctx context.Context) (result Float64, err err
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -696,7 +696,7 @@ func (client NumberClient) GetSmallDecimal(ctx context.Context) (result Decimal,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -756,7 +756,7 @@ func (client NumberClient) GetSmallDouble(ctx context.Context) (result Float64, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -816,7 +816,7 @@ func (client NumberClient) GetSmallFloat(ctx context.Context) (result Float64, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -876,7 +876,7 @@ func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -937,7 +937,7 @@ func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -998,7 +998,7 @@ func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (re
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1059,7 +1059,7 @@ func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64)
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1120,7 +1120,7 @@ func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1181,7 +1181,7 @@ func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (res
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1242,7 +1242,7 @@ func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) 
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1303,7 +1303,7 @@ func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decim
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1364,7 +1364,7 @@ func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float6
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1425,7 +1425,7 @@ func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

@@ -36,7 +36,7 @@ func (client DatetimeClient) GetInvalid(ctx context.Context) (result DateTime, e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -97,7 +97,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx cont
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -157,7 +157,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -218,7 +218,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx cont
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -279,7 +279,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx cont
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -339,7 +339,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -400,7 +400,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx cont
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -460,7 +460,7 @@ func (client DatetimeClient) GetNull(ctx context.Context) (result DateTime, err 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -520,7 +520,7 @@ func (client DatetimeClient) GetOverflow(ctx context.Context) (result DateTime, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -580,7 +580,7 @@ func (client DatetimeClient) GetUnderflow(ctx context.Context) (result DateTime,
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -640,7 +640,7 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTime(ctx context.Context) (re
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -700,7 +700,7 @@ func (client DatetimeClient) GetUtcMinDateTime(ctx context.Context) (result Date
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -760,7 +760,7 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTime(ctx context.Context) (re
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -820,7 +820,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -881,7 +881,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -942,7 +942,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1003,7 +1003,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Conte
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1064,7 +1064,7 @@ func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -1125,7 +1125,7 @@ func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody
 	defer func() {
 		sc := -1
 		if result.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

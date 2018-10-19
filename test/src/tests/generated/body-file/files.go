@@ -35,7 +35,7 @@ func (client FilesClient) GetEmptyFile(ctx context.Context) (result ReadCloser, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -94,7 +94,7 @@ func (client FilesClient) GetFile(ctx context.Context) (result ReadCloser, err e
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
@@ -153,7 +153,7 @@ func (client FilesClient) GetFileLarge(ctx context.Context) (result ReadCloser, 
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()

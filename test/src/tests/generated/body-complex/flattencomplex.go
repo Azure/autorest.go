@@ -35,7 +35,7 @@ func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseT
 	defer func() {
 		sc := -1
 		if result.Response.Response != nil {
-			sc = result.StatusCode
+			sc = result.Response.Response.StatusCode
 		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
