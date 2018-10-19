@@ -33,7 +33,10 @@ func NewImplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetOptionalGlobalQuery")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetOptionalGlobalQueryPreparer(ctx)
@@ -96,7 +99,10 @@ func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response
 func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetRequiredGlobalPath")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetRequiredGlobalPathPreparer(ctx)
@@ -157,7 +163,10 @@ func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response)
 func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetRequiredGlobalQuery")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetRequiredGlobalQueryPreparer(ctx)
@@ -219,7 +228,10 @@ func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response
 func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.GetRequiredPath")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetRequiredPathPreparer(ctx, pathParameter)
@@ -280,7 +292,10 @@ func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (resu
 func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.PutOptionalBody")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutOptionalBodyPreparer(ctx, bodyParameter)
@@ -341,7 +356,10 @@ func (client ImplicitClient) PutOptionalBodyResponder(resp *http.Response) (resu
 func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.PutOptionalHeader")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutOptionalHeaderPreparer(ctx, queryParameter)
@@ -401,7 +419,10 @@ func (client ImplicitClient) PutOptionalHeaderResponder(resp *http.Response) (re
 func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ImplicitClient.PutOptionalQuery")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutOptionalQueryPreparer(ctx, queryParameter)

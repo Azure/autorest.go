@@ -48,7 +48,10 @@ func NewWithBaseURI(baseURI string) BaseClient {
 func (client BaseClient) GetReport(ctx context.Context, qualifier string) (result SetInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/report/BaseClient.GetReport")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetReportPreparer(ctx, qualifier)

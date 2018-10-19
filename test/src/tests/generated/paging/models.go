@@ -66,7 +66,10 @@ type OdataProductResultIterator struct {
 func (iter *OdataProductResultIterator) NextWithContext(ctx context.Context) (err error) {
 	ctx = tracing.StartSpan(ctx, "generated/paging/OdataProductResultIterator.NextWithContext")
 	defer func() {
-		sc := iter.Response().StatusCode
+		sc := -1
+		if iter.Response().Response.Response != nil {
+			sc = iter.Response().StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	iter.i++
@@ -136,7 +139,10 @@ type OdataProductResultPage struct {
 func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err error) {
 	ctx = tracing.StartSpan(ctx, "generated/paging/OdataProductResultPage.NextWithContext")
 	defer func() {
-		sc := page.opr.StatusCode
+		sc := -1
+		if iter.Response().Response.Response != nil {
+			sc = page.Response().StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	next, err := page.fn(ctx, page.opr)
@@ -265,7 +271,10 @@ type ProductResultIterator struct {
 func (iter *ProductResultIterator) NextWithContext(ctx context.Context) (err error) {
 	ctx = tracing.StartSpan(ctx, "generated/paging/ProductResultIterator.NextWithContext")
 	defer func() {
-		sc := iter.Response().StatusCode
+		sc := -1
+		if iter.Response().Response.Response != nil {
+			sc = iter.Response().StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	iter.i++
@@ -335,7 +344,10 @@ type ProductResultPage struct {
 func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) {
 	ctx = tracing.StartSpan(ctx, "generated/paging/ProductResultPage.NextWithContext")
 	defer func() {
-		sc := page.pr.StatusCode
+		sc := -1
+		if iter.Response().Response.Response != nil {
+			sc = page.Response().StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	next, err := page.fn(ctx, page.pr)

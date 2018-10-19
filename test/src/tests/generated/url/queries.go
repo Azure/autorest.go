@@ -36,7 +36,10 @@ func NewQueriesClientWithBaseURI(baseURI string, globalStringPath string, global
 func (client QueriesClient) ArrayStringCsvEmpty(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringCsvEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ArrayStringCsvEmptyPreparer(ctx, arrayQuery)
@@ -100,7 +103,10 @@ func (client QueriesClient) ArrayStringCsvEmptyResponder(resp *http.Response) (r
 func (client QueriesClient) ArrayStringCsvNull(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringCsvNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ArrayStringCsvNullPreparer(ctx, arrayQuery)
@@ -166,7 +172,10 @@ func (client QueriesClient) ArrayStringCsvNullResponder(resp *http.Response) (re
 func (client QueriesClient) ArrayStringCsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringCsvValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ArrayStringCsvValidPreparer(ctx, arrayQuery)
@@ -232,7 +241,10 @@ func (client QueriesClient) ArrayStringCsvValidResponder(resp *http.Response) (r
 func (client QueriesClient) ArrayStringPipesValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringPipesValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ArrayStringPipesValidPreparer(ctx, arrayQuery)
@@ -298,7 +310,10 @@ func (client QueriesClient) ArrayStringPipesValidResponder(resp *http.Response) 
 func (client QueriesClient) ArrayStringSsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringSsvValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ArrayStringSsvValidPreparer(ctx, arrayQuery)
@@ -364,7 +379,10 @@ func (client QueriesClient) ArrayStringSsvValidResponder(resp *http.Response) (r
 func (client QueriesClient) ArrayStringTsvValid(ctx context.Context, arrayQuery []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ArrayStringTsvValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ArrayStringTsvValidPreparer(ctx, arrayQuery)
@@ -426,7 +444,10 @@ func (client QueriesClient) ArrayStringTsvValidResponder(resp *http.Response) (r
 func (client QueriesClient) ByteEmpty(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ByteEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ByteEmptyPreparer(ctx)
@@ -489,7 +510,10 @@ func (client QueriesClient) ByteEmptyResponder(resp *http.Response) (result auto
 func (client QueriesClient) ByteMultiByte(ctx context.Context, byteQuery []byte) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ByteMultiByte")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ByteMultiBytePreparer(ctx, byteQuery)
@@ -553,7 +577,10 @@ func (client QueriesClient) ByteMultiByteResponder(resp *http.Response) (result 
 func (client QueriesClient) ByteNull(ctx context.Context, byteQuery []byte) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.ByteNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ByteNullPreparer(ctx, byteQuery)
@@ -617,7 +644,10 @@ func (client QueriesClient) ByteNullResponder(resp *http.Response) (result autor
 func (client QueriesClient) DateNull(ctx context.Context, dateQuery *date.Date) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateNullPreparer(ctx, dateQuery)
@@ -681,7 +711,10 @@ func (client QueriesClient) DateNullResponder(resp *http.Response) (result autor
 func (client QueriesClient) DateTimeNull(ctx context.Context, dateTimeQuery *date.Time) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateTimeNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateTimeNullPreparer(ctx, dateTimeQuery)
@@ -743,7 +776,10 @@ func (client QueriesClient) DateTimeNullResponder(resp *http.Response) (result a
 func (client QueriesClient) DateTimeValid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateTimeValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateTimeValidPreparer(ctx)
@@ -804,7 +840,10 @@ func (client QueriesClient) DateTimeValidResponder(resp *http.Response) (result 
 func (client QueriesClient) DateValid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DateValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateValidPreparer(ctx)
@@ -865,7 +904,10 @@ func (client QueriesClient) DateValidResponder(resp *http.Response) (result auto
 func (client QueriesClient) DoubleDecimalNegative(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DoubleDecimalNegative")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DoubleDecimalNegativePreparer(ctx)
@@ -926,7 +968,10 @@ func (client QueriesClient) DoubleDecimalNegativeResponder(resp *http.Response) 
 func (client QueriesClient) DoubleDecimalPositive(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DoubleDecimalPositive")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DoubleDecimalPositivePreparer(ctx)
@@ -989,7 +1034,10 @@ func (client QueriesClient) DoubleDecimalPositiveResponder(resp *http.Response) 
 func (client QueriesClient) DoubleNull(ctx context.Context, doubleQuery *float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.DoubleNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DoubleNullPreparer(ctx, doubleQuery)
@@ -1053,7 +1101,10 @@ func (client QueriesClient) DoubleNullResponder(resp *http.Response) (result aut
 func (client QueriesClient) EnumNull(ctx context.Context, enumQuery URIColor) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.EnumNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.EnumNullPreparer(ctx, enumQuery)
@@ -1117,7 +1168,10 @@ func (client QueriesClient) EnumNullResponder(resp *http.Response) (result autor
 func (client QueriesClient) EnumValid(ctx context.Context, enumQuery URIColor) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.EnumValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.EnumValidPreparer(ctx, enumQuery)
@@ -1181,7 +1235,10 @@ func (client QueriesClient) EnumValidResponder(resp *http.Response) (result auto
 func (client QueriesClient) FloatNull(ctx context.Context, floatQuery *float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.FloatNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.FloatNullPreparer(ctx, floatQuery)
@@ -1243,7 +1300,10 @@ func (client QueriesClient) FloatNullResponder(resp *http.Response) (result auto
 func (client QueriesClient) FloatScientificNegative(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.FloatScientificNegative")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.FloatScientificNegativePreparer(ctx)
@@ -1304,7 +1364,10 @@ func (client QueriesClient) FloatScientificNegativeResponder(resp *http.Response
 func (client QueriesClient) FloatScientificPositive(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.FloatScientificPositive")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.FloatScientificPositivePreparer(ctx)
@@ -1365,7 +1428,10 @@ func (client QueriesClient) FloatScientificPositiveResponder(resp *http.Response
 func (client QueriesClient) GetBooleanFalse(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetBooleanFalse")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanFalsePreparer(ctx)
@@ -1428,7 +1494,10 @@ func (client QueriesClient) GetBooleanFalseResponder(resp *http.Response) (resul
 func (client QueriesClient) GetBooleanNull(ctx context.Context, boolQuery *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetBooleanNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanNullPreparer(ctx, boolQuery)
@@ -1490,7 +1559,10 @@ func (client QueriesClient) GetBooleanNullResponder(resp *http.Response) (result
 func (client QueriesClient) GetBooleanTrue(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetBooleanTrue")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanTruePreparer(ctx)
@@ -1551,7 +1623,10 @@ func (client QueriesClient) GetBooleanTrueResponder(resp *http.Response) (result
 func (client QueriesClient) GetIntNegativeOneMillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetIntNegativeOneMillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntNegativeOneMillionPreparer(ctx)
@@ -1614,7 +1689,10 @@ func (client QueriesClient) GetIntNegativeOneMillionResponder(resp *http.Respons
 func (client QueriesClient) GetIntNull(ctx context.Context, intQuery *int32) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetIntNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntNullPreparer(ctx, intQuery)
@@ -1676,7 +1754,10 @@ func (client QueriesClient) GetIntNullResponder(resp *http.Response) (result aut
 func (client QueriesClient) GetIntOneMillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetIntOneMillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntOneMillionPreparer(ctx)
@@ -1739,7 +1820,10 @@ func (client QueriesClient) GetIntOneMillionResponder(resp *http.Response) (resu
 func (client QueriesClient) GetLongNull(ctx context.Context, longQuery *int64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetLongNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongNullPreparer(ctx, longQuery)
@@ -1801,7 +1885,10 @@ func (client QueriesClient) GetLongNullResponder(resp *http.Response) (result au
 func (client QueriesClient) GetNegativeTenBillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetNegativeTenBillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNegativeTenBillionPreparer(ctx)
@@ -1862,7 +1949,10 @@ func (client QueriesClient) GetNegativeTenBillionResponder(resp *http.Response) 
 func (client QueriesClient) GetTenBillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.GetTenBillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetTenBillionPreparer(ctx)
@@ -1923,7 +2013,10 @@ func (client QueriesClient) GetTenBillionResponder(resp *http.Response) (result 
 func (client QueriesClient) StringEmpty(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringEmptyPreparer(ctx)
@@ -1986,7 +2079,10 @@ func (client QueriesClient) StringEmptyResponder(resp *http.Response) (result au
 func (client QueriesClient) StringNull(ctx context.Context, stringQuery string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringNullPreparer(ctx, stringQuery)
@@ -2048,7 +2144,10 @@ func (client QueriesClient) StringNullResponder(resp *http.Response) (result aut
 func (client QueriesClient) StringUnicode(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringUnicode")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringUnicodePreparer(ctx)
@@ -2109,7 +2208,10 @@ func (client QueriesClient) StringUnicodeResponder(resp *http.Response) (result 
 func (client QueriesClient) StringURLEncoded(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/QueriesClient.StringURLEncoded")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringURLEncodedPreparer(ctx)

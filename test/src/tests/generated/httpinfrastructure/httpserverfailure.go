@@ -35,7 +35,10 @@ func NewHTTPServerFailureClientWithBaseURI(baseURI string) HTTPServerFailureClie
 func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPServerFailureClient.Delete505")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Delete505Preparer(ctx, booleanValue)
@@ -97,7 +100,10 @@ func (client HTTPServerFailureClient) Delete505Responder(resp *http.Response) (r
 func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPServerFailureClient.Get501")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get501Preparer(ctx)
@@ -154,7 +160,10 @@ func (client HTTPServerFailureClient) Get501Responder(resp *http.Response) (resu
 func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPServerFailureClient.Head501")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Head501Preparer(ctx)
@@ -213,7 +222,10 @@ func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (res
 func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPServerFailureClient.Post505")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Post505Preparer(ctx, booleanValue)

@@ -37,7 +37,10 @@ func NewFormdataClientWithBaseURI(baseURI string) FormdataClient {
 func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadCloser, fileName string) (result ReadCloser, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-formdata/FormdataClient.UploadFile")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.UploadFilePreparer(ctx, fileContent, fileName)
@@ -101,7 +104,10 @@ func (client FormdataClient) UploadFileResponder(resp *http.Response) (result Re
 func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadCloser) (result ReadCloser, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-formdata/FormdataClient.UploadFileViaBody")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.UploadFileViaBodyPreparer(ctx, fileContent)

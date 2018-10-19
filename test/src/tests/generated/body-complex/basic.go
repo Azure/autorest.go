@@ -33,7 +33,10 @@ func NewBasicClientWithBaseURI(baseURI string) BasicClient {
 func (client BasicClient) GetEmpty(ctx context.Context) (result Basic, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/BasicClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx)
@@ -90,7 +93,10 @@ func (client BasicClient) GetEmptyResponder(resp *http.Response) (result Basic, 
 func (client BasicClient) GetInvalid(ctx context.Context) (result Basic, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/BasicClient.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -147,7 +153,10 @@ func (client BasicClient) GetInvalidResponder(resp *http.Response) (result Basic
 func (client BasicClient) GetNotProvided(ctx context.Context) (result Basic, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/BasicClient.GetNotProvided")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNotProvidedPreparer(ctx)
@@ -204,7 +213,10 @@ func (client BasicClient) GetNotProvidedResponder(resp *http.Response) (result B
 func (client BasicClient) GetNull(ctx context.Context) (result Basic, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/BasicClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -261,7 +273,10 @@ func (client BasicClient) GetNullResponder(resp *http.Response) (result Basic, e
 func (client BasicClient) GetValid(ctx context.Context) (result Basic, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/BasicClient.GetValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetValidPreparer(ctx)
@@ -320,7 +335,10 @@ func (client BasicClient) GetValidResponder(resp *http.Response) (result Basic, 
 func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/BasicClient.PutValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutValidPreparer(ctx, complexBody)

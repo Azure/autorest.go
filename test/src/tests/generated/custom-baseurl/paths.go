@@ -30,7 +30,10 @@ func NewPathsClient() PathsClient {
 func (client PathsClient) GetEmpty(ctx context.Context, accountName string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/custom-baseurl/PathsClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx, accountName)

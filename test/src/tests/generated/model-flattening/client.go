@@ -46,7 +46,10 @@ func NewWithBaseURI(baseURI string) BaseClient {
 func (client BaseClient) GetArray(ctx context.Context) (result ListFlattenedProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetArray")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayPreparer(ctx)
@@ -103,7 +106,10 @@ func (client BaseClient) GetArrayResponder(resp *http.Response) (result ListFlat
 func (client BaseClient) GetDictionary(ctx context.Context) (result SetFlattenedProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetDictionary")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryPreparer(ctx)
@@ -160,7 +166,10 @@ func (client BaseClient) GetDictionaryResponder(resp *http.Response) (result Set
 func (client BaseClient) GetResourceCollection(ctx context.Context) (result ResourceCollection, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetResourceCollection")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetResourceCollectionPreparer(ctx)
@@ -218,7 +227,10 @@ func (client BaseClient) GetResourceCollectionResponder(resp *http.Response) (re
 func (client BaseClient) GetWrappedArray(ctx context.Context) (result ListProductWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.GetWrappedArray")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetWrappedArrayPreparer(ctx)
@@ -277,7 +289,10 @@ func (client BaseClient) GetWrappedArrayResponder(resp *http.Response) (result L
 func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PostFlattenedSimpleProduct")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -352,7 +367,10 @@ func (client BaseClient) PostFlattenedSimpleProductResponder(resp *http.Response
 func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutArray")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutArrayPreparer(ctx, resourceArray)
@@ -415,7 +433,10 @@ func (client BaseClient) PutArrayResponder(resp *http.Response) (result autorest
 func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutDictionary")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutDictionaryPreparer(ctx, resourceDictionary)
@@ -478,7 +499,10 @@ func (client BaseClient) PutDictionaryResponder(resp *http.Response) (result aut
 func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutResourceCollection")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutResourceCollectionPreparer(ctx, resourceComplexObject)
@@ -541,7 +565,10 @@ func (client BaseClient) PutResourceCollectionResponder(resp *http.Response) (re
 func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutSimpleProduct")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -617,7 +644,10 @@ func (client BaseClient) PutSimpleProductResponder(resp *http.Response) (result 
 func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutSimpleProductWithGrouping")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -697,7 +727,10 @@ func (client BaseClient) PutSimpleProductWithGroupingResponder(resp *http.Respon
 func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/model-flattening/BaseClient.PutWrappedArray")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutWrappedArrayPreparer(ctx, resourceArray)

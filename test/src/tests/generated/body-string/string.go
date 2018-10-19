@@ -33,7 +33,10 @@ func NewStringClientWithBaseURI(baseURI string) StringClient {
 func (client StringClient) GetBase64Encoded(ctx context.Context) (result Base64URL, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetBase64Encoded")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBase64EncodedPreparer(ctx)
@@ -90,7 +93,10 @@ func (client StringClient) GetBase64EncodedResponder(resp *http.Response) (resul
 func (client StringClient) GetBase64URLEncoded(ctx context.Context) (result Base64URL, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetBase64URLEncoded")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBase64URLEncodedPreparer(ctx)
@@ -147,7 +153,10 @@ func (client StringClient) GetBase64URLEncodedResponder(resp *http.Response) (re
 func (client StringClient) GetEmpty(ctx context.Context) (result StringModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx)
@@ -204,7 +213,10 @@ func (client StringClient) GetEmptyResponder(resp *http.Response) (result String
 func (client StringClient) GetMbcs(ctx context.Context) (result StringModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetMbcs")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetMbcsPreparer(ctx)
@@ -261,7 +273,10 @@ func (client StringClient) GetMbcsResponder(resp *http.Response) (result StringM
 func (client StringClient) GetNotProvided(ctx context.Context) (result StringModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetNotProvided")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNotProvidedPreparer(ctx)
@@ -318,7 +333,10 @@ func (client StringClient) GetNotProvidedResponder(resp *http.Response) (result 
 func (client StringClient) GetNull(ctx context.Context) (result StringModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -375,7 +393,10 @@ func (client StringClient) GetNullResponder(resp *http.Response) (result StringM
 func (client StringClient) GetNullBase64URLEncoded(ctx context.Context) (result Base64URL, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetNullBase64URLEncoded")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullBase64URLEncodedPreparer(ctx)
@@ -433,7 +454,10 @@ func (client StringClient) GetNullBase64URLEncodedResponder(resp *http.Response)
 func (client StringClient) GetWhitespace(ctx context.Context) (result StringModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.GetWhitespace")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetWhitespacePreparer(ctx)
@@ -490,7 +514,10 @@ func (client StringClient) GetWhitespaceResponder(resp *http.Response) (result S
 func (client StringClient) PutBase64URLEncoded(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.PutBase64URLEncoded")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBase64URLEncodedPreparer(ctx, stringBody)
@@ -548,7 +575,10 @@ func (client StringClient) PutBase64URLEncodedResponder(resp *http.Response) (re
 func (client StringClient) PutEmpty(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.PutEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutEmptyPreparer(ctx)
@@ -606,7 +636,10 @@ func (client StringClient) PutEmptyResponder(resp *http.Response) (result autore
 func (client StringClient) PutMbcs(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.PutMbcs")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMbcsPreparer(ctx)
@@ -664,7 +697,10 @@ func (client StringClient) PutMbcsResponder(resp *http.Response) (result autores
 func (client StringClient) PutNull(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.PutNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutNullPreparer(ctx, stringBody)
@@ -726,7 +762,10 @@ func (client StringClient) PutNullResponder(resp *http.Response) (result autores
 func (client StringClient) PutWhitespace(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/StringClient.PutWhitespace")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutWhitespacePreparer(ctx)

@@ -33,7 +33,10 @@ func NewDurationClientWithBaseURI(baseURI string) DurationClient {
 func (client DurationClient) GetInvalid(ctx context.Context) (result TimeSpan, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-duration/DurationClient.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -90,7 +93,10 @@ func (client DurationClient) GetInvalidResponder(resp *http.Response) (result Ti
 func (client DurationClient) GetNull(ctx context.Context) (result TimeSpan, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-duration/DurationClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -147,7 +153,10 @@ func (client DurationClient) GetNullResponder(resp *http.Response) (result TimeS
 func (client DurationClient) GetPositiveDuration(ctx context.Context) (result TimeSpan, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-duration/DurationClient.GetPositiveDuration")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetPositiveDurationPreparer(ctx)
@@ -204,7 +213,10 @@ func (client DurationClient) GetPositiveDurationResponder(resp *http.Response) (
 func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBody string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-duration/DurationClient.PutPositiveDuration")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutPositiveDurationPreparer(ctx, durationBody)

@@ -34,7 +34,10 @@ func NewDateClientWithBaseURI(baseURI string) DateClient {
 func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetInvalidDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidDatePreparer(ctx)
@@ -91,7 +94,10 @@ func (client DateClient) GetInvalidDateResponder(resp *http.Response) (result Da
 func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetMaxDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetMaxDatePreparer(ctx)
@@ -148,7 +154,10 @@ func (client DateClient) GetMaxDateResponder(resp *http.Response) (result DateMo
 func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetMinDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetMinDatePreparer(ctx)
@@ -205,7 +214,10 @@ func (client DateClient) GetMinDateResponder(resp *http.Response) (result DateMo
 func (client DateClient) GetNull(ctx context.Context) (result DateModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -262,7 +274,10 @@ func (client DateClient) GetNullResponder(resp *http.Response) (result DateModel
 func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetOverflowDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetOverflowDatePreparer(ctx)
@@ -319,7 +334,10 @@ func (client DateClient) GetOverflowDateResponder(resp *http.Response) (result D
 func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.GetUnderflowDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUnderflowDatePreparer(ctx)
@@ -376,7 +394,10 @@ func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result 
 func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.PutMaxDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMaxDatePreparer(ctx, dateBody)
@@ -434,7 +455,10 @@ func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autore
 func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-date/DateClient.PutMinDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMinDatePreparer(ctx, dateBody)

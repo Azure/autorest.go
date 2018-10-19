@@ -35,7 +35,10 @@ func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
 func (client PolymorphismClient) GetComplicated(ctx context.Context) (result SalmonModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PolymorphismClient.GetComplicated")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplicatedPreparer(ctx)
@@ -92,7 +95,10 @@ func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (r
 func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PolymorphismClient.GetValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetValidPreparer(ctx)
@@ -150,7 +156,10 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody BasicSalmon) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PolymorphismClient.PutComplicated")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutComplicatedPreparer(ctx, complexBody)
@@ -208,7 +217,10 @@ func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (r
 func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PolymorphismClient.PutMissingDiscriminator")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMissingDiscriminatorPreparer(ctx, complexBody)
@@ -301,7 +313,10 @@ func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Res
 func (client PolymorphismClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PolymorphismClient.PutValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -394,7 +409,10 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PolymorphismClient.PutValidMissingRequired")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{

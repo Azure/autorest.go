@@ -34,7 +34,10 @@ func NewNumberClientWithBaseURI(baseURI string) NumberClient {
 func (client NumberClient) GetBigDecimal(ctx context.Context) (result Decimal, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBigDecimalPreparer(ctx)
@@ -91,7 +94,10 @@ func (client NumberClient) GetBigDecimalResponder(resp *http.Response) (result D
 func (client NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context) (result Decimal, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDecimalNegativeDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBigDecimalNegativeDecimalPreparer(ctx)
@@ -148,7 +154,10 @@ func (client NumberClient) GetBigDecimalNegativeDecimalResponder(resp *http.Resp
 func (client NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context) (result Decimal, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDecimalPositiveDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBigDecimalPositiveDecimalPreparer(ctx)
@@ -205,7 +214,10 @@ func (client NumberClient) GetBigDecimalPositiveDecimalResponder(resp *http.Resp
 func (client NumberClient) GetBigDouble(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDouble")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBigDoublePreparer(ctx)
@@ -262,7 +274,10 @@ func (client NumberClient) GetBigDoubleResponder(resp *http.Response) (result Fl
 func (client NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDoubleNegativeDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBigDoubleNegativeDecimalPreparer(ctx)
@@ -319,7 +334,10 @@ func (client NumberClient) GetBigDoubleNegativeDecimalResponder(resp *http.Respo
 func (client NumberClient) GetBigDoublePositiveDecimal(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigDoublePositiveDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBigDoublePositiveDecimalPreparer(ctx)
@@ -376,7 +394,10 @@ func (client NumberClient) GetBigDoublePositiveDecimalResponder(resp *http.Respo
 func (client NumberClient) GetBigFloat(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetBigFloat")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBigFloatPreparer(ctx)
@@ -433,7 +454,10 @@ func (client NumberClient) GetBigFloatResponder(resp *http.Response) (result Flo
 func (client NumberClient) GetInvalidDecimal(ctx context.Context) (result Decimal, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetInvalidDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidDecimalPreparer(ctx)
@@ -490,7 +514,10 @@ func (client NumberClient) GetInvalidDecimalResponder(resp *http.Response) (resu
 func (client NumberClient) GetInvalidDouble(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetInvalidDouble")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidDoublePreparer(ctx)
@@ -547,7 +574,10 @@ func (client NumberClient) GetInvalidDoubleResponder(resp *http.Response) (resul
 func (client NumberClient) GetInvalidFloat(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetInvalidFloat")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidFloatPreparer(ctx)
@@ -604,7 +634,10 @@ func (client NumberClient) GetInvalidFloatResponder(resp *http.Response) (result
 func (client NumberClient) GetNull(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -661,7 +694,10 @@ func (client NumberClient) GetNullResponder(resp *http.Response) (result Float64
 func (client NumberClient) GetSmallDecimal(ctx context.Context) (result Decimal, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetSmallDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetSmallDecimalPreparer(ctx)
@@ -718,7 +754,10 @@ func (client NumberClient) GetSmallDecimalResponder(resp *http.Response) (result
 func (client NumberClient) GetSmallDouble(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetSmallDouble")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetSmallDoublePreparer(ctx)
@@ -775,7 +814,10 @@ func (client NumberClient) GetSmallDoubleResponder(resp *http.Response) (result 
 func (client NumberClient) GetSmallFloat(ctx context.Context) (result Float64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.GetSmallFloat")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetSmallFloatPreparer(ctx)
@@ -832,7 +874,10 @@ func (client NumberClient) GetSmallFloatResponder(resp *http.Response) (result F
 func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBigDecimalPreparer(ctx, numberBody)
@@ -890,7 +935,10 @@ func (client NumberClient) PutBigDecimalResponder(resp *http.Response) (result a
 func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDecimalNegativeDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBigDecimalNegativeDecimalPreparer(ctx)
@@ -948,7 +996,10 @@ func (client NumberClient) PutBigDecimalNegativeDecimalResponder(resp *http.Resp
 func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDecimalPositiveDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBigDecimalPositiveDecimalPreparer(ctx)
@@ -1006,7 +1057,10 @@ func (client NumberClient) PutBigDecimalPositiveDecimalResponder(resp *http.Resp
 func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDouble")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBigDoublePreparer(ctx, numberBody)
@@ -1064,7 +1118,10 @@ func (client NumberClient) PutBigDoubleResponder(resp *http.Response) (result au
 func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDoubleNegativeDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBigDoubleNegativeDecimalPreparer(ctx)
@@ -1122,7 +1179,10 @@ func (client NumberClient) PutBigDoubleNegativeDecimalResponder(resp *http.Respo
 func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigDoublePositiveDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBigDoublePositiveDecimalPreparer(ctx)
@@ -1180,7 +1240,10 @@ func (client NumberClient) PutBigDoublePositiveDecimalResponder(resp *http.Respo
 func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutBigFloat")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBigFloatPreparer(ctx, numberBody)
@@ -1238,7 +1301,10 @@ func (client NumberClient) PutBigFloatResponder(resp *http.Response) (result aut
 func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutSmallDecimal")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutSmallDecimalPreparer(ctx, numberBody)
@@ -1296,7 +1362,10 @@ func (client NumberClient) PutSmallDecimalResponder(resp *http.Response) (result
 func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutSmallDouble")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutSmallDoublePreparer(ctx, numberBody)
@@ -1354,7 +1423,10 @@ func (client NumberClient) PutSmallDoubleResponder(resp *http.Response) (result 
 func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-number/NumberClient.PutSmallFloat")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutSmallFloatPreparer(ctx, numberBody)

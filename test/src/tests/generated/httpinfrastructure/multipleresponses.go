@@ -33,7 +33,10 @@ func NewMultipleResponsesClientWithBaseURI(baseURI string) MultipleResponsesClie
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model201ModelDefaultError200Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model201ModelDefaultError200ValidPreparer(ctx)
@@ -91,7 +94,10 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidRes
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model201ModelDefaultError201Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model201ModelDefaultError201ValidPreparer(ctx)
@@ -149,7 +155,10 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidRes
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model201ModelDefaultError400Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model201ModelDefaultError400ValidPreparer(ctx)
@@ -206,7 +215,10 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidRes
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model204NoModelDefaultError200ValidPreparer(ctx)
@@ -263,7 +275,10 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidR
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model204NoModelDefaultError201InvalidPreparer(ctx)
@@ -320,7 +335,10 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model204NoModelDefaultError202None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model204NoModelDefaultError202NonePreparer(ctx)
@@ -377,7 +395,10 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneRe
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model204NoModelDefaultError204ValidPreparer(ctx)
@@ -435,7 +456,10 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidR
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Model204NoModelDefaultError400ValidPreparer(ctx)
@@ -492,7 +516,10 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidR
 func (client MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA200Invalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA200InvalidPreparer(ctx)
@@ -550,7 +577,10 @@ func (client MultipleResponsesClient) Get200ModelA200InvalidResponder(resp *http
 func (client MultipleResponsesClient) Get200ModelA200None(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA200None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA200NonePreparer(ctx)
@@ -607,7 +637,10 @@ func (client MultipleResponsesClient) Get200ModelA200NoneResponder(resp *http.Re
 func (client MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA200Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA200ValidPreparer(ctx)
@@ -664,7 +697,10 @@ func (client MultipleResponsesClient) Get200ModelA200ValidResponder(resp *http.R
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context) (result SetObject, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA201ModelC404ModelDDefaultError200ValidPreparer(ctx)
@@ -721,7 +757,10 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context) (result SetObject, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA201ModelC404ModelDDefaultError201ValidPreparer(ctx)
@@ -779,7 +818,10 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context) (result SetObject, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA201ModelC404ModelDDefaultError400ValidPreparer(ctx)
@@ -836,7 +878,10 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context) (result SetObject, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA201ModelC404ModelDDefaultError404ValidPreparer(ctx)
@@ -893,7 +938,10 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 func (client MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA202Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA202ValidPreparer(ctx)
@@ -950,7 +998,10 @@ func (client MultipleResponsesClient) Get200ModelA202ValidResponder(resp *http.R
 func (client MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA400Invalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA400InvalidPreparer(ctx)
@@ -1007,7 +1058,10 @@ func (client MultipleResponsesClient) Get200ModelA400InvalidResponder(resp *http
 func (client MultipleResponsesClient) Get200ModelA400None(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA400None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA400NonePreparer(ctx)
@@ -1064,7 +1118,10 @@ func (client MultipleResponsesClient) Get200ModelA400NoneResponder(resp *http.Re
 func (client MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get200ModelA400Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200ModelA400ValidPreparer(ctx)
@@ -1121,7 +1178,10 @@ func (client MultipleResponsesClient) Get200ModelA400ValidResponder(resp *http.R
 func (client MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get202None204NoneDefaultError202None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get202None204NoneDefaultError202NonePreparer(ctx)
@@ -1177,7 +1237,10 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202NoneRespon
 func (client MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get202None204NoneDefaultError204None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get202None204NoneDefaultError204NonePreparer(ctx)
@@ -1234,7 +1297,10 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204NoneRespon
 func (client MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get202None204NoneDefaultError400Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get202None204NoneDefaultError400ValidPreparer(ctx)
@@ -1290,7 +1356,10 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidRespo
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get202None204NoneDefaultNone202InvalidPreparer(ctx)
@@ -1346,7 +1415,10 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidResp
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get202None204NoneDefaultNone204None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get202None204NoneDefaultNone204NonePreparer(ctx)
@@ -1402,7 +1474,10 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NoneRespond
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get202None204NoneDefaultNone400InvalidPreparer(ctx)
@@ -1458,7 +1533,10 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidResp
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.Get202None204NoneDefaultNone400None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get202None204NoneDefaultNone400NonePreparer(ctx)
@@ -1514,7 +1592,10 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NoneRespond
 func (client MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultModelA200None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultModelA200NonePreparer(ctx)
@@ -1571,7 +1652,10 @@ func (client MultipleResponsesClient) GetDefaultModelA200NoneResponder(resp *htt
 func (client MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultModelA200Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultModelA200ValidPreparer(ctx)
@@ -1628,7 +1712,10 @@ func (client MultipleResponsesClient) GetDefaultModelA200ValidResponder(resp *ht
 func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultModelA400None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultModelA400NonePreparer(ctx)
@@ -1685,7 +1772,10 @@ func (client MultipleResponsesClient) GetDefaultModelA400NoneResponder(resp *htt
 func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context) (result A, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultModelA400Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultModelA400ValidPreparer(ctx)
@@ -1742,7 +1832,10 @@ func (client MultipleResponsesClient) GetDefaultModelA400ValidResponder(resp *ht
 func (client MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultNone200Invalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultNone200InvalidPreparer(ctx)
@@ -1798,7 +1891,10 @@ func (client MultipleResponsesClient) GetDefaultNone200InvalidResponder(resp *ht
 func (client MultipleResponsesClient) GetDefaultNone200None(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultNone200None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultNone200NonePreparer(ctx)
@@ -1854,7 +1950,10 @@ func (client MultipleResponsesClient) GetDefaultNone200NoneResponder(resp *http.
 func (client MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultNone400Invalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultNone400InvalidPreparer(ctx)
@@ -1910,7 +2009,10 @@ func (client MultipleResponsesClient) GetDefaultNone400InvalidResponder(resp *ht
 func (client MultipleResponsesClient) GetDefaultNone400None(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/MultipleResponsesClient.GetDefaultNone400None")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDefaultNone400NonePreparer(ctx)

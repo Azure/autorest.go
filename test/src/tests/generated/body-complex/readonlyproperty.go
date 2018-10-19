@@ -33,7 +33,10 @@ func NewReadonlypropertyClientWithBaseURI(baseURI string) ReadonlypropertyClient
 func (client ReadonlypropertyClient) GetValid(ctx context.Context) (result ReadonlyObj, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/ReadonlypropertyClient.GetValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetValidPreparer(ctx)
@@ -90,7 +93,10 @@ func (client ReadonlypropertyClient) GetValidResponder(resp *http.Response) (res
 func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/ReadonlypropertyClient.PutValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutValidPreparer(ctx, complexBody)

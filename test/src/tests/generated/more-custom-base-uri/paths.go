@@ -33,7 +33,10 @@ func NewPathsClient(subscriptionID string) PathsClient {
 func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, keyVersion string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/more-custom-base-uri/PathsClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx, vault, secret, keyName, keyVersion)

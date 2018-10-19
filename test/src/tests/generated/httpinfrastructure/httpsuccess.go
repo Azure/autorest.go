@@ -35,7 +35,10 @@ func NewHTTPSuccessClientWithBaseURI(baseURI string) HTTPSuccessClient {
 func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Delete200")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Delete200Preparer(ctx, booleanValue)
@@ -98,7 +101,10 @@ func (client HTTPSuccessClient) Delete200Responder(resp *http.Response) (result 
 func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Delete202")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Delete202Preparer(ctx, booleanValue)
@@ -161,7 +167,10 @@ func (client HTTPSuccessClient) Delete202Responder(resp *http.Response) (result 
 func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Delete204")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Delete204Preparer(ctx, booleanValue)
@@ -222,7 +231,10 @@ func (client HTTPSuccessClient) Delete204Responder(resp *http.Response) (result 
 func (client HTTPSuccessClient) Get200(ctx context.Context) (result Bool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Get200")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get200Preparer(ctx)
@@ -279,7 +291,10 @@ func (client HTTPSuccessClient) Get200Responder(resp *http.Response) (result Boo
 func (client HTTPSuccessClient) Head200(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Head200")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Head200Preparer(ctx)
@@ -335,7 +350,10 @@ func (client HTTPSuccessClient) Head200Responder(resp *http.Response) (result au
 func (client HTTPSuccessClient) Head204(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Head204")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Head204Preparer(ctx)
@@ -391,7 +409,10 @@ func (client HTTPSuccessClient) Head204Responder(resp *http.Response) (result au
 func (client HTTPSuccessClient) Head404(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Head404")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Head404Preparer(ctx)
@@ -449,7 +470,10 @@ func (client HTTPSuccessClient) Head404Responder(resp *http.Response) (result au
 func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Patch200")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Patch200Preparer(ctx, booleanValue)
@@ -512,7 +536,10 @@ func (client HTTPSuccessClient) Patch200Responder(resp *http.Response) (result a
 func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Patch202")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Patch202Preparer(ctx, booleanValue)
@@ -575,7 +602,10 @@ func (client HTTPSuccessClient) Patch202Responder(resp *http.Response) (result a
 func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Patch204")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Patch204Preparer(ctx, booleanValue)
@@ -638,7 +668,10 @@ func (client HTTPSuccessClient) Patch204Responder(resp *http.Response) (result a
 func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post200")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Post200Preparer(ctx, booleanValue)
@@ -701,7 +734,10 @@ func (client HTTPSuccessClient) Post200Responder(resp *http.Response) (result au
 func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post201")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Post201Preparer(ctx, booleanValue)
@@ -764,7 +800,10 @@ func (client HTTPSuccessClient) Post201Responder(resp *http.Response) (result au
 func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post202")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Post202Preparer(ctx, booleanValue)
@@ -827,7 +866,10 @@ func (client HTTPSuccessClient) Post202Responder(resp *http.Response) (result au
 func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Post204")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Post204Preparer(ctx, booleanValue)
@@ -890,7 +932,10 @@ func (client HTTPSuccessClient) Post204Responder(resp *http.Response) (result au
 func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put200")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Put200Preparer(ctx, booleanValue)
@@ -953,7 +998,10 @@ func (client HTTPSuccessClient) Put200Responder(resp *http.Response) (result aut
 func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put201")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Put201Preparer(ctx, booleanValue)
@@ -1016,7 +1064,10 @@ func (client HTTPSuccessClient) Put201Responder(resp *http.Response) (result aut
 func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put202")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Put202Preparer(ctx, booleanValue)
@@ -1079,7 +1130,10 @@ func (client HTTPSuccessClient) Put202Responder(resp *http.Response) (result aut
 func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPSuccessClient.Put204")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Put204Preparer(ctx, booleanValue)

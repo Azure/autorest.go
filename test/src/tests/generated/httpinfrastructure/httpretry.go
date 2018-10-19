@@ -35,7 +35,10 @@ func NewHTTPRetryClientWithBaseURI(baseURI string) HTTPRetryClient {
 func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Delete503")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Delete503Preparer(ctx, booleanValue)
@@ -96,7 +99,10 @@ func (client HTTPRetryClient) Delete503Responder(resp *http.Response) (result au
 func (client HTTPRetryClient) Get502(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Get502")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Get502Preparer(ctx)
@@ -152,7 +158,10 @@ func (client HTTPRetryClient) Get502Responder(resp *http.Response) (result autor
 func (client HTTPRetryClient) Head408(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Head408")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Head408Preparer(ctx)
@@ -210,7 +219,10 @@ func (client HTTPRetryClient) Head408Responder(resp *http.Response) (result auto
 func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Patch500")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Patch500Preparer(ctx, booleanValue)
@@ -273,7 +285,10 @@ func (client HTTPRetryClient) Patch500Responder(resp *http.Response) (result aut
 func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Patch504")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Patch504Preparer(ctx, booleanValue)
@@ -336,7 +351,10 @@ func (client HTTPRetryClient) Patch504Responder(resp *http.Response) (result aut
 func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Post503")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Post503Preparer(ctx, booleanValue)
@@ -399,7 +417,10 @@ func (client HTTPRetryClient) Post503Responder(resp *http.Response) (result auto
 func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Put500")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Put500Preparer(ctx, booleanValue)
@@ -462,7 +483,10 @@ func (client HTTPRetryClient) Put500Responder(resp *http.Response) (result autor
 func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPRetryClient.Put504")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Put504Preparer(ctx, booleanValue)

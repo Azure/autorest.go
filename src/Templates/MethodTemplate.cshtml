@@ -37,18 +37,24 @@
 func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
     ctx = tracing.StartSpan(ctx, "@(Model.Fqdn)")
     defer func() {
+    sc := -1
     @if (Model.IsLongRunningOperation())
     {
         <text>
-            sc := -1
             if @(Model.ResponseAssignTarget).Response() != nil {
-            sc = @(Model.ResponseAssignTarget).Response().StatusCode
+                sc = @(Model.ResponseAssignTarget).Response().StatusCode
             }
         </text>
     }
     else
     {
-        <text>sc := @(Model.ResponseAssignTarget).StatusCode</text>
+        var rawResponse = Model.HasReturnValue() ? $"{Model.ResponseAssignTarget}.Response.Response" : $"{Model.ResponseAssignTarget}.Response";
+        <text>
+            
+            if @(rawResponse) != nil {
+                sc = @(Model.ResponseAssignTarget).StatusCode
+            }
+        </text>
     }
 
     tracing.EndSpan(ctx, sc, err)
@@ -205,13 +211,13 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
             if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
             preparer = autorest.DecoratePreparer(preparer,
             @(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
-                                  p.SerializedName, p.GetParameterName())))
+                                      p.SerializedName, p.GetParameterName())))
             @if (p.DefaultValue.Value != null)
             {
                 @: } else {
                 @:preparer = autorest.DecoratePreparer(preparer,
                 @:@(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
-                            p.SerializedName, p.DefaultValueString)))
+                              p.SerializedName, p.DefaultValueString)))
             }
             }
         </text>
@@ -258,34 +264,34 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     }
     }
 
-    @EmptyLine
-    @if (Model.Deprecated)
-    {
-        @:@WrapComment("// Deprecated: ", depMessage)
-    }
-    // @(Model.ResponderMethodName) handles the response to the @(Model.Name) request. The method always
-    // closes the http.Response Body.
-    func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) {
+@EmptyLine
+@if (Model.Deprecated)
+{
+    @:@WrapComment("// Deprecated: ", depMessage)
+}
+// @(Model.ResponderMethodName) handles the response to the @(Model.Name) request. The method always
+// closes the http.Response Body.
+func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (@Model.ResponderReturnSignature()) {
     @if (Model.IsLongRunningOperation() && Model.IsPageable)
     {
         var pageType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
-        <text>
-            result.@(pageType.ResultFieldName), err = client.@(Model.ResponderMethodName.ToCamelCase())(resp)
-            result.@(pageType.FnFieldName) = client.@(Model.NextMethodName)
-        </text>
+    <text>
+    result.@(pageType.ResultFieldName), err = client.@(Model.ResponderMethodName.ToCamelCase())(resp)
+    result.@(pageType.FnFieldName) = client.@(Model.NextMethodName)
+    </text>
     }
     else
     {
-        <text>
-            @if (Model.ReturnValue().Body.IsStreamType())
-            {
-                @:result.Value = &resp.Body
-            }
-            err = autorest.Respond(
-            @(Model.RespondDecorators.EmitAsArguments()))
+    <text>
+        @if (Model.ReturnValue().Body.IsStreamType())
+        {
+    @:result.Value = &resp.Body
+        }
+    err = autorest.Respond(
+    @(Model.RespondDecorators.EmitAsArguments()))
 
-            @(Model.Response(true))
-        </text>
+    @(Model.Response(true))
+    </text>
     }
     return
     }
@@ -371,39 +377,44 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
     @EmptyLine
     // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
     func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
-        ctx = tracing.StartSpan(ctx, "@(Model.Fqdn)")
-        defer func() {
-        @if (Model.IsLongRunningOperation())
-        {
+    ctx = tracing.StartSpan(ctx, "@(Model.Fqdn)")
+    defer func() {
+        sc := -1
+
+    @if (Model.IsLongRunningOperation())
+    {
         <text>
-            sc := -1
-            if result.@(Model.ResponseAssignTarget).Response() != nil {
+        if result.@(Model.ResponseAssignTarget).Response() != nil {
             sc = result.@(Model.ResponseAssignTarget).Response().StatusCode
         }
         </text>
-        }
-        else
-        {
-            <text>sc := result.page.@(pageType.ResultFieldName).StatusCode</text>
-        }
-
-            tracing.EndSpan(ctx, sc, err)
-        }()
-    @if (Model.IsLongRunningOperation())
-    {
-    <text>
-        var future @Model.MethodReturnType
-        future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
-        result.Future = future.Future
-    </text>
     }
     else
     {
-    <text>
+        <text>
+        if result.Response().Response.Response != nil {
+            sc = result.page.Response().StatusCode
+        }
+        </text>
+    }
+
+        tracing.EndSpan(ctx, sc, err)
+    }()
+    @if (Model.IsLongRunningOperation())
+    {
+        <text>
+        var future @Model.MethodReturnType
+        future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
+        result.Future = future.Future
+        </text>
+    }
+    else
+    {
+        <text>
         result.page, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
-    </text>
+        </text>
     }
         return
-    }
+        }
     </text>
 }

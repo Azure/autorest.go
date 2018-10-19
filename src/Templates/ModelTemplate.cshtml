@@ -357,7 +357,10 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         func (page * @Model.Name) NextWithContext(ctx context.Context) (err error) {
             ctx = tracing.StartSpan(ctx, "@(modelPageType.AdvancerFqdn)")
             defer func() {
-                sc := page.@(modelPageType.ResultFieldName).StatusCode
+                sc := -1
+                if iter.Response().Response.Response != nil {
+                    sc = page.Response().StatusCode
+                }
                 tracing.EndSpan(ctx, sc, err)
             }()
         next, err := page.@(modelPageType.FnFieldName)(ctx, page.@modelPageType.ResultFieldName)
@@ -405,7 +408,10 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         func (iter * @Model.Name) NextWithContext(ctx context.Context) (err error) {
             ctx = tracing.StartSpan(ctx, "@(iterType.AdvancerFqdn)")
             defer func() {
-                sc := iter.Response().StatusCode
+                sc := -1
+                if iter.Response().Response.Response != nil {
+                    sc = iter.Response().StatusCode
+                }
                 tracing.EndSpan(ctx, sc, err)
             }()
         iter.@iterType.IndexField++

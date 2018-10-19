@@ -36,7 +36,10 @@ func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 func (client ArrayClient) GetArrayEmpty(ctx context.Context) (result ListListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetArrayEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayEmptyPreparer(ctx)
@@ -93,7 +96,10 @@ func (client ArrayClient) GetArrayEmptyResponder(resp *http.Response) (result Li
 func (client ArrayClient) GetArrayItemEmpty(ctx context.Context) (result ListListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetArrayItemEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayItemEmptyPreparer(ctx)
@@ -150,7 +156,10 @@ func (client ArrayClient) GetArrayItemEmptyResponder(resp *http.Response) (resul
 func (client ArrayClient) GetArrayItemNull(ctx context.Context) (result ListListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetArrayItemNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayItemNullPreparer(ctx)
@@ -207,7 +216,10 @@ func (client ArrayClient) GetArrayItemNullResponder(resp *http.Response) (result
 func (client ArrayClient) GetArrayNull(ctx context.Context) (result ListListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetArrayNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayNullPreparer(ctx)
@@ -264,7 +276,10 @@ func (client ArrayClient) GetArrayNullResponder(resp *http.Response) (result Lis
 func (client ArrayClient) GetArrayValid(ctx context.Context) (result ListListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetArrayValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayValidPreparer(ctx)
@@ -322,7 +337,10 @@ func (client ArrayClient) GetArrayValidResponder(resp *http.Response) (result Li
 func (client ArrayClient) GetBase64URL(ctx context.Context) (result ListBase64URL, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetBase64URL")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBase64URLPreparer(ctx)
@@ -379,7 +397,10 @@ func (client ArrayClient) GetBase64URLResponder(resp *http.Response) (result Lis
 func (client ArrayClient) GetBooleanInvalidNull(ctx context.Context) (result ListBool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetBooleanInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanInvalidNullPreparer(ctx)
@@ -436,7 +457,10 @@ func (client ArrayClient) GetBooleanInvalidNullResponder(resp *http.Response) (r
 func (client ArrayClient) GetBooleanInvalidString(ctx context.Context) (result ListBool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetBooleanInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanInvalidStringPreparer(ctx)
@@ -493,7 +517,10 @@ func (client ArrayClient) GetBooleanInvalidStringResponder(resp *http.Response) 
 func (client ArrayClient) GetBooleanTfft(ctx context.Context) (result ListBool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetBooleanTfft")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanTfftPreparer(ctx)
@@ -550,7 +577,10 @@ func (client ArrayClient) GetBooleanTfftResponder(resp *http.Response) (result L
 func (client ArrayClient) GetByteInvalidNull(ctx context.Context) (result ListByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetByteInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetByteInvalidNullPreparer(ctx)
@@ -608,7 +638,10 @@ func (client ArrayClient) GetByteInvalidNullResponder(resp *http.Response) (resu
 func (client ArrayClient) GetByteValid(ctx context.Context) (result ListByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetByteValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetByteValidPreparer(ctx)
@@ -665,7 +698,10 @@ func (client ArrayClient) GetByteValidResponder(resp *http.Response) (result Lis
 func (client ArrayClient) GetComplexEmpty(ctx context.Context) (result ListProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetComplexEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexEmptyPreparer(ctx)
@@ -723,7 +759,10 @@ func (client ArrayClient) GetComplexEmptyResponder(resp *http.Response) (result 
 func (client ArrayClient) GetComplexItemEmpty(ctx context.Context) (result ListProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetComplexItemEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexItemEmptyPreparer(ctx)
@@ -781,7 +820,10 @@ func (client ArrayClient) GetComplexItemEmptyResponder(resp *http.Response) (res
 func (client ArrayClient) GetComplexItemNull(ctx context.Context) (result ListProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetComplexItemNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexItemNullPreparer(ctx)
@@ -838,7 +880,10 @@ func (client ArrayClient) GetComplexItemNullResponder(resp *http.Response) (resu
 func (client ArrayClient) GetComplexNull(ctx context.Context) (result ListProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetComplexNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexNullPreparer(ctx)
@@ -896,7 +941,10 @@ func (client ArrayClient) GetComplexNullResponder(resp *http.Response) (result L
 func (client ArrayClient) GetComplexValid(ctx context.Context) (result ListProduct, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetComplexValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexValidPreparer(ctx)
@@ -953,7 +1001,10 @@ func (client ArrayClient) GetComplexValidResponder(resp *http.Response) (result 
 func (client ArrayClient) GetDateInvalidChars(ctx context.Context) (result ListDate, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDateInvalidChars")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateInvalidCharsPreparer(ctx)
@@ -1010,7 +1061,10 @@ func (client ArrayClient) GetDateInvalidCharsResponder(resp *http.Response) (res
 func (client ArrayClient) GetDateInvalidNull(ctx context.Context) (result ListDate, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDateInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateInvalidNullPreparer(ctx)
@@ -1067,7 +1121,10 @@ func (client ArrayClient) GetDateInvalidNullResponder(resp *http.Response) (resu
 func (client ArrayClient) GetDateTimeInvalidChars(ctx context.Context) (result ListDateTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDateTimeInvalidChars")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
@@ -1124,7 +1181,10 @@ func (client ArrayClient) GetDateTimeInvalidCharsResponder(resp *http.Response) 
 func (client ArrayClient) GetDateTimeInvalidNull(ctx context.Context) (result ListDateTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDateTimeInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeInvalidNullPreparer(ctx)
@@ -1182,7 +1242,10 @@ func (client ArrayClient) GetDateTimeInvalidNullResponder(resp *http.Response) (
 func (client ArrayClient) GetDateTimeRfc1123Valid(ctx context.Context) (result ListDateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDateTimeRfc1123Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
@@ -1240,7 +1303,10 @@ func (client ArrayClient) GetDateTimeRfc1123ValidResponder(resp *http.Response) 
 func (client ArrayClient) GetDateTimeValid(ctx context.Context) (result ListDateTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDateTimeValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeValidPreparer(ctx)
@@ -1297,7 +1363,10 @@ func (client ArrayClient) GetDateTimeValidResponder(resp *http.Response) (result
 func (client ArrayClient) GetDateValid(ctx context.Context) (result ListDate, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDateValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateValidPreparer(ctx)
@@ -1354,7 +1423,10 @@ func (client ArrayClient) GetDateValidResponder(resp *http.Response) (result Lis
 func (client ArrayClient) GetDictionaryEmpty(ctx context.Context) (result ListSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDictionaryEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryEmptyPreparer(ctx)
@@ -1412,7 +1484,10 @@ func (client ArrayClient) GetDictionaryEmptyResponder(resp *http.Response) (resu
 func (client ArrayClient) GetDictionaryItemEmpty(ctx context.Context) (result ListSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDictionaryItemEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryItemEmptyPreparer(ctx)
@@ -1470,7 +1545,10 @@ func (client ArrayClient) GetDictionaryItemEmptyResponder(resp *http.Response) (
 func (client ArrayClient) GetDictionaryItemNull(ctx context.Context) (result ListSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDictionaryItemNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryItemNullPreparer(ctx)
@@ -1527,7 +1605,10 @@ func (client ArrayClient) GetDictionaryItemNullResponder(resp *http.Response) (r
 func (client ArrayClient) GetDictionaryNull(ctx context.Context) (result ListSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDictionaryNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryNullPreparer(ctx)
@@ -1585,7 +1666,10 @@ func (client ArrayClient) GetDictionaryNullResponder(resp *http.Response) (resul
 func (client ArrayClient) GetDictionaryValid(ctx context.Context) (result ListSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDictionaryValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryValidPreparer(ctx)
@@ -1642,7 +1726,10 @@ func (client ArrayClient) GetDictionaryValidResponder(resp *http.Response) (resu
 func (client ArrayClient) GetDoubleInvalidNull(ctx context.Context) (result ListFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDoubleInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDoubleInvalidNullPreparer(ctx)
@@ -1699,7 +1786,10 @@ func (client ArrayClient) GetDoubleInvalidNullResponder(resp *http.Response) (re
 func (client ArrayClient) GetDoubleInvalidString(ctx context.Context) (result ListFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDoubleInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDoubleInvalidStringPreparer(ctx)
@@ -1756,7 +1846,10 @@ func (client ArrayClient) GetDoubleInvalidStringResponder(resp *http.Response) (
 func (client ArrayClient) GetDoubleValid(ctx context.Context) (result ListFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDoubleValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDoubleValidPreparer(ctx)
@@ -1813,7 +1906,10 @@ func (client ArrayClient) GetDoubleValidResponder(resp *http.Response) (result L
 func (client ArrayClient) GetDurationValid(ctx context.Context) (result ListTimeSpan, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetDurationValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDurationValidPreparer(ctx)
@@ -1870,7 +1966,10 @@ func (client ArrayClient) GetDurationValidResponder(resp *http.Response) (result
 func (client ArrayClient) GetEmpty(ctx context.Context) (result ListInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx)
@@ -1927,7 +2026,10 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ListInt
 func (client ArrayClient) GetEnumValid(ctx context.Context) (result ListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetEnumValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEnumValidPreparer(ctx)
@@ -1984,7 +2086,10 @@ func (client ArrayClient) GetEnumValidResponder(resp *http.Response) (result Lis
 func (client ArrayClient) GetFloatInvalidNull(ctx context.Context) (result ListFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetFloatInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFloatInvalidNullPreparer(ctx)
@@ -2041,7 +2146,10 @@ func (client ArrayClient) GetFloatInvalidNullResponder(resp *http.Response) (res
 func (client ArrayClient) GetFloatInvalidString(ctx context.Context) (result ListFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetFloatInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFloatInvalidStringPreparer(ctx)
@@ -2098,7 +2206,10 @@ func (client ArrayClient) GetFloatInvalidStringResponder(resp *http.Response) (r
 func (client ArrayClient) GetFloatValid(ctx context.Context) (result ListFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetFloatValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFloatValidPreparer(ctx)
@@ -2155,7 +2266,10 @@ func (client ArrayClient) GetFloatValidResponder(resp *http.Response) (result Li
 func (client ArrayClient) GetIntegerValid(ctx context.Context) (result ListInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetIntegerValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntegerValidPreparer(ctx)
@@ -2212,7 +2326,10 @@ func (client ArrayClient) GetIntegerValidResponder(resp *http.Response) (result 
 func (client ArrayClient) GetIntInvalidNull(ctx context.Context) (result ListInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetIntInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntInvalidNullPreparer(ctx)
@@ -2269,7 +2386,10 @@ func (client ArrayClient) GetIntInvalidNullResponder(resp *http.Response) (resul
 func (client ArrayClient) GetIntInvalidString(ctx context.Context) (result ListInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetIntInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntInvalidStringPreparer(ctx)
@@ -2326,7 +2446,10 @@ func (client ArrayClient) GetIntInvalidStringResponder(resp *http.Response) (res
 func (client ArrayClient) GetInvalid(ctx context.Context) (result ListInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -2383,7 +2506,10 @@ func (client ArrayClient) GetInvalidResponder(resp *http.Response) (result ListI
 func (client ArrayClient) GetLongInvalidNull(ctx context.Context) (result ListInt64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetLongInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongInvalidNullPreparer(ctx)
@@ -2440,7 +2566,10 @@ func (client ArrayClient) GetLongInvalidNullResponder(resp *http.Response) (resu
 func (client ArrayClient) GetLongInvalidString(ctx context.Context) (result ListInt64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetLongInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongInvalidStringPreparer(ctx)
@@ -2497,7 +2626,10 @@ func (client ArrayClient) GetLongInvalidStringResponder(resp *http.Response) (re
 func (client ArrayClient) GetLongValid(ctx context.Context) (result ListInt64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetLongValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongValidPreparer(ctx)
@@ -2554,7 +2686,10 @@ func (client ArrayClient) GetLongValidResponder(resp *http.Response) (result Lis
 func (client ArrayClient) GetNull(ctx context.Context) (result ListInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -2611,7 +2746,10 @@ func (client ArrayClient) GetNullResponder(resp *http.Response) (result ListInt3
 func (client ArrayClient) GetStringEnumValid(ctx context.Context) (result ListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetStringEnumValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringEnumValidPreparer(ctx)
@@ -2668,7 +2806,10 @@ func (client ArrayClient) GetStringEnumValidResponder(resp *http.Response) (resu
 func (client ArrayClient) GetStringValid(ctx context.Context) (result ListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetStringValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringValidPreparer(ctx)
@@ -2725,7 +2866,10 @@ func (client ArrayClient) GetStringValidResponder(resp *http.Response) (result L
 func (client ArrayClient) GetStringWithInvalid(ctx context.Context) (result ListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetStringWithInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringWithInvalidPreparer(ctx)
@@ -2782,7 +2926,10 @@ func (client ArrayClient) GetStringWithInvalidResponder(resp *http.Response) (re
 func (client ArrayClient) GetStringWithNull(ctx context.Context) (result ListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetStringWithNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringWithNullPreparer(ctx)
@@ -2839,7 +2986,10 @@ func (client ArrayClient) GetStringWithNullResponder(resp *http.Response) (resul
 func (client ArrayClient) GetUUIDInvalidChars(ctx context.Context) (result ListUUID, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetUUIDInvalidChars")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUUIDInvalidCharsPreparer(ctx)
@@ -2897,7 +3047,10 @@ func (client ArrayClient) GetUUIDInvalidCharsResponder(resp *http.Response) (res
 func (client ArrayClient) GetUUIDValid(ctx context.Context) (result ListUUID, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.GetUUIDValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUUIDValidPreparer(ctx)
@@ -2954,7 +3107,10 @@ func (client ArrayClient) GetUUIDValidResponder(resp *http.Response) (result Lis
 func (client ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutArrayValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3018,7 +3174,10 @@ func (client ArrayClient) PutArrayValidResponder(resp *http.Response) (result au
 func (client ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutBooleanTfft")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3083,7 +3242,10 @@ func (client ArrayClient) PutBooleanTfftResponder(resp *http.Response) (result a
 func (client ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutByteValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3148,7 +3310,10 @@ func (client ArrayClient) PutByteValidResponder(resp *http.Response) (result aut
 func (client ArrayClient) PutComplexValid(ctx context.Context, arrayBody []Product) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutComplexValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3213,7 +3378,10 @@ func (client ArrayClient) PutComplexValidResponder(resp *http.Response) (result 
 func (client ArrayClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody []date.TimeRFC1123) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutDateTimeRfc1123Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3277,7 +3445,10 @@ func (client ArrayClient) PutDateTimeRfc1123ValidResponder(resp *http.Response) 
 func (client ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []date.Time) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutDateTimeValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3341,7 +3512,10 @@ func (client ArrayClient) PutDateTimeValidResponder(resp *http.Response) (result
 func (client ArrayClient) PutDateValid(ctx context.Context, arrayBody []date.Date) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutDateValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3406,7 +3580,10 @@ func (client ArrayClient) PutDateValidResponder(resp *http.Response) (result aut
 func (client ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutDictionaryValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3470,7 +3647,10 @@ func (client ArrayClient) PutDictionaryValidResponder(resp *http.Response) (resu
 func (client ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutDoubleValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3534,7 +3714,10 @@ func (client ArrayClient) PutDoubleValidResponder(resp *http.Response) (result a
 func (client ArrayClient) PutDurationValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutDurationValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3598,7 +3781,10 @@ func (client ArrayClient) PutDurationValidResponder(resp *http.Response) (result
 func (client ArrayClient) PutEmpty(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3662,7 +3848,10 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 func (client ArrayClient) PutEnumValid(ctx context.Context, arrayBody []FooEnum) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutEnumValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3726,7 +3915,10 @@ func (client ArrayClient) PutEnumValidResponder(resp *http.Response) (result aut
 func (client ArrayClient) PutFloatValid(ctx context.Context, arrayBody []float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutFloatValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3790,7 +3982,10 @@ func (client ArrayClient) PutFloatValidResponder(resp *http.Response) (result au
 func (client ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []int32) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutIntegerValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3854,7 +4049,10 @@ func (client ArrayClient) PutIntegerValidResponder(resp *http.Response) (result 
 func (client ArrayClient) PutLongValid(ctx context.Context, arrayBody []int64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutLongValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3918,7 +4116,10 @@ func (client ArrayClient) PutLongValidResponder(resp *http.Response) (result aut
 func (client ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutStringEnumValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3982,7 +4183,10 @@ func (client ArrayClient) PutStringEnumValidResponder(resp *http.Response) (resu
 func (client ArrayClient) PutStringValid(ctx context.Context, arrayBody []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutStringValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -4047,7 +4251,10 @@ func (client ArrayClient) PutStringValidResponder(resp *http.Response) (result a
 func (client ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []uuid.UUID) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-array/ArrayClient.PutUUIDValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{

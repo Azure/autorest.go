@@ -33,7 +33,10 @@ func NewPrimitiveClientWithBaseURI(baseURI string) PrimitiveClient {
 func (client PrimitiveClient) GetBool(ctx context.Context) (result BooleanWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetBool")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBoolPreparer(ctx)
@@ -90,7 +93,10 @@ func (client PrimitiveClient) GetBoolResponder(resp *http.Response) (result Bool
 func (client PrimitiveClient) GetByte(ctx context.Context) (result ByteWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetByte")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBytePreparer(ctx)
@@ -147,7 +153,10 @@ func (client PrimitiveClient) GetByteResponder(resp *http.Response) (result Byte
 func (client PrimitiveClient) GetDate(ctx context.Context) (result DateWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDatePreparer(ctx)
@@ -204,7 +213,10 @@ func (client PrimitiveClient) GetDateResponder(resp *http.Response) (result Date
 func (client PrimitiveClient) GetDateTime(ctx context.Context) (result DatetimeWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetDateTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimePreparer(ctx)
@@ -261,7 +273,10 @@ func (client PrimitiveClient) GetDateTimeResponder(resp *http.Response) (result 
 func (client PrimitiveClient) GetDateTimeRfc1123(ctx context.Context) (result Datetimerfc1123Wrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetDateTimeRfc1123")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeRfc1123Preparer(ctx)
@@ -318,7 +333,10 @@ func (client PrimitiveClient) GetDateTimeRfc1123Responder(resp *http.Response) (
 func (client PrimitiveClient) GetDouble(ctx context.Context) (result DoubleWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetDouble")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDoublePreparer(ctx)
@@ -375,7 +393,10 @@ func (client PrimitiveClient) GetDoubleResponder(resp *http.Response) (result Do
 func (client PrimitiveClient) GetDuration(ctx context.Context) (result DurationWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetDuration")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDurationPreparer(ctx)
@@ -432,7 +453,10 @@ func (client PrimitiveClient) GetDurationResponder(resp *http.Response) (result 
 func (client PrimitiveClient) GetFloat(ctx context.Context) (result FloatWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetFloat")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFloatPreparer(ctx)
@@ -489,7 +513,10 @@ func (client PrimitiveClient) GetFloatResponder(resp *http.Response) (result Flo
 func (client PrimitiveClient) GetInt(ctx context.Context) (result IntWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetInt")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntPreparer(ctx)
@@ -546,7 +573,10 @@ func (client PrimitiveClient) GetIntResponder(resp *http.Response) (result IntWr
 func (client PrimitiveClient) GetLong(ctx context.Context) (result LongWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetLong")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongPreparer(ctx)
@@ -603,7 +633,10 @@ func (client PrimitiveClient) GetLongResponder(resp *http.Response) (result Long
 func (client PrimitiveClient) GetString(ctx context.Context) (result StringWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.GetString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringPreparer(ctx)
@@ -662,7 +695,10 @@ func (client PrimitiveClient) GetStringResponder(resp *http.Response) (result St
 func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutBool")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBoolPreparer(ctx, complexBody)
@@ -722,7 +758,10 @@ func (client PrimitiveClient) PutBoolResponder(resp *http.Response) (result auto
 func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutByte")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutBytePreparer(ctx, complexBody)
@@ -782,7 +821,10 @@ func (client PrimitiveClient) PutByteResponder(resp *http.Response) (result auto
 func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutDatePreparer(ctx, complexBody)
@@ -842,7 +884,10 @@ func (client PrimitiveClient) PutDateResponder(resp *http.Response) (result auto
 func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutDateTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutDateTimePreparer(ctx, complexBody)
@@ -902,7 +947,10 @@ func (client PrimitiveClient) PutDateTimeResponder(resp *http.Response) (result 
 func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBody Datetimerfc1123Wrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutDateTimeRfc1123")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutDateTimeRfc1123Preparer(ctx, complexBody)
@@ -962,7 +1010,10 @@ func (client PrimitiveClient) PutDateTimeRfc1123Responder(resp *http.Response) (
 func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutDouble")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutDoublePreparer(ctx, complexBody)
@@ -1022,7 +1073,10 @@ func (client PrimitiveClient) PutDoubleResponder(resp *http.Response) (result au
 func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutDuration")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutDurationPreparer(ctx, complexBody)
@@ -1082,7 +1136,10 @@ func (client PrimitiveClient) PutDurationResponder(resp *http.Response) (result 
 func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutFloat")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutFloatPreparer(ctx, complexBody)
@@ -1142,7 +1199,10 @@ func (client PrimitiveClient) PutFloatResponder(resp *http.Response) (result aut
 func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutInt")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutIntPreparer(ctx, complexBody)
@@ -1202,7 +1262,10 @@ func (client PrimitiveClient) PutIntResponder(resp *http.Response) (result autor
 func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutLong")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutLongPreparer(ctx, complexBody)
@@ -1262,7 +1325,10 @@ func (client PrimitiveClient) PutLongResponder(resp *http.Response) (result auto
 func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/PrimitiveClient.PutString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutStringPreparer(ctx, complexBody)

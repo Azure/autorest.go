@@ -34,7 +34,10 @@ func NewExplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 func (client ExplicitClient) PostOptionalArrayHeader(ctx context.Context, headerParameter []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalArrayHeader")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalArrayHeaderPreparer(ctx, headerParameter)
@@ -94,7 +97,10 @@ func (client ExplicitClient) PostOptionalArrayHeaderResponder(resp *http.Respons
 func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bodyParameter []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalArrayParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalArrayParameterPreparer(ctx, bodyParameter)
@@ -155,7 +161,10 @@ func (client ExplicitClient) PostOptionalArrayParameterResponder(resp *http.Resp
 func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalArrayProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalArrayPropertyPreparer(ctx, bodyParameter)
@@ -216,7 +225,10 @@ func (client ExplicitClient) PostOptionalArrayPropertyResponder(resp *http.Respo
 func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bodyParameter *Product) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalClassParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -285,7 +297,10 @@ func (client ExplicitClient) PostOptionalClassParameterResponder(resp *http.Resp
 func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, bodyParameter *ClassOptionalWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalClassProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -355,7 +370,10 @@ func (client ExplicitClient) PostOptionalClassPropertyResponder(resp *http.Respo
 func (client ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, headerParameter *int32) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalIntegerHeader")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalIntegerHeaderPreparer(ctx, headerParameter)
@@ -415,7 +433,10 @@ func (client ExplicitClient) PostOptionalIntegerHeaderResponder(resp *http.Respo
 func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, bodyParameter *int32) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalIntegerParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalIntegerParameterPreparer(ctx, bodyParameter)
@@ -476,7 +497,10 @@ func (client ExplicitClient) PostOptionalIntegerParameterResponder(resp *http.Re
 func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bodyParameter *IntOptionalWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalIntegerProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalIntegerPropertyPreparer(ctx, bodyParameter)
@@ -537,7 +561,10 @@ func (client ExplicitClient) PostOptionalIntegerPropertyResponder(resp *http.Res
 func (client ExplicitClient) PostOptionalStringHeader(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalStringHeader")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalStringHeaderPreparer(ctx, bodyParameter)
@@ -597,7 +624,10 @@ func (client ExplicitClient) PostOptionalStringHeaderResponder(resp *http.Respon
 func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalStringParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalStringParameterPreparer(ctx, bodyParameter)
@@ -658,7 +688,10 @@ func (client ExplicitClient) PostOptionalStringParameterResponder(resp *http.Res
 func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bodyParameter *StringOptionalWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostOptionalStringProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostOptionalStringPropertyPreparer(ctx, bodyParameter)
@@ -720,7 +753,10 @@ func (client ExplicitClient) PostOptionalStringPropertyResponder(resp *http.Resp
 func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredArrayHeader")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -785,7 +821,10 @@ func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Respons
 func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredArrayParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -851,7 +890,10 @@ func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Resp
 func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredArrayProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -917,7 +959,10 @@ func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Respo
 func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredClassParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -983,7 +1028,10 @@ func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Resp
 func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredClassProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -1050,7 +1098,10 @@ func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Respo
 func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredIntegerHeader")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostRequiredIntegerHeaderPreparer(ctx, headerParameter)
@@ -1109,7 +1160,10 @@ func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Respo
 func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredIntegerParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostRequiredIntegerParameterPreparer(ctx, bodyParameter)
@@ -1169,7 +1223,10 @@ func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Re
 func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredIntegerProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -1235,7 +1292,10 @@ func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Res
 func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredStringHeader")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostRequiredStringHeaderPreparer(ctx, headerParameter)
@@ -1294,7 +1354,10 @@ func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Respon
 func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredStringParameter")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PostRequiredStringParameterPreparer(ctx, bodyParameter)
@@ -1354,7 +1417,10 @@ func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Res
 func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper) (result Error, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/required-optional/ExplicitClient.PostRequiredStringProperty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{

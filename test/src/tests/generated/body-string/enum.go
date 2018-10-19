@@ -34,7 +34,10 @@ func NewEnumClientWithBaseURI(baseURI string) EnumClient {
 func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.GetNotExpandable")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNotExpandablePreparer(ctx)
@@ -91,7 +94,10 @@ func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result 
 func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.GetReferenced")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetReferencedPreparer(ctx)
@@ -148,7 +154,10 @@ func (client EnumClient) GetReferencedResponder(resp *http.Response) (result Str
 func (client EnumClient) GetReferencedConstant(ctx context.Context) (result RefColorConstant, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.GetReferencedConstant")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetReferencedConstantPreparer(ctx)
@@ -205,7 +214,10 @@ func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (re
 func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.PutNotExpandable")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutNotExpandablePreparer(ctx, stringBody)
@@ -263,7 +275,10 @@ func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result 
 func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.PutReferenced")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutReferencedPreparer(ctx, enumStringBody)
@@ -321,7 +336,10 @@ func (client EnumClient) PutReferencedResponder(resp *http.Response) (result aut
 func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-string/EnumClient.PutReferencedConstant")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{

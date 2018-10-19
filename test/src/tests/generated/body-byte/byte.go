@@ -34,7 +34,10 @@ func NewByteClientWithBaseURI(baseURI string) ByteClient {
 func (client ByteClient) GetEmpty(ctx context.Context) (result ByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-byte/ByteClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx)
@@ -91,7 +94,10 @@ func (client ByteClient) GetEmptyResponder(resp *http.Response) (result ByteArra
 func (client ByteClient) GetInvalid(ctx context.Context) (result ByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-byte/ByteClient.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -148,7 +154,10 @@ func (client ByteClient) GetInvalidResponder(resp *http.Response) (result ByteAr
 func (client ByteClient) GetNonASCII(ctx context.Context) (result ByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-byte/ByteClient.GetNonASCII")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNonASCIIPreparer(ctx)
@@ -205,7 +214,10 @@ func (client ByteClient) GetNonASCIIResponder(resp *http.Response) (result ByteA
 func (client ByteClient) GetNull(ctx context.Context) (result ByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-byte/ByteClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -264,7 +276,10 @@ func (client ByteClient) GetNullResponder(resp *http.Response) (result ByteArray
 func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-byte/ByteClient.PutNonASCII")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{

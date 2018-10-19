@@ -34,7 +34,10 @@ func NewIntClientWithBaseURI(baseURI string) IntClient {
 func (client IntClient) GetInvalid(ctx context.Context) (result Int32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -91,7 +94,10 @@ func (client IntClient) GetInvalidResponder(resp *http.Response) (result Int32, 
 func (client IntClient) GetInvalidUnixTime(ctx context.Context) (result UnixTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetInvalidUnixTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidUnixTimePreparer(ctx)
@@ -148,7 +154,10 @@ func (client IntClient) GetInvalidUnixTimeResponder(resp *http.Response) (result
 func (client IntClient) GetNull(ctx context.Context) (result Int32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -205,7 +214,10 @@ func (client IntClient) GetNullResponder(resp *http.Response) (result Int32, err
 func (client IntClient) GetNullUnixTime(ctx context.Context) (result UnixTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetNullUnixTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullUnixTimePreparer(ctx)
@@ -262,7 +274,10 @@ func (client IntClient) GetNullUnixTimeResponder(resp *http.Response) (result Un
 func (client IntClient) GetOverflowInt32(ctx context.Context) (result Int32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetOverflowInt32")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetOverflowInt32Preparer(ctx)
@@ -319,7 +334,10 @@ func (client IntClient) GetOverflowInt32Responder(resp *http.Response) (result I
 func (client IntClient) GetOverflowInt64(ctx context.Context) (result Int64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetOverflowInt64")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetOverflowInt64Preparer(ctx)
@@ -376,7 +394,10 @@ func (client IntClient) GetOverflowInt64Responder(resp *http.Response) (result I
 func (client IntClient) GetUnderflowInt32(ctx context.Context) (result Int32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetUnderflowInt32")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUnderflowInt32Preparer(ctx)
@@ -433,7 +454,10 @@ func (client IntClient) GetUnderflowInt32Responder(resp *http.Response) (result 
 func (client IntClient) GetUnderflowInt64(ctx context.Context) (result Int64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetUnderflowInt64")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUnderflowInt64Preparer(ctx)
@@ -490,7 +514,10 @@ func (client IntClient) GetUnderflowInt64Responder(resp *http.Response) (result 
 func (client IntClient) GetUnixTime(ctx context.Context) (result UnixTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.GetUnixTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUnixTimePreparer(ctx)
@@ -547,7 +574,10 @@ func (client IntClient) GetUnixTimeResponder(resp *http.Response) (result UnixTi
 func (client IntClient) PutMax32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMax32")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMax32Preparer(ctx, intBody)
@@ -605,7 +635,10 @@ func (client IntClient) PutMax32Responder(resp *http.Response) (result autorest.
 func (client IntClient) PutMax64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMax64")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMax64Preparer(ctx, intBody)
@@ -663,7 +696,10 @@ func (client IntClient) PutMax64Responder(resp *http.Response) (result autorest.
 func (client IntClient) PutMin32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMin32")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMin32Preparer(ctx, intBody)
@@ -721,7 +757,10 @@ func (client IntClient) PutMin32Responder(resp *http.Response) (result autorest.
 func (client IntClient) PutMin64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutMin64")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutMin64Preparer(ctx, intBody)
@@ -779,7 +818,10 @@ func (client IntClient) PutMin64Responder(resp *http.Response) (result autorest.
 func (client IntClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTime) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-integer/IntClient.PutUnixTimeDate")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutUnixTimeDatePreparer(ctx, intBody)

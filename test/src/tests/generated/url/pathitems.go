@@ -40,7 +40,10 @@ func NewPathItemsClientWithBaseURI(baseURI string, globalStringPath string, glob
 func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathItemsClient.GetAllWithValues")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetAllWithValuesPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
@@ -121,7 +124,10 @@ func (client PathItemsClient) GetAllWithValuesResponder(resp *http.Response) (re
 func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathItemsClient.GetGlobalAndLocalQueryNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetGlobalAndLocalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
@@ -202,7 +208,10 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullResponder(resp *http.Res
 func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathItemsClient.GetGlobalQueryNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetGlobalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
@@ -283,7 +292,10 @@ func (client PathItemsClient) GetGlobalQueryNullResponder(resp *http.Response) (
 func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathItemsClient.GetLocalPathItemQueryNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLocalPathItemQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)

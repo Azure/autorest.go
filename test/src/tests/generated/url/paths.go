@@ -39,7 +39,10 @@ func NewPathsClientWithBaseURI(baseURI string, globalStringPath string, globalSt
 func (client PathsClient) ArrayCsvInPath(ctx context.Context, arrayPath []string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.ArrayCsvInPath")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -107,7 +110,10 @@ func (client PathsClient) ArrayCsvInPathResponder(resp *http.Response) (result a
 func (client PathsClient) Base64URL(ctx context.Context, base64URLPath string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.Base64URL")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.Base64URLPreparer(ctx, base64URLPath)
@@ -167,7 +173,10 @@ func (client PathsClient) Base64URLResponder(resp *http.Response) (result autore
 func (client PathsClient) ByteEmpty(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.ByteEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.ByteEmptyPreparer(ctx)
@@ -229,7 +238,10 @@ func (client PathsClient) ByteEmptyResponder(resp *http.Response) (result autore
 func (client PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.ByteMultiByte")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -297,7 +309,10 @@ func (client PathsClient) ByteMultiByteResponder(resp *http.Response) (result au
 func (client PathsClient) ByteNull(ctx context.Context, bytePath []byte) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.ByteNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -365,7 +380,10 @@ func (client PathsClient) ByteNullResponder(resp *http.Response) (result autores
 func (client PathsClient) DateNull(ctx context.Context, datePath date.Date) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.DateNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateNullPreparer(ctx, datePath)
@@ -427,7 +445,10 @@ func (client PathsClient) DateNullResponder(resp *http.Response) (result autores
 func (client PathsClient) DateTimeNull(ctx context.Context, dateTimePath date.Time) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.DateTimeNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateTimeNullPreparer(ctx, dateTimePath)
@@ -487,7 +508,10 @@ func (client PathsClient) DateTimeNullResponder(resp *http.Response) (result aut
 func (client PathsClient) DateTimeValid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.DateTimeValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateTimeValidPreparer(ctx)
@@ -547,7 +571,10 @@ func (client PathsClient) DateTimeValidResponder(resp *http.Response) (result au
 func (client PathsClient) DateValid(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.DateValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DateValidPreparer(ctx)
@@ -607,7 +634,10 @@ func (client PathsClient) DateValidResponder(resp *http.Response) (result autore
 func (client PathsClient) DoubleDecimalNegative(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.DoubleDecimalNegative")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DoubleDecimalNegativePreparer(ctx)
@@ -667,7 +697,10 @@ func (client PathsClient) DoubleDecimalNegativeResponder(resp *http.Response) (r
 func (client PathsClient) DoubleDecimalPositive(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.DoubleDecimalPositive")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.DoubleDecimalPositivePreparer(ctx)
@@ -729,7 +762,10 @@ func (client PathsClient) DoubleDecimalPositiveResponder(resp *http.Response) (r
 func (client PathsClient) EnumNull(ctx context.Context, enumPath URIColor) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.EnumNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.EnumNullPreparer(ctx, enumPath)
@@ -791,7 +827,10 @@ func (client PathsClient) EnumNullResponder(resp *http.Response) (result autores
 func (client PathsClient) EnumValid(ctx context.Context, enumPath URIColor) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.EnumValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.EnumValidPreparer(ctx, enumPath)
@@ -851,7 +890,10 @@ func (client PathsClient) EnumValidResponder(resp *http.Response) (result autore
 func (client PathsClient) FloatScientificNegative(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.FloatScientificNegative")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.FloatScientificNegativePreparer(ctx)
@@ -911,7 +953,10 @@ func (client PathsClient) FloatScientificNegativeResponder(resp *http.Response) 
 func (client PathsClient) FloatScientificPositive(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.FloatScientificPositive")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.FloatScientificPositivePreparer(ctx)
@@ -971,7 +1016,10 @@ func (client PathsClient) FloatScientificPositiveResponder(resp *http.Response) 
 func (client PathsClient) GetBooleanFalse(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.GetBooleanFalse")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanFalsePreparer(ctx)
@@ -1031,7 +1079,10 @@ func (client PathsClient) GetBooleanFalseResponder(resp *http.Response) (result 
 func (client PathsClient) GetBooleanTrue(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.GetBooleanTrue")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanTruePreparer(ctx)
@@ -1091,7 +1142,10 @@ func (client PathsClient) GetBooleanTrueResponder(resp *http.Response) (result a
 func (client PathsClient) GetIntNegativeOneMillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.GetIntNegativeOneMillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntNegativeOneMillionPreparer(ctx)
@@ -1151,7 +1205,10 @@ func (client PathsClient) GetIntNegativeOneMillionResponder(resp *http.Response)
 func (client PathsClient) GetIntOneMillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.GetIntOneMillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntOneMillionPreparer(ctx)
@@ -1211,7 +1268,10 @@ func (client PathsClient) GetIntOneMillionResponder(resp *http.Response) (result
 func (client PathsClient) GetNegativeTenBillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.GetNegativeTenBillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNegativeTenBillionPreparer(ctx)
@@ -1271,7 +1331,10 @@ func (client PathsClient) GetNegativeTenBillionResponder(resp *http.Response) (r
 func (client PathsClient) GetTenBillion(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.GetTenBillion")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetTenBillionPreparer(ctx)
@@ -1331,7 +1394,10 @@ func (client PathsClient) GetTenBillionResponder(resp *http.Response) (result au
 func (client PathsClient) StringEmpty(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.StringEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringEmptyPreparer(ctx)
@@ -1393,7 +1459,10 @@ func (client PathsClient) StringEmptyResponder(resp *http.Response) (result auto
 func (client PathsClient) StringNull(ctx context.Context, stringPath string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.StringNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringNullPreparer(ctx, stringPath)
@@ -1453,7 +1522,10 @@ func (client PathsClient) StringNullResponder(resp *http.Response) (result autor
 func (client PathsClient) StringUnicode(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.StringUnicode")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringUnicodePreparer(ctx)
@@ -1513,7 +1585,10 @@ func (client PathsClient) StringUnicodeResponder(resp *http.Response) (result au
 func (client PathsClient) StringURLEncoded(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.StringURLEncoded")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.StringURLEncodedPreparer(ctx)
@@ -1575,7 +1650,10 @@ func (client PathsClient) StringURLEncodedResponder(resp *http.Response) (result
 func (client PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath date.UnixTime) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/url/PathsClient.UnixTimeURL")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.UnixTimeURLPreparer(ctx, unixTimeURLPath)

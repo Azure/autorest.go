@@ -35,7 +35,10 @@ func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 func (client DictionaryClient) GetArrayEmpty(ctx context.Context) (result SetListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayEmptyPreparer(ctx)
@@ -92,7 +95,10 @@ func (client DictionaryClient) GetArrayEmptyResponder(resp *http.Response) (resu
 func (client DictionaryClient) GetArrayItemEmpty(ctx context.Context) (result SetListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayItemEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayItemEmptyPreparer(ctx)
@@ -149,7 +155,10 @@ func (client DictionaryClient) GetArrayItemEmptyResponder(resp *http.Response) (
 func (client DictionaryClient) GetArrayItemNull(ctx context.Context) (result SetListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayItemNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayItemNullPreparer(ctx)
@@ -206,7 +215,10 @@ func (client DictionaryClient) GetArrayItemNullResponder(resp *http.Response) (r
 func (client DictionaryClient) GetArrayNull(ctx context.Context) (result SetListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayNullPreparer(ctx)
@@ -263,7 +275,10 @@ func (client DictionaryClient) GetArrayNullResponder(resp *http.Response) (resul
 func (client DictionaryClient) GetArrayValid(ctx context.Context) (result SetListString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetArrayValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetArrayValidPreparer(ctx)
@@ -321,7 +336,10 @@ func (client DictionaryClient) GetArrayValidResponder(resp *http.Response) (resu
 func (client DictionaryClient) GetBase64URL(ctx context.Context) (result SetBase64URL, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBase64URL")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBase64URLPreparer(ctx)
@@ -378,7 +396,10 @@ func (client DictionaryClient) GetBase64URLResponder(resp *http.Response) (resul
 func (client DictionaryClient) GetBooleanInvalidNull(ctx context.Context) (result SetBool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBooleanInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanInvalidNullPreparer(ctx)
@@ -435,7 +456,10 @@ func (client DictionaryClient) GetBooleanInvalidNullResponder(resp *http.Respons
 func (client DictionaryClient) GetBooleanInvalidString(ctx context.Context) (result SetBool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBooleanInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanInvalidStringPreparer(ctx)
@@ -492,7 +516,10 @@ func (client DictionaryClient) GetBooleanInvalidStringResponder(resp *http.Respo
 func (client DictionaryClient) GetBooleanTfft(ctx context.Context) (result SetBool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetBooleanTfft")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetBooleanTfftPreparer(ctx)
@@ -549,7 +576,10 @@ func (client DictionaryClient) GetBooleanTfftResponder(resp *http.Response) (res
 func (client DictionaryClient) GetByteInvalidNull(ctx context.Context) (result SetByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetByteInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetByteInvalidNullPreparer(ctx)
@@ -607,7 +637,10 @@ func (client DictionaryClient) GetByteInvalidNullResponder(resp *http.Response) 
 func (client DictionaryClient) GetByteValid(ctx context.Context) (result SetByteArray, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetByteValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetByteValidPreparer(ctx)
@@ -664,7 +697,10 @@ func (client DictionaryClient) GetByteValidResponder(resp *http.Response) (resul
 func (client DictionaryClient) GetComplexEmpty(ctx context.Context) (result SetWidget, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexEmptyPreparer(ctx)
@@ -722,7 +758,10 @@ func (client DictionaryClient) GetComplexEmptyResponder(resp *http.Response) (re
 func (client DictionaryClient) GetComplexItemEmpty(ctx context.Context) (result SetWidget, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexItemEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexItemEmptyPreparer(ctx)
@@ -780,7 +819,10 @@ func (client DictionaryClient) GetComplexItemEmptyResponder(resp *http.Response)
 func (client DictionaryClient) GetComplexItemNull(ctx context.Context) (result SetWidget, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexItemNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexItemNullPreparer(ctx)
@@ -837,7 +879,10 @@ func (client DictionaryClient) GetComplexItemNullResponder(resp *http.Response) 
 func (client DictionaryClient) GetComplexNull(ctx context.Context) (result SetWidget, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexNullPreparer(ctx)
@@ -895,7 +940,10 @@ func (client DictionaryClient) GetComplexNullResponder(resp *http.Response) (res
 func (client DictionaryClient) GetComplexValid(ctx context.Context) (result SetWidget, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetComplexValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetComplexValidPreparer(ctx)
@@ -952,7 +1000,10 @@ func (client DictionaryClient) GetComplexValidResponder(resp *http.Response) (re
 func (client DictionaryClient) GetDateInvalidChars(ctx context.Context) (result SetDate, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateInvalidChars")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateInvalidCharsPreparer(ctx)
@@ -1009,7 +1060,10 @@ func (client DictionaryClient) GetDateInvalidCharsResponder(resp *http.Response)
 func (client DictionaryClient) GetDateInvalidNull(ctx context.Context) (result SetDate, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateInvalidNullPreparer(ctx)
@@ -1066,7 +1120,10 @@ func (client DictionaryClient) GetDateInvalidNullResponder(resp *http.Response) 
 func (client DictionaryClient) GetDateTimeInvalidChars(ctx context.Context) (result SetDateTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeInvalidChars")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeInvalidCharsPreparer(ctx)
@@ -1123,7 +1180,10 @@ func (client DictionaryClient) GetDateTimeInvalidCharsResponder(resp *http.Respo
 func (client DictionaryClient) GetDateTimeInvalidNull(ctx context.Context) (result SetDateTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeInvalidNullPreparer(ctx)
@@ -1181,7 +1241,10 @@ func (client DictionaryClient) GetDateTimeInvalidNullResponder(resp *http.Respon
 func (client DictionaryClient) GetDateTimeRfc1123Valid(ctx context.Context) (result SetDateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeRfc1123Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeRfc1123ValidPreparer(ctx)
@@ -1239,7 +1302,10 @@ func (client DictionaryClient) GetDateTimeRfc1123ValidResponder(resp *http.Respo
 func (client DictionaryClient) GetDateTimeValid(ctx context.Context) (result SetDateTime, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateTimeValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateTimeValidPreparer(ctx)
@@ -1296,7 +1362,10 @@ func (client DictionaryClient) GetDateTimeValidResponder(resp *http.Response) (r
 func (client DictionaryClient) GetDateValid(ctx context.Context) (result SetDate, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDateValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDateValidPreparer(ctx)
@@ -1353,7 +1422,10 @@ func (client DictionaryClient) GetDateValidResponder(resp *http.Response) (resul
 func (client DictionaryClient) GetDictionaryEmpty(ctx context.Context) (result SetSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryEmptyPreparer(ctx)
@@ -1411,7 +1483,10 @@ func (client DictionaryClient) GetDictionaryEmptyResponder(resp *http.Response) 
 func (client DictionaryClient) GetDictionaryItemEmpty(ctx context.Context) (result SetSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryItemEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryItemEmptyPreparer(ctx)
@@ -1469,7 +1544,10 @@ func (client DictionaryClient) GetDictionaryItemEmptyResponder(resp *http.Respon
 func (client DictionaryClient) GetDictionaryItemNull(ctx context.Context) (result SetSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryItemNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryItemNullPreparer(ctx)
@@ -1526,7 +1604,10 @@ func (client DictionaryClient) GetDictionaryItemNullResponder(resp *http.Respons
 func (client DictionaryClient) GetDictionaryNull(ctx context.Context) (result SetSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryNullPreparer(ctx)
@@ -1584,7 +1665,10 @@ func (client DictionaryClient) GetDictionaryNullResponder(resp *http.Response) (
 func (client DictionaryClient) GetDictionaryValid(ctx context.Context) (result SetSetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDictionaryValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDictionaryValidPreparer(ctx)
@@ -1641,7 +1725,10 @@ func (client DictionaryClient) GetDictionaryValidResponder(resp *http.Response) 
 func (client DictionaryClient) GetDoubleInvalidNull(ctx context.Context) (result SetFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDoubleInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDoubleInvalidNullPreparer(ctx)
@@ -1698,7 +1785,10 @@ func (client DictionaryClient) GetDoubleInvalidNullResponder(resp *http.Response
 func (client DictionaryClient) GetDoubleInvalidString(ctx context.Context) (result SetFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDoubleInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDoubleInvalidStringPreparer(ctx)
@@ -1755,7 +1845,10 @@ func (client DictionaryClient) GetDoubleInvalidStringResponder(resp *http.Respon
 func (client DictionaryClient) GetDoubleValid(ctx context.Context) (result SetFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDoubleValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDoubleValidPreparer(ctx)
@@ -1812,7 +1905,10 @@ func (client DictionaryClient) GetDoubleValidResponder(resp *http.Response) (res
 func (client DictionaryClient) GetDurationValid(ctx context.Context) (result SetTimeSpan, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetDurationValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetDurationValidPreparer(ctx)
@@ -1869,7 +1965,10 @@ func (client DictionaryClient) GetDurationValidResponder(resp *http.Response) (r
 func (client DictionaryClient) GetEmpty(ctx context.Context) (result SetInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx)
@@ -1926,7 +2025,10 @@ func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result Se
 func (client DictionaryClient) GetEmptyStringKey(ctx context.Context) (result SetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetEmptyStringKey")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyStringKeyPreparer(ctx)
@@ -1983,7 +2085,10 @@ func (client DictionaryClient) GetEmptyStringKeyResponder(resp *http.Response) (
 func (client DictionaryClient) GetFloatInvalidNull(ctx context.Context) (result SetFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetFloatInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFloatInvalidNullPreparer(ctx)
@@ -2040,7 +2145,10 @@ func (client DictionaryClient) GetFloatInvalidNullResponder(resp *http.Response)
 func (client DictionaryClient) GetFloatInvalidString(ctx context.Context) (result SetFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetFloatInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFloatInvalidStringPreparer(ctx)
@@ -2097,7 +2205,10 @@ func (client DictionaryClient) GetFloatInvalidStringResponder(resp *http.Respons
 func (client DictionaryClient) GetFloatValid(ctx context.Context) (result SetFloat64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetFloatValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFloatValidPreparer(ctx)
@@ -2154,7 +2265,10 @@ func (client DictionaryClient) GetFloatValidResponder(resp *http.Response) (resu
 func (client DictionaryClient) GetIntegerValid(ctx context.Context) (result SetInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetIntegerValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntegerValidPreparer(ctx)
@@ -2211,7 +2325,10 @@ func (client DictionaryClient) GetIntegerValidResponder(resp *http.Response) (re
 func (client DictionaryClient) GetIntInvalidNull(ctx context.Context) (result SetInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetIntInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntInvalidNullPreparer(ctx)
@@ -2268,7 +2385,10 @@ func (client DictionaryClient) GetIntInvalidNullResponder(resp *http.Response) (
 func (client DictionaryClient) GetIntInvalidString(ctx context.Context) (result SetInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetIntInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetIntInvalidStringPreparer(ctx)
@@ -2325,7 +2445,10 @@ func (client DictionaryClient) GetIntInvalidStringResponder(resp *http.Response)
 func (client DictionaryClient) GetInvalid(ctx context.Context) (result SetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -2382,7 +2505,10 @@ func (client DictionaryClient) GetInvalidResponder(resp *http.Response) (result 
 func (client DictionaryClient) GetLongInvalidNull(ctx context.Context) (result SetInt64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetLongInvalidNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongInvalidNullPreparer(ctx)
@@ -2439,7 +2565,10 @@ func (client DictionaryClient) GetLongInvalidNullResponder(resp *http.Response) 
 func (client DictionaryClient) GetLongInvalidString(ctx context.Context) (result SetInt64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetLongInvalidString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongInvalidStringPreparer(ctx)
@@ -2496,7 +2625,10 @@ func (client DictionaryClient) GetLongInvalidStringResponder(resp *http.Response
 func (client DictionaryClient) GetLongValid(ctx context.Context) (result SetInt64, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetLongValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetLongValidPreparer(ctx)
@@ -2553,7 +2685,10 @@ func (client DictionaryClient) GetLongValidResponder(resp *http.Response) (resul
 func (client DictionaryClient) GetNull(ctx context.Context) (result SetInt32, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -2610,7 +2745,10 @@ func (client DictionaryClient) GetNullResponder(resp *http.Response) (result Set
 func (client DictionaryClient) GetNullKey(ctx context.Context) (result SetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetNullKey")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullKeyPreparer(ctx)
@@ -2667,7 +2805,10 @@ func (client DictionaryClient) GetNullKeyResponder(resp *http.Response) (result 
 func (client DictionaryClient) GetNullValue(ctx context.Context) (result SetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetNullValue")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullValuePreparer(ctx)
@@ -2724,7 +2865,10 @@ func (client DictionaryClient) GetNullValueResponder(resp *http.Response) (resul
 func (client DictionaryClient) GetStringValid(ctx context.Context) (result SetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetStringValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringValidPreparer(ctx)
@@ -2781,7 +2925,10 @@ func (client DictionaryClient) GetStringValidResponder(resp *http.Response) (res
 func (client DictionaryClient) GetStringWithInvalid(ctx context.Context) (result SetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetStringWithInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringWithInvalidPreparer(ctx)
@@ -2838,7 +2985,10 @@ func (client DictionaryClient) GetStringWithInvalidResponder(resp *http.Response
 func (client DictionaryClient) GetStringWithNull(ctx context.Context) (result SetString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.GetStringWithNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetStringWithNullPreparer(ctx)
@@ -2895,7 +3045,10 @@ func (client DictionaryClient) GetStringWithNullResponder(resp *http.Response) (
 func (client DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutArrayValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -2959,7 +3112,10 @@ func (client DictionaryClient) PutArrayValidResponder(resp *http.Response) (resu
 func (client DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutBooleanTfft")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3024,7 +3180,10 @@ func (client DictionaryClient) PutBooleanTfftResponder(resp *http.Response) (res
 func (client DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutByteValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3089,7 +3248,10 @@ func (client DictionaryClient) PutByteValidResponder(resp *http.Response) (resul
 func (client DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutComplexValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3154,7 +3316,10 @@ func (client DictionaryClient) PutComplexValidResponder(resp *http.Response) (re
 func (client DictionaryClient) PutDateTimeRfc1123Valid(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDateTimeRfc1123Valid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3219,7 +3384,10 @@ func (client DictionaryClient) PutDateTimeRfc1123ValidResponder(resp *http.Respo
 func (client DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*date.Time) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDateTimeValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3283,7 +3451,10 @@ func (client DictionaryClient) PutDateTimeValidResponder(resp *http.Response) (r
 func (client DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*date.Date) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDateValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3348,7 +3519,10 @@ func (client DictionaryClient) PutDateValidResponder(resp *http.Response) (resul
 func (client DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDictionaryValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3412,7 +3586,10 @@ func (client DictionaryClient) PutDictionaryValidResponder(resp *http.Response) 
 func (client DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDoubleValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3476,7 +3653,10 @@ func (client DictionaryClient) PutDoubleValidResponder(resp *http.Response) (res
 func (client DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutDurationValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3540,7 +3720,10 @@ func (client DictionaryClient) PutDurationValidResponder(resp *http.Response) (r
 func (client DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3604,7 +3787,10 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 func (client DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutFloatValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3668,7 +3854,10 @@ func (client DictionaryClient) PutFloatValidResponder(resp *http.Response) (resu
 func (client DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutIntegerValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3732,7 +3921,10 @@ func (client DictionaryClient) PutIntegerValidResponder(resp *http.Response) (re
 func (client DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutLongValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -3796,7 +3988,10 @@ func (client DictionaryClient) PutLongValidResponder(resp *http.Response) (resul
 func (client DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-dictionary/DictionaryClient.PutStringValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{

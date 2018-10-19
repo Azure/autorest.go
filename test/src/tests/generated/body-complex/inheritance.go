@@ -33,7 +33,10 @@ func NewInheritanceClientWithBaseURI(baseURI string) InheritanceClient {
 func (client InheritanceClient) GetValid(ctx context.Context) (result Siamese, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/InheritanceClient.GetValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetValidPreparer(ctx)
@@ -94,7 +97,10 @@ func (client InheritanceClient) GetValidResponder(resp *http.Response) (result S
 func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/InheritanceClient.PutValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutValidPreparer(ctx, complexBody)

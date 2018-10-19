@@ -48,7 +48,10 @@ func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
 func (client BaseClient) GetWithConstantInPath(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.GetWithConstantInPath")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetWithConstantInPathPreparer(ctx)
@@ -108,7 +111,10 @@ func (client BaseClient) GetWithConstantInPathResponder(resp *http.Response) (re
 func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Product) (result Product, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.PostWithConstantInBody")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -203,7 +209,10 @@ func (client BaseClient) PostWithConstantInBodyResponder(resp *http.Response) (r
 func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName string, ID int32, body *Product) (result Product, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.ValidationOfBody")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -314,7 +323,10 @@ func (client BaseClient) ValidationOfBodyResponder(resp *http.Response) (result 
 func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, ID int32) (result Product, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/validation/BaseClient.ValidationOfMethodParameters")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{

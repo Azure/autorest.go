@@ -33,7 +33,10 @@ func NewFlattencomplexClientWithBaseURI(baseURI string) FlattencomplexClient {
 func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseTypeModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/FlattencomplexClient.GetValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetValidPreparer(ctx)

@@ -34,7 +34,10 @@ func NewPetsClientWithBaseURI(baseURI string) PetsClient {
 func (client PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties) (result PetAPInProperties, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/additional-properties/PetsClient.CreateAPInProperties")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -99,7 +102,10 @@ func (client PetsClient) CreateAPInPropertiesResponder(resp *http.Response) (res
 func (client PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString) (result PetAPInPropertiesWithAPString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/additional-properties/PetsClient.CreateAPInPropertiesWithAPString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -165,7 +171,10 @@ func (client PetsClient) CreateAPInPropertiesWithAPStringResponder(resp *http.Re
 func (client PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject) (result PetAPObject, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/additional-properties/PetsClient.CreateAPObject")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -230,7 +239,10 @@ func (client PetsClient) CreateAPObjectResponder(resp *http.Response) (result Pe
 func (client PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString) (result PetAPString, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/additional-properties/PetsClient.CreateAPString")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -295,7 +307,10 @@ func (client PetsClient) CreateAPStringResponder(resp *http.Response) (result Pe
 func (client PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue) (result PetAPTrue, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/additional-properties/PetsClient.CreateAPTrue")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	if err := validation.Validate([]validation.Validation{
@@ -360,7 +375,10 @@ func (client PetsClient) CreateAPTrueResponder(resp *http.Response) (result PetA
 func (client PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue) (result CatAPTrue, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/additional-properties/PetsClient.CreateCatAPTrue")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.CreateCatAPTruePreparer(ctx, createParameters)

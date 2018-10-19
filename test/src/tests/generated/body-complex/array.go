@@ -33,7 +33,10 @@ func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 func (client ArrayClient) GetEmpty(ctx context.Context) (result ArrayWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.GetEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyPreparer(ctx)
@@ -90,7 +93,10 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ArrayWr
 func (client ArrayClient) GetNotProvided(ctx context.Context) (result ArrayWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.GetNotProvided")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNotProvidedPreparer(ctx)
@@ -147,7 +153,10 @@ func (client ArrayClient) GetNotProvidedResponder(resp *http.Response) (result A
 func (client ArrayClient) GetValid(ctx context.Context) (result ArrayWrapper, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.GetValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetValidPreparer(ctx)
@@ -206,7 +215,10 @@ func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWr
 func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.PutEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutEmptyPreparer(ctx, complexBody)
@@ -267,7 +279,10 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-complex/ArrayClient.PutValid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutValidPreparer(ctx, complexBody)

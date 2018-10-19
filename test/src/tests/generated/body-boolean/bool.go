@@ -33,7 +33,10 @@ func NewBoolClientWithBaseURI(baseURI string) BoolClient {
 func (client BoolClient) GetFalse(ctx context.Context) (result BoolModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-boolean/BoolClient.GetFalse")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFalsePreparer(ctx)
@@ -90,7 +93,10 @@ func (client BoolClient) GetFalseResponder(resp *http.Response) (result BoolMode
 func (client BoolClient) GetInvalid(ctx context.Context) (result BoolModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-boolean/BoolClient.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -147,7 +153,10 @@ func (client BoolClient) GetInvalidResponder(resp *http.Response) (result BoolMo
 func (client BoolClient) GetNull(ctx context.Context) (result BoolModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-boolean/BoolClient.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -204,7 +213,10 @@ func (client BoolClient) GetNullResponder(resp *http.Response) (result BoolModel
 func (client BoolClient) GetTrue(ctx context.Context) (result BoolModel, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-boolean/BoolClient.GetTrue")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetTruePreparer(ctx)
@@ -261,7 +273,10 @@ func (client BoolClient) GetTrueResponder(resp *http.Response) (result BoolModel
 func (client BoolClient) PutFalse(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-boolean/BoolClient.PutFalse")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutFalsePreparer(ctx)
@@ -319,7 +334,10 @@ func (client BoolClient) PutFalseResponder(resp *http.Response) (result autorest
 func (client BoolClient) PutTrue(ctx context.Context) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-boolean/BoolClient.PutTrue")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutTruePreparer(ctx)

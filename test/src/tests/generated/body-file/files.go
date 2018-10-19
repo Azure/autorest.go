@@ -33,7 +33,10 @@ func NewFilesClientWithBaseURI(baseURI string) FilesClient {
 func (client FilesClient) GetEmptyFile(ctx context.Context) (result ReadCloser, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-file/FilesClient.GetEmptyFile")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyFilePreparer(ctx)
@@ -89,7 +92,10 @@ func (client FilesClient) GetEmptyFileResponder(resp *http.Response) (result Rea
 func (client FilesClient) GetFile(ctx context.Context) (result ReadCloser, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-file/FilesClient.GetFile")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFilePreparer(ctx)
@@ -145,7 +151,10 @@ func (client FilesClient) GetFileResponder(resp *http.Response) (result ReadClos
 func (client FilesClient) GetFileLarge(ctx context.Context) (result ReadCloser, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-file/FilesClient.GetFileLarge")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetFileLargePreparer(ctx)

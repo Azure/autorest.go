@@ -34,7 +34,10 @@ func NewDatetimerfc1123ClientWithBaseURI(baseURI string) Datetimerfc1123Client {
 func (client Datetimerfc1123Client) GetInvalid(ctx context.Context) (result DateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetInvalid")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetInvalidPreparer(ctx)
@@ -91,7 +94,10 @@ func (client Datetimerfc1123Client) GetInvalidResponder(resp *http.Response) (re
 func (client Datetimerfc1123Client) GetNull(ctx context.Context) (result DateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetNull")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNullPreparer(ctx)
@@ -148,7 +154,10 @@ func (client Datetimerfc1123Client) GetNullResponder(resp *http.Response) (resul
 func (client Datetimerfc1123Client) GetOverflow(ctx context.Context) (result DateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetOverflow")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetOverflowPreparer(ctx)
@@ -205,7 +214,10 @@ func (client Datetimerfc1123Client) GetOverflowResponder(resp *http.Response) (r
 func (client Datetimerfc1123Client) GetUnderflow(ctx context.Context) (result DateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUnderflow")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUnderflowPreparer(ctx)
@@ -262,7 +274,10 @@ func (client Datetimerfc1123Client) GetUnderflowResponder(resp *http.Response) (
 func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUtcLowercaseMaxDateTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUtcLowercaseMaxDateTimePreparer(ctx)
@@ -319,7 +334,10 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimeResponder(resp *ht
 func (client Datetimerfc1123Client) GetUtcMinDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUtcMinDateTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUtcMinDateTimePreparer(ctx)
@@ -376,7 +394,10 @@ func (client Datetimerfc1123Client) GetUtcMinDateTimeResponder(resp *http.Respon
 func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTimeRfc1123, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.GetUtcUppercaseMaxDateTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetUtcUppercaseMaxDateTimePreparer(ctx)
@@ -433,7 +454,10 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimeResponder(resp *ht
 func (client Datetimerfc1123Client) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.PutUtcMaxDateTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutUtcMaxDateTimePreparer(ctx, datetimeBody)
@@ -491,7 +515,10 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTimeResponder(resp *http.Respon
 func (client Datetimerfc1123Client) PutUtcMinDateTime(ctx context.Context, datetimeBody date.TimeRFC1123) (result autorest.Response, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/body-datetime-rfc1123/Datetimerfc1123Client.PutUtcMinDateTime")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.PutUtcMinDateTimePreparer(ctx, datetimeBody)

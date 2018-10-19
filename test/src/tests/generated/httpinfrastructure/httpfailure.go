@@ -33,7 +33,10 @@ func NewHTTPFailureClientWithBaseURI(baseURI string) HTTPFailureClient {
 func (client HTTPFailureClient) GetEmptyError(ctx context.Context) (result Bool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPFailureClient.GetEmptyError")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetEmptyErrorPreparer(ctx)
@@ -90,7 +93,10 @@ func (client HTTPFailureClient) GetEmptyErrorResponder(resp *http.Response) (res
 func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (result Bool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPFailureClient.GetNoModelEmpty")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNoModelEmptyPreparer(ctx)
@@ -147,7 +153,10 @@ func (client HTTPFailureClient) GetNoModelEmptyResponder(resp *http.Response) (r
 func (client HTTPFailureClient) GetNoModelError(ctx context.Context) (result Bool, err error) {
 	ctx = tracing.StartSpan(ctx, "generated/httpinfrastructure/HTTPFailureClient.GetNoModelError")
 	defer func() {
-		sc := result.StatusCode
+		sc := -1
+		if result.Response.Response != nil {
+			sc = result.StatusCode
+		}
 		tracing.EndSpan(ctx, sc, err)
 	}()
 	req, err := client.GetNoModelErrorPreparer(ctx)
