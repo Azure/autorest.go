@@ -33,8 +33,6 @@ func NewDatetimeClientWithBaseURI(baseURI string) DatetimeClient {
 
 // GetInvalid get invalid datetime value
 func (client DatetimeClient) GetInvalid(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetInvalid", fqdn))
 		defer func() {
@@ -98,8 +96,6 @@ func (client DatetimeClient) GetInvalidResponder(resp *http.Response) (result Da
 // GetLocalNegativeOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime", fqdn))
 		defer func() {
@@ -162,8 +158,6 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeResponder
 
 // GetLocalNegativeOffsetMinDateTime get min datetime value 0001-01-01T00:00:00-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetLocalNegativeOffsetMinDateTime", fqdn))
 		defer func() {
@@ -227,8 +221,6 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeResponder(resp *ht
 // GetLocalNegativeOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999-14:00
 func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime", fqdn))
 		defer func() {
@@ -292,8 +284,6 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeResponder
 // GetLocalPositiveOffsetLowercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31t23:59:59.9999999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime", fqdn))
 		defer func() {
@@ -356,8 +346,6 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeResponder
 
 // GetLocalPositiveOffsetMinDateTime get min datetime value 0001-01-01T00:00:00+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetLocalPositiveOffsetMinDateTime", fqdn))
 		defer func() {
@@ -421,8 +409,6 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeResponder(resp *ht
 // GetLocalPositiveOffsetUppercaseMaxDateTime get max datetime value with positive num offset
 // 9999-12-31T23:59:59.9999999+14:00
 func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime", fqdn))
 		defer func() {
@@ -485,8 +471,6 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeResponder
 
 // GetNull get null datetime value
 func (client DatetimeClient) GetNull(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetNull", fqdn))
 		defer func() {
@@ -549,8 +533,6 @@ func (client DatetimeClient) GetNullResponder(resp *http.Response) (result DateT
 
 // GetOverflow get overflow datetime value
 func (client DatetimeClient) GetOverflow(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetOverflow", fqdn))
 		defer func() {
@@ -613,8 +595,6 @@ func (client DatetimeClient) GetOverflowResponder(resp *http.Response) (result D
 
 // GetUnderflow get underflow datetime value
 func (client DatetimeClient) GetUnderflow(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetUnderflow", fqdn))
 		defer func() {
@@ -677,8 +657,6 @@ func (client DatetimeClient) GetUnderflowResponder(resp *http.Response) (result 
 
 // GetUtcLowercaseMaxDateTime get max datetime value 9999-12-31t23:59:59.9999999z
 func (client DatetimeClient) GetUtcLowercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetUtcLowercaseMaxDateTime", fqdn))
 		defer func() {
@@ -741,8 +719,6 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTimeResponder(resp *http.Resp
 
 // GetUtcMinDateTime get min datetime value 0001-01-01T00:00:00Z
 func (client DatetimeClient) GetUtcMinDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetUtcMinDateTime", fqdn))
 		defer func() {
@@ -805,8 +781,6 @@ func (client DatetimeClient) GetUtcMinDateTimeResponder(resp *http.Response) (re
 
 // GetUtcUppercaseMaxDateTime get max datetime value 9999-12-31T23:59:59.9999999Z
 func (client DatetimeClient) GetUtcUppercaseMaxDateTime(ctx context.Context) (result DateTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.GetUtcUppercaseMaxDateTime", fqdn))
 		defer func() {
@@ -869,8 +843,6 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTimeResponder(resp *http.Resp
 
 // PutLocalNegativeOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999-14:00
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.PutLocalNegativeOffsetMaxDateTime", fqdn))
 		defer func() {
@@ -934,8 +906,6 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeResponder(resp *ht
 
 // PutLocalNegativeOffsetMinDateTime put min datetime value 0001-01-01T00:00:00-14:00
 func (client DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.PutLocalNegativeOffsetMinDateTime", fqdn))
 		defer func() {
@@ -999,8 +969,6 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeResponder(resp *ht
 
 // PutLocalPositiveOffsetMaxDateTime put max datetime value with positive numoffset 9999-12-31t23:59:59.9999999+14:00
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.PutLocalPositiveOffsetMaxDateTime", fqdn))
 		defer func() {
@@ -1064,8 +1032,6 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeResponder(resp *ht
 
 // PutLocalPositiveOffsetMinDateTime put min datetime value 0001-01-01T00:00:00+14:00
 func (client DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.PutLocalPositiveOffsetMinDateTime", fqdn))
 		defer func() {
@@ -1129,8 +1095,6 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeResponder(resp *ht
 
 // PutUtcMaxDateTime put max datetime value 9999-12-31T23:59:59.9999999Z
 func (client DatetimeClient) PutUtcMaxDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.PutUtcMaxDateTime", fqdn))
 		defer func() {
@@ -1194,8 +1158,6 @@ func (client DatetimeClient) PutUtcMaxDateTimeResponder(resp *http.Response) (re
 
 // PutUtcMinDateTime put min datetime value 0001-01-01T00:00:00Z
 func (client DatetimeClient) PutUtcMinDateTime(ctx context.Context, datetimeBody date.Time) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DatetimeClient.PutUtcMinDateTime", fqdn))
 		defer func() {

@@ -39,8 +39,6 @@ func NewPathItemsClientWithBaseURI(baseURI string, globalStringPath string, glob
 // localStringQuery - should contain value 'localStringQuery'
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetAllWithValues", fqdn))
 		defer func() {
@@ -127,8 +125,6 @@ func (client PathItemsClient) GetAllWithValuesResponder(resp *http.Response) (re
 // localStringQuery - should contain null value
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetGlobalAndLocalQueryNull", fqdn))
 		defer func() {
@@ -215,8 +211,6 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullResponder(resp *http.Res
 // localStringQuery - should contain value 'localStringQuery'
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetGlobalQueryNull", fqdn))
 		defer func() {
@@ -303,8 +297,6 @@ func (client PathItemsClient) GetGlobalQueryNullResponder(resp *http.Response) (
 // localStringQuery - should contain value null
 // pathItemStringQuery - should contain value null
 func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetLocalPathItemQueryNull", fqdn))
 		defer func() {

@@ -33,8 +33,6 @@ func NewIntClientWithBaseURI(baseURI string) IntClient {
 
 // GetInvalid get invalid Int value
 func (client IntClient) GetInvalid(ctx context.Context) (result Int32, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetInvalid", fqdn))
 		defer func() {
@@ -97,8 +95,6 @@ func (client IntClient) GetInvalidResponder(resp *http.Response) (result Int32, 
 
 // GetInvalidUnixTime get invalid Unix time value
 func (client IntClient) GetInvalidUnixTime(ctx context.Context) (result UnixTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetInvalidUnixTime", fqdn))
 		defer func() {
@@ -161,8 +157,6 @@ func (client IntClient) GetInvalidUnixTimeResponder(resp *http.Response) (result
 
 // GetNull get null Int value
 func (client IntClient) GetNull(ctx context.Context) (result Int32, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetNull", fqdn))
 		defer func() {
@@ -225,8 +219,6 @@ func (client IntClient) GetNullResponder(resp *http.Response) (result Int32, err
 
 // GetNullUnixTime get null Unix time value
 func (client IntClient) GetNullUnixTime(ctx context.Context) (result UnixTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetNullUnixTime", fqdn))
 		defer func() {
@@ -289,8 +281,6 @@ func (client IntClient) GetNullUnixTimeResponder(resp *http.Response) (result Un
 
 // GetOverflowInt32 get overflow Int32 value
 func (client IntClient) GetOverflowInt32(ctx context.Context) (result Int32, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetOverflowInt32", fqdn))
 		defer func() {
@@ -353,8 +343,6 @@ func (client IntClient) GetOverflowInt32Responder(resp *http.Response) (result I
 
 // GetOverflowInt64 get overflow Int64 value
 func (client IntClient) GetOverflowInt64(ctx context.Context) (result Int64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetOverflowInt64", fqdn))
 		defer func() {
@@ -417,8 +405,6 @@ func (client IntClient) GetOverflowInt64Responder(resp *http.Response) (result I
 
 // GetUnderflowInt32 get underflow Int32 value
 func (client IntClient) GetUnderflowInt32(ctx context.Context) (result Int32, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetUnderflowInt32", fqdn))
 		defer func() {
@@ -481,8 +467,6 @@ func (client IntClient) GetUnderflowInt32Responder(resp *http.Response) (result 
 
 // GetUnderflowInt64 get underflow Int64 value
 func (client IntClient) GetUnderflowInt64(ctx context.Context) (result Int64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetUnderflowInt64", fqdn))
 		defer func() {
@@ -545,8 +529,6 @@ func (client IntClient) GetUnderflowInt64Responder(resp *http.Response) (result 
 
 // GetUnixTime get datetime encoded as Unix time value
 func (client IntClient) GetUnixTime(ctx context.Context) (result UnixTime, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.GetUnixTime", fqdn))
 		defer func() {
@@ -609,8 +591,6 @@ func (client IntClient) GetUnixTimeResponder(resp *http.Response) (result UnixTi
 
 // PutMax32 put max int32 value
 func (client IntClient) PutMax32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.PutMax32", fqdn))
 		defer func() {
@@ -674,8 +654,6 @@ func (client IntClient) PutMax32Responder(resp *http.Response) (result autorest.
 
 // PutMax64 put max int64 value
 func (client IntClient) PutMax64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.PutMax64", fqdn))
 		defer func() {
@@ -739,8 +717,6 @@ func (client IntClient) PutMax64Responder(resp *http.Response) (result autorest.
 
 // PutMin32 put min int32 value
 func (client IntClient) PutMin32(ctx context.Context, intBody int32) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.PutMin32", fqdn))
 		defer func() {
@@ -804,8 +780,6 @@ func (client IntClient) PutMin32Responder(resp *http.Response) (result autorest.
 
 // PutMin64 put min int64 value
 func (client IntClient) PutMin64(ctx context.Context, intBody int64) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.PutMin64", fqdn))
 		defer func() {
@@ -869,8 +843,6 @@ func (client IntClient) PutMin64Responder(resp *http.Response) (result autorest.
 
 // PutUnixTimeDate put datetime encoded as Unix time
 func (client IntClient) PutUnixTimeDate(ctx context.Context, intBody date.UnixTime) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/IntClient.PutUnixTimeDate", fqdn))
 		defer func() {

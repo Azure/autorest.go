@@ -32,8 +32,6 @@ func NewBoolClientWithBaseURI(baseURI string) BoolClient {
 
 // GetFalse get false Boolean value
 func (client BoolClient) GetFalse(ctx context.Context) (result BoolModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BoolClient.GetFalse", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client BoolClient) GetFalseResponder(resp *http.Response) (result BoolMode
 
 // GetInvalid get invalid Boolean value
 func (client BoolClient) GetInvalid(ctx context.Context) (result BoolModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BoolClient.GetInvalid", fqdn))
 		defer func() {
@@ -160,8 +156,6 @@ func (client BoolClient) GetInvalidResponder(resp *http.Response) (result BoolMo
 
 // GetNull get null Boolean value
 func (client BoolClient) GetNull(ctx context.Context) (result BoolModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BoolClient.GetNull", fqdn))
 		defer func() {
@@ -224,8 +218,6 @@ func (client BoolClient) GetNullResponder(resp *http.Response) (result BoolModel
 
 // GetTrue get true Boolean value
 func (client BoolClient) GetTrue(ctx context.Context) (result BoolModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BoolClient.GetTrue", fqdn))
 		defer func() {
@@ -288,8 +280,6 @@ func (client BoolClient) GetTrueResponder(resp *http.Response) (result BoolModel
 
 // PutFalse set Boolean value false
 func (client BoolClient) PutFalse(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BoolClient.PutFalse", fqdn))
 		defer func() {
@@ -353,8 +343,6 @@ func (client BoolClient) PutFalseResponder(resp *http.Response) (result autorest
 
 // PutTrue set Boolean value true
 func (client BoolClient) PutTrue(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BoolClient.PutTrue", fqdn))
 		defer func() {

@@ -32,8 +32,6 @@ func NewFilesClientWithBaseURI(baseURI string) FilesClient {
 
 // GetEmptyFile get empty file
 func (client FilesClient) GetEmptyFile(ctx context.Context) (result ReadCloser, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FilesClient.GetEmptyFile", fqdn))
 		defer func() {
@@ -95,8 +93,6 @@ func (client FilesClient) GetEmptyFileResponder(resp *http.Response) (result Rea
 
 // GetFile get file
 func (client FilesClient) GetFile(ctx context.Context) (result ReadCloser, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FilesClient.GetFile", fqdn))
 		defer func() {
@@ -158,8 +154,6 @@ func (client FilesClient) GetFileResponder(resp *http.Response) (result ReadClos
 
 // GetFileLarge get a large file
 func (client FilesClient) GetFileLarge(ctx context.Context) (result ReadCloser, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FilesClient.GetFileLarge", fqdn))
 		defer func() {

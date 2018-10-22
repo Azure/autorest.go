@@ -68,8 +68,6 @@ type OdataProductResultIterator struct {
 // NextWithContext advances to the next value.  If there was an error making
 // the request the iterator does not advance and the error is returned.
 func (iter *OdataProductResultIterator) NextWithContext(ctx context.Context) (err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/OdataProductResultIterator.NextWithContext", fqdn))
 		defer func() {
@@ -145,8 +143,6 @@ type OdataProductResultPage struct {
 // NextWithContext advances to the next page of values.  If there was an error making
 // the request the page does not advance and the error is returned.
 func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/OdataProductResultPage.NextWithContext", fqdn))
 		defer func() {
@@ -281,8 +277,6 @@ type ProductResultIterator struct {
 // NextWithContext advances to the next value.  If there was an error making
 // the request the iterator does not advance and the error is returned.
 func (iter *ProductResultIterator) NextWithContext(ctx context.Context) (err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ProductResultIterator.NextWithContext", fqdn))
 		defer func() {
@@ -358,8 +352,6 @@ type ProductResultPage struct {
 // NextWithContext advances to the next page of values.  If there was an error making
 // the request the page does not advance and the error is returned.
 func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ProductResultPage.NextWithContext", fqdn))
 		defer func() {

@@ -36,8 +36,6 @@ func NewFormdataClientWithBaseURI(baseURI string) FormdataClient {
 // fileContent - file to upload.
 // fileName - file name to upload. Name has to be spelled exactly as written here.
 func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadCloser, fileName string) (result ReadCloser, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FormdataClient.UploadFile", fqdn))
 		defer func() {
@@ -107,8 +105,6 @@ func (client FormdataClient) UploadFileResponder(resp *http.Response) (result Re
 // Parameters:
 // fileContent - file to upload.
 func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadCloser) (result ReadCloser, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FormdataClient.UploadFileViaBody", fqdn))
 		defer func() {

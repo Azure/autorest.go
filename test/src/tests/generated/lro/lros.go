@@ -33,8 +33,6 @@ func NewLROsClientWithBaseURI(baseURI string) LROsClient {
 // Delete202NoRetry204 long running delete request, service returns a 202 to the initial request. Polls return this
 // value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client LROsClient) Delete202NoRetry204(ctx context.Context) (result LROsDelete202NoRetry204Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Delete202NoRetry204", fqdn))
 		defer func() {
@@ -98,8 +96,6 @@ func (client LROsClient) Delete202NoRetry204Responder(resp *http.Response) (resu
 // Delete202Retry200 long running delete request, service returns a 202 to the initial request. Polls return this value
 // until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client LROsClient) Delete202Retry200(ctx context.Context) (result LROsDelete202Retry200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Delete202Retry200", fqdn))
 		defer func() {
@@ -162,8 +158,6 @@ func (client LROsClient) Delete202Retry200Responder(resp *http.Response) (result
 
 // Delete204Succeeded long running delete succeeds and returns right away
 func (client LROsClient) Delete204Succeeded(ctx context.Context) (result LROsDelete204SucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Delete204Succeeded", fqdn))
 		defer func() {
@@ -226,8 +220,6 @@ func (client LROsClient) Delete204SucceededResponder(resp *http.Response) (resul
 // DeleteAsyncNoHeaderInRetry long running delete request, service returns an Azure-AsyncOperation header in the
 // initial request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 func (client LROsClient) DeleteAsyncNoHeaderInRetry(ctx context.Context) (result LROsDeleteAsyncNoHeaderInRetryFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteAsyncNoHeaderInRetry", fqdn))
 		defer func() {
@@ -290,8 +282,6 @@ func (client LROsClient) DeleteAsyncNoHeaderInRetryResponder(resp *http.Response
 // DeleteAsyncNoRetrySucceeded long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROsClient) DeleteAsyncNoRetrySucceeded(ctx context.Context) (result LROsDeleteAsyncNoRetrySucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteAsyncNoRetrySucceeded", fqdn))
 		defer func() {
@@ -354,8 +344,6 @@ func (client LROsClient) DeleteAsyncNoRetrySucceededResponder(resp *http.Respons
 // DeleteAsyncRetrycanceled long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROsClient) DeleteAsyncRetrycanceled(ctx context.Context) (result LROsDeleteAsyncRetrycanceledFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteAsyncRetrycanceled", fqdn))
 		defer func() {
@@ -418,8 +406,6 @@ func (client LROsClient) DeleteAsyncRetrycanceledResponder(resp *http.Response) 
 // DeleteAsyncRetryFailed long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 func (client LROsClient) DeleteAsyncRetryFailed(ctx context.Context) (result LROsDeleteAsyncRetryFailedFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteAsyncRetryFailed", fqdn))
 		defer func() {
@@ -482,8 +468,6 @@ func (client LROsClient) DeleteAsyncRetryFailedResponder(resp *http.Response) (r
 // DeleteAsyncRetrySucceeded long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROsClient) DeleteAsyncRetrySucceeded(ctx context.Context) (result LROsDeleteAsyncRetrySucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteAsyncRetrySucceeded", fqdn))
 		defer func() {
@@ -546,8 +530,6 @@ func (client LROsClient) DeleteAsyncRetrySucceededResponder(resp *http.Response)
 // DeleteNoHeaderInRetry long running delete request, service returns a location header in the initial request.
 // Subsequent calls to operation status do not contain location header.
 func (client LROsClient) DeleteNoHeaderInRetry(ctx context.Context) (result LROsDeleteNoHeaderInRetryFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteNoHeaderInRetry", fqdn))
 		defer func() {
@@ -611,8 +593,6 @@ func (client LROsClient) DeleteNoHeaderInRetryResponder(resp *http.Response) (re
 // with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
 func (client LROsClient) DeleteProvisioning202Accepted200Succeeded(ctx context.Context) (result LROsDeleteProvisioning202Accepted200SucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteProvisioning202Accepted200Succeeded", fqdn))
 		defer func() {
@@ -677,8 +657,6 @@ func (client LROsClient) DeleteProvisioning202Accepted200SucceededResponder(resp
 // with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Canceled’
 func (client LROsClient) DeleteProvisioning202Deletingcanceled200(ctx context.Context) (result LROsDeleteProvisioning202Deletingcanceled200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteProvisioning202Deletingcanceled200", fqdn))
 		defer func() {
@@ -743,8 +721,6 @@ func (client LROsClient) DeleteProvisioning202Deletingcanceled200Responder(resp 
 // with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Failed’
 func (client LROsClient) DeleteProvisioning202DeletingFailed200(ctx context.Context) (result LROsDeleteProvisioning202DeletingFailed200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.DeleteProvisioning202DeletingFailed200", fqdn))
 		defer func() {
@@ -808,8 +784,6 @@ func (client LROsClient) DeleteProvisioning202DeletingFailed200Responder(resp *h
 // Post200WithPayload long running post request, service returns a 202 to the initial request, with 'Location' header.
 // Poll returns a 200 with a response body after success.
 func (client LROsClient) Post200WithPayload(ctx context.Context) (result LROsPost200WithPayloadFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Post200WithPayload", fqdn))
 		defer func() {
@@ -875,8 +849,6 @@ func (client LROsClient) Post200WithPayloadResponder(resp *http.Response) (resul
 // Parameters:
 // product - product to put
 func (client LROsClient) Post202NoRetry204(ctx context.Context, product *Product) (result LROsPost202NoRetry204Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Post202NoRetry204", fqdn))
 		defer func() {
@@ -947,8 +919,6 @@ func (client LROsClient) Post202NoRetry204Responder(resp *http.Response) (result
 // Parameters:
 // product - product to put
 func (client LROsClient) Post202Retry200(ctx context.Context, product *Product) (result LROsPost202Retry200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Post202Retry200", fqdn))
 		defer func() {
@@ -1019,8 +989,6 @@ func (client LROsClient) Post202Retry200Responder(resp *http.Response) (result a
 // Parameters:
 // product - product to put
 func (client LROsClient) PostAsyncNoRetrySucceeded(ctx context.Context, product *Product) (result LROsPostAsyncNoRetrySucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PostAsyncNoRetrySucceeded", fqdn))
 		defer func() {
@@ -1092,8 +1060,6 @@ func (client LROsClient) PostAsyncNoRetrySucceededResponder(resp *http.Response)
 // Parameters:
 // product - product to put
 func (client LROsClient) PostAsyncRetrycanceled(ctx context.Context, product *Product) (result LROsPostAsyncRetrycanceledFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PostAsyncRetrycanceled", fqdn))
 		defer func() {
@@ -1164,8 +1130,6 @@ func (client LROsClient) PostAsyncRetrycanceledResponder(resp *http.Response) (r
 // Parameters:
 // product - product to put
 func (client LROsClient) PostAsyncRetryFailed(ctx context.Context, product *Product) (result LROsPostAsyncRetryFailedFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PostAsyncRetryFailed", fqdn))
 		defer func() {
@@ -1236,8 +1200,6 @@ func (client LROsClient) PostAsyncRetryFailedResponder(resp *http.Response) (res
 // Parameters:
 // product - product to put
 func (client LROsClient) PostAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsPostAsyncRetrySucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PostAsyncRetrySucceeded", fqdn))
 		defer func() {
@@ -1307,8 +1269,6 @@ func (client LROsClient) PostAsyncRetrySucceededResponder(resp *http.Response) (
 // both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final
 // object
 func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGet(ctx context.Context) (result LROsPostDoubleHeadersFinalAzureHeaderGetFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PostDoubleHeadersFinalAzureHeaderGet", fqdn))
 		defer func() {
@@ -1373,8 +1333,6 @@ func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetResponder(resp *htt
 // with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the
 // final object if you support initial Autorest behavior.
 func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context) (result LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", fqdn))
 		defer func() {
@@ -1438,8 +1396,6 @@ func (client LROsClient) PostDoubleHeadersFinalAzureHeaderGetDefaultResponder(re
 // PostDoubleHeadersFinalLocationGet long running post request, service returns a 202 to the initial request with both
 // Location and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
 func (client LROsClient) PostDoubleHeadersFinalLocationGet(ctx context.Context) (result LROsPostDoubleHeadersFinalLocationGetFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PostDoubleHeadersFinalLocationGet", fqdn))
 		defer func() {
@@ -1506,8 +1462,6 @@ func (client LROsClient) PostDoubleHeadersFinalLocationGetResponder(resp *http.R
 // Parameters:
 // product - product to put
 func (client LROsClient) Put200Acceptedcanceled200(ctx context.Context, product *Product) (result LROsPut200Acceptedcanceled200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Put200Acceptedcanceled200", fqdn))
 		defer func() {
@@ -1578,8 +1532,6 @@ func (client LROsClient) Put200Acceptedcanceled200Responder(resp *http.Response)
 // Parameters:
 // product - product to put
 func (client LROsClient) Put200Succeeded(ctx context.Context, product *Product) (result LROsPut200SucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Put200Succeeded", fqdn))
 		defer func() {
@@ -1650,8 +1602,6 @@ func (client LROsClient) Put200SucceededResponder(resp *http.Response) (result P
 // Parameters:
 // product - product to put
 func (client LROsClient) Put200SucceededNoState(ctx context.Context, product *Product) (result LROsPut200SucceededNoStateFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Put200SucceededNoState", fqdn))
 		defer func() {
@@ -1723,8 +1673,6 @@ func (client LROsClient) Put200SucceededNoStateResponder(resp *http.Response) (r
 // Parameters:
 // product - product to put
 func (client LROsClient) Put200UpdatingSucceeded204(ctx context.Context, product *Product) (result LROsPut200UpdatingSucceeded204Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Put200UpdatingSucceeded204", fqdn))
 		defer func() {
@@ -1796,8 +1744,6 @@ func (client LROsClient) Put200UpdatingSucceeded204Responder(resp *http.Response
 // Parameters:
 // product - product to put
 func (client LROsClient) Put201CreatingFailed200(ctx context.Context, product *Product) (result LROsPut201CreatingFailed200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Put201CreatingFailed200", fqdn))
 		defer func() {
@@ -1869,8 +1815,6 @@ func (client LROsClient) Put201CreatingFailed200Responder(resp *http.Response) (
 // Parameters:
 // product - product to put
 func (client LROsClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LROsPut201CreatingSucceeded200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Put201CreatingSucceeded200", fqdn))
 		defer func() {
@@ -1941,8 +1885,6 @@ func (client LROsClient) Put201CreatingSucceeded200Responder(resp *http.Response
 // Parameters:
 // product - product to put
 func (client LROsClient) Put202Retry200(ctx context.Context, product *Product) (result LROsPut202Retry200Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.Put202Retry200", fqdn))
 		defer func() {
@@ -2013,8 +1955,6 @@ func (client LROsClient) Put202Retry200Responder(resp *http.Response) (result Pr
 // Parameters:
 // product - product to put
 func (client LROsClient) PutAsyncNoHeaderInRetry(ctx context.Context, product *Product) (result LROsPutAsyncNoHeaderInRetryFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutAsyncNoHeaderInRetry", fqdn))
 		defer func() {
@@ -2084,8 +2024,6 @@ func (client LROsClient) PutAsyncNoHeaderInRetryResponder(resp *http.Response) (
 // Parameters:
 // sku - sku to put
 func (client LROsClient) PutAsyncNonResource(ctx context.Context, sku *Sku) (result LROsPutAsyncNonResourceFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutAsyncNonResource", fqdn))
 		defer func() {
@@ -2157,8 +2095,6 @@ func (client LROsClient) PutAsyncNonResourceResponder(resp *http.Response) (resu
 // Parameters:
 // product - product to put
 func (client LROsClient) PutAsyncNoRetrycanceled(ctx context.Context, product *Product) (result LROsPutAsyncNoRetrycanceledFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutAsyncNoRetrycanceled", fqdn))
 		defer func() {
@@ -2230,8 +2166,6 @@ func (client LROsClient) PutAsyncNoRetrycanceledResponder(resp *http.Response) (
 // Parameters:
 // product - product to put
 func (client LROsClient) PutAsyncNoRetrySucceeded(ctx context.Context, product *Product) (result LROsPutAsyncNoRetrySucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutAsyncNoRetrySucceeded", fqdn))
 		defer func() {
@@ -2303,8 +2237,6 @@ func (client LROsClient) PutAsyncNoRetrySucceededResponder(resp *http.Response) 
 // Parameters:
 // product - product to put
 func (client LROsClient) PutAsyncRetryFailed(ctx context.Context, product *Product) (result LROsPutAsyncRetryFailedFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutAsyncRetryFailed", fqdn))
 		defer func() {
@@ -2376,8 +2308,6 @@ func (client LROsClient) PutAsyncRetryFailedResponder(resp *http.Response) (resu
 // Parameters:
 // product - product to put
 func (client LROsClient) PutAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsPutAsyncRetrySucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutAsyncRetrySucceeded", fqdn))
 		defer func() {
@@ -2447,8 +2377,6 @@ func (client LROsClient) PutAsyncRetrySucceededResponder(resp *http.Response) (r
 // Parameters:
 // product - sub Product to put
 func (client LROsClient) PutAsyncSubResource(ctx context.Context, product *SubProduct) (result LROsPutAsyncSubResourceFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutAsyncSubResource", fqdn))
 		defer func() {
@@ -2519,8 +2447,6 @@ func (client LROsClient) PutAsyncSubResourceResponder(resp *http.Response) (resu
 // Parameters:
 // product - product to put
 func (client LROsClient) PutNoHeaderInRetry(ctx context.Context, product *Product) (result LROsPutNoHeaderInRetryFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutNoHeaderInRetry", fqdn))
 		defer func() {
@@ -2590,8 +2516,6 @@ func (client LROsClient) PutNoHeaderInRetryResponder(resp *http.Response) (resul
 // Parameters:
 // sku - sku to put
 func (client LROsClient) PutNonResource(ctx context.Context, sku *Sku) (result LROsPutNonResourceFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutNonResource", fqdn))
 		defer func() {
@@ -2661,8 +2585,6 @@ func (client LROsClient) PutNonResourceResponder(resp *http.Response) (result Sk
 // Parameters:
 // product - sub Product to put
 func (client LROsClient) PutSubResource(ctx context.Context, product *SubProduct) (result LROsPutSubResourceFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsClient.PutSubResource", fqdn))
 		defer func() {

@@ -33,8 +33,6 @@ func NewNumberClientWithBaseURI(baseURI string) NumberClient {
 
 // GetBigDecimal get big decimal value 2.5976931e+101
 func (client NumberClient) GetBigDecimal(ctx context.Context) (result Decimal, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetBigDecimal", fqdn))
 		defer func() {
@@ -97,8 +95,6 @@ func (client NumberClient) GetBigDecimalResponder(resp *http.Response) (result D
 
 // GetBigDecimalNegativeDecimal get big decimal value -99999999.99
 func (client NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context) (result Decimal, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetBigDecimalNegativeDecimal", fqdn))
 		defer func() {
@@ -161,8 +157,6 @@ func (client NumberClient) GetBigDecimalNegativeDecimalResponder(resp *http.Resp
 
 // GetBigDecimalPositiveDecimal get big decimal value 99999999.99
 func (client NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context) (result Decimal, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetBigDecimalPositiveDecimal", fqdn))
 		defer func() {
@@ -225,8 +219,6 @@ func (client NumberClient) GetBigDecimalPositiveDecimalResponder(resp *http.Resp
 
 // GetBigDouble get big double value 2.5976931e+101
 func (client NumberClient) GetBigDouble(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetBigDouble", fqdn))
 		defer func() {
@@ -289,8 +281,6 @@ func (client NumberClient) GetBigDoubleResponder(resp *http.Response) (result Fl
 
 // GetBigDoubleNegativeDecimal get big double value -99999999.99
 func (client NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetBigDoubleNegativeDecimal", fqdn))
 		defer func() {
@@ -353,8 +343,6 @@ func (client NumberClient) GetBigDoubleNegativeDecimalResponder(resp *http.Respo
 
 // GetBigDoublePositiveDecimal get big double value 99999999.99
 func (client NumberClient) GetBigDoublePositiveDecimal(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetBigDoublePositiveDecimal", fqdn))
 		defer func() {
@@ -417,8 +405,6 @@ func (client NumberClient) GetBigDoublePositiveDecimalResponder(resp *http.Respo
 
 // GetBigFloat get big float value 3.402823e+20
 func (client NumberClient) GetBigFloat(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetBigFloat", fqdn))
 		defer func() {
@@ -481,8 +467,6 @@ func (client NumberClient) GetBigFloatResponder(resp *http.Response) (result Flo
 
 // GetInvalidDecimal get invalid decimal Number value
 func (client NumberClient) GetInvalidDecimal(ctx context.Context) (result Decimal, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetInvalidDecimal", fqdn))
 		defer func() {
@@ -545,8 +529,6 @@ func (client NumberClient) GetInvalidDecimalResponder(resp *http.Response) (resu
 
 // GetInvalidDouble get invalid double Number value
 func (client NumberClient) GetInvalidDouble(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetInvalidDouble", fqdn))
 		defer func() {
@@ -609,8 +591,6 @@ func (client NumberClient) GetInvalidDoubleResponder(resp *http.Response) (resul
 
 // GetInvalidFloat get invalid float Number value
 func (client NumberClient) GetInvalidFloat(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetInvalidFloat", fqdn))
 		defer func() {
@@ -673,8 +653,6 @@ func (client NumberClient) GetInvalidFloatResponder(resp *http.Response) (result
 
 // GetNull get null Number value
 func (client NumberClient) GetNull(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetNull", fqdn))
 		defer func() {
@@ -737,8 +715,6 @@ func (client NumberClient) GetNullResponder(resp *http.Response) (result Float64
 
 // GetSmallDecimal get small decimal value 2.5976931e-101
 func (client NumberClient) GetSmallDecimal(ctx context.Context) (result Decimal, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetSmallDecimal", fqdn))
 		defer func() {
@@ -801,8 +777,6 @@ func (client NumberClient) GetSmallDecimalResponder(resp *http.Response) (result
 
 // GetSmallDouble get big double value 2.5976931e-101
 func (client NumberClient) GetSmallDouble(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetSmallDouble", fqdn))
 		defer func() {
@@ -865,8 +839,6 @@ func (client NumberClient) GetSmallDoubleResponder(resp *http.Response) (result 
 
 // GetSmallFloat get big double value 3.402823e-20
 func (client NumberClient) GetSmallFloat(ctx context.Context) (result Float64, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.GetSmallFloat", fqdn))
 		defer func() {
@@ -929,8 +901,6 @@ func (client NumberClient) GetSmallFloatResponder(resp *http.Response) (result F
 
 // PutBigDecimal put big decimal value 2.5976931e+101
 func (client NumberClient) PutBigDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutBigDecimal", fqdn))
 		defer func() {
@@ -994,8 +964,6 @@ func (client NumberClient) PutBigDecimalResponder(resp *http.Response) (result a
 
 // PutBigDecimalNegativeDecimal put big decimal value -99999999.99
 func (client NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutBigDecimalNegativeDecimal", fqdn))
 		defer func() {
@@ -1059,8 +1027,6 @@ func (client NumberClient) PutBigDecimalNegativeDecimalResponder(resp *http.Resp
 
 // PutBigDecimalPositiveDecimal put big decimal value 99999999.99
 func (client NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutBigDecimalPositiveDecimal", fqdn))
 		defer func() {
@@ -1124,8 +1090,6 @@ func (client NumberClient) PutBigDecimalPositiveDecimalResponder(resp *http.Resp
 
 // PutBigDouble put big double value 2.5976931e+101
 func (client NumberClient) PutBigDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutBigDouble", fqdn))
 		defer func() {
@@ -1189,8 +1153,6 @@ func (client NumberClient) PutBigDoubleResponder(resp *http.Response) (result au
 
 // PutBigDoubleNegativeDecimal put big double value -99999999.99
 func (client NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutBigDoubleNegativeDecimal", fqdn))
 		defer func() {
@@ -1254,8 +1216,6 @@ func (client NumberClient) PutBigDoubleNegativeDecimalResponder(resp *http.Respo
 
 // PutBigDoublePositiveDecimal put big double value 99999999.99
 func (client NumberClient) PutBigDoublePositiveDecimal(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutBigDoublePositiveDecimal", fqdn))
 		defer func() {
@@ -1319,8 +1279,6 @@ func (client NumberClient) PutBigDoublePositiveDecimalResponder(resp *http.Respo
 
 // PutBigFloat put big float value 3.402823e+20
 func (client NumberClient) PutBigFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutBigFloat", fqdn))
 		defer func() {
@@ -1384,8 +1342,6 @@ func (client NumberClient) PutBigFloatResponder(resp *http.Response) (result aut
 
 // PutSmallDecimal put small decimal value 2.5976931e-101
 func (client NumberClient) PutSmallDecimal(ctx context.Context, numberBody decimal.Decimal) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutSmallDecimal", fqdn))
 		defer func() {
@@ -1449,8 +1405,6 @@ func (client NumberClient) PutSmallDecimalResponder(resp *http.Response) (result
 
 // PutSmallDouble put small double value 2.5976931e-101
 func (client NumberClient) PutSmallDouble(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutSmallDouble", fqdn))
 		defer func() {
@@ -1514,8 +1468,6 @@ func (client NumberClient) PutSmallDoubleResponder(resp *http.Response) (result 
 
 // PutSmallFloat put small float value 3.402823e-20
 func (client NumberClient) PutSmallFloat(ctx context.Context, numberBody float64) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/NumberClient.PutSmallFloat", fqdn))
 		defer func() {

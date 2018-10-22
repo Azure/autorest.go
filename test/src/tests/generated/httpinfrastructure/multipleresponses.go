@@ -32,8 +32,6 @@ func NewMultipleResponsesClientWithBaseURI(baseURI string) MultipleResponsesClie
 
 // Get200Model201ModelDefaultError200Valid send a 200 response with valid payload: {'statusCode': '200'}
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model201ModelDefaultError200Valid", fqdn))
 		defer func() {
@@ -97,8 +95,6 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidRes
 // Get200Model201ModelDefaultError201Valid send a 201 response with valid payload: {'statusCode': '201',
 // 'textStatusCode': 'Created'}
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model201ModelDefaultError201Valid", fqdn))
 		defer func() {
@@ -162,8 +158,6 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidRes
 // Get200Model201ModelDefaultError400Valid send a 400 response with valid payload: {'code': '400', 'message': 'client
 // error'}
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model201ModelDefaultError400Valid", fqdn))
 		defer func() {
@@ -226,8 +220,6 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidRes
 
 // Get200Model204NoModelDefaultError200Valid send a 200 response with valid payload: {'statusCode': '200'}
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid", fqdn))
 		defer func() {
@@ -290,8 +282,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidR
 
 // Get200Model204NoModelDefaultError201Invalid send a 201 response with valid payload: {'statusCode': '201'}
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid", fqdn))
 		defer func() {
@@ -354,8 +344,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 
 // Get200Model204NoModelDefaultError202None send a 202 response with no payload:
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model204NoModelDefaultError202None", fqdn))
 		defer func() {
@@ -418,8 +406,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneRe
 
 // Get200Model204NoModelDefaultError204Valid send a 204 response with no payload
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid", fqdn))
 		defer func() {
@@ -483,8 +469,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidR
 // Get200Model204NoModelDefaultError400Valid send a 400 response with valid error payload: {'status': 400, 'message':
 // 'client error'}
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid", fqdn))
 		defer func() {
@@ -547,8 +531,6 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidR
 
 // Get200ModelA200Invalid send a 200 response with invalid payload {'statusCodeInvalid': '200'}
 func (client MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA200Invalid", fqdn))
 		defer func() {
@@ -612,8 +594,6 @@ func (client MultipleResponsesClient) Get200ModelA200InvalidResponder(resp *http
 // Get200ModelA200None send a 200 response with no payload, when a payload is expected - client should return a null
 // object of thde type for model A
 func (client MultipleResponsesClient) Get200ModelA200None(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA200None", fqdn))
 		defer func() {
@@ -676,8 +656,6 @@ func (client MultipleResponsesClient) Get200ModelA200NoneResponder(resp *http.Re
 
 // Get200ModelA200Valid send a 200 response with payload {'statusCode': '200'}
 func (client MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA200Valid", fqdn))
 		defer func() {
@@ -740,8 +718,6 @@ func (client MultipleResponsesClient) Get200ModelA200ValidResponder(resp *http.R
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid send a 200 response with valid payload: {'statusCode': '200'}
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context) (result SetObject, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid", fqdn))
 		defer func() {
@@ -804,8 +780,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 
 // Get200ModelA201ModelC404ModelDDefaultError201Valid send a 200 response with valid payload: {'httpCode': '201'}
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context) (result SetObject, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid", fqdn))
 		defer func() {
@@ -869,8 +843,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 // Get200ModelA201ModelC404ModelDDefaultError400Valid send a 400 response with valid payload: {'code': '400',
 // 'message': 'client error'}
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context) (result SetObject, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid", fqdn))
 		defer func() {
@@ -933,8 +905,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 
 // Get200ModelA201ModelC404ModelDDefaultError404Valid send a 200 response with valid payload: {'httpStatusCode': '404'}
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context) (result SetObject, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid", fqdn))
 		defer func() {
@@ -997,8 +967,6 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 
 // Get200ModelA202Valid send a 202 response with payload {'statusCode': '202'}
 func (client MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA202Valid", fqdn))
 		defer func() {
@@ -1061,8 +1029,6 @@ func (client MultipleResponsesClient) Get200ModelA202ValidResponder(resp *http.R
 
 // Get200ModelA400Invalid send a 200 response with invalid payload {'statusCodeInvalid': '400'}
 func (client MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA400Invalid", fqdn))
 		defer func() {
@@ -1125,8 +1091,6 @@ func (client MultipleResponsesClient) Get200ModelA400InvalidResponder(resp *http
 
 // Get200ModelA400None send a 400 response with no payload client should treat as an http error with no error model
 func (client MultipleResponsesClient) Get200ModelA400None(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA400None", fqdn))
 		defer func() {
@@ -1189,8 +1153,6 @@ func (client MultipleResponsesClient) Get200ModelA400NoneResponder(resp *http.Re
 
 // Get200ModelA400Valid send a 200 response with payload {'statusCode': '400'}
 func (client MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get200ModelA400Valid", fqdn))
 		defer func() {
@@ -1253,8 +1215,6 @@ func (client MultipleResponsesClient) Get200ModelA400ValidResponder(resp *http.R
 
 // Get202None204NoneDefaultError202None send a 202 response with no payload
 func (client MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get202None204NoneDefaultError202None", fqdn))
 		defer func() {
@@ -1316,8 +1276,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202NoneRespon
 
 // Get202None204NoneDefaultError204None send a 204 response with no payload
 func (client MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get202None204NoneDefaultError204None", fqdn))
 		defer func() {
@@ -1380,8 +1338,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204NoneRespon
 // Get202None204NoneDefaultError400Valid send a 400 response with valid payload: {'code': '400', 'message': 'client
 // error'}
 func (client MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get202None204NoneDefaultError400Valid", fqdn))
 		defer func() {
@@ -1443,8 +1399,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidRespo
 
 // Get202None204NoneDefaultNone202Invalid send a 202 response with an unexpected payload {'property': 'value'}
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid", fqdn))
 		defer func() {
@@ -1506,8 +1460,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidResp
 
 // Get202None204NoneDefaultNone204None send a 204 response with no payload
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get202None204NoneDefaultNone204None", fqdn))
 		defer func() {
@@ -1569,8 +1521,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NoneRespond
 
 // Get202None204NoneDefaultNone400Invalid send a 400 response with an unexpected payload {'property': 'value'}
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid", fqdn))
 		defer func() {
@@ -1632,8 +1582,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidResp
 
 // Get202None204NoneDefaultNone400None send a 400 response with no payload
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.Get202None204NoneDefaultNone400None", fqdn))
 		defer func() {
@@ -1695,8 +1643,6 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NoneRespond
 
 // GetDefaultModelA200None send a 200 response with no payload
 func (client MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultModelA200None", fqdn))
 		defer func() {
@@ -1759,8 +1705,6 @@ func (client MultipleResponsesClient) GetDefaultModelA200NoneResponder(resp *htt
 
 // GetDefaultModelA200Valid send a 200 response with valid payload: {'statusCode': '200'}
 func (client MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultModelA200Valid", fqdn))
 		defer func() {
@@ -1823,8 +1767,6 @@ func (client MultipleResponsesClient) GetDefaultModelA200ValidResponder(resp *ht
 
 // GetDefaultModelA400None send a 400 response with no payload
 func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultModelA400None", fqdn))
 		defer func() {
@@ -1887,8 +1829,6 @@ func (client MultipleResponsesClient) GetDefaultModelA400NoneResponder(resp *htt
 
 // GetDefaultModelA400Valid send a 400 response with valid payload: {'statusCode': '400'}
 func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context) (result A, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultModelA400Valid", fqdn))
 		defer func() {
@@ -1951,8 +1891,6 @@ func (client MultipleResponsesClient) GetDefaultModelA400ValidResponder(resp *ht
 
 // GetDefaultNone200Invalid send a 200 response with invalid payload: {'statusCode': '200'}
 func (client MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultNone200Invalid", fqdn))
 		defer func() {
@@ -2014,8 +1952,6 @@ func (client MultipleResponsesClient) GetDefaultNone200InvalidResponder(resp *ht
 
 // GetDefaultNone200None send a 200 response with no payload
 func (client MultipleResponsesClient) GetDefaultNone200None(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultNone200None", fqdn))
 		defer func() {
@@ -2077,8 +2013,6 @@ func (client MultipleResponsesClient) GetDefaultNone200NoneResponder(resp *http.
 
 // GetDefaultNone400Invalid send a 400 response with valid payload: {'statusCode': '400'}
 func (client MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultNone400Invalid", fqdn))
 		defer func() {
@@ -2140,8 +2074,6 @@ func (client MultipleResponsesClient) GetDefaultNone400InvalidResponder(resp *ht
 
 // GetDefaultNone400None send a 400 response with no payload
 func (client MultipleResponsesClient) GetDefaultNone400None(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/MultipleResponsesClient.GetDefaultNone400None", fqdn))
 		defer func() {

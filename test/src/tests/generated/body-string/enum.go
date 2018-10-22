@@ -33,8 +33,6 @@ func NewEnumClientWithBaseURI(baseURI string) EnumClient {
 
 // GetNotExpandable get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.GetNotExpandable", fqdn))
 		defer func() {
@@ -97,8 +95,6 @@ func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result 
 
 // GetReferenced get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.GetReferenced", fqdn))
 		defer func() {
@@ -161,8 +157,6 @@ func (client EnumClient) GetReferencedResponder(resp *http.Response) (result Str
 
 // GetReferencedConstant get value 'green-color' from the constant.
 func (client EnumClient) GetReferencedConstant(ctx context.Context) (result RefColorConstant, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.GetReferencedConstant", fqdn))
 		defer func() {
@@ -225,8 +219,6 @@ func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (re
 
 // PutNotExpandable sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.PutNotExpandable", fqdn))
 		defer func() {
@@ -290,8 +282,6 @@ func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result 
 
 // PutReferenced sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.PutReferenced", fqdn))
 		defer func() {
@@ -355,8 +345,6 @@ func (client EnumClient) PutReferencedResponder(resp *http.Response) (result aut
 
 // PutReferencedConstant sends value 'green-color' from a constant
 func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.PutReferencedConstant", fqdn))
 		defer func() {

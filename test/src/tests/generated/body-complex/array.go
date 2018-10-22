@@ -32,8 +32,6 @@ func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 
 // GetEmpty get complex types with array property which is empty
 func (client ArrayClient) GetEmpty(ctx context.Context) (result ArrayWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetEmpty", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ArrayWr
 
 // GetNotProvided get complex types with array property while server doesn't provide a response payload
 func (client ArrayClient) GetNotProvided(ctx context.Context) (result ArrayWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetNotProvided", fqdn))
 		defer func() {
@@ -160,8 +156,6 @@ func (client ArrayClient) GetNotProvidedResponder(resp *http.Response) (result A
 
 // GetValid get complex types with array property
 func (client ArrayClient) GetValid(ctx context.Context) (result ArrayWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetValid", fqdn))
 		defer func() {
@@ -226,8 +220,6 @@ func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWr
 // Parameters:
 // complexBody - please put an empty array
 func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.PutEmpty", fqdn))
 		defer func() {
@@ -294,8 +286,6 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 // complexBody - please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox
 // jumps over the lazy dog"
 func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.PutValid", fqdn))
 		defer func() {

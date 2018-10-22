@@ -32,8 +32,6 @@ func NewInheritanceClientWithBaseURI(baseURI string) InheritanceClient {
 
 // GetValid get complex types that extend others
 func (client InheritanceClient) GetValid(ctx context.Context) (result Siamese, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/InheritanceClient.GetValid", fqdn))
 		defer func() {
@@ -100,8 +98,6 @@ func (client InheritanceClient) GetValidResponder(resp *http.Response) (result S
 // dogs, the 1st one named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
 // food="french fries".
 func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/InheritanceClient.PutValid", fqdn))
 		defer func() {

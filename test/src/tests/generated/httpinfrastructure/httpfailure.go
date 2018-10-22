@@ -32,8 +32,6 @@ func NewHTTPFailureClientWithBaseURI(baseURI string) HTTPFailureClient {
 
 // GetEmptyError get empty error form server
 func (client HTTPFailureClient) GetEmptyError(ctx context.Context) (result Bool, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetEmptyError", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client HTTPFailureClient) GetEmptyErrorResponder(resp *http.Response) (res
 
 // GetNoModelEmpty get empty response from server
 func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (result Bool, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetNoModelEmpty", fqdn))
 		defer func() {
@@ -160,8 +156,6 @@ func (client HTTPFailureClient) GetNoModelEmptyResponder(resp *http.Response) (r
 
 // GetNoModelError get empty error form server
 func (client HTTPFailureClient) GetNoModelError(ctx context.Context) (result Bool, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetNoModelError", fqdn))
 		defer func() {

@@ -32,8 +32,6 @@ func NewImplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 
 // GetOptionalGlobalQuery test implicitly optional query parameter
 func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetOptionalGlobalQuery", fqdn))
 		defer func() {
@@ -102,8 +100,6 @@ func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response
 
 // GetRequiredGlobalPath test implicitly required path parameter
 func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetRequiredGlobalPath", fqdn))
 		defer func() {
@@ -170,8 +166,6 @@ func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response)
 
 // GetRequiredGlobalQuery test implicitly required query parameter
 func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetRequiredGlobalQuery", fqdn))
 		defer func() {
@@ -239,8 +233,6 @@ func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response
 
 // GetRequiredPath test implicitly required path parameter
 func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetRequiredPath", fqdn))
 		defer func() {
@@ -307,8 +299,6 @@ func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (resu
 
 // PutOptionalBody test implicitly optional body parameter
 func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.PutOptionalBody", fqdn))
 		defer func() {
@@ -375,8 +365,6 @@ func (client ImplicitClient) PutOptionalBodyResponder(resp *http.Response) (resu
 
 // PutOptionalHeader test implicitly optional header parameter
 func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.PutOptionalHeader", fqdn))
 		defer func() {
@@ -442,8 +430,6 @@ func (client ImplicitClient) PutOptionalHeaderResponder(resp *http.Response) (re
 
 // PutOptionalQuery test implicitly optional query parameter
 func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.PutOptionalQuery", fqdn))
 		defer func() {

@@ -37,8 +37,6 @@ func NewPagingClientWithBaseURI(baseURI string) PagingClient {
 // timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
 // 30 seconds.
 func (client PagingClient) GetMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePages", fqdn))
 		defer func() {
@@ -138,8 +136,6 @@ func (client PagingClient) getMultiplePagesNextResults(ctx context.Context, last
 
 // GetMultiplePagesComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePages", fqdn))
 		defer func() {
@@ -156,8 +152,6 @@ func (client PagingClient) GetMultiplePagesComplete(ctx context.Context, clientR
 
 // GetMultiplePagesFailure a paging operation that receives a 400 on the second call
 func (client PagingClient) GetMultiplePagesFailure(ctx context.Context) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFailure", fqdn))
 		defer func() {
@@ -242,8 +236,6 @@ func (client PagingClient) getMultiplePagesFailureNextResults(ctx context.Contex
 
 // GetMultiplePagesFailureComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesFailureComplete(ctx context.Context) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFailure", fqdn))
 		defer func() {
@@ -260,8 +252,6 @@ func (client PagingClient) GetMultiplePagesFailureComplete(ctx context.Context) 
 
 // GetMultiplePagesFailureURI a paging operation that receives an invalid nextLink
 func (client PagingClient) GetMultiplePagesFailureURI(ctx context.Context) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFailureURI", fqdn))
 		defer func() {
@@ -346,8 +336,6 @@ func (client PagingClient) getMultiplePagesFailureURINextResults(ctx context.Con
 
 // GetMultiplePagesFailureURIComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesFailureURIComplete(ctx context.Context) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFailureURI", fqdn))
 		defer func() {
@@ -367,8 +355,6 @@ func (client PagingClient) GetMultiplePagesFailureURIComplete(ctx context.Contex
 // APIVersion - sets the api version to use.
 // tenant - sets the tenant to use.
 func (client PagingClient) GetMultiplePagesFragmentNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFragmentNextLink", fqdn))
 		defer func() {
@@ -446,8 +432,6 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkResponder(resp *http.
 
 // GetMultiplePagesFragmentNextLinkComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFragmentNextLink", fqdn))
 		defer func() {
@@ -468,8 +452,6 @@ func (client PagingClient) GetMultiplePagesFragmentNextLinkComplete(ctx context.
 // APIVersion - sets the api version to use.
 // tenant - sets the tenant to use.
 func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFragmentWithGroupingNextLink", fqdn))
 		defer func() {
@@ -547,8 +529,6 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkResponder
 
 // GetMultiplePagesFragmentWithGroupingNextLinkComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(ctx context.Context, APIVersion string, tenant string) (result OdataProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesFragmentWithGroupingNextLink", fqdn))
 		defer func() {
@@ -569,8 +549,6 @@ func (client PagingClient) GetMultiplePagesFragmentWithGroupingNextLinkComplete(
 // timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
 // 30 seconds.
 func (client PagingClient) GetMultiplePagesLRO(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result PagingGetMultiplePagesLROFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesLRO", fqdn))
 		defer func() {
@@ -672,8 +650,6 @@ func (client PagingClient) getMultiplePagesLRONextResults(ctx context.Context, l
 
 // GetMultiplePagesLROComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesLROComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result PagingGetMultiplePagesLROAllFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesLRO", fqdn))
 		defer func() {
@@ -693,8 +669,6 @@ func (client PagingClient) GetMultiplePagesLROComplete(ctx context.Context, clie
 // GetMultiplePagesRetryFirst a paging operation that fails on the first call with 500 and then retries and then get a
 // response including a nextLink that has 10 pages
 func (client PagingClient) GetMultiplePagesRetryFirst(ctx context.Context) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesRetryFirst", fqdn))
 		defer func() {
@@ -779,8 +753,6 @@ func (client PagingClient) getMultiplePagesRetryFirstNextResults(ctx context.Con
 
 // GetMultiplePagesRetryFirstComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesRetryFirstComplete(ctx context.Context) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesRetryFirst", fqdn))
 		defer func() {
@@ -798,8 +770,6 @@ func (client PagingClient) GetMultiplePagesRetryFirstComplete(ctx context.Contex
 // GetMultiplePagesRetrySecond a paging operation that includes a nextLink that has 10 pages, of which the 2nd call
 // fails first with 500. The client should retry and finish all 10 pages eventually.
 func (client PagingClient) GetMultiplePagesRetrySecond(ctx context.Context) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesRetrySecond", fqdn))
 		defer func() {
@@ -884,8 +854,6 @@ func (client PagingClient) getMultiplePagesRetrySecondNextResults(ctx context.Co
 
 // GetMultiplePagesRetrySecondComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesRetrySecondComplete(ctx context.Context) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesRetrySecond", fqdn))
 		defer func() {
@@ -907,8 +875,6 @@ func (client PagingClient) GetMultiplePagesRetrySecondComplete(ctx context.Conte
 // timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
 // 30 seconds.
 func (client PagingClient) GetMultiplePagesWithOffset(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesWithOffset", fqdn))
 		defer func() {
@@ -1012,8 +978,6 @@ func (client PagingClient) getMultiplePagesWithOffsetNextResults(ctx context.Con
 
 // GetMultiplePagesWithOffsetComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetMultiplePagesWithOffset", fqdn))
 		defer func() {
@@ -1034,8 +998,6 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Contex
 // timeout - sets the maximum time that the server can spend processing the request, in seconds. The default is
 // 30 seconds.
 func (client PagingClient) GetOdataMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetOdataMultiplePages", fqdn))
 		defer func() {
@@ -1135,8 +1097,6 @@ func (client PagingClient) getOdataMultiplePagesNextResults(ctx context.Context,
 
 // GetOdataMultiplePagesComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetOdataMultiplePagesComplete(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result OdataProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetOdataMultiplePages", fqdn))
 		defer func() {
@@ -1153,8 +1113,6 @@ func (client PagingClient) GetOdataMultiplePagesComplete(ctx context.Context, cl
 
 // GetSinglePages a paging operation that finishes on the first call without a nextlink
 func (client PagingClient) GetSinglePages(ctx context.Context) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetSinglePages", fqdn))
 		defer func() {
@@ -1239,8 +1197,6 @@ func (client PagingClient) getSinglePagesNextResults(ctx context.Context, lastRe
 
 // GetSinglePagesComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetSinglePagesComplete(ctx context.Context) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetSinglePages", fqdn))
 		defer func() {
@@ -1257,8 +1213,6 @@ func (client PagingClient) GetSinglePagesComplete(ctx context.Context) (result P
 
 // GetSinglePagesFailure a paging operation that receives a 400 on the first call
 func (client PagingClient) GetSinglePagesFailure(ctx context.Context) (result ProductResultPage, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetSinglePagesFailure", fqdn))
 		defer func() {
@@ -1343,8 +1297,6 @@ func (client PagingClient) getSinglePagesFailureNextResults(ctx context.Context,
 
 // GetSinglePagesFailureComplete enumerates all values, automatically crossing page boundaries as required.
 func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (result ProductResultIterator, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.GetSinglePagesFailure", fqdn))
 		defer func() {
@@ -1365,8 +1317,6 @@ func (client PagingClient) GetSinglePagesFailureComplete(ctx context.Context) (r
 // tenant - sets the tenant to use.
 // nextLink - next link for list operation.
 func (client PagingClient) NextFragment(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.NextFragment", fqdn))
 		defer func() {
@@ -1443,8 +1393,6 @@ func (client PagingClient) NextFragmentResponder(resp *http.Response) (result Od
 // tenant - sets the tenant to use.
 // nextLink - next link for list operation.
 func (client PagingClient) NextFragmentWithGrouping(ctx context.Context, APIVersion string, tenant string, nextLink string) (result OdataProductResult, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PagingClient.NextFragmentWithGrouping", fqdn))
 		defer func() {

@@ -33,8 +33,6 @@ func NewPolymorphicrecursiveClientWithBaseURI(baseURI string) Polymorphicrecursi
 
 // GetValid get complex types that are polymorphic and have recursive references
 func (client PolymorphicrecursiveClient) GetValid(ctx context.Context) (result FishModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphicrecursiveClient.GetValid", fqdn))
 		defer func() {
@@ -151,8 +149,6 @@ func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) 
 // ]
 // }
 func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphicrecursiveClient.PutValid", fqdn))
 		defer func() {

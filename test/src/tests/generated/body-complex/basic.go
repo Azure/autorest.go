@@ -32,8 +32,6 @@ func NewBasicClientWithBaseURI(baseURI string) BasicClient {
 
 // GetEmpty get a basic complex type that is empty
 func (client BasicClient) GetEmpty(ctx context.Context) (result Basic, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BasicClient.GetEmpty", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client BasicClient) GetEmptyResponder(resp *http.Response) (result Basic, 
 
 // GetInvalid get a basic complex type that is invalid for the local strong type
 func (client BasicClient) GetInvalid(ctx context.Context) (result Basic, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BasicClient.GetInvalid", fqdn))
 		defer func() {
@@ -160,8 +156,6 @@ func (client BasicClient) GetInvalidResponder(resp *http.Response) (result Basic
 
 // GetNotProvided get a basic complex type while the server doesn't provide a response payload
 func (client BasicClient) GetNotProvided(ctx context.Context) (result Basic, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BasicClient.GetNotProvided", fqdn))
 		defer func() {
@@ -224,8 +218,6 @@ func (client BasicClient) GetNotProvidedResponder(resp *http.Response) (result B
 
 // GetNull get a basic complex type whose properties are null
 func (client BasicClient) GetNull(ctx context.Context) (result Basic, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BasicClient.GetNull", fqdn))
 		defer func() {
@@ -288,8 +280,6 @@ func (client BasicClient) GetNullResponder(resp *http.Response) (result Basic, e
 
 // GetValid get complex type {id: 2, name: 'abc', color: 'YELLOW'}
 func (client BasicClient) GetValid(ctx context.Context) (result Basic, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BasicClient.GetValid", fqdn))
 		defer func() {
@@ -354,8 +344,6 @@ func (client BasicClient) GetValidResponder(resp *http.Response) (result Basic, 
 // Parameters:
 // complexBody - please put {id: 2, name: 'abc', color: 'Magenta'}
 func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BasicClient.PutValid", fqdn))
 		defer func() {

@@ -34,8 +34,6 @@ func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
 // GetComplicated get complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
 func (client PolymorphismClient) GetComplicated(ctx context.Context) (result SalmonModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphismClient.GetComplicated", fqdn))
 		defer func() {
@@ -98,8 +96,6 @@ func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (r
 
 // GetValid get complex types that are polymorphic
 func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphismClient.GetValid", fqdn))
 		defer func() {
@@ -163,8 +159,6 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 // PutComplicated put complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
 func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody BasicSalmon) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphismClient.PutComplicated", fqdn))
 		defer func() {
@@ -228,8 +222,6 @@ func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (r
 
 // PutMissingDiscriminator put complex types that are polymorphic, omitting the discriminator
 func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphismClient.PutMissingDiscriminator", fqdn))
 		defer func() {
@@ -328,8 +320,6 @@ func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Res
 // ]
 // };
 func (client PolymorphismClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphismClient.PutValid", fqdn))
 		defer func() {
@@ -428,8 +418,6 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 // ]
 // }
 func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphismClient.PutValidMissingRequired", fqdn))
 		defer func() {

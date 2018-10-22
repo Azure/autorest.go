@@ -47,8 +47,6 @@ func NewWithBaseURI(baseURI string) BaseClient {
 // qualifier - if specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The
 // only effect is, that generators that run all tests several times, can distinguish the generated reports.
 func (client BaseClient) GetReport(ctx context.Context, qualifier string) (result SetInt32, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetReport", fqdn))
 		defer func() {

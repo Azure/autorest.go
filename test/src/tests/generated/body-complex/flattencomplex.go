@@ -32,8 +32,6 @@ func NewFlattencomplexClientWithBaseURI(baseURI string) FlattencomplexClient {
 
 // GetValid sends the get valid request.
 func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseTypeModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FlattencomplexClient.GetValid", fqdn))
 		defer func() {

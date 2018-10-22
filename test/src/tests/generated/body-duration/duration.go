@@ -32,8 +32,6 @@ func NewDurationClientWithBaseURI(baseURI string) DurationClient {
 
 // GetInvalid get an invalid duration value
 func (client DurationClient) GetInvalid(ctx context.Context) (result TimeSpan, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.GetInvalid", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client DurationClient) GetInvalidResponder(resp *http.Response) (result Ti
 
 // GetNull get null duration value
 func (client DurationClient) GetNull(ctx context.Context) (result TimeSpan, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.GetNull", fqdn))
 		defer func() {
@@ -160,8 +156,6 @@ func (client DurationClient) GetNullResponder(resp *http.Response) (result TimeS
 
 // GetPositiveDuration get a positive duration value
 func (client DurationClient) GetPositiveDuration(ctx context.Context) (result TimeSpan, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.GetPositiveDuration", fqdn))
 		defer func() {
@@ -224,8 +218,6 @@ func (client DurationClient) GetPositiveDurationResponder(resp *http.Response) (
 
 // PutPositiveDuration put a positive duration value
 func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBody string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.PutPositiveDuration", fqdn))
 		defer func() {

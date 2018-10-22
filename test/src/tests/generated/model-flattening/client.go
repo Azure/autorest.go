@@ -45,8 +45,6 @@ func NewWithBaseURI(baseURI string) BaseClient {
 
 // GetArray get External Resource as an Array
 func (client BaseClient) GetArray(ctx context.Context) (result ListFlattenedProduct, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetArray", fqdn))
 		defer func() {
@@ -109,8 +107,6 @@ func (client BaseClient) GetArrayResponder(resp *http.Response) (result ListFlat
 
 // GetDictionary get External Resource as a Dictionary
 func (client BaseClient) GetDictionary(ctx context.Context) (result SetFlattenedProduct, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetDictionary", fqdn))
 		defer func() {
@@ -173,8 +169,6 @@ func (client BaseClient) GetDictionaryResponder(resp *http.Response) (result Set
 
 // GetResourceCollection get External Resource as a ResourceCollection
 func (client BaseClient) GetResourceCollection(ctx context.Context) (result ResourceCollection, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetResourceCollection", fqdn))
 		defer func() {
@@ -238,8 +232,6 @@ func (client BaseClient) GetResourceCollectionResponder(resp *http.Response) (re
 // GetWrappedArray no need to have a route in Express server for this operation. Used to verify the type flattened is
 // not removed if it's referenced in an array
 func (client BaseClient) GetWrappedArray(ctx context.Context) (result ListProductWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetWrappedArray", fqdn))
 		defer func() {
@@ -304,8 +296,6 @@ func (client BaseClient) GetWrappedArrayResponder(resp *http.Response) (result L
 // Parameters:
 // simpleBodyProduct - simple body product to post
 func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PostFlattenedSimpleProduct", fqdn))
 		defer func() {
@@ -386,8 +376,6 @@ func (client BaseClient) PostFlattenedSimpleProductResponder(resp *http.Response
 // Parameters:
 // resourceArray - external Resource as an Array to put
 func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutArray", fqdn))
 		defer func() {
@@ -456,8 +444,6 @@ func (client BaseClient) PutArrayResponder(resp *http.Response) (result autorest
 // Parameters:
 // resourceDictionary - external Resource as a Dictionary to put
 func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutDictionary", fqdn))
 		defer func() {
@@ -526,8 +512,6 @@ func (client BaseClient) PutDictionaryResponder(resp *http.Response) (result aut
 // Parameters:
 // resourceComplexObject - external Resource as a ResourceCollection to put
 func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutResourceCollection", fqdn))
 		defer func() {
@@ -596,8 +580,6 @@ func (client BaseClient) PutResourceCollectionResponder(resp *http.Response) (re
 // Parameters:
 // simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutSimpleProduct", fqdn))
 		defer func() {
@@ -679,8 +661,6 @@ func (client BaseClient) PutSimpleProductResponder(resp *http.Response) (result 
 // name - product name with value 'groupproduct'
 // simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutSimpleProductWithGrouping", fqdn))
 		defer func() {
@@ -766,8 +746,6 @@ func (client BaseClient) PutSimpleProductWithGroupingResponder(resp *http.Respon
 // Parameters:
 // resourceArray - external Resource as an Array to put
 func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutWrappedArray", fqdn))
 		defer func() {

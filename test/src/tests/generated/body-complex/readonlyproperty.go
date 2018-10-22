@@ -32,8 +32,6 @@ func NewReadonlypropertyClientWithBaseURI(baseURI string) ReadonlypropertyClient
 
 // GetValid get complex types that have readonly properties
 func (client ReadonlypropertyClient) GetValid(ctx context.Context) (result ReadonlyObj, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ReadonlypropertyClient.GetValid", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client ReadonlypropertyClient) GetValidResponder(resp *http.Response) (res
 
 // PutValid put complex types that have readonly properties
 func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ReadonlypropertyClient.PutValid", fqdn))
 		defer func() {

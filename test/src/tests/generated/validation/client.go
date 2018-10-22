@@ -47,8 +47,6 @@ func NewWithBaseURI(baseURI string, subscriptionID string) BaseClient {
 
 // GetWithConstantInPath sends the get with constant in path request.
 func (client BaseClient) GetWithConstantInPath(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetWithConstantInPath", fqdn))
 		defer func() {
@@ -114,8 +112,6 @@ func (client BaseClient) GetWithConstantInPathResponder(resp *http.Response) (re
 
 // PostWithConstantInBody sends the post with constant in body request.
 func (client BaseClient) PostWithConstantInBody(ctx context.Context, body *Product) (result Product, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PostWithConstantInBody", fqdn))
 		defer func() {
@@ -216,8 +212,6 @@ func (client BaseClient) PostWithConstantInBodyResponder(resp *http.Response) (r
 // resourceGroupName - required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // ID - required int multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfBody(ctx context.Context, resourceGroupName string, ID int32, body *Product) (result Product, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.ValidationOfBody", fqdn))
 		defer func() {
@@ -334,8 +328,6 @@ func (client BaseClient) ValidationOfBodyResponder(resp *http.Response) (result 
 // resourceGroupName - required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // ID - required int multiple of 10 from 100 to 1000.
 func (client BaseClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, ID int32) (result Product, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.ValidationOfMethodParameters", fqdn))
 		defer func() {

@@ -33,8 +33,6 @@ func NewPetsClientWithBaseURI(baseURI string) PetsClient {
 
 // CreateAPInProperties create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties) (result PetAPInProperties, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPInProperties", fqdn))
 		defer func() {
@@ -105,8 +103,6 @@ func (client PetsClient) CreateAPInPropertiesResponder(resp *http.Response) (res
 
 // CreateAPInPropertiesWithAPString create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString) (result PetAPInPropertiesWithAPString, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPInPropertiesWithAPString", fqdn))
 		defer func() {
@@ -178,8 +174,6 @@ func (client PetsClient) CreateAPInPropertiesWithAPStringResponder(resp *http.Re
 
 // CreateAPObject create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject) (result PetAPObject, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPObject", fqdn))
 		defer func() {
@@ -250,8 +244,6 @@ func (client PetsClient) CreateAPObjectResponder(resp *http.Response) (result Pe
 
 // CreateAPString create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString) (result PetAPString, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPString", fqdn))
 		defer func() {
@@ -322,8 +314,6 @@ func (client PetsClient) CreateAPStringResponder(resp *http.Response) (result Pe
 
 // CreateAPTrue create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue) (result PetAPTrue, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPTrue", fqdn))
 		defer func() {
@@ -394,8 +384,6 @@ func (client PetsClient) CreateAPTrueResponder(resp *http.Response) (result PetA
 
 // CreateCatAPTrue create a CatAPTrue which contains more properties than what is defined.
 func (client PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue) (result CatAPTrue, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateCatAPTrue", fqdn))
 		defer func() {

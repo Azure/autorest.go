@@ -33,8 +33,6 @@ func NewDateClientWithBaseURI(baseURI string) DateClient {
 
 // GetInvalidDate get invalid date value
 func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetInvalidDate", fqdn))
 		defer func() {
@@ -97,8 +95,6 @@ func (client DateClient) GetInvalidDateResponder(resp *http.Response) (result Da
 
 // GetMaxDate get max date value 9999-12-31
 func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetMaxDate", fqdn))
 		defer func() {
@@ -161,8 +157,6 @@ func (client DateClient) GetMaxDateResponder(resp *http.Response) (result DateMo
 
 // GetMinDate get min date value 0000-01-01
 func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetMinDate", fqdn))
 		defer func() {
@@ -225,8 +219,6 @@ func (client DateClient) GetMinDateResponder(resp *http.Response) (result DateMo
 
 // GetNull get null date value
 func (client DateClient) GetNull(ctx context.Context) (result DateModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetNull", fqdn))
 		defer func() {
@@ -289,8 +281,6 @@ func (client DateClient) GetNullResponder(resp *http.Response) (result DateModel
 
 // GetOverflowDate get overflow date value
 func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetOverflowDate", fqdn))
 		defer func() {
@@ -353,8 +343,6 @@ func (client DateClient) GetOverflowDateResponder(resp *http.Response) (result D
 
 // GetUnderflowDate get underflow date value
 func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetUnderflowDate", fqdn))
 		defer func() {
@@ -417,8 +405,6 @@ func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result 
 
 // PutMaxDate put max date value 9999-12-31
 func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.PutMaxDate", fqdn))
 		defer func() {
@@ -482,8 +468,6 @@ func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autore
 
 // PutMinDate put min date value 0000-01-01
 func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.PutMinDate", fqdn))
 		defer func() {

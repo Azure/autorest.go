@@ -34,8 +34,6 @@ func NewHTTPServerFailureClientWithBaseURI(baseURI string) HTTPServerFailureClie
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValue *bool) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Delete505", fqdn))
 		defer func() {
@@ -103,8 +101,6 @@ func (client HTTPServerFailureClient) Delete505Responder(resp *http.Response) (r
 
 // Get501 return 501 status code - should be represented in the client as an error
 func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Get501", fqdn))
 		defer func() {
@@ -167,8 +163,6 @@ func (client HTTPServerFailureClient) Get501Responder(resp *http.Response) (resu
 
 // Head501 return 501 status code - should be represented in the client as an error
 func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Head501", fqdn))
 		defer func() {
@@ -233,8 +227,6 @@ func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (res
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue *bool) (result Error, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Post505", fqdn))
 		defer func() {

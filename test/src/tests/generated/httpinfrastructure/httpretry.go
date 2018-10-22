@@ -34,8 +34,6 @@ func NewHTTPRetryClientWithBaseURI(baseURI string) HTTPRetryClient {
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Delete503", fqdn))
 		defer func() {
@@ -102,8 +100,6 @@ func (client HTTPRetryClient) Delete503Responder(resp *http.Response) (result au
 
 // Get502 return 502 status code, then 200 after retry
 func (client HTTPRetryClient) Get502(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Get502", fqdn))
 		defer func() {
@@ -165,8 +161,6 @@ func (client HTTPRetryClient) Get502Responder(resp *http.Response) (result autor
 
 // Head408 return 408 status code, then 200 after retry
 func (client HTTPRetryClient) Head408(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Head408", fqdn))
 		defer func() {
@@ -230,8 +224,6 @@ func (client HTTPRetryClient) Head408Responder(resp *http.Response) (result auto
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Patch500", fqdn))
 		defer func() {
@@ -300,8 +292,6 @@ func (client HTTPRetryClient) Patch500Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Patch504", fqdn))
 		defer func() {
@@ -370,8 +360,6 @@ func (client HTTPRetryClient) Patch504Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Post503", fqdn))
 		defer func() {
@@ -440,8 +428,6 @@ func (client HTTPRetryClient) Post503Responder(resp *http.Response) (result auto
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Put500", fqdn))
 		defer func() {
@@ -510,8 +496,6 @@ func (client HTTPRetryClient) Put500Responder(resp *http.Response) (result autor
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRetryClient.Put504", fqdn))
 		defer func() {

@@ -32,8 +32,6 @@ func NewLROSADsClientWithBaseURI(baseURI string) LROSADsClient {
 
 // Delete202NonRetry400 long running delete request, service returns a 202 with a location header
 func (client LROSADsClient) Delete202NonRetry400(ctx context.Context) (result LROSADsDelete202NonRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.Delete202NonRetry400", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client LROSADsClient) Delete202NonRetry400Responder(resp *http.Response) (
 // Delete202RetryInvalidHeader long running delete request, service returns a 202 to the initial request receing a
 // reponse with an invalid 'Location' and 'Retry-After' headers
 func (client LROSADsClient) Delete202RetryInvalidHeader(ctx context.Context) (result LROSADsDelete202RetryInvalidHeaderFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.Delete202RetryInvalidHeader", fqdn))
 		defer func() {
@@ -159,8 +155,6 @@ func (client LROSADsClient) Delete202RetryInvalidHeaderResponder(resp *http.Resp
 
 // Delete204Succeeded long running delete request, service returns a 204 to the initial request, indicating success.
 func (client LROSADsClient) Delete204Succeeded(ctx context.Context) (result LROSADsDelete204SucceededFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.Delete204Succeeded", fqdn))
 		defer func() {
@@ -223,8 +217,6 @@ func (client LROSADsClient) Delete204SucceededResponder(resp *http.Response) (re
 // DeleteAsyncRelativeRetry400 long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROSADsClient) DeleteAsyncRelativeRetry400(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.DeleteAsyncRelativeRetry400", fqdn))
 		defer func() {
@@ -287,8 +279,6 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400Responder(resp *http.Resp
 // DeleteAsyncRelativeRetryInvalidHeader long running delete request, service returns a 202 to the initial request. The
 // endpoint indicated in the Azure-AsyncOperation header is invalid
 func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", fqdn))
 		defer func() {
@@ -351,8 +341,6 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderResponder(resp 
 // DeleteAsyncRelativeRetryInvalidJSONPolling long running delete request, service returns a 202 to the initial
 // request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", fqdn))
 		defer func() {
@@ -415,8 +403,6 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingResponder(
 // DeleteAsyncRelativeRetryNoStatus long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryNoStatusFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.DeleteAsyncRelativeRetryNoStatus", fqdn))
 		defer func() {
@@ -478,8 +464,6 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusResponder(resp *http
 
 // DeleteNonRetry400 long running delete request, service returns a 400 with an error body
 func (client LROSADsClient) DeleteNonRetry400(ctx context.Context) (result LROSADsDeleteNonRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.DeleteNonRetry400", fqdn))
 		defer func() {
@@ -544,8 +528,6 @@ func (client LROSADsClient) DeleteNonRetry400Responder(resp *http.Response) (res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Product) (result LROSADsPost202NoLocationFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.Post202NoLocation", fqdn))
 		defer func() {
@@ -614,8 +596,6 @@ func (client LROSADsClient) Post202NoLocationResponder(resp *http.Response) (res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Product) (result LROSADsPost202NonRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.Post202NonRetry400", fqdn))
 		defer func() {
@@ -685,8 +665,6 @@ func (client LROSADsClient) Post202NonRetry400Responder(resp *http.Response) (re
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPost202RetryInvalidHeaderFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.Post202RetryInvalidHeader", fqdn))
 		defer func() {
@@ -756,8 +734,6 @@ func (client LROSADsClient) Post202RetryInvalidHeaderResponder(resp *http.Respon
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PostAsyncRelativeRetry400", fqdn))
 		defer func() {
@@ -828,8 +804,6 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Responder(resp *http.Respon
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PostAsyncRelativeRetryInvalidHeader", fqdn))
 		defer func() {
@@ -900,8 +874,6 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderResponder(resp *h
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", fqdn))
 		defer func() {
@@ -972,8 +944,6 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingResponder(re
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryNoPayloadFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PostAsyncRelativeRetryNoPayload", fqdn))
 		defer func() {
@@ -1042,8 +1012,6 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadResponder(resp *http.
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Product) (result LROSADsPostNonRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PostNonRetry400", fqdn))
 		defer func() {
@@ -1113,8 +1081,6 @@ func (client LROSADsClient) PostNonRetry400Responder(resp *http.Response) (resul
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Product) (result LROSADsPut200InvalidJSONFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.Put200InvalidJSON", fqdn))
 		defer func() {
@@ -1185,8 +1151,6 @@ func (client LROSADsClient) Put200InvalidJSONResponder(resp *http.Response) (res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutAsyncRelativeRetry400", fqdn))
 		defer func() {
@@ -1258,8 +1222,6 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Responder(resp *http.Respons
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutAsyncRelativeRetryInvalidHeader", fqdn))
 		defer func() {
@@ -1331,8 +1293,6 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderResponder(resp *ht
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", fqdn))
 		defer func() {
@@ -1404,8 +1364,6 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingResponder(res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutAsyncRelativeRetryNoStatus", fqdn))
 		defer func() {
@@ -1477,8 +1435,6 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusResponder(resp *http.Re
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", fqdn))
 		defer func() {
@@ -1549,8 +1505,6 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadResponder(resp *
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Context, product *Product) (result LROSADsPutError201NoProvisioningStatePayloadFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutError201NoProvisioningStatePayload", fqdn))
 		defer func() {
@@ -1621,8 +1575,6 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadResponder(resp 
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutNonRetry201Creating400", fqdn))
 		defer func() {
@@ -1693,8 +1645,6 @@ func (client LROSADsClient) PutNonRetry201Creating400Responder(resp *http.Respon
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400InvalidJSONFuture, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutNonRetry201Creating400InvalidJSON", fqdn))
 		defer func() {
@@ -1764,8 +1714,6 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONResponder(resp *
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product) (result LROSADsPutNonRetry400Future, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROSADsClient.PutNonRetry400", fqdn))
 		defer func() {

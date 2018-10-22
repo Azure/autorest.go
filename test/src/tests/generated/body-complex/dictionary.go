@@ -32,8 +32,6 @@ func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 
 // GetEmpty get complex types with dictionary property which is empty
 func (client DictionaryClient) GetEmpty(ctx context.Context) (result DictionaryWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetEmpty", fqdn))
 		defer func() {
@@ -96,8 +94,6 @@ func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result Di
 
 // GetNotProvided get complex types with dictionary property while server doesn't provide a response payload
 func (client DictionaryClient) GetNotProvided(ctx context.Context) (result DictionaryWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetNotProvided", fqdn))
 		defer func() {
@@ -160,8 +156,6 @@ func (client DictionaryClient) GetNotProvidedResponder(resp *http.Response) (res
 
 // GetNull get complex types with dictionary property which is null
 func (client DictionaryClient) GetNull(ctx context.Context) (result DictionaryWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetNull", fqdn))
 		defer func() {
@@ -224,8 +218,6 @@ func (client DictionaryClient) GetNullResponder(resp *http.Response) (result Dic
 
 // GetValid get complex types with dictionary property
 func (client DictionaryClient) GetValid(ctx context.Context) (result DictionaryWrapper, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetValid", fqdn))
 		defer func() {
@@ -290,8 +282,6 @@ func (client DictionaryClient) GetValidResponder(resp *http.Response) (result Di
 // Parameters:
 // complexBody - please put an empty dictionary
 func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutEmpty", fqdn))
 		defer func() {
@@ -358,8 +348,6 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 // complexBody - please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint",
 // "xls":"excel", "exe":"", "":null
 func (client DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutValid", fqdn))
 		defer func() {

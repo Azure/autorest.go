@@ -32,8 +32,6 @@ func NewPathsClient(subscriptionID string) PathsClient {
 // keyName - the key name with value 'key1'.
 // keyVersion - the key version. Default value 'v1'.
 func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, keyVersion string) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetEmpty", fqdn))
 		defer func() {

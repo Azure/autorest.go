@@ -34,8 +34,6 @@ func NewHTTPSuccessClientWithBaseURI(baseURI string) HTTPSuccessClient {
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Delete200", fqdn))
 		defer func() {
@@ -104,8 +102,6 @@ func (client HTTPSuccessClient) Delete200Responder(resp *http.Response) (result 
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Delete202", fqdn))
 		defer func() {
@@ -174,8 +170,6 @@ func (client HTTPSuccessClient) Delete202Responder(resp *http.Response) (result 
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Delete204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Delete204", fqdn))
 		defer func() {
@@ -242,8 +236,6 @@ func (client HTTPSuccessClient) Delete204Responder(resp *http.Response) (result 
 
 // Get200 get 200 success
 func (client HTTPSuccessClient) Get200(ctx context.Context) (result Bool, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Get200", fqdn))
 		defer func() {
@@ -306,8 +298,6 @@ func (client HTTPSuccessClient) Get200Responder(resp *http.Response) (result Boo
 
 // Head200 return 200 status code if successful
 func (client HTTPSuccessClient) Head200(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Head200", fqdn))
 		defer func() {
@@ -369,8 +359,6 @@ func (client HTTPSuccessClient) Head200Responder(resp *http.Response) (result au
 
 // Head204 return 204 status code if successful
 func (client HTTPSuccessClient) Head204(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Head204", fqdn))
 		defer func() {
@@ -432,8 +420,6 @@ func (client HTTPSuccessClient) Head204Responder(resp *http.Response) (result au
 
 // Head404 return 404 status code
 func (client HTTPSuccessClient) Head404(ctx context.Context) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Head404", fqdn))
 		defer func() {
@@ -497,8 +483,6 @@ func (client HTTPSuccessClient) Head404Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Patch200", fqdn))
 		defer func() {
@@ -567,8 +551,6 @@ func (client HTTPSuccessClient) Patch200Responder(resp *http.Response) (result a
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Patch202", fqdn))
 		defer func() {
@@ -637,8 +619,6 @@ func (client HTTPSuccessClient) Patch202Responder(resp *http.Response) (result a
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Patch204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Patch204", fqdn))
 		defer func() {
@@ -707,8 +687,6 @@ func (client HTTPSuccessClient) Patch204Responder(resp *http.Response) (result a
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post200", fqdn))
 		defer func() {
@@ -777,8 +755,6 @@ func (client HTTPSuccessClient) Post200Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post201", fqdn))
 		defer func() {
@@ -847,8 +823,6 @@ func (client HTTPSuccessClient) Post201Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post202", fqdn))
 		defer func() {
@@ -917,8 +891,6 @@ func (client HTTPSuccessClient) Post202Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Post204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Post204", fqdn))
 		defer func() {
@@ -987,8 +959,6 @@ func (client HTTPSuccessClient) Post204Responder(resp *http.Response) (result au
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put200(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put200", fqdn))
 		defer func() {
@@ -1057,8 +1027,6 @@ func (client HTTPSuccessClient) Put200Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put201(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put201", fqdn))
 		defer func() {
@@ -1127,8 +1095,6 @@ func (client HTTPSuccessClient) Put201Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put202(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put202", fqdn))
 		defer func() {
@@ -1197,8 +1163,6 @@ func (client HTTPSuccessClient) Put202Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPSuccessClient) Put204(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPSuccessClient.Put204", fqdn))
 		defer func() {

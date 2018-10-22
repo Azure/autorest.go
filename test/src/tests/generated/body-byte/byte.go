@@ -33,8 +33,6 @@ func NewByteClientWithBaseURI(baseURI string) ByteClient {
 
 // GetEmpty get empty byte value ''
 func (client ByteClient) GetEmpty(ctx context.Context) (result ByteArray, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ByteClient.GetEmpty", fqdn))
 		defer func() {
@@ -97,8 +95,6 @@ func (client ByteClient) GetEmptyResponder(resp *http.Response) (result ByteArra
 
 // GetInvalid get invalid byte value ':::SWAGGER::::'
 func (client ByteClient) GetInvalid(ctx context.Context) (result ByteArray, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ByteClient.GetInvalid", fqdn))
 		defer func() {
@@ -161,8 +157,6 @@ func (client ByteClient) GetInvalidResponder(resp *http.Response) (result ByteAr
 
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client ByteClient) GetNonASCII(ctx context.Context) (result ByteArray, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ByteClient.GetNonASCII", fqdn))
 		defer func() {
@@ -225,8 +219,6 @@ func (client ByteClient) GetNonASCIIResponder(resp *http.Response) (result ByteA
 
 // GetNull get null byte value
 func (client ByteClient) GetNull(ctx context.Context) (result ByteArray, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ByteClient.GetNull", fqdn))
 		defer func() {
@@ -291,8 +283,6 @@ func (client ByteClient) GetNullResponder(resp *http.Response) (result ByteArray
 // Parameters:
 // byteBody - base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
-	// Not necessary to perform this check as nothing will be instrumented if it is false, but
-	// adding it to avoid any potential perf issue.
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ByteClient.PutNonASCII", fqdn))
 		defer func() {
