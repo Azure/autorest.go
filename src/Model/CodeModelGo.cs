@@ -7,6 +7,7 @@ using AutoRest.Core.Utilities;
 using AutoRest.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,6 +18,7 @@ namespace AutoRest.Go.Model
     {
         public static readonly string OneVerString = "version.Number";
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
+        private const string sdkFqdnPrefix = "github.com/Azure/azure-sdk-for-go";
 
         public CodeModelGo()
         {
@@ -105,6 +107,28 @@ namespace AutoRest.Go.Model
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
         public string APIType => Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
+
+        public string PackageFqdn
+        {
+            get
+            {
+                var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result.ToLowerInvariant().Replace("\\", "/");
+                var sdkPath = Settings.Instance.Host?.GetValue<string>("go-sdk-folder").Result?.ToLowerInvariant().Replace("\\", "/").Trim();
+
+                if (!string.IsNullOrEmpty(sdkPath))
+                {
+                    return $"{sdkFqdnPrefix}/{outDir.Split(sdkPath, StringSplitOptions.None).Last()}";
+                }
+                else if (!Path.IsPathRooted(outDir))
+                {
+                    return outDir;
+                }
+                else
+                {
+                    return outDir.Substring(Path.GetPathRoot(outDir).Length);
+                }
+            }
+        }
 
         public IEnumerable<string> ClientImports
         {
@@ -303,7 +327,7 @@ namespace AutoRest.Go.Model
 
         /// FormatVersion normalizes a version string into a SemVer if it resembles one. Otherwise,
         /// it returns the original string unmodified. If version is empty or only comprised of
-        /// whitespace, 
+        /// whitespace,
         public static string FormatVersion(string version)
         {
 

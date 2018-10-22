@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewReadonlypropertyClientWithBaseURI(baseURI string) ReadonlypropertyClient
 
 // GetValid get complex types that have readonly properties
 func (client ReadonlypropertyClient) GetValid(ctx context.Context) (result ReadonlyObj, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ReadonlypropertyClient.GetValid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ReadonlypropertyClient", "GetValid", nil, "Failure preparing request")
@@ -82,6 +93,16 @@ func (client ReadonlypropertyClient) GetValidResponder(resp *http.Response) (res
 
 // PutValid put complex types that have readonly properties
 func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ReadonlypropertyClient.PutValid")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.ReadonlypropertyClient", "PutValid", nil, "Failure preparing request")

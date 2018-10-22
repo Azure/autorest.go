@@ -11,6 +11,9 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/body-number"
+
 // Decimal ...
 type Decimal struct {
 	autorest.Response `json:"-"`

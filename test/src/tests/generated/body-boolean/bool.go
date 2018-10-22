@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewBoolClientWithBaseURI(baseURI string) BoolClient {
 
 // GetFalse get false Boolean value
 func (client BoolClient) GetFalse(ctx context.Context) (result BoolModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BoolClient.GetFalse")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetFalsePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetFalse", nil, "Failure preparing request")
@@ -82,6 +93,16 @@ func (client BoolClient) GetFalseResponder(resp *http.Response) (result BoolMode
 
 // GetInvalid get invalid Boolean value
 func (client BoolClient) GetInvalid(ctx context.Context) (result BoolModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BoolClient.GetInvalid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetInvalid", nil, "Failure preparing request")
@@ -134,6 +155,16 @@ func (client BoolClient) GetInvalidResponder(resp *http.Response) (result BoolMo
 
 // GetNull get null Boolean value
 func (client BoolClient) GetNull(ctx context.Context) (result BoolModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BoolClient.GetNull")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetNull", nil, "Failure preparing request")
@@ -186,6 +217,16 @@ func (client BoolClient) GetNullResponder(resp *http.Response) (result BoolModel
 
 // GetTrue get true Boolean value
 func (client BoolClient) GetTrue(ctx context.Context) (result BoolModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BoolClient.GetTrue")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetTruePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "GetTrue", nil, "Failure preparing request")
@@ -238,6 +279,16 @@ func (client BoolClient) GetTrueResponder(resp *http.Response) (result BoolModel
 
 // PutFalse set Boolean value false
 func (client BoolClient) PutFalse(ctx context.Context) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BoolClient.PutFalse")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutFalsePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutFalse", nil, "Failure preparing request")
@@ -291,6 +342,16 @@ func (client BoolClient) PutFalseResponder(resp *http.Response) (result autorest
 
 // PutTrue set Boolean value true
 func (client BoolClient) PutTrue(ctx context.Context) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BoolClient.PutTrue")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutTruePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "booleangroup.BoolClient", "PutTrue", nil, "Failure preparing request")

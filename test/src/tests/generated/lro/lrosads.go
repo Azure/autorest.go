@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewLROSADsClientWithBaseURI(baseURI string) LROSADsClient {
 
 // Delete202NonRetry400 long running delete request, service returns a 202 with a location header
 func (client LROSADsClient) Delete202NonRetry400(ctx context.Context) (result LROSADsDelete202NonRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Delete202NonRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete202NonRetry400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202NonRetry400", nil, "Failure preparing request")
@@ -82,6 +93,16 @@ func (client LROSADsClient) Delete202NonRetry400Responder(resp *http.Response) (
 // Delete202RetryInvalidHeader long running delete request, service returns a 202 to the initial request receing a
 // reponse with an invalid 'Location' and 'Retry-After' headers
 func (client LROSADsClient) Delete202RetryInvalidHeader(ctx context.Context) (result LROSADsDelete202RetryInvalidHeaderFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Delete202RetryInvalidHeader")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete202RetryInvalidHeaderPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202RetryInvalidHeader", nil, "Failure preparing request")
@@ -133,6 +154,16 @@ func (client LROSADsClient) Delete202RetryInvalidHeaderResponder(resp *http.Resp
 
 // Delete204Succeeded long running delete request, service returns a 204 to the initial request, indicating success.
 func (client LROSADsClient) Delete204Succeeded(ctx context.Context) (result LROSADsDelete204SucceededFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Delete204Succeeded")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete204SucceededPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete204Succeeded", nil, "Failure preparing request")
@@ -185,6 +216,16 @@ func (client LROSADsClient) Delete204SucceededResponder(resp *http.Response) (re
 // DeleteAsyncRelativeRetry400 long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROSADsClient) DeleteAsyncRelativeRetry400(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.DeleteAsyncRelativeRetry400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetry400", nil, "Failure preparing request")
@@ -237,6 +278,16 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400Responder(resp *http.Resp
 // DeleteAsyncRelativeRetryInvalidHeader long running delete request, service returns a 202 to the initial request. The
 // endpoint indicated in the Azure-AsyncOperation header is invalid
 func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.DeleteAsyncRelativeRetryInvalidHeaderPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidHeader", nil, "Failure preparing request")
@@ -289,6 +340,16 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderResponder(resp 
 // DeleteAsyncRelativeRetryInvalidJSONPolling long running delete request, service returns a 202 to the initial
 // request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.DeleteAsyncRelativeRetryInvalidJSONPollingPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidJSONPolling", nil, "Failure preparing request")
@@ -341,6 +402,16 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingResponder(
 // DeleteAsyncRelativeRetryNoStatus long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context) (result LROSADsDeleteAsyncRelativeRetryNoStatusFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteAsyncRelativeRetryNoStatus")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.DeleteAsyncRelativeRetryNoStatusPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryNoStatus", nil, "Failure preparing request")
@@ -392,6 +463,16 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusResponder(resp *http
 
 // DeleteNonRetry400 long running delete request, service returns a 400 with an error body
 func (client LROSADsClient) DeleteNonRetry400(ctx context.Context) (result LROSADsDeleteNonRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.DeleteNonRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.DeleteNonRetry400Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteNonRetry400", nil, "Failure preparing request")
@@ -446,6 +527,16 @@ func (client LROSADsClient) DeleteNonRetry400Responder(resp *http.Response) (res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Product) (result LROSADsPost202NoLocationFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Post202NoLocation")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post202NoLocationPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NoLocation", nil, "Failure preparing request")
@@ -504,6 +595,16 @@ func (client LROSADsClient) Post202NoLocationResponder(resp *http.Response) (res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Product) (result LROSADsPost202NonRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Post202NonRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post202NonRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NonRetry400", nil, "Failure preparing request")
@@ -563,6 +664,16 @@ func (client LROSADsClient) Post202NonRetry400Responder(resp *http.Response) (re
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPost202RetryInvalidHeaderFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Post202RetryInvalidHeader")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post202RetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202RetryInvalidHeader", nil, "Failure preparing request")
@@ -622,6 +733,16 @@ func (client LROSADsClient) Post202RetryInvalidHeaderResponder(resp *http.Respon
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PostAsyncRelativeRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetry400", nil, "Failure preparing request")
@@ -682,6 +803,16 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Responder(resp *http.Respon
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidHeaderFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetryInvalidHeader")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PostAsyncRelativeRetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidHeader", nil, "Failure preparing request")
@@ -742,6 +873,16 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderResponder(resp *h
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PostAsyncRelativeRetryInvalidJSONPollingPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidJSONPolling", nil, "Failure preparing request")
@@ -802,6 +943,16 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingResponder(re
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context, product *Product) (result LROSADsPostAsyncRelativeRetryNoPayloadFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostAsyncRelativeRetryNoPayload")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PostAsyncRelativeRetryNoPayloadPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryNoPayload", nil, "Failure preparing request")
@@ -860,6 +1011,16 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadResponder(resp *http.
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Product) (result LROSADsPostNonRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PostNonRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PostNonRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostNonRetry400", nil, "Failure preparing request")
@@ -919,6 +1080,16 @@ func (client LROSADsClient) PostNonRetry400Responder(resp *http.Response) (resul
 // Parameters:
 // product - product to put
 func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Product) (result LROSADsPut200InvalidJSONFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.Put200InvalidJSON")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put200InvalidJSONPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Put200InvalidJSON", nil, "Failure preparing request")
@@ -979,6 +1150,16 @@ func (client LROSADsClient) Put200InvalidJSONResponder(resp *http.Response) (res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutAsyncRelativeRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetry400", nil, "Failure preparing request")
@@ -1040,6 +1221,16 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Responder(resp *http.Respons
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidHeaderFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryInvalidHeader")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutAsyncRelativeRetryInvalidHeaderPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidHeader", nil, "Failure preparing request")
@@ -1101,6 +1292,16 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderResponder(resp *ht
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutAsyncRelativeRetryInvalidJSONPollingPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidJSONPolling", nil, "Failure preparing request")
@@ -1162,6 +1363,16 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingResponder(res
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryNoStatus")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutAsyncRelativeRetryNoStatusPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatus", nil, "Failure preparing request")
@@ -1223,6 +1434,16 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusResponder(resp *http.Re
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Context, product *Product) (result LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutAsyncRelativeRetryNoStatusPayload")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutAsyncRelativeRetryNoStatusPayloadPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatusPayload", nil, "Failure preparing request")
@@ -1283,6 +1504,16 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadResponder(resp *
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Context, product *Product) (result LROSADsPutError201NoProvisioningStatePayloadFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutError201NoProvisioningStatePayload")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutError201NoProvisioningStatePayloadPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutError201NoProvisioningStatePayload", nil, "Failure preparing request")
@@ -1343,6 +1574,16 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadResponder(resp 
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutNonRetry201Creating400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutNonRetry201Creating400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400", nil, "Failure preparing request")
@@ -1403,6 +1644,16 @@ func (client LROSADsClient) PutNonRetry201Creating400Responder(resp *http.Respon
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Context, product *Product) (result LROSADsPutNonRetry201Creating400InvalidJSONFuture, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutNonRetry201Creating400InvalidJSON")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutNonRetry201Creating400InvalidJSONPreparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400InvalidJSON", nil, "Failure preparing request")
@@ -1462,6 +1713,16 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONResponder(resp *
 // Parameters:
 // product - product to put
 func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product) (result LROSADsPutNonRetry400Future, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROSADsClient.PutNonRetry400")
+		defer func() {
+			sc := -1
+			if result.Response() != nil {
+				sc = result.Response().StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutNonRetry400Preparer(ctx, product)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry400", nil, "Failure preparing request")

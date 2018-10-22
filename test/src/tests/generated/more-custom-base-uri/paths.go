@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewPathsClient(subscriptionID string) PathsClient {
 // keyName - the key name with value 'key1'.
 // keyVersion - the key version. Default value 'v1'.
 func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, keyVersion string) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetEmpty")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetEmptyPreparer(ctx, vault, secret, keyName, keyVersion)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "morecustombaseurigroup.PathsClient", "GetEmpty", nil, "Failure preparing request")

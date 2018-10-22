@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewBasicClientWithBaseURI(baseURI string) BasicClient {
 
 // GetEmpty get a basic complex type that is empty
 func (client BasicClient) GetEmpty(ctx context.Context) (result Basic, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BasicClient.GetEmpty")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetEmpty", nil, "Failure preparing request")
@@ -82,6 +93,16 @@ func (client BasicClient) GetEmptyResponder(resp *http.Response) (result Basic, 
 
 // GetInvalid get a basic complex type that is invalid for the local strong type
 func (client BasicClient) GetInvalid(ctx context.Context) (result Basic, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BasicClient.GetInvalid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetInvalid", nil, "Failure preparing request")
@@ -134,6 +155,16 @@ func (client BasicClient) GetInvalidResponder(resp *http.Response) (result Basic
 
 // GetNotProvided get a basic complex type while the server doesn't provide a response payload
 func (client BasicClient) GetNotProvided(ctx context.Context) (result Basic, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BasicClient.GetNotProvided")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNotProvidedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetNotProvided", nil, "Failure preparing request")
@@ -186,6 +217,16 @@ func (client BasicClient) GetNotProvidedResponder(resp *http.Response) (result B
 
 // GetNull get a basic complex type whose properties are null
 func (client BasicClient) GetNull(ctx context.Context) (result Basic, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BasicClient.GetNull")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetNull", nil, "Failure preparing request")
@@ -238,6 +279,16 @@ func (client BasicClient) GetNullResponder(resp *http.Response) (result Basic, e
 
 // GetValid get complex type {id: 2, name: 'abc', color: 'YELLOW'}
 func (client BasicClient) GetValid(ctx context.Context) (result Basic, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BasicClient.GetValid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "GetValid", nil, "Failure preparing request")
@@ -292,6 +343,16 @@ func (client BasicClient) GetValidResponder(resp *http.Response) (result Basic, 
 // Parameters:
 // complexBody - please put {id: 2, name: 'abc', color: 'Magenta'}
 func (client BasicClient) PutValid(ctx context.Context, complexBody Basic) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/BasicClient.PutValid")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.BasicClient", "PutValid", nil, "Failure preparing request")

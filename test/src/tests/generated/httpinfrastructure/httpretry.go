@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -32,6 +33,16 @@ func NewHTTPRetryClientWithBaseURI(baseURI string) HTTPRetryClient {
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Delete503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Delete503")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Delete503Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Delete503", nil, "Failure preparing request")
@@ -88,6 +99,16 @@ func (client HTTPRetryClient) Delete503Responder(resp *http.Response) (result au
 
 // Get502 return 502 status code, then 200 after retry
 func (client HTTPRetryClient) Get502(ctx context.Context) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Get502")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Get502Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Get502", nil, "Failure preparing request")
@@ -139,6 +160,16 @@ func (client HTTPRetryClient) Get502Responder(resp *http.Response) (result autor
 
 // Head408 return 408 status code, then 200 after retry
 func (client HTTPRetryClient) Head408(ctx context.Context) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Head408")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Head408Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Head408", nil, "Failure preparing request")
@@ -192,6 +223,16 @@ func (client HTTPRetryClient) Head408Responder(resp *http.Response) (result auto
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Patch500")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Patch500Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Patch500", nil, "Failure preparing request")
@@ -250,6 +291,16 @@ func (client HTTPRetryClient) Patch500Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Patch504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Patch504")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Patch504Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Patch504", nil, "Failure preparing request")
@@ -308,6 +359,16 @@ func (client HTTPRetryClient) Patch504Responder(resp *http.Response) (result aut
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Post503(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Post503")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Post503Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Post503", nil, "Failure preparing request")
@@ -366,6 +427,16 @@ func (client HTTPRetryClient) Post503Responder(resp *http.Response) (result auto
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put500(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Put500")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put500Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Put500", nil, "Failure preparing request")
@@ -424,6 +495,16 @@ func (client HTTPRetryClient) Put500Responder(resp *http.Response) (result autor
 // Parameters:
 // booleanValue - simple boolean value true
 func (client HTTPRetryClient) Put504(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRetryClient.Put504")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.Put504Preparer(ctx, booleanValue)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.HTTPRetryClient", "Put504", nil, "Failure preparing request")

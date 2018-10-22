@@ -99,9 +99,14 @@ namespace AutoRest.Go.Model
         /// </summary>
         public string ResultFieldName => ContentType.Name.ToVariableName();
 
+        /// <summary>
+        /// The qualified name for the advancer method.
+        /// </summary>
+        public string AdvancerQualifiedName => $"{Name}.NextWithContext";
+
         public override string Fields()
         {
-            return $"    {FnFieldName} func({ContentType.Name}) ({ContentType.Name}, error)\n    {ResultFieldName} {ContentType.Name}";
+            return $"    {FnFieldName} func(context.Context, {ContentType.Name}) ({ContentType.Name}, error)\n    {ResultFieldName} {ContentType.Name}";
         }
 
         public override bool Equals(object other)

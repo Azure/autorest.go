@@ -30,6 +30,11 @@ namespace AutoRest.Go.Model
 
         public bool NextAlreadyDefined { get; private set; }
 
+        /// <summary>
+        /// The method name qualified with the client name
+        /// </summary>
+        public string QualifiedName => $"{Owner}.{Name}";
+
         public bool IsCustomBaseUri
             => CodeModel.Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
@@ -47,7 +52,6 @@ namespace AutoRest.Go.Model
             Owner = (MethodGroup as MethodGroupGo).ClientName;
             PackageName = cmg.Namespace;
             NextAlreadyDefined = NextMethodExists(cmg.Methods.Cast<MethodGo>());
-
             var apiVersionParam =
               from p in Parameters
               let name = p.SerializedName

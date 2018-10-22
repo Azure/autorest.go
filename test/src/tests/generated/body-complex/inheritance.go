@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewInheritanceClientWithBaseURI(baseURI string) InheritanceClient {
 
 // GetValid get complex types that extend others
 func (client InheritanceClient) GetValid(ctx context.Context) (result Siamese, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/InheritanceClient.GetValid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "GetValid", nil, "Failure preparing request")
@@ -86,6 +97,16 @@ func (client InheritanceClient) GetValidResponder(resp *http.Response) (result S
 // dogs, the 1st one named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
 // food="french fries".
 func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/InheritanceClient.PutValid")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutValidPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.InheritanceClient", "PutValid", nil, "Failure preparing request")

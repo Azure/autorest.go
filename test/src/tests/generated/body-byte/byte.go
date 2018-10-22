@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,16 @@ func NewByteClientWithBaseURI(baseURI string) ByteClient {
 
 // GetEmpty get empty byte value ''
 func (client ByteClient) GetEmpty(ctx context.Context) (result ByteArray, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ByteClient.GetEmpty")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetEmptyPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetEmpty", nil, "Failure preparing request")
@@ -83,6 +94,16 @@ func (client ByteClient) GetEmptyResponder(resp *http.Response) (result ByteArra
 
 // GetInvalid get invalid byte value ':::SWAGGER::::'
 func (client ByteClient) GetInvalid(ctx context.Context) (result ByteArray, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ByteClient.GetInvalid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetInvalid", nil, "Failure preparing request")
@@ -135,6 +156,16 @@ func (client ByteClient) GetInvalidResponder(resp *http.Response) (result ByteAr
 
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client ByteClient) GetNonASCII(ctx context.Context) (result ByteArray, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ByteClient.GetNonASCII")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNonASCIIPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNonASCII", nil, "Failure preparing request")
@@ -187,6 +218,16 @@ func (client ByteClient) GetNonASCIIResponder(resp *http.Response) (result ByteA
 
 // GetNull get null byte value
 func (client ByteClient) GetNull(ctx context.Context) (result ByteArray, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ByteClient.GetNull")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "bytegroup.ByteClient", "GetNull", nil, "Failure preparing request")
@@ -241,6 +282,16 @@ func (client ByteClient) GetNullResponder(resp *http.Response) (result ByteArray
 // Parameters:
 // byteBody - base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 func (client ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ByteClient.PutNonASCII")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: byteBody,
 			Constraints: []validation.Constraint{{Target: "byteBody", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {

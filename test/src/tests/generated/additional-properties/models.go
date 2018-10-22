@@ -11,6 +11,9 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/additional-properties"
+
 // CatAPTrue ...
 type CatAPTrue struct {
 	autorest.Response `json:"-"`

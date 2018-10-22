@@ -12,6 +12,9 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/body-complex"
+
 // CMYKColors enumerates the values for cmyk colors.
 type CMYKColors string
 

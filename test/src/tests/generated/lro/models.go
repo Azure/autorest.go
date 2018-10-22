@@ -13,6 +13,9 @@ import (
 	"net/http"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/lro"
+
 // ProvisioningStateValues enumerates the values for provisioning state values.
 type ProvisioningStateValues string
 
@@ -118,8 +121,8 @@ type CloudError struct {
 	Message *string `json:"message,omitempty"`
 }
 
-// LRORetrysDelete202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LRORetrysDelete202Retry200Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LRORetrysDelete202Retry200Future struct {
 	azure.Future
 }
@@ -141,8 +144,8 @@ func (future *LRORetrysDelete202Retry200Future) Result(client LRORetrysClient) (
 	return
 }
 
-// LRORetrysDeleteAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LRORetrysDeleteAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
 }
@@ -164,8 +167,8 @@ func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LR
 	return
 }
 
-// LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the
-// results of a long-running operation.
+// LRORetrysDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving
+// the results of a long-running operation.
 type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
 }
@@ -193,8 +196,8 @@ func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(c
 	return
 }
 
-// LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LRORetrysPost202Retry200Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LRORetrysPost202Retry200Future struct {
 	azure.Future
 }
@@ -216,8 +219,8 @@ func (future *LRORetrysPost202Retry200Future) Result(client LRORetrysClient) (ar
 	return
 }
 
-// LRORetrysPostAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LRORetrysPostAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LRORetrysPostAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
 }
@@ -268,8 +271,8 @@ func (future *LRORetrysPut201CreatingSucceeded200Future) Result(client LRORetrys
 	return
 }
 
-// LRORetrysPutAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LRORetrysPutAsyncRelativeRetrySucceededFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LRORetrysPutAsyncRelativeRetrySucceededFuture struct {
 	azure.Future
 }
@@ -297,8 +300,8 @@ func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) Result(client LRORe
 	return
 }
 
-// LROSADsDelete202NonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsDelete202NonRetry400Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsDelete202NonRetry400Future struct {
 	azure.Future
 }
@@ -343,8 +346,8 @@ func (future *LROSADsDelete202RetryInvalidHeaderFuture) Result(client LROSADsCli
 	return
 }
 
-// LROSADsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsDelete204SucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsDelete204SucceededFuture struct {
 	azure.Future
 }
@@ -389,8 +392,8 @@ func (future *LROSADsDeleteAsyncRelativeRetry400Future) Result(client LROSADsCli
 	return
 }
 
-// LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
 }
@@ -412,8 +415,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) Result(client 
 	return
 }
 
-// LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
 }
@@ -435,8 +438,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Result(cl
 	return
 }
 
-// LROSADsDeleteAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsDeleteAsyncRelativeRetryNoStatusFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
 	azure.Future
 }
@@ -458,8 +461,8 @@ func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSA
 	return
 }
 
-// LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsDeleteNonRetry400Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsDeleteNonRetry400Future struct {
 	azure.Future
 }
@@ -481,8 +484,8 @@ func (future *LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar a
 	return
 }
 
-// LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsPost202NoLocationFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPost202NoLocationFuture struct {
 	azure.Future
 }
@@ -504,8 +507,8 @@ func (future *LROSADsPost202NoLocationFuture) Result(client LROSADsClient) (ar a
 	return
 }
 
-// LROSADsPost202NonRetry400Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsPost202NonRetry400Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPost202NonRetry400Future struct {
 	azure.Future
 }
@@ -573,8 +576,8 @@ func (future *LROSADsPostAsyncRelativeRetry400Future) Result(client LROSADsClien
 	return
 }
 
-// LROSADsPostAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPostAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
 }
@@ -596,8 +599,8 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) Result(client LR
 	return
 }
 
-// LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
 }
@@ -619,8 +622,8 @@ func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) Result(clie
 	return
 }
 
-// LROSADsPostAsyncRelativeRetryNoPayloadFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPostAsyncRelativeRetryNoPayloadFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
 	azure.Future
 }
@@ -665,8 +668,8 @@ func (future *LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar aut
 	return
 }
 
-// LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsPut200InvalidJSONFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPut200InvalidJSONFuture struct {
 	azure.Future
 }
@@ -694,8 +697,8 @@ func (future *LROSADsPut200InvalidJSONFuture) Result(client LROSADsClient) (p Pr
 	return
 }
 
-// LROSADsPutAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROSADsPutAsyncRelativeRetry400Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROSADsPutAsyncRelativeRetry400Future struct {
 	azure.Future
 }
@@ -723,8 +726,8 @@ func (future *LROSADsPutAsyncRelativeRetry400Future) Result(client LROSADsClient
 	return
 }
 
-// LROSADsPutAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPutAsyncRelativeRetryInvalidHeaderFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
 	azure.Future
 }
@@ -752,8 +755,8 @@ func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) Result(client LRO
 	return
 }
 
-// LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture struct {
 	azure.Future
 }
@@ -810,8 +813,8 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) Result(client LROSADsC
 	return
 }
 
-// LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture struct {
 	azure.Future
 }
@@ -839,8 +842,8 @@ func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) Result(client L
 	return
 }
 
-// LROSADsPutError201NoProvisioningStatePayloadFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPutError201NoProvisioningStatePayloadFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
 	azure.Future
 }
@@ -897,8 +900,8 @@ func (future *LROSADsPutNonRetry201Creating400Future) Result(client LROSADsClien
 	return
 }
 
-// LROSADsPutNonRetry201Creating400InvalidJSONFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROSADsPutNonRetry201Creating400InvalidJSONFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
 	azure.Future
 }
@@ -955,8 +958,8 @@ func (future *LROSADsPutNonRetry400Future) Result(client LROSADsClient) (p Produ
 	return
 }
 
-// LROsCustomHeaderPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsCustomHeaderPost202Retry200Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsCustomHeaderPost202Retry200Future struct {
 	azure.Future
 }
@@ -978,8 +981,8 @@ func (future *LROsCustomHeaderPost202Retry200Future) Result(client LROsCustomHea
 	return
 }
 
-// LROsCustomHeaderPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsCustomHeaderPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROsCustomHeaderPostAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1001,8 +1004,8 @@ func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) Result(client LROsC
 	return
 }
 
-// LROsCustomHeaderPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsCustomHeaderPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
 	azure.Future
 }
@@ -1030,8 +1033,8 @@ func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) Result(client LR
 	return
 }
 
-// LROsCustomHeaderPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsCustomHeaderPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROsCustomHeaderPutAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1140,8 +1143,8 @@ func (future *LROsDelete204SucceededFuture) Result(client LROsClient) (ar autore
 	return
 }
 
-// LROsDeleteAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsDeleteAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsDeleteAsyncNoHeaderInRetryFuture struct {
 	azure.Future
 }
@@ -1163,8 +1166,8 @@ func (future *LROsDeleteAsyncNoHeaderInRetryFuture) Result(client LROsClient) (a
 	return
 }
 
-// LROsDeleteAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsDeleteAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsDeleteAsyncNoRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1186,8 +1189,8 @@ func (future *LROsDeleteAsyncNoRetrySucceededFuture) Result(client LROsClient) (
 	return
 }
 
-// LROsDeleteAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsDeleteAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsDeleteAsyncRetrycanceledFuture struct {
 	azure.Future
 }
@@ -1209,8 +1212,8 @@ func (future *LROsDeleteAsyncRetrycanceledFuture) Result(client LROsClient) (ar 
 	return
 }
 
-// LROsDeleteAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsDeleteAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsDeleteAsyncRetryFailedFuture struct {
 	azure.Future
 }
@@ -1232,8 +1235,8 @@ func (future *LROsDeleteAsyncRetryFailedFuture) Result(client LROsClient) (ar au
 	return
 }
 
-// LROsDeleteAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsDeleteAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsDeleteAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1255,8 +1258,8 @@ func (future *LROsDeleteAsyncRetrySucceededFuture) Result(client LROsClient) (ar
 	return
 }
 
-// LROsDeleteNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsDeleteNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsDeleteNoHeaderInRetryFuture struct {
 	azure.Future
 }
@@ -1278,8 +1281,8 @@ func (future *LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar aut
 	return
 }
 
-// LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the results of
-// a long-running operation.
+// LROsDeleteProvisioning202Accepted200SucceededFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
 	azure.Future
 }
@@ -1307,8 +1310,8 @@ func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) Result(client
 	return
 }
 
-// LROsDeleteProvisioning202Deletingcanceled200Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsDeleteProvisioning202Deletingcanceled200Future an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROsDeleteProvisioning202Deletingcanceled200Future struct {
 	azure.Future
 }
@@ -1336,8 +1339,8 @@ func (future *LROsDeleteProvisioning202Deletingcanceled200Future) Result(client 
 	return
 }
 
-// LROsDeleteProvisioning202DeletingFailed200Future an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsDeleteProvisioning202DeletingFailed200Future an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROsDeleteProvisioning202DeletingFailed200Future struct {
 	azure.Future
 }
@@ -1423,7 +1426,8 @@ func (future *LROsPost202NoRetry204Future) Result(client LROsClient) (p Product,
 	return
 }
 
-// LROsPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPost202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPost202Retry200Future struct {
 	azure.Future
 }
@@ -1445,8 +1449,8 @@ func (future *LROsPost202Retry200Future) Result(client LROsClient) (ar autorest.
 	return
 }
 
-// LROsPostAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPostAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPostAsyncNoRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1474,8 +1478,8 @@ func (future *LROsPostAsyncNoRetrySucceededFuture) Result(client LROsClient) (p 
 	return
 }
 
-// LROsPostAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPostAsyncRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPostAsyncRetrycanceledFuture struct {
 	azure.Future
 }
@@ -1497,8 +1501,8 @@ func (future *LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar au
 	return
 }
 
-// LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPostAsyncRetryFailedFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPostAsyncRetryFailedFuture struct {
 	azure.Future
 }
@@ -1520,8 +1524,8 @@ func (future *LROsPostAsyncRetryFailedFuture) Result(client LROsClient) (ar auto
 	return
 }
 
-// LROsPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPostAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPostAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1549,8 +1553,8 @@ func (future *LROsPostAsyncRetrySucceededFuture) Result(client LROsClient) (p Pr
 	return
 }
 
-// LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture an abstraction for monitoring and retrieving the results
-// of a long-running operation.
+// LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture an abstraction for monitoring and retrieving the
+// results of a long-running operation.
 type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture struct {
 	azure.Future
 }
@@ -1578,8 +1582,8 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) Result(clie
 	return
 }
 
-// LROsPostDoubleHeadersFinalAzureHeaderGetFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPostDoubleHeadersFinalAzureHeaderGetFuture an abstraction for monitoring and retrieving the results
+// of a long-running operation.
 type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
 	azure.Future
 }
@@ -1607,8 +1611,8 @@ func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) Result(client LROs
 	return
 }
 
-// LROsPostDoubleHeadersFinalLocationGetFuture an abstraction for monitoring and retrieving the results of a
-// long-running operation.
+// LROsPostDoubleHeadersFinalLocationGetFuture an abstraction for monitoring and retrieving the results of
+// a long-running operation.
 type LROsPostDoubleHeadersFinalLocationGetFuture struct {
 	azure.Future
 }
@@ -1636,8 +1640,8 @@ func (future *LROsPostDoubleHeadersFinalLocationGetFuture) Result(client LROsCli
 	return
 }
 
-// LROsPut200Acceptedcanceled200Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPut200Acceptedcanceled200Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPut200Acceptedcanceled200Future struct {
 	azure.Future
 }
@@ -1665,7 +1669,8 @@ func (future *LROsPut200Acceptedcanceled200Future) Result(client LROsClient) (p 
 	return
 }
 
-// LROsPut200SucceededFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPut200SucceededFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPut200SucceededFuture struct {
 	azure.Future
 }
@@ -1693,8 +1698,8 @@ func (future *LROsPut200SucceededFuture) Result(client LROsClient) (p Product, e
 	return
 }
 
-// LROsPut200SucceededNoStateFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPut200SucceededNoStateFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPut200SucceededNoStateFuture struct {
 	azure.Future
 }
@@ -1722,8 +1727,8 @@ func (future *LROsPut200SucceededNoStateFuture) Result(client LROsClient) (p Pro
 	return
 }
 
-// LROsPut200UpdatingSucceeded204Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPut200UpdatingSucceeded204Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPut200UpdatingSucceeded204Future struct {
 	azure.Future
 }
@@ -1751,8 +1756,8 @@ func (future *LROsPut200UpdatingSucceeded204Future) Result(client LROsClient) (p
 	return
 }
 
-// LROsPut201CreatingFailed200Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPut201CreatingFailed200Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPut201CreatingFailed200Future struct {
 	azure.Future
 }
@@ -1780,8 +1785,8 @@ func (future *LROsPut201CreatingFailed200Future) Result(client LROsClient) (p Pr
 	return
 }
 
-// LROsPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPut201CreatingSucceeded200Future an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPut201CreatingSucceeded200Future struct {
 	azure.Future
 }
@@ -1809,7 +1814,8 @@ func (future *LROsPut201CreatingSucceeded200Future) Result(client LROsClient) (p
 	return
 }
 
-// LROsPut202Retry200Future an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPut202Retry200Future an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPut202Retry200Future struct {
 	azure.Future
 }
@@ -1837,8 +1843,8 @@ func (future *LROsPut202Retry200Future) Result(client LROsClient) (p Product, er
 	return
 }
 
-// LROsPutAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPutAsyncNoHeaderInRetryFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPutAsyncNoHeaderInRetryFuture struct {
 	azure.Future
 }
@@ -1895,8 +1901,8 @@ func (future *LROsPutAsyncNonResourceFuture) Result(client LROsClient) (s Sku, e
 	return
 }
 
-// LROsPutAsyncNoRetrycanceledFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPutAsyncNoRetrycanceledFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPutAsyncNoRetrycanceledFuture struct {
 	azure.Future
 }
@@ -1924,8 +1930,8 @@ func (future *LROsPutAsyncNoRetrycanceledFuture) Result(client LROsClient) (p Pr
 	return
 }
 
-// LROsPutAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPutAsyncNoRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPutAsyncNoRetrySucceededFuture struct {
 	azure.Future
 }
@@ -1982,8 +1988,8 @@ func (future *LROsPutAsyncRetryFailedFuture) Result(client LROsClient) (p Produc
 	return
 }
 
-// LROsPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a long-running
-// operation.
+// LROsPutAsyncRetrySucceededFuture an abstraction for monitoring and retrieving the results of a
+// long-running operation.
 type LROsPutAsyncRetrySucceededFuture struct {
 	azure.Future
 }
@@ -2069,7 +2075,8 @@ func (future *LROsPutNoHeaderInRetryFuture) Result(client LROsClient) (p Product
 	return
 }
 
-// LROsPutNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPutNonResourceFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutNonResourceFuture struct {
 	azure.Future
 }
@@ -2097,7 +2104,8 @@ func (future *LROsPutNonResourceFuture) Result(client LROsClient) (s Sku, err er
 	return
 }
 
-// LROsPutSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running operation.
+// LROsPutSubResourceFuture an abstraction for monitoring and retrieving the results of a long-running
+// operation.
 type LROsPutSubResourceFuture struct {
 	azure.Future
 }

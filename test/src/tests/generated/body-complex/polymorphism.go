@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -32,6 +33,16 @@ func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
 // GetComplicated get complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
 func (client PolymorphismClient) GetComplicated(ctx context.Context) (result SalmonModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetComplicated")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetComplicatedPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComplicated", nil, "Failure preparing request")
@@ -84,6 +95,16 @@ func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (r
 
 // GetValid get complex types that are polymorphic
 func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetValid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetValid", nil, "Failure preparing request")
@@ -137,6 +158,16 @@ func (client PolymorphismClient) GetValidResponder(resp *http.Response) (result 
 // PutComplicated put complex types that are polymorphic, but not at the root of the hierarchy; also have additional
 // properties
 func (client PolymorphismClient) PutComplicated(ctx context.Context, complexBody BasicSalmon) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutComplicated")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutComplicatedPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutComplicated", nil, "Failure preparing request")
@@ -190,6 +221,16 @@ func (client PolymorphismClient) PutComplicatedResponder(resp *http.Response) (r
 
 // PutMissingDiscriminator put complex types that are polymorphic, omitting the discriminator
 func (client PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody BasicSalmon) (result SalmonModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutMissingDiscriminator")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutMissingDiscriminatorPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "PutMissingDiscriminator", nil, "Failure preparing request")
@@ -278,6 +319,16 @@ func (client PolymorphismClient) PutMissingDiscriminatorResponder(resp *http.Res
 // ]
 // };
 func (client PolymorphismClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutValid")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -366,6 +417,16 @@ func (client PolymorphismClient) PutValidResponder(resp *http.Response) (result 
 // ]
 // }
 func (client PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.PutValidMissingRequired")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {

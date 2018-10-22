@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewPrimitiveClientWithBaseURI(baseURI string) PrimitiveClient {
 
 // GetBool get complex types with bool properties
 func (client PrimitiveClient) GetBool(ctx context.Context) (result BooleanWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetBool")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetBoolPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetBool", nil, "Failure preparing request")
@@ -82,6 +93,16 @@ func (client PrimitiveClient) GetBoolResponder(resp *http.Response) (result Bool
 
 // GetByte get complex types with byte properties
 func (client PrimitiveClient) GetByte(ctx context.Context) (result ByteWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetByte")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetBytePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetByte", nil, "Failure preparing request")
@@ -134,6 +155,16 @@ func (client PrimitiveClient) GetByteResponder(resp *http.Response) (result Byte
 
 // GetDate get complex types with date properties
 func (client PrimitiveClient) GetDate(ctx context.Context) (result DateWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDate")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDatePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDate", nil, "Failure preparing request")
@@ -186,6 +217,16 @@ func (client PrimitiveClient) GetDateResponder(resp *http.Response) (result Date
 
 // GetDateTime get complex types with datetime properties
 func (client PrimitiveClient) GetDateTime(ctx context.Context) (result DatetimeWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDateTime")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateTimePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDateTime", nil, "Failure preparing request")
@@ -238,6 +279,16 @@ func (client PrimitiveClient) GetDateTimeResponder(resp *http.Response) (result 
 
 // GetDateTimeRfc1123 get complex types with datetimeRfc1123 properties
 func (client PrimitiveClient) GetDateTimeRfc1123(ctx context.Context) (result Datetimerfc1123Wrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDateTimeRfc1123")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDateTimeRfc1123Preparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDateTimeRfc1123", nil, "Failure preparing request")
@@ -290,6 +341,16 @@ func (client PrimitiveClient) GetDateTimeRfc1123Responder(resp *http.Response) (
 
 // GetDouble get complex types with double properties
 func (client PrimitiveClient) GetDouble(ctx context.Context) (result DoubleWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDouble")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDoublePreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDouble", nil, "Failure preparing request")
@@ -342,6 +403,16 @@ func (client PrimitiveClient) GetDoubleResponder(resp *http.Response) (result Do
 
 // GetDuration get complex types with duration properties
 func (client PrimitiveClient) GetDuration(ctx context.Context) (result DurationWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDuration")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetDurationPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetDuration", nil, "Failure preparing request")
@@ -394,6 +465,16 @@ func (client PrimitiveClient) GetDurationResponder(resp *http.Response) (result 
 
 // GetFloat get complex types with float properties
 func (client PrimitiveClient) GetFloat(ctx context.Context) (result FloatWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetFloat")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetFloatPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetFloat", nil, "Failure preparing request")
@@ -446,6 +527,16 @@ func (client PrimitiveClient) GetFloatResponder(resp *http.Response) (result Flo
 
 // GetInt get complex types with integer properties
 func (client PrimitiveClient) GetInt(ctx context.Context) (result IntWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetInt")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetIntPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetInt", nil, "Failure preparing request")
@@ -498,6 +589,16 @@ func (client PrimitiveClient) GetIntResponder(resp *http.Response) (result IntWr
 
 // GetLong get complex types with long properties
 func (client PrimitiveClient) GetLong(ctx context.Context) (result LongWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetLong")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetLongPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetLong", nil, "Failure preparing request")
@@ -550,6 +651,16 @@ func (client PrimitiveClient) GetLongResponder(resp *http.Response) (result Long
 
 // GetString get complex types with string properties
 func (client PrimitiveClient) GetString(ctx context.Context) (result StringWrapper, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetString")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetStringPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "GetString", nil, "Failure preparing request")
@@ -604,6 +715,16 @@ func (client PrimitiveClient) GetStringResponder(resp *http.Response) (result St
 // Parameters:
 // complexBody - please put true and false
 func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutBool")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutBoolPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutBool", nil, "Failure preparing request")
@@ -659,6 +780,16 @@ func (client PrimitiveClient) PutBoolResponder(resp *http.Response) (result auto
 // Parameters:
 // complexBody - please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
 func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutByte")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutBytePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutByte", nil, "Failure preparing request")
@@ -714,6 +845,16 @@ func (client PrimitiveClient) PutByteResponder(resp *http.Response) (result auto
 // Parameters:
 // complexBody - please put '0001-01-01' and '2016-02-29'
 func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDate")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutDatePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDate", nil, "Failure preparing request")
@@ -769,6 +910,16 @@ func (client PrimitiveClient) PutDateResponder(resp *http.Response) (result auto
 // Parameters:
 // complexBody - please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
 func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDateTime")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutDateTimePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDateTime", nil, "Failure preparing request")
@@ -824,6 +975,16 @@ func (client PrimitiveClient) PutDateTimeResponder(resp *http.Response) (result 
 // Parameters:
 // complexBody - please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
 func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBody Datetimerfc1123Wrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDateTimeRfc1123")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutDateTimeRfc1123Preparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDateTimeRfc1123", nil, "Failure preparing request")
@@ -879,6 +1040,16 @@ func (client PrimitiveClient) PutDateTimeRfc1123Responder(resp *http.Response) (
 // Parameters:
 // complexBody - please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
 func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDouble")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutDoublePreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDouble", nil, "Failure preparing request")
@@ -934,6 +1105,16 @@ func (client PrimitiveClient) PutDoubleResponder(resp *http.Response) (result au
 // Parameters:
 // complexBody - please put 'P123DT22H14M12.011S'
 func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDuration")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutDurationPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutDuration", nil, "Failure preparing request")
@@ -989,6 +1170,16 @@ func (client PrimitiveClient) PutDurationResponder(resp *http.Response) (result 
 // Parameters:
 // complexBody - please put 1.05 and -0.003
 func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutFloat")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutFloatPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutFloat", nil, "Failure preparing request")
@@ -1044,6 +1235,16 @@ func (client PrimitiveClient) PutFloatResponder(resp *http.Response) (result aut
 // Parameters:
 // complexBody - please put -1 and 2
 func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutInt")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutIntPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutInt", nil, "Failure preparing request")
@@ -1099,6 +1300,16 @@ func (client PrimitiveClient) PutIntResponder(resp *http.Response) (result autor
 // Parameters:
 // complexBody - please put 1099511627775 and -999511627788
 func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutLong")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutLongPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutLong", nil, "Failure preparing request")
@@ -1154,6 +1365,16 @@ func (client PrimitiveClient) PutLongResponder(resp *http.Response) (result auto
 // Parameters:
 // complexBody - please put 'goodrequest', '', and null
 func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutString")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutStringPreparer(ctx, complexBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PrimitiveClient", "PutString", nil, "Failure preparing request")

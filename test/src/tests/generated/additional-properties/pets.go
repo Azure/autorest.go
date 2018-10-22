@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,16 @@ func NewPetsClientWithBaseURI(baseURI string) PetsClient {
 
 // CreateAPInProperties create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties) (result PetAPInProperties, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPInProperties")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: createParameters,
 			Constraints: []validation.Constraint{{Target: "createParameters.ID", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -91,6 +102,16 @@ func (client PetsClient) CreateAPInPropertiesResponder(resp *http.Response) (res
 
 // CreateAPInPropertiesWithAPString create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString) (result PetAPInPropertiesWithAPString, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPInPropertiesWithAPString")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: createParameters,
 			Constraints: []validation.Constraint{{Target: "createParameters.ID", Name: validation.Null, Rule: true, Chain: nil},
@@ -152,6 +173,16 @@ func (client PetsClient) CreateAPInPropertiesWithAPStringResponder(resp *http.Re
 
 // CreateAPObject create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject) (result PetAPObject, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPObject")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: createParameters,
 			Constraints: []validation.Constraint{{Target: "createParameters.ID", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -212,6 +243,16 @@ func (client PetsClient) CreateAPObjectResponder(resp *http.Response) (result Pe
 
 // CreateAPString create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString) (result PetAPString, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPString")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: createParameters,
 			Constraints: []validation.Constraint{{Target: "createParameters.ID", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -272,6 +313,16 @@ func (client PetsClient) CreateAPStringResponder(resp *http.Response) (result Pe
 
 // CreateAPTrue create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue) (result PetAPTrue, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPTrue")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: createParameters,
 			Constraints: []validation.Constraint{{Target: "createParameters.ID", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {
@@ -332,6 +383,16 @@ func (client PetsClient) CreateAPTrueResponder(resp *http.Response) (result PetA
 
 // CreateCatAPTrue create a CatAPTrue which contains more properties than what is defined.
 func (client PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue) (result CatAPTrue, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateCatAPTrue")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.CreateCatAPTruePreparer(ctx, createParameters)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "additionalproperties.PetsClient", "CreateCatAPTrue", nil, "Failure preparing request")

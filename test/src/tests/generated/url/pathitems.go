@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -37,6 +38,16 @@ func NewPathItemsClientWithBaseURI(baseURI string, globalStringPath string, glob
 // localStringQuery - should contain value 'localStringQuery'
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetAllWithValues")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetAllWithValuesPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetAllWithValues", nil, "Failure preparing request")
@@ -113,6 +124,16 @@ func (client PathItemsClient) GetAllWithValuesResponder(resp *http.Response) (re
 // localStringQuery - should contain null value
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetGlobalAndLocalQueryNull")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetGlobalAndLocalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetGlobalAndLocalQueryNull", nil, "Failure preparing request")
@@ -189,6 +210,16 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullResponder(resp *http.Res
 // localStringQuery - should contain value 'localStringQuery'
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetGlobalQueryNull")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetGlobalQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetGlobalQueryNull", nil, "Failure preparing request")
@@ -265,6 +296,16 @@ func (client PathItemsClient) GetGlobalQueryNullResponder(resp *http.Response) (
 // localStringQuery - should contain value null
 // pathItemStringQuery - should contain value null
 func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetLocalPathItemQueryNull")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetLocalPathItemQueryNullPreparer(ctx, localStringPath, pathItemStringPath, localStringQuery, pathItemStringQuery)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "urlgroup.PathItemsClient", "GetLocalPathItemQueryNull", nil, "Failure preparing request")

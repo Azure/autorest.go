@@ -10,6 +10,9 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/httpinfrastructure"
+
 // A ...
 type A struct {
 	autorest.Response `json:"-"`

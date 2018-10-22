@@ -10,6 +10,7 @@ import (
 	"context"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -30,6 +31,16 @@ func NewDurationClientWithBaseURI(baseURI string) DurationClient {
 
 // GetInvalid get an invalid duration value
 func (client DurationClient) GetInvalid(ctx context.Context) (result TimeSpan, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.GetInvalid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetInvalidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetInvalid", nil, "Failure preparing request")
@@ -82,6 +93,16 @@ func (client DurationClient) GetInvalidResponder(resp *http.Response) (result Ti
 
 // GetNull get null duration value
 func (client DurationClient) GetNull(ctx context.Context) (result TimeSpan, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.GetNull")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetNullPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetNull", nil, "Failure preparing request")
@@ -134,6 +155,16 @@ func (client DurationClient) GetNullResponder(resp *http.Response) (result TimeS
 
 // GetPositiveDuration get a positive duration value
 func (client DurationClient) GetPositiveDuration(ctx context.Context) (result TimeSpan, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.GetPositiveDuration")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetPositiveDurationPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "GetPositiveDuration", nil, "Failure preparing request")
@@ -186,6 +217,16 @@ func (client DurationClient) GetPositiveDurationResponder(resp *http.Response) (
 
 // PutPositiveDuration put a positive duration value
 func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBody string) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.PutPositiveDuration")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.PutPositiveDurationPreparer(ctx, durationBody)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "durationgroup.DurationClient", "PutPositiveDuration", nil, "Failure preparing request")

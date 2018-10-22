@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
+	"github.com/Azure/go-autorest/tracing"
 	"net/http"
 )
 
@@ -31,6 +32,16 @@ func NewPolymorphicrecursiveClientWithBaseURI(baseURI string) Polymorphicrecursi
 
 // GetValid get complex types that are polymorphic and have recursive references
 func (client PolymorphicrecursiveClient) GetValid(ctx context.Context) (result FishModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphicrecursiveClient.GetValid")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	req, err := client.GetValidPreparer(ctx)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphicrecursiveClient", "GetValid", nil, "Failure preparing request")
@@ -137,6 +148,16 @@ func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) 
 // ]
 // }
 func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphicrecursiveClient.PutValid")
+		defer func() {
+			sc := -1
+			if result.Response != nil {
+				sc = result.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
 	if err := validation.Validate([]validation.Validation{
 		{TargetValue: complexBody,
 			Constraints: []validation.Constraint{{Target: "complexBody.Length", Name: validation.Null, Rule: true, Chain: nil}}}}); err != nil {

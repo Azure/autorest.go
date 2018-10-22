@@ -20,20 +20,24 @@ namespace AutoRest.Go
 
         public virtual IEnumerable<string> AutorestImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest") };
 
+        public virtual IEnumerable<string> TracingImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/tracing") };
+
         public virtual IEnumerable<string> StandardImports => new string[]
         {
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/azure"),
             PrimaryTypeGo.GetImportLine(package: "net/http"),
-            PrimaryTypeGo.GetImportLine(package: "context")
+            PrimaryTypeGo.GetImportLine(package: "context"),
         };
 
         public virtual IEnumerable<string> PageableImports => new string[]
         {
             PrimaryTypeGo.GetImportLine(package: "net/http"),
+            PrimaryTypeGo.GetImportLine(package: "context"),
+            PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/tracing"),
             PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/to")
         };
 
-        public virtual IEnumerable<string> ValidationImport => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
+        public virtual IEnumerable<string> ValidationImports => new string[] { PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest/validation") };
 
         public string[] UserDefinedNames => new string[] {
                                                             "UserAgent",

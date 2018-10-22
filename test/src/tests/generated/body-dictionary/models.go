@@ -12,6 +12,9 @@ import (
 	"github.com/Azure/go-autorest/autorest/date"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/body-dictionary"
+
 // Error ...
 type Error struct {
 	Status  *int32  `json:"status,omitempty"`

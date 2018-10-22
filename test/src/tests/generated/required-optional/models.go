@@ -10,6 +10,9 @@ import (
 	"github.com/Azure/go-autorest/autorest"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/required-optional"
+
 // ArrayOptionalWrapper ...
 type ArrayOptionalWrapper struct {
 	Value *[]string `json:"value,omitempty"`

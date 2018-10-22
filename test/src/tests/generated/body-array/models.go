@@ -12,6 +12,9 @@ import (
 	"github.com/satori/go.uuid"
 )
 
+// The package's fully qualified name.
+const fqdn = "test/src/tests/generated/body-array"
+
 // FooEnum enumerates the values for foo enum.
 type FooEnum string
 
