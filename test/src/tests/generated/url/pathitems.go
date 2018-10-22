@@ -8,7 +8,6 @@ package urlgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -40,7 +39,7 @@ func NewPathItemsClientWithBaseURI(baseURI string, globalStringPath string, glob
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetAllWithValues(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetAllWithValues", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetAllWithValues")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -126,7 +125,7 @@ func (client PathItemsClient) GetAllWithValuesResponder(resp *http.Response) (re
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetGlobalAndLocalQueryNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetGlobalAndLocalQueryNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -212,7 +211,7 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullResponder(resp *http.Res
 // pathItemStringQuery - a string value 'pathItemStringQuery' that appears as a query parameter
 func (client PathItemsClient) GetGlobalQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetGlobalQueryNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetGlobalQueryNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -298,7 +297,7 @@ func (client PathItemsClient) GetGlobalQueryNullResponder(resp *http.Response) (
 // pathItemStringQuery - should contain value null
 func (client PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, localStringPath string, pathItemStringPath string, localStringQuery string, pathItemStringQuery string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathItemsClient.GetLocalPathItemQueryNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathItemsClient.GetLocalPathItemQueryNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

@@ -11,7 +11,6 @@ package modelflatteninggroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -46,7 +45,7 @@ func NewWithBaseURI(baseURI string) BaseClient {
 // GetArray get External Resource as an Array
 func (client BaseClient) GetArray(ctx context.Context) (result ListFlattenedProduct, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetArray", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.GetArray")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -108,7 +107,7 @@ func (client BaseClient) GetArrayResponder(resp *http.Response) (result ListFlat
 // GetDictionary get External Resource as a Dictionary
 func (client BaseClient) GetDictionary(ctx context.Context) (result SetFlattenedProduct, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetDictionary", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.GetDictionary")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -170,7 +169,7 @@ func (client BaseClient) GetDictionaryResponder(resp *http.Response) (result Set
 // GetResourceCollection get External Resource as a ResourceCollection
 func (client BaseClient) GetResourceCollection(ctx context.Context) (result ResourceCollection, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetResourceCollection", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.GetResourceCollection")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -233,7 +232,7 @@ func (client BaseClient) GetResourceCollectionResponder(resp *http.Response) (re
 // not removed if it's referenced in an array
 func (client BaseClient) GetWrappedArray(ctx context.Context) (result ListProductWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetWrappedArray", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.GetWrappedArray")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -297,7 +296,7 @@ func (client BaseClient) GetWrappedArrayResponder(resp *http.Response) (result L
 // simpleBodyProduct - simple body product to post
 func (client BaseClient) PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PostFlattenedSimpleProduct", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.PostFlattenedSimpleProduct")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -377,7 +376,7 @@ func (client BaseClient) PostFlattenedSimpleProductResponder(resp *http.Response
 // resourceArray - external Resource as an Array to put
 func (client BaseClient) PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutArray", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.PutArray")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -445,7 +444,7 @@ func (client BaseClient) PutArrayResponder(resp *http.Response) (result autorest
 // resourceDictionary - external Resource as a Dictionary to put
 func (client BaseClient) PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutDictionary", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.PutDictionary")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -513,7 +512,7 @@ func (client BaseClient) PutDictionaryResponder(resp *http.Response) (result aut
 // resourceComplexObject - external Resource as a ResourceCollection to put
 func (client BaseClient) PutResourceCollection(ctx context.Context, resourceComplexObject *ResourceCollection) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutResourceCollection", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.PutResourceCollection")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -581,7 +580,7 @@ func (client BaseClient) PutResourceCollectionResponder(resp *http.Response) (re
 // simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProduct(ctx context.Context, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutSimpleProduct", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.PutSimpleProduct")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -662,7 +661,7 @@ func (client BaseClient) PutSimpleProductResponder(resp *http.Response) (result 
 // simpleBodyProduct - simple body product to put
 func (client BaseClient) PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *SimpleProduct) (result SimpleProduct, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutSimpleProductWithGrouping", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.PutSimpleProductWithGrouping")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -747,7 +746,7 @@ func (client BaseClient) PutSimpleProductWithGroupingResponder(resp *http.Respon
 // resourceArray - external Resource as an Array to put
 func (client BaseClient) PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.PutWrappedArray", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.PutWrappedArray")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

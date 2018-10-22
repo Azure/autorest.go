@@ -8,7 +8,6 @@ package optionalgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewImplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 // GetOptionalGlobalQuery test implicitly optional query parameter
 func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetOptionalGlobalQuery", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetOptionalGlobalQuery")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -101,7 +100,7 @@ func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response
 // GetRequiredGlobalPath test implicitly required path parameter
 func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetRequiredGlobalPath", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetRequiredGlobalPath")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -167,7 +166,7 @@ func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response)
 // GetRequiredGlobalQuery test implicitly required query parameter
 func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetRequiredGlobalQuery", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetRequiredGlobalQuery")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -234,7 +233,7 @@ func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response
 // GetRequiredPath test implicitly required path parameter
 func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.GetRequiredPath", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetRequiredPath")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -300,7 +299,7 @@ func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (resu
 // PutOptionalBody test implicitly optional body parameter
 func (client ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.PutOptionalBody", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.PutOptionalBody")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -366,7 +365,7 @@ func (client ImplicitClient) PutOptionalBodyResponder(resp *http.Response) (resu
 // PutOptionalHeader test implicitly optional header parameter
 func (client ImplicitClient) PutOptionalHeader(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.PutOptionalHeader", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.PutOptionalHeader")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -431,7 +430,7 @@ func (client ImplicitClient) PutOptionalHeaderResponder(resp *http.Response) (re
 // PutOptionalQuery test implicitly optional query parameter
 func (client ImplicitClient) PutOptionalQuery(ctx context.Context, queryParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ImplicitClient.PutOptionalQuery", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.PutOptionalQuery")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

@@ -8,7 +8,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -35,7 +34,7 @@ func NewHTTPClientFailureClientWithBaseURI(baseURI string) HTTPClientFailureClie
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Delete400", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Delete400")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -104,7 +103,7 @@ func (client HTTPClientFailureClient) Delete400Responder(resp *http.Response) (r
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete407(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Delete407", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Delete407")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -173,7 +172,7 @@ func (client HTTPClientFailureClient) Delete407Responder(resp *http.Response) (r
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Delete417(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Delete417", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Delete417")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -240,7 +239,7 @@ func (client HTTPClientFailureClient) Delete417Responder(resp *http.Response) (r
 // Get400 return 400 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get400(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Get400", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get400")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -302,7 +301,7 @@ func (client HTTPClientFailureClient) Get400Responder(resp *http.Response) (resu
 // Get402 return 402 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get402(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Get402", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get402")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -364,7 +363,7 @@ func (client HTTPClientFailureClient) Get402Responder(resp *http.Response) (resu
 // Get403 return 403 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get403(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Get403", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get403")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -426,7 +425,7 @@ func (client HTTPClientFailureClient) Get403Responder(resp *http.Response) (resu
 // Get411 return 411 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get411(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Get411", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get411")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -488,7 +487,7 @@ func (client HTTPClientFailureClient) Get411Responder(resp *http.Response) (resu
 // Get412 return 412 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get412(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Get412", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get412")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -550,7 +549,7 @@ func (client HTTPClientFailureClient) Get412Responder(resp *http.Response) (resu
 // Get416 return 416 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Get416(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Get416", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Get416")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -612,7 +611,7 @@ func (client HTTPClientFailureClient) Get416Responder(resp *http.Response) (resu
 // Head400 return 400 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head400(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Head400", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head400")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -674,7 +673,7 @@ func (client HTTPClientFailureClient) Head400Responder(resp *http.Response) (res
 // Head401 return 401 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head401(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Head401", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head401")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -736,7 +735,7 @@ func (client HTTPClientFailureClient) Head401Responder(resp *http.Response) (res
 // Head410 return 410 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head410(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Head410", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head410")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -798,7 +797,7 @@ func (client HTTPClientFailureClient) Head410Responder(resp *http.Response) (res
 // Head429 return 429 status code - should be represented in the client as an error
 func (client HTTPClientFailureClient) Head429(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Head429", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Head429")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -862,7 +861,7 @@ func (client HTTPClientFailureClient) Head429Responder(resp *http.Response) (res
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Patch400", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Patch400")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -931,7 +930,7 @@ func (client HTTPClientFailureClient) Patch400Responder(resp *http.Response) (re
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch405(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Patch405", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Patch405")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1000,7 +999,7 @@ func (client HTTPClientFailureClient) Patch405Responder(resp *http.Response) (re
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Patch414(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Patch414", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Patch414")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1069,7 +1068,7 @@ func (client HTTPClientFailureClient) Patch414Responder(resp *http.Response) (re
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Post400", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Post400")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1138,7 +1137,7 @@ func (client HTTPClientFailureClient) Post400Responder(resp *http.Response) (res
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post406(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Post406", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Post406")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1207,7 +1206,7 @@ func (client HTTPClientFailureClient) Post406Responder(resp *http.Response) (res
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Post415(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Post415", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Post415")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1276,7 +1275,7 @@ func (client HTTPClientFailureClient) Post415Responder(resp *http.Response) (res
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put400(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Put400", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put400")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1345,7 +1344,7 @@ func (client HTTPClientFailureClient) Put400Responder(resp *http.Response) (resu
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put404(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Put404", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put404")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1414,7 +1413,7 @@ func (client HTTPClientFailureClient) Put404Responder(resp *http.Response) (resu
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put409(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Put409", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put409")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1483,7 +1482,7 @@ func (client HTTPClientFailureClient) Put409Responder(resp *http.Response) (resu
 // booleanValue - simple boolean value true
 func (client HTTPClientFailureClient) Put413(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPClientFailureClient.Put413", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPClientFailureClient.Put413")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

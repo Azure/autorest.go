@@ -8,7 +8,6 @@ package stringgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -34,7 +33,7 @@ func NewEnumClientWithBaseURI(baseURI string) EnumClient {
 // GetNotExpandable get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client EnumClient) GetNotExpandable(ctx context.Context) (result StringModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.GetNotExpandable", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/EnumClient.GetNotExpandable")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -96,7 +95,7 @@ func (client EnumClient) GetNotExpandableResponder(resp *http.Response) (result 
 // GetReferenced get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client EnumClient) GetReferenced(ctx context.Context) (result StringModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.GetReferenced", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/EnumClient.GetReferenced")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -158,7 +157,7 @@ func (client EnumClient) GetReferencedResponder(resp *http.Response) (result Str
 // GetReferencedConstant get value 'green-color' from the constant.
 func (client EnumClient) GetReferencedConstant(ctx context.Context) (result RefColorConstant, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.GetReferencedConstant", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/EnumClient.GetReferencedConstant")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -220,7 +219,7 @@ func (client EnumClient) GetReferencedConstantResponder(resp *http.Response) (re
 // PutNotExpandable sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.PutNotExpandable", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/EnumClient.PutNotExpandable")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -283,7 +282,7 @@ func (client EnumClient) PutNotExpandableResponder(resp *http.Response) (result 
 // PutReferenced sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.PutReferenced", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/EnumClient.PutReferenced")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -346,7 +345,7 @@ func (client EnumClient) PutReferencedResponder(resp *http.Response) (result aut
 // PutReferencedConstant sends value 'green-color' from a constant
 func (client EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/EnumClient.PutReferencedConstant", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/EnumClient.PutReferencedConstant")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

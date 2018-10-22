@@ -356,7 +356,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         // the request the page does not advance and the error is returned.
         func (page * @Model.Name) NextWithContext(ctx context.Context) (err error) {
         if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/@(modelPageType.AdvancerQualifiedName)", fqdn))
+        ctx = tracing.StartSpan(ctx, fqdn + "/@(modelPageType.AdvancerQualifiedName)")
         defer func() {
         sc := -1
         if page.Response().Response.Response != nil {
@@ -409,7 +409,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         // the request the iterator does not advance and the error is returned.
         func (iter * @Model.Name) NextWithContext(ctx context.Context) (err error) {
         if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/@(iterType.AdvancerQualifiedName)", fqdn))
+        ctx = tracing.StartSpan(ctx, fqdn + "/@(iterType.AdvancerQualifiedName)")
         defer func() {
         sc := -1
         if iter.Response().Response.Response != nil {

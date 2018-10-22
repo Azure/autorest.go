@@ -8,7 +8,6 @@ package dategroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -34,7 +33,7 @@ func NewDateClientWithBaseURI(baseURI string) DateClient {
 // GetInvalidDate get invalid date value
 func (client DateClient) GetInvalidDate(ctx context.Context) (result DateModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetInvalidDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.GetInvalidDate")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -96,7 +95,7 @@ func (client DateClient) GetInvalidDateResponder(resp *http.Response) (result Da
 // GetMaxDate get max date value 9999-12-31
 func (client DateClient) GetMaxDate(ctx context.Context) (result DateModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetMaxDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.GetMaxDate")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -158,7 +157,7 @@ func (client DateClient) GetMaxDateResponder(resp *http.Response) (result DateMo
 // GetMinDate get min date value 0000-01-01
 func (client DateClient) GetMinDate(ctx context.Context) (result DateModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetMinDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.GetMinDate")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -220,7 +219,7 @@ func (client DateClient) GetMinDateResponder(resp *http.Response) (result DateMo
 // GetNull get null date value
 func (client DateClient) GetNull(ctx context.Context) (result DateModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.GetNull")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -282,7 +281,7 @@ func (client DateClient) GetNullResponder(resp *http.Response) (result DateModel
 // GetOverflowDate get overflow date value
 func (client DateClient) GetOverflowDate(ctx context.Context) (result DateModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetOverflowDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.GetOverflowDate")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -344,7 +343,7 @@ func (client DateClient) GetOverflowDateResponder(resp *http.Response) (result D
 // GetUnderflowDate get underflow date value
 func (client DateClient) GetUnderflowDate(ctx context.Context) (result DateModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.GetUnderflowDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.GetUnderflowDate")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -406,7 +405,7 @@ func (client DateClient) GetUnderflowDateResponder(resp *http.Response) (result 
 // PutMaxDate put max date value 9999-12-31
 func (client DateClient) PutMaxDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.PutMaxDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.PutMaxDate")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -469,7 +468,7 @@ func (client DateClient) PutMaxDateResponder(resp *http.Response) (result autore
 // PutMinDate put min date value 0000-01-01
 func (client DateClient) PutMinDate(ctx context.Context, dateBody date.Date) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DateClient.PutMinDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DateClient.PutMinDate")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

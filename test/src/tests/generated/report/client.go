@@ -11,7 +11,6 @@ package report
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -48,7 +47,7 @@ func NewWithBaseURI(baseURI string) BaseClient {
 // only effect is, that generators that run all tests several times, can distinguish the generated reports.
 func (client BaseClient) GetReport(ctx context.Context, qualifier string) (result SetInt32, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/BaseClient.GetReport", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/BaseClient.GetReport")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

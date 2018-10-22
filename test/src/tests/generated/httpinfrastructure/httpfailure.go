@@ -8,7 +8,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewHTTPFailureClientWithBaseURI(baseURI string) HTTPFailureClient {
 // GetEmptyError get empty error form server
 func (client HTTPFailureClient) GetEmptyError(ctx context.Context) (result Bool, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetEmptyError", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPFailureClient.GetEmptyError")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -95,7 +94,7 @@ func (client HTTPFailureClient) GetEmptyErrorResponder(resp *http.Response) (res
 // GetNoModelEmpty get empty response from server
 func (client HTTPFailureClient) GetNoModelEmpty(ctx context.Context) (result Bool, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetNoModelEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPFailureClient.GetNoModelEmpty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -157,7 +156,7 @@ func (client HTTPFailureClient) GetNoModelEmptyResponder(resp *http.Response) (r
 // GetNoModelError get empty error form server
 func (client HTTPFailureClient) GetNoModelError(ctx context.Context) (result Bool, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPFailureClient.GetNoModelError", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPFailureClient.GetNoModelError")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

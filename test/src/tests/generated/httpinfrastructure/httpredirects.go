@@ -8,7 +8,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -35,7 +34,7 @@ func NewHTTPRedirectsClientWithBaseURI(baseURI string) HTTPRedirectsClient {
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Delete307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Delete307", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Delete307")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -101,7 +100,7 @@ func (client HTTPRedirectsClient) Delete307Responder(resp *http.Response) (resul
 // Get300 return 300 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Get300(ctx context.Context) (result ListString, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get300", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Get300")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -163,7 +162,7 @@ func (client HTTPRedirectsClient) Get300Responder(resp *http.Response) (result L
 // Get301 return 301 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Get301(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get301", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Get301")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -224,7 +223,7 @@ func (client HTTPRedirectsClient) Get301Responder(resp *http.Response) (result a
 // Get302 return 302 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Get302(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get302", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Get302")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -285,7 +284,7 @@ func (client HTTPRedirectsClient) Get302Responder(resp *http.Response) (result a
 // Get307 redirect get with 307, resulting in a 200 success
 func (client HTTPRedirectsClient) Get307(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Get307", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Get307")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -346,7 +345,7 @@ func (client HTTPRedirectsClient) Get307Responder(resp *http.Response) (result a
 // Head300 return 300 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Head300(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head300", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Head300")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -407,7 +406,7 @@ func (client HTTPRedirectsClient) Head300Responder(resp *http.Response) (result 
 // Head301 return 301 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Head301(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head301", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Head301")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -468,7 +467,7 @@ func (client HTTPRedirectsClient) Head301Responder(resp *http.Response) (result 
 // Head302 return 302 status code and redirect to /http/success/200
 func (client HTTPRedirectsClient) Head302(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head302", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Head302")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -529,7 +528,7 @@ func (client HTTPRedirectsClient) Head302Responder(resp *http.Response) (result 
 // Head307 redirect with 307, resulting in a 200 success
 func (client HTTPRedirectsClient) Head307(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Head307", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Head307")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -593,7 +592,7 @@ func (client HTTPRedirectsClient) Head307Responder(resp *http.Response) (result 
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Patch302(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Patch302", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Patch302")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -661,7 +660,7 @@ func (client HTTPRedirectsClient) Patch302Responder(resp *http.Response) (result
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Patch307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Patch307", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Patch307")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -730,7 +729,7 @@ func (client HTTPRedirectsClient) Patch307Responder(resp *http.Response) (result
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Post303(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Post303", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Post303")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -798,7 +797,7 @@ func (client HTTPRedirectsClient) Post303Responder(resp *http.Response) (result 
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Post307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Post307", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Post307")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -867,7 +866,7 @@ func (client HTTPRedirectsClient) Post307Responder(resp *http.Response) (result 
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Put301(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Put301", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Put301")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -935,7 +934,7 @@ func (client HTTPRedirectsClient) Put301Responder(resp *http.Response) (result a
 // booleanValue - simple boolean value true
 func (client HTTPRedirectsClient) Put307(ctx context.Context, booleanValue *bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPRedirectsClient.Put307", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPRedirectsClient.Put307")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

@@ -8,7 +8,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 // GetEmpty get complex types with array property which is empty
 func (client ArrayClient) GetEmpty(ctx context.Context) (result ArrayWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetEmpty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -95,7 +94,7 @@ func (client ArrayClient) GetEmptyResponder(resp *http.Response) (result ArrayWr
 // GetNotProvided get complex types with array property while server doesn't provide a response payload
 func (client ArrayClient) GetNotProvided(ctx context.Context) (result ArrayWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetNotProvided", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetNotProvided")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -157,7 +156,7 @@ func (client ArrayClient) GetNotProvidedResponder(resp *http.Response) (result A
 // GetValid get complex types with array property
 func (client ArrayClient) GetValid(ctx context.Context) (result ArrayWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.GetValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.GetValid")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -221,7 +220,7 @@ func (client ArrayClient) GetValidResponder(resp *http.Response) (result ArrayWr
 // complexBody - please put an empty array
 func (client ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.PutEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutEmpty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -287,7 +286,7 @@ func (client ArrayClient) PutEmptyResponder(resp *http.Response) (result autores
 // jumps over the lazy dog"
 func (client ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ArrayClient.PutValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ArrayClient.PutValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

@@ -8,7 +8,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewReadonlypropertyClientWithBaseURI(baseURI string) ReadonlypropertyClient
 // GetValid get complex types that have readonly properties
 func (client ReadonlypropertyClient) GetValid(ctx context.Context) (result ReadonlyObj, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ReadonlypropertyClient.GetValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ReadonlypropertyClient.GetValid")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -95,7 +94,7 @@ func (client ReadonlypropertyClient) GetValidResponder(resp *http.Response) (res
 // PutValid put complex types that have readonly properties
 func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ReadonlypropertyClient.PutValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ReadonlypropertyClient.PutValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

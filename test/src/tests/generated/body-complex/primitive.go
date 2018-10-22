@@ -8,7 +8,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewPrimitiveClientWithBaseURI(baseURI string) PrimitiveClient {
 // GetBool get complex types with bool properties
 func (client PrimitiveClient) GetBool(ctx context.Context) (result BooleanWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetBool", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetBool")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -95,7 +94,7 @@ func (client PrimitiveClient) GetBoolResponder(resp *http.Response) (result Bool
 // GetByte get complex types with byte properties
 func (client PrimitiveClient) GetByte(ctx context.Context) (result ByteWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetByte", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetByte")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -157,7 +156,7 @@ func (client PrimitiveClient) GetByteResponder(resp *http.Response) (result Byte
 // GetDate get complex types with date properties
 func (client PrimitiveClient) GetDate(ctx context.Context) (result DateWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDate")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -219,7 +218,7 @@ func (client PrimitiveClient) GetDateResponder(resp *http.Response) (result Date
 // GetDateTime get complex types with datetime properties
 func (client PrimitiveClient) GetDateTime(ctx context.Context) (result DatetimeWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetDateTime", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDateTime")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -281,7 +280,7 @@ func (client PrimitiveClient) GetDateTimeResponder(resp *http.Response) (result 
 // GetDateTimeRfc1123 get complex types with datetimeRfc1123 properties
 func (client PrimitiveClient) GetDateTimeRfc1123(ctx context.Context) (result Datetimerfc1123Wrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetDateTimeRfc1123", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDateTimeRfc1123")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -343,7 +342,7 @@ func (client PrimitiveClient) GetDateTimeRfc1123Responder(resp *http.Response) (
 // GetDouble get complex types with double properties
 func (client PrimitiveClient) GetDouble(ctx context.Context) (result DoubleWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetDouble", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDouble")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -405,7 +404,7 @@ func (client PrimitiveClient) GetDoubleResponder(resp *http.Response) (result Do
 // GetDuration get complex types with duration properties
 func (client PrimitiveClient) GetDuration(ctx context.Context) (result DurationWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetDuration", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetDuration")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -467,7 +466,7 @@ func (client PrimitiveClient) GetDurationResponder(resp *http.Response) (result 
 // GetFloat get complex types with float properties
 func (client PrimitiveClient) GetFloat(ctx context.Context) (result FloatWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetFloat", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetFloat")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -529,7 +528,7 @@ func (client PrimitiveClient) GetFloatResponder(resp *http.Response) (result Flo
 // GetInt get complex types with integer properties
 func (client PrimitiveClient) GetInt(ctx context.Context) (result IntWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetInt", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetInt")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -591,7 +590,7 @@ func (client PrimitiveClient) GetIntResponder(resp *http.Response) (result IntWr
 // GetLong get complex types with long properties
 func (client PrimitiveClient) GetLong(ctx context.Context) (result LongWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetLong", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetLong")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -653,7 +652,7 @@ func (client PrimitiveClient) GetLongResponder(resp *http.Response) (result Long
 // GetString get complex types with string properties
 func (client PrimitiveClient) GetString(ctx context.Context) (result StringWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.GetString", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.GetString")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -717,7 +716,7 @@ func (client PrimitiveClient) GetStringResponder(resp *http.Response) (result St
 // complexBody - please put true and false
 func (client PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutBool", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutBool")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -782,7 +781,7 @@ func (client PrimitiveClient) PutBoolResponder(resp *http.Response) (result auto
 // complexBody - please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
 func (client PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutByte", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutByte")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -847,7 +846,7 @@ func (client PrimitiveClient) PutByteResponder(resp *http.Response) (result auto
 // complexBody - please put '0001-01-01' and '2016-02-29'
 func (client PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDate")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -912,7 +911,7 @@ func (client PrimitiveClient) PutDateResponder(resp *http.Response) (result auto
 // complexBody - please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
 func (client PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutDateTime", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDateTime")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -977,7 +976,7 @@ func (client PrimitiveClient) PutDateTimeResponder(resp *http.Response) (result 
 // complexBody - please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
 func (client PrimitiveClient) PutDateTimeRfc1123(ctx context.Context, complexBody Datetimerfc1123Wrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutDateTimeRfc1123", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDateTimeRfc1123")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1042,7 +1041,7 @@ func (client PrimitiveClient) PutDateTimeRfc1123Responder(resp *http.Response) (
 // complexBody - please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
 func (client PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutDouble", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDouble")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1107,7 +1106,7 @@ func (client PrimitiveClient) PutDoubleResponder(resp *http.Response) (result au
 // complexBody - please put 'P123DT22H14M12.011S'
 func (client PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutDuration", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutDuration")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1172,7 +1171,7 @@ func (client PrimitiveClient) PutDurationResponder(resp *http.Response) (result 
 // complexBody - please put 1.05 and -0.003
 func (client PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutFloat", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutFloat")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1237,7 +1236,7 @@ func (client PrimitiveClient) PutFloatResponder(resp *http.Response) (result aut
 // complexBody - please put -1 and 2
 func (client PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutInt", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutInt")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1302,7 +1301,7 @@ func (client PrimitiveClient) PutIntResponder(resp *http.Response) (result autor
 // complexBody - please put 1099511627775 and -999511627788
 func (client PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutLong", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutLong")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1367,7 +1366,7 @@ func (client PrimitiveClient) PutLongResponder(resp *http.Response) (result auto
 // complexBody - please put 'goodrequest', '', and null
 func (client PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PrimitiveClient.PutString", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PrimitiveClient.PutString")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

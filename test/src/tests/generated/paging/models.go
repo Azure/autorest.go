@@ -8,7 +8,6 @@ package paginggroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
@@ -69,7 +68,7 @@ type OdataProductResultIterator struct {
 // the request the iterator does not advance and the error is returned.
 func (iter *OdataProductResultIterator) NextWithContext(ctx context.Context) (err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/OdataProductResultIterator.NextWithContext", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/OdataProductResultIterator.NextWithContext")
 		defer func() {
 			sc := -1
 			if iter.Response().Response.Response != nil {
@@ -144,7 +143,7 @@ type OdataProductResultPage struct {
 // the request the page does not advance and the error is returned.
 func (page *OdataProductResultPage) NextWithContext(ctx context.Context) (err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/OdataProductResultPage.NextWithContext", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/OdataProductResultPage.NextWithContext")
 		defer func() {
 			sc := -1
 			if page.Response().Response.Response != nil {
@@ -278,7 +277,7 @@ type ProductResultIterator struct {
 // the request the iterator does not advance and the error is returned.
 func (iter *ProductResultIterator) NextWithContext(ctx context.Context) (err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ProductResultIterator.NextWithContext", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ProductResultIterator.NextWithContext")
 		defer func() {
 			sc := -1
 			if iter.Response().Response.Response != nil {
@@ -353,7 +352,7 @@ type ProductResultPage struct {
 // the request the page does not advance and the error is returned.
 func (page *ProductResultPage) NextWithContext(ctx context.Context) (err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ProductResultPage.NextWithContext", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ProductResultPage.NextWithContext")
 		defer func() {
 			sc := -1
 			if page.Response().Response.Response != nil {

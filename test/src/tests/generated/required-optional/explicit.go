@@ -8,7 +8,6 @@ package optionalgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -34,7 +33,7 @@ func NewExplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 // PostOptionalArrayHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
 func (client ExplicitClient) PostOptionalArrayHeader(ctx context.Context, headerParameter []string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalArrayHeader", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalArrayHeader")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -99,7 +98,7 @@ func (client ExplicitClient) PostOptionalArrayHeaderResponder(resp *http.Respons
 // PostOptionalArrayParameter test explicitly optional array. Please put null.
 func (client ExplicitClient) PostOptionalArrayParameter(ctx context.Context, bodyParameter []string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalArrayParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalArrayParameter")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -165,7 +164,7 @@ func (client ExplicitClient) PostOptionalArrayParameterResponder(resp *http.Resp
 // PostOptionalArrayProperty test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
 func (client ExplicitClient) PostOptionalArrayProperty(ctx context.Context, bodyParameter *ArrayOptionalWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalArrayProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalArrayProperty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -231,7 +230,7 @@ func (client ExplicitClient) PostOptionalArrayPropertyResponder(resp *http.Respo
 // PostOptionalClassParameter test explicitly optional complex object. Please put null.
 func (client ExplicitClient) PostOptionalClassParameter(ctx context.Context, bodyParameter *Product) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalClassParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalClassParameter")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -305,7 +304,7 @@ func (client ExplicitClient) PostOptionalClassParameterResponder(resp *http.Resp
 // null.
 func (client ExplicitClient) PostOptionalClassProperty(ctx context.Context, bodyParameter *ClassOptionalWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalClassProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalClassProperty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -380,7 +379,7 @@ func (client ExplicitClient) PostOptionalClassPropertyResponder(resp *http.Respo
 // PostOptionalIntegerHeader test explicitly optional integer. Please put a header 'headerParameter' => null.
 func (client ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, headerParameter *int32) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalIntegerHeader", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalIntegerHeader")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -445,7 +444,7 @@ func (client ExplicitClient) PostOptionalIntegerHeaderResponder(resp *http.Respo
 // PostOptionalIntegerParameter test explicitly optional integer. Please put null.
 func (client ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, bodyParameter *int32) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalIntegerParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalIntegerParameter")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -511,7 +510,7 @@ func (client ExplicitClient) PostOptionalIntegerParameterResponder(resp *http.Re
 // PostOptionalIntegerProperty test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
 func (client ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, bodyParameter *IntOptionalWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalIntegerProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalIntegerProperty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -577,7 +576,7 @@ func (client ExplicitClient) PostOptionalIntegerPropertyResponder(resp *http.Res
 // PostOptionalStringHeader test explicitly optional string. Please put a header 'headerParameter' => null.
 func (client ExplicitClient) PostOptionalStringHeader(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalStringHeader", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalStringHeader")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -642,7 +641,7 @@ func (client ExplicitClient) PostOptionalStringHeaderResponder(resp *http.Respon
 // PostOptionalStringParameter test explicitly optional string. Please put null.
 func (client ExplicitClient) PostOptionalStringParameter(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalStringParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalStringParameter")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -708,7 +707,7 @@ func (client ExplicitClient) PostOptionalStringParameterResponder(resp *http.Res
 // PostOptionalStringProperty test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
 func (client ExplicitClient) PostOptionalStringProperty(ctx context.Context, bodyParameter *StringOptionalWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostOptionalStringProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostOptionalStringProperty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -775,7 +774,7 @@ func (client ExplicitClient) PostOptionalStringPropertyResponder(resp *http.Resp
 // library should throw before the request is sent.
 func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredArrayHeader", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredArrayHeader")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -845,7 +844,7 @@ func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Respons
 // before the request is sent.
 func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredArrayParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredArrayParameter")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -916,7 +915,7 @@ func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Resp
 // the client library should throw before the request is sent.
 func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredArrayProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredArrayProperty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -987,7 +986,7 @@ func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Respo
 // throw before the request is sent.
 func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredClassParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredClassParameter")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1058,7 +1057,7 @@ func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Resp
 // null and the client library should throw before the request is sent.
 func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredClassProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredClassProperty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1130,7 +1129,7 @@ func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Respo
 // client library should throw before the request is sent.
 func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredIntegerHeader", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredIntegerHeader")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1194,7 +1193,7 @@ func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Respo
 // before the request is sent.
 func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredIntegerParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredIntegerParameter")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1259,7 +1258,7 @@ func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Re
 // the client library should throw before the request is sent.
 func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredIntegerProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredIntegerProperty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1330,7 +1329,7 @@ func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Res
 // client library should throw before the request is sent.
 func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredStringHeader", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredStringHeader")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1394,7 +1393,7 @@ func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Respon
 // before the request is sent.
 func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredStringParameter", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredStringParameter")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -1459,7 +1458,7 @@ func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Res
 // and the client library should throw before the request is sent.
 func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/ExplicitClient.PostRequiredStringProperty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredStringProperty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

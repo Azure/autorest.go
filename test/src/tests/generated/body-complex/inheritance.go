@@ -8,7 +8,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewInheritanceClientWithBaseURI(baseURI string) InheritanceClient {
 // GetValid get complex types that extend others
 func (client InheritanceClient) GetValid(ctx context.Context) (result Siamese, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/InheritanceClient.GetValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/InheritanceClient.GetValid")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -99,7 +98,7 @@ func (client InheritanceClient) GetValidResponder(resp *http.Response) (result S
 // food="french fries".
 func (client InheritanceClient) PutValid(ctx context.Context, complexBody Siamese) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/InheritanceClient.PutValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/InheritanceClient.PutValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

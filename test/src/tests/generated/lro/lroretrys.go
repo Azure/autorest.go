@@ -8,7 +8,6 @@ package lrogroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -34,7 +33,7 @@ func NewLRORetrysClientWithBaseURI(baseURI string) LRORetrysClient {
 // return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client LRORetrysClient) Delete202Retry200(ctx context.Context) (result LRORetrysDelete202Retry200Future, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LRORetrysClient.Delete202Retry200", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LRORetrysClient.Delete202Retry200")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -96,7 +95,7 @@ func (client LRORetrysClient) Delete202Retry200Responder(resp *http.Response) (r
 // request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceeded(ctx context.Context) (result LRORetrysDeleteAsyncRelativeRetrySucceededFuture, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LRORetrysClient.DeleteAsyncRelativeRetrySucceeded")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -159,7 +158,7 @@ func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededResponder(resp *h
 // poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client LRORetrysClient) DeleteProvisioning202Accepted200Succeeded(ctx context.Context) (result LRORetrysDeleteProvisioning202Accepted200SucceededFuture, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LRORetrysClient.DeleteProvisioning202Accepted200Succeeded")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -224,7 +223,7 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededResponder
 // product - product to put
 func (client LRORetrysClient) Post202Retry200(ctx context.Context, product *Product) (result LRORetrysPost202Retry200Future, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LRORetrysClient.Post202Retry200", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LRORetrysClient.Post202Retry200")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -294,7 +293,7 @@ func (client LRORetrysClient) Post202Retry200Responder(resp *http.Response) (res
 // product - product to put
 func (client LRORetrysClient) PostAsyncRelativeRetrySucceeded(ctx context.Context, product *Product) (result LRORetrysPostAsyncRelativeRetrySucceededFuture, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LRORetrysClient.PostAsyncRelativeRetrySucceeded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LRORetrysClient.PostAsyncRelativeRetrySucceeded")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -364,7 +363,7 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceededResponder(resp *htt
 // product - product to put
 func (client LRORetrysClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LRORetrysPut201CreatingSucceeded200Future, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LRORetrysClient.Put201CreatingSucceeded200", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LRORetrysClient.Put201CreatingSucceeded200")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -435,7 +434,7 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Responder(resp *http.Res
 // product - product to put
 func (client LRORetrysClient) PutAsyncRelativeRetrySucceeded(ctx context.Context, product *Product) (result LRORetrysPutAsyncRelativeRetrySucceededFuture, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LRORetrysClient.PutAsyncRelativeRetrySucceeded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LRORetrysClient.PutAsyncRelativeRetrySucceeded")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {

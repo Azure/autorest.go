@@ -8,7 +8,6 @@ package stringgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewStringClientWithBaseURI(baseURI string) StringClient {
 // GetBase64Encoded get value that is base64 encoded
 func (client StringClient) GetBase64Encoded(ctx context.Context) (result Base64URL, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetBase64Encoded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetBase64Encoded")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -95,7 +94,7 @@ func (client StringClient) GetBase64EncodedResponder(resp *http.Response) (resul
 // GetBase64URLEncoded get value that is base64url encoded
 func (client StringClient) GetBase64URLEncoded(ctx context.Context) (result Base64URL, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetBase64URLEncoded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetBase64URLEncoded")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -157,7 +156,7 @@ func (client StringClient) GetBase64URLEncodedResponder(resp *http.Response) (re
 // GetEmpty get empty string value value ''
 func (client StringClient) GetEmpty(ctx context.Context) (result StringModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetEmpty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -219,7 +218,7 @@ func (client StringClient) GetEmptyResponder(resp *http.Response) (result String
 // GetMbcs get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client StringClient) GetMbcs(ctx context.Context) (result StringModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetMbcs", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetMbcs")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -281,7 +280,7 @@ func (client StringClient) GetMbcsResponder(resp *http.Response) (result StringM
 // GetNotProvided get String value when no string value is sent in response payload
 func (client StringClient) GetNotProvided(ctx context.Context) (result StringModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetNotProvided", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetNotProvided")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -343,7 +342,7 @@ func (client StringClient) GetNotProvidedResponder(resp *http.Response) (result 
 // GetNull get null string value value
 func (client StringClient) GetNull(ctx context.Context) (result StringModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetNull")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -405,7 +404,7 @@ func (client StringClient) GetNullResponder(resp *http.Response) (result StringM
 // GetNullBase64URLEncoded get null value that is expected to be base64url encoded
 func (client StringClient) GetNullBase64URLEncoded(ctx context.Context) (result Base64URL, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetNullBase64URLEncoded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetNullBase64URLEncoded")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -468,7 +467,7 @@ func (client StringClient) GetNullBase64URLEncodedResponder(resp *http.Response)
 // men to come to the aid of their country<tab><space><space>'
 func (client StringClient) GetWhitespace(ctx context.Context) (result StringModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.GetWhitespace", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.GetWhitespace")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -530,7 +529,7 @@ func (client StringClient) GetWhitespaceResponder(resp *http.Response) (result S
 // PutBase64URLEncoded put value that is base64url encoded
 func (client StringClient) PutBase64URLEncoded(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.PutBase64URLEncoded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.PutBase64URLEncoded")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -593,7 +592,7 @@ func (client StringClient) PutBase64URLEncodedResponder(resp *http.Response) (re
 // PutEmpty set string value empty ''
 func (client StringClient) PutEmpty(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.PutEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.PutEmpty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -656,7 +655,7 @@ func (client StringClient) PutEmptyResponder(resp *http.Response) (result autore
 // PutMbcs set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client StringClient) PutMbcs(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.PutMbcs", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.PutMbcs")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -719,7 +718,7 @@ func (client StringClient) PutMbcsResponder(resp *http.Response) (result autores
 // PutNull set string value null
 func (client StringClient) PutNull(ctx context.Context, stringBody string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.PutNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.PutNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -786,7 +785,7 @@ func (client StringClient) PutNullResponder(resp *http.Response) (result autores
 // men to come to the aid of their country<tab><space><space>'
 func (client StringClient) PutWhitespace(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/StringClient.PutWhitespace", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/StringClient.PutWhitespace")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

@@ -8,7 +8,6 @@ package morecustombaseurigroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewPathsClient(subscriptionID string) PathsClient {
 // keyVersion - the key version. Default value 'v1'.
 func (client PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, keyVersion string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetEmpty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

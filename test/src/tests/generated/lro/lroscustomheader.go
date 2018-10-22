@@ -8,7 +8,6 @@ package lrogroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -37,7 +36,7 @@ func NewLROsCustomHeaderClientWithBaseURI(baseURI string) LROsCustomHeaderClient
 // product - product to put
 func (client LROsCustomHeaderClient) Post202Retry200(ctx context.Context, product *Product) (result LROsCustomHeaderPost202Retry200Future, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.Post202Retry200", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.Post202Retry200")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -107,7 +106,7 @@ func (client LROsCustomHeaderClient) Post202Retry200Responder(resp *http.Respons
 // product - product to put
 func (client LROsCustomHeaderClient) PostAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPostAsyncRetrySucceededFuture, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.PostAsyncRetrySucceeded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.PostAsyncRetrySucceeded")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -178,7 +177,7 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededResponder(resp *http
 // product - product to put
 func (client LROsCustomHeaderClient) Put201CreatingSucceeded200(ctx context.Context, product *Product) (result LROsCustomHeaderPut201CreatingSucceeded200Future, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.Put201CreatingSucceeded200", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.Put201CreatingSucceeded200")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {
@@ -249,7 +248,7 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Responder(resp *h
 // product - product to put
 func (client LROsCustomHeaderClient) PutAsyncRetrySucceeded(ctx context.Context, product *Product) (result LROsCustomHeaderPutAsyncRetrySucceededFuture, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/LROsCustomHeaderClient.PutAsyncRetrySucceeded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/LROsCustomHeaderClient.PutAsyncRetrySucceeded")
 		defer func() {
 			sc := -1
 			if result.Response() != nil {

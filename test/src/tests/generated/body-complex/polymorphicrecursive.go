@@ -8,7 +8,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -34,7 +33,7 @@ func NewPolymorphicrecursiveClientWithBaseURI(baseURI string) Polymorphicrecursi
 // GetValid get complex types that are polymorphic and have recursive references
 func (client PolymorphicrecursiveClient) GetValid(ctx context.Context) (result FishModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphicrecursiveClient.GetValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphicrecursiveClient.GetValid")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -150,7 +149,7 @@ func (client PolymorphicrecursiveClient) GetValidResponder(resp *http.Response) 
 // }
 func (client PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody BasicFish) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PolymorphicrecursiveClient.PutValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphicrecursiveClient.PutValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

@@ -8,7 +8,6 @@ package urlgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -39,7 +38,7 @@ func NewPathsClientWithBaseURI(baseURI string, globalStringPath string, globalSt
 // format
 func (client PathsClient) ArrayCsvInPath(ctx context.Context, arrayPath []string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.ArrayCsvInPath", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.ArrayCsvInPath")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -112,7 +111,7 @@ func (client PathsClient) ArrayCsvInPathResponder(resp *http.Response) (result a
 // base64URLPath - base64url encoded value
 func (client PathsClient) Base64URL(ctx context.Context, base64URLPath string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.Base64URL", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.Base64URL")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -177,7 +176,7 @@ func (client PathsClient) Base64URLResponder(resp *http.Response) (result autore
 // ByteEmpty get '' as byte array
 func (client PathsClient) ByteEmpty(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.ByteEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.ByteEmpty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -244,7 +243,7 @@ func (client PathsClient) ByteEmptyResponder(resp *http.Response) (result autore
 // bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 func (client PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.ByteMultiByte", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.ByteMultiByte")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -317,7 +316,7 @@ func (client PathsClient) ByteMultiByteResponder(resp *http.Response) (result au
 // bytePath - null as byte array (should throw)
 func (client PathsClient) ByteNull(ctx context.Context, bytePath []byte) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.ByteNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.ByteNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -390,7 +389,7 @@ func (client PathsClient) ByteNullResponder(resp *http.Response) (result autores
 // datePath - null as date (should throw)
 func (client PathsClient) DateNull(ctx context.Context, datePath date.Date) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.DateNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.DateNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -457,7 +456,7 @@ func (client PathsClient) DateNullResponder(resp *http.Response) (result autores
 // dateTimePath - null as date-time
 func (client PathsClient) DateTimeNull(ctx context.Context, dateTimePath date.Time) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.DateTimeNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.DateTimeNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -522,7 +521,7 @@ func (client PathsClient) DateTimeNullResponder(resp *http.Response) (result aut
 // DateTimeValid get '2012-01-01T01:01:01Z' as date-time
 func (client PathsClient) DateTimeValid(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.DateTimeValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.DateTimeValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -587,7 +586,7 @@ func (client PathsClient) DateTimeValidResponder(resp *http.Response) (result au
 // DateValid get '2012-01-01' as date
 func (client PathsClient) DateValid(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.DateValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.DateValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -652,7 +651,7 @@ func (client PathsClient) DateValidResponder(resp *http.Response) (result autore
 // DoubleDecimalNegative get '-9999999.999' numeric value
 func (client PathsClient) DoubleDecimalNegative(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.DoubleDecimalNegative", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.DoubleDecimalNegative")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -717,7 +716,7 @@ func (client PathsClient) DoubleDecimalNegativeResponder(resp *http.Response) (r
 // DoubleDecimalPositive get '9999999.999' numeric value
 func (client PathsClient) DoubleDecimalPositive(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.DoubleDecimalPositive", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.DoubleDecimalPositive")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -784,7 +783,7 @@ func (client PathsClient) DoubleDecimalPositiveResponder(resp *http.Response) (r
 // enumPath - send null should throw
 func (client PathsClient) EnumNull(ctx context.Context, enumPath URIColor) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.EnumNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.EnumNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -851,7 +850,7 @@ func (client PathsClient) EnumNullResponder(resp *http.Response) (result autores
 // enumPath - send the value green
 func (client PathsClient) EnumValid(ctx context.Context, enumPath URIColor) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.EnumValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.EnumValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -916,7 +915,7 @@ func (client PathsClient) EnumValidResponder(resp *http.Response) (result autore
 // FloatScientificNegative get '-1.034E-20' numeric value
 func (client PathsClient) FloatScientificNegative(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.FloatScientificNegative", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.FloatScientificNegative")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -981,7 +980,7 @@ func (client PathsClient) FloatScientificNegativeResponder(resp *http.Response) 
 // FloatScientificPositive get '1.034E+20' numeric value
 func (client PathsClient) FloatScientificPositive(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.FloatScientificPositive", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.FloatScientificPositive")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1046,7 +1045,7 @@ func (client PathsClient) FloatScientificPositiveResponder(resp *http.Response) 
 // GetBooleanFalse get false Boolean value on path
 func (client PathsClient) GetBooleanFalse(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetBooleanFalse", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetBooleanFalse")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1111,7 +1110,7 @@ func (client PathsClient) GetBooleanFalseResponder(resp *http.Response) (result 
 // GetBooleanTrue get true Boolean value on path
 func (client PathsClient) GetBooleanTrue(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetBooleanTrue", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetBooleanTrue")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1176,7 +1175,7 @@ func (client PathsClient) GetBooleanTrueResponder(resp *http.Response) (result a
 // GetIntNegativeOneMillion get '-1000000' integer value
 func (client PathsClient) GetIntNegativeOneMillion(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetIntNegativeOneMillion", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetIntNegativeOneMillion")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1241,7 +1240,7 @@ func (client PathsClient) GetIntNegativeOneMillionResponder(resp *http.Response)
 // GetIntOneMillion get '1000000' integer value
 func (client PathsClient) GetIntOneMillion(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetIntOneMillion", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetIntOneMillion")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1306,7 +1305,7 @@ func (client PathsClient) GetIntOneMillionResponder(resp *http.Response) (result
 // GetNegativeTenBillion get '-10000000000' 64 bit integer value
 func (client PathsClient) GetNegativeTenBillion(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetNegativeTenBillion", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetNegativeTenBillion")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1371,7 +1370,7 @@ func (client PathsClient) GetNegativeTenBillionResponder(resp *http.Response) (r
 // GetTenBillion get '10000000000' 64 bit integer value
 func (client PathsClient) GetTenBillion(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.GetTenBillion", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.GetTenBillion")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1436,7 +1435,7 @@ func (client PathsClient) GetTenBillionResponder(resp *http.Response) (result au
 // StringEmpty get ''
 func (client PathsClient) StringEmpty(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.StringEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.StringEmpty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1503,7 +1502,7 @@ func (client PathsClient) StringEmptyResponder(resp *http.Response) (result auto
 // stringPath - null string value
 func (client PathsClient) StringNull(ctx context.Context, stringPath string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.StringNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.StringNull")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1568,7 +1567,7 @@ func (client PathsClient) StringNullResponder(resp *http.Response) (result autor
 // StringUnicode get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 func (client PathsClient) StringUnicode(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.StringUnicode", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.StringUnicode")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1633,7 +1632,7 @@ func (client PathsClient) StringUnicodeResponder(resp *http.Response) (result au
 // StringURLEncoded get 'begin!*'();:@ &=+$,/?#[]end
 func (client PathsClient) StringURLEncoded(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.StringURLEncoded", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.StringURLEncoded")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1700,7 +1699,7 @@ func (client PathsClient) StringURLEncodedResponder(resp *http.Response) (result
 // unixTimeURLPath - unix time encoded value
 func (client PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath date.UnixTime) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PathsClient.UnixTimeURL", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PathsClient.UnixTimeURL")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

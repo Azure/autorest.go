@@ -36,7 +36,7 @@
 
 func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
     if tracing.IsEnabled() {
-        ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/@(Model.QualifiedName)", fqdn))
+        ctx = tracing.StartSpan(ctx, fqdn + "/@(Model.QualifiedName)")
         defer func() {
             sc := -1
     @if (Model.IsLongRunningOperation())
@@ -380,7 +380,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
     func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
         if tracing.IsEnabled() {
-            ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/@(Model.QualifiedName)", fqdn))
+            ctx = tracing.StartSpan(ctx, fqdn + "/@(Model.QualifiedName)")
 
             defer func() {
                 sc := -1

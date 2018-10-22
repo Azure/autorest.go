@@ -8,7 +8,6 @@ package filegroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewFilesClientWithBaseURI(baseURI string) FilesClient {
 // GetEmptyFile get empty file
 func (client FilesClient) GetEmptyFile(ctx context.Context) (result ReadCloser, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FilesClient.GetEmptyFile", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/FilesClient.GetEmptyFile")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -94,7 +93,7 @@ func (client FilesClient) GetEmptyFileResponder(resp *http.Response) (result Rea
 // GetFile get file
 func (client FilesClient) GetFile(ctx context.Context) (result ReadCloser, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FilesClient.GetFile", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/FilesClient.GetFile")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -155,7 +154,7 @@ func (client FilesClient) GetFileResponder(resp *http.Response) (result ReadClos
 // GetFileLarge get a large file
 func (client FilesClient) GetFileLarge(ctx context.Context) (result ReadCloser, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FilesClient.GetFileLarge", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/FilesClient.GetFileLarge")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

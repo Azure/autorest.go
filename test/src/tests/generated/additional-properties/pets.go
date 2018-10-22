@@ -8,7 +8,6 @@ package additionalproperties
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/validation"
@@ -34,7 +33,7 @@ func NewPetsClientWithBaseURI(baseURI string) PetsClient {
 // CreateAPInProperties create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties) (result PetAPInProperties, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPInProperties", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPInProperties")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -104,7 +103,7 @@ func (client PetsClient) CreateAPInPropertiesResponder(resp *http.Response) (res
 // CreateAPInPropertiesWithAPString create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString) (result PetAPInPropertiesWithAPString, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPInPropertiesWithAPString", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPInPropertiesWithAPString")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -175,7 +174,7 @@ func (client PetsClient) CreateAPInPropertiesWithAPStringResponder(resp *http.Re
 // CreateAPObject create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject) (result PetAPObject, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPObject", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPObject")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -245,7 +244,7 @@ func (client PetsClient) CreateAPObjectResponder(resp *http.Response) (result Pe
 // CreateAPString create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString) (result PetAPString, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPString", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPString")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -315,7 +314,7 @@ func (client PetsClient) CreateAPStringResponder(resp *http.Response) (result Pe
 // CreateAPTrue create a Pet which contains more properties than what is defined.
 func (client PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue) (result PetAPTrue, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateAPTrue", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateAPTrue")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -385,7 +384,7 @@ func (client PetsClient) CreateAPTrueResponder(resp *http.Response) (result PetA
 // CreateCatAPTrue create a CatAPTrue which contains more properties than what is defined.
 func (client PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue) (result CatAPTrue, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/PetsClient.CreateCatAPTrue", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/PetsClient.CreateCatAPTrue")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

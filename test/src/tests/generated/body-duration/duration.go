@@ -8,7 +8,6 @@ package durationgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewDurationClientWithBaseURI(baseURI string) DurationClient {
 // GetInvalid get an invalid duration value
 func (client DurationClient) GetInvalid(ctx context.Context) (result TimeSpan, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.GetInvalid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.GetInvalid")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -95,7 +94,7 @@ func (client DurationClient) GetInvalidResponder(resp *http.Response) (result Ti
 // GetNull get null duration value
 func (client DurationClient) GetNull(ctx context.Context) (result TimeSpan, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.GetNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.GetNull")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -157,7 +156,7 @@ func (client DurationClient) GetNullResponder(resp *http.Response) (result TimeS
 // GetPositiveDuration get a positive duration value
 func (client DurationClient) GetPositiveDuration(ctx context.Context) (result TimeSpan, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.GetPositiveDuration", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.GetPositiveDuration")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -219,7 +218,7 @@ func (client DurationClient) GetPositiveDurationResponder(resp *http.Response) (
 // PutPositiveDuration put a positive duration value
 func (client DurationClient) PutPositiveDuration(ctx context.Context, durationBody string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DurationClient.PutPositiveDuration", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DurationClient.PutPositiveDuration")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

@@ -8,7 +8,6 @@ package formdatagroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -37,7 +36,7 @@ func NewFormdataClientWithBaseURI(baseURI string) FormdataClient {
 // fileName - file name to upload. Name has to be spelled exactly as written here.
 func (client FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadCloser, fileName string) (result ReadCloser, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FormdataClient.UploadFile", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/FormdataClient.UploadFile")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -106,7 +105,7 @@ func (client FormdataClient) UploadFileResponder(resp *http.Response) (result Re
 // fileContent - file to upload.
 func (client FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadCloser) (result ReadCloser, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FormdataClient.UploadFileViaBody", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/FormdataClient.UploadFileViaBody")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

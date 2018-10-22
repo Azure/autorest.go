@@ -8,7 +8,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 // GetEmpty get complex types with dictionary property which is empty
 func (client DictionaryClient) GetEmpty(ctx context.Context) (result DictionaryWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetEmpty")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -95,7 +94,7 @@ func (client DictionaryClient) GetEmptyResponder(resp *http.Response) (result Di
 // GetNotProvided get complex types with dictionary property while server doesn't provide a response payload
 func (client DictionaryClient) GetNotProvided(ctx context.Context) (result DictionaryWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetNotProvided", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetNotProvided")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -157,7 +156,7 @@ func (client DictionaryClient) GetNotProvidedResponder(resp *http.Response) (res
 // GetNull get complex types with dictionary property which is null
 func (client DictionaryClient) GetNull(ctx context.Context) (result DictionaryWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetNull", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetNull")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -219,7 +218,7 @@ func (client DictionaryClient) GetNullResponder(resp *http.Response) (result Dic
 // GetValid get complex types with dictionary property
 func (client DictionaryClient) GetValid(ctx context.Context) (result DictionaryWrapper, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.GetValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.GetValid")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -283,7 +282,7 @@ func (client DictionaryClient) GetValidResponder(resp *http.Response) (result Di
 // complexBody - please put an empty dictionary
 func (client DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutEmpty", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutEmpty")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -349,7 +348,7 @@ func (client DictionaryClient) PutEmptyResponder(resp *http.Response) (result au
 // "xls":"excel", "exe":"", "":null
 func (client DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/DictionaryClient.PutValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/DictionaryClient.PutValid")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

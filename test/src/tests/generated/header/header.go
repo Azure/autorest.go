@@ -8,7 +8,6 @@ package headergroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/date"
@@ -35,7 +34,7 @@ func NewHeaderClientWithBaseURI(baseURI string) HeaderClient {
 // CustomRequestID send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 func (client HeaderClient) CustomRequestID(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.CustomRequestID", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.CustomRequestID")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -100,7 +99,7 @@ func (client HeaderClient) CustomRequestIDResponder(resp *http.Response) (result
 // value - send a post request with header values true or false
 func (client HeaderClient) ParamBool(ctx context.Context, scenario string, value bool) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamBool", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamBool")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -166,7 +165,7 @@ func (client HeaderClient) ParamBoolResponder(resp *http.Response) (result autor
 // value - send a post request with header values "啊齄丂狛狜隣郎隣兀﨩"
 func (client HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamByte", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamByte")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -239,7 +238,7 @@ func (client HeaderClient) ParamByteResponder(resp *http.Response) (result autor
 // value - send a post request with header values "2010-01-01" or "0001-01-01"
 func (client HeaderClient) ParamDate(ctx context.Context, scenario string, value date.Date) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamDate")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -306,7 +305,7 @@ func (client HeaderClient) ParamDateResponder(resp *http.Response) (result autor
 // value - send a post request with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
 func (client HeaderClient) ParamDatetime(ctx context.Context, scenario string, value date.Time) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamDatetime", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamDatetime")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -374,7 +373,7 @@ func (client HeaderClient) ParamDatetimeResponder(resp *http.Response) (result a
 // GMT"
 func (client HeaderClient) ParamDatetimeRfc1123(ctx context.Context, scenario string, value *date.TimeRFC1123) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamDatetimeRfc1123", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamDatetimeRfc1123")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -444,7 +443,7 @@ func (client HeaderClient) ParamDatetimeRfc1123Responder(resp *http.Response) (r
 // value - send a post request with header values 7e120 or -3.0
 func (client HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamDouble", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamDouble")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -510,7 +509,7 @@ func (client HeaderClient) ParamDoubleResponder(resp *http.Response) (result aut
 // value - send a post request with header values "P123DT22H14M12.011S"
 func (client HeaderClient) ParamDuration(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamDuration", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamDuration")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -577,7 +576,7 @@ func (client HeaderClient) ParamDurationResponder(resp *http.Response) (result a
 // value - send a post request with header values 'GREY'
 func (client HeaderClient) ParamEnum(ctx context.Context, scenario string, value GreyscaleColors) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamEnum", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamEnum")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -645,7 +644,7 @@ func (client HeaderClient) ParamEnumResponder(resp *http.Response) (result autor
 // userAgent - send a post request with header value "User-Agent": "overwrite"
 func (client HeaderClient) ParamExistingKey(ctx context.Context, userAgent string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamExistingKey", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamExistingKey")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -711,7 +710,7 @@ func (client HeaderClient) ParamExistingKeyResponder(resp *http.Response) (resul
 // value - send a post request with header values 0.07 or -3.0
 func (client HeaderClient) ParamFloat(ctx context.Context, scenario string, value float64) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamFloat", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamFloat")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -778,7 +777,7 @@ func (client HeaderClient) ParamFloatResponder(resp *http.Response) (result auto
 // value - send a post request with header values 1 or -2
 func (client HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamInteger", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamInteger")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -845,7 +844,7 @@ func (client HeaderClient) ParamIntegerResponder(resp *http.Response) (result au
 // value - send a post request with header values 105 or -2
 func (client HeaderClient) ParamLong(ctx context.Context, scenario string, value int64) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamLong", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamLong")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -910,7 +909,7 @@ func (client HeaderClient) ParamLongResponder(resp *http.Response) (result autor
 // contentType - send a post request with header value "Content-Type": "text/html"
 func (client HeaderClient) ParamProtectedKey(ctx context.Context, contentType string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamProtectedKey", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamProtectedKey")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -976,7 +975,7 @@ func (client HeaderClient) ParamProtectedKeyResponder(resp *http.Response) (resu
 // value - send a post request with header values "The quick brown fox jumps over the lazy dog" or null or ""
 func (client HeaderClient) ParamString(ctx context.Context, scenario string, value string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ParamString", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ParamString")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1044,7 +1043,7 @@ func (client HeaderClient) ParamStringResponder(resp *http.Response) (result aut
 // scenario - send a post request with header values "scenario": "true" or "false"
 func (client HeaderClient) ResponseBool(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseBool", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseBool")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1108,7 +1107,7 @@ func (client HeaderClient) ResponseBoolResponder(resp *http.Response) (result au
 // scenario - send a post request with header values "scenario": "valid"
 func (client HeaderClient) ResponseByte(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseByte", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseByte")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1172,7 +1171,7 @@ func (client HeaderClient) ResponseByteResponder(resp *http.Response) (result au
 // scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDate(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseDate", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseDate")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1236,7 +1235,7 @@ func (client HeaderClient) ResponseDateResponder(resp *http.Response) (result au
 // scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDatetime(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseDatetime", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseDatetime")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1301,7 +1300,7 @@ func (client HeaderClient) ResponseDatetimeResponder(resp *http.Response) (resul
 // scenario - send a post request with header values "scenario": "valid" or "min"
 func (client HeaderClient) ResponseDatetimeRfc1123(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseDatetimeRfc1123", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseDatetimeRfc1123")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1365,7 +1364,7 @@ func (client HeaderClient) ResponseDatetimeRfc1123Responder(resp *http.Response)
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseDouble(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseDouble", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseDouble")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1429,7 +1428,7 @@ func (client HeaderClient) ResponseDoubleResponder(resp *http.Response) (result 
 // scenario - send a post request with header values "scenario": "valid"
 func (client HeaderClient) ResponseDuration(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseDuration", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseDuration")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1493,7 +1492,7 @@ func (client HeaderClient) ResponseDurationResponder(resp *http.Response) (resul
 // scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 func (client HeaderClient) ResponseEnum(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseEnum", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseEnum")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1555,7 +1554,7 @@ func (client HeaderClient) ResponseEnumResponder(resp *http.Response) (result au
 // ResponseExistingKey get a response with header value "User-Agent": "overwrite"
 func (client HeaderClient) ResponseExistingKey(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseExistingKey", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseExistingKey")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1618,7 +1617,7 @@ func (client HeaderClient) ResponseExistingKeyResponder(resp *http.Response) (re
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseFloat(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseFloat", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseFloat")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1682,7 +1681,7 @@ func (client HeaderClient) ResponseFloatResponder(resp *http.Response) (result a
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseInteger(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseInteger", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseInteger")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1746,7 +1745,7 @@ func (client HeaderClient) ResponseIntegerResponder(resp *http.Response) (result
 // scenario - send a post request with header values "scenario": "positive" or "negative"
 func (client HeaderClient) ResponseLong(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseLong", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseLong")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1808,7 +1807,7 @@ func (client HeaderClient) ResponseLongResponder(resp *http.Response) (result au
 // ResponseProtectedKey get a response with header value "Content-Type": "text/html"
 func (client HeaderClient) ResponseProtectedKey(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseProtectedKey", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseProtectedKey")
 		defer func() {
 			sc := -1
 			if result.Response != nil {
@@ -1871,7 +1870,7 @@ func (client HeaderClient) ResponseProtectedKeyResponder(resp *http.Response) (r
 // scenario - send a post request with header values "scenario": "valid" or "null" or "empty"
 func (client HeaderClient) ResponseString(ctx context.Context, scenario string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HeaderClient.ResponseString", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HeaderClient.ResponseString")
 		defer func() {
 			sc := -1
 			if result.Response != nil {

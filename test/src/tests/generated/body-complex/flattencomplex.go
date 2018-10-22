@@ -8,7 +8,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -33,7 +32,7 @@ func NewFlattencomplexClientWithBaseURI(baseURI string) FlattencomplexClient {
 // GetValid sends the get valid request.
 func (client FlattencomplexClient) GetValid(ctx context.Context) (result MyBaseTypeModel, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/FlattencomplexClient.GetValid", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/FlattencomplexClient.GetValid")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {

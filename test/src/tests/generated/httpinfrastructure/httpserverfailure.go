@@ -8,7 +8,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/tracing"
@@ -35,7 +34,7 @@ func NewHTTPServerFailureClientWithBaseURI(baseURI string) HTTPServerFailureClie
 // booleanValue - simple boolean value true
 func (client HTTPServerFailureClient) Delete505(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Delete505", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Delete505")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -102,7 +101,7 @@ func (client HTTPServerFailureClient) Delete505Responder(resp *http.Response) (r
 // Get501 return 501 status code - should be represented in the client as an error
 func (client HTTPServerFailureClient) Get501(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Get501", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Get501")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -164,7 +163,7 @@ func (client HTTPServerFailureClient) Get501Responder(resp *http.Response) (resu
 // Head501 return 501 status code - should be represented in the client as an error
 func (client HTTPServerFailureClient) Head501(ctx context.Context) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Head501", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Head501")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
@@ -228,7 +227,7 @@ func (client HTTPServerFailureClient) Head501Responder(resp *http.Response) (res
 // booleanValue - simple boolean value true
 func (client HTTPServerFailureClient) Post505(ctx context.Context, booleanValue *bool) (result Error, err error) {
 	if tracing.IsEnabled() {
-		ctx = tracing.StartSpan(ctx, fmt.Sprintf("%s/HTTPServerFailureClient.Post505", fqdn))
+		ctx = tracing.StartSpan(ctx, fqdn+"/HTTPServerFailureClient.Post505")
 		defer func() {
 			sc := -1
 			if result.Response.Response != nil {
