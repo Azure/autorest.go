@@ -62,7 +62,7 @@ namespace AutoRest.Go.Model
         /// Gets true if this response type needs a preparer to retrieve the next page of results.
         /// This is false if the swagger explicitly defines a next operation (i.e. x-ms-pageable:operationName).
         /// </summary>
-        public bool PreparerNeeded { get; }
+        public bool PreparerNeeded { get; private set; }
 
         /// <summary>
         /// Gets the underlying type returned from the pageable operation (i.e. the wrapper around the array).
@@ -132,6 +132,19 @@ namespace AutoRest.Go.Model
         public override int GetHashCode()
         {
             return Name.GetHashCode();
+        }
+
+        /// <summary>
+        /// Updates the page with properties from the passed page. Throws an exception of pages are not equal.
+        /// </summary>
+        /// <param name="page"></param>
+        public void MergeWithPage(PageTypeGo page)
+        {
+            if (!this.Equals(page))
+            {
+                throw new InvalidOperationException("CreatePageableTypeForMethod requires method to be a pageable operation");
+            }
+            PreparerNeeded |= page.PreparerNeeded;
         }
     }
 }

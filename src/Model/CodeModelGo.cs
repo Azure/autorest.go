@@ -371,7 +371,9 @@ namespace AutoRest.Go.Model
             var page = new PageTypeGo(method);
             if (ModelTypes.Contains(page))
             {
-                page = ModelTypes.First(mt => mt.Equals(page)).Cast<PageTypeGo>();
+                var previousPage = ModelTypes.First(mt => mt.Equals(page)).Cast<PageTypeGo>();
+                previousPage.MergeWithPage(page);
+                page = previousPage;
             }
             else
             {
