@@ -135,14 +135,14 @@ namespace AutoRest.Go.Model
         }
 
         /// <summary>
-        /// Updates the page with properties from the passed page. Throws an exception of pages are not equal.
+        /// Updates the page with properties from the passed page. Throws an exception if pages are not equal.
         /// </summary>
         /// <param name="page"></param>
         public void MergeWithPage(PageTypeGo page)
         {
             if (!this.Equals(page))
             {
-                throw new InvalidOperationException("CreatePageableTypeForMethod requires method to be a pageable operation");
+                throw new InvalidOperationException($"{nameof(MergeWithPage)} requires method to be a pageable operation");
             }
             PreparerNeeded |= page.PreparerNeeded;
         }

@@ -365,7 +365,7 @@ namespace AutoRest.Go.Model
         {
             if (!method.IsPageable)
             {
-                throw new InvalidOperationException("CreatePageableTypeForMethod requires method to be a pageable operation");
+                throw new InvalidOperationException($"{nameof(CreatePageableTypeForMethod)} requires method to be a pageable operation");
             }
 
             var page = new PageTypeGo(method);
