@@ -365,13 +365,15 @@ namespace AutoRest.Go.Model
         {
             if (!method.IsPageable)
             {
-                throw new InvalidOperationException("CreatePageableTypeForMethod requires method to be a pageable operation");
+                throw new InvalidOperationException($"{nameof(CreatePageableTypeForMethod)} requires method to be a pageable operation");
             }
 
             var page = new PageTypeGo(method);
             if (ModelTypes.Contains(page))
             {
-                page = ModelTypes.First(mt => mt.Equals(page)).Cast<PageTypeGo>();
+                var previousPage = ModelTypes.First(mt => mt.Equals(page)).Cast<PageTypeGo>();
+                previousPage.MergeWithPage(page);
+                page = previousPage;
             }
             else
             {
