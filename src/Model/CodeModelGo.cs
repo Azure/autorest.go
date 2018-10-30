@@ -117,7 +117,7 @@ namespace AutoRest.Go.Model
 
                 if (!string.IsNullOrEmpty(sdkPath))
                 {
-                    return $"{sdkFqdnPrefix}/{outDir.Split(sdkPath, StringSplitOptions.None).Last()}";
+                    return $"{sdkFqdnPrefix}/{outDir.Split(sdkPath, StringSplitOptions.None).Last()}".Replace("//", "/");
                 }
                 else if (!Path.IsPathRooted(outDir))
                 {
