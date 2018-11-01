@@ -157,8 +157,8 @@
         {
             if (property.IsPointer || property.ModelType is DictionaryTypeGo)
             {
-                @:if(@(Model.Name.FixedValue.ToVariableName()).@(property.Name) != nil) {
-                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToVariableName()).@(property.Name)
+                @:if(@(Model.Name.FixedValue.ToVariableName()).@(property.FieldName) != nil) {
+                @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToVariableName()).@(property.FieldName)
                 @:}
             }
             else if (property.ModelType is EnumTypeGo)
@@ -331,7 +331,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
     }
     else
     {
-        @:@(receiverVar).@(p.Name) = &@varName
+        @:@(receiverVar).@(p.FieldName) = &@varName
     }
     }
 
