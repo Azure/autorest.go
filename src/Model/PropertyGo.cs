@@ -54,6 +54,33 @@ namespace AutoRest.Go.Model
             || this.ModelType is DictionaryTypeGo
             || this.ModelType.PrimaryType(KnownPrimaryType.Object));
 
+        /// <summary>
+        /// Gets the field name for this property.  Usually this is Name however for
+        /// flattened composite types it will be the name of the composite type.
+        /// </summary>
+        public string FieldName
+        {
+            get
+            {
+                if (ModelType is CompositeTypeGo && this.ShouldBeFlattened())
+                {
+                    return TypeName;
+                }
+                return Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the type name for this property.
+        /// </summary>
+        private string TypeName
+        {
+            get
+            {
+                return ModelType.HasInterface() ? ModelType.GetInterfaceName() : ModelType.Name.Value;
+            }
+        }
+
         ///<summary>
         /// Gets the property representation.
         /// </summary>
@@ -63,13 +90,12 @@ namespace AutoRest.Go.Model
             {
                 // Polymorphic fields are implemented as go interfaces and a pointer to an
                 // interface is not implementing the interface.
-                var typeName = this.ModelType.HasInterface() ? this.ModelType.GetInterfaceName() : this.ModelType.Name.Value;
-                var fieldType = this.IsPointer ? $"*{typeName}" : $"{typeName}";
-                var jsonTag = this.ModelType is DictionaryTypeGo ? this.JsonTag(omitEmpty: false) : this.JsonTag();
+                var fieldType = IsPointer ? $"*{TypeName}" : $"{TypeName}";
+                var jsonTag = ModelType is DictionaryTypeGo ? JsonTag(omitEmpty: false) : JsonTag();
 
-                return this.ModelType is CompositeTypeGo && this.ShouldBeFlattened()
+                return ModelType is CompositeTypeGo && this.ShouldBeFlattened()
                     ? $"{fieldType} {jsonTag}"
-                    : $"{this.Name} {fieldType} {jsonTag}";
+                    : $"{Name} {fieldType} {jsonTag}";
             }
         }
 

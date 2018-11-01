@@ -272,7 +272,7 @@ namespace AutoRest.Go.Model
                 }
                 if (!string.IsNullOrWhiteSpace(property.Documentation))
                 {
-                    indented.Append($"{property.Name} - {property.Documentation}".ToCommentBlock());
+                    indented.Append($"{property.FieldName} - {property.Documentation}".ToCommentBlock());
                 }
 
                 indented.AppendLine(property.Field);
