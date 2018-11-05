@@ -155,7 +155,8 @@
 
         @foreach (var property in Model.AllProperties.Where(p => !string.IsNullOrEmpty(p.SerializedName)))
         {
-            if (property.IsPointer || property.ModelType is DictionaryTypeGo)
+            // must check object for nil to avoid inserting `"foo": null` into the JSON
+            if (property.IsPointer || property.ModelType is DictionaryTypeGo || property.ModelType.IsPrimaryType(KnownPrimaryType.Object))
             {
                 @:if(@(Model.Name.FixedValue.ToVariableName()).@(property.FieldName) != nil) {
                 @:objectMap["@(property.SerializedName)"] = @(Model.Name.FixedValue.ToVariableName()).@(property.FieldName)
