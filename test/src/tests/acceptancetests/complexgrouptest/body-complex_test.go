@@ -5,14 +5,13 @@ import (
 	"encoding/json"
 	"net/http"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/complexgroup"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
 	"github.com/Azure/go-autorest/autorest/to"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-complex"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

@@ -4,10 +4,9 @@ import (
 	"context"
 	"math"
 	"testing"
-	"time"
-
 	"tests/acceptancetests/utils"
-	. "tests/generated/body-integer"
+	. "tests/generated/integergroup"
+	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
 	chk "gopkg.in/check.v1"

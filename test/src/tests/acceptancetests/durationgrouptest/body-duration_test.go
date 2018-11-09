@@ -3,12 +3,11 @@ package durationgrouptest
 import (
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/durationgroup"
 	"time"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-duration"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

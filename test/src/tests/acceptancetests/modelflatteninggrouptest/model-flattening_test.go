@@ -4,11 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/modelflatteninggroup"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/model-flattening"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }
@@ -47,8 +46,8 @@ func (s *ModelFlatteningSuite) TestGetArray(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState,
 				ProvisioningStateValues: "OK",
-				PName: &pname,
-				Type:  &propty,
+				PName:                   &pname,
+				Type:                    &propty,
 			},
 		},
 		FlattenedProduct{
@@ -84,8 +83,8 @@ func (s *ModelFlatteningSuite) TestGetDictionary(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState,
 				ProvisioningStateValues: "OK",
-				PName: &pname,
-				Type:  &propty,
+				PName:                   &pname,
+				Type:                    &propty,
 			},
 		},
 		"Product2": &FlattenedProduct{
@@ -121,8 +120,8 @@ func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState,
 				ProvisioningStateValues: "OK",
-				PName: &pname,
-				Type:  &propty,
+				PName:                   &pname,
+				Type:                    &propty,
 			},
 		},
 		"Product2": &FlattenedProduct{
@@ -153,8 +152,8 @@ func (s *ModelFlatteningSuite) TestGetResourceCollection(c *chk.C) {
 			FlattenedProductProperties: &FlattenedProductProperties{
 				ProvisioningState:       &provisioningState4,
 				ProvisioningStateValues: "OK",
-				PName: &pname4,
-				Type:  &propty4,
+				PName:                   &pname4,
+				Type:                    &propty4,
 			},
 		},
 		FlattenedProduct{

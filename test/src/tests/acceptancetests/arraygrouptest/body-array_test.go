@@ -3,14 +3,13 @@ package arraygrouptest
 import (
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/arraygroup"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
 	uuid "github.com/satori/go.uuid"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-array"
 )
 
 //TODO:

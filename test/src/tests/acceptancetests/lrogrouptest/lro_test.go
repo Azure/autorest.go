@@ -4,13 +4,12 @@ import (
 	"context"
 	"net/http"
 	"testing"
+	"tests/acceptancetests/utils"
+	"tests/generated/lrogroup"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/to"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	"tests/generated/lro"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

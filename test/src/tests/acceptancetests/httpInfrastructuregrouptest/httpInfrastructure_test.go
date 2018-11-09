@@ -5,13 +5,12 @@ import (
 	"net/http"
 	"strconv"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/httpinfrastructuregroup"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/httpinfrastructure"
 )
 
 //TODO:

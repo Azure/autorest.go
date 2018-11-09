@@ -3,13 +3,12 @@ package dategrouptest
 import (
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/dategroup"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-date"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

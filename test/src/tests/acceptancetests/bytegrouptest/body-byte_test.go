@@ -4,11 +4,10 @@ import (
 	"bytes"
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/bytegroup"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-byte"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

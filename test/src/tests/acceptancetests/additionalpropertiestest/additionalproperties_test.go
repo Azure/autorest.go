@@ -4,12 +4,11 @@ import (
 	"context"
 	"encoding/base64"
 	"testing"
+	"tests/acceptancetests/utils"
+	"tests/generated/additionalproperties"
 
 	"github.com/Azure/go-autorest/autorest/to"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	addlprops "tests/generated/additional-properties"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }
@@ -18,8 +17,8 @@ type AdditionalPropertiesSuite struct{}
 
 var _ = chk.Suite(&AdditionalPropertiesSuite{})
 
-func getPetsClient() addlprops.PetsClient {
-	c := addlprops.NewPetsClient()
+func getPetsClient() additionalproperties.PetsClient {
+	c := additionalproperties.NewPetsClient()
 	c.RetryDuration = 1
 	c.BaseURI = utils.GetBaseURI()
 	return c
@@ -28,7 +27,7 @@ func getPetsClient() addlprops.PetsClient {
 var petsClient = getPetsClient()
 
 func (s *AdditionalPropertiesSuite) TestCreateAPInProperties(c *chk.C) {
-	res, err := petsClient.CreateAPInProperties(context.Background(), addlprops.PetAPInProperties{
+	res, err := petsClient.CreateAPInProperties(context.Background(), additionalproperties.PetAPInProperties{
 		ID:   to.Int32Ptr(4),
 		Name: to.StringPtr("Bunny"),
 		AdditionalProperties: map[string]*float64{
@@ -42,7 +41,7 @@ func (s *AdditionalPropertiesSuite) TestCreateAPInProperties(c *chk.C) {
 }
 
 func (s *AdditionalPropertiesSuite) TestCreateAPInPropertiesWithAPString(c *chk.C) {
-	res, err := petsClient.CreateAPInPropertiesWithAPString(context.Background(), addlprops.PetAPInPropertiesWithAPString{
+	res, err := petsClient.CreateAPInPropertiesWithAPString(context.Background(), additionalproperties.PetAPInPropertiesWithAPString{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
@@ -79,7 +78,7 @@ func (s *AdditionalPropertiesSuite) TestCreateAPObject(c *chk.C) {
 		},
 		"picture": base64.StdEncoding.EncodeToString([]byte{255, 255, 255, 255, 254}),
 	}
-	res, err := petsClient.CreateAPObject(context.Background(), addlprops.PetAPObject{
+	res, err := petsClient.CreateAPObject(context.Background(), additionalproperties.PetAPObject{
 		ID:                   to.Int32Ptr(2),
 		Name:                 to.StringPtr("Hira"),
 		AdditionalProperties: addlProps,
@@ -90,7 +89,7 @@ func (s *AdditionalPropertiesSuite) TestCreateAPObject(c *chk.C) {
 }
 
 func (s *AdditionalPropertiesSuite) TestCreateAPString(c *chk.C) {
-	res, err := petsClient.CreateAPString(context.Background(), addlprops.PetAPString{
+	res, err := petsClient.CreateAPString(context.Background(), additionalproperties.PetAPString{
 		ID:   to.Int32Ptr(3),
 		Name: to.StringPtr("Tommy"),
 		AdditionalProperties: map[string]*string{
@@ -113,7 +112,7 @@ func (s *AdditionalPropertiesSuite) TestCreateAPTrue(c *chk.C) {
 			"color": "Red",
 		},
 	}
-	res, err := petsClient.CreateAPTrue(context.Background(), addlprops.PetAPTrue{
+	res, err := petsClient.CreateAPTrue(context.Background(), additionalproperties.PetAPTrue{
 		ID:                   to.Int32Ptr(1),
 		Name:                 to.StringPtr("Puppy"),
 		AdditionalProperties: addlProps,
@@ -130,7 +129,7 @@ func (s *AdditionalPropertiesSuite) TestCreateCatAPTrue(c *chk.C) {
 			"color": "Red",
 		},
 	}
-	res, err := petsClient.CreateCatAPTrue(context.Background(), addlprops.CatAPTrue{
+	res, err := petsClient.CreateCatAPTrue(context.Background(), additionalproperties.CatAPTrue{
 		ID:                   to.Int32Ptr(1),
 		Name:                 to.StringPtr("Lisa"),
 		Friendly:             to.BoolPtr(true),

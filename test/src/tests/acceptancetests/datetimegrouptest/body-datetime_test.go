@@ -3,12 +3,11 @@ package datetimegrouptest
 import (
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/datetimegroup"
 	"time"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-datetime"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

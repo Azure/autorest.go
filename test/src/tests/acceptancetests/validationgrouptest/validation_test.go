@@ -3,11 +3,10 @@ package validationgrouptest
 import (
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/validationgroup"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/validation"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }
