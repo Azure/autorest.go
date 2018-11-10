@@ -3,12 +3,11 @@ package numbergrouptest
 import (
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/numbergroup"
 
 	_ "github.com/shopspring/decimal"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-number"
 )
 
 // TODO: decimal tests

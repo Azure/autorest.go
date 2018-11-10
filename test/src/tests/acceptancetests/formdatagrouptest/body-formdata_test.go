@@ -5,11 +5,10 @@ import (
 	"context"
 	"io/ioutil"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/formdatagroup"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-formdata"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

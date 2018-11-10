@@ -4,13 +4,12 @@ import (
 	"context"
 	"strings"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/datetimerfc1123group"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-datetime-rfc1123"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

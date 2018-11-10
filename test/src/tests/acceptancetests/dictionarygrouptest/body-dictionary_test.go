@@ -3,13 +3,12 @@ package dictionarygrouptest
 import (
 	"context"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/dictionarygroup"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-dictionary"
 )
 
 //TODO:

@@ -6,13 +6,12 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/headergroup"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/date"
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/header"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

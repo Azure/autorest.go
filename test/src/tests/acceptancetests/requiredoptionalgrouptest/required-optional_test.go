@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-
 	"tests/acceptancetests/utils"
-	. "tests/generated/required-optional"
+	. "tests/generated/optionalgroup"
 
 	chk "gopkg.in/check.v1"
 )

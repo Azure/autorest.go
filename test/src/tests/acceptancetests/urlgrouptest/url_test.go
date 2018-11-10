@@ -4,11 +4,10 @@ import (
 	"context"
 	"encoding/base64"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/urlgroup"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/url"
 )
 
 //Not in coverage, for now

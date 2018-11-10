@@ -6,11 +6,10 @@ import (
 	"io"
 	"io/ioutil"
 	"testing"
+	"tests/acceptancetests/utils"
+	. "tests/generated/filegroup"
 
 	chk "gopkg.in/check.v1"
-
-	"tests/acceptancetests/utils"
-	. "tests/generated/body-file"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

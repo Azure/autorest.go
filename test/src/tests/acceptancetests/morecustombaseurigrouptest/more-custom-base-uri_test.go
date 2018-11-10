@@ -3,10 +3,9 @@ package morecustombaseurigrouptest
 import (
 	"context"
 	"testing"
+	. "tests/generated/morecustombaseurigroup"
 
 	chk "gopkg.in/check.v1"
-
-	. "tests/generated/more-custom-base-uri"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }

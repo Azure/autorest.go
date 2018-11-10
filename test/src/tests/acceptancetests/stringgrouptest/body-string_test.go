@@ -3,9 +3,8 @@ package stringgrouptest
 import (
 	"context"
 	"testing"
-
 	"tests/acceptancetests/utils"
-	. "tests/generated/body-string"
+	. "tests/generated/stringgroup"
 
 	chk "gopkg.in/check.v1"
 )

@@ -3,10 +3,9 @@ package custombaseurlgrouptest
 import (
 	"context"
 	"testing"
+	. "tests/generated/custombaseurlgroup"
 
 	chk "gopkg.in/check.v1"
-
-	. "tests/generated/custom-baseurl"
 )
 
 func Test(t *testing.T) { chk.TestingT(t) }
