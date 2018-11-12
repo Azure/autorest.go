@@ -11,7 +11,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/optionalgroup"
+const fqdn = "tests/generated/optionalgroup"
 
 // ArrayOptionalWrapper ...
 type ArrayOptionalWrapper struct {

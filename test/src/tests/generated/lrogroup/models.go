@@ -14,7 +14,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/lrogroup"
+const fqdn = "tests/generated/lrogroup"
 
 // ProvisioningStateValues enumerates the values for provisioning state values.
 type ProvisioningStateValues string

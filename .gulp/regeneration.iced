@@ -17,7 +17,8 @@ regenExpected = (opts,done) ->
       "--go",
       "--output-folder=#{opts.outputBaseDir}/#{key}",
       "--license-header=#{if !!opts.header then opts.header else 'MICROSOFT_MIT_NO_VERSION'}",
-      "--enable-xml"
+      "--enable-xml",
+      "--package-name=#{opts.packageNameBase}/#{key}"
     ]
 
     for swaggerFile in swaggerFiles
@@ -89,7 +90,8 @@ task 'regenerate-go', '', (done) ->
   regenExpected {
     'outputBaseDir': 'test/src/tests/generated',
     'inputBaseDir': swaggerDir,
-    'mappings': goMappings
+    'mappings': goMappings,
+    'packageNameBase': 'tests/generated'
   },done
   return null
 

@@ -34,7 +34,7 @@
     }
 }
 
-func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@Model.MethodReturnSignature()) {
+func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (@Model.MethodReturnSignature()) {
     if tracing.IsEnabled() {
         ctx = tracing.StartSpan(ctx, fqdn + "/@(Model.QualifiedName)")
         defer func() {
@@ -77,7 +77,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         var nextMethod = Model.NextMethod;
         if (nextMethod != null)
         {
-            var returnType = nextMethod.MethodReturnType;
+            var returnType = nextMethod.MethodReturnType();
             var nextLinkField = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().NextLink;
             <text>
                 result.@fnField = func(ctx context.Context, lastResult @returnType) (@returnType, error) {
@@ -135,7 +135,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         @:@WrapComment("// Deprecated: ", depMessage)
     }
     // @(Model.PreparerMethodName) prepares the @(Model.Name) request.
-    func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParametersSignature)) (*http.Request, error) {
+    func (client @(Model.Owner)) @(Model.PreparerMethodName)(@(Model.MethodParametersSignature())) (*http.Request, error) {
     @if (Model.IsCustomBaseUri && Model.URLParameters.Any())
     {
         <text>
@@ -232,7 +232,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature) (@M
         var senderRetSig = "*http.Response, error";
         if (Model.IsLongRunningOperation())
         {
-            senderRetSig = $"future {Model.MethodReturnType}, err error";
+            senderRetSig = $"future {Model.MethodReturnType()}, err error";
         }
     }
 
@@ -378,7 +378,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     <text>
     @EmptyLine
     // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
-    func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature)) (result @resultTypeName, err error) {
+    func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature())) (result @resultTypeName, err error) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/@(Model.QualifiedName)")
 
@@ -408,7 +408,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
     @if (Model.IsLongRunningOperation())
     {
         <text>
-        var future @Model.MethodReturnType
+        var future @Model.MethodReturnType()
         future, err = client.@(Model.Name)(@(Model.HelperInvocationParameters()))
         result.Future = future.Future
         </text>

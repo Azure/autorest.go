@@ -12,7 +12,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/report"
+const fqdn = "tests/generated/report"
 
 // Error ...
 type Error struct {

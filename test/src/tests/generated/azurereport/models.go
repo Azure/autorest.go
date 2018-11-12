@@ -12,7 +12,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/azurereport"
+const fqdn = "tests/generated/azurereport"
 
 // Error ...
 type Error struct {

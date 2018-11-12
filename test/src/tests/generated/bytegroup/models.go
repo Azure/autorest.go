@@ -11,7 +11,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/bytegroup"
+const fqdn = "tests/generated/bytegroup"
 
 // ByteArray ...
 type ByteArray struct {

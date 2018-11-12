@@ -13,7 +13,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/arraygroup"
+const fqdn = "tests/generated/arraygroup"
 
 // FooEnum enumerates the values for foo enum.
 type FooEnum string

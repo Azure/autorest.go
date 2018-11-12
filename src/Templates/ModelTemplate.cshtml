@@ -398,6 +398,11 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         }
         return *page.@(modelPageType.ResultFieldName).@itemName
         }
+
+        // Creates a new instance of the @Model.Name type.
+        func New@(Model.Name) (getNextPage @(modelPageType.NextPageFunctionSig)) @Model.Name {
+            return @(Model.Name){@(modelPageType.FnFieldName): getNextPage}
+        }
     </text>
 }
 
@@ -455,6 +460,11 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         return @itemType.GetZeroInitExpression()
         }
         return iter.@(iterType.PageField).Values()[iter.@iterType.IndexField]
+        }
+
+        // Creates a new instance of the @Model.Name type.
+        func New@(Model.Name) (page @(iterType.PageType.Name)) @Model.Name {
+            return @(Model.Name){@(iterType.PageField): page}
         }
     </text>
 }

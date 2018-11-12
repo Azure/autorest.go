@@ -12,7 +12,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/datetimerfc1123group"
+const fqdn = "tests/generated/datetimerfc1123group"
 
 // DateTimeRfc1123 ...
 type DateTimeRfc1123 struct {

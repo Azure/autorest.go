@@ -7,7 +7,7 @@ package headergroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/headergroup"
+const fqdn = "tests/generated/headergroup"
 
 // GreyscaleColors enumerates the values for greyscale colors.
 type GreyscaleColors string

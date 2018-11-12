@@ -83,6 +83,7 @@ namespace AutoRest.Go
                 "models",
                 "client",
                 "version",
+                "interfaces",
             };
 
             foreach (var methodGroup in codeModel.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name)))
@@ -98,6 +99,10 @@ namespace AutoRest.Go
                 };
                 await Write(methodGroupTemplate, FormatFileName(methodGroup.Name).ToLowerInvariant());
             }
+
+            // interfaces
+            var interfacesTemplate = new InterfacesTemplate { Model = codeModel };
+            await Write(interfacesTemplate, FormatFileName($"{CodeNamerGo.InterfacePackageName(codeModel.Namespace)}/interfaces"));
 
             // Version
             var versionTemplate = new VersionTemplate { Model = codeModel };

@@ -11,7 +11,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/validationgroup"
+const fqdn = "tests/generated/validationgroup"
 
 // EnumConst enumerates the values for enum const.
 type EnumConst string

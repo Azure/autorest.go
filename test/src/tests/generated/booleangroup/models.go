@@ -11,7 +11,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/booleangroup"
+const fqdn = "tests/generated/booleangroup"
 
 // BoolModel ...
 type BoolModel struct {

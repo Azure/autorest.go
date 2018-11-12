@@ -11,7 +11,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/stringgroup"
+const fqdn = "tests/generated/stringgroup"
 
 // Colors enumerates the values for colors.
 type Colors string

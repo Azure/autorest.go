@@ -12,7 +12,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/numbergroup"
+const fqdn = "tests/generated/numbergroup"
 
 // Decimal ...
 type Decimal struct {
