@@ -245,6 +245,20 @@ namespace AutoRest.Go
         }
 
         /// <summary>
+        /// Gets the suffix to add to interface types.
+        /// </summary>
+        public static string InterfaceTypeSuffix => "API";
+
+        /// <summary>
+        /// Returns the package name that contains all the operation interfaces.
+        /// </summary>
+        /// <param name="parentPackage">The name of the parent package.</param>
+        public static string InterfacePackageName(string parentPackage)
+        {
+            return $"{parentPackage.ToLowerInvariant()}{InterfaceTypeSuffix.ToLowerInvariant()}";
+        }
+
+        /// <summary>
         /// Formats a string to work around golint name stuttering
         /// Refactor -> CodeModelTransformer
         /// </summary>
@@ -437,7 +451,7 @@ namespace AutoRest.Go
         /// <returns>The name of the type to be returned from the specified method.</returns>
         internal string GetPageTypeName(MethodGo method)
         {
-            return $"{method.MethodReturnType}Page";
+            return $"{method.MethodReturnType()}Page";
         }
 
         /// <summary>

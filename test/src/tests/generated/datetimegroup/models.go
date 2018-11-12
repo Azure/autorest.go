@@ -12,7 +12,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/datetimegroup"
+const fqdn = "tests/generated/datetimegroup"
 
 // DateTime ...
 type DateTime struct {

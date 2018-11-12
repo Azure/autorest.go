@@ -12,7 +12,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/additionalproperties"
+const fqdn = "tests/generated/additionalproperties"
 
 // CatAPTrue ...
 type CatAPTrue struct {

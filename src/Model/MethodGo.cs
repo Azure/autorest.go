@@ -109,26 +109,41 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Generate the method parameter declaration.
         /// </summary>
-        public string MethodParametersSignature
+        /// <param name="includePkgName">Pass true if the type name should include the package prefix.  Defaults to false.</param>
+        public string MethodParametersSignature(bool includePkgName = false)
         {
-            get
+            var declarations = new List<string> { "ctx context.Context" };
+            LocalParameters
+                .ForEach(p => declarations.Add(string.Format(
+                                                    p.IsRequired || p.ModelType.CanBeEmpty()
+                                                        ? "{0} {1}"
+                                                        : "{0} *{1}", p.Name, p.ModelType.HasInterface()
+                                                            ? p.ModelType.GetInterfaceName(includePkgName)
+                                                            : ParameterTypeSig(p.ModelType, includePkgName))));
+            return string.Join(", ", declarations);
+        }
+
+        private string ParameterTypeSig(IModelType type, bool includePkgName)
+        {
+            if (includePkgName && type is CompositeTypeGo)
             {
-                var declarations = new List<string> { "ctx context.Context" };
-                LocalParameters
-                    .ForEach(p => declarations.Add(string.Format(
-                                                        p.IsRequired || p.ModelType.CanBeEmpty()
-                                                            ? "{0} {1}"
-                                                            : "{0} *{1}", p.Name, p.ModelType.HasInterface()
-                                                                ? p.ModelType.GetInterfaceName()
-                                                                : p.ModelType.Name.ToString())));
-                return string.Join(", ", declarations);
+                return $"{CodeModel.Namespace}.{type.Name}";
             }
+            return type.Name.ToString();
         }
 
         /// <summary>
         /// Gets the return type name for this method.
         /// </summary>
-        public string MethodReturnType => HasReturnValue() ? ReturnValue().Body.Name.ToString() : DefaultReturnType;
+        /// <param name="includePkgName">Pass true if the type name should include the package prefix.  Defaults to false.</param>
+        public string MethodReturnType(bool includePkgName = false)
+        {
+            return HasReturnValue()
+                ? includePkgName
+                    ? $"{CodeModel.Namespace}.{ReturnValue().Body.Name.ToString()}"
+                    : ReturnValue().Body.Name.ToString()
+                : DefaultReturnType;
+        }
 
         private string MethodReturnSig(string resultTypeName)
         {
@@ -139,10 +154,11 @@ namespace AutoRest.Go.Model
         /// Returns the method return signature for this method (e.g. "foo, bar").
         /// For responder methods use ResponderReturnSignature() instead.
         /// </summary>
+        /// <param name="includePkgName">Pass true if the type name should include the package prefix.  Defaults to false.</param>
         /// <returns>The method signature for this method.</returns>
-        public string MethodReturnSignature()
+        public string MethodReturnSignature(bool includePkgName = false)
         {
-            return MethodReturnSig(MethodReturnType);
+            return MethodReturnSig(MethodReturnType(includePkgName));
         }
 
         /// <summary>

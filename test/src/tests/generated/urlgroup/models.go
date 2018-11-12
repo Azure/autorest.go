@@ -7,7 +7,7 @@ package urlgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/urlgroup"
+const fqdn = "tests/generated/urlgroup"
 
 // URIColor enumerates the values for uri color.
 type URIColor string

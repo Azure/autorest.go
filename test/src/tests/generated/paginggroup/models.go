@@ -16,7 +16,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/paginggroup"
+const fqdn = "tests/generated/paginggroup"
 
 // Status enumerates the values for status.
 type Status string
@@ -116,6 +116,11 @@ func (iter OdataProductResultIterator) Value() Product {
 	return iter.page.Values()[iter.i]
 }
 
+// Creates a new instance of the OdataProductResultIterator type.
+func NewOdataProductResultIterator(page OdataProductResultPage) OdataProductResultIterator {
+	return OdataProductResultIterator{page: page}
+}
+
 // IsEmpty returns true if the ListResult contains no values.
 func (opr OdataProductResult) IsEmpty() bool {
 	return opr.Values == nil || len(*opr.Values) == 0
@@ -183,6 +188,11 @@ func (page OdataProductResultPage) Values() []Product {
 		return nil
 	}
 	return *page.opr.Values
+}
+
+// Creates a new instance of the OdataProductResultPage type.
+func NewOdataProductResultPage(getNextPage func(context.Context, OdataProductResult) (OdataProductResult, error)) OdataProductResultPage {
+	return OdataProductResultPage{fn: getNextPage}
 }
 
 // OperationResult ...
@@ -325,6 +335,11 @@ func (iter ProductResultIterator) Value() Product {
 	return iter.page.Values()[iter.i]
 }
 
+// Creates a new instance of the ProductResultIterator type.
+func NewProductResultIterator(page ProductResultPage) ProductResultIterator {
+	return ProductResultIterator{page: page}
+}
+
 // IsEmpty returns true if the ListResult contains no values.
 func (pr ProductResult) IsEmpty() bool {
 	return pr.Values == nil || len(*pr.Values) == 0
@@ -392,4 +407,9 @@ func (page ProductResultPage) Values() []Product {
 		return nil
 	}
 	return *page.pr.Values
+}
+
+// Creates a new instance of the ProductResultPage type.
+func NewProductResultPage(getNextPage func(context.Context, ProductResult) (ProductResult, error)) ProductResultPage {
+	return ProductResultPage{fn: getNextPage}
 }

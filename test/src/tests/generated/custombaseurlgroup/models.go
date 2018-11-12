@@ -7,7 +7,7 @@ package custombaseurlgroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/custombaseurlgroup"
+const fqdn = "tests/generated/custombaseurlgroup"
 
 // Error ...
 type Error struct {

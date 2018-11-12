@@ -104,9 +104,14 @@ namespace AutoRest.Go.Model
         /// </summary>
         public string AdvancerQualifiedName => $"{Name}.NextWithContext";
 
+        /// <summary>
+        /// Gets the signature of the function used to advance to the next page.
+        /// </summary>
+        public string NextPageFunctionSig => $"func(context.Context, {ContentType.Name}) ({ContentType.Name}, error)";
+
         public override string Fields()
         {
-            return $"    {FnFieldName} func(context.Context, {ContentType.Name}) ({ContentType.Name}, error)\n    {ResultFieldName} {ContentType.Name}";
+            return $"    {FnFieldName} {NextPageFunctionSig}\n    {ResultFieldName} {ContentType.Name}";
         }
 
         public override bool Equals(object other)

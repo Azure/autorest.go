@@ -13,7 +13,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/complexgroup"
+const fqdn = "tests/generated/complexgroup"
 
 // CMYKColors enumerates the values for cmyk colors.
 type CMYKColors string

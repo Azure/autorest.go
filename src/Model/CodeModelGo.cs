@@ -112,10 +112,15 @@ namespace AutoRest.Go.Model
         {
             get
             {
+                var pkgName = Settings.Instance.Host?.GetValue<string>("package-name").Result.ToLowerInvariant();
                 var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result.ToLowerInvariant().Replace("\\", "/");
                 var sdkPath = Settings.Instance.Host?.GetValue<string>("go-sdk-folder").Result?.ToLowerInvariant().Replace("\\", "/").Trim();
 
-                if (!string.IsNullOrEmpty(sdkPath))
+                if (!string.IsNullOrWhiteSpace(pkgName))
+                {
+                    return pkgName;
+                }
+                else if (!string.IsNullOrEmpty(sdkPath))
                 {
                     return $"{sdkFqdnPrefix}/{outDir.Split(sdkPath, StringSplitOptions.None).Last()}".Replace("//", "/");
                 }

@@ -11,7 +11,7 @@ import (
 )
 
 // The package's fully qualified name.
-const fqdn = "test/src/tests/generated/httpinfrastructuregroup"
+const fqdn = "tests/generated/httpinfrastructuregroup"
 
 // A ...
 type A struct {

@@ -366,11 +366,13 @@ namespace AutoRest.Go
         /// <summary>
         /// Gets the interface name for the type.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="includePkgName">Pass true if the type name should include the package prefix.  Defaults to false.</param>
         /// <returns></returns>
-        public static string GetInterfaceName(this IModelType type)
+        public static string GetInterfaceName(this IModelType type, bool includePkgName = false)
         {
-            return $"Basic{type.Name}";
+            return includePkgName
+                ? $"{type.CodeModel.Namespace}.Basic{type.Name}"
+                : $"Basic{type.Name}";
         }
 
         /// <summary>

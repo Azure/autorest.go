@@ -1,0 +1,76 @@
+@using AutoRest.Core.Utilities
+@using AutoRest.Go
+@using AutoRest.Go.Model
+@using AutoRest.Go.Templates
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+
+@inherits AutoRest.Core.Template<AutoRest.Go.Model.CodeModelGo>
+
+@{
+    var content = new Dictionary<string, IEnumerable<MethodGo>>();
+    var imports = new HashSet<string> { PrimaryTypeGo.GetImportLine(package: "context"), PrimaryTypeGo.GetImportLine(package: Model.PackageFqdn) };
+
+    // add methods from the unnamed group.  note that not every package will
+    // contain such methods so check to see if there are any before adding.
+    if (Model.ClientMethods.Any())
+    {
+        content.Add(Model.BaseClient, Model.ClientMethods.OrderBy(m => m.Name.Value));
+    }
+
+    // filter out unnamed method groups as they were added above
+    var methodGroups = Model.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name));
+    foreach (var methodGroup in methodGroups)
+    {
+        content.Add(methodGroup.ClientName, methodGroup.Methods.Cast<MethodGo>().OrderBy(m => m.Name.Value));
+    }
+
+    var arImport = PrimaryTypeGo.GetImportLine(package: "github.com/Azure/go-autorest/autorest");
+    foreach (var methods in content.Values)
+    {
+        foreach (var method in methods)
+        {
+            foreach (var p in method.Parameters)
+            {
+                p.ModelType.AddImports(imports);
+            }
+            if (method.HasReturnValue())
+            {
+                method.ReturnType.Body.AddImports(imports);
+            }
+            else if (!imports.Contains(arImport))
+            {
+                imports.Add(arImport);
+            }
+        }
+    }
+}
+
+package @CodeNamerGo.InterfacePackageName(Model.Namespace)
+@EmptyLine
+@Header("// ")
+@EmptyLine
+
+import (
+@foreach (var import in imports)
+{
+    @:@(import)
+}
+)
+@EmptyLine
+@foreach (var c in content)
+{
+    var typeName = $"{c.Key}{CodeNamerGo.InterfaceTypeSuffix}";
+    <text>
+        // @typeName contains the set of methods on the @(c.Key) type.
+        type @typeName interface {
+        @foreach (var method in c.Value)
+        {
+            @:@(method.Name)(@method.MethodParametersSignature(true)) (@method.MethodReturnSignature(true))
+        }
+        }
+        @EmptyLine
+        var _ @typeName = (*@(Model.Namespace).@(c.Key))(nil)
+    </text>
+}
