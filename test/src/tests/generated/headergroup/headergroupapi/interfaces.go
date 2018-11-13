@@ -23,7 +23,7 @@ type HeaderClientAPI interface {
 	ParamDatetimeRfc1123(ctx context.Context, scenario string, value *date.TimeRFC1123) (result autorest.Response, err error)
 	ParamDouble(ctx context.Context, scenario string, value float64) (result autorest.Response, err error)
 	ParamDuration(ctx context.Context, scenario string, value string) (result autorest.Response, err error)
-	ParamEnum(ctx context.Context, scenario string, value GreyscaleColors) (result autorest.Response, err error)
+	ParamEnum(ctx context.Context, scenario string, value headergroup.GreyscaleColors) (result autorest.Response, err error)
 	ParamExistingKey(ctx context.Context, userAgent string) (result autorest.Response, err error)
 	ParamFloat(ctx context.Context, scenario string, value float64) (result autorest.Response, err error)
 	ParamInteger(ctx context.Context, scenario string, value int32) (result autorest.Response, err error)

@@ -463,6 +463,14 @@ namespace AutoRest.Go
                 format == KnownFormat.date_time_rfc1123;
         }
 
+        /// <summary>
+        /// Returns true if the specified type is user-defined.
+        /// </summary>
+        public static bool IsUserDefinedType(this IModelType type)
+        {
+            return (type is CompositeTypeGo) || (type is EnumTypeGo etg && etg.IsNamed);
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////
         // Validate code
         //

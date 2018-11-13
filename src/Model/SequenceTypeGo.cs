@@ -29,5 +29,15 @@ namespace AutoRest.Go.Model
         /// Returns the type name of the element (shorthand for ElementType.Name).
         /// </summary>
         public string GetElement => $"{ElementType.Name}";
+
+        /// <summary>
+        /// Gets the name of the type including the package prefix if applicable (e.g. []package.Type).
+        /// </summary>
+        public string NameWithPackagePrefix =>
+            ElementType.HasInterface()
+                ? $"[]{CodeModel.Namespace}.{ElementType.GetInterfaceName()}"
+                : ElementType.IsUserDefinedType()
+                    ? $"[]{CodeModel.Namespace}.{ElementType.Name}"
+                    : $"[]{ElementType.Name}";
     }
 }

@@ -1,3 +1,4 @@
+@using AutoRest.Core.Model.XmsExtensions
 @using AutoRest.Core.Utilities
 @using AutoRest.Go
 @using AutoRest.Go.Model
@@ -18,7 +19,6 @@
     {
         content.Add(Model.BaseClient, Model.ClientMethods.OrderBy(m => m.Name.Value));
     }
-
     // filter out unnamed method groups as they were added above
     var methodGroups = Model.MethodGroups.Where(mg => !string.IsNullOrEmpty(mg.Name));
     foreach (var methodGroup in methodGroups)
@@ -33,7 +33,10 @@
         {
             foreach (var p in method.Parameters)
             {
-                p.ModelType.AddImports(imports);
+                if (((ParameterGo)p).IsMethodArgument)
+                {
+                    p.ModelType.AddImports(imports);
+                }
             }
             if (method.HasReturnValue())
             {

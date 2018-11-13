@@ -28,8 +28,9 @@ task 'install_common',"", (done) ->
 # Run language-specific tests:
 task 'test', "", ['regenerate'], (done) ->
   process.env.GOPATH = path.normalize("#{basefolder}/test")
-  await execute "dep ensure",          { cwd: './test/src/tests' }, defer code, stderr, stdout
-  await execute "go run ./runner.go",     { cwd: './test/src/tests' }, defer code, stderr, stdout
+  await execute "dep ensure", { cwd: './test/src/tests' }, defer code, stderr, stdout
+  await execute "go build ./generated/...", { cwd: './test/src/tests' }, defer code, stderr, stdout
+  await execute "go run ./runner.go", { cwd: './test/src/tests' }, defer code, stderr, stdout
   done();
 
 # CI job

@@ -47,6 +47,14 @@ namespace AutoRest.Go
                     {
                         property.Name = property.ModelType.HasInterface() ? property.ModelType.GetInterfaceName() : property.ModelType.Name.Value;
                     }
+                    if (property.ModelType is SequenceTypeGo stg)
+                    {
+                        stg.CodeModel = cmg;
+                    }
+                    else if (property.ModelType is DictionaryTypeGo dtg)
+                    {
+                        dtg.CodeModel = cmg;
+                    }
                 }
             }
         }
@@ -265,6 +273,14 @@ namespace AutoRest.Go
                 foreach (var parameter in method.Parameters)
                 {
                     parameter.Name = scope.GetVariableName(parameter.Name);
+                    if (parameter.ModelType is SequenceTypeGo stg)
+                    {
+                        stg.CodeModel = cmg;
+                    }
+                    else if (parameter.ModelType is DictionaryTypeGo dtg)
+                    {
+                        dtg.CodeModel = cmg;
+                    }
                 }
 
                 // fix up method return types

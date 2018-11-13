@@ -36,8 +36,8 @@ type EnumClientAPI interface {
 	GetNotExpandable(ctx context.Context) (result stringgroup.StringModel, err error)
 	GetReferenced(ctx context.Context) (result stringgroup.StringModel, err error)
 	GetReferencedConstant(ctx context.Context) (result stringgroup.RefColorConstant, err error)
-	PutNotExpandable(ctx context.Context, stringBody Colors) (result autorest.Response, err error)
-	PutReferenced(ctx context.Context, enumStringBody Colors) (result autorest.Response, err error)
+	PutNotExpandable(ctx context.Context, stringBody stringgroup.Colors) (result autorest.Response, err error)
+	PutReferenced(ctx context.Context, enumStringBody stringgroup.Colors) (result autorest.Response, err error)
 	PutReferencedConstant(ctx context.Context, enumStringBody stringgroup.RefColorConstant) (result autorest.Response, err error)
 }
 

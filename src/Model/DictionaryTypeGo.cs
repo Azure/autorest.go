@@ -61,5 +61,13 @@ namespace AutoRest.Go.Model
         /// Gets the expression for a zero-initialized dictionary type.
         /// </summary>
         public string ZeroInitExpression => $"{FieldNameFormat}{{}}";
+
+        /// <summary>
+        /// Gets the name of the type including the package prefix (e.g. map[string]*package.Type).
+        /// </summary>
+        public string NameWithPackagePrefix =>
+            ValueType.IsUserDefinedType()
+                ? string.Format(CultureInfo.InvariantCulture, FieldNameFormat, $"{CodeModel.Namespace}.{ValueType.Name}")
+                : string.Format(CultureInfo.InvariantCulture, FieldNameFormat, ValueType.Name);
     }
 }
