@@ -19,12 +19,12 @@ type BaseClientAPI interface {
 	GetResourceCollection(ctx context.Context) (result modelflatteninggroup.ResourceCollection, err error)
 	GetWrappedArray(ctx context.Context) (result modelflatteninggroup.ListProductWrapper, err error)
 	PostFlattenedSimpleProduct(ctx context.Context, simpleBodyProduct *modelflatteninggroup.SimpleProduct) (result modelflatteninggroup.SimpleProduct, err error)
-	PutArray(ctx context.Context, resourceArray []Resource) (result autorest.Response, err error)
-	PutDictionary(ctx context.Context, resourceDictionary map[string]*FlattenedProduct) (result autorest.Response, err error)
+	PutArray(ctx context.Context, resourceArray []modelflatteninggroup.Resource) (result autorest.Response, err error)
+	PutDictionary(ctx context.Context, resourceDictionary map[string]*modelflatteninggroup.FlattenedProduct) (result autorest.Response, err error)
 	PutResourceCollection(ctx context.Context, resourceComplexObject *modelflatteninggroup.ResourceCollection) (result autorest.Response, err error)
 	PutSimpleProduct(ctx context.Context, simpleBodyProduct *modelflatteninggroup.SimpleProduct) (result modelflatteninggroup.SimpleProduct, err error)
 	PutSimpleProductWithGrouping(ctx context.Context, name string, simpleBodyProduct *modelflatteninggroup.SimpleProduct) (result modelflatteninggroup.SimpleProduct, err error)
-	PutWrappedArray(ctx context.Context, resourceArray []WrappedProduct) (result autorest.Response, err error)
+	PutWrappedArray(ctx context.Context, resourceArray []modelflatteninggroup.WrappedProduct) (result autorest.Response, err error)
 }
 
 var _ BaseClientAPI = (*modelflatteninggroup.BaseClient)(nil)

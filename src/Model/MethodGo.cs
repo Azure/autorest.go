@@ -125,9 +125,14 @@ namespace AutoRest.Go.Model
 
         private string ParameterTypeSig(IModelType type, bool includePkgName)
         {
-            if (includePkgName && type is CompositeTypeGo)
+            if (includePkgName)
             {
-                return $"{CodeModel.Namespace}.{type.Name}";
+                if (type.IsUserDefinedType())
+                    return $"{CodeModel.Namespace}.{type.Name}";
+                else if (type is SequenceTypeGo stg)
+                    return stg.NameWithPackagePrefix;
+                else if (type is DictionaryTypeGo dtg)
+                    return dtg.NameWithPackagePrefix;
             }
             return type.Name.ToString();
         }

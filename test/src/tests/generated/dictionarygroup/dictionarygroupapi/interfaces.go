@@ -68,7 +68,7 @@ type DictionaryClientAPI interface {
 	PutArrayValid(ctx context.Context, arrayBody map[string][]string) (result autorest.Response, err error)
 	PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool) (result autorest.Response, err error)
 	PutByteValid(ctx context.Context, arrayBody map[string][]byte) (result autorest.Response, err error)
-	PutComplexValid(ctx context.Context, arrayBody map[string]*Widget) (result autorest.Response, err error)
+	PutComplexValid(ctx context.Context, arrayBody map[string]*dictionarygroup.Widget) (result autorest.Response, err error)
 	PutDateTimeRfc1123Valid(ctx context.Context, arrayBody map[string]*date.TimeRFC1123) (result autorest.Response, err error)
 	PutDateTimeValid(ctx context.Context, arrayBody map[string]*date.Time) (result autorest.Response, err error)
 	PutDateValid(ctx context.Context, arrayBody map[string]*date.Date) (result autorest.Response, err error)
