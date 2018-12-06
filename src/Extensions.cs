@@ -32,6 +32,9 @@ namespace AutoRest.Go
         // contains a map from a model type to its corresponding interface name
         private static Dictionary<IModelType, string> s_interfaceNames = new Dictionary<IModelType, string>();
 
+        // contains a map from a one-word string to multiple words e.g. "FooBarBaz" => ["Foo", "Bar", "Baz"]
+        private static Dictionary<string, string[]> s_wordMap = new Dictionary<string, string[]>();
+
         /////////////////////////////////////////////////////////////////////////////////////////
         //
         // General Extensions
@@ -110,7 +113,11 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static string[] ToWords(this string value)
         {
-            return WordSplitPattern.Split(value).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            if (!s_wordMap.ContainsKey(value))
+            {
+                s_wordMap.Add(value, WordSplitPattern.Split(value).Where(s => !string.IsNullOrEmpty(s)).ToArray());
+            }
+            return s_wordMap[value];
         }
 
         /// <summary>
