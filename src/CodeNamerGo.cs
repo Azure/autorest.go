@@ -54,7 +54,7 @@ namespace AutoRest.Go
 
         // CommonInitialisms are those "words" within a name that Golint expects to be uppercase.
         // See https://github.com/golang/lint/blob/master/lint.go for detail.
-        private HashSet<string> CommonInitialisms => new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
+        private HashSet<string> _commonInitialisms = new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
                                                             "Acl",
                                                             "Api",
                                                             "Ascii",
@@ -503,7 +503,7 @@ namespace AutoRest.Go
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i];
-                if (CommonInitialisms.Contains(word))
+                if (_commonInitialisms.Contains(word))
                 {
                     word = word.ToUpper();
                 }
@@ -512,7 +512,7 @@ namespace AutoRest.Go
                     // This ensures that names like `ClusterUsersGroupDNs`
                     // get propery cased to `ClusterUsersGroupDNS`
                     var concat = words[i] + words[i + 1];
-                    if (CommonInitialisms.Contains(concat.ToLower()))
+                    if (_commonInitialisms.Contains(concat.ToLower()))
                     {
                         word = concat.ToUpper();
                         i++;

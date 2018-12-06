@@ -281,7 +281,7 @@ namespace AutoRest.Go.Model
             return indented.ToString();
         }
 
-        public IModelType GetElementType(IModelType type)
+        private IModelType GetElementType(IModelType type)
         {
             if (type is SequenceTypeGo sequenceType)
             {

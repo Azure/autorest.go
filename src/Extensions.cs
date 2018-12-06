@@ -29,6 +29,9 @@ namespace AutoRest.Go
             { "containerservice", "containerservices" }
         };
 
+        // contains a map from a model type to its corresponding interface name
+        private static Dictionary<IModelType, string> s_interfaceNames = new Dictionary<IModelType, string>();
+
         /////////////////////////////////////////////////////////////////////////////////////////
         //
         // General Extensions
@@ -370,9 +373,19 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static string GetInterfaceName(this IModelType type, bool includePkgName = false)
         {
+            // this function is called in a *LOT* of places so is perf sensitive
+            if (!s_interfaceNames.ContainsKey(type))
+            {
+                var baseName = $"Basic{type.Name}";
+                if (type.CodeModel.AllModelTypes.Any(mt => mt.Name == baseName))
+                {
+                    baseName = $"Basic{baseName}";
+                }
+                s_interfaceNames.Add(type, baseName);
+            }
             return includePkgName
-                ? $"{type.CodeModel.Namespace}.Basic{type.Name}"
-                : $"Basic{type.Name}";
+                ? $"{type.CodeModel.Namespace}.{s_interfaceNames[type]}"
+                : s_interfaceNames[type];
         }
 
         /// <summary>
