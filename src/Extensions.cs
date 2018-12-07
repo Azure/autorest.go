@@ -29,6 +29,12 @@ namespace AutoRest.Go
             { "containerservice", "containerservices" }
         };
 
+        // contains a map from a model type to its corresponding interface name
+        private static Dictionary<IModelType, string> s_interfaceNames = new Dictionary<IModelType, string>();
+
+        // contains a map from a one-word string to multiple words e.g. "FooBarBaz" => ["Foo", "Bar", "Baz"]
+        private static Dictionary<string, string[]> s_wordMap = new Dictionary<string, string[]>();
+
         /////////////////////////////////////////////////////////////////////////////////////////
         //
         // General Extensions
@@ -107,7 +113,11 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static string[] ToWords(this string value)
         {
-            return WordSplitPattern.Split(value).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            if (!s_wordMap.ContainsKey(value))
+            {
+                s_wordMap.Add(value, WordSplitPattern.Split(value).Where(s => !string.IsNullOrEmpty(s)).ToArray());
+            }
+            return s_wordMap[value];
         }
 
         /// <summary>
@@ -370,9 +380,19 @@ namespace AutoRest.Go
         /// <returns></returns>
         public static string GetInterfaceName(this IModelType type, bool includePkgName = false)
         {
+            // this function is called in a *LOT* of places so is perf sensitive
+            if (!s_interfaceNames.ContainsKey(type))
+            {
+                var interfaceName = $"Basic{type.Name}";
+                if (type.CodeModel.AllModelTypes.Any(mt => mt.Name == interfaceName))
+                {
+                    interfaceName = $"Basic{interfaceName}";
+                }
+                s_interfaceNames.Add(type, interfaceName);
+            }
             return includePkgName
-                ? $"{type.CodeModel.Namespace}.Basic{type.Name}"
-                : $"Basic{type.Name}";
+                ? $"{type.CodeModel.Namespace}.{s_interfaceNames[type]}"
+                : s_interfaceNames[type];
         }
 
         /// <summary>
