@@ -383,12 +383,12 @@ namespace AutoRest.Go
             // this function is called in a *LOT* of places so is perf sensitive
             if (!s_interfaceNames.ContainsKey(type))
             {
-                var baseName = $"Basic{type.Name}";
-                if (type.CodeModel.AllModelTypes.Any(mt => mt.Name == baseName))
+                var interfaceName = $"Basic{type.Name}";
+                if (type.CodeModel.AllModelTypes.Any(mt => mt.Name == interfaceName))
                 {
-                    baseName = $"Basic{baseName}";
+                    interfaceName = $"Basic{interfaceName}";
                 }
-                s_interfaceNames.Add(type, baseName);
+                s_interfaceNames.Add(type, interfaceName);
             }
             return includePkgName
                 ? $"{type.CodeModel.Namespace}.{s_interfaceNames[type]}"
