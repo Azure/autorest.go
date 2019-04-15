@@ -272,7 +272,16 @@ namespace AutoRest.Go.Model
                 }
                 if (!string.IsNullOrWhiteSpace(property.Documentation))
                 {
-                    indented.Append($"{property.FieldName} - {property.Documentation}".ToCommentBlock());
+                    var ro = "";
+                    if (property.IsReadOnly)
+                    {
+                        ro = "READ-ONLY; ";
+                    }
+                    indented.Append($"{property.FieldName} - {ro}{property.Documentation}".ToCommentBlock());
+                }
+                else if (property.IsReadOnly)
+                {
+                    indented.Append($"// {property.FieldName} - READ-ONLY\n");
                 }
 
                 indented.AppendLine(property.Field);

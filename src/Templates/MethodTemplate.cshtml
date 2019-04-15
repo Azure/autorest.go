@@ -190,6 +190,17 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
             @EmptyLine
         </text>
     }
+    @if (Model.BodyParameter != null && Model.BodyParameter.ModelType is CompositeTypeGo ctg)
+    {
+        // set all read-only properties to nil so they aren't sent over the wire
+        foreach (var p in ctg.Properties)
+        {
+            if (p.IsReadOnly)
+            {
+                @:@(Model.BodyParameter.Name).@(p.Name) = nil
+            }
+        }
+    }
     preparer := autorest.CreatePreparer(
     @(Model.PrepareDecorators.EmitAsArguments()))
 

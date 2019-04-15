@@ -155,6 +155,11 @@
 
         @foreach (var property in Model.AllProperties.Where(p => !string.IsNullOrEmpty(p.SerializedName)))
         {
+            if (property.IsReadOnly)
+            {
+                // don't send read-only fields across the wire
+                continue;
+            }
             // must check object for nil to avoid inserting `"foo": null` into the JSON
             if (property.IsPointer || property.ModelType is DictionaryTypeGo || property.ModelType.IsPrimaryType(KnownPrimaryType.Object))
             {

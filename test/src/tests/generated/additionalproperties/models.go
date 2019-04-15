@@ -22,7 +22,8 @@ type CatAPTrue struct {
 	AdditionalProperties map[string]interface{} `json:""`
 	ID                   *int32                 `json:"id,omitempty"`
 	Name                 *string                `json:"name,omitempty"`
-	Status               *bool                  `json:"status,omitempty"`
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for CatAPTrue.
@@ -36,9 +37,6 @@ func (cat CatAPTrue) MarshalJSON() ([]byte, error) {
 	}
 	if cat.Name != nil {
 		objectMap["name"] = cat.Name
-	}
-	if cat.Status != nil {
-		objectMap["status"] = cat.Status
 	}
 	for k, v := range cat.AdditionalProperties {
 		objectMap[k] = v
@@ -117,9 +115,10 @@ type Error struct {
 
 // PetAPInProperties ...
 type PetAPInProperties struct {
-	autorest.Response    `json:"-"`
-	ID                   *int32              `json:"id,omitempty"`
-	Name                 *string             `json:"name,omitempty"`
+	autorest.Response `json:"-"`
+	ID                *int32  `json:"id,omitempty"`
+	Name              *string `json:"name,omitempty"`
+	// Status - READ-ONLY
 	Status               *bool               `json:"status,omitempty"`
 	AdditionalProperties map[string]*float64 `json:"additionalProperties"`
 }
@@ -133,9 +132,6 @@ func (paip PetAPInProperties) MarshalJSON() ([]byte, error) {
 	if paip.Name != nil {
 		objectMap["name"] = paip.Name
 	}
-	if paip.Status != nil {
-		objectMap["status"] = paip.Status
-	}
 	if paip.AdditionalProperties != nil {
 		objectMap["additionalProperties"] = paip.AdditionalProperties
 	}
@@ -146,9 +142,10 @@ func (paip PetAPInProperties) MarshalJSON() ([]byte, error) {
 type PetAPInPropertiesWithAPString struct {
 	autorest.Response `json:"-"`
 	// AdditionalProperties - Unmatched properties from the message are deserialized this collection
-	AdditionalProperties  map[string]*string  `json:""`
-	ID                    *int32              `json:"id,omitempty"`
-	Name                  *string             `json:"name,omitempty"`
+	AdditionalProperties map[string]*string `json:""`
+	ID                   *int32             `json:"id,omitempty"`
+	Name                 *string            `json:"name,omitempty"`
+	// Status - READ-ONLY
 	Status                *bool               `json:"status,omitempty"`
 	OdataLocation         *string             `json:"@odata.location,omitempty"`
 	AdditionalProperties1 map[string]*float64 `json:"additionalProperties"`
@@ -162,9 +159,6 @@ func (paipwas PetAPInPropertiesWithAPString) MarshalJSON() ([]byte, error) {
 	}
 	if paipwas.Name != nil {
 		objectMap["name"] = paipwas.Name
-	}
-	if paipwas.Status != nil {
-		objectMap["status"] = paipwas.Status
 	}
 	if paipwas.OdataLocation != nil {
 		objectMap["@odata.location"] = paipwas.OdataLocation
@@ -257,7 +251,8 @@ type PetAPObject struct {
 	AdditionalProperties map[string]interface{} `json:""`
 	ID                   *int32                 `json:"id,omitempty"`
 	Name                 *string                `json:"name,omitempty"`
-	Status               *bool                  `json:"status,omitempty"`
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for PetAPObject.
@@ -268,9 +263,6 @@ func (pao PetAPObject) MarshalJSON() ([]byte, error) {
 	}
 	if pao.Name != nil {
 		objectMap["name"] = pao.Name
-	}
-	if pao.Status != nil {
-		objectMap["status"] = pao.Status
 	}
 	for k, v := range pao.AdditionalProperties {
 		objectMap[k] = v
@@ -339,7 +331,8 @@ type PetAPString struct {
 	AdditionalProperties map[string]*string `json:""`
 	ID                   *int32             `json:"id,omitempty"`
 	Name                 *string            `json:"name,omitempty"`
-	Status               *bool              `json:"status,omitempty"`
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for PetAPString.
@@ -350,9 +343,6 @@ func (pas PetAPString) MarshalJSON() ([]byte, error) {
 	}
 	if pas.Name != nil {
 		objectMap["name"] = pas.Name
-	}
-	if pas.Status != nil {
-		objectMap["status"] = pas.Status
 	}
 	for k, v := range pas.AdditionalProperties {
 		objectMap[k] = v
@@ -421,7 +411,8 @@ type PetAPTrue struct {
 	AdditionalProperties map[string]interface{} `json:""`
 	ID                   *int32                 `json:"id,omitempty"`
 	Name                 *string                `json:"name,omitempty"`
-	Status               *bool                  `json:"status,omitempty"`
+	// Status - READ-ONLY
+	Status *bool `json:"status,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for PetAPTrue.
@@ -432,9 +423,6 @@ func (pat PetAPTrue) MarshalJSON() ([]byte, error) {
 	}
 	if pat.Name != nil {
 		objectMap["name"] = pat.Name
-	}
-	if pat.Status != nil {
-		objectMap["status"] = pat.Status
 	}
 	for k, v := range pat.AdditionalProperties {
 		objectMap[k] = v

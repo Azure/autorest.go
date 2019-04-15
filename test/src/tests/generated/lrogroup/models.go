@@ -2152,14 +2152,14 @@ type OperationResultError struct {
 type Product struct {
 	autorest.Response  `json:"-"`
 	*ProductProperties `json:"properties,omitempty"`
-	// ID - Resource Id
+	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
-	// Type - Resource Type
+	// Type - READ-ONLY; Resource Type
 	Type *string            `json:"type,omitempty"`
 	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
-	// Name - Resource Name
+	// Name - READ-ONLY; Resource Name
 	Name *string `json:"name,omitempty"`
 }
 
@@ -2169,20 +2169,11 @@ func (p Product) MarshalJSON() ([]byte, error) {
 	if p.ProductProperties != nil {
 		objectMap["properties"] = p.ProductProperties
 	}
-	if p.ID != nil {
-		objectMap["id"] = p.ID
-	}
-	if p.Type != nil {
-		objectMap["type"] = p.Type
-	}
 	if p.Tags != nil {
 		objectMap["tags"] = p.Tags
 	}
 	if p.Location != nil {
 		objectMap["location"] = p.Location
-	}
-	if p.Name != nil {
-		objectMap["name"] = p.Name
 	}
 	return json.Marshal(objectMap)
 }
@@ -2259,40 +2250,31 @@ func (p *Product) UnmarshalJSON(body []byte) error {
 // ProductProperties ...
 type ProductProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-	// ProvisioningStateValues - Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
+	// ProvisioningStateValues - READ-ONLY; Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 }
 
 // Resource ...
 type Resource struct {
-	// ID - Resource Id
+	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
-	// Type - Resource Type
+	// Type - READ-ONLY; Resource Type
 	Type *string            `json:"type,omitempty"`
 	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
-	// Name - Resource Name
+	// Name - READ-ONLY; Resource Name
 	Name *string `json:"name,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if r.ID != nil {
-		objectMap["id"] = r.ID
-	}
-	if r.Type != nil {
-		objectMap["type"] = r.Type
-	}
 	if r.Tags != nil {
 		objectMap["tags"] = r.Tags
 	}
 	if r.Location != nil {
 		objectMap["location"] = r.Location
-	}
-	if r.Name != nil {
-		objectMap["name"] = r.Name
 	}
 	return json.Marshal(objectMap)
 }
@@ -2308,7 +2290,7 @@ type Sku struct {
 type SubProduct struct {
 	autorest.Response     `json:"-"`
 	*SubProductProperties `json:"properties,omitempty"`
-	// ID - Sub Resource Id
+	// ID - READ-ONLY; Sub Resource Id
 	ID *string `json:"id,omitempty"`
 }
 
@@ -2317,9 +2299,6 @@ func (sp SubProduct) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if sp.SubProductProperties != nil {
 		objectMap["properties"] = sp.SubProductProperties
-	}
-	if sp.ID != nil {
-		objectMap["id"] = sp.ID
 	}
 	return json.Marshal(objectMap)
 }
@@ -2360,12 +2339,12 @@ func (sp *SubProduct) UnmarshalJSON(body []byte) error {
 // SubProductProperties ...
 type SubProductProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
-	// ProvisioningStateValues - Possible values include: 'ProvisioningStateValues1Succeeded', 'ProvisioningStateValues1Failed', 'ProvisioningStateValues1Canceled', 'ProvisioningStateValues1Accepted', 'ProvisioningStateValues1Creating', 'ProvisioningStateValues1Created', 'ProvisioningStateValues1Updating', 'ProvisioningStateValues1Updated', 'ProvisioningStateValues1Deleting', 'ProvisioningStateValues1Deleted', 'ProvisioningStateValues1OK'
+	// ProvisioningStateValues - READ-ONLY; Possible values include: 'ProvisioningStateValues1Succeeded', 'ProvisioningStateValues1Failed', 'ProvisioningStateValues1Canceled', 'ProvisioningStateValues1Accepted', 'ProvisioningStateValues1Creating', 'ProvisioningStateValues1Created', 'ProvisioningStateValues1Updating', 'ProvisioningStateValues1Updated', 'ProvisioningStateValues1Deleting', 'ProvisioningStateValues1Deleted', 'ProvisioningStateValues1OK'
 	ProvisioningStateValues ProvisioningStateValues1 `json:"provisioningStateValues,omitempty"`
 }
 
 // SubResource ...
 type SubResource struct {
-	// ID - Sub Resource Id
+	// ID - READ-ONLY; Sub Resource Id
 	ID *string `json:"id,omitempty"`
 }

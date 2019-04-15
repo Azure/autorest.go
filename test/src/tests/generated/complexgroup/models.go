@@ -975,8 +975,9 @@ type Pet struct {
 // ReadonlyObj ...
 type ReadonlyObj struct {
 	autorest.Response `json:"-"`
-	ID                *string `json:"id,omitempty"`
-	Size              *int32  `json:"size,omitempty"`
+	// ID - READ-ONLY
+	ID   *string `json:"id,omitempty"`
+	Size *int32  `json:"size,omitempty"`
 }
 
 // BasicSalmon ...
