@@ -93,6 +93,68 @@ func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (r
 	return
 }
 
+// GetDotSyntax get complex types that are polymorphic, JSON key contains a dot
+func (client PolymorphismClient) GetDotSyntax(ctx context.Context) (result DotFishModel, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetDotSyntax")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetDotSyntaxPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetDotSyntaxSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetDotSyntaxResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetDotSyntax", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetDotSyntaxPreparer prepares the GetDotSyntax request.
+func (client PolymorphismClient) GetDotSyntaxPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/dotsyntax"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetDotSyntaxSender sends the GetDotSyntax request. The method will close the
+// http.Response Body if it receives an error.
+func (client PolymorphismClient) GetDotSyntaxSender(req *http.Request) (*http.Response, error) {
+	return autorest.SendWithSender(client, req,
+		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+}
+
+// GetDotSyntaxResponder handles the response to the GetDotSyntax request. The method always
+// closes the http.Response Body.
+func (client PolymorphismClient) GetDotSyntaxResponder(resp *http.Response) (result DotFishModel, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetValid get complex types that are polymorphic
 func (client PolymorphismClient) GetValid(ctx context.Context) (result FishModel, err error) {
 	if tracing.IsEnabled() {

@@ -86,6 +86,7 @@ var _ InheritanceClientAPI = (*complexgroup.InheritanceClient)(nil)
 // PolymorphismClientAPI contains the set of methods on the PolymorphismClient type.
 type PolymorphismClientAPI interface {
 	GetComplicated(ctx context.Context) (result complexgroup.SalmonModel, err error)
+	GetDotSyntax(ctx context.Context) (result complexgroup.DotFishModel, err error)
 	GetValid(ctx context.Context) (result complexgroup.FishModel, err error)
 	PutComplicated(ctx context.Context, complexBody complexgroup.BasicSalmon) (result autorest.Response, err error)
 	PutMissingDiscriminator(ctx context.Context, complexBody complexgroup.BasicSalmon) (result complexgroup.SalmonModel, err error)

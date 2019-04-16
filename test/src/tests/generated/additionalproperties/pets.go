@@ -71,6 +71,7 @@ func (client PetsClient) CreateAPInProperties(ctx context.Context, createParamet
 
 // CreateAPInPropertiesPreparer prepares the CreateAPInProperties request.
 func (client PetsClient) CreateAPInPropertiesPreparer(ctx context.Context, createParameters PetAPInProperties) (*http.Request, error) {
+	createParameters.Status = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
@@ -142,6 +143,7 @@ func (client PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, c
 
 // CreateAPInPropertiesWithAPStringPreparer prepares the CreateAPInPropertiesWithAPString request.
 func (client PetsClient) CreateAPInPropertiesWithAPStringPreparer(ctx context.Context, createParameters PetAPInPropertiesWithAPString) (*http.Request, error) {
+	createParameters.Status = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
@@ -212,6 +214,7 @@ func (client PetsClient) CreateAPObject(ctx context.Context, createParameters Pe
 
 // CreateAPObjectPreparer prepares the CreateAPObject request.
 func (client PetsClient) CreateAPObjectPreparer(ctx context.Context, createParameters PetAPObject) (*http.Request, error) {
+	createParameters.Status = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
@@ -282,6 +285,7 @@ func (client PetsClient) CreateAPString(ctx context.Context, createParameters Pe
 
 // CreateAPStringPreparer prepares the CreateAPString request.
 func (client PetsClient) CreateAPStringPreparer(ctx context.Context, createParameters PetAPString) (*http.Request, error) {
+	createParameters.Status = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),
@@ -352,6 +356,7 @@ func (client PetsClient) CreateAPTrue(ctx context.Context, createParameters PetA
 
 // CreateAPTruePreparer prepares the CreateAPTrue request.
 func (client PetsClient) CreateAPTruePreparer(ctx context.Context, createParameters PetAPTrue) (*http.Request, error) {
+	createParameters.Status = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),

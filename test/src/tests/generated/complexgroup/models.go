@@ -34,29 +34,44 @@ func PossibleCMYKColorsValues() []CMYKColors {
 	return []CMYKColors{BlacK, Cyan, Magenta, YELLOW}
 }
 
-// Fishtype enumerates the values for fishtype.
-type Fishtype string
+// FishType enumerates the values for fish type.
+type FishType string
+
+const (
+	// FishTypeDotFish ...
+	FishTypeDotFish FishType = "DotFish"
+	// FishTypeDotSalmon ...
+	FishTypeDotSalmon FishType = "DotSalmon"
+)
+
+// PossibleFishTypeValues returns an array of possible values for the FishType const type.
+func PossibleFishTypeValues() []FishType {
+	return []FishType{FishTypeDotFish, FishTypeDotSalmon}
+}
+
+// FishtypeBasicFish enumerates the values for fishtype basic fish.
+type FishtypeBasicFish string
 
 const (
 	// FishtypeCookiecuttershark ...
-	FishtypeCookiecuttershark Fishtype = "cookiecuttershark"
+	FishtypeCookiecuttershark FishtypeBasicFish = "cookiecuttershark"
 	// FishtypeFish ...
-	FishtypeFish Fishtype = "Fish"
+	FishtypeFish FishtypeBasicFish = "Fish"
 	// FishtypeGoblin ...
-	FishtypeGoblin Fishtype = "goblin"
+	FishtypeGoblin FishtypeBasicFish = "goblin"
 	// FishtypeSalmon ...
-	FishtypeSalmon Fishtype = "salmon"
+	FishtypeSalmon FishtypeBasicFish = "salmon"
 	// FishtypeSawshark ...
-	FishtypeSawshark Fishtype = "sawshark"
+	FishtypeSawshark FishtypeBasicFish = "sawshark"
 	// FishtypeShark ...
-	FishtypeShark Fishtype = "shark"
+	FishtypeShark FishtypeBasicFish = "shark"
 	// FishtypeSmartSalmon ...
-	FishtypeSmartSalmon Fishtype = "smart_salmon"
+	FishtypeSmartSalmon FishtypeBasicFish = "smart_salmon"
 )
 
-// PossibleFishtypeValues returns an array of possible values for the Fishtype const type.
-func PossibleFishtypeValues() []Fishtype {
-	return []Fishtype{FishtypeCookiecuttershark, FishtypeFish, FishtypeGoblin, FishtypeSalmon, FishtypeSawshark, FishtypeShark, FishtypeSmartSalmon}
+// PossibleFishtypeBasicFishValues returns an array of possible values for the FishtypeBasicFish const type.
+func PossibleFishtypeBasicFishValues() []FishtypeBasicFish {
+	return []FishtypeBasicFish{FishtypeCookiecuttershark, FishtypeFish, FishtypeGoblin, FishtypeSalmon, FishtypeSawshark, FishtypeShark, FishtypeSmartSalmon}
 }
 
 // GoblinSharkColor enumerates the values for goblin shark color.
@@ -150,7 +165,7 @@ type Cookiecuttershark struct {
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Cookiecuttershark.
@@ -283,7 +298,7 @@ func (c *Cookiecuttershark) UnmarshalJSON(body []byte) error {
 			}
 		case "fishtype":
 			if v != nil {
-				var fishtype Fishtype
+				var fishtype FishtypeBasicFish
 				err = json.Unmarshal(*v, &fishtype)
 				if err != nil {
 					return err
@@ -339,6 +354,145 @@ type Dog struct {
 	Name *string `json:"name,omitempty"`
 }
 
+// BasicDotFish ...
+type BasicDotFish interface {
+	AsDotSalmon() (*DotSalmon, bool)
+	AsDotFish() (*DotFish, bool)
+}
+
+// DotFish ...
+type DotFish struct {
+	autorest.Response `json:"-"`
+	Species           *string `json:"species,omitempty"`
+	// FishType - Possible values include: 'FishTypeDotFish', 'FishTypeDotSalmon'
+	FishType FishType `json:"fish.type,omitempty"`
+}
+
+func unmarshalBasicDotFish(body []byte) (BasicDotFish, error) {
+	var m map[string]interface{}
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["fish.type"] {
+	case string(FishTypeDotSalmon):
+		var ds DotSalmon
+		err := json.Unmarshal(body, &ds)
+		return ds, err
+	default:
+		var df DotFish
+		err := json.Unmarshal(body, &df)
+		return df, err
+	}
+}
+func unmarshalBasicDotFishArray(body []byte) ([]BasicDotFish, error) {
+	var rawMessages []*json.RawMessage
+	err := json.Unmarshal(body, &rawMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	dfArray := make([]BasicDotFish, len(rawMessages))
+
+	for index, rawMessage := range rawMessages {
+		df, err := unmarshalBasicDotFish(*rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		dfArray[index] = df
+	}
+	return dfArray, nil
+}
+
+// MarshalJSON is the custom marshaler for DotFish.
+func (df DotFish) MarshalJSON() ([]byte, error) {
+	df.FishType = FishTypeDotFish
+	objectMap := make(map[string]interface{})
+	if df.Species != nil {
+		objectMap["species"] = df.Species
+	}
+	if df.FishType != "" {
+		objectMap["fish.type"] = df.FishType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsDotSalmon is the BasicDotFish implementation for DotFish.
+func (df DotFish) AsDotSalmon() (*DotSalmon, bool) {
+	return nil, false
+}
+
+// AsDotFish is the BasicDotFish implementation for DotFish.
+func (df DotFish) AsDotFish() (*DotFish, bool) {
+	return &df, true
+}
+
+// AsBasicDotFish is the BasicDotFish implementation for DotFish.
+func (df DotFish) AsBasicDotFish() (BasicDotFish, bool) {
+	return &df, true
+}
+
+// DotFishModel ...
+type DotFishModel struct {
+	autorest.Response `json:"-"`
+	Value             BasicDotFish `json:"value,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for DotFishModel struct.
+func (dfm *DotFishModel) UnmarshalJSON(body []byte) error {
+	df, err := unmarshalBasicDotFish(body)
+	if err != nil {
+		return err
+	}
+	dfm.Value = df
+
+	return nil
+}
+
+// DotSalmon ...
+type DotSalmon struct {
+	Location *string `json:"location,omitempty"`
+	Iswild   *bool   `json:"iswild,omitempty"`
+	Species  *string `json:"species,omitempty"`
+	// FishType - Possible values include: 'FishTypeDotFish', 'FishTypeDotSalmon'
+	FishType FishType `json:"fish.type,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for DotSalmon.
+func (ds DotSalmon) MarshalJSON() ([]byte, error) {
+	ds.FishType = FishTypeDotSalmon
+	objectMap := make(map[string]interface{})
+	if ds.Location != nil {
+		objectMap["location"] = ds.Location
+	}
+	if ds.Iswild != nil {
+		objectMap["iswild"] = ds.Iswild
+	}
+	if ds.Species != nil {
+		objectMap["species"] = ds.Species
+	}
+	if ds.FishType != "" {
+		objectMap["fish.type"] = ds.FishType
+	}
+	return json.Marshal(objectMap)
+}
+
+// AsDotSalmon is the BasicDotFish implementation for DotSalmon.
+func (ds DotSalmon) AsDotSalmon() (*DotSalmon, bool) {
+	return &ds, true
+}
+
+// AsDotFish is the BasicDotFish implementation for DotSalmon.
+func (ds DotSalmon) AsDotFish() (*DotFish, bool) {
+	return nil, false
+}
+
+// AsBasicDotFish is the BasicDotFish implementation for DotSalmon.
+func (ds DotSalmon) AsBasicDotFish() (BasicDotFish, bool) {
+	return &ds, true
+}
+
 // DoubleWrapper ...
 type DoubleWrapper struct {
 	autorest.Response                                                               `json:"-"`
@@ -378,7 +532,7 @@ type Fish struct {
 	Length            *float64     `json:"length,omitempty"`
 	Siblings          *[]BasicFish `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
 }
 
 func unmarshalBasicFish(body []byte) (BasicFish, error) {
@@ -544,7 +698,7 @@ func (f *Fish) UnmarshalJSON(body []byte) error {
 			}
 		case "fishtype":
 			if v != nil {
-				var fishtype Fishtype
+				var fishtype FishtypeBasicFish
 				err = json.Unmarshal(*v, &fishtype)
 				if err != nil {
 					return err
@@ -592,7 +746,7 @@ type Goblinshark struct {
 	Length   *float64         `json:"length,omitempty"`
 	Siblings *[]BasicFish     `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Goblinshark.
@@ -749,7 +903,7 @@ func (g *Goblinshark) UnmarshalJSON(body []byte) error {
 			}
 		case "fishtype":
 			if v != nil {
-				var fishtype Fishtype
+				var fishtype FishtypeBasicFish
 				err = json.Unmarshal(*v, &fishtype)
 				if err != nil {
 					return err
@@ -975,8 +1129,9 @@ type Pet struct {
 // ReadonlyObj ...
 type ReadonlyObj struct {
 	autorest.Response `json:"-"`
-	ID                *string `json:"id,omitempty"`
-	Size              *int32  `json:"size,omitempty"`
+	// ID - READ-ONLY
+	ID   *string `json:"id,omitempty"`
+	Size *int32  `json:"size,omitempty"`
 }
 
 // BasicSalmon ...
@@ -994,7 +1149,7 @@ type Salmon struct {
 	Length            *float64     `json:"length,omitempty"`
 	Siblings          *[]BasicFish `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
 }
 
 func unmarshalBasicSalmon(body []byte) (BasicSalmon, error) {
@@ -1164,7 +1319,7 @@ func (s *Salmon) UnmarshalJSON(body []byte) error {
 			}
 		case "fishtype":
 			if v != nil {
-				var fishtype Fishtype
+				var fishtype FishtypeBasicFish
 				err = json.Unmarshal(*v, &fishtype)
 				if err != nil {
 					return err
@@ -1203,7 +1358,7 @@ type Sawshark struct {
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Sawshark.
@@ -1348,7 +1503,7 @@ func (s *Sawshark) UnmarshalJSON(body []byte) error {
 			}
 		case "fishtype":
 			if v != nil {
-				var fishtype Fishtype
+				var fishtype FishtypeBasicFish
 				err = json.Unmarshal(*v, &fishtype)
 				if err != nil {
 					return err
@@ -1377,7 +1532,7 @@ type Shark struct {
 	Length   *float64     `json:"length,omitempty"`
 	Siblings *[]BasicFish `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
 }
 
 func unmarshalBasicShark(body []byte) (BasicShark, error) {
@@ -1555,7 +1710,7 @@ func (s *Shark) UnmarshalJSON(body []byte) error {
 			}
 		case "fishtype":
 			if v != nil {
-				var fishtype Fishtype
+				var fishtype FishtypeBasicFish
 				err = json.Unmarshal(*v, &fishtype)
 				if err != nil {
 					return err
@@ -1589,7 +1744,7 @@ type SmartSalmon struct {
 	Length               *float64               `json:"length,omitempty"`
 	Siblings             *[]BasicFish           `json:"siblings,omitempty"`
 	// Fishtype - Possible values include: 'FishtypeFish', 'FishtypeSalmon', 'FishtypeSmartSalmon', 'FishtypeShark', 'FishtypeSawshark', 'FishtypeGoblin', 'FishtypeCookiecuttershark'
-	Fishtype Fishtype `json:"fishtype,omitempty"`
+	Fishtype FishtypeBasicFish `json:"fishtype,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for SmartSalmon.
@@ -1749,7 +1904,7 @@ func (s *SmartSalmon) UnmarshalJSON(body []byte) error {
 			}
 		case "fishtype":
 			if v != nil {
-				var fishtype Fishtype
+				var fishtype FishtypeBasicFish
 				err = json.Unmarshal(*v, &fishtype)
 				if err != nil {
 					return err

@@ -126,6 +126,7 @@ func (client ReadonlypropertyClient) PutValid(ctx context.Context, complexBody R
 
 // PutValidPreparer prepares the PutValid request.
 func (client ReadonlypropertyClient) PutValidPreparer(ctx context.Context, complexBody ReadonlyObj) (*http.Request, error) {
+	complexBody.ID = nil
 	preparer := autorest.CreatePreparer(
 		autorest.AsContentType("application/json; charset=utf-8"),
 		autorest.AsPut(),

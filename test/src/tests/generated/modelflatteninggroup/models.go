@@ -122,14 +122,14 @@ func (e *Error) UnmarshalJSON(body []byte) error {
 // FlattenedProduct flattened product.
 type FlattenedProduct struct {
 	*FlattenedProductProperties `json:"properties,omitempty"`
-	// ID - Resource Id
+	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
-	// Type - Resource Type
+	// Type - READ-ONLY; Resource Type
 	Type *string            `json:"type,omitempty"`
 	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
-	// Name - Resource Name
+	// Name - READ-ONLY; Resource Name
 	Name *string `json:"name,omitempty"`
 }
 
@@ -139,20 +139,11 @@ func (fp FlattenedProduct) MarshalJSON() ([]byte, error) {
 	if fp.FlattenedProductProperties != nil {
 		objectMap["properties"] = fp.FlattenedProductProperties
 	}
-	if fp.ID != nil {
-		objectMap["id"] = fp.ID
-	}
-	if fp.Type != nil {
-		objectMap["type"] = fp.Type
-	}
 	if fp.Tags != nil {
 		objectMap["tags"] = fp.Tags
 	}
 	if fp.Location != nil {
 		objectMap["location"] = fp.Location
-	}
-	if fp.Name != nil {
-		objectMap["name"] = fp.Name
 	}
 	return json.Marshal(objectMap)
 }
@@ -230,7 +221,7 @@ func (fp *FlattenedProduct) UnmarshalJSON(body []byte) error {
 type FlattenedProductProperties struct {
 	PName *string `json:"p.name,omitempty"`
 	Type  *string `json:"type,omitempty"`
-	// ProvisioningStateValues - Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
+	// ProvisioningStateValues - READ-ONLY; Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Accepted', 'Creating', 'Created', 'Updating', 'Updated', 'Deleting', 'Deleted', 'OK'
 	ProvisioningStateValues ProvisioningStateValues `json:"provisioningStateValues,omitempty"`
 	ProvisioningState       *string                 `json:"provisioningState,omitempty"`
 }
@@ -301,34 +292,25 @@ func (pw *ProductWrapper) UnmarshalJSON(body []byte) error {
 
 // Resource ...
 type Resource struct {
-	// ID - Resource Id
+	// ID - READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty"`
-	// Type - Resource Type
+	// Type - READ-ONLY; Resource Type
 	Type *string            `json:"type,omitempty"`
 	Tags map[string]*string `json:"tags"`
 	// Location - Resource Location
 	Location *string `json:"location,omitempty"`
-	// Name - Resource Name
+	// Name - READ-ONLY; Resource Name
 	Name *string `json:"name,omitempty"`
 }
 
 // MarshalJSON is the custom marshaler for Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	if r.ID != nil {
-		objectMap["id"] = r.ID
-	}
-	if r.Type != nil {
-		objectMap["type"] = r.Type
-	}
 	if r.Tags != nil {
 		objectMap["tags"] = r.Tags
 	}
 	if r.Location != nil {
 		objectMap["location"] = r.Location
-	}
-	if r.Name != nil {
-		objectMap["name"] = r.Name
 	}
 	return json.Marshal(objectMap)
 }
