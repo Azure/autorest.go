@@ -7,6 +7,7 @@ package lrogroup
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
@@ -131,7 +132,7 @@ type LRORetrysDelete202Retry200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LRORetrysDelete202Retry200Future) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDelete202Retry200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -154,7 +155,7 @@ type LRORetrysDeleteAsyncRelativeRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LRORetrysDeleteAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -177,7 +178,7 @@ type LRORetrysDeleteProvisioning202Accepted200SucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LRORetrysDeleteProvisioning202Accepted200SucceededFuture) Result(client LRORetrysClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysDeleteProvisioning202Accepted200SucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -206,7 +207,7 @@ type LRORetrysPost202Retry200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LRORetrysPost202Retry200Future) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPost202Retry200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -229,7 +230,7 @@ type LRORetrysPostAsyncRelativeRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LRORetrysPostAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPostAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -252,7 +253,7 @@ type LRORetrysPut201CreatingSucceeded200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LRORetrysPut201CreatingSucceeded200Future) Result(client LRORetrysClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPut201CreatingSucceeded200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -281,7 +282,7 @@ type LRORetrysPutAsyncRelativeRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LRORetrysPutAsyncRelativeRetrySucceededFuture) Result(client LRORetrysClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysPutAsyncRelativeRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -310,7 +311,7 @@ type LROSADsDelete202NonRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDelete202NonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202NonRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -333,7 +334,7 @@ type LROSADsDelete202RetryInvalidHeaderFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDelete202RetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete202RetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -356,7 +357,7 @@ type LROSADsDelete204SucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDelete204SucceededFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDelete204SucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -379,7 +380,7 @@ type LROSADsDeleteAsyncRelativeRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDeleteAsyncRelativeRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -402,7 +403,7 @@ type LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -425,7 +426,7 @@ type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -448,7 +449,7 @@ type LROSADsDeleteAsyncRelativeRetryNoStatusFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDeleteAsyncRelativeRetryNoStatusFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -471,7 +472,7 @@ type LROSADsDeleteNonRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsDeleteNonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsDeleteNonRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -494,7 +495,7 @@ type LROSADsPost202NoLocationFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPost202NoLocationFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NoLocationFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -517,7 +518,7 @@ type LROSADsPost202NonRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPost202NonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202NonRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -540,7 +541,7 @@ type LROSADsPost202RetryInvalidHeaderFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPost202RetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPost202RetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -563,7 +564,7 @@ type LROSADsPostAsyncRelativeRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPostAsyncRelativeRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -586,7 +587,7 @@ type LROSADsPostAsyncRelativeRetryInvalidHeaderFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPostAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -609,7 +610,7 @@ type LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -632,7 +633,7 @@ type LROSADsPostAsyncRelativeRetryNoPayloadFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPostAsyncRelativeRetryNoPayloadFuture) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostAsyncRelativeRetryNoPayloadFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -655,7 +656,7 @@ type LROSADsPostNonRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPostNonRetry400Future) Result(client LROSADsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPostNonRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -678,7 +679,7 @@ type LROSADsPut200InvalidJSONFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPut200InvalidJSONFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPut200InvalidJSONFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -707,7 +708,7 @@ type LROSADsPutAsyncRelativeRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutAsyncRelativeRetry400Future) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -736,7 +737,7 @@ type LROSADsPutAsyncRelativeRetryInvalidHeaderFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutAsyncRelativeRetryInvalidHeaderFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidHeaderFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -765,7 +766,7 @@ type LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -794,7 +795,7 @@ type LROSADsPutAsyncRelativeRetryNoStatusFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutAsyncRelativeRetryNoStatusFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -823,7 +824,7 @@ type LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -852,7 +853,7 @@ type LROSADsPutError201NoProvisioningStatePayloadFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutError201NoProvisioningStatePayloadFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutError201NoProvisioningStatePayloadFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -881,7 +882,7 @@ type LROSADsPutNonRetry201Creating400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutNonRetry201Creating400Future) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -910,7 +911,7 @@ type LROSADsPutNonRetry201Creating400InvalidJSONFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutNonRetry201Creating400InvalidJSONFuture) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry201Creating400InvalidJSONFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -939,7 +940,7 @@ type LROSADsPutNonRetry400Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROSADsPutNonRetry400Future) Result(client LROSADsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsPutNonRetry400Future", "Result", future.Response(), "Polling failure")
 		return
@@ -968,7 +969,7 @@ type LROsCustomHeaderPost202Retry200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsCustomHeaderPost202Retry200Future) Result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPost202Retry200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -991,7 +992,7 @@ type LROsCustomHeaderPostAsyncRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsCustomHeaderPostAsyncRetrySucceededFuture) Result(client LROsCustomHeaderClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPostAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1014,7 +1015,7 @@ type LROsCustomHeaderPut201CreatingSucceeded200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsCustomHeaderPut201CreatingSucceeded200Future) Result(client LROsCustomHeaderClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPut201CreatingSucceeded200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1043,7 +1044,7 @@ type LROsCustomHeaderPutAsyncRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsCustomHeaderPutAsyncRetrySucceededFuture) Result(client LROsCustomHeaderClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsCustomHeaderPutAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1072,7 +1073,7 @@ type LROsDelete202NoRetry204Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDelete202NoRetry204Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202NoRetry204Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1101,7 +1102,7 @@ type LROsDelete202Retry200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDelete202Retry200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete202Retry200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1130,7 +1131,7 @@ type LROsDelete204SucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDelete204SucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDelete204SucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1153,7 +1154,7 @@ type LROsDeleteAsyncNoHeaderInRetryFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteAsyncNoHeaderInRetryFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1176,7 +1177,7 @@ type LROsDeleteAsyncNoRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteAsyncNoRetrySucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncNoRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1199,7 +1200,7 @@ type LROsDeleteAsyncRetrycanceledFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteAsyncRetrycanceledFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrycanceledFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1222,7 +1223,7 @@ type LROsDeleteAsyncRetryFailedFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteAsyncRetryFailedFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetryFailedFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1245,7 +1246,7 @@ type LROsDeleteAsyncRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteAsyncRetrySucceededFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1268,7 +1269,7 @@ type LROsDeleteNoHeaderInRetryFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteNoHeaderInRetryFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1291,7 +1292,7 @@ type LROsDeleteProvisioning202Accepted200SucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteProvisioning202Accepted200SucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Accepted200SucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1320,7 +1321,7 @@ type LROsDeleteProvisioning202Deletingcanceled200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteProvisioning202Deletingcanceled200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202Deletingcanceled200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1349,7 +1350,7 @@ type LROsDeleteProvisioning202DeletingFailed200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsDeleteProvisioning202DeletingFailed200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsDeleteProvisioning202DeletingFailed200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1378,7 +1379,7 @@ type LROsPost200WithPayloadFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPost200WithPayloadFuture) Result(client LROsClient) (s Sku, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost200WithPayloadFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1407,7 +1408,7 @@ type LROsPost202NoRetry204Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPost202NoRetry204Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202NoRetry204Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1436,7 +1437,7 @@ type LROsPost202Retry200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPost202Retry200Future) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPost202Retry200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1459,7 +1460,7 @@ type LROsPostAsyncNoRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPostAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncNoRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1488,7 +1489,7 @@ type LROsPostAsyncRetrycanceledFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPostAsyncRetrycanceledFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrycanceledFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1511,7 +1512,7 @@ type LROsPostAsyncRetryFailedFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPostAsyncRetryFailedFuture) Result(client LROsClient) (ar autorest.Response, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetryFailedFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1534,7 +1535,7 @@ type LROsPostAsyncRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPostAsyncRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1563,7 +1564,7 @@ type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetDefaultFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1592,7 +1593,7 @@ type LROsPostDoubleHeadersFinalAzureHeaderGetFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPostDoubleHeadersFinalAzureHeaderGetFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalAzureHeaderGetFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1621,7 +1622,7 @@ type LROsPostDoubleHeadersFinalLocationGetFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPostDoubleHeadersFinalLocationGetFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPostDoubleHeadersFinalLocationGetFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1650,7 +1651,7 @@ type LROsPut200Acceptedcanceled200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPut200Acceptedcanceled200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200Acceptedcanceled200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1679,7 +1680,7 @@ type LROsPut200SucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPut200SucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1708,7 +1709,7 @@ type LROsPut200SucceededNoStateFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPut200SucceededNoStateFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200SucceededNoStateFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1737,7 +1738,7 @@ type LROsPut200UpdatingSucceeded204Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPut200UpdatingSucceeded204Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut200UpdatingSucceeded204Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1766,7 +1767,7 @@ type LROsPut201CreatingFailed200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPut201CreatingFailed200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingFailed200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1795,7 +1796,7 @@ type LROsPut201CreatingSucceeded200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPut201CreatingSucceeded200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut201CreatingSucceeded200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1824,7 +1825,7 @@ type LROsPut202Retry200Future struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPut202Retry200Future) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPut202Retry200Future", "Result", future.Response(), "Polling failure")
 		return
@@ -1853,7 +1854,7 @@ type LROsPutAsyncNoHeaderInRetryFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutAsyncNoHeaderInRetryFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1882,7 +1883,7 @@ type LROsPutAsyncNonResourceFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutAsyncNonResourceFuture) Result(client LROsClient) (s Sku, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNonResourceFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1911,7 +1912,7 @@ type LROsPutAsyncNoRetrycanceledFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutAsyncNoRetrycanceledFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrycanceledFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1940,7 +1941,7 @@ type LROsPutAsyncNoRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutAsyncNoRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncNoRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1969,7 +1970,7 @@ type LROsPutAsyncRetryFailedFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutAsyncRetryFailedFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetryFailedFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -1998,7 +1999,7 @@ type LROsPutAsyncRetrySucceededFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutAsyncRetrySucceededFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncRetrySucceededFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -2027,7 +2028,7 @@ type LROsPutAsyncSubResourceFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutAsyncSubResourceFuture) Result(client LROsClient) (sp SubProduct, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutAsyncSubResourceFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -2056,7 +2057,7 @@ type LROsPutNoHeaderInRetryFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutNoHeaderInRetryFuture) Result(client LROsClient) (p Product, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNoHeaderInRetryFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -2085,7 +2086,7 @@ type LROsPutNonResourceFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutNonResourceFuture) Result(client LROsClient) (s Sku, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutNonResourceFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -2114,7 +2115,7 @@ type LROsPutSubResourceFuture struct {
 // If the operation has not completed it will return an error.
 func (future *LROsPutSubResourceFuture) Result(client LROsClient) (sp SubProduct, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "lrogroup.LROsPutSubResourceFuture", "Result", future.Response(), "Polling failure")
 		return

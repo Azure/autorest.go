@@ -489,7 +489,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
         // If the operation has not completed it will return an error.
         func (future *@Model.Name) Result(client @ftg.ClientTypeName) (@resultVar @ftg.ResultTypeName, err error) {
         var done bool
-        done, err = future.Done(client)
+        done, err = future.DoneWithContext(context.Background(), client)
         if err != nil {
         err = autorest.NewErrorWithError(err, "@futureTypeName", "Result", future.Response(), "Polling failure")
         return

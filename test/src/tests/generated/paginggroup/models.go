@@ -211,7 +211,7 @@ type PagingGetMultiplePagesLROAllFuture struct {
 // If the operation has not completed it will return an error.
 func (future *PagingGetMultiplePagesLROAllFuture) Result(client PagingClient) (prp ProductResultPage, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROAllFuture", "Result", future.Response(), "Polling failure")
 		return
@@ -240,7 +240,7 @@ type PagingGetMultiplePagesLROFuture struct {
 // If the operation has not completed it will return an error.
 func (future *PagingGetMultiplePagesLROFuture) Result(client PagingClient) (prp ProductResultPage, err error) {
 	var done bool
-	done, err = future.Done(client)
+	done, err = future.DoneWithContext(context.Background(), client)
 	if err != nil {
 		err = autorest.NewErrorWithError(err, "paginggroup.PagingGetMultiplePagesLROFuture", "Result", future.Response(), "Polling failure")
 		return
