@@ -197,7 +197,13 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
         {
             if (p.IsReadOnly)
             {
-                @:@(Model.BodyParameter.Name).@(p.Name) = nil
+                var emptyValue = "nil";
+                if (!((PropertyGo)p).IsPointer)
+                {
+                    // enums aren't pointer types so set to empty string
+                    emptyValue = "\"\"";
+                }
+                @:@(Model.BodyParameter.Name).@(p.Name) = @emptyValue
             }
         }
     }
