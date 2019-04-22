@@ -190,14 +190,21 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
             @EmptyLine
         </text>
     }
-    @if (Model.BodyParameter != null && Model.BodyParameter.ModelType is CompositeTypeGo ctg)
+    @if (Model.BodyParameter != null && Model.BodyParameter.ModelType is CompositeTypeGo ctg && !ctg.IsPolymorphic)
     {
-        // set all read-only properties to nil so they aren't sent over the wire
+        // set all read-only properties to nil so they aren't sent over the wire.  polymorphic types
+        // are passed as interfaces plus they do this in their custom marshallers so skip them here.
         foreach (var p in ctg.Properties)
         {
             if (p.IsReadOnly)
             {
-                @:@(Model.BodyParameter.Name).@(p.Name) = nil
+                var emptyValue = "nil";
+                if (!((PropertyGo)p).IsPointer)
+                {
+                    // enums aren't pointer types so set to empty string
+                    emptyValue = "\"\"";
+                }
+                @:@(Model.BodyParameter.Name).@(p.Name) = @emptyValue
             }
         }
     }
