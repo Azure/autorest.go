@@ -120,13 +120,22 @@ namespace AutoRest.Go
                 }
                 // module name is everything to the right of the start of the module root
                 var gomodTemplate = new GoModTemplate { Model = new GoMod(normalized.Substring(i)) };
-                await Write(gomodTemplate, "go.mod");
+                await Write(gomodTemplate, $"{StagingDir()}go.mod");
             }
         }
 
         private string FormatFileName(string fileName)
         {
-            return $"{fileName}{ImplementationFileExtension}";
+            return $"{StagingDir()}{fileName}{ImplementationFileExtension}";
+        }
+
+        private string StagingDir()
+        {
+            if (!Settings.Instance.Host.GetValue<bool>("stage").Result)
+            {
+                return "";
+            }
+            return "stage/";
         }
     }
 }
