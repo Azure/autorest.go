@@ -4,7 +4,7 @@ go:
   - 1.11.x
   - 1.12.x
 env:
-  - NODE_VERSION="8.9.4"
+  - NODE_VERSION="10.15.3"
 before_install:
   - nvm install $NODE_VERSION
 install:
