@@ -29,6 +29,15 @@ namespace AutoRest.Go
             { "containerservice", "containerservices" }
         };
 
+        /// <summary>
+        /// Resets variant static data.  Call between batches.
+        /// </summary>
+        public static void ResetState()
+        {
+            s_interfaceNames.Clear();
+            s_wordMap.Clear();
+        }
+
         // contains a map from a model type to its corresponding interface name
         private static Dictionary<IModelType, string> s_interfaceNames = new Dictionary<IModelType, string>();
 

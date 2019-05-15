@@ -28,7 +28,12 @@ namespace AutoRest.Go.Model
 
             CodeModel = method.CodeModel;
             ContentType = (CompositeTypeGo)method.ReturnType.Body;
-            ElementType = ContentType.Properties.FirstOrDefault(p => p.ModelType is SequenceTypeGo).ModelType.Cast<SequenceTypeGo>().ElementType;
+            var returnSeq = ContentType.Properties.FirstOrDefault(p => p.ModelType is SequenceTypeGo);
+            if (returnSeq == null)
+            {
+                throw new InvalidOperationException($"pageable return type {ContentType.Name} for method {method.Owner}.{method.Name} does not contain an array");
+            }
+            ElementType = returnSeq.ModelType.Cast<SequenceTypeGo>().ElementType;
 
             Documentation = $"Contains a page of {ReturnTypeName} values.";
             PreparerNeeded = !method.NextMethodExists(CodeModel.Methods.Cast<MethodGo>());
