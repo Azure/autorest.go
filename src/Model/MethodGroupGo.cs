@@ -11,8 +11,6 @@ namespace AutoRest.Go.Model
 {
     public class MethodGroupGo : MethodGroup
     {
-        private static HashSet<string> s_AllNames = new HashSet<string>();
-
         public string ClientName { get; private set; }
         public string Documentation { get; private set; }
         public string PackageName { get; private set; }
@@ -34,30 +32,16 @@ namespace AutoRest.Go.Model
         {
         }
 
-        internal void Transform(CodeModelGo cmg)
+        internal void Transform(CodeModelGo cmg, HashSet<string> allNames)
         {
             var originalName = Name.Value;
             Name = Name.Value.TrimPackageName(cmg.Namespace);
 
-            // use the API version as the prefix to the group name; this is because
-            // in batch mode the generator isn't recycled per batch so you can end up
-            // with erroneous collisions.  note that for composite packages (web)
-            // there will be no API version so fall back to using the batch tag.
-            var prefix = cmg.ApiVersion;
-            if (string.IsNullOrWhiteSpace(prefix))
-            {
-                prefix = cmg.Tag;
-            }
-
-            // keep a list of all method group names as trimming the package name
-            // can introduce collisions.  if there's a collision append "Group" to
-            // the name.  unfortunately we can't do this in the namer as we don't
-            // have access to the package name.
-            if (s_AllNames.Contains($"{prefix}_{Name.Value}"))
+            if (allNames.Contains($"{Name.Value}"))
             {
                 Name += "Group";
             }
-            s_AllNames.Add($"{prefix}_{Name.Value}");
+            allNames.Add($"{Name.Value}");
 
             if (Name != originalName)
             {

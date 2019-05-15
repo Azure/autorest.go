@@ -29,6 +29,11 @@ namespace AutoRest.Go
             get { return ".go"; }
         }
 
+        public CodeGeneratorGo()
+        {
+            Extensions.ResetState();
+        }
+
         /// <summary>
         /// Generates Go code for service client.
         /// </summary>

@@ -259,9 +259,12 @@ namespace AutoRest.Go
 
         private static void TransformMethods(CodeModelGo cmg)
         {
-            foreach (var mg in cmg.MethodGroups)
             {
-                mg.Transform(cmg);
+                var allNames = new HashSet<string>();
+                foreach (var mg in cmg.MethodGroups)
+                {
+                    mg.Transform(cmg, allNames);
+                }
             }
 
             var wrapperTypes = new Dictionary<string, CompositeTypeGo>();
