@@ -19,11 +19,21 @@ namespace AutoRest.Go.Model
         public static readonly string OneVerString = "version.Number";
         private static readonly Regex semVerPattern = new Regex(@"^v?(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<tag>\S+))?$", RegexOptions.Compiled);
         private const string sdkFqdnPrefix = "github.com/Azure/azure-sdk-for-go";
+        private string _pkgName;
+        private string _outDir;
+        private string _sdkPath;
 
         public CodeModelGo()
         {
             Version = FormatVersion(Settings.Instance.PackageVersion);
             SpecifiedUserAgent = Settings.Instance.Host?.GetValue<string>("user-agent").Result;
+            UseOneVer = Settings.Instance.Host?.GetValue<bool>("use-onever").Result ?? false;
+            Tag = Settings.Instance.Host?.GetValue<string>("tag").Result ?? null;
+            APIType = Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
+            ShouldValidate = (bool)Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result;
+            _pkgName = Settings.Instance.Host?.GetValue<string>("package-name").Result?.ToLowerInvariant();
+            _outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result.ToLowerInvariant().Replace("\\", "/");
+            _sdkPath = Settings.Instance.Host?.GetValue<string>("go-sdk-folder").Result?.ToLowerInvariant().Replace("\\", "/").Trim();
         }
 
         public string Version { get; }
@@ -37,12 +47,12 @@ namespace AutoRest.Go.Model
         /// <summary>
         /// Returns true if the --use-onever flag was specified (off by default).
         /// </summary>
-        public bool UseOneVer => Settings.Instance.Host?.GetValue<bool>("use-onever").Result ?? false;
+        public bool UseOneVer { get; }
 
         /// <summary>
         /// Returns the value passed with the --tag option or null if not specified.
         /// </summary>
-        public string Tag => Settings.Instance.Host?.GetValue<string>("tag").Result ?? null;
+        public string Tag { get; }
 
         /// <summary>
         /// Returns the name of the packages version directory, e.g. "2018-02-01", calculated
@@ -50,8 +60,7 @@ namespace AutoRest.Go.Model
         /// </summary>
         private string PackageVerDir()
         {
-            var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result;
-            if (string.IsNullOrWhiteSpace(outDir))
+            if (string.IsNullOrWhiteSpace(_outDir))
             {
                 return null;
             }
@@ -62,9 +71,9 @@ namespace AutoRest.Go.Model
             //
             // we want the "2017-05-01-preview" portion
 
-            var i = outDir.LastIndexOf('/');
-            var j = outDir.LastIndexOf('/', i - 1);
-            return outDir.Substring(j + 1, i - j - 1);
+            var i = _outDir.LastIndexOf('/');
+            var j = _outDir.LastIndexOf('/', i - 1);
+            return _outDir.Substring(j + 1, i - j - 1);
         }
 
         private string DefaultUserAgent
@@ -106,31 +115,27 @@ namespace AutoRest.Go.Model
         public string BaseClient => "BaseClient";
         public bool IsCustomBaseUri => Extensions.ContainsKey(SwaggerExtensions.ParameterizedHostExtension);
 
-        public string APIType => Settings.Instance.Host?.GetValue<string>("openapi-type").Result;
+        public string APIType { get; }
 
         public string PackageFqdn
         {
             get
             {
-                var pkgName = Settings.Instance.Host?.GetValue<string>("package-name").Result?.ToLowerInvariant();
-                var outDir = Settings.Instance.Host?.GetValue<string>("output-folder").Result.ToLowerInvariant().Replace("\\", "/");
-                var sdkPath = Settings.Instance.Host?.GetValue<string>("go-sdk-folder").Result?.ToLowerInvariant().Replace("\\", "/").Trim();
-
-                if (!string.IsNullOrWhiteSpace(pkgName))
+                if (!string.IsNullOrWhiteSpace(_pkgName))
                 {
-                    return pkgName;
+                    return _pkgName;
                 }
-                else if (!string.IsNullOrEmpty(sdkPath))
+                else if (!string.IsNullOrEmpty(_sdkPath))
                 {
-                    return $"{sdkFqdnPrefix}/{outDir.Split(sdkPath, StringSplitOptions.None).Last()}".Replace("//", "/");
+                    return $"{sdkFqdnPrefix}/{_outDir.Split(_sdkPath, StringSplitOptions.None).Last()}".Replace("//", "/");
                 }
-                else if (!Path.IsPathRooted(outDir))
+                else if (!Path.IsPathRooted(_outDir))
                 {
-                    return outDir;
+                    return _outDir;
                 }
                 else
                 {
-                    return outDir.Substring(Path.GetPathRoot(outDir).Length);
+                    return _outDir.Substring(Path.GetPathRoot(_outDir).Length);
                 }
             }
         }
@@ -193,7 +198,7 @@ namespace AutoRest.Go.Model
 
         public virtual IEnumerable<MethodGroupGo> MethodGroups => Operations.Cast<MethodGroupGo>();
 
-        public bool ShouldValidate => (bool)AutoRest.Core.Settings.Instance.Host?.GetValue<bool?>("client-side-validation").Result;
+        public bool ShouldValidate { get; }
 
         public string GlobalParameters
         {

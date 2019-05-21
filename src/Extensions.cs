@@ -562,14 +562,14 @@ namespace AutoRest.Go
             List<string> x = new List<string>();
             if (method != HttpMethod.Patch || !p.IsBodyParameter() || isCompositeProperties)
             {
-                foreach (var prop in ((CompositeType)p.ModelType).Properties)
+                foreach (var prop in ((CompositeType)p.ModelType).Properties.Cast<PropertyGo>())
                 {
                     var primary = prop.ModelType as PrimaryType;
                     var sequence = prop.ModelType as SequenceType;
                     var map = prop.ModelType as DictionaryTypeGo;
                     var composite = prop.ModelType as CompositeType;
 
-                    var propName = prop.Name;
+                    var propName = prop.FieldName;
 
                     if (primary != null || sequence != null || map != null)
                     {
