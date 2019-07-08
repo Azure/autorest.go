@@ -262,12 +262,12 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
     // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
     // http.Response Body if it receives an error.
     func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
+        sd := autorest.GetSendDecorators(req.Context(), @Model.SendDecorators.EmitAsArguments())
     @if (Model.IsLongRunningOperation())
     {
         <text>
             var resp *http.Response
-            resp, err = autorest.SendWithSender(client, req,
-            @(Model.SendDecorators.EmitAsArguments()))
+            resp, err = autorest.SendWithSender(client, req, sd...)
             if err != nil {
             return
             }
@@ -278,8 +278,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
     else
     {
         <text>
-            return autorest.SendWithSender(client, req,
-            @(Model.SendDecorators.EmitAsArguments()))
+            return autorest.SendWithSender(client, req, sd...)
         </text>
     }
     }

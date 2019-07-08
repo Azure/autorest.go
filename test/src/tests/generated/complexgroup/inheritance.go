@@ -74,8 +74,8 @@ func (client InheritanceClient) GetValidPreparer(ctx context.Context) (*http.Req
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client InheritanceClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
@@ -142,8 +142,8 @@ func (client InheritanceClient) PutValidPreparer(ctx context.Context, complexBod
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client InheritanceClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always

@@ -84,8 +84,8 @@ func (client FormdataClient) UploadFilePreparer(ctx context.Context, fileContent
 // UploadFileSender sends the UploadFile request. The method will close the
 // http.Response Body if it receives an error.
 func (client FormdataClient) UploadFileSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // UploadFileResponder handles the response to the UploadFile request. The method always
@@ -149,8 +149,8 @@ func (client FormdataClient) UploadFileViaBodyPreparer(ctx context.Context, file
 // UploadFileViaBodySender sends the UploadFileViaBody request. The method will close the
 // http.Response Body if it receives an error.
 func (client FormdataClient) UploadFileViaBodySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // UploadFileViaBodyResponder handles the response to the UploadFileViaBody request. The method always

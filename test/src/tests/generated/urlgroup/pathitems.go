@@ -99,8 +99,8 @@ func (client PathItemsClient) GetAllWithValuesPreparer(ctx context.Context, loca
 // GetAllWithValuesSender sends the GetAllWithValues request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetAllWithValuesSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetAllWithValuesResponder handles the response to the GetAllWithValues request. The method always
@@ -185,8 +185,8 @@ func (client PathItemsClient) GetGlobalAndLocalQueryNullPreparer(ctx context.Con
 // GetGlobalAndLocalQueryNullSender sends the GetGlobalAndLocalQueryNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetGlobalAndLocalQueryNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetGlobalAndLocalQueryNullResponder handles the response to the GetGlobalAndLocalQueryNull request. The method always
@@ -271,8 +271,8 @@ func (client PathItemsClient) GetGlobalQueryNullPreparer(ctx context.Context, lo
 // GetGlobalQueryNullSender sends the GetGlobalQueryNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetGlobalQueryNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetGlobalQueryNullResponder handles the response to the GetGlobalQueryNull request. The method always
@@ -357,8 +357,8 @@ func (client PathItemsClient) GetLocalPathItemQueryNullPreparer(ctx context.Cont
 // GetLocalPathItemQueryNullSender sends the GetLocalPathItemQueryNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathItemsClient) GetLocalPathItemQueryNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetLocalPathItemQueryNullResponder handles the response to the GetLocalPathItemQueryNull request. The method always

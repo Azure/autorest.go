@@ -130,7 +130,7 @@ func (s *LROSuite) TestRetryPutAsyncRelativeRetrySucceeded(c *chk.C) {
 func (s *LROSuite) TestDelete202NoRetry204(c *chk.C) {
 	future, err := lrosClient.Delete202NoRetry204(context.Background())
 	c.Assert(err, chk.IsNil)
-	for done, err := future.Done(lrosClient); !done; done, err = future.Done(lrosClient) {
+	for done, err := future.DoneWithContext(context.Background(), lrosClient); !done; done, err = future.DoneWithContext(context.Background(), lrosClient) {
 		c.Assert(err, chk.IsNil)
 	}
 	c.Assert(future.Response().StatusCode, chk.Equals, 204)
@@ -140,7 +140,7 @@ func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
 	future, err := lrosClient.Delete202Retry200(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusAccepted)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, true)
 	p, err := future.Result(lrosClient)
@@ -151,7 +151,7 @@ func (s *LROSuite) TestDelete202Retry200(c *chk.C) {
 func (s *LROSuite) TestDelete204Succeeded(c *chk.C) {
 	future, err := lrosClient.Delete204Succeeded(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, true)
 	r, err := future.Result(lrosClient)
@@ -163,7 +163,7 @@ func (s *LROSuite) TestDeleteAsyncNoHeaderInRetry(c *chk.C) {
 	future, err := lrosClient.DeleteAsyncNoHeaderInRetry(context.Background())
 	c.Assert(err, chk.IsNil)
 	c.Assert(future.Response().StatusCode, chk.Equals, http.StatusAccepted)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, false)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -176,7 +176,7 @@ func (s *LROSuite) TestDeleteAsyncNoHeaderInRetry(c *chk.C) {
 func (s *LROSuite) TestDeleteAsyncNoRetrySucceeded(c *chk.C) {
 	future, err := lrosClient.DeleteAsyncNoRetrySucceeded(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, false)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -189,7 +189,7 @@ func (s *LROSuite) TestDeleteAsyncNoRetrySucceeded(c *chk.C) {
 func (s *LROSuite) TestDeleteAsyncRetrycanceled(c *chk.C) {
 	future, err := lrosClient.DeleteAsyncRetrycanceled(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, false)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -202,7 +202,7 @@ func (s *LROSuite) TestDeleteAsyncRetrycanceled(c *chk.C) {
 func (s *LROSuite) TestDeleteAsyncRetryFailed(c *chk.C) {
 	future, err := lrosClient.DeleteAsyncRetryFailed(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, false)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -215,7 +215,7 @@ func (s *LROSuite) TestDeleteAsyncRetryFailed(c *chk.C) {
 func (s *LROSuite) TestDeleteAsyncRetrySucceeded(c *chk.C) {
 	future, err := lrosClient.DeleteAsyncRetrySucceeded(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, false)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -228,7 +228,7 @@ func (s *LROSuite) TestDeleteAsyncRetrySucceeded(c *chk.C) {
 func (s *LROSuite) TestDeleteNoHeaderInRetry(c *chk.C) {
 	future, err := lrosClient.DeleteNoHeaderInRetry(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, false)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -241,7 +241,7 @@ func (s *LROSuite) TestDeleteNoHeaderInRetry(c *chk.C) {
 func (s *LROSuite) TestDeleteProvisioning202Accepted200Succeeded(c *chk.C) {
 	future, err := lrosClient.DeleteProvisioning202Accepted200Succeeded(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, true)
 	r, err := future.Result(lrosClient)
@@ -253,7 +253,7 @@ func (s *LROSuite) TestDeleteProvisioning202Accepted200Succeeded(c *chk.C) {
 func (s *LROSuite) TestDeleteProvisioning202Deletingcanceled200(c *chk.C) {
 	future, err := lrosClient.DeleteProvisioning202Deletingcanceled200(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.NotNil)
 	c.Assert(done, chk.Equals, true)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -266,7 +266,7 @@ func (s *LROSuite) TestDeleteProvisioning202Deletingcanceled200(c *chk.C) {
 func (s *LROSuite) TestDeleteProvisioning202DeletingFailed200(c *chk.C) {
 	future, err := lrosClient.DeleteProvisioning202DeletingFailed200(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lrosClient)
+	done, err := future.DoneWithContext(context.Background(), lrosClient)
 	c.Assert(err, chk.NotNil)
 	c.Assert(done, chk.Equals, true)
 	err = future.WaitForCompletionRef(context.Background(), lrosClient.Client)
@@ -464,7 +464,7 @@ func (s *LROSuite) TestPutSubResource(c *chk.C) {
 func (s *LROSuite) TestSADsDelete202NonRetry400(c *chk.C) {
 	future, err := lroSADSClient.Delete202NonRetry400(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lroSADSClient)
+	done, err := future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(done, chk.Equals, false)
 	c.Assert(err, chk.NotNil)
 	c.Assert(future.Response().StatusCode, chk.Equals, 400)
@@ -478,7 +478,7 @@ func (s *LROSuite) TestSADsDelete202RetryInvalidHeader(c *chk.C) {
 func (s *LROSuite) TestSADsDelete204Succeeded(c *chk.C) {
 	future, err := lroSADSClient.Delete204Succeeded(context.Background())
 	c.Assert(err, chk.IsNil)
-	done, err := future.Done(lroSADSClient)
+	done, err := future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.IsNil)
 	c.Assert(done, chk.Equals, true)
 }
@@ -498,14 +498,14 @@ func (s *LROSuite) TestSADsDeleteAsyncRelativeRetryInvalidHeader(c *chk.C) {
 func (s *LROSuite) TestSADsDeleteAsyncRelativeRetryInvalidJSONPolling(c *chk.C) {
 	future, err := lroSADSClient.DeleteAsyncRelativeRetryInvalidJSONPolling(context.Background())
 	c.Assert(err, chk.IsNil)
-	_, err = future.Done(lroSADSClient)
+	_, err = future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *LROSuite) TestSADsDeleteAsyncRelativeRetryNoStatus(c *chk.C) {
 	future, err := lroSADSClient.DeleteAsyncRelativeRetryNoStatus(context.Background())
 	c.Assert(err, chk.IsNil)
-	_, err = future.Done(lroSADSClient)
+	_, err = future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.NotNil)
 }
 
@@ -522,7 +522,7 @@ func (s *LROSuite) TestSADsPost202NoLocation(c *chk.C) {
 func (s *LROSuite) TestSADsPost202NonRetry400(c *chk.C) {
 	future, err := lroSADSClient.Post202NonRetry400(context.Background(), &lrogroup.Product{})
 	c.Assert(err, chk.IsNil)
-	b, err := future.Done(lroSADSClient)
+	b, err := future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.NotNil)
 	c.Assert(b, chk.Equals, false)
 }
@@ -535,7 +535,7 @@ func (s *LROSuite) TestSADsPost202RetryInvalidHeader(c *chk.C) {
 func (s *LROSuite) TestSADsPostAsyncRelativeRetry400(c *chk.C) {
 	future, err := lroSADSClient.PostAsyncRelativeRetry400(context.Background(), &lrogroup.Product{})
 	c.Assert(err, chk.IsNil)
-	b, err := future.Done(lroSADSClient)
+	b, err := future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.NotNil)
 	c.Assert(b, chk.Equals, false)
 }
@@ -548,21 +548,21 @@ func (s *LROSuite) TestSADsPostAsyncRelativeRetryInvalidHeader(c *chk.C) {
 func (s *LROSuite) TestSADsPostAsyncRelativeRetryInvalidJSONPolling(c *chk.C) {
 	future, err := lroSADSClient.PostAsyncRelativeRetryInvalidJSONPolling(context.Background(), &lrogroup.Product{})
 	c.Assert(err, chk.IsNil)
-	_, err = future.Done(lroSADSClient)
+	_, err = future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *LROSuite) TestSADsPostAsyncRelativeRetryNoPayload(c *chk.C) {
 	future, err := lroSADSClient.PostAsyncRelativeRetryNoPayload(context.Background(), &lrogroup.Product{})
 	c.Assert(err, chk.IsNil)
-	_, err = future.Done(lroSADSClient)
+	_, err = future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.NotNil)
 }
 
 func (s *LROSuite) TestSADsPostNonRetry400(c *chk.C) {
 	future, err := lroSADSClient.PostNonRetry400(context.Background(), &lrogroup.Product{})
 	c.Assert(err, chk.NotNil)
-	_, err = future.Done(lroSADSClient)
+	_, err = future.DoneWithContext(context.Background(), lroSADSClient)
 	c.Assert(err, chk.NotNil)
 }
 

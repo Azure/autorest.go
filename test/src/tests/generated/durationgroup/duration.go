@@ -74,8 +74,8 @@ func (client DurationClient) GetInvalidPreparer(ctx context.Context) (*http.Requ
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
@@ -136,8 +136,8 @@ func (client DurationClient) GetNullPreparer(ctx context.Context) (*http.Request
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -198,8 +198,8 @@ func (client DurationClient) GetPositiveDurationPreparer(ctx context.Context) (*
 // GetPositiveDurationSender sends the GetPositiveDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) GetPositiveDurationSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetPositiveDurationResponder handles the response to the GetPositiveDuration request. The method always
@@ -262,8 +262,8 @@ func (client DurationClient) PutPositiveDurationPreparer(ctx context.Context, du
 // PutPositiveDurationSender sends the PutPositiveDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client DurationClient) PutPositiveDurationSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutPositiveDurationResponder handles the response to the PutPositiveDuration request. The method always

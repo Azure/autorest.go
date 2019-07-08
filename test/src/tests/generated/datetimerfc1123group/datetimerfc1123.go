@@ -75,8 +75,8 @@ func (client Datetimerfc1123Client) GetInvalidPreparer(ctx context.Context) (*ht
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
@@ -137,8 +137,8 @@ func (client Datetimerfc1123Client) GetNullPreparer(ctx context.Context) (*http.
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -199,8 +199,8 @@ func (client Datetimerfc1123Client) GetOverflowPreparer(ctx context.Context) (*h
 // GetOverflowSender sends the GetOverflow request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) GetOverflowSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetOverflowResponder handles the response to the GetOverflow request. The method always
@@ -261,8 +261,8 @@ func (client Datetimerfc1123Client) GetUnderflowPreparer(ctx context.Context) (*
 // GetUnderflowSender sends the GetUnderflow request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) GetUnderflowSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetUnderflowResponder handles the response to the GetUnderflow request. The method always
@@ -323,8 +323,8 @@ func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimePreparer(ctx conte
 // GetUtcLowercaseMaxDateTimeSender sends the GetUtcLowercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) GetUtcLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetUtcLowercaseMaxDateTimeResponder handles the response to the GetUtcLowercaseMaxDateTime request. The method always
@@ -385,8 +385,8 @@ func (client Datetimerfc1123Client) GetUtcMinDateTimePreparer(ctx context.Contex
 // GetUtcMinDateTimeSender sends the GetUtcMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) GetUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetUtcMinDateTimeResponder handles the response to the GetUtcMinDateTime request. The method always
@@ -447,8 +447,8 @@ func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimePreparer(ctx conte
 // GetUtcUppercaseMaxDateTimeSender sends the GetUtcUppercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) GetUtcUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetUtcUppercaseMaxDateTimeResponder handles the response to the GetUtcUppercaseMaxDateTime request. The method always
@@ -511,8 +511,8 @@ func (client Datetimerfc1123Client) PutUtcMaxDateTimePreparer(ctx context.Contex
 // PutUtcMaxDateTimeSender sends the PutUtcMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) PutUtcMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutUtcMaxDateTimeResponder handles the response to the PutUtcMaxDateTime request. The method always
@@ -574,8 +574,8 @@ func (client Datetimerfc1123Client) PutUtcMinDateTimePreparer(ctx context.Contex
 // PutUtcMinDateTimeSender sends the PutUtcMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client Datetimerfc1123Client) PutUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutUtcMinDateTimeResponder handles the response to the PutUtcMinDateTime request. The method always

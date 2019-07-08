@@ -75,8 +75,8 @@ func (client DateClient) GetInvalidDatePreparer(ctx context.Context) (*http.Requ
 // GetInvalidDateSender sends the GetInvalidDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) GetInvalidDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetInvalidDateResponder handles the response to the GetInvalidDate request. The method always
@@ -137,8 +137,8 @@ func (client DateClient) GetMaxDatePreparer(ctx context.Context) (*http.Request,
 // GetMaxDateSender sends the GetMaxDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) GetMaxDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetMaxDateResponder handles the response to the GetMaxDate request. The method always
@@ -199,8 +199,8 @@ func (client DateClient) GetMinDatePreparer(ctx context.Context) (*http.Request,
 // GetMinDateSender sends the GetMinDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) GetMinDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetMinDateResponder handles the response to the GetMinDate request. The method always
@@ -261,8 +261,8 @@ func (client DateClient) GetNullPreparer(ctx context.Context) (*http.Request, er
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -323,8 +323,8 @@ func (client DateClient) GetOverflowDatePreparer(ctx context.Context) (*http.Req
 // GetOverflowDateSender sends the GetOverflowDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) GetOverflowDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetOverflowDateResponder handles the response to the GetOverflowDate request. The method always
@@ -385,8 +385,8 @@ func (client DateClient) GetUnderflowDatePreparer(ctx context.Context) (*http.Re
 // GetUnderflowDateSender sends the GetUnderflowDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) GetUnderflowDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetUnderflowDateResponder handles the response to the GetUnderflowDate request. The method always
@@ -449,8 +449,8 @@ func (client DateClient) PutMaxDatePreparer(ctx context.Context, dateBody date.D
 // PutMaxDateSender sends the PutMaxDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) PutMaxDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutMaxDateResponder handles the response to the PutMaxDate request. The method always
@@ -512,8 +512,8 @@ func (client DateClient) PutMinDatePreparer(ctx context.Context, dateBody date.D
 // PutMinDateSender sends the PutMinDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client DateClient) PutMinDateSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutMinDateResponder handles the response to the PutMinDate request. The method always

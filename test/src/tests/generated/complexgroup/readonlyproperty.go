@@ -74,8 +74,8 @@ func (client ReadonlypropertyClient) GetValidPreparer(ctx context.Context) (*htt
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ReadonlypropertyClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
@@ -139,8 +139,8 @@ func (client ReadonlypropertyClient) PutValidPreparer(ctx context.Context, compl
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ReadonlypropertyClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always
