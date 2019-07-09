@@ -79,8 +79,8 @@ func (client ExplicitClient) PostOptionalArrayHeaderPreparer(ctx context.Context
 // PostOptionalArrayHeaderSender sends the PostOptionalArrayHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalArrayHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalArrayHeaderResponder handles the response to the PostOptionalArrayHeader request. The method always
@@ -145,8 +145,8 @@ func (client ExplicitClient) PostOptionalArrayParameterPreparer(ctx context.Cont
 // PostOptionalArrayParameterSender sends the PostOptionalArrayParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalArrayParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalArrayParameterResponder handles the response to the PostOptionalArrayParameter request. The method always
@@ -211,8 +211,8 @@ func (client ExplicitClient) PostOptionalArrayPropertyPreparer(ctx context.Conte
 // PostOptionalArrayPropertySender sends the PostOptionalArrayProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalArrayPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalArrayPropertyResponder handles the response to the PostOptionalArrayProperty request. The method always
@@ -284,8 +284,8 @@ func (client ExplicitClient) PostOptionalClassParameterPreparer(ctx context.Cont
 // PostOptionalClassParameterSender sends the PostOptionalClassParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalClassParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalClassParameterResponder handles the response to the PostOptionalClassParameter request. The method always
@@ -360,8 +360,8 @@ func (client ExplicitClient) PostOptionalClassPropertyPreparer(ctx context.Conte
 // PostOptionalClassPropertySender sends the PostOptionalClassProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalClassPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalClassPropertyResponder handles the response to the PostOptionalClassProperty request. The method always
@@ -425,8 +425,8 @@ func (client ExplicitClient) PostOptionalIntegerHeaderPreparer(ctx context.Conte
 // PostOptionalIntegerHeaderSender sends the PostOptionalIntegerHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalIntegerHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalIntegerHeaderResponder handles the response to the PostOptionalIntegerHeader request. The method always
@@ -491,8 +491,8 @@ func (client ExplicitClient) PostOptionalIntegerParameterPreparer(ctx context.Co
 // PostOptionalIntegerParameterSender sends the PostOptionalIntegerParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalIntegerParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalIntegerParameterResponder handles the response to the PostOptionalIntegerParameter request. The method always
@@ -557,8 +557,8 @@ func (client ExplicitClient) PostOptionalIntegerPropertyPreparer(ctx context.Con
 // PostOptionalIntegerPropertySender sends the PostOptionalIntegerProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalIntegerPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalIntegerPropertyResponder handles the response to the PostOptionalIntegerProperty request. The method always
@@ -622,8 +622,8 @@ func (client ExplicitClient) PostOptionalStringHeaderPreparer(ctx context.Contex
 // PostOptionalStringHeaderSender sends the PostOptionalStringHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalStringHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalStringHeaderResponder handles the response to the PostOptionalStringHeader request. The method always
@@ -688,8 +688,8 @@ func (client ExplicitClient) PostOptionalStringParameterPreparer(ctx context.Con
 // PostOptionalStringParameterSender sends the PostOptionalStringParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalStringParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalStringParameterResponder handles the response to the PostOptionalStringParameter request. The method always
@@ -754,8 +754,8 @@ func (client ExplicitClient) PostOptionalStringPropertyPreparer(ctx context.Cont
 // PostOptionalStringPropertySender sends the PostOptionalStringProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostOptionalStringPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostOptionalStringPropertyResponder handles the response to the PostOptionalStringProperty request. The method always
@@ -823,8 +823,8 @@ func (client ExplicitClient) PostRequiredArrayHeaderPreparer(ctx context.Context
 // PostRequiredArrayHeaderSender sends the PostRequiredArrayHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredArrayHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredArrayHeaderResponder handles the response to the PostRequiredArrayHeader request. The method always
@@ -894,8 +894,8 @@ func (client ExplicitClient) PostRequiredArrayParameterPreparer(ctx context.Cont
 // PostRequiredArrayParameterSender sends the PostRequiredArrayParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredArrayParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredArrayParameterResponder handles the response to the PostRequiredArrayParameter request. The method always
@@ -965,8 +965,8 @@ func (client ExplicitClient) PostRequiredArrayPropertyPreparer(ctx context.Conte
 // PostRequiredArrayPropertySender sends the PostRequiredArrayProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredArrayPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredArrayPropertyResponder handles the response to the PostRequiredArrayProperty request. The method always
@@ -1036,8 +1036,8 @@ func (client ExplicitClient) PostRequiredClassParameterPreparer(ctx context.Cont
 // PostRequiredClassParameterSender sends the PostRequiredClassParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredClassParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredClassParameterResponder handles the response to the PostRequiredClassParameter request. The method always
@@ -1108,8 +1108,8 @@ func (client ExplicitClient) PostRequiredClassPropertyPreparer(ctx context.Conte
 // PostRequiredClassPropertySender sends the PostRequiredClassProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredClassPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredClassPropertyResponder handles the response to the PostRequiredClassProperty request. The method always
@@ -1172,8 +1172,8 @@ func (client ExplicitClient) PostRequiredIntegerHeaderPreparer(ctx context.Conte
 // PostRequiredIntegerHeaderSender sends the PostRequiredIntegerHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredIntegerHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredIntegerHeaderResponder handles the response to the PostRequiredIntegerHeader request. The method always
@@ -1237,8 +1237,8 @@ func (client ExplicitClient) PostRequiredIntegerParameterPreparer(ctx context.Co
 // PostRequiredIntegerParameterSender sends the PostRequiredIntegerParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredIntegerParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredIntegerParameterResponder handles the response to the PostRequiredIntegerParameter request. The method always
@@ -1308,8 +1308,8 @@ func (client ExplicitClient) PostRequiredIntegerPropertyPreparer(ctx context.Con
 // PostRequiredIntegerPropertySender sends the PostRequiredIntegerProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredIntegerPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredIntegerPropertyResponder handles the response to the PostRequiredIntegerProperty request. The method always
@@ -1372,8 +1372,8 @@ func (client ExplicitClient) PostRequiredStringHeaderPreparer(ctx context.Contex
 // PostRequiredStringHeaderSender sends the PostRequiredStringHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredStringHeaderSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredStringHeaderResponder handles the response to the PostRequiredStringHeader request. The method always
@@ -1437,8 +1437,8 @@ func (client ExplicitClient) PostRequiredStringParameterPreparer(ctx context.Con
 // PostRequiredStringParameterSender sends the PostRequiredStringParameter request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredStringParameterSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredStringParameterResponder handles the response to the PostRequiredStringParameter request. The method always
@@ -1508,8 +1508,8 @@ func (client ExplicitClient) PostRequiredStringPropertyPreparer(ctx context.Cont
 // PostRequiredStringPropertySender sends the PostRequiredStringProperty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ExplicitClient) PostRequiredStringPropertySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostRequiredStringPropertyResponder handles the response to the PostRequiredStringProperty request. The method always

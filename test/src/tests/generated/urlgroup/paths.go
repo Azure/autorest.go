@@ -90,8 +90,8 @@ func (client PathsClient) ArrayCsvInPathPreparer(ctx context.Context, arrayPath 
 // ArrayCsvInPathSender sends the ArrayCsvInPath request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ArrayCsvInPathSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // ArrayCsvInPathResponder handles the response to the ArrayCsvInPath request. The method always
@@ -157,8 +157,8 @@ func (client PathsClient) Base64URLPreparer(ctx context.Context, base64URLPath s
 // Base64URLSender sends the Base64URL request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) Base64URLSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Base64URLResponder handles the response to the Base64URL request. The method always
@@ -222,8 +222,8 @@ func (client PathsClient) ByteEmptyPreparer(ctx context.Context) (*http.Request,
 // ByteEmptySender sends the ByteEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ByteEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // ByteEmptyResponder handles the response to the ByteEmpty request. The method always
@@ -295,8 +295,8 @@ func (client PathsClient) ByteMultiBytePreparer(ctx context.Context, bytePath []
 // ByteMultiByteSender sends the ByteMultiByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ByteMultiByteSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // ByteMultiByteResponder handles the response to the ByteMultiByte request. The method always
@@ -368,8 +368,8 @@ func (client PathsClient) ByteNullPreparer(ctx context.Context, bytePath []byte)
 // ByteNullSender sends the ByteNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) ByteNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // ByteNullResponder handles the response to the ByteNull request. The method always
@@ -435,8 +435,8 @@ func (client PathsClient) DateNullPreparer(ctx context.Context, datePath date.Da
 // DateNullSender sends the DateNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // DateNullResponder handles the response to the DateNull request. The method always
@@ -502,8 +502,8 @@ func (client PathsClient) DateTimeNullPreparer(ctx context.Context, dateTimePath
 // DateTimeNullSender sends the DateTimeNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateTimeNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // DateTimeNullResponder handles the response to the DateTimeNull request. The method always
@@ -567,8 +567,8 @@ func (client PathsClient) DateTimeValidPreparer(ctx context.Context) (*http.Requ
 // DateTimeValidSender sends the DateTimeValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateTimeValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // DateTimeValidResponder handles the response to the DateTimeValid request. The method always
@@ -632,8 +632,8 @@ func (client PathsClient) DateValidPreparer(ctx context.Context) (*http.Request,
 // DateValidSender sends the DateValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DateValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // DateValidResponder handles the response to the DateValid request. The method always
@@ -697,8 +697,8 @@ func (client PathsClient) DoubleDecimalNegativePreparer(ctx context.Context) (*h
 // DoubleDecimalNegativeSender sends the DoubleDecimalNegative request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DoubleDecimalNegativeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // DoubleDecimalNegativeResponder handles the response to the DoubleDecimalNegative request. The method always
@@ -762,8 +762,8 @@ func (client PathsClient) DoubleDecimalPositivePreparer(ctx context.Context) (*h
 // DoubleDecimalPositiveSender sends the DoubleDecimalPositive request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) DoubleDecimalPositiveSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // DoubleDecimalPositiveResponder handles the response to the DoubleDecimalPositive request. The method always
@@ -829,8 +829,8 @@ func (client PathsClient) EnumNullPreparer(ctx context.Context, enumPath URIColo
 // EnumNullSender sends the EnumNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) EnumNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // EnumNullResponder handles the response to the EnumNull request. The method always
@@ -896,8 +896,8 @@ func (client PathsClient) EnumValidPreparer(ctx context.Context, enumPath URICol
 // EnumValidSender sends the EnumValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) EnumValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // EnumValidResponder handles the response to the EnumValid request. The method always
@@ -961,8 +961,8 @@ func (client PathsClient) FloatScientificNegativePreparer(ctx context.Context) (
 // FloatScientificNegativeSender sends the FloatScientificNegative request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) FloatScientificNegativeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // FloatScientificNegativeResponder handles the response to the FloatScientificNegative request. The method always
@@ -1026,8 +1026,8 @@ func (client PathsClient) FloatScientificPositivePreparer(ctx context.Context) (
 // FloatScientificPositiveSender sends the FloatScientificPositive request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) FloatScientificPositiveSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // FloatScientificPositiveResponder handles the response to the FloatScientificPositive request. The method always
@@ -1091,8 +1091,8 @@ func (client PathsClient) GetBooleanFalsePreparer(ctx context.Context) (*http.Re
 // GetBooleanFalseSender sends the GetBooleanFalse request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetBooleanFalseSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetBooleanFalseResponder handles the response to the GetBooleanFalse request. The method always
@@ -1156,8 +1156,8 @@ func (client PathsClient) GetBooleanTruePreparer(ctx context.Context) (*http.Req
 // GetBooleanTrueSender sends the GetBooleanTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetBooleanTrueSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetBooleanTrueResponder handles the response to the GetBooleanTrue request. The method always
@@ -1221,8 +1221,8 @@ func (client PathsClient) GetIntNegativeOneMillionPreparer(ctx context.Context) 
 // GetIntNegativeOneMillionSender sends the GetIntNegativeOneMillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetIntNegativeOneMillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetIntNegativeOneMillionResponder handles the response to the GetIntNegativeOneMillion request. The method always
@@ -1286,8 +1286,8 @@ func (client PathsClient) GetIntOneMillionPreparer(ctx context.Context) (*http.R
 // GetIntOneMillionSender sends the GetIntOneMillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetIntOneMillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetIntOneMillionResponder handles the response to the GetIntOneMillion request. The method always
@@ -1351,8 +1351,8 @@ func (client PathsClient) GetNegativeTenBillionPreparer(ctx context.Context) (*h
 // GetNegativeTenBillionSender sends the GetNegativeTenBillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetNegativeTenBillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNegativeTenBillionResponder handles the response to the GetNegativeTenBillion request. The method always
@@ -1416,8 +1416,8 @@ func (client PathsClient) GetTenBillionPreparer(ctx context.Context) (*http.Requ
 // GetTenBillionSender sends the GetTenBillion request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) GetTenBillionSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetTenBillionResponder handles the response to the GetTenBillion request. The method always
@@ -1481,8 +1481,8 @@ func (client PathsClient) StringEmptyPreparer(ctx context.Context) (*http.Reques
 // StringEmptySender sends the StringEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // StringEmptyResponder handles the response to the StringEmpty request. The method always
@@ -1548,8 +1548,8 @@ func (client PathsClient) StringNullPreparer(ctx context.Context, stringPath str
 // StringNullSender sends the StringNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // StringNullResponder handles the response to the StringNull request. The method always
@@ -1613,8 +1613,8 @@ func (client PathsClient) StringUnicodePreparer(ctx context.Context) (*http.Requ
 // StringUnicodeSender sends the StringUnicode request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringUnicodeSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // StringUnicodeResponder handles the response to the StringUnicode request. The method always
@@ -1678,8 +1678,8 @@ func (client PathsClient) StringURLEncodedPreparer(ctx context.Context) (*http.R
 // StringURLEncodedSender sends the StringURLEncoded request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) StringURLEncodedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // StringURLEncodedResponder handles the response to the StringURLEncoded request. The method always
@@ -1745,8 +1745,8 @@ func (client PathsClient) UnixTimeURLPreparer(ctx context.Context, unixTimeURLPa
 // UnixTimeURLSender sends the UnixTimeURL request. The method will close the
 // http.Response Body if it receives an error.
 func (client PathsClient) UnixTimeURLSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // UnixTimeURLResponder handles the response to the UnixTimeURL request. The method always

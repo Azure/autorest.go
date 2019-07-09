@@ -74,8 +74,8 @@ func (client DictionaryClient) GetEmptyPreparer(ctx context.Context) (*http.Requ
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client DictionaryClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetEmptyResponder handles the response to the GetEmpty request. The method always
@@ -136,8 +136,8 @@ func (client DictionaryClient) GetNotProvidedPreparer(ctx context.Context) (*htt
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
 // http.Response Body if it receives an error.
 func (client DictionaryClient) GetNotProvidedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNotProvidedResponder handles the response to the GetNotProvided request. The method always
@@ -198,8 +198,8 @@ func (client DictionaryClient) GetNullPreparer(ctx context.Context) (*http.Reque
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client DictionaryClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -260,8 +260,8 @@ func (client DictionaryClient) GetValidPreparer(ctx context.Context) (*http.Requ
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client DictionaryClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
@@ -326,8 +326,8 @@ func (client DictionaryClient) PutEmptyPreparer(ctx context.Context, complexBody
 // PutEmptySender sends the PutEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client DictionaryClient) PutEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutEmptyResponder handles the response to the PutEmpty request. The method always
@@ -392,8 +392,8 @@ func (client DictionaryClient) PutValidPreparer(ctx context.Context, complexBody
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client DictionaryClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always

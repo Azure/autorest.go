@@ -74,8 +74,8 @@ func (client BasicClient) GetEmptyPreparer(ctx context.Context) (*http.Request, 
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client BasicClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetEmptyResponder handles the response to the GetEmpty request. The method always
@@ -136,8 +136,8 @@ func (client BasicClient) GetInvalidPreparer(ctx context.Context) (*http.Request
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client BasicClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
@@ -198,8 +198,8 @@ func (client BasicClient) GetNotProvidedPreparer(ctx context.Context) (*http.Req
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
 // http.Response Body if it receives an error.
 func (client BasicClient) GetNotProvidedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNotProvidedResponder handles the response to the GetNotProvided request. The method always
@@ -260,8 +260,8 @@ func (client BasicClient) GetNullPreparer(ctx context.Context) (*http.Request, e
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client BasicClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -322,8 +322,8 @@ func (client BasicClient) GetValidPreparer(ctx context.Context) (*http.Request, 
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client BasicClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
@@ -394,8 +394,8 @@ func (client BasicClient) PutValidPreparer(ctx context.Context, complexBody Basi
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client BasicClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always

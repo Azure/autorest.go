@@ -81,8 +81,8 @@ func (client HTTPRetryClient) Delete503Preparer(ctx context.Context, booleanValu
 // Delete503Sender sends the Delete503 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Delete503Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Delete503Responder handles the response to the Delete503 request. The method always
@@ -142,8 +142,8 @@ func (client HTTPRetryClient) Get502Preparer(ctx context.Context) (*http.Request
 // Get502Sender sends the Get502 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Get502Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Get502Responder handles the response to the Get502 request. The method always
@@ -203,8 +203,8 @@ func (client HTTPRetryClient) Head408Preparer(ctx context.Context) (*http.Reques
 // Head408Sender sends the Head408 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Head408Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Head408Responder handles the response to the Head408 request. The method always
@@ -271,8 +271,8 @@ func (client HTTPRetryClient) Patch500Preparer(ctx context.Context, booleanValue
 // Patch500Sender sends the Patch500 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Patch500Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Patch500Responder handles the response to the Patch500 request. The method always
@@ -339,8 +339,8 @@ func (client HTTPRetryClient) Patch504Preparer(ctx context.Context, booleanValue
 // Patch504Sender sends the Patch504 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Patch504Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Patch504Responder handles the response to the Patch504 request. The method always
@@ -407,8 +407,8 @@ func (client HTTPRetryClient) Post503Preparer(ctx context.Context, booleanValue 
 // Post503Sender sends the Post503 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Post503Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Post503Responder handles the response to the Post503 request. The method always
@@ -475,8 +475,8 @@ func (client HTTPRetryClient) Put500Preparer(ctx context.Context, booleanValue *
 // Put500Sender sends the Put500 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Put500Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Put500Responder handles the response to the Put500 request. The method always
@@ -543,8 +543,8 @@ func (client HTTPRetryClient) Put504Preparer(ctx context.Context, booleanValue *
 // Put504Sender sends the Put504 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPRetryClient) Put504Sender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // Put504Responder handles the response to the Put504 request. The method always

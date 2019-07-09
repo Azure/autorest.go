@@ -74,8 +74,8 @@ func (client HTTPFailureClient) GetEmptyErrorPreparer(ctx context.Context) (*htt
 // GetEmptyErrorSender sends the GetEmptyError request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPFailureClient) GetEmptyErrorSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetEmptyErrorResponder handles the response to the GetEmptyError request. The method always
@@ -136,8 +136,8 @@ func (client HTTPFailureClient) GetNoModelEmptyPreparer(ctx context.Context) (*h
 // GetNoModelEmptySender sends the GetNoModelEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPFailureClient) GetNoModelEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNoModelEmptyResponder handles the response to the GetNoModelEmpty request. The method always
@@ -198,8 +198,8 @@ func (client HTTPFailureClient) GetNoModelErrorPreparer(ctx context.Context) (*h
 // GetNoModelErrorSender sends the GetNoModelError request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPFailureClient) GetNoModelErrorSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNoModelErrorResponder handles the response to the GetNoModelError request. The method always

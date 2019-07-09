@@ -93,8 +93,8 @@ func (client BaseClient) GetWithConstantInPathPreparer(ctx context.Context) (*ht
 // GetWithConstantInPathSender sends the GetWithConstantInPath request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) GetWithConstantInPathSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetWithConstantInPathResponder handles the response to the GetWithConstantInPath request. The method always
@@ -189,8 +189,8 @@ func (client BaseClient) PostWithConstantInBodyPreparer(ctx context.Context, bod
 // PostWithConstantInBodySender sends the PostWithConstantInBody request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PostWithConstantInBodySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PostWithConstantInBodyResponder handles the response to the PostWithConstantInBody request. The method always
@@ -305,8 +305,8 @@ func (client BaseClient) ValidationOfBodyPreparer(ctx context.Context, resourceG
 // ValidationOfBodySender sends the ValidationOfBody request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) ValidationOfBodySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // ValidationOfBodyResponder handles the response to the ValidationOfBody request. The method always
@@ -394,8 +394,8 @@ func (client BaseClient) ValidationOfMethodParametersPreparer(ctx context.Contex
 // ValidationOfMethodParametersSender sends the ValidationOfMethodParameters request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) ValidationOfMethodParametersSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // ValidationOfMethodParametersResponder handles the response to the ValidationOfMethodParameters request. The method always

@@ -95,8 +95,8 @@ func (client BaseClient) GetReportPreparer(ctx context.Context, qualifier string
 // GetReportSender sends the GetReport request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) GetReportSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetReportResponder handles the response to the GetReport request. The method always

@@ -74,8 +74,8 @@ func (client StringClient) GetBase64EncodedPreparer(ctx context.Context) (*http.
 // GetBase64EncodedSender sends the GetBase64Encoded request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetBase64EncodedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetBase64EncodedResponder handles the response to the GetBase64Encoded request. The method always
@@ -136,8 +136,8 @@ func (client StringClient) GetBase64URLEncodedPreparer(ctx context.Context) (*ht
 // GetBase64URLEncodedSender sends the GetBase64URLEncoded request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetBase64URLEncodedResponder handles the response to the GetBase64URLEncoded request. The method always
@@ -198,8 +198,8 @@ func (client StringClient) GetEmptyPreparer(ctx context.Context) (*http.Request,
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetEmptyResponder handles the response to the GetEmpty request. The method always
@@ -260,8 +260,8 @@ func (client StringClient) GetMbcsPreparer(ctx context.Context) (*http.Request, 
 // GetMbcsSender sends the GetMbcs request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetMbcsSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetMbcsResponder handles the response to the GetMbcs request. The method always
@@ -322,8 +322,8 @@ func (client StringClient) GetNotProvidedPreparer(ctx context.Context) (*http.Re
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetNotProvidedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNotProvidedResponder handles the response to the GetNotProvided request. The method always
@@ -384,8 +384,8 @@ func (client StringClient) GetNullPreparer(ctx context.Context) (*http.Request, 
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -446,8 +446,8 @@ func (client StringClient) GetNullBase64URLEncodedPreparer(ctx context.Context) 
 // GetNullBase64URLEncodedSender sends the GetNullBase64URLEncoded request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetNullBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetNullBase64URLEncodedResponder handles the response to the GetNullBase64URLEncoded request. The method always
@@ -509,8 +509,8 @@ func (client StringClient) GetWhitespacePreparer(ctx context.Context) (*http.Req
 // GetWhitespaceSender sends the GetWhitespace request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) GetWhitespaceSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // GetWhitespaceResponder handles the response to the GetWhitespace request. The method always
@@ -573,8 +573,8 @@ func (client StringClient) PutBase64URLEncodedPreparer(ctx context.Context, stri
 // PutBase64URLEncodedSender sends the PutBase64URLEncoded request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) PutBase64URLEncodedSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutBase64URLEncodedResponder handles the response to the PutBase64URLEncoded request. The method always
@@ -636,8 +636,8 @@ func (client StringClient) PutEmptyPreparer(ctx context.Context) (*http.Request,
 // PutEmptySender sends the PutEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) PutEmptySender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutEmptyResponder handles the response to the PutEmpty request. The method always
@@ -699,8 +699,8 @@ func (client StringClient) PutMbcsPreparer(ctx context.Context) (*http.Request, 
 // PutMbcsSender sends the PutMbcs request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) PutMbcsSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutMbcsResponder handles the response to the PutMbcs request. The method always
@@ -765,8 +765,8 @@ func (client StringClient) PutNullPreparer(ctx context.Context, stringBody strin
 // PutNullSender sends the PutNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) PutNullSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutNullResponder handles the response to the PutNull request. The method always
@@ -829,8 +829,8 @@ func (client StringClient) PutWhitespacePreparer(ctx context.Context) (*http.Req
 // PutWhitespaceSender sends the PutWhitespace request. The method will close the
 // http.Response Body if it receives an error.
 func (client StringClient) PutWhitespaceSender(req *http.Request) (*http.Response, error) {
-	return autorest.SendWithSender(client, req,
-		autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
 }
 
 // PutWhitespaceResponder handles the response to the PutWhitespace request. The method always
