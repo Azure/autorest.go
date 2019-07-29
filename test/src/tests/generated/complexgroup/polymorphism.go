@@ -93,6 +93,134 @@ func (client PolymorphismClient) GetComplicatedResponder(resp *http.Response) (r
 	return
 }
 
+// GetComposedWithDiscriminator get complex object composing a polymorphic scalar property and array property with
+// polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type
+// specified on the wire.
+func (client PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context) (result DotFishMarket, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetComposedWithDiscriminator")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetComposedWithDiscriminatorPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetComposedWithDiscriminatorSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetComposedWithDiscriminatorResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithDiscriminator", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetComposedWithDiscriminatorPreparer prepares the GetComposedWithDiscriminator request.
+func (client PolymorphismClient) GetComposedWithDiscriminatorPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/composedWithDiscriminator"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetComposedWithDiscriminatorSender sends the GetComposedWithDiscriminator request. The method will close the
+// http.Response Body if it receives an error.
+func (client PolymorphismClient) GetComposedWithDiscriminatorSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
+}
+
+// GetComposedWithDiscriminatorResponder handles the response to the GetComposedWithDiscriminator request. The method always
+// closes the http.Response Body.
+func (client PolymorphismClient) GetComposedWithDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// GetComposedWithoutDiscriminator get complex object composing a polymorphic scalar property and array property with
+// polymorphic element type, without discriminator specified on wire. Deserialization must NOT fail and use the
+// explicit type of the property.
+func (client PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context) (result DotFishMarket, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PolymorphismClient.GetComposedWithoutDiscriminator")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetComposedWithoutDiscriminatorPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetComposedWithoutDiscriminatorSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetComposedWithoutDiscriminatorResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "complexgroup.PolymorphismClient", "GetComposedWithoutDiscriminator", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetComposedWithoutDiscriminatorPreparer prepares the GetComposedWithoutDiscriminator request.
+func (client PolymorphismClient) GetComposedWithoutDiscriminatorPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/complex/polymorphism/composedWithoutDiscriminator"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetComposedWithoutDiscriminatorSender sends the GetComposedWithoutDiscriminator request. The method will close the
+// http.Response Body if it receives an error.
+func (client PolymorphismClient) GetComposedWithoutDiscriminatorSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
+}
+
+// GetComposedWithoutDiscriminatorResponder handles the response to the GetComposedWithoutDiscriminator request. The method always
+// closes the http.Response Body.
+func (client PolymorphismClient) GetComposedWithoutDiscriminatorResponder(resp *http.Response) (result DotFishMarket, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetDotSyntax get complex types that are polymorphic, JSON key contains a dot
 func (client PolymorphismClient) GetDotSyntax(ctx context.Context) (result DotFishModel, err error) {
 	if tracing.IsEnabled() {
