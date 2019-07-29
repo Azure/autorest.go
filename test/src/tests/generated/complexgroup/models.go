@@ -433,6 +433,64 @@ func (df DotFish) AsBasicDotFish() (BasicDotFish, bool) {
 	return &df, true
 }
 
+// DotFishMarket ...
+type DotFishMarket struct {
+	autorest.Response `json:"-"`
+	SampleSalmon      *DotSalmon      `json:"sampleSalmon,omitempty"`
+	Salmons           *[]DotSalmon    `json:"salmons,omitempty"`
+	SampleFish        BasicDotFish    `json:"sampleFish,omitempty"`
+	Fishes            *[]BasicDotFish `json:"fishes,omitempty"`
+}
+
+// UnmarshalJSON is the custom unmarshaler for DotFishMarket struct.
+func (dfm *DotFishMarket) UnmarshalJSON(body []byte) error {
+	var m map[string]*json.RawMessage
+	err := json.Unmarshal(body, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		switch k {
+		case "sampleSalmon":
+			if v != nil {
+				var sampleSalmon DotSalmon
+				err = json.Unmarshal(*v, &sampleSalmon)
+				if err != nil {
+					return err
+				}
+				dfm.SampleSalmon = &sampleSalmon
+			}
+		case "salmons":
+			if v != nil {
+				var salmons []DotSalmon
+				err = json.Unmarshal(*v, &salmons)
+				if err != nil {
+					return err
+				}
+				dfm.Salmons = &salmons
+			}
+		case "sampleFish":
+			if v != nil {
+				sampleFish, err := unmarshalBasicDotFish(*v)
+				if err != nil {
+					return err
+				}
+				dfm.SampleFish = sampleFish
+			}
+		case "fishes":
+			if v != nil {
+				fishes, err := unmarshalBasicDotFishArray(*v)
+				if err != nil {
+					return err
+				}
+				dfm.Fishes = &fishes
+			}
+		}
+	}
+
+	return nil
+}
+
 // DotFishModel ...
 type DotFishModel struct {
 	autorest.Response `json:"-"`
