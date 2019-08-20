@@ -227,11 +227,17 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
 
     @foreach (var p in Model.OptionalHeaderParameters)
     {
+        var deref = string.Empty;
+        if (p.ModelType.IsNumericType())
+        {
+            // optional numeric values are passed as pointers
+            deref = "*";
+        }
         <text>
             if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
             preparer = autorest.DecoratePreparer(preparer,
-            @(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}))",
-                                      p.SerializedName, p.GetParameterName())))
+            @(string.Format("autorest.WithHeader(\"{0}\",autorest.String({1}{2}))",
+                                      p.SerializedName, deref, p.GetParameterName())))
             @if (p.DefaultValue.Value != null)
             {
                 @: } else {

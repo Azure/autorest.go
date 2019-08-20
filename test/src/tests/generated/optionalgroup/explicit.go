@@ -417,7 +417,7 @@ func (client ExplicitClient) PostOptionalIntegerHeaderPreparer(ctx context.Conte
 		autorest.WithPath("/reqopt/optional/integer/header"))
 	if headerParameter != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("headerParameter", autorest.String(headerParameter)))
+			autorest.WithHeader("headerParameter", autorest.String(*headerParameter)))
 	}
 	return preparer.Prepare((&http.Request{}).WithContext(ctx))
 }
