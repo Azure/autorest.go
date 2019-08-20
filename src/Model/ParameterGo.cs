@@ -128,10 +128,7 @@ namespace AutoRest.Go.Model
 
         public bool RequiresUrlEncoding()
         {
-            return (Location == Core.Model.ParameterLocation.Query ||
-                    Location == Core.Model.ParameterLocation.Path ||
-                    Location == Core.Model.ParameterLocation.Header)
-                && !Extensions.ContainsKey(SwaggerExtensions.SkipUrlEncodingExtension);
+            return (Location == Core.Model.ParameterLocation.Query || Location == Core.Model.ParameterLocation.Path) && !Extensions.ContainsKey(SwaggerExtensions.SkipUrlEncodingExtension);
         }
 
         /// <summary>
