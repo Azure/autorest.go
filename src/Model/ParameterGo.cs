@@ -418,10 +418,14 @@ namespace AutoRest.Go.Model
                     ancestors.Remove(p.ModelType.Name);
                 }
                 else
+                {
                     x.AddRange(p.ValidateType(name, method));
+                }
 
                 if (x.Count != 0)
+                {
                     v.Add($"{{ TargetValue: {name},\n Constraints: []validation.Constraint{{{string.Join(",\n", x)}}}}}");
+                }
             }
             return string.Join(",\n", v);
         }

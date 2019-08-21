@@ -15,6 +15,8 @@ namespace AutoRest.Go
     {
         public const string NullConstraint = "Null";
 
+        public const string EmptyConstraint = "Empty";
+
         public const string ReadOnlyConstraint = "ReadOnly";
 
         private static readonly Regex IsApiVersionPattern = new Regex(@"^api[^a-zA-Z0-9_]?version", RegexOptions.IgnoreCase);
@@ -536,6 +538,8 @@ namespace AutoRest.Go
             {
                 if (p.CheckNull() || isCompositeProperties)
                     y.AddRange(x.AddChain(name, NullConstraint, p.IsRequired));
+                else if (!p.IsRequired && p.ModelType.PrimaryType(KnownPrimaryType.String))
+                    y.AddRange(x.AddChain(name, EmptyConstraint, p.IsRequired));
                 else
                     y.AddRange(x);
             }
@@ -659,6 +663,19 @@ namespace AutoRest.Go
                 || (t is PrimaryType primaryType
                    && primaryType.KnownPrimaryType == KnownPrimaryType.ByteArray)
                 || t is SequenceType;
+        }
+
+        /// <summary>
+        /// Returns true if the specified type is a numeric type.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool IsNumericType(this IModelType t)
+        {
+            return t.PrimaryType(KnownPrimaryType.Decimal) ||
+                t.PrimaryType(KnownPrimaryType.Double) ||
+                t.PrimaryType(KnownPrimaryType.Int) ||
+                t.PrimaryType(KnownPrimaryType.Long);
         }
 
         /// <summary>

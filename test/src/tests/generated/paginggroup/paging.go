@@ -80,11 +80,11 @@ func (client PagingClient) GetMultiplePagesPreparer(ctx context.Context, clientR
 	}
 	if maxresults != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("maxresults", autorest.String(maxresults)))
+			autorest.WithHeader("maxresults", autorest.String(*maxresults)))
 	}
 	if timeout != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("timeout", autorest.String(timeout)))
+			autorest.WithHeader("timeout", autorest.String(*timeout)))
 	} else {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(30)))
@@ -585,11 +585,11 @@ func (client PagingClient) GetMultiplePagesLROPreparer(ctx context.Context, clie
 	}
 	if maxresults != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("maxresults", autorest.String(maxresults)))
+			autorest.WithHeader("maxresults", autorest.String(*maxresults)))
 	}
 	if timeout != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("timeout", autorest.String(timeout)))
+			autorest.WithHeader("timeout", autorest.String(*timeout)))
 	} else {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(30)))
@@ -922,11 +922,11 @@ func (client PagingClient) GetMultiplePagesWithOffsetPreparer(ctx context.Contex
 	}
 	if maxresults != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("maxresults", autorest.String(maxresults)))
+			autorest.WithHeader("maxresults", autorest.String(*maxresults)))
 	}
 	if timeout != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("timeout", autorest.String(timeout)))
+			autorest.WithHeader("timeout", autorest.String(*timeout)))
 	} else {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(30)))
@@ -1041,11 +1041,11 @@ func (client PagingClient) GetOdataMultiplePagesPreparer(ctx context.Context, cl
 	}
 	if maxresults != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("maxresults", autorest.String(maxresults)))
+			autorest.WithHeader("maxresults", autorest.String(*maxresults)))
 	}
 	if timeout != nil {
 		preparer = autorest.DecoratePreparer(preparer,
-			autorest.WithHeader("timeout", autorest.String(timeout)))
+			autorest.WithHeader("timeout", autorest.String(*timeout)))
 	} else {
 		preparer = autorest.DecoratePreparer(preparer,
 			autorest.WithHeader("timeout", autorest.String(30)))
