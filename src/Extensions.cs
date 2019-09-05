@@ -266,6 +266,7 @@ namespace AutoRest.Go
             switch (format)
             {
                 case CollectionFormat.Csv:
+                case CollectionFormat.Multi:
                     return ",";
                 case CollectionFormat.Pipes:
                     return "|";

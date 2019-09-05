@@ -79,6 +79,7 @@ func runTests(srvOutput *bytes.Buffer, allPass *bool) {
 		"requiredoptionalgroup",
 		"stringgroup",
 		"urlgroup",
+		"urlmultigroup",
 		"validationgroup",
 		"custombaseurlgroup",
 		"filegroup",

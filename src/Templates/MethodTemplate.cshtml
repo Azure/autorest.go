@@ -160,7 +160,16 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
         @:@(Model.QueryMap)
         foreach (var p in Model.OptionalQueryParameters)
         {
-            @:if @(p.GetEmptyCheck(p.GetParameterName(), false)) {
+            string emptyCheck;
+            if (p.CollectionFormat == CollectionFormat.Multi)
+            {
+                emptyCheck = $"{p.GetParameterName()} != nil";
+            }
+            else
+            {
+                emptyCheck = p.GetEmptyCheck(p.GetParameterName(), false);
+            }
+            @:if @emptyCheck {
             @:@(p.AddToMap("queryParameters"))
             if (p.DefaultValue.Value != null)
             {
