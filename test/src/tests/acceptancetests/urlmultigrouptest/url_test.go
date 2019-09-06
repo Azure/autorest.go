@@ -2,6 +2,7 @@ package urlmultigrouptest
 
 import (
 	"context"
+	"net/url"
 	"testing"
 	"tests/acceptancetests/utils"
 	. "tests/generated/urlmultigroup"
@@ -25,7 +26,7 @@ func getQueryClient() QueriesClient {
 }
 
 func (s *URLMultiSuite) TestArrayStringMultiEmpty(c *chk.C) {
-	_, err := queryClient.ArrayStringMultiEmpty(context.Background(), []string{})
+	_, err := queryClient.ArrayStringMultiEmpty(context.Background(), []string{""})
 	c.Assert(err, chk.IsNil)
 }
 
@@ -37,7 +38,7 @@ func (s *URLMultiSuite) TestArrayStringMultiNull(c *chk.C) {
 func (s *URLMultiSuite) TestArrayStringMultiValid(c *chk.C) {
 	_, err := queryClient.ArrayStringMultiValid(context.Background(), []string{
 		"ArrayQuery1",
-		"begin!*'();:@ &=+$,/?#[]end",
+		url.QueryEscape("begin!*'();:@ &=+$,/?#[]end"),
 		"",
 		"",
 	})

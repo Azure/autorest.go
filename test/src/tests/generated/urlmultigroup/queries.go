@@ -67,8 +67,8 @@ func (client QueriesClient) ArrayStringMultiEmpty(ctx context.Context, arrayQuer
 // ArrayStringMultiEmptyPreparer prepares the ArrayStringMultiEmpty request.
 func (client QueriesClient) ArrayStringMultiEmptyPreparer(ctx context.Context, arrayQuery []string) (*http.Request, error) {
 	queryParameters := map[string]interface{}{}
-	if arrayQuery != nil {
-		queryParameters["arrayQuery"] = autorest.Encode("query", arrayQuery, ",")
+	if arrayQuery != nil && len(arrayQuery) > 0 {
+		queryParameters["arrayQuery"] = arrayQuery
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -136,8 +136,8 @@ func (client QueriesClient) ArrayStringMultiNull(ctx context.Context, arrayQuery
 // ArrayStringMultiNullPreparer prepares the ArrayStringMultiNull request.
 func (client QueriesClient) ArrayStringMultiNullPreparer(ctx context.Context, arrayQuery []string) (*http.Request, error) {
 	queryParameters := map[string]interface{}{}
-	if arrayQuery != nil {
-		queryParameters["arrayQuery"] = autorest.Encode("query", arrayQuery, ",")
+	if arrayQuery != nil && len(arrayQuery) > 0 {
+		queryParameters["arrayQuery"] = arrayQuery
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -207,8 +207,8 @@ func (client QueriesClient) ArrayStringMultiValid(ctx context.Context, arrayQuer
 // ArrayStringMultiValidPreparer prepares the ArrayStringMultiValid request.
 func (client QueriesClient) ArrayStringMultiValidPreparer(ctx context.Context, arrayQuery []string) (*http.Request, error) {
 	queryParameters := map[string]interface{}{}
-	if arrayQuery != nil {
-		queryParameters["arrayQuery"] = autorest.Encode("query", arrayQuery, ",")
+	if arrayQuery != nil && len(arrayQuery) > 0 {
+		queryParameters["arrayQuery"] = arrayQuery
 	}
 
 	preparer := autorest.CreatePreparer(

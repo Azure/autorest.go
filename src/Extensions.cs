@@ -266,7 +266,6 @@ namespace AutoRest.Go
             switch (format)
             {
                 case CollectionFormat.Csv:
-                case CollectionFormat.Multi:
                     return ",";
                 case CollectionFormat.Pipes:
                     return "|";
@@ -277,6 +276,14 @@ namespace AutoRest.Go
                 default:
                     throw new NotSupportedException(string.Format("Collection format {0} is not supported.", format));
             }
+        }
+
+        /// <summary>
+        /// Returns true if the specified CollectionFormat requires a separator.
+        /// </summary>
+        public static bool CollectionFormatRequiresSeparator(this CollectionFormat format)
+        {
+            return format != CollectionFormat.None && format != CollectionFormat.Multi;
         }
 
         public static bool IsApiVersion(this string name)
