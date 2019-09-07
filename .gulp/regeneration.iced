@@ -78,6 +78,7 @@ goMappings = {
   'report':['report.json','report'],
   'optionalgroup':['required-optional.json','optionalgroup'],
   'urlgroup':['url.json','urlgroup'],
+  'urlmultigroup':['url-multi-collectionFormat.json','urlmultigroup'],
   'validationgroup':['validation.json', 'validationgroup'],
   'paginggroup':['paging.json', 'paginggroup'],
   'morecustombaseurigroup':['custom-baseUrl-more-options.json', 'morecustombaseurigroup'],

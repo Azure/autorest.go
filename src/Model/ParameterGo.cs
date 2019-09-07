@@ -128,7 +128,7 @@ namespace AutoRest.Go.Model
 
         public bool RequiresUrlEncoding()
         {
-            return (Location == Core.Model.ParameterLocation.Query || Location == Core.Model.ParameterLocation.Path) && !Extensions.ContainsKey(SwaggerExtensions.SkipUrlEncodingExtension);
+            return ((Location == Core.Model.ParameterLocation.Query && CollectionFormat != CollectionFormat.Multi ) || Location == Core.Model.ParameterLocation.Path) && !Extensions.ContainsKey(SwaggerExtensions.SkipUrlEncodingExtension);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace AutoRest.Go.Model
                                           ? "{0}"
                                           : "*{0}";
 
-            var s = CollectionFormat != CollectionFormat.None
+            var s = CollectionFormat.CollectionFormatRequiresSeparator()
                                   ? $"{format},\"{CollectionFormat.GetSeparator()}\""
                                   : $"{format}";
 

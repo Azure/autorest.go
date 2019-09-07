@@ -278,6 +278,14 @@ namespace AutoRest.Go
             }
         }
 
+        /// <summary>
+        /// Returns true if the specified CollectionFormat requires a separator.
+        /// </summary>
+        public static bool CollectionFormatRequiresSeparator(this CollectionFormat format)
+        {
+            return format != CollectionFormat.None && format != CollectionFormat.Multi;
+        }
+
         public static bool IsApiVersion(this string name)
         {
             return IsApiVersionPattern.IsMatch(name);
