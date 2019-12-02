@@ -711,9 +711,10 @@ namespace AutoRest.Go
             {
                 value = $"`{constraintValue}`";
             }
-            else if (constraintName == Constraint.InclusiveMaximum.ToString())
+            else if (constraintName == Constraint.InclusiveMaximum.ToString() ||
+                     constraintName == Constraint.InclusiveMinimum.ToString())
             {
-                // swagger spec states that InclusiveMaximum should be an integer
+                // swagger spec states that InclusiveMaximum should be a number
                 // however the validation code supports int64 and float64.  to be
                 // on the safe side handle both cases here.
                 if (constraintValue.IndexOf('.') > -1)
