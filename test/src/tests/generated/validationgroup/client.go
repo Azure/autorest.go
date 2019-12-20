@@ -286,7 +286,7 @@ func (client BaseClient) ValidationOfBodyPreparer(ctx context.Context, resourceG
 
 	const APIVersion = "1.0.0"
 	queryParameters := map[string]interface{}{
-		"api-version": APIVersion,
+		"apiVersion": APIVersion,
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -380,7 +380,7 @@ func (client BaseClient) ValidationOfMethodParametersPreparer(ctx context.Contex
 
 	const APIVersion = "1.0.0"
 	queryParameters := map[string]interface{}{
-		"api-version": APIVersion,
+		"apiVersion": APIVersion,
 	}
 
 	preparer := autorest.CreatePreparer(
