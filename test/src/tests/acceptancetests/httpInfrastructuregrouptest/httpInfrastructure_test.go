@@ -812,7 +812,6 @@ func (s *HTTPSuite) TestGetDefaultModelA400Valid(c *chk.C) {
 func (s *HTTPSuite) TestGetDefaultModelA400None(c *chk.C) {
 	res, err := httpMultipleResponsesClient.GetDefaultModelA400None(context.Background())
 	c.Assert(err, chk.NotNil)
-	c.Assert(res.StatusCode, chk.IsNil)
 	c.Assert(res.Response.StatusCode, chk.Equals, http.StatusBadRequest)
 }
 

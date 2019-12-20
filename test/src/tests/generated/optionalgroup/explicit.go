@@ -772,13 +772,13 @@ func (client ExplicitClient) PostOptionalStringPropertyResponder(resp *http.Resp
 
 // PostRequiredArrayHeader test explicitly required array. Please put a header 'headerParameter' => null and the client
 // library should throw before the request is sent.
-func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredArrayHeader")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -797,7 +797,7 @@ func (client ExplicitClient) PostRequiredArrayHeader(ctx context.Context, header
 
 	resp, err := client.PostRequiredArrayHeaderSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayHeader", resp, "Failure sending request")
 		return
 	}
@@ -829,26 +829,25 @@ func (client ExplicitClient) PostRequiredArrayHeaderSender(req *http.Request) (*
 
 // PostRequiredArrayHeaderResponder handles the response to the PostRequiredArrayHeader request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredArrayParameter test explicitly required array. Please put null and the client library should throw
 // before the request is sent.
-func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredArrayParameter")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -867,7 +866,7 @@ func (client ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bod
 
 	resp, err := client.PostRequiredArrayParameterSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayParameter", resp, "Failure sending request")
 		return
 	}
@@ -900,26 +899,25 @@ func (client ExplicitClient) PostRequiredArrayParameterSender(req *http.Request)
 
 // PostRequiredArrayParameterResponder handles the response to the PostRequiredArrayParameter request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredArrayProperty test explicitly required array. Please put a valid array-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
-func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredArrayProperty")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -938,7 +936,7 @@ func (client ExplicitClient) PostRequiredArrayProperty(ctx context.Context, body
 
 	resp, err := client.PostRequiredArrayPropertySender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredArrayProperty", resp, "Failure sending request")
 		return
 	}
@@ -971,26 +969,25 @@ func (client ExplicitClient) PostRequiredArrayPropertySender(req *http.Request) 
 
 // PostRequiredArrayPropertyResponder handles the response to the PostRequiredArrayProperty request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredArrayPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredClassParameter test explicitly required complex object. Please put null and the client library should
 // throw before the request is sent.
-func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product) (result Error, err error) {
+func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredClassParameter")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1009,7 +1006,7 @@ func (client ExplicitClient) PostRequiredClassParameter(ctx context.Context, bod
 
 	resp, err := client.PostRequiredClassParameterSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredClassParameter", resp, "Failure sending request")
 		return
 	}
@@ -1042,26 +1039,25 @@ func (client ExplicitClient) PostRequiredClassParameterSender(req *http.Request)
 
 // PostRequiredClassParameterResponder handles the response to the PostRequiredClassParameter request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredClassParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredClassProperty test explicitly required complex object. Please put a valid class-wrapper with 'value' =
 // null and the client library should throw before the request is sent.
-func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredClassProperty")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1081,7 +1077,7 @@ func (client ExplicitClient) PostRequiredClassProperty(ctx context.Context, body
 
 	resp, err := client.PostRequiredClassPropertySender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredClassProperty", resp, "Failure sending request")
 		return
 	}
@@ -1114,26 +1110,25 @@ func (client ExplicitClient) PostRequiredClassPropertySender(req *http.Request) 
 
 // PostRequiredClassPropertyResponder handles the response to the PostRequiredClassProperty request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredClassPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredIntegerHeader test explicitly required integer. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
-func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32) (result Error, err error) {
+func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredIntegerHeader")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1146,7 +1141,7 @@ func (client ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, head
 
 	resp, err := client.PostRequiredIntegerHeaderSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerHeader", resp, "Failure sending request")
 		return
 	}
@@ -1178,26 +1173,25 @@ func (client ExplicitClient) PostRequiredIntegerHeaderSender(req *http.Request) 
 
 // PostRequiredIntegerHeaderResponder handles the response to the PostRequiredIntegerHeader request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredIntegerHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredIntegerParameter test explicitly required integer. Please put null and the client library should throw
 // before the request is sent.
-func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32) (result Error, err error) {
+func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredIntegerParameter")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1210,7 +1204,7 @@ func (client ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, b
 
 	resp, err := client.PostRequiredIntegerParameterSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerParameter", resp, "Failure sending request")
 		return
 	}
@@ -1243,26 +1237,25 @@ func (client ExplicitClient) PostRequiredIntegerParameterSender(req *http.Reques
 
 // PostRequiredIntegerParameterResponder handles the response to the PostRequiredIntegerParameter request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredIntegerParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredIntegerProperty test explicitly required integer. Please put a valid int-wrapper with 'value' = null and
 // the client library should throw before the request is sent.
-func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredIntegerProperty")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1281,7 +1274,7 @@ func (client ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bo
 
 	resp, err := client.PostRequiredIntegerPropertySender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredIntegerProperty", resp, "Failure sending request")
 		return
 	}
@@ -1314,26 +1307,25 @@ func (client ExplicitClient) PostRequiredIntegerPropertySender(req *http.Request
 
 // PostRequiredIntegerPropertyResponder handles the response to the PostRequiredIntegerProperty request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredIntegerPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredStringHeader test explicitly required string. Please put a header 'headerParameter' => null and the
 // client library should throw before the request is sent.
-func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string) (result Error, err error) {
+func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredStringHeader")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1346,7 +1338,7 @@ func (client ExplicitClient) PostRequiredStringHeader(ctx context.Context, heade
 
 	resp, err := client.PostRequiredStringHeaderSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringHeader", resp, "Failure sending request")
 		return
 	}
@@ -1378,26 +1370,25 @@ func (client ExplicitClient) PostRequiredStringHeaderSender(req *http.Request) (
 
 // PostRequiredStringHeaderResponder handles the response to the PostRequiredStringHeader request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredStringHeaderResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredStringParameter test explicitly required string. Please put null and the client library should throw
 // before the request is sent.
-func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string) (result Error, err error) {
+func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredStringParameter")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1410,7 +1401,7 @@ func (client ExplicitClient) PostRequiredStringParameter(ctx context.Context, bo
 
 	resp, err := client.PostRequiredStringParameterSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringParameter", resp, "Failure sending request")
 		return
 	}
@@ -1443,26 +1434,25 @@ func (client ExplicitClient) PostRequiredStringParameterSender(req *http.Request
 
 // PostRequiredStringParameterResponder handles the response to the PostRequiredStringParameter request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredStringParameterResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // PostRequiredStringProperty test explicitly required string. Please put a valid string-wrapper with 'value' = null
 // and the client library should throw before the request is sent.
-func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper) (result Error, err error) {
+func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ExplicitClient.PostRequiredStringProperty")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1481,7 +1471,7 @@ func (client ExplicitClient) PostRequiredStringProperty(ctx context.Context, bod
 
 	resp, err := client.PostRequiredStringPropertySender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ExplicitClient", "PostRequiredStringProperty", resp, "Failure sending request")
 		return
 	}
@@ -1514,13 +1504,12 @@ func (client ExplicitClient) PostRequiredStringPropertySender(req *http.Request)
 
 // PostRequiredStringPropertyResponder handles the response to the PostRequiredStringProperty request. The method always
 // closes the http.Response Body.
-func (client ExplicitClient) PostRequiredStringPropertyResponder(resp *http.Response) (result Error, err error) {
+func (client ExplicitClient) PostRequiredStringPropertyResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }

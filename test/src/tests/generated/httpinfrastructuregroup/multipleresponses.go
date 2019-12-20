@@ -1765,13 +1765,13 @@ func (client MultipleResponsesClient) GetDefaultModelA200ValidResponder(resp *ht
 }
 
 // GetDefaultModelA400None send a 400 response with no payload
-func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context) (result A, err error) {
+func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/MultipleResponsesClient.GetDefaultModelA400None")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1784,7 +1784,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400None(ctx context.Contex
 
 	resp, err := client.GetDefaultModelA400NoneSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA400None", resp, "Failure sending request")
 		return
 	}
@@ -1815,25 +1815,24 @@ func (client MultipleResponsesClient) GetDefaultModelA400NoneSender(req *http.Re
 
 // GetDefaultModelA400NoneResponder handles the response to the GetDefaultModelA400None request. The method always
 // closes the http.Response Body.
-func (client MultipleResponsesClient) GetDefaultModelA400NoneResponder(resp *http.Response) (result A, err error) {
+func (client MultipleResponsesClient) GetDefaultModelA400NoneResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // GetDefaultModelA400Valid send a 400 response with valid payload: {'statusCode': '400'}
-func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context) (result A, err error) {
+func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/MultipleResponsesClient.GetDefaultModelA400Valid")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -1846,7 +1845,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Conte
 
 	resp, err := client.GetDefaultModelA400ValidSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "httpinfrastructuregroup.MultipleResponsesClient", "GetDefaultModelA400Valid", resp, "Failure sending request")
 		return
 	}
@@ -1877,14 +1876,13 @@ func (client MultipleResponsesClient) GetDefaultModelA400ValidSender(req *http.R
 
 // GetDefaultModelA400ValidResponder handles the response to the GetDefaultModelA400Valid request. The method always
 // closes the http.Response Body.
-func (client MultipleResponsesClient) GetDefaultModelA400ValidResponder(resp *http.Response) (result A, err error) {
+func (client MultipleResponsesClient) GetDefaultModelA400ValidResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 

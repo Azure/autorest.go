@@ -413,3 +413,147 @@ func (page ProductResultPage) Values() []Product {
 func NewProductResultPage(getNextPage func(context.Context, ProductResult) (ProductResult, error)) ProductResultPage {
 	return ProductResultPage{fn: getNextPage}
 }
+
+// ProductResultValue ...
+type ProductResultValue struct {
+	autorest.Response `json:"-"`
+	Value             *[]Product `json:"value,omitempty"`
+	NextLink          *string    `json:"nextLink,omitempty"`
+}
+
+// ProductResultValueIterator provides access to a complete listing of Product values.
+type ProductResultValueIterator struct {
+	i    int
+	page ProductResultValuePage
+}
+
+// NextWithContext advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+func (iter *ProductResultValueIterator) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ProductResultValueIterator.NextWithContext")
+		defer func() {
+			sc := -1
+			if iter.Response().Response.Response != nil {
+				sc = iter.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	iter.i++
+	if iter.i < len(iter.page.Values()) {
+		return nil
+	}
+	err = iter.page.NextWithContext(ctx)
+	if err != nil {
+		iter.i--
+		return err
+	}
+	iter.i = 0
+	return nil
+}
+
+// Next advances to the next value.  If there was an error making
+// the request the iterator does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (iter *ProductResultValueIterator) Next() error {
+	return iter.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the enumeration should be started or is not yet complete.
+func (iter ProductResultValueIterator) NotDone() bool {
+	return iter.page.NotDone() && iter.i < len(iter.page.Values())
+}
+
+// Response returns the raw server response from the last page request.
+func (iter ProductResultValueIterator) Response() ProductResultValue {
+	return iter.page.Response()
+}
+
+// Value returns the current value or a zero-initialized value if the
+// iterator has advanced beyond the end of the collection.
+func (iter ProductResultValueIterator) Value() Product {
+	if !iter.page.NotDone() {
+		return Product{}
+	}
+	return iter.page.Values()[iter.i]
+}
+
+// Creates a new instance of the ProductResultValueIterator type.
+func NewProductResultValueIterator(page ProductResultValuePage) ProductResultValueIterator {
+	return ProductResultValueIterator{page: page}
+}
+
+// IsEmpty returns true if the ListResult contains no values.
+func (prv ProductResultValue) IsEmpty() bool {
+	return prv.Value == nil || len(*prv.Value) == 0
+}
+
+// productResultValuePreparer prepares a request to retrieve the next set of results.
+// It returns nil if no more results exist.
+func (prv ProductResultValue) productResultValuePreparer(ctx context.Context) (*http.Request, error) {
+	if prv.NextLink == nil || len(to.String(prv.NextLink)) < 1 {
+		return nil, nil
+	}
+	return autorest.Prepare((&http.Request{}).WithContext(ctx),
+		autorest.AsJSON(),
+		autorest.AsGet(),
+		autorest.WithBaseURL(to.String(prv.NextLink)))
+}
+
+// ProductResultValuePage contains a page of Product values.
+type ProductResultValuePage struct {
+	fn  func(context.Context, ProductResultValue) (ProductResultValue, error)
+	prv ProductResultValue
+}
+
+// NextWithContext advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+func (page *ProductResultValuePage) NextWithContext(ctx context.Context) (err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/ProductResultValuePage.NextWithContext")
+		defer func() {
+			sc := -1
+			if page.Response().Response.Response != nil {
+				sc = page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	next, err := page.fn(ctx, page.prv)
+	if err != nil {
+		return err
+	}
+	page.prv = next
+	return nil
+}
+
+// Next advances to the next page of values.  If there was an error making
+// the request the page does not advance and the error is returned.
+// Deprecated: Use NextWithContext() instead.
+func (page *ProductResultValuePage) Next() error {
+	return page.NextWithContext(context.Background())
+}
+
+// NotDone returns true if the page enumeration should be started or is not yet complete.
+func (page ProductResultValuePage) NotDone() bool {
+	return !page.prv.IsEmpty()
+}
+
+// Response returns the raw server response from the last page request.
+func (page ProductResultValuePage) Response() ProductResultValue {
+	return page.prv
+}
+
+// Values returns the slice of values for the current page or nil if there are no values.
+func (page ProductResultValuePage) Values() []Product {
+	if page.prv.IsEmpty() {
+		return nil
+	}
+	return *page.prv.Value
+}
+
+// Creates a new instance of the ProductResultValuePage type.
+func NewProductResultValuePage(getNextPage func(context.Context, ProductResultValue) (ProductResultValue, error)) ProductResultValuePage {
+	return ProductResultValuePage{fn: getNextPage}
+}

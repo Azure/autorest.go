@@ -30,13 +30,13 @@ func NewImplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, req
 }
 
 // GetOptionalGlobalQuery test implicitly optional query parameter
-func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result Error, err error) {
+func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetOptionalGlobalQuery")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -49,7 +49,7 @@ func (client ImplicitClient) GetOptionalGlobalQuery(ctx context.Context) (result
 
 	resp, err := client.GetOptionalGlobalQuerySender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetOptionalGlobalQuery", resp, "Failure sending request")
 		return
 	}
@@ -86,25 +86,24 @@ func (client ImplicitClient) GetOptionalGlobalQuerySender(req *http.Request) (*h
 
 // GetOptionalGlobalQueryResponder handles the response to the GetOptionalGlobalQuery request. The method always
 // closes the http.Response Body.
-func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response) (result Error, err error) {
+func (client ImplicitClient) GetOptionalGlobalQueryResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // GetRequiredGlobalPath test implicitly required path parameter
-func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result Error, err error) {
+func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetRequiredGlobalPath")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -117,7 +116,7 @@ func (client ImplicitClient) GetRequiredGlobalPath(ctx context.Context) (result 
 
 	resp, err := client.GetRequiredGlobalPathSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalPath", resp, "Failure sending request")
 		return
 	}
@@ -152,25 +151,24 @@ func (client ImplicitClient) GetRequiredGlobalPathSender(req *http.Request) (*ht
 
 // GetRequiredGlobalPathResponder handles the response to the GetRequiredGlobalPath request. The method always
 // closes the http.Response Body.
-func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response) (result Error, err error) {
+func (client ImplicitClient) GetRequiredGlobalPathResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // GetRequiredGlobalQuery test implicitly required query parameter
-func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result Error, err error) {
+func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetRequiredGlobalQuery")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -183,7 +181,7 @@ func (client ImplicitClient) GetRequiredGlobalQuery(ctx context.Context) (result
 
 	resp, err := client.GetRequiredGlobalQuerySender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredGlobalQuery", resp, "Failure sending request")
 		return
 	}
@@ -219,25 +217,24 @@ func (client ImplicitClient) GetRequiredGlobalQuerySender(req *http.Request) (*h
 
 // GetRequiredGlobalQueryResponder handles the response to the GetRequiredGlobalQuery request. The method always
 // closes the http.Response Body.
-func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response) (result Error, err error) {
+func (client ImplicitClient) GetRequiredGlobalQueryResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 
 // GetRequiredPath test implicitly required path parameter
-func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result Error, err error) {
+func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string) (result autorest.Response, err error) {
 	if tracing.IsEnabled() {
 		ctx = tracing.StartSpan(ctx, fqdn+"/ImplicitClient.GetRequiredPath")
 		defer func() {
 			sc := -1
-			if result.Response.Response != nil {
-				sc = result.Response.Response.StatusCode
+			if result.Response != nil {
+				sc = result.Response.StatusCode
 			}
 			tracing.EndSpan(ctx, sc, err)
 		}()
@@ -250,7 +247,7 @@ func (client ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter 
 
 	resp, err := client.GetRequiredPathSender(req)
 	if err != nil {
-		result.Response = autorest.Response{Response: resp}
+		result.Response = resp
 		err = autorest.NewErrorWithError(err, "optionalgroup.ImplicitClient", "GetRequiredPath", resp, "Failure sending request")
 		return
 	}
@@ -285,14 +282,13 @@ func (client ImplicitClient) GetRequiredPathSender(req *http.Request) (*http.Res
 
 // GetRequiredPathResponder handles the response to the GetRequiredPath request. The method always
 // closes the http.Response Body.
-func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (result Error, err error) {
+func (client ImplicitClient) GetRequiredPathResponder(resp *http.Response) (result autorest.Response, err error) {
 	err = autorest.Respond(
 		resp,
 		client.ByInspecting(),
 		azure.WithErrorUnlessStatusCode(http.StatusOK),
-		autorest.ByUnmarshallingJSON(&result),
 		autorest.ByClosing())
-	result.Response = autorest.Response{Response: resp}
+	result.Response = resp
 	return
 }
 

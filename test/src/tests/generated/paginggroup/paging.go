@@ -991,6 +991,168 @@ func (client PagingClient) GetMultiplePagesWithOffsetComplete(ctx context.Contex
 	return
 }
 
+// GetNoItemNamePages a paging operation that must return result of the default 'value' node.
+func (client PagingClient) GetNoItemNamePages(ctx context.Context) (result ProductResultValuePage, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetNoItemNamePages")
+		defer func() {
+			sc := -1
+			if result.prv.Response.Response != nil {
+				sc = result.prv.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.fn = client.getNoItemNamePagesNextResults
+	req, err := client.GetNoItemNamePagesPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNoItemNamePages", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetNoItemNamePagesSender(req)
+	if err != nil {
+		result.prv.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNoItemNamePages", resp, "Failure sending request")
+		return
+	}
+
+	result.prv, err = client.GetNoItemNamePagesResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNoItemNamePages", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetNoItemNamePagesPreparer prepares the GetNoItemNamePages request.
+func (client PagingClient) GetNoItemNamePagesPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/paging/noitemname"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetNoItemNamePagesSender sends the GetNoItemNamePages request. The method will close the
+// http.Response Body if it receives an error.
+func (client PagingClient) GetNoItemNamePagesSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
+}
+
+// GetNoItemNamePagesResponder handles the response to the GetNoItemNamePages request. The method always
+// closes the http.Response Body.
+func (client PagingClient) GetNoItemNamePagesResponder(resp *http.Response) (result ProductResultValue, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
+// getNoItemNamePagesNextResults retrieves the next set of results, if any.
+func (client PagingClient) getNoItemNamePagesNextResults(ctx context.Context, lastResults ProductResultValue) (result ProductResultValue, err error) {
+	req, err := lastResults.productResultValuePreparer(ctx)
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getNoItemNamePagesNextResults", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
+	resp, err := client.GetNoItemNamePagesSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getNoItemNamePagesNextResults", resp, "Failure sending next results request")
+	}
+	result, err = client.GetNoItemNamePagesResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "getNoItemNamePagesNextResults", resp, "Failure responding to next results request")
+	}
+	return
+}
+
+// GetNoItemNamePagesComplete enumerates all values, automatically crossing page boundaries as required.
+func (client PagingClient) GetNoItemNamePagesComplete(ctx context.Context) (result ProductResultValueIterator, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetNoItemNamePages")
+		defer func() {
+			sc := -1
+			if result.Response().Response.Response != nil {
+				sc = result.page.Response().Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	result.page, err = client.GetNoItemNamePages(ctx)
+	return
+}
+
+// GetNullNextLinkNamePages a paging operation that must ignore any kind of nextLink, and stop after page 1.
+func (client PagingClient) GetNullNextLinkNamePages(ctx context.Context) (result ProductResult, err error) {
+	if tracing.IsEnabled() {
+		ctx = tracing.StartSpan(ctx, fqdn+"/PagingClient.GetNullNextLinkNamePages")
+		defer func() {
+			sc := -1
+			if result.Response.Response != nil {
+				sc = result.Response.Response.StatusCode
+			}
+			tracing.EndSpan(ctx, sc, err)
+		}()
+	}
+	req, err := client.GetNullNextLinkNamePagesPreparer(ctx)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNullNextLinkNamePages", nil, "Failure preparing request")
+		return
+	}
+
+	resp, err := client.GetNullNextLinkNamePagesSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNullNextLinkNamePages", resp, "Failure sending request")
+		return
+	}
+
+	result, err = client.GetNullNextLinkNamePagesResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetNullNextLinkNamePages", resp, "Failure responding to request")
+	}
+
+	return
+}
+
+// GetNullNextLinkNamePagesPreparer prepares the GetNullNextLinkNamePages request.
+func (client PagingClient) GetNullNextLinkNamePagesPreparer(ctx context.Context) (*http.Request, error) {
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/paging/nullnextlink"))
+	return preparer.Prepare((&http.Request{}).WithContext(ctx))
+}
+
+// GetNullNextLinkNamePagesSender sends the GetNullNextLinkNamePages request. The method will close the
+// http.Response Body if it receives an error.
+func (client PagingClient) GetNullNextLinkNamePagesSender(req *http.Request) (*http.Response, error) {
+	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+	return autorest.SendWithSender(client, req, sd...)
+}
+
+// GetNullNextLinkNamePagesResponder handles the response to the GetNullNextLinkNamePages request. The method always
+// closes the http.Response Body.
+func (client PagingClient) GetNullNextLinkNamePagesResponder(resp *http.Response) (result ProductResult, err error) {
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
+}
+
 // GetOdataMultiplePages a paging operation that includes a nextLink in odata format that has 10 pages
 // Parameters:
 // maxresults - sets the maximum number of items to return in the response.

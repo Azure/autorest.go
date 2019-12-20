@@ -57,66 +57,9 @@ type BaseProduct struct {
 
 // Error ...
 type Error struct {
-	Status  *int32  `json:"status,omitempty"`
-	Message *string `json:"message,omitempty"`
-	*Error  `json:"parentError,omitempty"`
-}
-
-// MarshalJSON is the custom marshaler for Error.
-func (e Error) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	if e.Status != nil {
-		objectMap["status"] = e.Status
-	}
-	if e.Message != nil {
-		objectMap["message"] = e.Message
-	}
-	if e.Error != nil {
-		objectMap["parentError"] = e.Error
-	}
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON is the custom unmarshaler for Error struct.
-func (e *Error) UnmarshalJSON(body []byte) error {
-	var m map[string]*json.RawMessage
-	err := json.Unmarshal(body, &m)
-	if err != nil {
-		return err
-	}
-	for k, v := range m {
-		switch k {
-		case "status":
-			if v != nil {
-				var status int32
-				err = json.Unmarshal(*v, &status)
-				if err != nil {
-					return err
-				}
-				e.Status = &status
-			}
-		case "message":
-			if v != nil {
-				var message string
-				err = json.Unmarshal(*v, &message)
-				if err != nil {
-					return err
-				}
-				e.Message = &message
-			}
-		case "parentError":
-			if v != nil {
-				var errorVar Error
-				err = json.Unmarshal(*v, &errorVar)
-				if err != nil {
-					return err
-				}
-				e.Error = &errorVar
-			}
-		}
-	}
-
-	return nil
+	Status      *int32  `json:"status,omitempty"`
+	Message     *string `json:"message,omitempty"`
+	ParentError *Error  `json:"parentError,omitempty"`
 }
 
 // FlattenedProduct flattened product.

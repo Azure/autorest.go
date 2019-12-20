@@ -22,6 +22,8 @@ type PagingClientAPI interface {
 	GetMultiplePagesRetryFirst(ctx context.Context) (result paginggroup.ProductResultPage, err error)
 	GetMultiplePagesRetrySecond(ctx context.Context) (result paginggroup.ProductResultPage, err error)
 	GetMultiplePagesWithOffset(ctx context.Context, offset int32, clientRequestID string, maxresults *int32, timeout *int32) (result paginggroup.ProductResultPage, err error)
+	GetNoItemNamePages(ctx context.Context) (result paginggroup.ProductResultValuePage, err error)
+	GetNullNextLinkNamePages(ctx context.Context) (result paginggroup.ProductResult, err error)
 	GetOdataMultiplePages(ctx context.Context, clientRequestID string, maxresults *int32, timeout *int32) (result paginggroup.OdataProductResultPage, err error)
 	GetSinglePages(ctx context.Context) (result paginggroup.ProductResultPage, err error)
 	GetSinglePagesFailure(ctx context.Context) (result paginggroup.ProductResultPage, err error)
