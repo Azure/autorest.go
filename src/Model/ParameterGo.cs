@@ -15,8 +15,6 @@ namespace AutoRest.Go.Model
 {
     public class ParameterGo : Parameter
     {
-        public const string APIVersionName = "APIVersion";
-
         public ParameterGo()
         {
 
@@ -46,11 +44,7 @@ namespace AutoRest.Go.Model
         public string GetParameterName()
         {
             string retval;
-            if (IsAPIVersion)
-            {
-                retval = APIVersionName;
-            }
-            else if (IsClientProperty)
+            if (IsClientProperty)
             {
                 retval = GetClientPropertryName();
             }
@@ -61,11 +55,9 @@ namespace AutoRest.Go.Model
             return retval;
         }
 
-        public override bool IsClientProperty => base.IsClientProperty == true && !IsAPIVersion;
-
         public virtual bool IsAPIVersion => SerializedName.IsApiVersion();
 
-        public virtual bool IsMethodArgument => !IsClientProperty && !IsAPIVersion && !IsConstant;
+        public virtual bool IsMethodArgument => !IsClientProperty && !IsConstant;
 
         /// <summary>
         /// Returns a properly formatted DefaultValue string.
@@ -121,9 +113,7 @@ namespace AutoRest.Go.Model
         /// <returns></returns>
         public string NameForMap()
         {
-            return IsAPIVersion
-                     ? AzureExtensions.ApiVersion
-                     : SerializedName;
+            return SerializedName;
         }
 
         public bool RequiresUrlEncoding()
@@ -139,7 +129,7 @@ namespace AutoRest.Go.Model
         {
             if (IsAPIVersion)
             {
-                return APIVersionName;
+                return Name;
             }
 
             if (IsConstant)
