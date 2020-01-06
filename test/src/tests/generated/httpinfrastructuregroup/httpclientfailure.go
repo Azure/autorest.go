@@ -24,7 +24,9 @@ func NewHTTPClientFailureClient() HTTPClientFailureClient {
 	return NewHTTPClientFailureClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewHTTPClientFailureClientWithBaseURI creates an instance of the HTTPClientFailureClient client.
+// NewHTTPClientFailureClientWithBaseURI creates an instance of the HTTPClientFailureClient client using a custom
+// endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
+// stack).
 func NewHTTPClientFailureClientWithBaseURI(baseURI string) HTTPClientFailureClient {
 	return HTTPClientFailureClient{NewWithBaseURI(baseURI)}
 }

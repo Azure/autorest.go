@@ -24,7 +24,9 @@ func NewMultipleResponsesClient() MultipleResponsesClient {
 	return NewMultipleResponsesClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewMultipleResponsesClientWithBaseURI creates an instance of the MultipleResponsesClient client.
+// NewMultipleResponsesClientWithBaseURI creates an instance of the MultipleResponsesClient client using a custom
+// endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
+// stack).
 func NewMultipleResponsesClientWithBaseURI(baseURI string) MultipleResponsesClient {
 	return MultipleResponsesClient{NewWithBaseURI(baseURI)}
 }

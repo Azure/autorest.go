@@ -24,7 +24,8 @@ func NewStringClient() StringClient {
 	return NewStringClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewStringClientWithBaseURI creates an instance of the StringClient client.
+// NewStringClientWithBaseURI creates an instance of the StringClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewStringClientWithBaseURI(baseURI string) StringClient {
 	return StringClient{NewWithBaseURI(baseURI)}
 }

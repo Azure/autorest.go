@@ -25,7 +25,8 @@ func NewNumberClient() NumberClient {
 	return NewNumberClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewNumberClientWithBaseURI creates an instance of the NumberClient client.
+// NewNumberClientWithBaseURI creates an instance of the NumberClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewNumberClientWithBaseURI(baseURI string) NumberClient {
 	return NumberClient{NewWithBaseURI(baseURI)}
 }

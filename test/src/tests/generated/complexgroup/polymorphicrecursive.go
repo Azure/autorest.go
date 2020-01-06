@@ -25,7 +25,9 @@ func NewPolymorphicrecursiveClient() PolymorphicrecursiveClient {
 	return NewPolymorphicrecursiveClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewPolymorphicrecursiveClientWithBaseURI creates an instance of the PolymorphicrecursiveClient client.
+// NewPolymorphicrecursiveClientWithBaseURI creates an instance of the PolymorphicrecursiveClient client using a custom
+// endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
+// stack).
 func NewPolymorphicrecursiveClientWithBaseURI(baseURI string) PolymorphicrecursiveClient {
 	return PolymorphicrecursiveClient{NewWithBaseURI(baseURI)}
 }

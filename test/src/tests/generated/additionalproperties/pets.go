@@ -25,7 +25,8 @@ func NewPetsClient() PetsClient {
 	return NewPetsClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewPetsClientWithBaseURI creates an instance of the PetsClient client.
+// NewPetsClientWithBaseURI creates an instance of the PetsClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewPetsClientWithBaseURI(baseURI string) PetsClient {
 	return PetsClient{NewWithBaseURI(baseURI)}
 }

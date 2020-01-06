@@ -24,7 +24,8 @@ func NewPathItemsClient(globalStringPath string, globalStringQuery string) PathI
 	return NewPathItemsClientWithBaseURI(DefaultBaseURI, globalStringPath, globalStringQuery)
 }
 
-// NewPathItemsClientWithBaseURI creates an instance of the PathItemsClient client.
+// NewPathItemsClientWithBaseURI creates an instance of the PathItemsClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewPathItemsClientWithBaseURI(baseURI string, globalStringPath string, globalStringQuery string) PathItemsClient {
 	return PathItemsClient{NewWithBaseURI(baseURI, globalStringPath, globalStringQuery)}
 }

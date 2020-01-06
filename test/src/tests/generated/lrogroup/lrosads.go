@@ -24,7 +24,8 @@ func NewLROSADsClient() LROSADsClient {
 	return NewLROSADsClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewLROSADsClientWithBaseURI creates an instance of the LROSADsClient client.
+// NewLROSADsClientWithBaseURI creates an instance of the LROSADsClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewLROSADsClientWithBaseURI(baseURI string) LROSADsClient {
 	return LROSADsClient{NewWithBaseURI(baseURI)}
 }

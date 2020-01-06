@@ -25,7 +25,8 @@ func NewQueriesClient(globalStringPath string, globalStringQuery string) Queries
 	return NewQueriesClientWithBaseURI(DefaultBaseURI, globalStringPath, globalStringQuery)
 }
 
-// NewQueriesClientWithBaseURI creates an instance of the QueriesClient client.
+// NewQueriesClientWithBaseURI creates an instance of the QueriesClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewQueriesClientWithBaseURI(baseURI string, globalStringPath string, globalStringQuery string) QueriesClient {
 	return QueriesClient{NewWithBaseURI(baseURI, globalStringPath, globalStringQuery)}
 }

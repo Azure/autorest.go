@@ -25,7 +25,8 @@ func NewDatetimerfc1123Client() Datetimerfc1123Client {
 	return NewDatetimerfc1123ClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewDatetimerfc1123ClientWithBaseURI creates an instance of the Datetimerfc1123Client client.
+// NewDatetimerfc1123ClientWithBaseURI creates an instance of the Datetimerfc1123Client client using a custom endpoint.
+// Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewDatetimerfc1123ClientWithBaseURI(baseURI string) Datetimerfc1123Client {
 	return Datetimerfc1123Client{NewWithBaseURI(baseURI)}
 }

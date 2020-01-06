@@ -32,7 +32,8 @@ func New(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQu
 	return NewWithBaseURI(DefaultBaseURI, requiredGlobalPath, requiredGlobalQuery, optionalGlobalQuery)
 }
 
-// NewWithBaseURI creates an instance of the BaseClient client.
+// NewWithBaseURI creates an instance of the BaseClient client using a custom endpoint.  Use this when interacting with
+// an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewWithBaseURI(baseURI string, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) BaseClient {
 	return BaseClient{
 		Client:              autorest.NewClientWithUserAgent(UserAgent()),

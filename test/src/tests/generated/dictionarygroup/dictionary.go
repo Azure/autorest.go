@@ -26,7 +26,8 @@ func NewDictionaryClient() DictionaryClient {
 	return NewDictionaryClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewDictionaryClientWithBaseURI creates an instance of the DictionaryClient client.
+// NewDictionaryClientWithBaseURI creates an instance of the DictionaryClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewDictionaryClientWithBaseURI(baseURI string) DictionaryClient {
 	return DictionaryClient{NewWithBaseURI(baseURI)}
 }

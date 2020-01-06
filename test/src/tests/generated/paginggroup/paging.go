@@ -25,7 +25,8 @@ func NewPagingClient() PagingClient {
 	return NewPagingClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewPagingClientWithBaseURI creates an instance of the PagingClient client.
+// NewPagingClientWithBaseURI creates an instance of the PagingClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewPagingClientWithBaseURI(baseURI string) PagingClient {
 	return PagingClient{NewWithBaseURI(baseURI)}
 }

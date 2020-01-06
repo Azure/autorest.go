@@ -24,7 +24,8 @@ func NewBasicClient() BasicClient {
 	return NewBasicClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewBasicClientWithBaseURI creates an instance of the BasicClient client.
+// NewBasicClientWithBaseURI creates an instance of the BasicClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewBasicClientWithBaseURI(baseURI string) BasicClient {
 	return BasicClient{NewWithBaseURI(baseURI)}
 }
