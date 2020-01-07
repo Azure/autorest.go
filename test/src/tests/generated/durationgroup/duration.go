@@ -24,7 +24,8 @@ func NewDurationClient() DurationClient {
 	return NewDurationClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewDurationClientWithBaseURI creates an instance of the DurationClient client.
+// NewDurationClientWithBaseURI creates an instance of the DurationClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewDurationClientWithBaseURI(baseURI string) DurationClient {
 	return DurationClient{NewWithBaseURI(baseURI)}
 }

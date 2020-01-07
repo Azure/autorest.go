@@ -24,7 +24,8 @@ func NewFlattencomplexClient() FlattencomplexClient {
 	return NewFlattencomplexClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewFlattencomplexClientWithBaseURI creates an instance of the FlattencomplexClient client.
+// NewFlattencomplexClientWithBaseURI creates an instance of the FlattencomplexClient client using a custom endpoint.
+// Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewFlattencomplexClientWithBaseURI(baseURI string) FlattencomplexClient {
 	return FlattencomplexClient{NewWithBaseURI(baseURI)}
 }

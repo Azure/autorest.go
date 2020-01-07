@@ -25,7 +25,8 @@ func NewFormdataClient() FormdataClient {
 	return NewFormdataClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewFormdataClientWithBaseURI creates an instance of the FormdataClient client.
+// NewFormdataClientWithBaseURI creates an instance of the FormdataClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewFormdataClientWithBaseURI(baseURI string) FormdataClient {
 	return FormdataClient{NewWithBaseURI(baseURI)}
 }

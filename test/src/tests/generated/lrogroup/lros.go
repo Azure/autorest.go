@@ -24,7 +24,8 @@ func NewLROsClient() LROsClient {
 	return NewLROsClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewLROsClientWithBaseURI creates an instance of the LROsClient client.
+// NewLROsClientWithBaseURI creates an instance of the LROsClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewLROsClientWithBaseURI(baseURI string) LROsClient {
 	return LROsClient{NewWithBaseURI(baseURI)}
 }

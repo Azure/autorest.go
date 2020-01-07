@@ -25,7 +25,8 @@ func NewPolymorphismClient() PolymorphismClient {
 	return NewPolymorphismClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewPolymorphismClientWithBaseURI creates an instance of the PolymorphismClient client.
+// NewPolymorphismClientWithBaseURI creates an instance of the PolymorphismClient client using a custom endpoint.  Use
+// this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewPolymorphismClientWithBaseURI(baseURI string) PolymorphismClient {
 	return PolymorphismClient{NewWithBaseURI(baseURI)}
 }

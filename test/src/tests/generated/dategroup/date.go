@@ -25,7 +25,8 @@ func NewDateClient() DateClient {
 	return NewDateClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewDateClientWithBaseURI creates an instance of the DateClient client.
+// NewDateClientWithBaseURI creates an instance of the DateClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewDateClientWithBaseURI(baseURI string) DateClient {
 	return DateClient{NewWithBaseURI(baseURI)}
 }

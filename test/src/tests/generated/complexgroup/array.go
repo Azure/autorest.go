@@ -24,7 +24,8 @@ func NewArrayClient() ArrayClient {
 	return NewArrayClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewArrayClientWithBaseURI creates an instance of the ArrayClient client.
+// NewArrayClientWithBaseURI creates an instance of the ArrayClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewArrayClientWithBaseURI(baseURI string) ArrayClient {
 	return ArrayClient{NewWithBaseURI(baseURI)}
 }

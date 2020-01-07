@@ -24,7 +24,9 @@ func NewLROsCustomHeaderClient() LROsCustomHeaderClient {
 	return NewLROsCustomHeaderClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewLROsCustomHeaderClientWithBaseURI creates an instance of the LROsCustomHeaderClient client.
+// NewLROsCustomHeaderClientWithBaseURI creates an instance of the LROsCustomHeaderClient client using a custom
+// endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
+// stack).
 func NewLROsCustomHeaderClientWithBaseURI(baseURI string) LROsCustomHeaderClient {
 	return LROsCustomHeaderClient{NewWithBaseURI(baseURI)}
 }

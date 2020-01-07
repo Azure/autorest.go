@@ -24,7 +24,8 @@ func NewPrimitiveClient() PrimitiveClient {
 	return NewPrimitiveClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewPrimitiveClientWithBaseURI creates an instance of the PrimitiveClient client.
+// NewPrimitiveClientWithBaseURI creates an instance of the PrimitiveClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewPrimitiveClientWithBaseURI(baseURI string) PrimitiveClient {
 	return PrimitiveClient{NewWithBaseURI(baseURI)}
 }

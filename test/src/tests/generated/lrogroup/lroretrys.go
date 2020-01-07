@@ -24,7 +24,8 @@ func NewLRORetrysClient() LRORetrysClient {
 	return NewLRORetrysClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewLRORetrysClientWithBaseURI creates an instance of the LRORetrysClient client.
+// NewLRORetrysClientWithBaseURI creates an instance of the LRORetrysClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewLRORetrysClientWithBaseURI(baseURI string) LRORetrysClient {
 	return LRORetrysClient{NewWithBaseURI(baseURI)}
 }

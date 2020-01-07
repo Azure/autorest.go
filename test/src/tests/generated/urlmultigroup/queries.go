@@ -24,7 +24,8 @@ func NewQueriesClient() QueriesClient {
 	return NewQueriesClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewQueriesClientWithBaseURI creates an instance of the QueriesClient client.
+// NewQueriesClientWithBaseURI creates an instance of the QueriesClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewQueriesClientWithBaseURI(baseURI string) QueriesClient {
 	return QueriesClient{NewWithBaseURI(baseURI)}
 }

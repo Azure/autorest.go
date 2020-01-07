@@ -25,7 +25,8 @@ func NewIntClient() IntClient {
 	return NewIntClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewIntClientWithBaseURI creates an instance of the IntClient client.
+// NewIntClientWithBaseURI creates an instance of the IntClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewIntClientWithBaseURI(baseURI string) IntClient {
 	return IntClient{NewWithBaseURI(baseURI)}
 }

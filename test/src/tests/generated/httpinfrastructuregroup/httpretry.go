@@ -24,7 +24,8 @@ func NewHTTPRetryClient() HTTPRetryClient {
 	return NewHTTPRetryClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewHTTPRetryClientWithBaseURI creates an instance of the HTTPRetryClient client.
+// NewHTTPRetryClientWithBaseURI creates an instance of the HTTPRetryClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewHTTPRetryClientWithBaseURI(baseURI string) HTTPRetryClient {
 	return HTTPRetryClient{NewWithBaseURI(baseURI)}
 }

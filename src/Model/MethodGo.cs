@@ -614,6 +614,29 @@ namespace AutoRest.Go.Model
         public bool IsNextMethod => Name.Value.EqualsIgnoreCase(NextOperationName);
 
         /// <summary>
+        /// Returns true if a ListComplete method should be generated.
+        /// </summary>
+        public bool NeedsListComplete => IsPageable && !IsNextMethod;
+        
+        /// <summary>
+        /// Returns the name of the type returned from a ListComplete method.
+        /// This should only be called if NeedsListComplete returns true.
+        /// </summary>
+        public string ListCompleteReturnSig(bool includePkgName = false)
+        {
+            var resultTypeName = ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().IteratorType.Name;
+            if (IsLongRunningOperation())
+            {
+                resultTypeName = ((LroPagedResponseGo)ReturnType).ListAllReturnType.Name;
+            }
+            if (includePkgName)
+            {
+                resultTypeName = $"{CodeModel.Namespace}.{resultTypeName}";
+            }
+            return MethodReturnSig(resultTypeName);
+        }
+
+        /// <summary>
         /// Checks if method for next page of results on paged methods is already present in the method list.
         /// </summary>
         /// <param name="methods"></param>

@@ -71,6 +71,10 @@ import (
         @foreach (var method in c.Value)
         {
             @:@(method.Name)(@method.MethodParametersSignature(true)) (@method.MethodReturnSignature(true))
+            @if (method.NeedsListComplete)
+            {
+                @:@(method.ListCompleteMethodName)(@(method.MethodParametersSignature())) (@method.ListCompleteReturnSig(true))
+            }
         }
         }
         @EmptyLine

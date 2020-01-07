@@ -24,7 +24,8 @@ func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, op
 	return NewImplicitClientWithBaseURI(DefaultBaseURI, requiredGlobalPath, requiredGlobalQuery, optionalGlobalQuery)
 }
 
-// NewImplicitClientWithBaseURI creates an instance of the ImplicitClient client.
+// NewImplicitClientWithBaseURI creates an instance of the ImplicitClient client using a custom endpoint.  Use this
+// when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewImplicitClientWithBaseURI(baseURI string, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32) ImplicitClient {
 	return ImplicitClient{NewWithBaseURI(baseURI, requiredGlobalPath, requiredGlobalQuery, optionalGlobalQuery)}
 }

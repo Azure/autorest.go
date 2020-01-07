@@ -24,7 +24,9 @@ func NewReadonlypropertyClient() ReadonlypropertyClient {
 	return NewReadonlypropertyClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewReadonlypropertyClientWithBaseURI creates an instance of the ReadonlypropertyClient client.
+// NewReadonlypropertyClientWithBaseURI creates an instance of the ReadonlypropertyClient client using a custom
+// endpoint.  Use this when interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure
+// stack).
 func NewReadonlypropertyClientWithBaseURI(baseURI string) ReadonlypropertyClient {
 	return ReadonlypropertyClient{NewWithBaseURI(baseURI)}
 }

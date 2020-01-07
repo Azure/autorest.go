@@ -389,19 +389,12 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
             </text>
 }
 
-@if (Model.IsPageable && !Model.IsNextMethod)
+@if (Model.NeedsListComplete)
 {
-    var resultTypeName = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType().IteratorType.Name;
-    var pageType = Model.ReturnType.Body.Cast<CompositeTypeGo>().UnwrapPageType();
-
-    if (Model.IsLongRunningOperation())
-    {
-        resultTypeName = ((LroPagedResponseGo)Model.ReturnType).ListAllReturnType.Name;
-    }
     <text>
     @EmptyLine
     // @(Model.ListCompleteMethodName) enumerates all values, automatically crossing page boundaries as required.
-    func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature())) (result @resultTypeName, err error) {
+    func (client @(Model.Owner)) @(Model.ListCompleteMethodName)(@(Model.MethodParametersSignature())) (@Model.ListCompleteReturnSig()) {
         if tracing.IsEnabled() {
             ctx = tracing.StartSpan(ctx, fqdn + "/@(Model.QualifiedName)")
 

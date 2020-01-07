@@ -24,7 +24,8 @@ func NewBoolClient() BoolClient {
 	return NewBoolClientWithBaseURI(DefaultBaseURI)
 }
 
-// NewBoolClientWithBaseURI creates an instance of the BoolClient client.
+// NewBoolClientWithBaseURI creates an instance of the BoolClient client using a custom endpoint.  Use this when
+// interacting with an Azure cloud that uses a non-standard base URI (sovereign clouds, Azure stack).
 func NewBoolClientWithBaseURI(baseURI string) BoolClient {
 	return BoolClient{NewWithBaseURI(baseURI)}
 }
