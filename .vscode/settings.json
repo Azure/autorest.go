@@ -1,14 +1,33 @@
+// Place your settings in this file to overwrite default and user settings.
 {
-  // we use gulp. npm is just for show.
-  "npm.autoDetect": "off",
-  "[csharp]": {
-    "editor.tabSize": 4
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/common/temp/**": true,
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "generated/**": true,
+    "generated": true,
+    "ps-generated/**": true,
+    "generated2/**": true,
+    "**/*.js.map": true,
+    "**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "**/*.d.ts": {
+      "when": "$(basename).ts"
+    },
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/obj/**": true,
+    "**/bin/**": true
   },
   "[typescript]": {
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.tabSize": 2,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
   },
   "[json]": {
     "editor.formatOnSave": true,
@@ -16,7 +35,34 @@
     "editor.tabSize": 2,
     "editor.detectIndentation": false
   },
+  "[csharp]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false
+  },
+  "typescript.tsdk": "src\\node_modules\\typescript\\lib",
   "files.associations": {
-    "*.iced": "coffeescript"
-  }
+    "rush.json": "jsonc",
+    "command-line.json": "jsonc",
+    "common-versions.json": "jsonc"
+  },
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": false
+    }
+  ],
+  "eslint.workingDirectories": [
+    {
+      "changeProcessCWD": true,
+      "directory": "./src",
+    },
+  ]
 }
