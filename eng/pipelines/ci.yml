@@ -1,0 +1,43 @@
+trigger:
+  branches:
+    include:
+    - track2
+
+pr:
+  branches:
+    include:
+    - track2
+
+variables:
+  NodeVersion: '10.x'
+
+jobs:
+  - job: 'AutoRest_Go_CI'
+    displayName: 'Run AutoRest CI Checks'
+
+    strategy:
+      matrix:
+        Linux_1804:
+          OSName: 'Linux'
+          OSVmImage: 'ubuntu-18.04'
+
+    pool:
+      vmImage: '$(OSVmImage)'
+
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node $(NodeVersion)'
+        inputs:
+          versionSpec: '$(NodeVersion)'
+
+      - script: |
+          cd $(Build.SourcesDirectory)
+          npm install -g "@microsoft/rush"
+          rush update
+          rush install
+          npm install -g "@autorest/autorest"
+        displayName: 'Prepare Environment'
+
+      - script: |
+          rush build
+        displayName: 'Build Sources'
