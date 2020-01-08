@@ -21,7 +21,7 @@ export async function generator(host: Host) {
     let text = "A source file\n";
 
     const headerText = await session.getValue("header-text", "NO HEADER TEXT?");
-
+    headerText = "foo";
     text = text + headerText;
 
     for (const each of values(session.model.schemas.objects)) {
