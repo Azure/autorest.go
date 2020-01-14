@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package generatortests
+package bytegroup
 
 import (
 	"bytes"
+	"encoding/json"
+	"errors"
 	"net/http"
 	"net/url"
 	"strings"
@@ -27,7 +29,16 @@ func (Service) GetEmptyRequest(u *url.URL) (*azcore.Request, error) {
 // GetEmptyHandleResponse handles the GetEmpty response.
 // TODO: What else should be done here? Check for specific status codes?
 func (Service) GetEmptyHandleResponse(resp *azcore.Response) (*ByteArray, error) {
-	return &ByteArray{Value: &resp.Payload}, nil
+	// TODO: add resp.UnmarshalAsJSON() in azcore
+	if len(resp.Payload) == 0 {
+		return nil, errors.New("missing payload")
+	}
+	ba := ByteArray{}
+	err := json.Unmarshal(resp.Payload, &ba.Value)
+	if err != nil {
+		return nil, errors.New("unmarshalling ByteArray")
+	}
+	return &ba, nil
 }
 
 // GetInvalidRequest creates the GetEmpty request.
