@@ -52,6 +52,7 @@ jobs:
       - script: |
           set -e
           go version
+          go get github.com/jstemmer/go-junit-report
         displayName: 'Install Dependencies'
 
       - script: go vet $(go list ./...)
@@ -62,8 +63,14 @@ jobs:
           pushd ../src/node_modules/@autorest/test-server
           npm start
           popd
-          go test ./...
+          go test ./... 2>&1 | go-junit-report > report.xml
           pushd ../src/node_modules/@autorest/test-server
           npm stop
         displayName: 'Run Acceptance Tests'
         workingDirectory: '$(goTestPath)'
+
+      - task: PublishTestResults@2
+        inputs:
+          testRunner: JUnit
+          testResultsFiles: $(goTestPath)/report.xml
+          failTaskOnFailedTests: true
