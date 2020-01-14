@@ -17,12 +17,13 @@ jobs:
 
     strategy:
       matrix:
-        Linux_1804:
-          OSName: 'Linux'
-          OSVmImage: 'ubuntu-18.04'
+        Linux_Go113:
+          vm.image: 'ubuntu-18.04'
+          go.version: '1.13'
+          GOROOT: '/usr/local/go$(go.version)'
 
     pool:
-      vmImage: '$(OSVmImage)'
+      vmImage: '$(vm.image)'
 
     steps:
       - task: NodeTool@0
@@ -36,8 +37,30 @@ jobs:
           rush update
           rush install
           npm install -g "@autorest/autorest"
-        displayName: 'Prepare Environment'
+        displayName: 'Prepare Generator Environment'
 
       - script: |
           rush build
-        displayName: 'Build Sources'
+        displayName: 'Build Generator Sources'
+
+      - script: |
+          set -e
+          echo '##vso[task.prependpath]$(GOROOT)/bin'
+        displayName: 'Create Go Workspace'
+
+      - script: |
+          set -e
+          go version
+        displayName: 'Install Dependencies'
+
+      - script: go vet $(go list ./test/...)
+        displayName: 'Vet'
+
+      - script: |
+          pushd ./src/node_modules/@autorest/test-server
+          npm start
+          popd
+          go test ./test/...
+          pushd ./src/node_modules/@autorest/test-server
+          npm stop
+        displayName: 'Run Acceptance Tests'
