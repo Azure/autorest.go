@@ -10,6 +10,8 @@ pr:
 
 variables:
   NodeVersion: '10.x'
+  goTestPath: '$(system.defaultWorkingDirectory)/test'
+  GOBIN: '$(system.defaultWorkingDirectory)/bin/go'
 
 jobs:
   - job: 'AutoRest_Go_CI'
@@ -17,12 +19,13 @@ jobs:
 
     strategy:
       matrix:
-        Linux_1804:
-          OSName: 'Linux'
-          OSVmImage: 'ubuntu-18.04'
+        Linux_Go113:
+          vm.image: 'ubuntu-18.04'
+          go.version: '1.13'
+          GOROOT: '/usr/local/go$(go.version)'
 
     pool:
-      vmImage: '$(OSVmImage)'
+      vmImage: '$(vm.image)'
 
     steps:
       - task: NodeTool@0
@@ -36,8 +39,40 @@ jobs:
           rush update
           rush install
           npm install -g "@autorest/autorest"
-        displayName: 'Prepare Environment'
+        displayName: 'Prepare Generator Environment'
 
       - script: |
           rush build
-        displayName: 'Build Sources'
+        displayName: 'Build Generator Sources'
+
+      - script: |
+          set -e
+          echo '##vso[task.prependpath]$(GOROOT)/bin'
+        displayName: 'Create Go Workspace'
+
+      - script: |
+          set -e
+          go version
+          go get github.com/jstemmer/go-junit-report
+        displayName: 'Install Dependencies'
+        workingDirectory: '$(goTestPath)'
+
+      - script: go vet $(go list ./...)
+        displayName: 'Vet'
+        workingDirectory: '$(goTestPath)'
+
+      - script: |
+          pushd ../src/node_modules/@autorest/test-server
+          npm start
+          popd
+          go test -v ./... 2>&1 | $(GOBIN)/go-junit-report > report.xml
+          pushd ../src/node_modules/@autorest/test-server
+          npm stop
+        displayName: 'Run Acceptance Tests'
+        workingDirectory: '$(goTestPath)'
+
+      - task: PublishTestResults@2
+        inputs:
+          testRunner: JUnit
+          testResultsFiles: $(goTestPath)/report.xml
+          failTaskOnFailedTests: true
