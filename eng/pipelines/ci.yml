@@ -11,6 +11,7 @@ pr:
 variables:
   NodeVersion: '10.x'
   goTestPath: '$(system.defaultWorkingDirectory)/test'
+  GOBIN: '$(system.defaultWorkingDirectory)/bin/go'
 
 jobs:
   - job: 'AutoRest_Go_CI'
@@ -54,6 +55,7 @@ jobs:
           go version
           go get github.com/jstemmer/go-junit-report
         displayName: 'Install Dependencies'
+        workingDirectory: '$(goTestPath)'
 
       - script: go vet $(go list ./...)
         displayName: 'Vet'
@@ -63,7 +65,7 @@ jobs:
           pushd ../src/node_modules/@autorest/test-server
           npm start
           popd
-          go test ./... 2>&1 | go-junit-report > report.xml
+          go test ./... 2>&1 | $(GOBIN)/go-junit-report > report.xml
           pushd ../src/node_modules/@autorest/test-server
           npm stop
         displayName: 'Run Acceptance Tests'
