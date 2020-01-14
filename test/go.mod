@@ -1,4 +1,4 @@
-module bytegroup
+module generatortests
 
 go 1.13
 

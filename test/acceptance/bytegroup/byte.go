@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package bytegroup
+package generatortests
 
 import (
-	azinternal "bytegroup/internal/bytegroup"
 	"context"
+	azinternal "generatortests/acceptance/bytegroup/internal/bytegroup"
 	"net/url"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
