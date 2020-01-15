@@ -7,3 +7,6 @@ import azinternal "generatortests/autorest/generated/bytegroup/internal/bytegrou
 
 // ByteArray to consume byte information
 type ByteArray = azinternal.ByteArray
+
+// GetEmptyResponse ...
+type GetEmptyResponse = azinternal.GetEmptyResponse

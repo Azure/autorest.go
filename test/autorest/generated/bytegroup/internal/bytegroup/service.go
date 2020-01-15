@@ -9,6 +9,7 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -17,28 +18,28 @@ import (
 // Service ..
 type Service struct{}
 
-// GetEmptyRequest creates the GetEmpty request.
-func (Service) GetEmptyRequest(u *url.URL) (*azcore.Request, error) {
-	if !strings.HasSuffix(u.Path, "/") {
-		u.Path = u.Path + "/"
-	}
-	u.Path = u.Path + "byte/empty"
-	return azcore.NewRequest(http.MethodGet, *u), nil
+// GetEmptyCreateRequest creates the GetEmpty request.
+func (Service) GetEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
+	u.Path = path.Join(u.Path, "/byte/empty")
+	// TODO: this makes two copies
+	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
-// TODO: What else should be done here? Check for specific status codes?
-func (Service) GetEmptyHandleResponse(resp *azcore.Response) (*ByteArray, error) {
+func (Service) GetEmptyHandleResponse(resp *azcore.Response) (*GetEmptyResponse, error) {
+	if err := resp.CheckStatusCode(http.StatusOK); err != nil {
+		return nil, err
+	}
 	// TODO: add resp.UnmarshalAsJSON() in azcore
 	if len(resp.Payload) == 0 {
 		return nil, errors.New("missing payload")
 	}
-	ba := ByteArray{}
-	err := json.Unmarshal(resp.Payload, &ba.Value)
+	result := GetEmptyResponse{StatusCode: resp.StatusCode}
+	err := json.Unmarshal(resp.Payload, &result.Value)
 	if err != nil {
-		return nil, errors.New("unmarshalling ByteArray")
+		return nil, errors.New("unmarshalling GetEmptyResponse")
 	}
-	return &ba, nil
+	return &result, nil
 }
 
 // GetInvalidRequest creates the GetEmpty request.

@@ -12,3 +12,9 @@ type ByteArray struct {
 	azcore.Response `json:"-"`
 	Value           *[]byte `json:"value,omitempty"`
 }
+
+// GetEmptyResponse ...
+type GetEmptyResponse struct {
+	StatusCode int
+	Value      *[]byte `json:"value,omitempty"`
+}
