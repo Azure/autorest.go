@@ -4,22 +4,27 @@
 package bytegrouptest
 
 import (
-	"bytes"
 	"context"
 	"generatortests/autorest/generated/bytegroup"
+	"net/http"
+	"reflect"
 	"testing"
 )
 
 func TestGetEmpty(t *testing.T) {
-	client, err := bytegroup.NewByteClient("http://localhost:3000", nil)
+	client, err := bytegroup.NewByteClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create byte client: %v", err)
 	}
-	array, err := client.GetEmpty(context.Background())
+	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	if !bytes.Equal(*array.Value, nil) {
-		t.Fatalf("expected empty array, got %+v", *array.Value)
+	expected := &bytegroup.GetEmptyResponse{
+		StatusCode: http.StatusOK,
+		Value:      &[]byte{},
+	}
+	if !reflect.DeepEqual(result, expected) {
+		t.Fatalf("got %+v, want %+v", result, expected)
 	}
 }

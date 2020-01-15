@@ -35,7 +35,7 @@ type ByteClientOptions struct {
 }
 
 // NewByteClient creates an instance of the ByteClient client.
-func NewByteClient(endpoint string, options *ByteClientOptions) (*ByteClient, error) {
+func NewByteClient(options *ByteClientOptions) (*ByteClient, error) {
 	if options == nil {
 		options = &ByteClientOptions{}
 	}
@@ -44,12 +44,13 @@ func NewByteClient(endpoint string, options *ByteClientOptions) (*ByteClient, er
 		azcore.NewUniqueRequestIDPolicy(),
 		azcore.NewRetryPolicy(options.Retry),
 		azcore.NewRequestLogPolicy(options.LogOptions))
-	return NewByteClientWithPipeline(endpoint, p)
+	return NewByteClientWithPipeline(p)
 }
 
 // NewByteClientWithPipeline creates an instance of the ByteClient client.
-func NewByteClientWithPipeline(endpoint string, p azcore.Pipeline) (*ByteClient, error) {
-	u, err := url.Parse(endpoint)
+func NewByteClientWithPipeline(p azcore.Pipeline) (*ByteClient, error) {
+	// TODO: custom endpoint (sovereign clouds)
+	u, err := url.Parse("http://localhost:3000")
 	if err != nil {
 		return nil, err
 	}
@@ -57,17 +58,15 @@ func NewByteClientWithPipeline(endpoint string, p azcore.Pipeline) (*ByteClient,
 }
 
 // GetEmpty get empty byte value ''
-func (client *ByteClient) GetEmpty(ctx context.Context) (*azinternal.ByteArray, error) {
-	req, err := client.s.GetEmptyRequest(client.u)
+func (client *ByteClient) GetEmpty(ctx context.Context) (*GetEmptyResponse, error) {
+	req, err := client.s.GetEmptyCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
-
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-
 	ba, err := client.s.GetEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
