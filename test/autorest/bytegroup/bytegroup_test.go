@@ -25,6 +25,6 @@ func TestGetEmpty(t *testing.T) {
 		Value:      &[]byte{},
 	}
 	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("expected empty array, got %+v", result)
+		t.Fatalf("got %+v, want %+v", result, expected)
 	}
 }
