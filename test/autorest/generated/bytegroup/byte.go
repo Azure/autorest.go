@@ -11,6 +11,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
+// DefaultEndpoint is the default endpoint used for the byteclient service.
+const DefaultEndpoint = "http://localhost:3000"
+
 // ByteClient is the test Infrastructure for AutoRest Swagger BAT
 type ByteClient struct {
 	s azinternal.Service
@@ -21,7 +24,6 @@ type ByteClient struct {
 // ByteClientOptions ...
 type ByteClientOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
-	// Leave this as nil to use the default HTTP transport.
 	HTTPClient azcore.Transport
 
 	// LogOptions configures the built-in request logging policy behavior.
@@ -34,23 +36,31 @@ type ByteClientOptions struct {
 	Telemetry azcore.TelemetryOptions
 }
 
+// DefaultByteClientOptions creates a ByteClientOptions type initialized with default values.
+func DefaultByteClientOptions() ByteClientOptions {
+	return ByteClientOptions{
+		HTTPClient: azcore.DefaultHTTPClientTransport(),
+		Retry:      azcore.DefaultRetryOptions(),
+	}
+}
+
 // NewByteClient creates an instance of the ByteClient client.
-func NewByteClient(options *ByteClientOptions) (*ByteClient, error) {
+func NewByteClient(endpoint string, options *ByteClientOptions) (*ByteClient, error) {
 	if options == nil {
-		options = &ByteClientOptions{}
+		o := DefaultByteClientOptions()
+		options = &o
 	}
 	p := azcore.NewPipeline(options.HTTPClient,
 		azcore.NewTelemetryPolicy(options.Telemetry),
 		azcore.NewUniqueRequestIDPolicy(),
-		azcore.NewRetryPolicy(options.Retry),
+		azcore.NewRetryPolicy(&options.Retry),
 		azcore.NewRequestLogPolicy(options.LogOptions))
-	return NewByteClientWithPipeline(p)
+	return NewByteClientWithPipeline(endpoint, p)
 }
 
 // NewByteClientWithPipeline creates an instance of the ByteClient client.
-func NewByteClientWithPipeline(p azcore.Pipeline) (*ByteClient, error) {
-	// TODO: custom endpoint (sovereign clouds)
-	u, err := url.Parse("http://localhost:3000")
+func NewByteClientWithPipeline(endpoint string, p azcore.Pipeline) (*ByteClient, error) {
+	u, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, err
 	}

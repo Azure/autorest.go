@@ -5,6 +5,9 @@ package bytegroup
 
 import azinternal "generatortests/autorest/generated/bytegroup/internal/bytegroup"
 
+// Error ...
+type Error = azinternal.Error
+
 // GetEmptyResponse ...
 type GetEmptyResponse = azinternal.GetEmptyResponse
 
