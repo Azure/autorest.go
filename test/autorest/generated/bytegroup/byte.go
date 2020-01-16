@@ -75,37 +75,32 @@ func (client *ByteClient) GetEmpty(ctx context.Context) (*GetEmptyResponse, erro
 }
 
 // GetInvalid get invalid byte value ':::SWAGGER::::'
-func (client *ByteClient) GetInvalid(ctx context.Context) (*azinternal.ByteArray, error) {
-	req, err := client.s.GetInvalidRequest(client.u)
+func (client *ByteClient) GetInvalid(ctx context.Context) (*GetInvalidResponse, error) {
+	req, err := client.s.GetInvalidCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
-
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-
 	ba, err := client.s.GetInvalidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-
 	return ba, nil
 }
 
 // GetNonASCII get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client *ByteClient) GetNonASCII(ctx context.Context) (*azinternal.ByteArray, error) {
-	req, err := client.s.GetNonASCIIRequest(client.u)
+func (client *ByteClient) GetNonASCII(ctx context.Context) (*GetNonASCIIResponse, error) {
+	req, err := client.s.GetNonASCIICreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
-
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-
 	ba, err := client.s.GetNonASCIIHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -113,19 +108,17 @@ func (client *ByteClient) GetNonASCII(ctx context.Context) (*azinternal.ByteArra
 	return ba, nil
 }
 
-// GetNil get null byte value
-func (client *ByteClient) GetNil(ctx context.Context) (*azinternal.ByteArray, error) {
-	req, err := client.s.GetNilRequest(client.u)
+// GetNull get null byte value
+func (client *ByteClient) GetNull(ctx context.Context) (*GetNullResponse, error) {
+	req, err := client.s.GetNullCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
-
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-
-	ba, err := client.s.GetNilHandleResponse(resp)
+	ba, err := client.s.GetNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -135,18 +128,16 @@ func (client *ByteClient) GetNil(ctx context.Context) (*azinternal.ByteArray, er
 // PutNonASCII put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 // Parameters:
 // byteBody - base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (*azinternal.ByteArray, error) {
+func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte) (*PutNonASCIIResponse, error) {
 	// TODO check validation requirements?
-	req, err := client.s.PutNonASCIIRequest(client.u, byteBody)
+	req, err := client.s.PutNonASCIICreateRequest(*client.u, byteBody)
 	if err != nil {
 		return nil, err
 	}
-
 	resp, err := client.p.Do(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-
 	ba, err := client.s.PutNonASCIIHandleResponse(resp)
 	if err != nil {
 		return nil, err
