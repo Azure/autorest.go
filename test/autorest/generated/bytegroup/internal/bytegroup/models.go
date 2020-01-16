@@ -3,18 +3,31 @@
 
 package bytegroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-)
-
-// ByteArray ...
-type ByteArray struct {
-	azcore.Response `json:"-"`
-	Value           *[]byte `json:"value,omitempty"`
-}
-
 // GetEmptyResponse ...
 type GetEmptyResponse struct {
 	StatusCode int
-	Value      *[]byte `json:"value,omitempty"`
+	Value      []byte `json:"value,omitempty"`
+}
+
+// GetInvalidResponse ...
+type GetInvalidResponse struct {
+	StatusCode int
+	Value      []byte `json:"value,omitempty"`
+}
+
+// GetNonASCIIResponse ...
+type GetNonASCIIResponse struct {
+	StatusCode int
+	Value      []byte `json:"value,omitempty"`
+}
+
+// GetNullResponse ...
+type GetNullResponse struct {
+	StatusCode int
+	Value      []byte `json:"value,omitempty"`
+}
+
+// PutNonASCIIResponse ...
+type PutNonASCIIResponse struct {
+	StatusCode int
 }

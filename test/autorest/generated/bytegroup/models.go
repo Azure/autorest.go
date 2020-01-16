@@ -5,8 +5,17 @@ package bytegroup
 
 import azinternal "generatortests/autorest/generated/bytegroup/internal/bytegroup"
 
-// ByteArray to consume byte information
-type ByteArray = azinternal.ByteArray
-
 // GetEmptyResponse ...
 type GetEmptyResponse = azinternal.GetEmptyResponse
+
+// GetInvalidResponse ...
+type GetInvalidResponse = azinternal.GetInvalidResponse
+
+// GetNonASCIIResponse ...
+type GetNonASCIIResponse = azinternal.GetNonASCIIResponse
+
+// GetNullResponse ...
+type GetNullResponse = azinternal.GetNullResponse
+
+// PutNonASCIIResponse ...
+type PutNonASCIIResponse = azinternal.PutNonASCIIResponse
