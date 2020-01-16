@@ -12,7 +12,7 @@ import (
 )
 
 func getByteClient(t *testing.T) *bytegroup.ByteClient {
-	client, err := bytegroup.NewByteClient(nil)
+	client, err := bytegroup.NewByteClient(bytegroup.DefaultEndpoint, nil)
 	if err != nil {
 		t.Fatalf("failed to create byte client: %v", err)
 	}

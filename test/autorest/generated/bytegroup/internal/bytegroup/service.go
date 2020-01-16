@@ -17,14 +17,13 @@ type Service struct{}
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (Service) GetEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/byte/empty")
-	// TODO: this makes two copies
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
 func (Service) GetEmptyHandleResponse(resp *azcore.Response) (*GetEmptyResponse, error) {
-	if err := resp.CheckStatusCode(http.StatusOK); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
 	}
 	result := GetEmptyResponse{StatusCode: resp.StatusCode}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
@@ -38,8 +37,8 @@ func (Service) GetInvalidCreateRequest(u url.URL) (*azcore.Request, error) {
 
 // GetInvalidHandleResponse handles the GetInvalid response.
 func (Service) GetInvalidHandleResponse(resp *azcore.Response) (*GetInvalidResponse, error) {
-	if err := resp.CheckStatusCode(http.StatusOK); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
 	}
 	result := GetInvalidResponse{StatusCode: resp.StatusCode}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
@@ -53,8 +52,8 @@ func (Service) GetNonASCIICreateRequest(u url.URL) (*azcore.Request, error) {
 
 // GetNonASCIIHandleResponse handles the GetNonASCII response.
 func (Service) GetNonASCIIHandleResponse(resp *azcore.Response) (*GetNonASCIIResponse, error) {
-	if err := resp.CheckStatusCode(http.StatusOK); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
 	}
 	result := GetNonASCIIResponse{StatusCode: resp.StatusCode}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
@@ -68,8 +67,8 @@ func (Service) GetNullCreateRequest(u url.URL) (*azcore.Request, error) {
 
 // GetNullHandleResponse handles the GetNull response.
 func (Service) GetNullHandleResponse(resp *azcore.Response) (*GetNullResponse, error) {
-	if err := resp.CheckStatusCode(http.StatusOK); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
 	}
 	result := GetNullResponse{StatusCode: resp.StatusCode}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
@@ -88,8 +87,8 @@ func (Service) PutNonASCIICreateRequest(u url.URL, byteBody []byte) (*azcore.Req
 
 // PutNonASCIIHandleResponse handles the PutNonASCII response.
 func (Service) PutNonASCIIHandleResponse(resp *azcore.Response) (*PutNonASCIIResponse, error) {
-	if err := resp.CheckStatusCode(http.StatusOK); err != nil {
-		return nil, err
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
 	}
 	return &PutNonASCIIResponse{StatusCode: resp.StatusCode}, nil
 }
