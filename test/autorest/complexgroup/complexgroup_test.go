@@ -40,8 +40,7 @@ func TestGetValid(t *testing.T) {
 
 func TestPutValid(t *testing.T) {
 	client := getComplexClient(t)
-	b := complexgroup.Basic{ID: 2, Name: "abc", Color: "Magenta"}
-	result, err := client.PutValid(context.Background(), b)
+	result, err := client.PutValid(context.Background(), complexgroup.Basic{ID: 2, Name: "abc", Color: "Magenta"})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
