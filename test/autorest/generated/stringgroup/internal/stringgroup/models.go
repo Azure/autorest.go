@@ -26,7 +26,7 @@ func (e Error) Error() string {
 // GetMBCSResponse ...
 type GetMBCSResponse struct {
 	StatusCode int
-	Value      []string `json:"value,omitempty"`
+	Value      string `json:"value,omitempty"`
 }
 
 // PutMBCSResponse ...

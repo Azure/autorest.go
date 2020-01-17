@@ -87,7 +87,7 @@ func (client *StringClient) GetMBCS(ctx context.Context) (*GetMBCSResponse, erro
 // PutMBCS Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 // Parameters:
 // stringBody - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-func (client *StringClient) PutMBCS(ctx context.Context, stringBody []string) (*PutMBCSResponse, error) {
+func (client *StringClient) PutMBCS(ctx context.Context, stringBody string) (*PutMBCSResponse, error) {
 	// TODO check validation requirements?
 	req, err := client.s.PutMBCSCreateRequest(*client.u, stringBody)
 	if err != nil {

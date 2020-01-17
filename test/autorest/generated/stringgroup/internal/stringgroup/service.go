@@ -31,7 +31,7 @@ func (Service) GetMBCSHandleResponse(resp *azcore.Response) (*GetMBCSResponse, e
 }
 
 // PutMBCSCreateRequest creates the PutMBCS request.
-func (Service) PutMBCSCreateRequest(u url.URL, stringBody []string) (*azcore.Request, error) {
+func (Service) PutMBCSCreateRequest(u url.URL, stringBody string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/string/mbcs")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(stringBody)
