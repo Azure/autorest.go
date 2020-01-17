@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package bytegrouptest
+package stringgrouptest
 
 import (
 	"context"
@@ -42,7 +42,7 @@ func TestPutMBCS(t *testing.T) {
 	client := getStringClient(t)
 	result, err := client.PutMBCS(context.Background(), "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 	if err != nil {
-		t.Fatalf("PutNonASCII: %v", err)
+		t.Fatalf("PutMBCS: %v", err)
 	}
 	expected := &stringgroup.PutMBCSResponse{
 		StatusCode: http.StatusOK,
