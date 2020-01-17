@@ -7,7 +7,7 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // Error ...
 type Error struct {
-	Status  int32
+	Status  string
 	Message string
 }
 
