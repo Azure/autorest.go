@@ -5,6 +5,9 @@ package stringgroup
 
 import azinternal "generatortests/autorest/generated/stringgroup/internal/stringgroup"
 
+// Error ...
+type Error = azinternal.Error
+
 // GetMBCSResponse ...
 type GetMBCSResponse = azinternal.GetMBCSResponse
 

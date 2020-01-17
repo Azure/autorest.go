@@ -17,7 +17,6 @@ type Service struct{}
 // GetMBCSCreateRequest creates the GetMBCS request.
 func (Service) GetMBCSCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/string/mbcs")
-	// TODO: this makes two copies
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 

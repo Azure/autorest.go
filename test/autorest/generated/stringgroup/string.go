@@ -67,7 +67,7 @@ func NewStringClientWithPipeline(endpoint string, p azcore.Pipeline) (*StringCli
 	return &StringClient{u: u, p: p}, nil
 }
 
-// GetMBCS ..
+// GetMBCS Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client *StringClient) GetMBCS(ctx context.Context) (*GetMBCSResponse, error) {
 	req, err := client.s.GetMBCSCreateRequest(*client.u)
 	if err != nil {
@@ -77,11 +77,11 @@ func (client *StringClient) GetMBCS(ctx context.Context) (*GetMBCSResponse, erro
 	if err != nil {
 		return nil, err
 	}
-	ba, err := client.s.GetMBCSHandleResponse(resp)
+	s, err := client.s.GetMBCSHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	return ba, nil
+	return s, nil
 }
 
 // PutMBCS Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
@@ -97,9 +97,9 @@ func (client *StringClient) PutMBCS(ctx context.Context, stringBody string) (*Pu
 	if err != nil {
 		return nil, err
 	}
-	ba, err := client.s.PutMBCSHandleResponse(resp)
+	s, err := client.s.PutMBCSHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
-	return ba, nil
+	return s, nil
 }
