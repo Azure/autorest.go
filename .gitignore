@@ -296,10 +296,7 @@ resources/bin/*
 *.tgz
 package/*
 
-generated*/*
 petstore*/*
-
-**/generated*/*
 
 
 # Logs
@@ -380,5 +377,3 @@ package-deps.json
 /tests/**/license.txt
 
 !/tests/**/test/*
-
-generated/
