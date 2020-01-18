@@ -41,7 +41,7 @@ func TestGetValid(t *testing.T) {
 	}
 	expected := &complexgroup.GetValidResponse{
 		StatusCode: http.StatusOK,
-		Basic:      complexgroup.Basic{ID: 2, Name: "abc", Color: v},
+		Basic:      &complexgroup.Basic{ID: 2, Name: "abc", Color: v},
 	}
 	deepEqualOrFatal(t, result, expected)
 }

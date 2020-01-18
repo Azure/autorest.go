@@ -52,7 +52,7 @@ type Basic struct {
 // GetValidResponse ...
 type GetValidResponse struct {
 	StatusCode int
-	Basic      Basic
+	Basic      *Basic
 }
 
 // PutValidResponse ...
