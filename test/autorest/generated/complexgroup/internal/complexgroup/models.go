@@ -5,35 +5,54 @@ package complexgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
+// ColorType is an enumerated type for complex group color strings
+type ColorType string
+
+const (
+	// ColorYellow ...
+	ColorYellow ColorType = "YELLOW"
+	// ColorMagenta ...
+	ColorMagenta ColorType = "Magenta"
+	// ColorCyan ...
+	ColorCyan ColorType = "cyan"
+	// ColorBlack ...
+	ColorBlack ColorType = "blacK"
+)
+
+// ColorValues ...
+func ColorValues() []ColorType {
+	return []ColorType{ColorYellow, ColorMagenta, ColorCyan, ColorBlack}
+}
+
 // Error ...
 type Error struct {
-	Status  string
-	Message string
+	Status  string `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
-	err := Error{}
+	err := &Error{}
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
 	return err
 }
 
-func (e Error) Error() string {
+func (e *Error) Error() string {
 	return e.Message
 }
 
 // Basic ..
 type Basic struct {
-	ID    int    `json:"id,omitempty"`
-	Name  string `json:"name,omitempty"`
-	Color string `json:"color,omitempty"`
+	ID    int       `json:"id,omitempty"`
+	Name  string    `json:"name,omitempty"`
+	Color ColorType `json:"color,omitempty"`
 }
 
 // GetValidResponse ...
 type GetValidResponse struct {
 	StatusCode int
-	Value      Basic
+	Basic      Basic
 }
 
 // PutValidResponse ...

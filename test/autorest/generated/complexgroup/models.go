@@ -11,6 +11,9 @@ type Error = azinternal.Error
 // Basic ...
 type Basic = azinternal.Basic
 
+// ColorType ...
+type ColorType = azinternal.ColorType
+
 // GetValidResponse ...
 type GetValidResponse = azinternal.GetValidResponse
 

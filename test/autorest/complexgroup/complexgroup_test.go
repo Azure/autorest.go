@@ -31,16 +31,32 @@ func TestGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
+	var v complexgroup.ColorType
+	colors := complexgroup.PossibleColorValues()
+	for _, c := range colors {
+		if string(c) == "YELLOW" {
+			v = c
+			break
+		}
+	}
 	expected := &complexgroup.GetValidResponse{
 		StatusCode: http.StatusOK,
-		Value:      complexgroup.Basic{ID: 2, Name: "abc", Color: "YELLOW"},
+		Basic:      complexgroup.Basic{ID: 2, Name: "abc", Color: v},
 	}
 	deepEqualOrFatal(t, result, expected)
 }
 
 func TestPutValid(t *testing.T) {
 	client := getComplexClient(t)
-	result, err := client.PutValid(context.Background(), complexgroup.Basic{ID: 2, Name: "abc", Color: "Magenta"})
+	var v complexgroup.ColorType
+	colors := complexgroup.PossibleColorValues()
+	for _, c := range colors {
+		if string(c) == "Magenta" {
+			v = c
+			break
+		}
+	}
+	result, err := client.PutValid(context.Background(), complexgroup.Basic{ID: 2, Name: "abc", Color: v})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}

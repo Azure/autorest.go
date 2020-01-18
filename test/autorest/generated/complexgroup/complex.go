@@ -36,6 +36,11 @@ type ComplexClientOptions struct {
 	Telemetry azcore.TelemetryOptions
 }
 
+// PossibleColorValues ...
+func PossibleColorValues() []ColorType {
+	return azinternal.ColorValues()
+}
+
 // DefaultComplexClientOptions creates a ComplexClientOptions type initialized with default values.
 func DefaultComplexClientOptions() ComplexClientOptions {
 	return ComplexClientOptions{

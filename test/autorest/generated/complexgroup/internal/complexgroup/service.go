@@ -26,7 +26,7 @@ func (Service) GetValidHandleResponse(resp *azcore.Response) (*GetValidResponse,
 		return nil, newError(resp)
 	}
 	result := GetValidResponse{StatusCode: resp.StatusCode}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
 // PutValidCreateRequest creates the PutValid request.
