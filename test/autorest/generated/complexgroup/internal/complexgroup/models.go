@@ -26,8 +26,8 @@ func ColorValues() []ColorType {
 
 // Error ...
 type Error struct {
-	Status  string `json:"status,omitempty"`
-	Message string `json:"message,omitempty"`
+	Status  *string `json:"status,omitempty"`
+	Message *string `json:"message,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -39,14 +39,14 @@ func newError(resp *azcore.Response) error {
 }
 
 func (e *Error) Error() string {
-	return e.Message
+	return *e.Message
 }
 
 // Basic ..
 type Basic struct {
-	ID    int       `json:"id,omitempty"`
-	Name  string    `json:"name,omitempty"`
-	Color ColorType `json:"color,omitempty"`
+	ID    *int       `json:"id,omitempty"`
+	Name  *string    `json:"name,omitempty"`
+	Color *ColorType `json:"color,omitempty"`
 }
 
 // GetValidResponse ...

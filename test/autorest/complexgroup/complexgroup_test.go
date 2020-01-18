@@ -39,9 +39,10 @@ func TestGetValid(t *testing.T) {
 			break
 		}
 	}
+	i, s := int(2), "abc"
 	expected := &complexgroup.GetValidResponse{
 		StatusCode: http.StatusOK,
-		Basic:      &complexgroup.Basic{ID: 2, Name: "abc", Color: v},
+		Basic:      &complexgroup.Basic{ID: &i, Name: &s, Color: &v},
 	}
 	deepEqualOrFatal(t, result, expected)
 }
@@ -56,7 +57,8 @@ func TestPutValid(t *testing.T) {
 			break
 		}
 	}
-	result, err := client.PutValid(context.Background(), complexgroup.Basic{ID: 2, Name: "abc", Color: v})
+	i, s := int(2), "abc"
+	result, err := client.PutValid(context.Background(), complexgroup.Basic{ID: &i, Name: &s, Color: &v})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
