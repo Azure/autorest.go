@@ -38,7 +38,7 @@ type ComplexClientOptions struct {
 
 // PossibleColorValues ...
 func PossibleColorValues() []ColorType {
-	return azinternal.ColorValues()
+	return azinternal.PossibleColorValues()
 }
 
 // DefaultComplexClientOptions creates a ComplexClientOptions type initialized with default values.

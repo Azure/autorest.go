@@ -19,8 +19,8 @@ const (
 	ColorBlack ColorType = "blacK"
 )
 
-// ColorValues ...
-func ColorValues() []ColorType {
+// PossibleColorValues ...
+func PossibleColorValues() []ColorType {
 	return []ColorType{ColorYellow, ColorMagenta, ColorCyan, ColorBlack}
 }
 
