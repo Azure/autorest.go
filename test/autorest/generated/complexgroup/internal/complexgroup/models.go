@@ -59,3 +59,33 @@ type GetValidResponse struct {
 type PutValidResponse struct {
 	StatusCode int
 }
+
+// GetInvalidResponse ...
+type GetInvalidResponse struct {
+	StatusCode int
+	Basic      *Basic
+}
+
+// GetEmptyResponse ...
+type GetEmptyResponse struct {
+	StatusCode int
+	Basic      *Basic
+}
+
+// GetNullResponse ...
+type GetNullResponse struct {
+	StatusCode int
+	Basic      *Basic
+}
+
+// GetNotProvidedResponse ...
+type GetNotProvidedResponse struct {
+	StatusCode int
+	Basic      *Basic
+}
+
+// GetIntResponse ...
+type GetIntResponse struct {
+	StatusCode int
+	Basic      *Basic
+}
