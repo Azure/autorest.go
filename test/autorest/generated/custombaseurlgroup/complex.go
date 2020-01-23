@@ -11,9 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// DefaultEndpoint is the default endpoint used for the CustomBaseURLClient service.
-const DefaultEndpoint = "http://localhost:3000"
-
 // CustomBaseURLClient is the test Infrastructure for AutoRest Swagger
 type CustomBaseURLClient struct {
 	s azinternal.Service

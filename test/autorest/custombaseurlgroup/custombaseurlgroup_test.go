@@ -12,7 +12,7 @@ import (
 )
 
 func getCustomBaseURLClient(t *testing.T) *custombaseurlgroup.CustomBaseURLClient {
-	client, err := custombaseurlgroup.NewCustomBaseURLClient(custombaseurlgroup.DefaultEndpoint, nil)
+	client, err := custombaseurlgroup.NewCustomBaseURLClient("http://localhost:3000", nil)
 	if err != nil {
 		t.Fatalf("failed to create custom base URL client: %v", err)
 	}
