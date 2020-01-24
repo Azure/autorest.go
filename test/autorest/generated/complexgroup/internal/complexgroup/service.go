@@ -160,7 +160,7 @@ func (Service) GetLongHandleResponse(resp *azcore.Response) (*GetLongResponse, e
 }
 
 // PutLongCreateRequest creates the PutLong request.
-func (Service) PutLongCreateRequest(u url.URL, complexBody *LongWrapper) (*azcore.Request, error) {
+func (Service) PutLongCreateRequest(u url.URL, complexBody LongWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/long")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -195,7 +195,7 @@ func (Service) GetFloatHandleResponse(resp *azcore.Response) (*GetFloatResponse,
 }
 
 // PutFloatCreateRequest creates the PutFloat request.
-func (Service) PutFloatCreateRequest(u url.URL, complexBody *FloatWrapper) (*azcore.Request, error) {
+func (Service) PutFloatCreateRequest(u url.URL, complexBody FloatWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/float")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -230,7 +230,7 @@ func (Service) GetDoubleHandleResponse(resp *azcore.Response) (*GetDoubleRespons
 }
 
 // PutDoubleCreateRequest creates the PutDouble request.
-func (Service) PutDoubleCreateRequest(u url.URL, complexBody *DoubleWrapper) (*azcore.Request, error) {
+func (Service) PutDoubleCreateRequest(u url.URL, complexBody DoubleWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/double")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -265,7 +265,7 @@ func (Service) GetBoolHandleResponse(resp *azcore.Response) (*GetBoolResponse, e
 }
 
 // PutBoolCreateRequest creates the PutBool request.
-func (Service) PutBoolCreateRequest(u url.URL, complexBody *BooleanWrapper) (*azcore.Request, error) {
+func (Service) PutBoolCreateRequest(u url.URL, complexBody BooleanWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/bool")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -300,7 +300,7 @@ func (Service) GetStringHandleResponse(resp *azcore.Response) (*GetStringRespons
 }
 
 // PutStringCreateRequest creates the PutString request.
-func (Service) PutStringCreateRequest(u url.URL, complexBody *StringWrapper) (*azcore.Request, error) {
+func (Service) PutStringCreateRequest(u url.URL, complexBody StringWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/string")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -317,4 +317,45 @@ func (Service) PutStringHandleResponse(resp *azcore.Response) (*PutStringRespons
 	}
 	result := PutStringResponse{StatusCode: resp.StatusCode}
 	return &result, resp.UnmarshalAsJSON(&result.StringWrapper)
+}
+
+// GetDateCreateRequest creates the GetDate request.
+func (Service) GetDateCreateRequest(u url.URL) (*azcore.Request, error) {
+	u.Path = path.Join(u.Path, "/complex/primitive/date")
+	return azcore.NewRequest(http.MethodGet, u), nil
+}
+
+// GetDateHandleResponse handles the GetDate response.
+func (Service) GetDateHandleResponse(resp *azcore.Response) (*GetDateResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := GetDateResponse{StatusCode: resp.StatusCode}
+	return &result, resp.UnmarshalAsJSON(&result.DateWrapper)
+}
+
+// PutDateCreateRequest creates the PutDate request.
+func (Service) PutDateCreateRequest(u url.URL, complexBody DateWrapper) (*azcore.Request, error) {
+	u.Path = path.Join(u.Path, "/complex/primitive/date")
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON(complexBody)
+	if err != nil {
+		return nil, err
+	}
+	// TODO delete this
+	// r, e := ioutil.ReadAll(req.Body)
+	// if e != nil {
+	// 	fmt.Println(e)
+	// }
+	// fmt.Println(string(r))
+	return req, nil
+}
+
+// PutDateHandleResponse handles the PutDate response.
+func (Service) PutDateHandleResponse(resp *azcore.Response) (*PutDateResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := PutDateResponse{StatusCode: resp.StatusCode}
+	return &result, resp.UnmarshalAsJSON(&result.DateWrapper)
 }

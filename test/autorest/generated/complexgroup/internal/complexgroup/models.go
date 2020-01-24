@@ -3,7 +3,11 @@
 
 package complexgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+)
 
 // ColorType is an enumerated type for complex group color strings
 type ColorType string
@@ -84,6 +88,12 @@ type StringWrapper struct {
 	Field *string `json:"field,omitempty"`
 	Empty *string `json:"empty,omitempty"`
 	Null  *string `json:"null,omitempty"`
+}
+
+// DateWrapper ...
+type DateWrapper struct {
+	Field *time.Time `json:"field,omitempty"`
+	Leap  *time.Time `json:"leap,omitempty"`
 }
 
 // GetValidResponse ...
@@ -191,4 +201,16 @@ type GetStringResponse struct {
 type PutStringResponse struct {
 	StatusCode    int
 	StringWrapper *StringWrapper
+}
+
+// GetDateResponse ...
+type GetDateResponse struct {
+	StatusCode  int
+	DateWrapper *DateWrapper
+}
+
+// PutDateResponse ...
+type PutDateResponse struct {
+	StatusCode  int
+	DateWrapper *DateWrapper
 }

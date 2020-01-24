@@ -114,7 +114,7 @@ func (client *PrimitiveClient) GetLong(ctx context.Context) (*GetLongResponse, e
 
 // PutLong ...
 func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (*PutLongResponse, error) {
-	req, err := client.s.PutLongCreateRequest(*client.u, &complexBody)
+	req, err := client.s.PutLongCreateRequest(*client.u, complexBody)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context) (*GetFloatResponse,
 
 // PutFloat ...
 func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (*PutFloatResponse, error) {
-	req, err := client.s.PutFloatCreateRequest(*client.u, &complexBody)
+	req, err := client.s.PutFloatCreateRequest(*client.u, complexBody)
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context) (*GetDoubleRespons
 
 // PutDouble ...
 func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (*PutDoubleResponse, error) {
-	req, err := client.s.PutDoubleCreateRequest(*client.u, &complexBody)
+	req, err := client.s.PutDoubleCreateRequest(*client.u, complexBody)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (client *PrimitiveClient) GetBool(ctx context.Context) (*GetBoolResponse, e
 
 // PutBool ...
 func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (*PutBoolResponse, error) {
-	req, err := client.s.PutBoolCreateRequest(*client.u, &complexBody)
+	req, err := client.s.PutBoolCreateRequest(*client.u, complexBody)
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +250,7 @@ func (client *PrimitiveClient) GetString(ctx context.Context) (*GetStringRespons
 
 // PutString ...
 func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (*PutStringResponse, error) {
-	req, err := client.s.PutStringCreateRequest(*client.u, &complexBody)
+	req, err := client.s.PutStringCreateRequest(*client.u, complexBody)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +259,40 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 		return nil, err
 	}
 	s, err := client.s.PutStringHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// GetDate ...
+func (client *PrimitiveClient) GetDate(ctx context.Context) (*GetDateResponse, error) {
+	req, err := client.s.GetDateCreateRequest(*client.u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.GetDateHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// PutDate ...
+func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (*PutDateResponse, error) {
+	req, err := client.s.PutDateCreateRequest(*client.u, complexBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.PutDateHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}

@@ -29,6 +29,9 @@ type BooleanWrapper = azinternal.BooleanWrapper
 // StringWrapper ...
 type StringWrapper = azinternal.StringWrapper
 
+// DateWrapper ...
+type DateWrapper = azinternal.DateWrapper
+
 // ColorType ...
 type ColorType = azinternal.ColorType
 
@@ -85,3 +88,9 @@ type GetStringResponse = azinternal.GetStringResponse
 
 // PutStringResponse ...
 type PutStringResponse = azinternal.PutStringResponse
+
+// GetDateResponse ...
+type GetDateResponse = azinternal.GetDateResponse
+
+// PutDateResponse ...
+type PutDateResponse = azinternal.PutDateResponse
