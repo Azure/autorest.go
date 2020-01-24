@@ -203,14 +203,14 @@ type PutStringResponse struct {
 	StringWrapper *StringWrapper
 }
 
-// GetDateResponse ...
-type GetDateResponse struct {
-	StatusCode  int
-	DateWrapper *DateWrapper
-}
+// // GetDateResponse ...
+// type GetDateResponse struct {
+// 	StatusCode  int
+// 	DateWrapper *DateWrapper
+// }
 
-// PutDateResponse ...
-type PutDateResponse struct {
-	StatusCode  int
-	DateWrapper *DateWrapper
-}
+// // PutDateResponse ...
+// type PutDateResponse struct {
+// 	StatusCode  int
+// 	DateWrapper *DateWrapper
+// }

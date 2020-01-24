@@ -265,36 +265,36 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 	return s, nil
 }
 
-// GetDate ...
-func (client *PrimitiveClient) GetDate(ctx context.Context) (*GetDateResponse, error) {
-	req, err := client.s.GetDateCreateRequest(*client.u)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	s, err := client.s.GetDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return s, nil
-}
+// // GetDate ...
+// func (client *PrimitiveClient) GetDate(ctx context.Context) (*GetDateResponse, error) {
+// 	req, err := client.s.GetDateCreateRequest(*client.u)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	resp, err := client.p.Do(ctx, req)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	s, err := client.s.GetDateHandleResponse(resp)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return s, nil
+// }
 
-// PutDate ...
-func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (*PutDateResponse, error) {
-	req, err := client.s.PutDateCreateRequest(*client.u, complexBody)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	s, err := client.s.PutDateHandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return s, nil
-}
+// // PutDate ...
+// func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper) (*PutDateResponse, error) {
+// 	req, err := client.s.PutDateCreateRequest(*client.u, complexBody)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	resp, err := client.p.Do(ctx, req)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	s, err := client.s.PutDateHandleResponse(resp)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return s, nil
+// }
