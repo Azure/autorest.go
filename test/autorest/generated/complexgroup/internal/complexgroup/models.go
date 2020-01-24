@@ -55,6 +55,18 @@ type IntWrapper struct {
 	Field2 *int32 `json:"field2,omitempty"`
 }
 
+// LongWrapper ...
+type LongWrapper struct {
+	Field1 *int64 `json:"field1,omitempty"`
+	Field2 *int64 `json:"field2,omitempty"`
+}
+
+// FloatWrapper ...
+type FloatWrapper struct {
+	Field1 *float32 `json:"field1,omitempty"`
+	Field2 *float32 `json:"field2,omitempty"`
+}
+
 // DoubleWrapper ..
 type DoubleWrapper struct {
 	Field1                                                                          *float64 `json:"field1,omitempty"`
@@ -123,12 +135,60 @@ type PutIntResponse struct {
 
 // GetLongResponse ...
 type GetLongResponse struct {
-	StatusCode int
-	Value      int64
+	StatusCode  int
+	LongWrapper *LongWrapper
 }
 
 // PutLongResponse ...
 type PutLongResponse struct {
-	StatusCode int
-	Value      int64
+	StatusCode  int
+	LongWrapper *LongWrapper
+}
+
+// GetFloatResponse ...
+type GetFloatResponse struct {
+	StatusCode   int
+	FloatWrapper *FloatWrapper
+}
+
+// PutFloatResponse ...
+type PutFloatResponse struct {
+	StatusCode   int
+	FloatWrapper *FloatWrapper
+}
+
+// GetDoubleResponse ...
+type GetDoubleResponse struct {
+	StatusCode    int
+	DoubleWrapper *DoubleWrapper
+}
+
+// PutDoubleResponse ...
+type PutDoubleResponse struct {
+	StatusCode    int
+	DoubleWrapper *DoubleWrapper
+}
+
+// GetBoolResponse ...
+type GetBoolResponse struct {
+	StatusCode     int
+	BooleanWrapper *BooleanWrapper
+}
+
+// PutBoolResponse ...
+type PutBoolResponse struct {
+	StatusCode     int
+	BooleanWrapper *BooleanWrapper
+}
+
+// GetStringResponse ...
+type GetStringResponse struct {
+	StatusCode    int
+	StringWrapper *StringWrapper
+}
+
+// PutStringResponse ...
+type PutStringResponse struct {
+	StatusCode    int
+	StringWrapper *StringWrapper
 }

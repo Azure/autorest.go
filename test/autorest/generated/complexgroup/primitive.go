@@ -94,3 +94,173 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 	}
 	return s, nil
 }
+
+// GetLong ...
+func (client *PrimitiveClient) GetLong(ctx context.Context) (*GetLongResponse, error) {
+	req, err := client.s.GetLongCreateRequest(*client.u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.GetLongHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// PutLong ...
+func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper) (*PutLongResponse, error) {
+	req, err := client.s.PutLongCreateRequest(*client.u, &complexBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.PutLongHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// GetFloat ...
+func (client *PrimitiveClient) GetFloat(ctx context.Context) (*GetFloatResponse, error) {
+	req, err := client.s.GetFloatCreateRequest(*client.u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.GetFloatHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// PutFloat ...
+func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper) (*PutFloatResponse, error) {
+	req, err := client.s.PutFloatCreateRequest(*client.u, &complexBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.PutFloatHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// GetDouble ...
+func (client *PrimitiveClient) GetDouble(ctx context.Context) (*GetDoubleResponse, error) {
+	req, err := client.s.GetDoubleCreateRequest(*client.u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.GetDoubleHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// PutDouble ...
+func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper) (*PutDoubleResponse, error) {
+	req, err := client.s.PutDoubleCreateRequest(*client.u, &complexBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.PutDoubleHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// GetBool ...
+func (client *PrimitiveClient) GetBool(ctx context.Context) (*GetBoolResponse, error) {
+	req, err := client.s.GetBoolCreateRequest(*client.u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.GetBoolHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// PutBool ...
+func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper) (*PutBoolResponse, error) {
+	req, err := client.s.PutBoolCreateRequest(*client.u, &complexBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.PutBoolHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// GetString ...
+func (client *PrimitiveClient) GetString(ctx context.Context) (*GetStringResponse, error) {
+	req, err := client.s.GetStringCreateRequest(*client.u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.GetStringHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// PutString ...
+func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper) (*PutStringResponse, error) {
+	req, err := client.s.PutStringCreateRequest(*client.u, &complexBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.s.PutStringHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
