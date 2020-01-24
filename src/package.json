@@ -1,5 +1,5 @@
 {
-  "name": "@autorest/autorest.go",
+  "name": "@autorest/go",
   "version": "2.1.0",
   "description": "AutoRest Go Generator",
   "main": "dist/exports.js",

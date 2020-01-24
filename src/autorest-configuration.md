@@ -10,7 +10,7 @@ AutoRest needs the below config to pick this up as a plug-in - see https://githu
 
 ``` yaml !isLoaded('@autorest/remodeler') 
 use-extension:
-  "@autorest/modelerfour" : "~4.0.0" 
+  "@autorest/modelerfour" : "4.3.142" 
 
 # will use highest 4.0.x 
 ```
@@ -29,12 +29,12 @@ pipeline:
     input: modelerfour/identity
 
   # extensibility: allow transforms after the naming
-  go-namer/new-transform: 
+  go-transform: 
     input: go-namer 
 
   # generates code
   go:
-    input: go-namer/new-transform # and the generated c# files
+    input: go-transform # and the generated c# files
 
   # extensibility: allow text-transforms after the code gen
   go/text-transform:
@@ -43,7 +43,7 @@ pipeline:
   # output the files to disk
   go/emitter:
     input: 
-      - go-namer/new-transform  # this allows us to dump out the code model after the namer (add --output-artifact:code-model-v4 on the command line)
+      - go-transform  # this allows us to dump out the code model after the namer (add --output-artifact:code-model-v4 on the command line)
       - go/text-transform # this grabs the outputs after the last step.
       
     is-object: false # tell it that we're not putting an object graph out

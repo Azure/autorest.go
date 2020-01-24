@@ -10,8 +10,8 @@
       "name": "Attach",
       "address": "127.0.0.1",
       "port": 9229,
-      "localRoot": "${workspaceFolder}",
-      "remoteRoot": "${workspaceFolder}"
+      "smartStep" : true,
+      "skipFiles": ["<node_internals/**/*.js"]
     },
     {
       "type": "node",

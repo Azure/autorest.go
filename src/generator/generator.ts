@@ -3,33 +3,23 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { codeModelSchema, CodeModel, Language } from '@azure-tools/codemodel';
-import { values } from '@azure-tools/linq';
+import { Host, startSession } from '@azure-tools/autorest-extension-base';
+import { codeModelSchema, CodeModel } from '@azure-tools/codemodel';
+import { generateModels } from './models'
 
-
+// The generator emits Go source code files to disk.
 export async function generator(host: Host) {
   const debug = await host.GetValue('debug') || false;
 
   try {
+
     // get the code model from the core
     const session = await startSession<CodeModel>(host, codeModelSchema);
+    const namespace = await session.getValue('namespace');
 
-    const c = await session.getValue(<any>null, null);
+    const models = await generateModels(session);
 
-    // example: do something here.
-    let text = "A source file\n";
-
-    const headerText = await session.getValue("header-text", "NO HEADER TEXT?");
-
-    text = text + headerText;
-
-    for (const each of values(session.model.schemas.objects)) {
-      text = text + `schema: ${each.language.go?.name}\n`;
-    }
-
-    // example: output a generated text file
-    host.WriteFile('go-sample.txt', text, undefined, 'source-file-go');
+    host.WriteFile(`internal/${namespace}/models.go`, models, undefined, 'source-file-go');
 
   } catch (E) {
     if (debug) {
