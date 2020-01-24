@@ -11,8 +11,16 @@ import (
 	"testing"
 )
 
-func getComplexClient(t *testing.T) *complexgroup.ComplexClient {
-	client, err := complexgroup.NewComplexClient(complexgroup.DefaultEndpoint, nil)
+func getBasicClient(t *testing.T) *complexgroup.BasicClient {
+	client, err := complexgroup.NewBasicClient(complexgroup.DefaultEndpoint, nil)
+	if err != nil {
+		t.Fatalf("failed to create complex client: %v", err)
+	}
+	return client
+}
+
+func getPrimitiveClient(t *testing.T) *complexgroup.PrimitiveClient {
+	client, err := complexgroup.NewPrimitiveClient(complexgroup.DefaultEndpoint, nil)
 	if err != nil {
 		t.Fatalf("failed to create complex client: %v", err)
 	}
@@ -26,7 +34,7 @@ func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
 }
 
 func TestGetValid(t *testing.T) {
-	client := getComplexClient(t)
+	client := getBasicClient(t)
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
@@ -48,7 +56,7 @@ func TestGetValid(t *testing.T) {
 }
 
 func TestPutValid(t *testing.T) {
-	client := getComplexClient(t)
+	client := getBasicClient(t)
 	var v complexgroup.ColorType
 	colors := complexgroup.PossibleColorValues()
 	for _, c := range colors {
@@ -63,6 +71,84 @@ func TestPutValid(t *testing.T) {
 		t.Fatalf("PutValid: %v", err)
 	}
 	expected := &complexgroup.PutValidResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+// TODO check this
+func TestGetInvalid(t *testing.T) {
+	client := getBasicClient(t)
+	result, err := client.GetInvalid(context.Background())
+	if err == nil {
+		t.Fatalf("GetInvalid expected an error")
+	}
+	var expected *complexgroup.GetInvalidResponse
+	expected = nil
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetEmpty(t *testing.T) {
+	client := getBasicClient(t)
+	result, err := client.GetEmpty(context.Background())
+	if err != nil {
+		t.Fatalf("GetEmpty: %v", err)
+	}
+	expected := &complexgroup.GetEmptyResponse{
+		StatusCode: http.StatusOK,
+		Basic:      &complexgroup.Basic{},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetNull(t *testing.T) {
+	client := getBasicClient(t)
+	result, err := client.GetNull(context.Background())
+	if err != nil {
+		t.Fatalf("GetNull: %v", err)
+	}
+	expected := &complexgroup.GetNullResponse{
+		StatusCode: http.StatusOK,
+		Basic:      &complexgroup.Basic{},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetNotProvided(t *testing.T) {
+	client := getBasicClient(t)
+	result, err := client.GetNotProvided(context.Background())
+	if err != nil {
+		t.Fatalf("GetNotProvided: %v", err)
+	}
+	expected := &complexgroup.GetNotProvidedResponse{
+		StatusCode: http.StatusOK,
+		Basic:      nil,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetInt(t *testing.T) {
+	client := getPrimitiveClient(t)
+	result, err := client.GetInt(context.Background())
+	if err != nil {
+		t.Fatalf("GetInt: %v", err)
+	}
+	a, b := int32(-1), int32(2)
+	expected := &complexgroup.GetIntResponse{
+		StatusCode: http.StatusOK,
+		IntWrapper: &complexgroup.IntWrapper{Field1: &a, Field2: &b},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestPutInt(t *testing.T) {
+	client := getPrimitiveClient(t)
+	a, b := int32(-1), int32(2)
+	result, err := client.PutInt(context.Background(), complexgroup.IntWrapper{Field1: &a, Field2: &b})
+	if err != nil {
+		t.Fatalf("PutInt: %v", err)
+	}
+	expected := &complexgroup.PutIntResponse{
 		StatusCode: http.StatusOK,
 	}
 	deepEqualOrFatal(t, result, expected)
