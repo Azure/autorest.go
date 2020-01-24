@@ -79,16 +79,13 @@ func TestPutValid(t *testing.T) {
 // TODO check this
 func TestGetInvalid(t *testing.T) {
 	client := getBasicClient(t)
-	_, err := client.GetInvalid(context.Background())
+	result, err := client.GetInvalid(context.Background())
 	if err == nil {
 		t.Fatalf("GetInvalid expected an error")
 	}
-	// i, s := int(1), "abc"
-	// expected := &complexgroup.GetInvalidResponse{
-	// 	StatusCode: http.StatusOK,
-	// 	Basic:      &complexgroup.Basic{ID: &i, Name: &s},
-	// }
-	// deepEqualOrFatal(t, result, expected)
+	var expected *complexgroup.GetInvalidResponse
+	expected = nil
+	deepEqualOrFatal(t, result, expected)
 }
 
 func TestGetEmpty(t *testing.T) {
@@ -104,7 +101,6 @@ func TestGetEmpty(t *testing.T) {
 	deepEqualOrFatal(t, result, expected)
 }
 
-// TODO nil or null?
 func TestGetNull(t *testing.T) {
 	client := getBasicClient(t)
 	result, err := client.GetNull(context.Background())

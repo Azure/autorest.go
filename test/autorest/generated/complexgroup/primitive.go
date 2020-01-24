@@ -80,7 +80,7 @@ func (client *PrimitiveClient) GetInt(ctx context.Context) (*GetIntResponse, err
 
 // PutInt ...
 func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper) (*PutIntResponse, error) {
-	req, err := client.s.PutIntCreateRequest(*client.u, &complexBody)
+	req, err := client.s.PutIntCreateRequest(*client.u, complexBody)
 	if err != nil {
 		return nil, err
 	}

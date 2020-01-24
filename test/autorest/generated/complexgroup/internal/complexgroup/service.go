@@ -79,7 +79,6 @@ func (Service) GetEmptyHandleResponse(resp *azcore.Response) (*GetEmptyResponse,
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
-// TODO nil or null?
 // GetNullCreateRequest creates the GetNull request.
 func (Service) GetNullCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/basic/null")
@@ -126,7 +125,7 @@ func (Service) GetIntHandleResponse(resp *azcore.Response) (*GetIntResponse, err
 }
 
 // PutIntCreateRequest creates the PutInt request.
-func (Service) PutIntCreateRequest(u url.URL, complexBody *IntWrapper) (*azcore.Request, error) {
+func (Service) PutIntCreateRequest(u url.URL, complexBody IntWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/integer")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
