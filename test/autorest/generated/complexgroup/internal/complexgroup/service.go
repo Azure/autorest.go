@@ -79,7 +79,6 @@ func (Service) GetEmptyHandleResponse(resp *azcore.Response) (*GetEmptyResponse,
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
 }
 
-// TODO nil or null?
 // GetNullCreateRequest creates the GetNull request.
 func (Service) GetNullCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/basic/null")
