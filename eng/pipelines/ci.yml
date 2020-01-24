@@ -36,13 +36,12 @@ jobs:
       - script: |
           cd $(Build.SourcesDirectory)
           npm install -g "@microsoft/rush"
-          rush update
-          rush install
+          rush update --debug
           npm install -g "@autorest/autorest"
         displayName: 'Prepare Generator Environment'
 
       - script: |
-          rush build
+          rush rebuild -v
         displayName: 'Build Generator Sources'
 
       - script: |
