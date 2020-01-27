@@ -13,7 +13,7 @@ import (
 
 // CustomBaseURLClient is the test Infrastructure for AutoRest Swagger
 type CustomBaseURLClient struct {
-	s azinternal.Service
+	s azinternal.PathsClient
 	u *url.URL
 	p azcore.Pipeline
 }

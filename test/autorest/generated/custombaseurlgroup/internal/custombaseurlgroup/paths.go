@@ -11,17 +11,17 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// Service ..
-type Service struct{}
+// PathsClient ...
+type PathsClient struct{}
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (Service) GetEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
+func (PathsClient) GetEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/customuri")
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
-func (Service) GetEmptyHandleResponse(resp *azcore.Response) (*GetEmptyResponse, error) {
+func (PathsClient) GetEmptyHandleResponse(resp *azcore.Response) (*GetEmptyResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
