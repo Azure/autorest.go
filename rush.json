@@ -95,7 +95,7 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "@autorest/autorest.go",
+      "packageName": "@autorest/go",
       "projectFolder": "src",
       "reviewCategory": "production",
       "shouldPublish": true
