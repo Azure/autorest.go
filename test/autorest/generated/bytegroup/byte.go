@@ -16,7 +16,7 @@ const DefaultEndpoint = "http://localhost:3000"
 
 // ByteClient is the test Infrastructure for AutoRest Swagger BAT
 type ByteClient struct {
-	s azinternal.Service
+	s azinternal.ByteClient
 	u *url.URL
 	p azcore.Pipeline
 }
