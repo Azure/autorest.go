@@ -257,7 +257,7 @@ func (PrimitiveClient) PutStringHandleResponse(resp *azcore.Response) (*PutStrin
 // }
 
 // // PutDateHandleResponse handles the PutDate response.
-// func (ComplexClient) PutDateHandleResponse(resp *azcore.Response) (*PutDateResponse, error) {
+// func (PrimitiveClient) PutDateHandleResponse(resp *azcore.Response) (*PutDateResponse, error) {
 // 	if !resp.HasStatusCode(http.StatusOK) {
 // 		return nil, newError(resp)
 // 	}
