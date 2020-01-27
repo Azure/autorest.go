@@ -16,7 +16,7 @@ const DefaultEndpoint = "http://localhost:3000"
 
 // BasicClient is the test Infrastructure for AutoRest Swagger
 type BasicClient struct {
-	s azinternal.Service
+	s azinternal.ComplexClient
 	u *url.URL
 	p azcore.Pipeline
 }
