@@ -13,7 +13,7 @@ import (
 
 // PrimitiveClient is the test Infrastructure for AutoRest Swagger
 type PrimitiveClient struct {
-	s azinternal.ComplexClient
+	s azinternal.PrimitiveClient
 	u *url.URL
 	p azcore.Pipeline
 }
