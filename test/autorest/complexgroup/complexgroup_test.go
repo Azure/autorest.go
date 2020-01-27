@@ -153,3 +153,181 @@ func TestPutInt(t *testing.T) {
 	}
 	deepEqualOrFatal(t, result, expected)
 }
+
+func TestGetLong(t *testing.T) {
+	client := getPrimitiveClient(t)
+	result, err := client.GetLong(context.Background())
+	if err != nil {
+		t.Fatalf("GetLong: %v", err)
+	}
+	a, b := int64(1099511627775), int64(-999511627788)
+	expected := &complexgroup.GetLongResponse{
+		StatusCode:  http.StatusOK,
+		LongWrapper: &complexgroup.LongWrapper{Field1: &a, Field2: &b},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestPutLong(t *testing.T) {
+	client := getPrimitiveClient(t)
+	a, b := int64(1099511627775), int64(-999511627788)
+	result, err := client.PutLong(context.Background(), complexgroup.LongWrapper{Field1: &a, Field2: &b})
+	if err != nil {
+		t.Fatalf("PutLong: %v", err)
+	}
+	expected := &complexgroup.PutLongResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetFloat(t *testing.T) {
+	client := getPrimitiveClient(t)
+	result, err := client.GetFloat(context.Background())
+	if err != nil {
+		t.Fatalf("GetFloat: %v", err)
+	}
+	a, b := float32(1.05), float32(-0.003)
+	expected := &complexgroup.GetFloatResponse{
+		StatusCode:   http.StatusOK,
+		FloatWrapper: &complexgroup.FloatWrapper{Field1: &a, Field2: &b},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestPutFloat(t *testing.T) {
+	client := getPrimitiveClient(t)
+	a, b := float32(1.05), float32(-0.003)
+	result, err := client.PutFloat(context.Background(), complexgroup.FloatWrapper{Field1: &a, Field2: &b})
+	if err != nil {
+		t.Fatalf("PutFloat: %v", err)
+	}
+	expected := &complexgroup.PutFloatResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetDouble(t *testing.T) {
+	client := getPrimitiveClient(t)
+	result, err := client.GetDouble(context.Background())
+	if err != nil {
+		t.Fatalf("GetDouble: %v", err)
+	}
+	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
+	expected := &complexgroup.GetDoubleResponse{
+		StatusCode:    http.StatusOK,
+		DoubleWrapper: &complexgroup.DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestPutDouble(t *testing.T) {
+	client := getPrimitiveClient(t)
+	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
+	result, err := client.PutDouble(context.Background(), complexgroup.DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b})
+	if err != nil {
+		t.Fatalf("PutDouble: %v", err)
+	}
+	expected := &complexgroup.PutDoubleResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetBool(t *testing.T) {
+	client := getPrimitiveClient(t)
+	result, err := client.GetBool(context.Background())
+	if err != nil {
+		t.Fatalf("GetBool: %v", err)
+	}
+	a, b := true, false
+	expected := &complexgroup.GetBoolResponse{
+		StatusCode:     http.StatusOK,
+		BooleanWrapper: &complexgroup.BooleanWrapper{FieldTrue: &a, FieldFalse: &b},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestPutBool(t *testing.T) {
+	client := getPrimitiveClient(t)
+	a, b := true, false
+	result, err := client.PutBool(context.Background(), complexgroup.BooleanWrapper{FieldTrue: &a, FieldFalse: &b})
+	if err != nil {
+		t.Fatalf("PutBool: %v", err)
+	}
+	expected := &complexgroup.PutBoolResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestGetString(t *testing.T) {
+	client := getPrimitiveClient(t)
+	result, err := client.GetString(context.Background())
+	if err != nil {
+		t.Fatalf("GetString: %v", err)
+	}
+	var c *string
+	a, b, c := "goodrequest", "", nil
+	expected := &complexgroup.GetStringResponse{
+		StatusCode:    http.StatusOK,
+		StringWrapper: &complexgroup.StringWrapper{Field: &a, Empty: &b, Null: c},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestPutString(t *testing.T) {
+	client := getPrimitiveClient(t)
+	var c *string
+	a, b, c := "goodrequest", "", nil
+	result, err := client.PutString(context.Background(), complexgroup.StringWrapper{Field: &a, Empty: &b, Null: c})
+	if err != nil {
+		t.Fatalf("PutString: %v", err)
+	}
+	expected := &complexgroup.PutStringResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+// func TestGetDate(t *testing.T) {
+// 	client := getPrimitiveClient(t)
+// 	result, err := client.GetDate(context.Background())
+// 	if err != nil {
+// 		t.Fatalf("GetDate: %v", err)
+// 	}
+// 	a, err := time.Parse("2006-01-02", "0001-01-01")
+// 	if err != nil {
+// 		t.Fatalf("Unable to parse date string: %v", err)
+// 	}
+// 	b, err := time.Parse("2006-01-02", "2016-02-29")
+// 	if err != nil {
+// 		t.Fatalf("Unable to parse leap year date string: %v", err)
+// 	}
+// 	expected := &complexgroup.GetDateResponse{
+// 		StatusCode:  http.StatusOK,
+// 		DateWrapper: &complexgroup.DateWrapper{Field: &a, Leap: &b},
+// 	}
+// 	deepEqualOrFatal(t, result, expected)
+// }
+
+// func TestPutDate(t *testing.T) {
+// 	client := getPrimitiveClient(t)
+// 	a, err := time.Parse("2006-01-02", "0001-01-01")
+// 	if err != nil {
+// 		t.Fatalf("Unable to parse date string: %v", err)
+// 	}
+// 	b, err := time.Parse("2006-01-02", "2016-02-29")
+// 	if err != nil {
+// 		t.Fatalf("Unable to parse leap year date string: %v", err)
+// 	}
+// 	result, err := client.PutDate(context.Background(), complexgroup.DateWrapper{Field: &a, Leap: &b})
+// 	if err != nil {
+// 		t.Fatalf("PutDate: %v", err)
+// 	}
+// 	expected := &complexgroup.PutDateResponse{
+// 		StatusCode: http.StatusOK,
+// 	}
+// 	deepEqualOrFatal(t, result, expected)
+// }
