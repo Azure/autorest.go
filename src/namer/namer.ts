@@ -45,9 +45,11 @@ async function process(session: Session<CodeModel>) {
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
     details.name = pascalCase(details.name);
+    details.name = capitalizeAcronyms(details.name)
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
       details.name = pascalCase(details.name);
+      details.name = capitalizeAcronyms(details.name)
     }
   }
 
@@ -55,9 +57,11 @@ async function process(session: Session<CodeModel>) {
   for (const group of values(model.operationGroups)) {
     const details = <Language>group.language.go;
     details.name = pascalCase(details.name);
+    details.name = capitalizeAcronyms(details.name)
     for (const op of values(group.operations)) {
       const details = <Language>op.language.go;
       details.name = pascalCase(details.name);
+      details.name = capitalizeAcronyms(details.name)
     }
   }
 
@@ -66,6 +70,7 @@ async function process(session: Session<CodeModel>) {
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
       details.name = `${enm.language.go?.name}${pascalCase(details.name.toLowerCase())}`;
+      details.name = `${enm.language.go?.name}${capitalizeAcronyms(details.name)}`;
     }
   }
   return session;
@@ -78,4 +83,51 @@ function cloneLanguageInfo(graph: any) {
       instance.go = clone(instance.default, false, undefined, undefined, ['schema', 'origin']);
     }
   }
+}
+
+let acronyms = [
+  "Acl",
+  "Api",
+  "Ascii",
+  "Cpu",
+  "Css",
+  "Dns",
+  "Eof",
+  "Guid",
+  "Html",
+  "Http",
+  "Https",
+  "Id",
+  "Ip",
+  "Json",
+  "Lhs",
+  "Qps",
+  "Ram",
+  "Rfc", // TODO check
+  "Rhs",
+  "Rpc",
+  "Sla",
+  "Smtp",
+  "Sql",
+  "Ssh",
+  "Tcp",
+  "Tls",
+  "Ttl",
+  "Udp",
+  "Ui",
+  "Uid",
+  "Uuid",
+  "Uri",
+  "Url",
+  "Utf8",
+  "Vm",
+  "Xml",
+  "Xsrf",
+  "Xss"]
+
+function capitalizeAcronyms(name: string): string {
+  for (const word of acronyms) {
+    name = name.replace(word, word.toUpperCase())
+  }
+  return name
 }
