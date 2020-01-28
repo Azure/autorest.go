@@ -5,7 +5,7 @@
 
 import { serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, SchemaResponse, Property, Response, Schema } from '@azure-tools/codemodel';
+import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, OperationGroup, SchemaResponse, Property, Response, Schema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 // The transformer adds Go-specific information to the code model.
@@ -29,7 +29,7 @@ export async function transform(host: Host) {
 }
 
 async function process(session: Session<CodeModel>) {
-  createResponseTypes(session);
+  processOperationResponses(session);
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
     for (const prop of values(obj.properties)) {
@@ -70,33 +70,38 @@ function schemaTypeToGoType(schema: Schema): string {
   }
 }
 
-// creates the response type to be returned from an operation and updates the operation
-function createResponseTypes(session: Session<CodeModel>) {
+function processOperationResponses(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      if (!op.responses) {
-        continue;
-      }
-      if (length(op.responses) > 1) {
-        throw console.error('multiple responses NYI');
-      }
-      // create the `type FooResponse struct` response
-      // type with a `StatusCode int` field
-      const resp = op.responses[0];
-      const name = `${op.language.go!.name}Response`;
-      resp.language.go = {
-        name: name,
-        description: `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`,
-        properties: [
-          newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
-        ]
-      }
-      // if the response defines a schema then add it as a field to the reponse type
-      if (isSchemaResponse(resp)) {
-        resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
-        (<Array<Property>>resp.language.go!.properties).push(newProperty('Value', resp.schema.language.go!.description, resp.schema));
+      createResponseType(group, op);
+      // annotate all exception types as errors; this is so we know to generate an Error() method
+      for (const ex of values(op.exceptions)) {
+        (<SchemaResponse>ex).schema.language.go!.errorType = true;
       }
     }
+  }
+}
+
+// creates the response type to be returned from an operation and updates the operation
+function createResponseType(group: OperationGroup, op: Operation) {
+  if (length(op.responses) > 1) {
+    throw console.error('multiple responses NYI');
+  }
+  // create the `type FooResponse struct` response
+  // type with a `StatusCode int` field
+  const resp = op.responses![0];
+  const name = `${op.language.go!.name}Response`;
+  resp.language.go = {
+    name: name,
+    description: `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`,
+    properties: [
+      newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
+    ]
+  }
+  // if the response defines a schema then add it as a field to the response type
+  if (isSchemaResponse(resp)) {
+    resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
+    (<Array<Property>>resp.language.go!.properties).push(newProperty('Value', resp.schema.language.go!.description, resp.schema));
   }
 }
 

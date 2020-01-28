@@ -5,6 +5,8 @@
 
 import { Host, startSession } from '@azure-tools/autorest-extension-base';
 import { codeModelSchema, CodeModel } from '@azure-tools/codemodel';
+import { values } from '@azure-tools/linq';
+import { generateOperations } from './operations'
 import { generateModels } from './models'
 
 // The generator emits Go source code files to disk.
@@ -17,8 +19,12 @@ export async function generator(host: Host) {
     const session = await startSession<CodeModel>(host, codeModelSchema);
     const namespace = await session.getValue('namespace');
 
-    const models = await generateModels(session);
+    const operations = await generateOperations(session);
+    for (const op of values(operations)) {
+      host.WriteFile(`internal/${namespace}/${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
+    }
 
+    const models = await generateModels(session);
     host.WriteFile(`internal/${namespace}/models.go`, models, undefined, 'source-file-go');
 
   } catch (E) {
