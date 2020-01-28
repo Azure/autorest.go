@@ -73,7 +73,7 @@ import (
             @:@(method.Name)(@method.MethodParametersSignature(true)) (@method.MethodReturnSignature(true))
             @if (method.NeedsListComplete)
             {
-                @:@(method.ListCompleteMethodName)(@(method.MethodParametersSignature())) (@method.ListCompleteReturnSig(true))
+                @:@(method.ListCompleteMethodName)(@(method.MethodParametersSignature(true))) (@method.ListCompleteReturnSig(true))
             }
         }
         }
