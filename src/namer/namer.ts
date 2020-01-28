@@ -41,7 +41,7 @@ async function process(session: Session<CodeModel>) {
   // copy all the .language.default data into .language.go
   cloneLanguageInfo(model);
 
-  // pascal-case names of objects and their fields
+  // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
     details.name = pascalCase(details.name);
@@ -53,7 +53,7 @@ async function process(session: Session<CodeModel>) {
     }
   }
 
-  // pascal-case operation groups and their operations
+  // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const details = <Language>group.language.go;
     details.name = pascalCase(details.name);
@@ -65,7 +65,7 @@ async function process(session: Session<CodeModel>) {
     }
   }
 
-  // fix up enum type and value names
+  // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
@@ -85,46 +85,50 @@ function cloneLanguageInfo(graph: any) {
   }
 }
 
-let acronyms = [
-  "Acl",
-  "Api",
-  "Ascii",
-  "Cpu",
-  "Css",
-  "Dns",
-  "Eof",
-  "Guid",
-  "Html",
-  "Http",
-  "Https",
-  "Id",
-  "Ip",
-  "Json",
-  "Lhs",
-  "Qps",
-  "Ram",
-  "Rfc", // TODO check
-  "Rhs",
-  "Rpc",
-  "Sla",
-  "Smtp",
-  "Sql",
-  "Ssh",
-  "Tcp",
-  "Tls",
-  "Ttl",
-  "Udp",
-  "Ui",
-  "Uid",
-  "Uuid",
-  "Uri",
-  "Url",
-  "Utf8",
-  "Vm",
-  "Xml",
-  "Xsrf",
-  "Xss"]
+const acronyms = [
+  'Acl',
+  'Api',
+  'Ascii',
+  'Cpu',
+  'Css',
+  'Dns',
+  'Eof',
+  'Guid',
+  'Html',
+  'Http',
+  'Https',
+  'Id',
+  'Ip',
+  'Json',
+  'Lhs',
+  'Qps',
+  'Ram',
+  'Rfc', // TODO check
+  'Rhs',
+  'Rpc',
+  'Sla',
+  'Smtp',
+  'Sql',
+  'Ssh',
+  'Tcp',
+  'Tls',
+  'Ttl',
+  'Udp',
+  'Ui',
+  'Uid',
+  'Uuid',
+  'Uri',
+  'Url',
+  'Utf8',
+  'Vm',
+  'Xml',
+  'Xsrf',
+  'Xss'
+]
 
+// make sure that common acronyms are capitalized
+// NOTE: this function does not perform a case insensitive check considering scenarios where this would cause problems
+// for example 'curl' would end up as 'cURL' if we did case insensitive checks
 function capitalizeAcronyms(name: string): string {
   for (const word of acronyms) {
     name = name.replace(word, word.toUpperCase())
