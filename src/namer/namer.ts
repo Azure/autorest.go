@@ -58,6 +58,7 @@ async function process(session: Session<CodeModel>) {
     const details = <Language>group.language.go;
     details.name = pascalCase(details.name);
     details.name = capitalizeAcronyms(details.name)
+    details.clientName = `${details.name}Client`;
     for (const op of values(group.operations)) {
       const details = <Language>op.language.go;
       details.name = pascalCase(details.name);
