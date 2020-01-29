@@ -6,7 +6,7 @@
 import { serialize, pascalCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { codeModelSchema, CodeModel, Language } from '@azure-tools/codemodel';
-import { visitor, clone, values } from '@azure-tools/linq';
+import { length, visitor, clone, values } from '@azure-tools/linq';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -87,6 +87,14 @@ async function process(session: Session<CodeModel>) {
       details.name = pascalCase(details.name);
       details.name = capitalizeAcronyms(details.name)
       details.protocolNaming = new protocolMethods(details.name);
+      // fix up response type name and description
+      if (length(op.responses) > 1) {
+        throw console.error('multiple responses NYI');
+      }
+      const resp = op.responses![0];
+      const name = `${op.language.go!.name}Response`;
+      resp.language.go!.name = name;
+      resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
     }
   }
 
