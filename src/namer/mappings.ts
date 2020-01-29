@@ -1,4 +1,9 @@
-export const CommonAcronyms = [
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+ export const CommonAcronyms = [
     'Acl',
     'Api',
     'Ascii',
@@ -104,9 +109,6 @@ export const CommonAcronyms = [
       'text', 'scanner', 'tabwriter', 'template', 'parse',
       'time',
       'unicode', 'utf16', 'utf8',
-      'unsafe',
-
-      // Other reserved names and packages (defined by the base libraries this code uses)
-      'autorest', 'client', 'date', 'err', 'req', 'resp', 'result', 'sender', 'to', 'validation', 'm', 'v', 'k', 'objectMap'
+      'unsafe'
   ]
 
