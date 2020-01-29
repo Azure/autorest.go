@@ -83,6 +83,10 @@ async function process(session: Session<CodeModel>) {
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
+      for (const param of values(op.request.parameters)) {
+        const paramDetails = <Language>param.language.go
+        paramDetails.name = getEscapedReservedName(paramDetails.name, "Parameter")
+      }
       details.protocolNaming = new protocolMethods(details.name);
       // fix up response type name and description
       if (length(op.responses) > 1) {
