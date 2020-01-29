@@ -90,14 +90,9 @@ function createResponseType(group: OperationGroup, op: Operation) {
   // create the `type FooResponse struct` response
   // type with a `StatusCode int` field
   const resp = op.responses![0];
-  const name = `${op.language.go!.name}Response`;
-  resp.language.go = {
-    name: name,
-    description: `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`,
-    properties: [
-      newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
-    ]
-  }
+  resp.language.go!.properties = [
+    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
+  ];
   // if the response defines a schema then add it as a field to the response type
   if (isSchemaResponse(resp)) {
     resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);

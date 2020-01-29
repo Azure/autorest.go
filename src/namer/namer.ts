@@ -6,9 +6,8 @@
 import { serialize, pascalCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { codeModelSchema, CodeModel, Language } from '@azure-tools/codemodel';
-import { visitor, clone, values } from '@azure-tools/linq';
+import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-// import * as fs from 'fs';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -26,6 +25,29 @@ export async function namer(host: Host) {
       console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
     }
     throw E;
+  }
+}
+
+const requestMethodSuffix = 'CreateRequest';
+const responseMethodSuffix = 'HandleResponse';
+
+// contains extended naming information for operations
+export interface OperationNaming extends Language {
+  protocolNaming: protocolNaming
+}
+
+interface protocolNaming {
+  requestMethod: string;
+  responseMethod: string;
+}
+
+class protocolMethods implements protocolNaming {
+  readonly requestMethod: string;
+  readonly responseMethod: string;
+
+  constructor(name: string) {
+    this.requestMethod = `${name}${requestMethodSuffix}`;
+    this.responseMethod = `${name}${responseMethodSuffix}`;
   }
 }
 
@@ -58,13 +80,24 @@ async function process(session: Session<CodeModel>) {
     details.name = capitalizeAcronyms(pascalCase(details.name));
     details.clientName = `${details.name}Client`; // we don't call GetEscapedReservedName here since any operation group that uses a reserved word will have 'Client' attached to it
     for (const op of values(group.operations)) {
-      const details = <Language>op.language.go;
+      const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), "Method");
+      details.protocolNaming = new protocolMethods(details.name);
+      // fix up response type name and description
+      if (length(op.responses) > 1) {
+        throw console.error('multiple responses NYI');
+      }
+      const resp = op.responses![0];
+      const name = `${op.language.go!.name}Response`;
+      resp.language.go!.name = name;
+      resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
     }
   }
 
   // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
+    // add PossibleValues func name
+    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values()`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
       details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
