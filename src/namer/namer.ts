@@ -18,6 +18,7 @@ export async function namer(host: Host) {
 
     await process(session);
     
+    // output the model to the pipeline
     host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
 
   } catch (E) {
