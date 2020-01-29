@@ -16,7 +16,7 @@ export const CommonAcronyms = [
     'Lhs',
     'Qps',
     'Ram',
-    'Rfc', // TODO check
+    'Rfc',
     'Rhs',
     'Rpc',
     'Sla',
