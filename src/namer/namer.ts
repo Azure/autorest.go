@@ -68,10 +68,10 @@ async function process(session: Session<CodeModel>) {
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
-    details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), "Model");
+    details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Model');
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
-      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), "Field");
+      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Field');
     }
   }
 
@@ -82,7 +82,7 @@ async function process(session: Session<CodeModel>) {
     details.clientName = `${details.name}Client`; // we don't call GetEscapedReservedName here since any operation group that uses a reserved word will have 'Client' attached to it
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
-      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), "Method");
+      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       details.protocolNaming = new protocolMethods(details.name);
       // fix up response type name and description
       if (length(op.responses) > 1) {
