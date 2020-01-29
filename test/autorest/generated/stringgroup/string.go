@@ -11,9 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// DefaultEndpoint is the default endpoint used for the stringClient service.
-const DefaultEndpoint = "http://localhost:3000"
-
 // StringClient is the test Infrastructure for AutoRest Swagger BAT
 type StringClient struct {
 	s azinternal.Service
@@ -45,7 +42,12 @@ func DefaultStringClientOptions() StringClientOptions {
 }
 
 // NewStringClient creates an instance of the StringClient client.
-func NewStringClient(endpoint string, options *StringClientOptions) (*StringClient, error) {
+func NewStringClient(options *StringClientOptions) (*StringClient, error) {
+	return NewStringClientWithEndpoint("http://localhost:3000", options)
+}
+
+// NewStringClientWithEndpoint creates an instance of the StringClient client.
+func NewStringClientWithEndpoint(endpoint string, options *StringClientOptions) (*StringClient, error) {
 	if options == nil {
 		o := DefaultStringClientOptions()
 		options = &o

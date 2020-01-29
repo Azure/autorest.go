@@ -11,9 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// DefaultEndpoint is the default endpoint used for the BasicClient service.
-const DefaultEndpoint = "http://localhost:3000"
-
 // BasicClient is the test Infrastructure for AutoRest Swagger
 type BasicClient struct {
 	s azinternal.BasicClient
@@ -50,7 +47,12 @@ func DefaultBasicClientOptions() BasicClientOptions {
 }
 
 // NewBasicClient creates an instance of the BasicClient client.
-func NewBasicClient(endpoint string, options *BasicClientOptions) (*BasicClient, error) {
+func NewBasicClient(options *BasicClientOptions) (*BasicClient, error) {
+	return NewBasicClientWithEndpoint("http://localhost:3000", options)
+}
+
+// NewBasicClientWithEndpoint creates an instance of the BasicClient client.
+func NewBasicClientWithEndpoint(endpoint string, options *BasicClientOptions) (*BasicClient, error) {
 	if options == nil {
 		o := DefaultBasicClientOptions()
 		options = &o

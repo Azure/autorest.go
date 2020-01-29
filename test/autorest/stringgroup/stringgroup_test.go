@@ -12,7 +12,7 @@ import (
 )
 
 func getStringClient(t *testing.T) *stringgroup.StringClient {
-	client, err := stringgroup.NewStringClient(stringgroup.DefaultEndpoint, nil)
+	client, err := stringgroup.NewStringClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create string client: %v", err)
 	}
