@@ -12,7 +12,7 @@ import (
 )
 
 func getBasicClient(t *testing.T) *complexgroup.BasicClient {
-	client, err := complexgroup.NewBasicClient(complexgroup.DefaultEndpoint, nil)
+	client, err := complexgroup.NewBasicClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create complex client: %v", err)
 	}
@@ -20,7 +20,7 @@ func getBasicClient(t *testing.T) *complexgroup.BasicClient {
 }
 
 func getPrimitiveClient(t *testing.T) *complexgroup.PrimitiveClient {
-	client, err := complexgroup.NewPrimitiveClient(complexgroup.DefaultEndpoint, nil)
+	client, err := complexgroup.NewPrimitiveClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create complex client: %v", err)
 	}
