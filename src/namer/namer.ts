@@ -84,8 +84,8 @@ async function process(session: Session<CodeModel>) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       for (const param of values(op.request.parameters)) {
-        const paramDetails = <Language>param.language.go
-        paramDetails.name = getEscapedReservedName(paramDetails.name, 'Parameter')
+        const paramDetails = <Language>param.language.go;
+        paramDetails.name = getEscapedReservedName(paramDetails.name, 'Parameter');
       }
       details.protocolNaming = new protocolMethods(details.name);
       // fix up response type name and description
@@ -108,6 +108,11 @@ async function process(session: Session<CodeModel>) {
       details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
     }
   }
+
+  for (const globalParam of values(session.model.globalParameters)) {
+    const details = <Language>globalParam.language.go;
+    details.name = capitalizeAcronyms(pascalCase(details.name));
+  }
   return session;
 }
 
@@ -125,23 +130,24 @@ function cloneLanguageInfo(graph: any) {
 // for example 'curl' would end up as 'cURL' if we did case insensitive checks
 function capitalizeAcronyms(name: string): string {
   for (const word of CommonAcronyms) {
-    name = name.replace(word, word.toUpperCase())
+    name = name.replace(word, word.toUpperCase());
   }
-  return name
+  return name;
 }
 
 // make sure that reserved words are escaped
 function getEscapedReservedName(name: string, appendValue: string): string {
   if (name === null) {
-    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "name" parameter')
+    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "name" parameter');
   }
   if (appendValue === null) {
-    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "appendValue" parameter')
+    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "appendValue" parameter');
   }
 
   if (ReservedWords.includes(name)) {
-    name += appendValue
+    name += appendValue;
   }
 
-  return name
+  return name;
 }
+
