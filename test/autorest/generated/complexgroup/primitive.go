@@ -42,7 +42,12 @@ func DefaultPrimitiveClientOptions() PrimitiveClientOptions {
 }
 
 // NewPrimitiveClient creates an instance of the PrimitiveClient client.
-func NewPrimitiveClient(endpoint string, options *PrimitiveClientOptions) (*PrimitiveClient, error) {
+func NewPrimitiveClient(options *PrimitiveClientOptions) (*PrimitiveClient, error) {
+	return NewPrimitiveClientWithEndpoint("http://localhost:3000", options)
+}
+
+// NewPrimitiveClientWithEndpoint creates an instance of the PrimitiveClient client.
+func NewPrimitiveClientWithEndpoint(endpoint string, options *PrimitiveClientOptions) (*PrimitiveClient, error) {
 	if options == nil {
 		o := DefaultPrimitiveClientOptions()
 		options = &o

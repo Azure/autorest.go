@@ -11,9 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// DefaultEndpoint is the default endpoint used for the byteclient service.
-const DefaultEndpoint = "http://localhost:3000"
-
 // ByteClient is the test Infrastructure for AutoRest Swagger BAT
 type ByteClient struct {
 	s azinternal.ByteClient
@@ -45,7 +42,12 @@ func DefaultByteClientOptions() ByteClientOptions {
 }
 
 // NewByteClient creates an instance of the ByteClient client.
-func NewByteClient(endpoint string, options *ByteClientOptions) (*ByteClient, error) {
+func NewByteClient(options *ByteClientOptions) (*ByteClient, error) {
+	return NewByteClientWithEndpoint("http://localhost:3000", options)
+}
+
+// NewByteClientWithEndpoint creates an instance of the ByteClient client.
+func NewByteClientWithEndpoint(endpoint string, options *ByteClientOptions) (*ByteClient, error) {
 	if options == nil {
 		o := DefaultByteClientOptions()
 		options = &o

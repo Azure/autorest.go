@@ -8,7 +8,6 @@ import { Host, startSession, Session } from '@azure-tools/autorest-extension-bas
 import { codeModelSchema, CodeModel, Language } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import * as fs from "fs";
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -18,11 +17,6 @@ export async function namer(host: Host) {
     const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
     await process(session);
-
-    await fs.writeFile('testYAML.yaml', serialize(session.model), (err) => {
-      if (err) throw err;
-      console.log("File saved!")
-    })
 
     // output the model to the pipeline
     host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
@@ -108,7 +102,7 @@ async function process(session: Session<CodeModel>) {
   // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
     // add PossibleValues func name
-    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values()`;
+    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
       details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
@@ -156,3 +150,4 @@ function getEscapedReservedName(name: string, appendValue: string): string {
 
   return name;
 }
+
