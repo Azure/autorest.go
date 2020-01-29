@@ -28,6 +28,29 @@ export async function namer(host: Host) {
   }
 }
 
+const requestMethodSuffix = 'CreateRequest';
+const responseMethodSuffix = 'HandleResponse';
+
+// contains extended naming information for operations
+export interface OperationNaming extends Language {
+  protocolNaming: protocolNaming
+}
+
+interface protocolNaming {
+  requestMethod: string;
+  responseMethod: string;
+}
+
+class protocolMethods implements protocolNaming {
+  readonly requestMethod: string;
+  readonly responseMethod: string;
+
+  constructor(name: string) {
+    this.requestMethod = `${name}${requestMethodSuffix}`;
+    this.responseMethod = `${name}${responseMethodSuffix}`;
+  }
+}
+
 async function process(session: Session<CodeModel>) {
   const model = session.model;
 
@@ -60,14 +83,17 @@ async function process(session: Session<CodeModel>) {
     details.name = capitalizeAcronyms(details.name)
     details.clientName = `${details.name}Client`;
     for (const op of values(group.operations)) {
-      const details = <Language>op.language.go;
+      const details = <OperationNaming>op.language.go;
       details.name = pascalCase(details.name);
       details.name = capitalizeAcronyms(details.name)
+      details.protocolNaming = new protocolMethods(details.name);
     }
   }
 
   // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
+    // add PossibleValues func name
+    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values()`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
       details.name = `${enm.language.go?.name}${pascalCase(details.name.toLowerCase())}`;
