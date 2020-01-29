@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, joinComma } from '@azure-tools/codegen'
+import { comment, joinComma } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema, ChoiceSchema, Language, ChoiceValue, Schema, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, ImportManager, SortAscending } from './helpers'
+import { ContentPreamble, HasDescription, ImportManager, SortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -61,12 +61,12 @@ class StructDef {
 
   text(): string {
     let text = '';
-    if (hasDescription(this.Language)) {
+    if (HasDescription(this.Language)) {
       text += `${comment(this.Language.description, '// ')}\n`;
     }
     text += `type ${this.Language.name} struct {\n`;
     for (const prop of values(this.Properties)) {
-      if (hasDescription(prop.language.go!)) {
+      if (HasDescription(prop.language.go!)) {
         text += `\t${comment(prop.language.go!.description, '// ')}\n`;
       }
       text += `\t${prop.language.go!.name} ${prop.schema.language.go!.name}\n`;
@@ -91,7 +91,7 @@ class StructDef {
 function generateEnums(enums?: ChoiceSchema<StringSchema>[]): string {
   let text = '';
   for (const enm of values(enums)) {
-    if (hasDescription(enm.language.go!)) {
+    if (HasDescription(enm.language.go!)) {
       text += `${comment(enm.language.go!.name, '// ')} - ${enm.language.go!.description}\n`;
     }
     text += `type ${enm.language.go!.name} ${enm.choiceType.language.go!.name}\n\n`;
@@ -99,7 +99,7 @@ function generateEnums(enums?: ChoiceSchema<StringSchema>[]): string {
     const vals = new Array<string>();
     text += 'const (\n'
     for (const val of values(enm.choices)) {
-      if (hasDescription(val.language.go!)) {
+      if (HasDescription(val.language.go!)) {
         text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
       }
       text += `\t${val.language.go!.name} ${enm.language.go!.name} = "${val.value}"\n`;
@@ -138,8 +138,4 @@ function addImportForSchemaType(schema: Schema) {
     case SchemaType.DateTime:
       imports.add('time');
   }
-}
-
-function hasDescription(lang: Language): boolean {
-  return (lang.description.length > 0 && !lang.description.startsWith('MISSING'));
 }

@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen'
 import { CodeModel, Operation, Parameter, Protocols, ImplementationLocation } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
-import { ContentPreamble, ImportManager, SortAscending } from './helpers';
+import { ContentPreamble, ImportManager, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 // represents an operation group
