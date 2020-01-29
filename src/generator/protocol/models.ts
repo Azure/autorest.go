@@ -106,7 +106,7 @@ function generateEnums(enums?: ChoiceSchema<StringSchema>[]): string {
       vals.push(val.language.go!.name);
     }
     text += ")\n\n"
-    text += `func Possible${enm.language.go!.name}Values() []${enm.language.go!.name} {\n`;
+    text += `func ${enm.language.go!.possibleValuesFunc}() []${enm.language.go!.name} {\n`;
     text += `\treturn []${enm.language.go!.name}{${joinComma(vals, (item: string) => item)}}\n`;
     text += '}\n\n';
   }

@@ -7,7 +7,8 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen'
 import { CodeModel, Operation, Parameter, Protocols, ImplementationLocation } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
-import { ContentPreamble, ImportManager, SortAscending } from './helpers'
+import { ContentPreamble, ImportManager, SortAscending } from './helpers';
+import { OperationNaming } from '../../namer/namer';
 
 // represents an operation group
 export class OperationInfo {
@@ -47,14 +48,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
   return operations;
 }
 
-const requestMethodSuffix = 'CreateRequest';
-const responseMethodSuffix = 'HandleResponse';
-
 // this list of packages to import
 const imports = new ImportManager();
 
 function createProtocolRequest(client: string, op: Operation): string {
-  const name = `${op.language.go!.name}${requestMethodSuffix}`;
+  const info = <OperationNaming>op.language.go!;
+  const name = info.protocolNaming.requestMethod;
   const params = ['u url.URL'];
   for (const param of values(op.request.parameters)) {
     if (param.implementation === ImplementationLocation.Method) {
@@ -62,7 +61,7 @@ function createProtocolRequest(client: string, op: Operation): string {
     }
   }
   const returns = ['*azcore.Request', 'error'];
-  let text = `${comment(name, '// ')} creates the ${op.language.go!.name} request.\n`;
+  let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (${client}) ${name}(${params.join(', ')}) (${returns.join(', ')}) {\n`;
   text += `\tu.Path = path.Join(u.Path, "${op.request.protocol.http!.path}")\n`;
   const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)`;
@@ -83,7 +82,8 @@ function createProtocolRequest(client: string, op: Operation): string {
 }
 
 function createProtocolResponse(client: string, op: Operation): string {
-  const name = `${op.language.go!.name}${responseMethodSuffix}`;
+  const info = <OperationNaming>op.language.go!;
+  const name = info.protocolNaming.responseMethod;
   const params = ['resp *azcore.Response'];
   if (length(op.responses) > 1) {
     throw console.error('multiple responses NYI');
@@ -91,7 +91,7 @@ function createProtocolResponse(client: string, op: Operation): string {
   const resp = op.responses![0];
   const returns = [`*${resp.language.go!.name}`, 'error'];
 
-  let text = `${comment(name, '// ')} handles the ${op.language.go!.name} response.\n`;
+  let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (${client}) ${name}(${params}) (${returns.join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(http.StatusOK) {\n`;
   text += `\t\treturn nil, newError(resp)\n`;
