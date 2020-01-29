@@ -7,6 +7,7 @@ import { serialize, pascalCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { codeModelSchema, CodeModel, Language } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
+import { CommonAcronyms, ReservedWords } from './mappings';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -67,25 +68,25 @@ async function process(session: Session<CodeModel>) {
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
-    details.name = pascalCase(details.name);
-    details.name = capitalizeAcronyms(details.name)
+    details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Model');
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
-      details.name = pascalCase(details.name);
-      details.name = capitalizeAcronyms(details.name)
+      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Field');
     }
   }
 
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const details = <Language>group.language.go;
-    details.name = pascalCase(details.name);
-    details.name = capitalizeAcronyms(details.name)
-    details.clientName = `${details.name}Client`;
+    details.name = capitalizeAcronyms(pascalCase(details.name));
+    details.clientName = `${details.name}Client`; // we don't call GetEscapedReservedName here since any operation group that uses a reserved word will have 'Client' attached to it
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
-      details.name = pascalCase(details.name);
-      details.name = capitalizeAcronyms(details.name)
+      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
+      for (const param of values(op.request.parameters)) {
+        const paramDetails = <Language>param.language.go
+        paramDetails.name = getEscapedReservedName(paramDetails.name, 'Parameter')
+      }
       details.protocolNaming = new protocolMethods(details.name);
       // fix up response type name and description
       if (length(op.responses) > 1) {
@@ -104,8 +105,7 @@ async function process(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values()`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${pascalCase(details.name.toLowerCase())}`;
-      details.name = `${enm.language.go?.name}${capitalizeAcronyms(details.name)}`;
+      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
     }
   }
   return session;
@@ -120,53 +120,28 @@ function cloneLanguageInfo(graph: any) {
   }
 }
 
-const acronyms = [
-  'Acl',
-  'Api',
-  'Ascii',
-  'Cpu',
-  'Css',
-  'Dns',
-  'Eof',
-  'Guid',
-  'Html',
-  'Http',
-  'Https',
-  'Id',
-  'Ip',
-  'Json',
-  'Lhs',
-  'Qps',
-  'Ram',
-  'Rfc', // TODO check
-  'Rhs',
-  'Rpc',
-  'Sla',
-  'Smtp',
-  'Sql',
-  'Ssh',
-  'Tcp',
-  'Tls',
-  'Ttl',
-  'Udp',
-  'Ui',
-  'Uid',
-  'Uuid',
-  'Uri',
-  'Url',
-  'Utf8',
-  'Vm',
-  'Xml',
-  'Xsrf',
-  'Xss'
-]
-
 // make sure that common acronyms are capitalized
 // NOTE: this function does not perform a case insensitive check considering scenarios where this would cause problems
 // for example 'curl' would end up as 'cURL' if we did case insensitive checks
 function capitalizeAcronyms(name: string): string {
-  for (const word of acronyms) {
+  for (const word of CommonAcronyms) {
     name = name.replace(word, word.toUpperCase())
   }
+  return name
+}
+
+// make sure that reserved words are escaped
+function getEscapedReservedName(name: string, appendValue: string): string {
+  if (name === null) {
+    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "name" parameter')
+  }
+  if (appendValue === null) {
+    throw new Error('GetEscapedReservedName: Cannot pass in a null value for "appendValue" parameter')
+  }
+
+  if (ReservedWords.includes(name)) {
+    name += appendValue
+  }
+
   return name
 }
