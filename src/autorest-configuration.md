@@ -28,21 +28,27 @@ pipeline:
   go-namer:
     input: modelerfour/identity
 
-  # extensibility: allow transforms after the naming
+  # add Go-specific data to the code model
   go-transform: 
     input: go-namer 
 
-  # generates code
-  go:
-    input: go-transform # and the generated c# files
+  # generates code for the protocol layer
+  go-protocol:
+    input: go-transform
+
+  # generates code for the convenience layer
+  go-convenience:
+    input: go-protocol
 
   # extensibility: allow text-transforms after the code gen
   go/text-transform:
-    input: go
+    input: go-convenience
 
   # output the files to disk
   go/emitter:
     input: 
+      - go-protocol
+      - go-convenience
       - go-transform  # this allows us to dump out the code model after the namer (add --output-artifact:code-model-v4 on the command line)
       - go/text-transform # this grabs the outputs after the last step.
       
