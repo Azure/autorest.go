@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen'
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel, Language } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 
 // tracks packages that need to be imported
@@ -54,4 +54,9 @@ export async function ContentPreamble(session: Session<CodeModel>): Promise<stri
 // used to sort strings in ascending order
 export function SortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
+}
+
+// returns true if the language contains a description
+export function HasDescription(lang: Language): boolean {
+  return (lang.description.length > 0 && !lang.description.startsWith('MISSING'));
 }

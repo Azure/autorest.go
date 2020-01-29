@@ -102,7 +102,7 @@ async function process(session: Session<CodeModel>) {
   // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
     // add PossibleValues func name
-    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values()`;
+    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
       details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
