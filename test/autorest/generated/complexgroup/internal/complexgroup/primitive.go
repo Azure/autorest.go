@@ -11,17 +11,17 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// PrimitiveClient ...
-type PrimitiveClient struct{}
+// PrimitiveOperations ...
+type PrimitiveOperations struct{}
 
 // GetIntCreateRequest creates the GetInt request.
-func (PrimitiveClient) GetIntCreateRequest(u url.URL) (*azcore.Request, error) {
+func (PrimitiveOperations) GetIntCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/integer")
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetIntHandleResponse handles the GetInt response.
-func (PrimitiveClient) GetIntHandleResponse(resp *azcore.Response) (*GetIntResponse, error) {
+func (PrimitiveOperations) GetIntHandleResponse(resp *azcore.Response) (*GetIntResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -30,7 +30,7 @@ func (PrimitiveClient) GetIntHandleResponse(resp *azcore.Response) (*GetIntRespo
 }
 
 // PutIntCreateRequest creates the PutInt request.
-func (PrimitiveClient) PutIntCreateRequest(u url.URL, complexBody IntWrapper) (*azcore.Request, error) {
+func (PrimitiveOperations) PutIntCreateRequest(u url.URL, complexBody IntWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/integer")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -41,7 +41,7 @@ func (PrimitiveClient) PutIntCreateRequest(u url.URL, complexBody IntWrapper) (*
 }
 
 // PutIntHandleResponse handles the PutInt response.
-func (PrimitiveClient) PutIntHandleResponse(resp *azcore.Response) (*PutIntResponse, error) {
+func (PrimitiveOperations) PutIntHandleResponse(resp *azcore.Response) (*PutIntResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -50,13 +50,13 @@ func (PrimitiveClient) PutIntHandleResponse(resp *azcore.Response) (*PutIntRespo
 }
 
 // GetLongCreateRequest creates the GetLong request.
-func (PrimitiveClient) GetLongCreateRequest(u url.URL) (*azcore.Request, error) {
+func (PrimitiveOperations) GetLongCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/long")
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetLongHandleResponse handles the GetLong response.
-func (PrimitiveClient) GetLongHandleResponse(resp *azcore.Response) (*GetLongResponse, error) {
+func (PrimitiveOperations) GetLongHandleResponse(resp *azcore.Response) (*GetLongResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -65,7 +65,7 @@ func (PrimitiveClient) GetLongHandleResponse(resp *azcore.Response) (*GetLongRes
 }
 
 // PutLongCreateRequest creates the PutLong request.
-func (PrimitiveClient) PutLongCreateRequest(u url.URL, complexBody LongWrapper) (*azcore.Request, error) {
+func (PrimitiveOperations) PutLongCreateRequest(u url.URL, complexBody LongWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/long")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -76,7 +76,7 @@ func (PrimitiveClient) PutLongCreateRequest(u url.URL, complexBody LongWrapper) 
 }
 
 // PutLongHandleResponse handles the PutLong response.
-func (PrimitiveClient) PutLongHandleResponse(resp *azcore.Response) (*PutLongResponse, error) {
+func (PrimitiveOperations) PutLongHandleResponse(resp *azcore.Response) (*PutLongResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -85,13 +85,13 @@ func (PrimitiveClient) PutLongHandleResponse(resp *azcore.Response) (*PutLongRes
 }
 
 // GetFloatCreateRequest creates the GetFloat request.
-func (PrimitiveClient) GetFloatCreateRequest(u url.URL) (*azcore.Request, error) {
+func (PrimitiveOperations) GetFloatCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/float")
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetFloatHandleResponse handles the GetFloat response.
-func (PrimitiveClient) GetFloatHandleResponse(resp *azcore.Response) (*GetFloatResponse, error) {
+func (PrimitiveOperations) GetFloatHandleResponse(resp *azcore.Response) (*GetFloatResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -100,7 +100,7 @@ func (PrimitiveClient) GetFloatHandleResponse(resp *azcore.Response) (*GetFloatR
 }
 
 // PutFloatCreateRequest creates the PutFloat request.
-func (PrimitiveClient) PutFloatCreateRequest(u url.URL, complexBody FloatWrapper) (*azcore.Request, error) {
+func (PrimitiveOperations) PutFloatCreateRequest(u url.URL, complexBody FloatWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/float")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -111,7 +111,7 @@ func (PrimitiveClient) PutFloatCreateRequest(u url.URL, complexBody FloatWrapper
 }
 
 // PutFloatHandleResponse handles the PutFloat response.
-func (PrimitiveClient) PutFloatHandleResponse(resp *azcore.Response) (*PutFloatResponse, error) {
+func (PrimitiveOperations) PutFloatHandleResponse(resp *azcore.Response) (*PutFloatResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -120,13 +120,13 @@ func (PrimitiveClient) PutFloatHandleResponse(resp *azcore.Response) (*PutFloatR
 }
 
 // GetDoubleCreateRequest creates the GetDouble request.
-func (PrimitiveClient) GetDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
+func (PrimitiveOperations) GetDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/double")
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetDoubleHandleResponse handles the GetDouble response.
-func (PrimitiveClient) GetDoubleHandleResponse(resp *azcore.Response) (*GetDoubleResponse, error) {
+func (PrimitiveOperations) GetDoubleHandleResponse(resp *azcore.Response) (*GetDoubleResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -135,7 +135,7 @@ func (PrimitiveClient) GetDoubleHandleResponse(resp *azcore.Response) (*GetDoubl
 }
 
 // PutDoubleCreateRequest creates the PutDouble request.
-func (PrimitiveClient) PutDoubleCreateRequest(u url.URL, complexBody DoubleWrapper) (*azcore.Request, error) {
+func (PrimitiveOperations) PutDoubleCreateRequest(u url.URL, complexBody DoubleWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/double")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -146,7 +146,7 @@ func (PrimitiveClient) PutDoubleCreateRequest(u url.URL, complexBody DoubleWrapp
 }
 
 // PutDoubleHandleResponse handles the PutDouble response.
-func (PrimitiveClient) PutDoubleHandleResponse(resp *azcore.Response) (*PutDoubleResponse, error) {
+func (PrimitiveOperations) PutDoubleHandleResponse(resp *azcore.Response) (*PutDoubleResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -155,13 +155,13 @@ func (PrimitiveClient) PutDoubleHandleResponse(resp *azcore.Response) (*PutDoubl
 }
 
 // GetBoolCreateRequest creates the GetBool request.
-func (PrimitiveClient) GetBoolCreateRequest(u url.URL) (*azcore.Request, error) {
+func (PrimitiveOperations) GetBoolCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/bool")
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetBoolHandleResponse handles the GetBool response.
-func (PrimitiveClient) GetBoolHandleResponse(resp *azcore.Response) (*GetBoolResponse, error) {
+func (PrimitiveOperations) GetBoolHandleResponse(resp *azcore.Response) (*GetBoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -170,7 +170,7 @@ func (PrimitiveClient) GetBoolHandleResponse(resp *azcore.Response) (*GetBoolRes
 }
 
 // PutBoolCreateRequest creates the PutBool request.
-func (PrimitiveClient) PutBoolCreateRequest(u url.URL, complexBody BooleanWrapper) (*azcore.Request, error) {
+func (PrimitiveOperations) PutBoolCreateRequest(u url.URL, complexBody BooleanWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/bool")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -181,7 +181,7 @@ func (PrimitiveClient) PutBoolCreateRequest(u url.URL, complexBody BooleanWrappe
 }
 
 // PutBoolHandleResponse handles the PutBool response.
-func (PrimitiveClient) PutBoolHandleResponse(resp *azcore.Response) (*PutBoolResponse, error) {
+func (PrimitiveOperations) PutBoolHandleResponse(resp *azcore.Response) (*PutBoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -190,13 +190,13 @@ func (PrimitiveClient) PutBoolHandleResponse(resp *azcore.Response) (*PutBoolRes
 }
 
 // GetStringCreateRequest creates the GetString request.
-func (PrimitiveClient) GetStringCreateRequest(u url.URL) (*azcore.Request, error) {
+func (PrimitiveOperations) GetStringCreateRequest(u url.URL) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/string")
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
 // GetStringHandleResponse handles the GetString response.
-func (PrimitiveClient) GetStringHandleResponse(resp *azcore.Response) (*GetStringResponse, error) {
+func (PrimitiveOperations) GetStringHandleResponse(resp *azcore.Response) (*GetStringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -205,7 +205,7 @@ func (PrimitiveClient) GetStringHandleResponse(resp *azcore.Response) (*GetStrin
 }
 
 // PutStringCreateRequest creates the PutString request.
-func (PrimitiveClient) PutStringCreateRequest(u url.URL, complexBody StringWrapper) (*azcore.Request, error) {
+func (PrimitiveOperations) PutStringCreateRequest(u url.URL, complexBody StringWrapper) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/primitive/string")
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
@@ -216,7 +216,7 @@ func (PrimitiveClient) PutStringCreateRequest(u url.URL, complexBody StringWrapp
 }
 
 // PutStringHandleResponse handles the PutString response.
-func (PrimitiveClient) PutStringHandleResponse(resp *azcore.Response) (*PutStringResponse, error) {
+func (PrimitiveOperations) PutStringHandleResponse(resp *azcore.Response) (*PutStringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
@@ -225,13 +225,13 @@ func (PrimitiveClient) PutStringHandleResponse(resp *azcore.Response) (*PutStrin
 }
 
 // // GetDateCreateRequest creates the GetDate request.
-// func (PrimitiveClient) GetDateCreateRequest(u url.URL) (*azcore.Request, error) {
+// func (PrimitiveOperations) GetDateCreateRequest(u url.URL) (*azcore.Request, error) {
 // 	u.Path = path.Join(u.Path, "/complex/primitive/date")
 // 	return azcore.NewRequest(http.MethodGet, u), nil
 // }
 
 // // GetDateHandleResponse handles the GetDate response.
-// func (PrimitiveClient) GetDateHandleResponse(resp *azcore.Response) (*GetDateResponse, error) {
+// func (PrimitiveOperations) GetDateHandleResponse(resp *azcore.Response) (*GetDateResponse, error) {
 // 	if !resp.HasStatusCode(http.StatusOK) {
 // 		return nil, newError(resp)
 // 	}
@@ -240,7 +240,7 @@ func (PrimitiveClient) PutStringHandleResponse(resp *azcore.Response) (*PutStrin
 // }
 
 // // PutDateCreateRequest creates the PutDate request.
-// func (PrimitiveClient) PutDateCreateRequest(u url.URL, complexBody DateWrapper) (*azcore.Request, error) {
+// func (PrimitiveOperations) PutDateCreateRequest(u url.URL, complexBody DateWrapper) (*azcore.Request, error) {
 // 	u.Path = path.Join(u.Path, "/complex/primitive/date")
 // 	req := azcore.NewRequest(http.MethodPut, u)
 // 	err := req.MarshalAsJSON(complexBody)
@@ -257,7 +257,7 @@ func (PrimitiveClient) PutStringHandleResponse(resp *azcore.Response) (*PutStrin
 // }
 
 // // PutDateHandleResponse handles the PutDate response.
-// func (PrimitiveClient) PutDateHandleResponse(resp *azcore.Response) (*PutDateResponse, error) {
+// func (PrimitiveOperations) PutDateHandleResponse(resp *azcore.Response) (*PutDateResponse, error) {
 // 	if !resp.HasStatusCode(http.StatusOK) {
 // 		return nil, newError(resp)
 // 	}

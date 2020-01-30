@@ -5,6 +5,11 @@ package complexgroup
 
 import azinternal "generatortests/autorest/generated/complexgroup/internal/complexgroup"
 
+// PossibleColorValues ...
+func PossibleColorValues() []ColorType {
+	return azinternal.PossibleColorValues()
+}
+
 // Error ...
 type Error = azinternal.Error
 

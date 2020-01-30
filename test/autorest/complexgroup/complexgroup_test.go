@@ -11,20 +11,20 @@ import (
 	"testing"
 )
 
-func getBasicClient(t *testing.T) *complexgroup.BasicClient {
-	client, err := complexgroup.NewBasicClient(nil)
+func getBasicOperations(t *testing.T) complexgroup.BasicOperations {
+	client, err := complexgroup.NewDefaultClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create complex client: %v", err)
 	}
-	return client
+	return client.BasicOperations()
 }
 
-func getPrimitiveClient(t *testing.T) *complexgroup.PrimitiveClient {
-	client, err := complexgroup.NewPrimitiveClient(nil)
+func getPrimitiveOperations(t *testing.T) complexgroup.PrimitiveOperations {
+	client, err := complexgroup.NewDefaultClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create complex client: %v", err)
 	}
-	return client
+	return client.PrimitiveOperations()
 }
 
 func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
@@ -34,7 +34,7 @@ func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
 }
 
 func TestGetValid(t *testing.T) {
-	client := getBasicClient(t)
+	client := getBasicOperations(t)
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
@@ -56,7 +56,7 @@ func TestGetValid(t *testing.T) {
 }
 
 func TestPutValid(t *testing.T) {
-	client := getBasicClient(t)
+	client := getBasicOperations(t)
 	var v complexgroup.ColorType
 	colors := complexgroup.PossibleColorValues()
 	for _, c := range colors {
@@ -78,7 +78,7 @@ func TestPutValid(t *testing.T) {
 
 // TODO check this
 func TestGetInvalid(t *testing.T) {
-	client := getBasicClient(t)
+	client := getBasicOperations(t)
 	result, err := client.GetInvalid(context.Background())
 	if err == nil {
 		t.Fatalf("GetInvalid expected an error")
@@ -89,7 +89,7 @@ func TestGetInvalid(t *testing.T) {
 }
 
 func TestGetEmpty(t *testing.T) {
-	client := getBasicClient(t)
+	client := getBasicOperations(t)
 	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
@@ -102,7 +102,7 @@ func TestGetEmpty(t *testing.T) {
 }
 
 func TestGetNull(t *testing.T) {
-	client := getBasicClient(t)
+	client := getBasicOperations(t)
 	result, err := client.GetNull(context.Background())
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
@@ -115,7 +115,7 @@ func TestGetNull(t *testing.T) {
 }
 
 func TestGetNotProvided(t *testing.T) {
-	client := getBasicClient(t)
+	client := getBasicOperations(t)
 	result, err := client.GetNotProvided(context.Background())
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
@@ -128,7 +128,7 @@ func TestGetNotProvided(t *testing.T) {
 }
 
 func TestGetInt(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	result, err := client.GetInt(context.Background())
 	if err != nil {
 		t.Fatalf("GetInt: %v", err)
@@ -142,7 +142,7 @@ func TestGetInt(t *testing.T) {
 }
 
 func TestPutInt(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	a, b := int32(-1), int32(2)
 	result, err := client.PutInt(context.Background(), complexgroup.IntWrapper{Field1: &a, Field2: &b})
 	if err != nil {
@@ -155,7 +155,7 @@ func TestPutInt(t *testing.T) {
 }
 
 func TestGetLong(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	result, err := client.GetLong(context.Background())
 	if err != nil {
 		t.Fatalf("GetLong: %v", err)
@@ -169,7 +169,7 @@ func TestGetLong(t *testing.T) {
 }
 
 func TestPutLong(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	a, b := int64(1099511627775), int64(-999511627788)
 	result, err := client.PutLong(context.Background(), complexgroup.LongWrapper{Field1: &a, Field2: &b})
 	if err != nil {
@@ -182,7 +182,7 @@ func TestPutLong(t *testing.T) {
 }
 
 func TestGetFloat(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	result, err := client.GetFloat(context.Background())
 	if err != nil {
 		t.Fatalf("GetFloat: %v", err)
@@ -196,7 +196,7 @@ func TestGetFloat(t *testing.T) {
 }
 
 func TestPutFloat(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	a, b := float32(1.05), float32(-0.003)
 	result, err := client.PutFloat(context.Background(), complexgroup.FloatWrapper{Field1: &a, Field2: &b})
 	if err != nil {
@@ -209,7 +209,7 @@ func TestPutFloat(t *testing.T) {
 }
 
 func TestGetDouble(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	result, err := client.GetDouble(context.Background())
 	if err != nil {
 		t.Fatalf("GetDouble: %v", err)
@@ -223,7 +223,7 @@ func TestGetDouble(t *testing.T) {
 }
 
 func TestPutDouble(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
 	result, err := client.PutDouble(context.Background(), complexgroup.DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b})
 	if err != nil {
@@ -236,7 +236,7 @@ func TestPutDouble(t *testing.T) {
 }
 
 func TestGetBool(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	result, err := client.GetBool(context.Background())
 	if err != nil {
 		t.Fatalf("GetBool: %v", err)
@@ -250,7 +250,7 @@ func TestGetBool(t *testing.T) {
 }
 
 func TestPutBool(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	a, b := true, false
 	result, err := client.PutBool(context.Background(), complexgroup.BooleanWrapper{FieldTrue: &a, FieldFalse: &b})
 	if err != nil {
@@ -263,7 +263,7 @@ func TestPutBool(t *testing.T) {
 }
 
 func TestGetString(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	result, err := client.GetString(context.Background())
 	if err != nil {
 		t.Fatalf("GetString: %v", err)
@@ -278,7 +278,7 @@ func TestGetString(t *testing.T) {
 }
 
 func TestPutString(t *testing.T) {
-	client := getPrimitiveClient(t)
+	client := getPrimitiveOperations(t)
 	var c *string
 	a, b, c := "goodrequest", "", nil
 	result, err := client.PutString(context.Background(), complexgroup.StringWrapper{Field: &a, Empty: &b, Null: c})
@@ -292,7 +292,7 @@ func TestPutString(t *testing.T) {
 }
 
 // func TestGetDate(t *testing.T) {
-// 	client := getPrimitiveClient(t)
+// 	client := getPrimitiveOperations(t)
 // 	result, err := client.GetDate(context.Background())
 // 	if err != nil {
 // 		t.Fatalf("GetDate: %v", err)
@@ -313,7 +313,7 @@ func TestPutString(t *testing.T) {
 // }
 
 // func TestPutDate(t *testing.T) {
-// 	client := getPrimitiveClient(t)
+// 	client := getPrimitiveOperations(t)
 // 	a, err := time.Parse("2006-01-02", "0001-01-01")
 // 	if err != nil {
 // 		t.Fatalf("Unable to parse date string: %v", err)
