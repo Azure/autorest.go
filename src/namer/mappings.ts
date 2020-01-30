@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
- export const CommonAcronyms = [
+export const CommonAcronyms = [
     'Acl',
     'Api',
     'Ascii',
@@ -77,7 +77,8 @@
       'bytes',
       'compress', 'bzip2', 'flate', 'gzip', 'lzw', 'zlib',
       'container', 'heap', 'list', 'ring',
-      'crypto', 'aes', 'cipher', 'des', 'dsa', 'ecdsa', 'elliptic', 'hmac', 'md5', 'rand', 'rc4', 'rsa', 'sha1', 'sha256', 'sha512', 'subtle', 'tls', 'x509', 'pkix',
+      'context',
+      'crypto', 'aes', 'cipher', 'des', 'dsa', 'ecdsa', 'ed25519', 'elliptic', 'hmac', 'md5', 'rand', 'rc4', 'rsa', 'sha1', 'sha256', 'sha512', 'subtle', 'tls', 'x509', 'pkix',
       'database', 'sql', 'driver',
       'debug', 'dwarf', 'elf', 'gosym', 'macho', 'pe', 'plan9obj',
       'encoding', 'ascii85', 'asn1', 'base32', 'base64', 'binary', 'csv', 'gob', 'hex', 'json', 'pem', 'xml',
@@ -92,19 +93,20 @@
       'index', 'suffixarray',
       'io', 'ioutil',
       'log', 'syslog',
-      'math', 'big', 'cmplx', 'rand',
+      'math', 'big', 'bits', 'cmplx', 'rand',
       'mime', 'multipart', 'quotedprintable',
-      'net', 'http', 'cgi', 'cookiejar', 'fcgi', 'httptest', 'httputil', 'pprof', 'mail', 'rpc', 'jsonrpc', 'smtp', 'textproto', 'url',
+      'net', 'http', 'cgi', 'cookiejar', 'fcgi', 'httptest', 'httptrace', 'httputil', 'pprof', 'mail', 'rpc', 'jsonrpc', 'smtp', 'textproto', 'url',
       'os', 'exec', 'signal', 'user',
       'path', 'filepath',
+      'plugin',
       'reflect',
       'regexp', 'syntax',
-      'runtime', 'cgo', 'debug', 'pprof', 'race', 'trace',
+      'runtime', 'cgo', 'debug', 'msan', 'pprof', 'race', 'trace',
       'sort',
       'strconv',
       'strings',
       'sync', 'atomic',
-      'syscall',
+      'syscall', 'js',
       'testing', 'iotest', 'quick',
       'text', 'scanner', 'tabwriter', 'template', 'parse',
       'time',
