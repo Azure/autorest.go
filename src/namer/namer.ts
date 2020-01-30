@@ -111,7 +111,7 @@ async function process(session: Session<CodeModel>) {
 
   for (const globalParam of values(session.model.globalParameters)) {
     const details = <Language>globalParam.language.go;
-    details.name = capitalizeAcronyms(pascalCase(details.name));
+    details.name = capitalizeAcronyms(details.name);
   }
   return session;
 }
