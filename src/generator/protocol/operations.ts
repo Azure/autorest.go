@@ -5,13 +5,13 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen'
-import { CodeModel, Operation, Parameter, Protocols, ImplementationLocation } from '@azure-tools/codemodel';
-import { length, values } from '@azure-tools/linq';
-import { ContentPreamble, ImportManager, SortAscending } from '../common/helpers';
+import { CodeModel, Language, Operation, Parameter, Protocols } from '@azure-tools/codemodel';
+import { values } from '@azure-tools/linq';
+import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
-// represents an operation group
-export class OperationInfo {
+// represents the generated content for an operation group
+export class OperationGroupContent {
   readonly name: string;
   readonly content: string;
 
@@ -22,7 +22,7 @@ export class OperationInfo {
 }
 
 // Creates the content for all <operation>.go files
-export async function generateOperations(session: Session<CodeModel>): Promise<OperationInfo[]> {
+export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
   // add standard imorts
   imports.add('net/http');
   imports.add('net/url');
@@ -30,7 +30,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
   // generate protocol operations
-  const operations = new Array<OperationInfo>();
+  const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
     let text = await ContentPreamble(session);
     text += imports.text();
@@ -40,12 +40,41 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
     group.operations.sort((a: Operation, b: Operation) => { return SortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
+      op.language.go!.protocolSigs = new protocolSigs();
       text += createProtocolRequest(clientName, op);
       text += createProtocolResponse(clientName, op);
     }
-    operations.push(new OperationInfo(group.language.go!.name, text));
+    operations.push(new OperationGroupContent(group.language.go!.name, text));
   }
   return operations;
+}
+
+// contains method signature information for request and response methods
+export interface ProtocolSig extends Language {
+  protocolSigs: ProtocolSigs;
+}
+
+interface ProtocolSigs {
+  requestMethod: MethodSig;
+  responseMethod: MethodSig;
+}
+
+class protocolSigs implements ProtocolSigs {
+  requestMethod: MethodSig;
+  responseMethod: MethodSig;
+  constructor() {
+    this.requestMethod = new methodSig();
+    this.responseMethod = new methodSig();
+  }
+}
+
+class methodSig implements MethodSig {
+  params: ParamInfo[];
+  returns: string[];
+  constructor() {
+    this.params = new Array<ParamInfo>();
+    this.returns = new Array<string>();
+  }
 }
 
 // this list of packages to import
@@ -54,15 +83,12 @@ const imports = new ImportManager();
 function createProtocolRequest(client: string, op: Operation): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
-  const params = ['u url.URL'];
-  for (const param of values(op.request.parameters)) {
-    if (param.implementation === ImplementationLocation.Method) {
-      params.push(`${param.language.go!.name} ${param.schema.language.go!.name}`);
-    }
-  }
-  const returns = ['*azcore.Request', 'error'];
+  // stick the method signature info into the code model so other generators can access it later
+  const sig = <ProtocolSig>op.language.go!;
+  sig.protocolSigs.requestMethod.params = [{ name: 'u', type: 'url.URL' }].concat(generateParameterInfo(op));
+  sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (${client}) ${name}(${params.join(', ')}) (${returns.join(', ')}) {\n`;
+  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   text += `\tu.Path = path.Join(u.Path, "${op.request.protocol.http!.path}")\n`;
   const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)`;
   if (getMediaType(op.request.protocol) === 'none') {
@@ -84,18 +110,18 @@ function createProtocolRequest(client: string, op: Operation): string {
 function createProtocolResponse(client: string, op: Operation): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
-  const params = ['resp *azcore.Response'];
-  if (length(op.responses) > 1) {
-    throw console.error('multiple responses NYI');
-  }
-  const resp = op.responses![0];
-  const returns = [`*${resp.language.go!.name}`, 'error'];
+  // stick the method signature info into the code model so other generators can access it later
+  const sig = <ProtocolSig>op.language.go!;
+  sig.protocolSigs.responseMethod.params = [{ name: 'resp', type: '*azcore.Response' }];
+  sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op);
 
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (${client}) ${name}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(http.StatusOK) {\n`;
   text += `\t\treturn nil, newError(resp)\n`;
   text += '\t}\n';
+
+  const resp = op.responses![0];
   const respObj = `${resp.language.go!.name}{StatusCode: resp.StatusCode}`;
   if (getMediaType(resp.protocol) === 'none') {
     // no response body so nothing to unmarshal
