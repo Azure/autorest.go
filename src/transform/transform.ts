@@ -42,32 +42,13 @@ async function process(session: Session<CodeModel>) {
 function schemaTypeToGoType(schema: Schema): string {
   switch (schema.type) {
     case SchemaType.Array:
-      const arraySchema = <ArraySchema>schema
+      const arraySchema = <ArraySchema>schema;
       switch (arraySchema.elementType.type) {
-        case SchemaType.Boolean:
-          return '[]bool';
-        case SchemaType.Date:
-          return '[]time.Time'
-        case SchemaType.DateTime:
-          return '[]time.Time';
-        case SchemaType.Duration:
-          return '[]time.Duration';
-        case SchemaType.Integer:
-          if ((<NumberSchema>schema).precision === 32) {
-            return '[]int32';
-          }
-          return '[]int64';
-        case SchemaType.Number:
-          if ((<NumberSchema>schema).precision === 32) {
-            return '[]float32';
-          }
-          return '[]float64';
         case SchemaType.String:
-          return '[]string'
-        case SchemaType.Uuid:
           return '[]string';
         default: 
-          return `[]${(<ArraySchema>schema).elementType.language.go!.name}`;
+          const elem = <Schema>arraySchema.elementType;
+          return `[]${schemaTypeToGoType(elem)}`
       }
     case SchemaType.Boolean:
       return 'bool';
