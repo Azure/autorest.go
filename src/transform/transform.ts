@@ -5,7 +5,7 @@
 
 import { serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, OperationGroup, SchemaResponse, Property, Response, Schema } from '@azure-tools/codemodel';
+import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, OperationGroup, SchemaResponse, Property, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 // The transformer adds Go-specific information to the code model.
@@ -57,6 +57,10 @@ function schemaTypeToGoType(schema: Schema): string {
     case SchemaType.Date:
     case SchemaType.DateTime:
       return 'time.Time';
+    case SchemaType.Dictionary:
+      const dictSchema = <DictionarySchema>schema;
+      const elem = <Schema>dictSchema.elementType
+      return `map[string]*${schemaTypeToGoType(elem)}`;
     case SchemaType.Duration:
       return 'time.Duration';
     case SchemaType.Integer:
