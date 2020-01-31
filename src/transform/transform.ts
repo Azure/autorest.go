@@ -48,7 +48,7 @@ function schemaTypeToGoType(schema: Schema): string {
           return '[]string';
         default: 
           const elem = <Schema>arraySchema.elementType;
-          return `[]${schemaTypeToGoType(elem)}`
+          return `[]${schemaTypeToGoType(elem)}`;
       }
     case SchemaType.Boolean:
       return 'bool';
@@ -59,7 +59,7 @@ function schemaTypeToGoType(schema: Schema): string {
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
-      const elem = <Schema>dictSchema.elementType
+      const elem = <Schema>dictSchema.elementType;
       return `map[string]*${schemaTypeToGoType(elem)}`;
     case SchemaType.Duration:
       return 'time.Duration';
