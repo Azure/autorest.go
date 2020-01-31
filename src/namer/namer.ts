@@ -1,13 +1,13 @@
-/*---------------------------------------------------------------------------------------------
+/*  ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+ *  --------------------------------------------------------------------------------------------  */
 
-import { serialize, pascalCase } from '@azure-tools/codegen';
-import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { codeModelSchema, CodeModel, Language } from '@azure-tools/codemodel';
-import { length, visitor, clone, values } from '@azure-tools/linq';
-import { CommonAcronyms, ReservedWords } from './mappings';
+import { serialize, pascalCase } from '@azure-tools/codegen'
+import { Host, startSession, Session } from '@azure-tools/autorest-extension-base'
+import { codeModelSchema, CodeModel, Language, ObjectSchema, SchemaType, Schema } from '@azure-tools/codemodel'
+import { length, visitor, clone, values } from '@azure-tools/linq'
+import { CommonAcronyms, ReservedWords } from './mappings'
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -78,6 +78,7 @@ async function process(session: Session<CodeModel>) {
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const details = <Language>group.language.go;
+    const opGroupName = capitalizeAcronyms(pascalCase(group.$key));
     details.name = capitalizeAcronyms(pascalCase(details.name));
     details.clientName = `${details.name}Client`; // we don't call GetEscapedReservedName here since any operation group that uses a reserved word will have 'Client' attached to it
     for (const op of values(group.operations)) {
@@ -93,7 +94,7 @@ async function process(session: Session<CodeModel>) {
         throw console.error('multiple responses NYI');
       }
       const resp = op.responses![0];
-      const name = `${op.language.go!.name}Response`;
+      const name = `${opGroupName}${op.language.go!.name}Response`;
       resp.language.go!.name = name;
       resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
     }
@@ -150,4 +151,3 @@ function getEscapedReservedName(name: string, appendValue: string): string {
 
   return name;
 }
-
