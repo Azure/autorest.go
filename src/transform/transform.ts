@@ -42,7 +42,14 @@ async function process(session: Session<CodeModel>) {
 function schemaTypeToGoType(schema: Schema): string {
   switch (schema.type) {
     case SchemaType.Array:
-      return `[]${(<ArraySchema>schema).elementType.language.go!.name}`;
+      const arraySchema = <ArraySchema>schema;
+      switch (arraySchema.elementType.type) {
+        case SchemaType.String:
+          return '[]string';
+        default: 
+          const elem = <Schema>arraySchema.elementType;
+          return `[]${schemaTypeToGoType(elem)}`
+      }
     case SchemaType.Boolean:
       return 'bool';
     case SchemaType.ByteArray:
