@@ -73,7 +73,11 @@ function generateOperation(clientName: string, op: Operation): string {
   const params = [{ name: 'ctx', type: 'context.Context' }].concat(generateParameterInfo(op));
   const returns = genereateReturnsInfo(op);
   const protocol = <ProtocolSig>op.language.go!;
-  let text = `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params)}) (${returns.join(', ')}) {\n`;
+  let text = '';
+  if (HasDescription(op.language.go!)) {
+    text += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+  }
+  text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params)}) (${returns.join(', ')}) {\n`;
   // slice off the first param returned from extractParamNames as we know it's the URL (cheating a bit...)
   const protocolReqParams = ['*client.u'].concat(extractParamNames(protocol.protocolSigs.requestMethod.params).slice(1));
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${protocolReqParams.join(', ')})\n`;

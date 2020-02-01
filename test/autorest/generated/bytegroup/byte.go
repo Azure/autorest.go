@@ -29,6 +29,7 @@ type byteOperations struct {
 	azinternal.ByteOperations
 }
 
+	// GetEmpty - Get empty byte value '' 
 func (client *byteOperations) GetEmpty(ctx context.Context) (*ByteGetEmptyResponse, error) {
 	req, err := client.GetEmptyCreateRequest(*client.u)
 	if err != nil {
@@ -45,6 +46,7 @@ func (client *byteOperations) GetEmpty(ctx context.Context) (*ByteGetEmptyRespon
 	return result, nil
 }
 
+	// GetInvalid - Get invalid byte value ':::SWAGGER::::' 
 func (client *byteOperations) GetInvalid(ctx context.Context) (*ByteGetInvalidResponse, error) {
 	req, err := client.GetInvalidCreateRequest(*client.u)
 	if err != nil {
@@ -61,6 +63,7 @@ func (client *byteOperations) GetInvalid(ctx context.Context) (*ByteGetInvalidRe
 	return result, nil
 }
 
+	// GetNonASCII - Get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6) 
 func (client *byteOperations) GetNonASCII(ctx context.Context) (*ByteGetNonASCIIResponse, error) {
 	req, err := client.GetNonASCIICreateRequest(*client.u)
 	if err != nil {
@@ -77,6 +80,7 @@ func (client *byteOperations) GetNonASCII(ctx context.Context) (*ByteGetNonASCII
 	return result, nil
 }
 
+	// GetNull - Get null byte value 
 func (client *byteOperations) GetNull(ctx context.Context) (*ByteGetNullResponse, error) {
 	req, err := client.GetNullCreateRequest(*client.u)
 	if err != nil {
@@ -93,6 +97,7 @@ func (client *byteOperations) GetNull(ctx context.Context) (*ByteGetNullResponse
 	return result, nil
 }
 
+	// PutNonASCII - Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6) 
 func (client *byteOperations) PutNonASCII(ctx context.Context, byteBody []byte) (*BytePutNonASCIIResponse, error) {
 	req, err := client.PutNonASCIICreateRequest(*client.u, byteBody)
 	if err != nil {
