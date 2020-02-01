@@ -7,7 +7,7 @@ import { serialize } from '@azure-tools/codegen';
 import { Host, startSession } from '@azure-tools/autorest-extension-base';
 import { codeModelSchema, CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { generateClient } from './client'
+import { generateClient } from './client';
 import { generateModels } from './models';
 import { generateOperations } from './operations';
 

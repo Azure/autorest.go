@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { camelCase } from '@azure-tools/codegen'
+import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, ImportManager } from '../common/helpers';
@@ -30,7 +30,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\tTelemetry azcore.TelemetryOptions\n';
   text += '}\n\n';
   text += '// DefaultClientOptions creates a ClientOptions type initialized with default values.\n';
-  text += 'func DefaultClientOptions() ClientOptions {'
+  text += 'func DefaultClientOptions() ClientOptions {';
   text += '\treturn ClientOptions{\n';
   text += '\t\tHTTPClient: azcore.DefaultHTTPClientTransport(),\n';
   text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
