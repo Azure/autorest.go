@@ -6,7 +6,10 @@
 import { serialize } from '@azure-tools/codegen';
 import { Host, startSession } from '@azure-tools/autorest-extension-base';
 import { codeModelSchema, CodeModel } from '@azure-tools/codemodel';
+import { values } from '@azure-tools/linq';
+import { generateClient } from './client';
 import { generateModels } from './models';
+import { generateOperations } from './operations';
 
 // The generator emits Go source code files to disk.
 export async function convenienceGen(host: Host) {
@@ -21,13 +24,16 @@ export async function convenienceGen(host: Host) {
     // updates are complete and before any source files are written.
     host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
 
-    /*const operations = await generateOperations(session);
+    const client = await generateClient(session);
+    host.WriteFile('client.go', client, undefined, 'source-file-go');
+
+    const operations = await generateOperations(session);
     for (const op of values(operations)) {
-      host.WriteFile(`${namespace}/${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
-    }*/
+      host.WriteFile(`${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
+    }
 
     const models = await generateModels(session);
-    host.WriteFile(`models.go`, models, undefined, 'source-file-go');
+    host.WriteFile('models.go', models, undefined, 'source-file-go');
 
   } catch (E) {
     if (debug) {

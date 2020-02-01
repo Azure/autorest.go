@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment } from '@azure-tools/codegen'
+import { comment } from '@azure-tools/codegen';
 import { CodeModel, ImplementationLocation, Language, Operation } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 

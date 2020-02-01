@@ -7,17 +7,13 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
 import { ChoiceValue, CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
+import { InternalPackage, InternalPackagePath } from './helpers';
 import { ContentPreamble, HasDescription, SortAscending } from '../common/helpers';
 
-const internalPackage = 'azinternal';
-
+// generates content for models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
   let text = await ContentPreamble(session);
-
-  const module = await session.getValue('module-path');
-  const namespace = await session.getValue('namespace');
-
-  text += `import ${internalPackage} "${module}/internal/${namespace}"\n\n`;
+  text += `import ${InternalPackage} "${await InternalPackagePath(session)}"\n\n`;
 
   // create type aliases for enums
 
@@ -25,18 +21,18 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     if (HasDescription(enm.language.go!)) {
       text += `${comment(enm.language.go!.name, '// ')} - ${enm.language.go!.description}\n`;
     }
-    text += `type ${enm.language.go!.name} = ${internalPackage}.${enm.language.go!.name}\n\n`;
+    text += `type ${enm.language.go!.name} = ${InternalPackage}.${enm.language.go!.name}\n\n`;
     enm.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
     text += 'const (\n'
     for (const val of values(enm.choices)) {
       if (HasDescription(val.language.go!)) {
         text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
       }
-      text += `\t${val.language.go!.name} = ${internalPackage}.${val.language.go!.name}\n`;
+      text += `\t${val.language.go!.name} = ${InternalPackage}.${val.language.go!.name}\n`;
     }
     text += ")\n\n"
     text += `func ${enm.language.go!.possibleValuesFunc}() []${enm.language.go!.name} {\n`;
-    text += `\treturn ${internalPackage}.${enm.language.go!.possibleValuesFunc}()\n`;
+    text += `\treturn ${InternalPackage}.${enm.language.go!.possibleValuesFunc}()\n`;
     text += '}\n\n';
   }
 
