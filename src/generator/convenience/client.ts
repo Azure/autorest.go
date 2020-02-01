@@ -30,7 +30,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\tTelemetry azcore.TelemetryOptions\n';
   text += '}\n\n';
   text += '// DefaultClientOptions creates a ClientOptions type initialized with default values.\n';
-  text += 'func DefaultClientOptions() ClientOptions {';
+  text += 'func DefaultClientOptions() ClientOptions {\n';
   text += '\treturn ClientOptions{\n';
   text += '\t\tHTTPClient: azcore.DefaultHTTPClientTransport(),\n';
   text += '\t\tRetry: azcore.DefaultRetryOptions(),\n';
