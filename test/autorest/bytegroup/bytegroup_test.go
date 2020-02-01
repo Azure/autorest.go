@@ -11,12 +11,12 @@ import (
 	"testing"
 )
 
-func getByteClient(t *testing.T) *bytegroup.ByteClient {
-	client, err := bytegroup.NewByteClient(nil)
+func getByteClient(t *testing.T) bytegroup.ByteOperations {
+	client, err := bytegroup.NewDefaultClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create byte client: %v", err)
 	}
-	return client
+	return client.ByteOperations()
 }
 
 func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
@@ -31,7 +31,7 @@ func TestGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	expected := &bytegroup.GetEmptyResponse{
+	expected := &bytegroup.ByteGetEmptyResponse{
 		StatusCode: http.StatusOK,
 		Value:      []byte{},
 	}
@@ -56,7 +56,7 @@ func TestGetNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNonASCII: %v", err)
 	}
-	expected := &bytegroup.GetNonASCIIResponse{
+	expected := &bytegroup.ByteGetNonASCIIResponse{
 		StatusCode: http.StatusOK,
 		Value:      []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6},
 	}
@@ -69,7 +69,7 @@ func TestGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	expected := &bytegroup.GetNullResponse{
+	expected := &bytegroup.ByteGetNullResponse{
 		StatusCode: http.StatusOK,
 	}
 	deepEqualOrFatal(t, result, expected)
@@ -81,7 +81,7 @@ func TestPutNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNonASCII: %v", err)
 	}
-	expected := &bytegroup.PutNonASCIIResponse{
+	expected := &bytegroup.BytePutNonASCIIResponse{
 		StatusCode: http.StatusOK,
 	}
 	deepEqualOrFatal(t, result, expected)
