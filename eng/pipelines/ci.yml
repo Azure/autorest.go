@@ -61,11 +61,11 @@ jobs:
         workingDirectory: '$(goTestPath)'
 
       - script: |
-          pushd ../src/node_modules/@autorest/test-server
-          npm start
+          pushd ../src/node_modules/@microsoft.azure/autorest.testserver
+          npm start&
           popd
           go test -v ./... 2>&1 | $(GOBIN)/go-junit-report > report.xml
-          pushd ../src/node_modules/@autorest/test-server
+          pushd ../src/node_modules/@microsoft.azure/autorest.testserver
           npm stop
         displayName: 'Run Acceptance Tests'
         workingDirectory: '$(goTestPath)'
