@@ -50,11 +50,14 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '}\n\n';
 
   const endpoint = getDefaultEndpoint(session.model.globalParameters);
-  text += '// NewDefaultClient creates an instance of the Client type.\n';
-  text += `// It uses the default endpoint ${endpoint}\n`;
-  text += 'func NewDefaultClient(options *ClientOptions) (*Client, error) {\n';
-  text += `\treturn NewClient("${endpoint}", options)\n`;
-  text += '}\n\n';
+  if (endpoint) {
+    text += '// DefaultEndpoint is the default service endpoint.\n';
+    text += `const DefaultEndpoint = "${endpoint}"\n\n`;
+    text += '// NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.\n';
+    text += 'func NewDefaultClient(options *ClientOptions) (*Client, error) {\n';
+    text += '\treturn NewClient(DefaultEndpoint, options)\n';
+    text += '}\n\n';
+  }
 
   text += '// NewClient creates an instance of the Client type with the specified endpoint.\n';
   text += 'func NewClient(endpoint string, options *ClientOptions) (*Client, error) {\n';

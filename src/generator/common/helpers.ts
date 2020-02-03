@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ImplementationLocation, Language, Operation } from '@azure-tools/codemodel';
+import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Schemas, SchemaType } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 type importEntry = { imp: string, alias?: string };
@@ -93,6 +93,10 @@ export interface ParamInfo {
 export function generateParameterInfo(op: Operation): ParamInfo[] {
   const params = new Array<ParamInfo>();
   for (const param of values(op.request.parameters)) {
+    if (param.schema.type === SchemaType.Constant) {
+      // don't generate a parameter for a constant
+      continue;
+    }
     if (param.implementation === ImplementationLocation.Method) {
       params.push({ name: param.language.go!.name, type: param.schema.language.go!.name });
     }
@@ -128,4 +132,42 @@ export function extractParamNames(paramInfo: ParamInfo[]): string[] {
     paramNames.push(param.name);
   }
   return paramNames;
+}
+
+// represents an enum type and its values
+export class EnumEntry {
+  name: string;
+  type: string;
+  funcName: string;
+  desc?: string;
+  choices: ChoiceValue[];
+  constructor(name: string, type: string, funcName: string, choices: ChoiceValue[]) {
+    this.name = name;
+    this.type = type;
+    this.funcName = funcName;
+    this.choices = choices;
+  }
+}
+
+// returns a collection containing all enum entries and their values
+export function getEnums(schemas: Schemas): EnumEntry[] {
+  // group all enum categories into a single array so they can be sorted
+  const enums = new Array<EnumEntry>();
+  for (const choice of values(schemas.choices)) {
+    choice.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
+    const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
+    if (HasDescription(choice.language.go!)) {
+      entry.desc = choice.language.go!.description;
+    }
+    enums.push(entry);
+  }
+  for (const choice of values(schemas.sealedChoices)) {
+    const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
+    if (HasDescription(choice.language.go!)) {
+      entry.desc = choice.language.go!.description;
+    }
+    enums.push(entry);
+  }
+  enums.sort((a: EnumEntry, b: EnumEntry) => { return SortAscending(a.name, b.name) });
+  return enums;
 }

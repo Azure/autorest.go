@@ -46,8 +46,8 @@ type BytePutNonASCIIResponse struct {
 }
 
 type Error struct {
-	Message string
-	Status int32
+	Message *string
+	Status *int32
 }
 
 func newError(resp *azcore.Response) error {
