@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen'
-import { CodeModel, ConstantSchema, Language, Operation, Parameter, Protocols, SchemaType } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, ImplementationLocation, Language, Operation, Parameter, Protocols, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
@@ -32,18 +32,22 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
-    let text = await ContentPreamble(session);
-    text += imports.text();
-
     const clientName = group.language.go!.clientName;
-    text += `type ${clientName} struct{}\n\n`;
-
+    let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return SortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
+      // protocol creation can add imports to the list so
+      // it must be done before the imports are written out
       op.language.go!.protocolSigs = new protocolSigs();
-      text += createProtocolRequest(clientName, op);
-      text += createProtocolResponse(clientName, op);
+      opText += createProtocolRequest(clientName, op);
+      opText += createProtocolResponse(clientName, op);
     }
+    // stitch it all together
+    let text = await ContentPreamble(session);
+    text += imports.text();
+    text += `type ${clientName} struct{}\n\n`;
+    text += opText;
+
     operations.push(new OperationGroupContent(group.language.go!.name, text));
   }
   return operations;
@@ -83,6 +87,12 @@ const imports = new ImportManager();
 function createProtocolRequest(client: string, op: Operation): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
+  for (const param of values(op.request.parameters)) {
+    if (param.implementation !== ImplementationLocation.Method) {
+      continue;
+    }
+    imports.addImportForSchemaType(param.schema);
+  }
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
   sig.protocolSigs.requestMethod.params = [{ name: 'u', type: 'url.URL' }].concat(generateParameterInfo(op));
