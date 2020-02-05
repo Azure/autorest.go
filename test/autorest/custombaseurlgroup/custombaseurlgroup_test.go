@@ -11,12 +11,12 @@ import (
 	"testing"
 )
 
-func getCustomBaseURLClient(t *testing.T) *custombaseurlgroup.CustomBaseURLClient {
-	client, err := custombaseurlgroup.NewCustomBaseURLClient("http://localhost:3000", nil)
+func getCustomBaseURLClient(t *testing.T) custombaseurlgroup.PathsOperations {
+	client, err := custombaseurlgroup.NewClient("http://localhost:3000", nil)
 	if err != nil {
 		t.Fatalf("failed to create custom base URL client: %v", err)
 	}
-	return client
+	return client.PathsOperations()
 }
 
 func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
@@ -27,11 +27,11 @@ func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
 
 func TestGetEmpty(t *testing.T) {
 	client := getCustomBaseURLClient(t)
-	result, err := client.GetEmpty(context.Background())
+	result, err := client.GetEmpty(context.Background(), "")
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	expected := &custombaseurlgroup.GetEmptyResponse{
+	expected := &custombaseurlgroup.PathsGetEmptyResponse{
 		StatusCode: http.StatusOK,
 	}
 	deepEqualOrFatal(t, result, expected)
