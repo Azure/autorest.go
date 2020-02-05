@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen'
-import { CodeModel, Language, Operation, Parameter, Protocols } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, Language, Operation, Parameter, Protocols, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
@@ -97,7 +97,13 @@ function createProtocolRequest(client: string, op: Operation): string {
   } else {
     const bodyParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     text += `\treq := ${reqObj}\n`;
-    text += `\terr := req.MarshalAs${getMediaType(op.request.protocol)}(${bodyParam?.language.go!.name})\n`;
+    // default to the body param name
+    let body = bodyParam!.language.go!.name;
+    if (bodyParam!.schema.type === SchemaType.Constant) {
+      // if the value is constant, embed it directly
+      body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
+    }
+    text += `\terr := req.MarshalAs${getMediaType(op.request.protocol)}(${body})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
@@ -139,4 +145,15 @@ function getMediaType(protocol: Protocols): 'JSON' | 'none' {
     return 'none';
   }
   return 'JSON';
+}
+
+function formatConstantValue(schema: ConstantSchema) {
+  // null check must come before any type checks
+  if (schema.value.value === null) {
+    return 'nil';
+  }
+  if (schema.valueType.type === SchemaType.String) {
+    return `"${schema.value.value}"`;
+  }
+  return schema.value.value;
 }

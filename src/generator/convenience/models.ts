@@ -5,10 +5,10 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { ChoiceValue, CodeModel } from '@azure-tools/codemodel';
+import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { InternalPackage, InternalPackagePath } from './helpers';
-import { ContentPreamble, HasDescription, SortAscending } from '../common/helpers';
+import { ContentPreamble, getEnums, HasDescription, SortAscending } from '../common/helpers';
 
 // generates content for models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -17,12 +17,12 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 
   // create type aliases for enums
 
-  for (const enm of values(session.model.schemas.choices)) {
-    if (HasDescription(enm.language.go!)) {
-      text += `${comment(enm.language.go!.name, '// ')} - ${enm.language.go!.description}\n`;
+  const enums = getEnums(session.model.schemas);
+  for (const enm of values(enums)) {
+    if (enm.desc) {
+      text += `${comment(enm.name, '// ')} - ${enm.desc}\n`;
     }
-    text += `type ${enm.language.go!.name} = ${InternalPackage}.${enm.language.go!.name}\n\n`;
-    enm.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
+    text += `type ${enm.name} = ${InternalPackage}.${enm.name}\n\n`;
     text += 'const (\n'
     for (const val of values(enm.choices)) {
       if (HasDescription(val.language.go!)) {
@@ -31,8 +31,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
       text += `\t${val.language.go!.name} = ${InternalPackage}.${val.language.go!.name}\n`;
     }
     text += ")\n\n"
-    text += `func ${enm.language.go!.possibleValuesFunc}() []${enm.language.go!.name} {\n`;
-    text += `\treturn ${InternalPackage}.${enm.language.go!.possibleValuesFunc}()\n`;
+    text += `func ${enm.funcName}() []${enm.name} {\n`;
+    text += `\treturn ${InternalPackage}.${enm.funcName}()\n`;
     text += '}\n\n';
   }
 

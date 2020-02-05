@@ -11,12 +11,20 @@ import (
 	"testing"
 )
 
-func getStringClient(t *testing.T) *stringgroup.StringClient {
-	client, err := stringgroup.NewStringClient(nil)
+func getEnumClient(t *testing.T) stringgroup.EnumOperations {
+	client, err := stringgroup.NewDefaultClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create string client: %v", err)
 	}
-	return client
+	return client.EnumOperations()
+}
+
+func getStringClient(t *testing.T) stringgroup.StringOperations {
+	client, err := stringgroup.NewDefaultClient(nil)
+	if err != nil {
+		t.Fatalf("failed to create string client: %v", err)
+	}
+	return client.StringOperations()
 }
 
 func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
@@ -25,27 +33,31 @@ func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
 	}
 }
 
-func TestGetMBCS(t *testing.T) {
+func TestStringGetMBCS(t *testing.T) {
 	client := getStringClient(t)
 	result, err := client.GetMBCS(context.Background())
 	if err != nil {
 		t.Fatalf("GetMBCS: %v", err)
 	}
-	expected := &stringgroup.GetMBCSResponse{
+	expected := &stringgroup.StringGetMBCSResponse{
 		StatusCode: http.StatusOK,
-		Value:      "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€",
+		Value:      toStrPtr("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€"),
 	}
 	deepEqualOrFatal(t, result, expected)
 }
 
-func TestPutMBCS(t *testing.T) {
+func TestStringPutMBCS(t *testing.T) {
 	client := getStringClient(t)
-	result, err := client.PutMBCS(context.Background(), "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
+	result, err := client.PutMBCS(context.Background())
 	if err != nil {
 		t.Fatalf("PutMBCS: %v", err)
 	}
-	expected := &stringgroup.PutMBCSResponse{
+	expected := &stringgroup.StringPutMBCSResponse{
 		StatusCode: http.StatusOK,
 	}
 	deepEqualOrFatal(t, result, expected)
+}
+
+func toStrPtr(s string) *string {
+	return &s
 }
