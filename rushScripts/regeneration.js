@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
 
-swaggerDir = "src/node_modules/@autorest/test-server/__files/swagger/";
+swaggerDir = "src/node_modules/@microsoft.azure/autorest.testserver/swagger/";
 
 goMappings = {
     'additionalproperties':['additionalProperties.json'],
@@ -33,20 +33,25 @@ goMappings = {
     'azurereport':['azure-report.json']
   };
 
+// loop through all of the namespaces in goMappings
 for (namespace in goMappings) {
+    // loop through each file related to a particular namespace 
     for (swagger in goMappings[namespace]) {
-        child = exec("autorest-beta --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=" + swaggerDir + goMappings[namespace][swagger] + " --namespace=" + namespace + " --output-folder=test/autorest/generated/" + namespace + " --version:3.0.6192 --module-path=test/",
+        // for each swagger run the autorest-beta command to generate code based on the swagger for the relevant namespace and output to the /generated directory
+        child = exec("autorest-beta --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=" + swaggerDir + goMappings[namespace][swagger] + " --namespace=" + namespace + " --output-folder=test/autorest/generated/" + namespace + " --version:3.0.6192 --module-path=generatortests/autorest/generated/" + namespace,
         function (error, stdout, stderr) {
+            // print any output or error from the autorest-beta command
             if (stdout !== '') {
                 console.log('autorest-beta stdout: ' + stdout);
             }
             if (stderr !== '') {
                 console.log('autorest-beta stderr: ' + stderr);
             }
+            // print any output resulting from executing the autorest-beta command
             if (error !== null) {
                 console.log('autorest-beta exec error: ' + error);
             }
-
+            // print any output or error from go fmt
             fmt = exec("go fmt ./test/autorest/generated/" + namespace,
             function (error, stdout, stderr) {
                 if (stdout !== '') {
@@ -55,6 +60,7 @@ for (namespace in goMappings) {
                 if (stderr !== '') {
                     console.log('fmt stderr: ' + stderr);
                 }
+                // print any output resulting from a failure to execute go fmt
                 if (error !== null) {
                     console.log('fmt exec error: ' + error);
                 }
