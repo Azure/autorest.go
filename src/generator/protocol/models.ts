@@ -5,9 +5,9 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, joinComma } from '@azure-tools/codegen';
-import { CodeModel, ObjectSchema, ChoiceSchema, Language, ChoiceValue, Schema, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, Schemas, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, HasDescription, ImportManager, SortAscending } from '../common/helpers';
+import { ContentPreamble, getEnums, HasDescription, ImportManager, SortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -33,7 +33,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   session.model.schemas.choices?.sort(
     (a: ChoiceSchema<StringSchema>, b: ChoiceSchema<StringSchema>) => { return SortAscending(a.language.go!.name, b.language.go!.name); }
   );
-  text += generateEnums(session.model.schemas.choices);
+  text += generateEnums(session.model.schemas);
 
   // structs
   structs.sort((a: StructDef, b: StructDef) => { return SortAscending(a.Language.name, b.Language.name) });
@@ -69,7 +69,12 @@ class StructDef {
       if (HasDescription(prop.language.go!)) {
         text += `\t${comment(prop.language.go!.description, '// ')}\n`;
       }
-      text += `\t${prop.language.go!.name} ${prop.schema.language.go!.name}\n`;
+      let typeName = prop.schema.language.go!.name;
+      if (prop.schema.type === SchemaType.Constant) {
+        // for constants we use the underlying type name
+        typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
+      }
+      text += `\t${prop.language.go!.name} ${this.byref(prop)}${typeName}\n`;
     }
     text += '}\n\n';
     if (this.Language.errorType) {
@@ -86,28 +91,35 @@ class StructDef {
     }
     return text;
   }
+
+  private byref(prop: Property): string {
+    if (prop.language.go!.noByRef === true) {
+      return '';
+    }
+    return '*';
+  }
 }
 
-function generateEnums(enums?: ChoiceSchema<StringSchema>[]): string {
+function generateEnums(schemas: Schemas): string {
+  const enums = getEnums(schemas);
   let text = '';
   for (const enm of values(enums)) {
-    if (HasDescription(enm.language.go!)) {
-      text += `${comment(enm.language.go!.name, '// ')} - ${enm.language.go!.description}\n`;
+    if (enm.desc) {
+      text += `${comment(enm.name, '// ')} - ${enm.desc}\n`;
     }
-    text += `type ${enm.language.go!.name} ${enm.choiceType.language.go!.name}\n\n`;
-    enm.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
+    text += `type ${enm.name} ${enm.type}\n\n`;
     const vals = new Array<string>();
     text += 'const (\n'
     for (const val of values(enm.choices)) {
       if (HasDescription(val.language.go!)) {
         text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
       }
-      text += `\t${val.language.go!.name} ${enm.language.go!.name} = "${val.value}"\n`;
+      text += `\t${val.language.go!.name} ${enm.name} = "${val.value}"\n`;
       vals.push(val.language.go!.name);
     }
     text += ")\n\n"
-    text += `func ${enm.language.go!.possibleValuesFunc}() []${enm.language.go!.name} {\n`;
-    text += `\treturn []${enm.language.go!.name}{${joinComma(vals, (item: string) => item)}}\n`;
+    text += `func ${enm.funcName}() []${enm.name} {\n`;
+    text += `\treturn []${enm.name}{${joinComma(vals, (item: string) => item)}}\n`;
     text += '}\n\n';
   }
   return text;

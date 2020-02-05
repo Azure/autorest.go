@@ -75,7 +75,7 @@ function generateOperation(clientName: string, op: Operation): string {
   const protocol = <ProtocolSig>op.language.go!;
   let text = '';
   if (HasDescription(op.language.go!)) {
-    text += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+    text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
   }
   text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params)}) (${returns.join(', ')}) {\n`;
   // slice off the first param returned from extractParamNames as we know it's the URL (cheating a bit...)

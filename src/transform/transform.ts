@@ -33,6 +33,9 @@ async function process(session: Session<CodeModel>) {
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
     for (const prop of values(obj.properties)) {
+      if (noByRef(prop.schema.type)) {
+        prop.language.go!.noByRef = true;
+      }
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(prop.schema)}`;
     }
@@ -46,7 +49,7 @@ function schemaTypeToGoType(schema: Schema): string {
       switch (arraySchema.elementType.type) {
         case SchemaType.String:
           return '[]string';
-        default: 
+        default:
           const elem = <Schema>arraySchema.elementType;
           return `[]${schemaTypeToGoType(elem)}`;
       }
@@ -84,7 +87,7 @@ function schemaTypeToGoType(schema: Schema): string {
 function processOperationResponses(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      createResponseType(group, op);
+      createResponseType(op);
       // annotate all exception types as errors; this is so we know to generate an Error() method
       for (const ex of values(op.exceptions)) {
         (<SchemaResponse>ex).schema.language.go!.errorType = true;
@@ -94,7 +97,7 @@ function processOperationResponses(session: Session<CodeModel>) {
 }
 
 // creates the response type to be returned from an operation and updates the operation
-function createResponseType(group: OperationGroup, op: Operation) {
+function createResponseType(op: Operation) {
   if (length(op.responses) > 1) {
     throw console.error('multiple responses NYI');
   }
@@ -102,12 +105,12 @@ function createResponseType(group: OperationGroup, op: Operation) {
   // type with a `StatusCode int` field
   const resp = op.responses![0];
   resp.language.go!.properties = [
-    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
+    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32), true)
   ];
   // if the response defines a schema then add it as a field to the response type
   if (isSchemaResponse(resp)) {
     resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
-    (<Array<Property>>resp.language.go!.properties).push(newProperty('Value', resp.schema.language.go!.description, resp.schema));
+    (<Array<Property>>resp.language.go!.properties).push(newProperty('Value', resp.schema.language.go!.description, resp.schema, noByRef(resp.schema.type)));
   }
 }
 
@@ -117,12 +120,18 @@ function newNumber(name: string, desc: string, type: SchemaType.Integer | Schema
   return num;
 }
 
-function newProperty(name: string, desc: string, schema: Schema): Property {
+function newProperty(name: string, desc: string, schema: Schema, noByRef?: boolean): Property {
   let prop = new Property(name, desc, schema);
   prop.language.go = prop.language.default;
+  prop.language.go.noByRef = noByRef;
   return prop;
 }
 
 function isSchemaResponse(resp?: Response): resp is SchemaResponse {
   return (resp as SchemaResponse).schema !== undefined;
+}
+
+// returns true if the type should not be a pointer-to-type
+function noByRef(type: SchemaType): boolean {
+  return type === SchemaType.Array || type === SchemaType.ByteArray || type === SchemaType.Dictionary;
 }

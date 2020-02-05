@@ -110,6 +110,14 @@ async function process(session: Session<CodeModel>) {
       details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
     }
   }
+  for (const enm of values(session.model.schemas.sealedChoices)) {
+    // add PossibleValues func name
+    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
+    for (const choice of values(enm.choices)) {
+      const details = <Language>choice.language.go;
+      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
+    }
+  }
 
   for (const globalParam of values(session.model.globalParameters)) {
     const details = <Language>globalParam.language.go;
