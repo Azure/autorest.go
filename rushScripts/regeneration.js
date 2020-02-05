@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 var exec = require('child_process').exec;
 
 swaggerDir = "src/node_modules/@microsoft.azure/autorest.testserver/swagger/";
