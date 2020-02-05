@@ -139,15 +139,7 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
     if (lang.errorType) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     }
-    addImportForSchemaType(prop.schema);
+    imports.addImportForSchemaType(prop.schema);
   }
   return st;
-}
-
-function addImportForSchemaType(schema: Schema) {
-  switch (schema.type) {
-    case SchemaType.Date:
-    case SchemaType.DateTime:
-      imports.add('time');
-  }
 }

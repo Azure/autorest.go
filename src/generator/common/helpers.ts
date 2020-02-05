@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Schemas, SchemaType } from '@azure-tools/codemodel';
+import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Schema, Schemas, SchemaType } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 type importEntry = { imp: string, alias?: string };
@@ -47,6 +47,15 @@ export class ImportManager {
     }
     text += ')\n\n';
     return text;
+  }
+
+  addImportForSchemaType(schema: Schema) {
+    switch (schema.type) {
+      case SchemaType.Date:
+      case SchemaType.DateTime:
+      case SchemaType.UnixTime:
+        this.add('time');
+    }
   }
 
   private alias(entry: importEntry): string {

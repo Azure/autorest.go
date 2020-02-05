@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel, Operation } from '@azure-tools/codemodel';
+import { CodeModel, ImplementationLocation, Operation } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { InternalPackage, InternalPackagePath } from './helpers';
 import { ContentPreamble, extractParamNames, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager } from '../common/helpers';
@@ -32,21 +32,31 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
   // generate protocol operations
   const operations = new Array<OperationInfo>();
   for (const group of values(session.model.operationGroups)) {
-    let text = await ContentPreamble(session);
-    text += imports.text();
-
+    let interfaceText = '';
     // interface definition
-    text += `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
-    text += `type ${group.language.go!.clientName} interface {\n`;
+    // this can add imports to the list so it must
+    // be done before the imports are written out
+    interfaceText += `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
+    interfaceText += `type ${group.language.go!.clientName} interface {\n`;
     for (const op of values(group.operations)) {
+      for (const param of values(op.request.parameters)) {
+        if (param.implementation !== ImplementationLocation.Method) {
+          continue;
+        }
+        imports.addImportForSchemaType(param.schema);
+      }
       if (HasDescription(op.language.go!)) {
-        text += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+        interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
       }
       const params = [{ name: 'ctx', type: 'context.Context' }].concat(generateParameterInfo(op));
       const returns = genereateReturnsInfo(op);
-      text += `\t${op.language.go!.name}(${generateParamsSig(params)}) (${returns.join(', ')})\n`;
+      interfaceText += `\t${op.language.go!.name}(${generateParamsSig(params)}) (${returns.join(', ')})\n`;
     }
-    text += '}\n\n';
+    interfaceText += '}\n\n';
+
+    let text = await ContentPreamble(session);
+    text += imports.text();
+    text += interfaceText;
 
     // internal client type
     const clientName = camelCase(group.language.go!.clientName);
