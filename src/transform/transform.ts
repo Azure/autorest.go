@@ -80,6 +80,7 @@ function schemaTypeToGoType(schema: Schema): string {
   }
 }
 
+// we will transform operation request parameter schema types to Go types
 function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
