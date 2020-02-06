@@ -82,6 +82,10 @@ async function process(session: Session<CodeModel>) {
     details.name = capitalizeAcronyms(pascalCase(details.name));
     // we don't call GetEscapedReservedName here since any operation group that uses a reserved word will have 'Operations' attached to it
     details.clientName = `${details.name}Operations`;
+    // this sets Operations as the default name for operation groups that don't specify a group name
+    if (length(details.name) === 0) {
+      details.name = `Operations`;
+    }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
