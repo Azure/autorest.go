@@ -48,6 +48,12 @@
       "name": "lint",
       "summary": "run all npm lint",
       "shellCommand": "node .scripts/npm-run.js eslint"
+    },
+    {
+      "commandKind": "global",
+      "name": "regenerate",
+      "summary": "run node ./rushScripts/regeneration.js to regenerate all swaggers specified in the autorest.testserver",
+      "shellCommand": "node ./rushScripts/regeneration.js"
     }
   ],
   "parameters": []
