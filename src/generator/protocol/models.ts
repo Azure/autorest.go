@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, joinComma } from '@azure-tools/codegen';
+import { comment, joinComma, camelCase } from '@azure-tools/codegen';
 import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, Schemas, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, getEnums, HasDescription, ImportManager, SortAscending } from '../common/helpers';
@@ -74,7 +74,7 @@ class StructDef {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
       }
-      text += `\t${prop.language.go!.name} ${this.byref(prop)}${typeName}\n`;
+      text += `\t${prop.language.go!.name} ${this.byref(prop)}${typeName} \`json:"${camelCase(prop.serializedName)},omitempty"\`\n`;
     }
     text += '}\n\n';
     if (this.Language.errorType) {

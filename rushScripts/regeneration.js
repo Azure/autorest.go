@@ -5,9 +5,9 @@ var exec = require('child_process').exec;
 swaggerDir = "src/node_modules/@microsoft.azure/autorest.testserver/swagger/";
 
 goMappings = {
-    'additionalproperties':['additionalProperties.json'],
+    'additionalpropertiesgroup':['additionalProperties.json'],
     'arraygroup':['body-array.json'],
-    'azurereport':['azure-report.json'],
+    'azurereportgroup':['azure-report.json'],
     'booleangroup':['body-boolean.json'],
     'bytegroup':['body-byte.json'],
     'complexgroup':['body-complex.json'],
@@ -28,7 +28,7 @@ goMappings = {
     'numbergroup':['body-number.json'],
     'optionalgroup':['required-optional.json'],
     'paginggroup':['paging.json'],
-    'report':['report.json'],
+    'reportgroup':['report.json'],
     'stringgroup':['body-string.json'],
     'urlgroup':['url.json'],
     'urlmultigroup':['url-multi-collectionFormat.json'],
