@@ -4,6 +4,7 @@
 package complexgroup
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -30,7 +31,7 @@ func PossibleColorValues() []ColorType {
 
 // Error ...
 type Error struct {
-	Status  *string `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -94,6 +95,57 @@ type StringWrapper struct {
 type DateWrapper struct {
 	Field *time.Time `json:"field,omitempty"`
 	Leap  *time.Time `json:"leap,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for DateWrapper.
+func (d DateWrapper) MarshalJSON() ([]byte, error) {
+	type alias DateWrapper
+	aux := &struct {
+		*alias
+		Field *string `json:"field,omitempty"`
+		Leap  *string `json:"leap,omitempty"`
+	}{
+		alias: (*alias)(&d),
+	}
+	if d.Field != nil {
+		s := d.Field.Format("2006-01-02")
+		aux.Field = &s
+	}
+	if d.Leap != nil {
+		s := d.Leap.Format("2006-01-02")
+		aux.Leap = &s
+	}
+	return json.Marshal(aux)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for DateWrapper.
+func (d *DateWrapper) UnmarshalJSON(data []byte) error {
+	type alias DateWrapper
+	aux := &struct {
+		*alias
+		Field *string `json:"field,omitempty"`
+		Leap  *string `json:"leap,omitempty"`
+	}{
+		alias: (*alias)(d),
+	}
+	if err := json.Unmarshal(data, aux); err != nil {
+		return err
+	}
+	if aux.Field != nil {
+		t, err := time.Parse("2006-01-02", *aux.Field)
+		if err != nil {
+			return err
+		}
+		d.Field = &t
+	}
+	if aux.Leap != nil {
+		t, err := time.Parse("2006-01-02", *aux.Leap)
+		if err != nil {
+			return err
+		}
+		d.Leap = &t
+	}
+	return nil
 }
 
 // GetValidResponse ...
@@ -203,14 +255,14 @@ type PutStringResponse struct {
 	StringWrapper *StringWrapper
 }
 
-// // GetDateResponse ...
-// type GetDateResponse struct {
-// 	StatusCode  int
-// 	DateWrapper *DateWrapper
-// }
+// GetDateResponse ...
+type GetDateResponse struct {
+	StatusCode  int
+	DateWrapper *DateWrapper
+}
 
-// // PutDateResponse ...
-// type PutDateResponse struct {
-// 	StatusCode  int
-// 	DateWrapper *DateWrapper
-// }
+// PutDateResponse ...
+type PutDateResponse struct {
+	StatusCode  int
+	DateWrapper *DateWrapper
+}

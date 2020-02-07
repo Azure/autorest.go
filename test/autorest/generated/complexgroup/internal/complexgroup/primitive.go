@@ -224,43 +224,37 @@ func (PrimitiveOperations) PutStringHandleResponse(resp *azcore.Response) (*PutS
 	return &result, resp.UnmarshalAsJSON(&result.StringWrapper)
 }
 
-// // GetDateCreateRequest creates the GetDate request.
-// func (PrimitiveOperations) GetDateCreateRequest(u url.URL) (*azcore.Request, error) {
-// 	u.Path = path.Join(u.Path, "/complex/primitive/date")
-// 	return azcore.NewRequest(http.MethodGet, u), nil
-// }
+// GetDateCreateRequest creates the GetDate request.
+func (PrimitiveOperations) GetDateCreateRequest(u url.URL) (*azcore.Request, error) {
+	u.Path = path.Join(u.Path, "/complex/primitive/date")
+	return azcore.NewRequest(http.MethodGet, u), nil
+}
 
-// // GetDateHandleResponse handles the GetDate response.
-// func (PrimitiveOperations) GetDateHandleResponse(resp *azcore.Response) (*GetDateResponse, error) {
-// 	if !resp.HasStatusCode(http.StatusOK) {
-// 		return nil, newError(resp)
-// 	}
-// 	result := GetDateResponse{StatusCode: resp.StatusCode}
-// 	return &result, resp.UnmarshalAsJSON(&result.DateWrapper)
-// }
+// GetDateHandleResponse handles the GetDate response.
+func (PrimitiveOperations) GetDateHandleResponse(resp *azcore.Response) (*GetDateResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := GetDateResponse{StatusCode: resp.StatusCode}
+	return &result, resp.UnmarshalAsJSON(&result.DateWrapper)
+}
 
-// // PutDateCreateRequest creates the PutDate request.
-// func (PrimitiveOperations) PutDateCreateRequest(u url.URL, complexBody DateWrapper) (*azcore.Request, error) {
-// 	u.Path = path.Join(u.Path, "/complex/primitive/date")
-// 	req := azcore.NewRequest(http.MethodPut, u)
-// 	err := req.MarshalAsJSON(complexBody)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	// TODO delete this
-// 	// r, e := ioutil.ReadAll(req.Body)
-// 	// if e != nil {
-// 	// 	fmt.Println(e)
-// 	// }
-// 	// fmt.Println(string(r))
-// 	return req, nil
-// }
+// PutDateCreateRequest creates the PutDate request.
+func (PrimitiveOperations) PutDateCreateRequest(u url.URL, complexBody DateWrapper) (*azcore.Request, error) {
+	u.Path = path.Join(u.Path, "/complex/primitive/date")
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON(complexBody)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
 
-// // PutDateHandleResponse handles the PutDate response.
-// func (PrimitiveOperations) PutDateHandleResponse(resp *azcore.Response) (*PutDateResponse, error) {
-// 	if !resp.HasStatusCode(http.StatusOK) {
-// 		return nil, newError(resp)
-// 	}
-// 	result := PutDateResponse{StatusCode: resp.StatusCode}
-// 	return &result, resp.UnmarshalAsJSON(&result.DateWrapper)
-// }
+// PutDateHandleResponse handles the PutDate response.
+func (PrimitiveOperations) PutDateHandleResponse(resp *azcore.Response) (*PutDateResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := PutDateResponse{StatusCode: resp.StatusCode}
+	return &result, resp.UnmarshalAsJSON(&result.DateWrapper)
+}

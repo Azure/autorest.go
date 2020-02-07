@@ -11,12 +11,14 @@ import (
 // PrimitiveOperations contains the methods for the Primitive group.
 type PrimitiveOperations interface {
 	GetBool(ctx context.Context) (*GetBoolResponse, error)
+	GetDate(ctx context.Context) (*GetDateResponse, error)
 	GetDouble(ctx context.Context) (*GetDoubleResponse, error)
 	GetFloat(ctx context.Context) (*GetFloatResponse, error)
 	GetInt(ctx context.Context) (*GetIntResponse, error)
 	GetLong(ctx context.Context) (*GetLongResponse, error)
 	GetString(ctx context.Context) (*GetStringResponse, error)
 	PutBool(ctx context.Context, complexBody BooleanWrapper) (*PutBoolResponse, error)
+	PutDate(ctx context.Context, complexBody DateWrapper) (*PutDateResponse, error)
 	PutDouble(ctx context.Context, complexBody DoubleWrapper) (*PutDoubleResponse, error)
 	PutFloat(ctx context.Context, complexBody FloatWrapper) (*PutFloatResponse, error)
 	PutInt(ctx context.Context, complexBody IntWrapper) (*PutIntResponse, error)
@@ -233,38 +235,38 @@ func (client *primitiveOperations) PutString(ctx context.Context, complexBody St
 	return s, nil
 }
 
-// // GetDate ...
-// func (client *primitiveOperations) GetDate(ctx context.Context) (*GetDateResponse, error) {
-// 	req, err := client.GetDateCreateRequest(*client.u)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	resp, err := client.p.Do(ctx, req)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	s, err := client.GetDateHandleResponse(resp)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return s, nil
-// }
+// GetDate ...
+func (client *primitiveOperations) GetDate(ctx context.Context) (*GetDateResponse, error) {
+	req, err := client.GetDateCreateRequest(*client.u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.GetDateHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
 
-// // PutDate ...
-// func (client *primitiveOperations) PutDate(ctx context.Context, complexBody DateWrapper) (*PutDateResponse, error) {
-// 	req, err := client.PutDateCreateRequest(*client.u, complexBody)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	resp, err := client.p.Do(ctx, req)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	s, err := client.PutDateHandleResponse(resp)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return s, nil
-// }
+// PutDate ...
+func (client *primitiveOperations) PutDate(ctx context.Context, complexBody DateWrapper) (*PutDateResponse, error) {
+	req, err := client.PutDateCreateRequest(*client.u, complexBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	s, err := client.PutDateHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
 
 var _ PrimitiveOperations = (*primitiveOperations)(nil)
