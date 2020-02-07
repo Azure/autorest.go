@@ -5,7 +5,7 @@
 
 import { serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, OperationGroup, SchemaResponse, Property, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
+import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Property, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 // The transformer adds Go-specific information to the code model.
@@ -29,6 +29,7 @@ export async function transform(host: Host) {
 }
 
 async function process(session: Session<CodeModel>) {
+  processOperationRequests(session);
   processOperationResponses(session);
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
@@ -46,13 +47,8 @@ function schemaTypeToGoType(schema: Schema): string {
   switch (schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
-      switch (arraySchema.elementType.type) {
-        case SchemaType.String:
-          return '[]string';
-        default:
-          const elem = <Schema>arraySchema.elementType;
-          return `[]${schemaTypeToGoType(elem)}`;
-      }
+      const arrayElem = <Schema>arraySchema.elementType;
+      return `[]${schemaTypeToGoType(arrayElem)}`;
     case SchemaType.Boolean:
       return 'bool';
     case SchemaType.ByteArray:
@@ -62,8 +58,8 @@ function schemaTypeToGoType(schema: Schema): string {
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
-      const elem = <Schema>dictSchema.elementType;
-      return `map[string]*${schemaTypeToGoType(elem)}`;
+      const dictElem = <Schema>dictSchema.elementType;
+      return `map[string]*${schemaTypeToGoType(dictElem)}`;
     case SchemaType.Duration:
       return 'time.Duration';
     case SchemaType.Integer:
@@ -81,6 +77,17 @@ function schemaTypeToGoType(schema: Schema): string {
       return 'string';
     default:
       return schema.language.go!.name;
+  }
+}
+
+// we will transform operation request parameter schema types to Go types
+function processOperationRequests(session: Session<CodeModel>) {
+  for (const group of values(session.model.operationGroups)) {
+    for (const op of values(group.operations)) {
+      for (const param of values(op.request.parameters)) {
+        param.schema.language.go!.name = schemaTypeToGoType(param.schema);
+      }
+    }
   }
 }
 
