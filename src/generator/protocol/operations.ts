@@ -23,15 +23,17 @@ export class OperationGroupContent {
 
 // Creates the content for all <operation>.go files
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
-  // add standard imorts
-  imports.add('net/http');
-  imports.add('net/url');
-  imports.add('path');
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
+    // the list of packages to import
+    const imports = new ImportManager();
+    // add standard imorts
+    imports.add('net/http');
+    imports.add('net/url');
+    imports.add('path');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+
     const clientName = group.language.go!.clientName;
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return SortAscending(a.language.go!.name, b.language.go!.name) });
@@ -39,7 +41,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       op.language.go!.protocolSigs = new protocolSigs();
-      opText += createProtocolRequest(clientName, op);
+      opText += createProtocolRequest(clientName, op, imports);
       opText += createProtocolResponse(clientName, op);
     }
     // stitch it all together
@@ -81,10 +83,7 @@ class methodSig implements MethodSig {
   }
 }
 
-// this list of packages to import
-const imports = new ImportManager();
-
-function createProtocolRequest(client: string, op: Operation): string {
+function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(op.request.parameters)) {
