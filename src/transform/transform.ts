@@ -45,6 +45,8 @@ async function process(session: Session<CodeModel>) {
 
 function schemaTypeToGoType(schema: Schema): string {
   switch (schema.type) {
+    case SchemaType.Any:
+      return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
@@ -73,7 +75,6 @@ function schemaTypeToGoType(schema: Schema): string {
         return 'float32';
       }
       return 'float64';
-    case SchemaType.Any:
     case SchemaType.String:
     case SchemaType.Uuid:
       return 'string';
