@@ -85,7 +85,7 @@ function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       for (const param of values(op.request.parameters)) {
-        param.schema.language.go!.name = schemaTypeToGoType(param.schema)
+        param.schema.language.go!.name = schemaTypeToGoType(param.schema);
       }
     }
   }
