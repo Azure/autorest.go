@@ -45,6 +45,8 @@ async function process(session: Session<CodeModel>) {
 
 function schemaTypeToGoType(schema: Schema): string {
   switch (schema.type) {
+    case SchemaType.Any:
+      return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
@@ -55,6 +57,7 @@ function schemaTypeToGoType(schema: Schema): string {
       return '[]byte';
     case SchemaType.Date:
     case SchemaType.DateTime:
+    case SchemaType.UnixTime:
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
