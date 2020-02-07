@@ -5,7 +5,7 @@
 
 import { serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Property, Response, Schema, DictionarySchema, ConstantSchema, ObjectSchema } from '@azure-tools/codemodel';
+import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Property, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 // The transformer adds Go-specific information to the code model.
