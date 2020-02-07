@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func getBasicOperations(t *testing.T) complexgroup.BasicOperations {
@@ -291,43 +292,43 @@ func TestPutString(t *testing.T) {
 	deepEqualOrFatal(t, result, expected)
 }
 
-// func TestGetDate(t *testing.T) {
-// 	client := getPrimitiveOperations(t)
-// 	result, err := client.GetDate(context.Background())
-// 	if err != nil {
-// 		t.Fatalf("GetDate: %v", err)
-// 	}
-// 	a, err := time.Parse("2006-01-02", "0001-01-01")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse date string: %v", err)
-// 	}
-// 	b, err := time.Parse("2006-01-02", "2016-02-29")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse leap year date string: %v", err)
-// 	}
-// 	expected := &complexgroup.GetDateResponse{
-// 		StatusCode:  http.StatusOK,
-// 		DateWrapper: &complexgroup.DateWrapper{Field: &a, Leap: &b},
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
+func TestGetDate(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.GetDate(context.Background())
+	if err != nil {
+		t.Fatalf("GetDate: %v", err)
+	}
+	a, err := time.Parse("2006-01-02", "0001-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse date string: %v", err)
+	}
+	b, err := time.Parse("2006-01-02", "2016-02-29")
+	if err != nil {
+		t.Fatalf("Unable to parse leap year date string: %v", err)
+	}
+	expected := &complexgroup.GetDateResponse{
+		StatusCode:  http.StatusOK,
+		DateWrapper: &complexgroup.DateWrapper{Field: &a, Leap: &b},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
 
-// func TestPutDate(t *testing.T) {
-// 	client := getPrimitiveOperations(t)
-// 	a, err := time.Parse("2006-01-02", "0001-01-01")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse date string: %v", err)
-// 	}
-// 	b, err := time.Parse("2006-01-02", "2016-02-29")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse leap year date string: %v", err)
-// 	}
-// 	result, err := client.PutDate(context.Background(), complexgroup.DateWrapper{Field: &a, Leap: &b})
-// 	if err != nil {
-// 		t.Fatalf("PutDate: %v", err)
-// 	}
-// 	expected := &complexgroup.PutDateResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
+func TestPutDate(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	a, err := time.Parse("2006-01-02", "0001-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse date string: %v", err)
+	}
+	b, err := time.Parse("2006-01-02", "2016-02-29")
+	if err != nil {
+		t.Fatalf("Unable to parse leap year date string: %v", err)
+	}
+	result, err := client.PutDate(context.Background(), complexgroup.DateWrapper{Field: &a, Leap: &b})
+	if err != nil {
+		t.Fatalf("PutDate: %v", err)
+	}
+	expected := &complexgroup.PutDateResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
