@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *  --------------------------------------------------------------------------------------------  */
 
-import { serialize, pascalCase } from '@azure-tools/codegen'
+import { serialize, pascalCase, camelCase } from '@azure-tools/codegen'
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base'
 import { codeModelSchema, CodeModel, Language, ObjectSchema, SchemaType, Schema } from '@azure-tools/codemodel'
 import { length, visitor, clone, values } from '@azure-tools/linq'
@@ -17,7 +17,7 @@ export async function namer(host: Host) {
     const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
     await process(session);
-
+    
     // output the model to the pipeline
     host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
 
@@ -91,7 +91,7 @@ async function process(session: Session<CodeModel>) {
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       for (const param of values(op.request.parameters)) {
         const paramDetails = <Language>param.language.go;
-        paramDetails.name = getEscapedReservedName(paramDetails.name, 'Parameter');
+        paramDetails.name = getEscapedReservedName(camelCase(paramDetails.name), 'Parameter');
       }
       details.protocolNaming = new protocolMethods(details.name);
       // fix up response type name and description
