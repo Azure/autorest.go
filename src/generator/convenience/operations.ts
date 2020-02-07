@@ -25,13 +25,15 @@ export class OperationInfo {
 
 // Creates the content for all <operation>.go files
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationInfo[]> {
-  // add standard imorts
-  imports.add('context');
-  imports.add(await InternalPackagePath(session), InternalPackage);
-
   // generate protocol operations
   const operations = new Array<OperationInfo>();
   for (const group of values(session.model.operationGroups)) {
+    // this list of packages to import
+    const imports = new ImportManager();
+    // add standard imorts
+    imports.add('context');
+    imports.add(await InternalPackagePath(session), InternalPackage);
+
     let interfaceText = '';
     // interface definition
     // this can add imports to the list so it must
@@ -74,9 +76,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
   }
   return operations;
 }
-
-// this list of packages to import
-const imports = new ImportManager();
 
 function generateOperation(clientName: string, op: Operation): string {
   const info = <OperationNaming>op.language.go!;

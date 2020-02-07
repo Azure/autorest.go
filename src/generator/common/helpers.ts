@@ -51,14 +51,18 @@ export class ImportManager {
 
   addImportForSchemaType(schema: Schema) {
     switch (schema.type) {
-      case SchemaType.Array: 
+      case SchemaType.Array:
         this.addImportForSchemaType((<ArraySchema>schema).elementType);
+        break;
       case SchemaType.Dictionary:
         this.addImportForSchemaType((<DictionarySchema>schema).elementType);
+        break;
       case SchemaType.Date:
       case SchemaType.DateTime:
+      case SchemaType.Duration:
       case SchemaType.UnixTime:
         this.add('time');
+        break;
     }
   }
 

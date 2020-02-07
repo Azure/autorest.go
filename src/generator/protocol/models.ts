@@ -86,7 +86,16 @@ class StructDef {
       text += '\treturn err\n';
       text += '}\n\n';
       text += `func (e ${this.Language.name}) Error() string {\n`;
-      text += `\treturn "TODO"\n`;
+      text += `\tmsg := ""\n`;
+      for (const prop of values(this.Properties)) {
+        text += `\tif e.${prop.language.go!.name} != nil {\n`;
+        text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
+        text += `\t}\n`;
+      }
+      text += '\tif msg == "" {\n';
+      text += '\t\tmsg = "missing error info"\n';
+      text += '\t}\n';
+      text += '\treturn msg\n';
       text += '}\n\n';
     }
     return text;
@@ -134,11 +143,12 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
 }
 
 function generateStruct(lang: Language, props?: Property[]): StructDef {
+  if (lang.errorType) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    imports.add('fmt');
+  }
   const st = new StructDef(lang, props);
   for (const prop of values(props)) {
-    if (lang.errorType) {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    }
     imports.addImportForSchemaType(prop.schema);
   }
   return st;
