@@ -74,7 +74,7 @@ class StructDef {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
       }
-      text += `\t${prop.language.go!.name} ${this.byref(prop)}${typeName}\n`;
+      text += `\t${prop.language.go!.name} ${this.byref(prop)}${typeName} \`json:"${prop.serializedName},omitempty"\`\n`;
     }
     text += '}\n\n';
     if (this.Language.errorType) {
