@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen'
-import { CodeModel, ConstantSchema, ImplementationLocation, Language, Operation, Parameter, Protocols, SchemaType } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, ImplementationLocation, Language, Operation, Parameter, Protocols, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
@@ -143,7 +143,7 @@ function createProtocolResponse(client: string, op: Operation): string {
     text += `\treturn &${respObj}, nil\n`;
   } else {
     text += `\tresult := ${respObj}\n`;
-    text += `\treturn &result, resp.UnmarshalAs${getMediaType(resp.protocol)}(&result.Value)\n`;
+    text += `\treturn &result, resp.UnmarshalAs${getMediaType(resp.protocol)}(&result.${(<SchemaResponse>resp).schema.language.go!.responseValue})\n`;
   }
   text += '}\n\n';
   return text;
