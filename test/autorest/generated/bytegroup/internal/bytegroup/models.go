@@ -5,7 +5,10 @@
 
 package bytegroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+)
 
 // ByteGetEmptyResponse contains the response from method Byte.GetEmpty.
 type ByteGetEmptyResponse struct {
@@ -46,8 +49,8 @@ type BytePutNonASCIIResponse struct {
 }
 
 type Error struct {
-	Message *string
-	Status *int32
+	Message *string `json:"message,omitempty"`
+	Status *int32 `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -59,6 +62,16 @@ func newError(resp *azcore.Response) error {
 }
 
 func (e Error) Error() string {
-	return "TODO"
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
 }
 

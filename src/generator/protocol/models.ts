@@ -74,7 +74,12 @@ class StructDef {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
       }
-      text += `\t${prop.language.go!.name} ${this.byref(prop)}${typeName} \`json:"${prop.serializedName},omitempty"\`\n`;
+      let tag = ` \`json:"${prop.serializedName},omitempty"\``;
+      if (this.Language.responseType) {
+        // tags aren't required for response types
+        tag = '';
+      }
+      text += `\t${prop.language.go!.name} ${this.byref(prop)}${typeName}${tag}\n`;
     }
     text += '}\n\n';
     if (this.Language.errorType) {
