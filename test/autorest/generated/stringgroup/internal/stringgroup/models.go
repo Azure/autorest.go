@@ -5,7 +5,10 @@
 
 package stringgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+)
 
 type Colors string
 
@@ -28,9 +31,9 @@ type EnumGetNotExpandableResponse struct {
 
 // EnumGetReferencedConstantResponse contains the response from method Enum.GetReferencedConstant.
 type EnumGetReferencedConstantResponse struct {
+	RefColorConstant *RefColorConstant
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value *RefColorConstant
 }
 
 // EnumGetReferencedResponse contains the response from method Enum.GetReferenced.
@@ -59,8 +62,8 @@ type EnumPutReferencedResponse struct {
 }
 
 type Error struct {
-	Message *string
-	Status *int32
+	Message *string `json:"message,omitempty"`
+	Status *int32 `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -72,14 +75,24 @@ func newError(resp *azcore.Response) error {
 }
 
 func (e Error) Error() string {
-	return "TODO"
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
 }
 
 type RefColorConstant struct {
 	// Referenced Color Constant Description.
-	ColorConstant *string
+	ColorConstant *string `json:"ColorConstant,omitempty"`
 	// Sample string.
-	Field1 *string
+	Field1 *string `json:"field1,omitempty"`
 }
 
 // StringGetBase64EncodedResponse contains the response from method String.GetBase64Encoded.
