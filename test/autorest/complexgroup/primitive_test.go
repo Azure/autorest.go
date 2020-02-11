@@ -140,6 +140,19 @@ func TestPrimitiveGetBool(t *testing.T) {
 	deepEqualOrFatal(t, result, expected)
 }
 
+func TestPrimitiveGetByte(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.GetByte(context.Background())
+	if err != nil {
+		t.Fatalf("GetByte: %v", err)
+	}
+	expected := &complexgroup.PrimitiveGetByteResponse{
+		StatusCode:  http.StatusOK,
+		ByteWrapper: &complexgroup.ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}},
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
 func TestPrimitivePutBool(t *testing.T) {
 	client := getPrimitiveOperations(t)
 	a, b := true, false
@@ -148,6 +161,18 @@ func TestPrimitivePutBool(t *testing.T) {
 		t.Fatalf("PutBool: %v", err)
 	}
 	expected := &complexgroup.PrimitivePutBoolResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestPrimitivePutByte(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.PutByte(context.Background(), complexgroup.ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}})
+	if err != nil {
+		t.Fatalf("PutByte: %v", err)
+	}
+	expected := &complexgroup.PrimitivePutByteResponse{
 		StatusCode: http.StatusOK,
 	}
 	deepEqualOrFatal(t, result, expected)
@@ -222,3 +247,5 @@ func TestPrimitivePutString(t *testing.T) {
 // 	}
 // 	deepEqualOrFatal(t, result, expected)
 // }
+
+// TODO: GetDateTime, GetDateTimeRFC1123, GetDuration, PutDateTime, PutDateTimeRFC1123, PutDuration
