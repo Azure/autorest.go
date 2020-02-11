@@ -56,7 +56,7 @@ func (EnumOperations) GetReferencedConstantHandleResponse(resp *azcore.Response)
 		return nil, newError(resp)
 	}
 	result := EnumGetReferencedConstantResponse{StatusCode: resp.StatusCode}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	return &result, resp.UnmarshalAsJSON(&result.RefColorConstant)
 }
 
 // PutNotExpandableCreateRequest creates the PutNotExpandable request.

@@ -7,17 +7,8 @@ import (
 	"context"
 	"generatortests/autorest/generated/stringgroup"
 	"net/http"
-	"reflect"
 	"testing"
 )
-
-func getEnumClient(t *testing.T) stringgroup.EnumOperations {
-	client, err := stringgroup.NewDefaultClient(nil)
-	if err != nil {
-		t.Fatalf("failed to create string client: %v", err)
-	}
-	return client.EnumOperations()
-}
 
 func getStringClient(t *testing.T) stringgroup.StringOperations {
 	client, err := stringgroup.NewDefaultClient(nil)
@@ -25,12 +16,6 @@ func getStringClient(t *testing.T) stringgroup.StringOperations {
 		t.Fatalf("failed to create string client: %v", err)
 	}
 	return client.StringOperations()
-}
-
-func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
-	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("got %+v, want %+v", result, expected)
-	}
 }
 
 func TestStringGetMBCS(t *testing.T) {
