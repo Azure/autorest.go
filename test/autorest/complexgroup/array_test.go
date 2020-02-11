@@ -60,9 +60,10 @@ func TestArrayGetValid(t *testing.T) {
 	deepEqualOrFatal(t, result, expected)
 }
 
+// TODO this works if the Array field in ArrayWrapper is of type []*string without the omitempty JSON tag
 // func TestArrayPutEmpty(t *testing.T) {
 // 	client := getArrayOperations(t)
-// 	result, err := client.PutEmpty(context.Background(), complexgroup.ArrayWrapper{Array: []string{}})
+// 	result, err := client.PutEmpty(context.Background(), complexgroup.ArrayWrapper{Array: []*string{}})
 // 	if err != nil {
 // 		t.Fatalf("PutEmpty: %v", err)
 // 	}
@@ -72,9 +73,10 @@ func TestArrayGetValid(t *testing.T) {
 // 	deepEqualOrFatal(t, result, expected)
 // }
 
+// TODO this only works if the Array field on ArrayWrapper is of type []*string
 // func TestArrayPutValid(t *testing.T) {
 // 	client := getArrayOperations(t)
-// 	result, err := client.PutValid(context.Background(), complexgroup.ArrayWrapper{Array: []string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}})
+// 	result, err := client.PutValid(context.Background(), complexgroup.ArrayWrapper{Array: []*string{toStrPtr("1, 2, 3, 4"), toStrPtr(""), nil, toStrPtr("&S#$(*Y"), toStrPtr("The quick brown fox jumps over the lazy dog")}})
 // 	if err != nil {
 // 		t.Fatalf("PutValid: %v", err)
 // 	}
@@ -82,4 +84,8 @@ func TestArrayGetValid(t *testing.T) {
 // 		StatusCode: http.StatusOK,
 // 	}
 // 	deepEqualOrFatal(t, result, expected)
+// }
+
+// func toStrPtr(s string) *string {
+// 	return &s
 // }
