@@ -38,10 +38,9 @@ func TestDictionaryGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	val := complexgroup.DictionaryWrapper{}
 	expected := &complexgroup.DictionaryGetNotProvidedResponse{
 		StatusCode:        http.StatusOK,
-		DictionaryWrapper: &val,
+		DictionaryWrapper: &complexgroup.DictionaryWrapper{},
 	}
 	deepEqualOrFatal(t, result, expected)
 }
