@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, pascalCase } from '@azure-tools/codegen'
+import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
 import { CodeModel, ConstantSchema, ImplementationLocation, Language, Operation, Parameter, Protocols, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
@@ -149,11 +149,17 @@ function createProtocolResponse(client: string, op: Operation): string {
   return text;
 }
 
-function getMediaType(protocol: Protocols): 'JSON' | 'none' {
-  if (protocol.http!.knownMediaType === undefined) {
-    return 'none';
+// returns the media type used by the protocol
+function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'none' {
+  // TODO: binary, forms etc
+  switch (protocol.http!.knownMediaType) {
+    case KnownMediaType.Json:
+      return 'JSON';
+    case KnownMediaType.Xml:
+      return 'XML';
+    default:
+      return 'none';
   }
-  return 'JSON';
 }
 
 function formatConstantValue(schema: ConstantSchema) {

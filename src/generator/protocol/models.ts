@@ -74,7 +74,7 @@ class StructDef {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
       }
-      let tag = ` \`json:"${prop.serializedName},omitempty"\``;
+      let tag = ` \`${prop.schema.language.go!.marshallingFormat}:"${prop.serializedName},omitempty"\``;
       if (this.Language.responseType) {
         // tags aren't required for response types
         tag = '';
@@ -85,7 +85,7 @@ class StructDef {
     if (this.Language.errorType) {
       text += `func new${this.Language.name}(resp *azcore.Response) error {\n`;
       text += `\terr := ${this.Language.name}{}\n`;
-      text += `\tif err := resp.UnmarshalAsJSON(&err); err != nil {\n`;
+      text += `\tif err := resp.UnmarshalAs${(<string>this.Language.marshallingFormat).toUpperCase()}(&err); err != nil {\n`;
       text += `\t\treturn err\n`;
       text += `\t}\n`;
       text += '\treturn err\n';
