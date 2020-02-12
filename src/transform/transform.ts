@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { serialize } from '@azure-tools/codegen';
+import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Property, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 // The transformer adds Go-specific information to the code model.
@@ -83,12 +83,51 @@ function schemaTypeToGoType(schema: Schema): string {
   }
 }
 
+function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json' | 'xml') {
+  if (schema.language.go!.marshallingFormat) {
+    // this schema has already been processed, don't do it again
+    return;
+  }
+  schema.language.go!.marshallingFormat = marshallingFormat;
+  switch (schema.type) {
+    case SchemaType.Array:
+      const arraySchema = <ArraySchema>schema;
+      recursiveAddMarshallingFormat(arraySchema.elementType, marshallingFormat);
+      break;
+    case SchemaType.Dictionary:
+      const dictSchema = <DictionarySchema>schema;
+      recursiveAddMarshallingFormat(dictSchema.elementType, marshallingFormat);
+      break;
+    case SchemaType.Object:
+      const os = <ObjectSchema>schema;
+      for (const prop of values(os.properties)) {
+        recursiveAddMarshallingFormat(prop.schema, marshallingFormat);
+      }
+      // if this is a discriminated type, update children and parents
+      for (const child of values(os.children?.all)) {
+        recursiveAddMarshallingFormat(child, marshallingFormat);
+      }
+      for (const parent of values(os.parents?.all)) {
+        recursiveAddMarshallingFormat(parent, marshallingFormat);
+      }
+      break;
+  }
+}
+
 // we will transform operation request parameter schema types to Go types
 function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       for (const param of values(op.request.parameters)) {
         param.schema.language.go!.name = schemaTypeToGoType(param.schema);
+      }
+      // recursively add the marshalling format to the body param if applicable
+      const marshallingFormat = getMarshallingFormat(op.request.protocol);
+      if (marshallingFormat !== 'na') {
+        const bodyParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+        if (bodyParam) {
+          recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
+        }
       }
     }
   }
@@ -100,7 +139,19 @@ function processOperationResponses(session: Session<CodeModel>) {
       createResponseType(op);
       // annotate all exception types as errors; this is so we know to generate an Error() method
       for (const ex of values(op.exceptions)) {
+        const marshallingFormat = getMarshallingFormat(ex.protocol);
+        if (marshallingFormat === 'na') {
+          throw console.error(`unexpected media type none for ${ex.language.go!.name} error type`);
+        }
         (<SchemaResponse>ex).schema.language.go!.errorType = true;
+        recursiveAddMarshallingFormat((<SchemaResponse>ex).schema, marshallingFormat);
+      }
+      // recursively add the marshalling format to the responses if applicable
+      for (const resp of values(op.responses)) {
+        const marshallingFormat = getMarshallingFormat(resp.protocol);
+        if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
+          recursiveAddMarshallingFormat(resp.schema, marshallingFormat);
+        }
       }
     }
   }
@@ -152,4 +203,17 @@ function isSchemaResponse(resp?: Response): resp is SchemaResponse {
 // returns true if the type should not be a pointer-to-type
 function noByRef(type: SchemaType): boolean {
   return type === SchemaType.Array || type === SchemaType.ByteArray || type === SchemaType.Dictionary;
+}
+
+// returns the format used for marshallling/unmarshalling.
+// if the media type isn't applicable then 'na' is returned.
+function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
+  switch (protocol.http!.knownMediaType) {
+    case KnownMediaType.Json:
+      return 'json';
+    case KnownMediaType.Xml:
+      return 'xml';
+    default:
+      return 'na';
+  }
 }
