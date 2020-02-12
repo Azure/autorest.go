@@ -99,7 +99,3 @@ func TestDictionaryPutValid(t *testing.T) {
 	}
 	deepEqualOrFatal(t, result, expected)
 }
-
-func toStrPtr(s string) *string {
-	return &s
-}
