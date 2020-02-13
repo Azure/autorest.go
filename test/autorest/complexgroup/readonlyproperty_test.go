@@ -32,14 +32,15 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 	deepEqualOrFatal(t, result, expected)
 }
 
-func TestReadonlypropertyPutValid(t *testing.T) {
-	client := getReadonlypropertyOperations(t)
-	result, err := client.PutValid(context.Background(), complexgroup.ReadonlyObj{})
-	if err != nil {
-		t.Fatalf("PutValid: %v", err)
-	}
-	expected := &complexgroup.ReadonlypropertyPutValidResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-}
+// func TestReadonlypropertyPutValid(t *testing.T) {
+// 	client := getReadonlypropertyOperations(t)
+// 	id, size := "1234", int32(2)
+// 	result, err := client.PutValid(context.Background(), complexgroup.ReadonlyObj{ID: &id, Size: &size})
+// 	if err != nil {
+// 		t.Fatalf("PutValid: %v", err)
+// 	}
+// 	expected := &complexgroup.ReadonlypropertyPutValidResponse{
+// 		StatusCode: http.StatusOK,
+// 	}
+// 	deepEqualOrFatal(t, result, expected)
+// }
