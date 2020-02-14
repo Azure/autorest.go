@@ -18,34 +18,44 @@ func getInheritanceOperations(t *testing.T) complexgroup.InheritanceOperations {
 	return client.InheritanceOperations()
 }
 
-// TODO this test passes but the endpoint is returning more fields than what we're currently checking for
 func TestInheritanceGetValid(t *testing.T) {
 	client := getInheritanceOperations(t)
 	result, err := client.GetValid(context.Background())
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	id := "persian"
+	d1ID, d1Name, d1Food, d2ID, d2Name, d2Food := int32(1), "Potato", "tomato", int32(-1), "Tomato", "french fries"
+	id, name, color, breed, hates := int32(2), "Siameeee", "green", "persian", []complexgroup.Dog{complexgroup.Dog{ID: &d1ID, Name: &d1Name, Food: &d1Food}, complexgroup.Dog{ID: &d2ID, Name: &d2Name, Food: &d2Food}}
 	expected := &complexgroup.InheritanceGetValidResponse{
 		StatusCode: http.StatusOK,
-		Siamese:    &complexgroup.Siamese{Breed: &id},
+		Siamese: &complexgroup.Siamese{
+			Breed: &breed,
+			Color: &color,
+			Hates: hates,
+			ID:    &id,
+			Name:  &name,
+		},
 	}
 	deepEqualOrFatal(t, result, expected)
 }
 
-// // TODO the endpoint is expecting more fields than those that currently exist in the Siamese type because we're still missing the discriminated type functionality
-// func TestInheritancePutValid(t *testing.T) {
-// 	client := getInheritanceOperations(t)
-// 	x := "persian"
-// 	cat := complexgroup.Siamese{
-// 		Breed: &x,
-// 	}
-// 	result, err := client.PutValid(context.Background(), cat)
-// 	if err != nil {
-// 		t.Fatalf("PutValid: %v", err)
-// 	}
-// 	expected := &complexgroup.InheritancePutValidResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
+func TestInheritancePutValid(t *testing.T) {
+	client := getInheritanceOperations(t)
+	d1ID, d1Name, d1Food, d2ID, d2Name, d2Food := int32(1), "Potato", "tomato", int32(-1), "Tomato", "french fries"
+	id, name, color, breed, hates := int32(2), "Siameeee", "green", "persian", []complexgroup.Dog{complexgroup.Dog{ID: &d1ID, Name: &d1Name, Food: &d1Food}, complexgroup.Dog{ID: &d2ID, Name: &d2Name, Food: &d2Food}}
+	cat := complexgroup.Siamese{
+		Breed: &breed,
+		Color: &color,
+		Hates: hates,
+		ID:    &id,
+		Name:  &name,
+	}
+	result, err := client.PutValid(context.Background(), cat)
+	if err != nil {
+		t.Fatalf("PutValid: %v", err)
+	}
+	expected := &complexgroup.InheritancePutValidResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}

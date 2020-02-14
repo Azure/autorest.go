@@ -7,21 +7,36 @@ package complexgroup
 
 import (
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type CMYKColors string
 
 const (
-	CMYKColorsBlack CMYKColors = "blacK"
-	CMYKColorsCyan CMYKColors = "cyan"
+	CMYKColorsBlack   CMYKColors = "blacK"
+	CMYKColorsCyan    CMYKColors = "cyan"
 	CMYKColorsMagenta CMYKColors = "Magenta"
-	CMYKColorsYellow CMYKColors = "YELLOW"
+	CMYKColorsYellow  CMYKColors = "YELLOW"
 )
 
 func PossibleCMYKColorsValues() []CMYKColors {
 	return []CMYKColors{CMYKColorsBlack, CMYKColorsCyan, CMYKColorsMagenta, CMYKColorsYellow}
+}
+
+type FishType string
+
+const (
+	FishTypeSalmon      FishType = "salmon"
+	FishTypeSmartSalmon FishType = "smart_salmon"
+	FishTypeShark       FishType = "shark"
+	FishTypeSawshark    FishType = "sawshark"
+	FishTypeGoblinShark FishType = "goblin_shark"
+)
+
+func PossibleFishTypeValues() []FishType {
+	return []FishType{FishTypeSalmon, FishTypeSmartSalmon, FishTypeShark, FishTypeSawshark, FishTypeGoblinShark}
 }
 
 // GoblinSharkColor - Colors possible
@@ -29,16 +44,27 @@ type GoblinSharkColor string
 
 const (
 	GoblinSharkColorBrown GoblinSharkColor = "brown"
-	GoblinSharkColorGray GoblinSharkColor = "gray"
+	GoblinSharkColorGray  GoblinSharkColor = "gray"
 	// GoblinSharkColorLowerred - Lowercase RED
 	GoblinSharkColorLowerred GoblinSharkColor = "red"
-	GoblinSharkColorPink GoblinSharkColor = "pink"
+	GoblinSharkColorPink     GoblinSharkColor = "pink"
 	// GoblinSharkColorUpperred - Uppercase RED
 	GoblinSharkColorUpperred GoblinSharkColor = "RED"
 )
 
 func PossibleGoblinSharkColorValues() []GoblinSharkColor {
 	return []GoblinSharkColor{GoblinSharkColorBrown, GoblinSharkColorGray, GoblinSharkColorLowerred, GoblinSharkColorPink, GoblinSharkColorUpperred}
+}
+
+type SalmonType string
+
+const (
+	SalmonTypeSalmon      SalmonType = "salmon"
+	SalmonTypeSmartSalmon SalmonType = "smart_salmon"
+)
+
+func PossibleSalmonTypeValues() []SalmonType {
+	return []SalmonType{SalmonTypeSalmon, SalmonTypeSmartSalmon}
 }
 
 // ArrayGetEmptyResponse contains the response from method Array.GetEmpty.
@@ -129,7 +155,7 @@ type BasicPutValidResponse struct {
 
 type BooleanWrapper struct {
 	FieldFalse *bool `json:"field_false,omitempty"`
-	FieldTrue *bool `json:"field_true,omitempty"`
+	FieldTrue  *bool `json:"field_true,omitempty"`
 }
 
 type ByteWrapper struct {
@@ -138,7 +164,9 @@ type ByteWrapper struct {
 
 type Cat struct {
 	Color *string `json:"color,omitempty"`
-	Hates []Dog `json:"hates,omitempty"`
+	Hates []Dog   `json:"hates,omitempty"`
+	ID    *int32  `json:"id,omitempty"`
+	Name  *string `json:"name,omitempty"`
 }
 
 type Cookiecuttershark struct {
@@ -146,17 +174,17 @@ type Cookiecuttershark struct {
 
 type DateWrapper struct {
 	Field *time.Time `json:"field,omitempty"`
-	Leap *time.Time `json:"leap,omitempty"`
+	Leap  *time.Time `json:"leap,omitempty"`
 }
 
 type DatetimeWrapper struct {
 	Field *time.Time `json:"field,omitempty"`
-	Now *time.Time `json:"now,omitempty"`
+	Now   *time.Time `json:"now,omitempty"`
 }
 
 type Datetimerfc1123Wrapper struct {
 	Field *time.Time `json:"field,omitempty"`
-	Now *time.Time `json:"now,omitempty"`
+	Now   *time.Time `json:"now,omitempty"`
 }
 
 // DictionaryGetEmptyResponse contains the response from method Dictionary.GetEmpty.
@@ -201,32 +229,34 @@ type DictionaryPutValidResponse struct {
 
 type DictionaryWrapper struct {
 	// Dictionary of <components·schemas·dictionary_wrapper·properties·defaultprogram·additionalproperties>
-	DefaultProgram map[string]*string `json:"defaultProgram,omitempty"`
+	DefaultProgram map[string]*string `json:"defaultProgram"`
 }
 
 type Dog struct {
 	Food *string `json:"food,omitempty"`
+	ID   *int32  `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 type DotFish struct {
 	FishType *string `json:"fish.type,omitempty"`
-	Species *string `json:"species,omitempty"`
+	Species  *string `json:"species,omitempty"`
 }
 
 type DotFishMarket struct {
-	Fishes []DotFish `json:"fishes,omitempty"`
-	Salmons []DotSalmon `json:"salmons,omitempty"`
-	SampleFish *DotFish `json:"sampleFish,omitempty"`
-	SampleSalmon *DotSalmon `json:"sampleSalmon,omitempty"`
+	Fishes       []DotFish   `json:"fishes,omitempty"`
+	Salmons      []DotSalmon `json:"salmons,omitempty"`
+	SampleFish   *DotFish    `json:"sampleFish,omitempty"`
+	SampleSalmon *DotSalmon  `json:"sampleSalmon,omitempty"`
 }
 
 type DotSalmon struct {
-	Iswild *bool `json:"iswild,omitempty"`
+	Iswild   *bool   `json:"iswild,omitempty"`
 	Location *string `json:"location,omitempty"`
 }
 
 type DoubleWrapper struct {
-	Field1 *float64 `json:"field1,omitempty"`
+	Field1                                                                          *float64 `json:"field1,omitempty"`
 	Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64 `json:"field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose,omitempty"`
 }
 
@@ -236,7 +266,7 @@ type DurationWrapper struct {
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -262,10 +292,10 @@ func (e Error) Error() string {
 }
 
 type Fish struct {
-	Fishtype *string `json:"fishtype,omitempty"`
-	Length *float32 `json:"length,omitempty"`
-	Siblings []Fish `json:"siblings,omitempty"`
-	Species *string `json:"species,omitempty"`
+	Fishtype *string  `json:"fishtype,omitempty"`
+	Length   *float32 `json:"length,omitempty"`
+	Siblings []Fish   `json:"siblings,omitempty"`
+	Species  *string  `json:"species,omitempty"`
 }
 
 // FlattencomplexGetValidResponse contains the response from method Flattencomplex.GetValid.
@@ -282,8 +312,16 @@ type FloatWrapper struct {
 
 type Goblinshark struct {
 	// Colors possible
-	Color *GoblinSharkColor `json:"color,omitempty"`
-	Jawsize *int32 `json:"jawsize,omitempty"`
+	Color    *GoblinSharkColor `json:"color,omitempty"`
+	Jawsize  *int32            `json:"jawsize,omitempty"`
+	Length   *float64          `json:"length,omitempty"`
+	Species  *string           `json:"species,omitempty"`
+	Age      *int32            `json:"age,omitempty"`
+	Birthday *time.Time        `json:"birthday,omitempty"`
+}
+
+func (g Goblinshark) FishModelType() FishType {
+	return FishTypeGoblinShark
 }
 
 // InheritanceGetValidResponse contains the response from method Inheritance.GetValid.
@@ -315,8 +353,8 @@ type MyBaseHelperType struct {
 
 type MyBaseType struct {
 	Helper *MyBaseHelperType `json:"helper,omitempty"`
-	Kind *string `json:"kind,omitempty"`
-	PropB1 *string `json:"propB1,omitempty"`
+	Kind   *string           `json:"kind,omitempty"`
+	PropB1 *string           `json:"propB1,omitempty"`
 }
 
 type MyDerivedType struct {
@@ -324,7 +362,7 @@ type MyDerivedType struct {
 }
 
 type Pet struct {
-	ID *int32 `json:"id,omitempty"`
+	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
@@ -343,7 +381,7 @@ type PolymorphicrecursivePutValidResponse struct {
 
 // PolymorphismGetComplicatedResponse contains the response from method Polymorphism.GetComplicated.
 type PolymorphismGetComplicatedResponse struct {
-	Salmon *Salmon
+	Salmon SalmonModel
 	// StatusCode contains the HTTP status code.
 	StatusCode int
 }
@@ -474,7 +512,7 @@ type PrimitiveGetLongResponse struct {
 // PrimitiveGetStringResponse contains the response from method Primitive.GetString.
 type PrimitiveGetStringResponse struct {
 	// StatusCode contains the HTTP status code.
-	StatusCode int
+	StatusCode    int
 	StringWrapper *StringWrapper
 }
 
@@ -545,8 +583,8 @@ type PrimitivePutStringResponse struct {
 }
 
 type ReadonlyObj struct {
-	ID *string `json:"id,omitempty"`
-	Size *int32 `json:"size,omitempty"`
+	ID   *string `json:"id,omitempty"`
+	Size *int32  `json:"size,omitempty"`
 }
 
 // ReadonlypropertyGetValidResponse contains the response from method Readonlyproperty.GetValid.
@@ -562,31 +600,85 @@ type ReadonlypropertyPutValidResponse struct {
 	StatusCode int
 }
 
+// TODO fix name
+type FishModel interface {
+	// FishModelType indicates the underlying type
+	FishModelType() FishType
+}
+
+type SalmonModel interface {
+	SalmonModelType() SalmonType
+}
+
 type Salmon struct {
-	Iswild *bool `json:"iswild,omitempty"`
-	Location *string `json:"location,omitempty"`
+	Fishtype *string     `json:"fishtype,omitempty"`
+	Length   *float32    `json:"length,omitempty"`
+	Siblings []FishModel `json:"siblings,omitempty"`
+	Species  *string     `json:"species,omitempty"`
+	Iswild   *bool       `json:"iswild,omitempty"`
+	Location *string     `json:"location,omitempty"`
+}
+
+func (s Salmon) FishModelType() FishType {
+	return FishTypeSalmon
+}
+
+func (s Salmon) SalmonModelType() SalmonType {
+	return SalmonTypeSalmon
 }
 
 type Sawshark struct {
-	Picture []byte `json:"picture,omitempty"`
+	Length   *float64   `json:"length,omitempty"`
+	Species  *string    `json:"species,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *time.Time `json:"birthday,omitempty"`
+	Picture  *[]byte    `json:"picture,omitempty"`
+}
+
+func (s Sawshark) FishModelType() FishType {
+	return FishTypeSawshark
 }
 
 type Shark struct {
-	Age *int32 `json:"age,omitempty"`
+	Length   *float64   `json:"length,omitempty"`
+	Species  *string    `json:"species,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
 	Birthday *time.Time `json:"birthday,omitempty"`
+}
+
+func (s Shark) FishModelType() FishType {
+	return FishTypeShark
 }
 
 type Siamese struct {
 	Breed *string `json:"breed,omitempty"`
+	Color *string `json:"color,omitempty"`
+	Hates []Dog   `json:"hates,omitempty"`
+	ID    *int32  `json:"id,omitempty"`
+	Name  *string `json:"name,omitempty"`
 }
 
 type SmartSalmon struct {
+	Fishtype *string  `json:"fishtype,omitempty"`
+	Length   *float32 `json:"length,omitempty"`
+	// Siblings *[]FishModel `json:"siblings,omitempty"`
+	Species       *string `json:"species,omitempty"`
+	Iswild        *bool   `json:"iswild,omitempty"`
+	Location      *string `json:"location,omitempty"`
 	CollegeDegree *string `json:"college_degree,omitempty"`
+	// AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+func (s SmartSalmon) FishModelType() FishType {
+	return FishTypeSmartSalmon
+}
+
+func (s SmartSalmon) SalmonModelType() SalmonType {
+	return SalmonTypeSmartSalmon
 }
 
 type StringWrapper struct {
 	Empty *string `json:"empty,omitempty"`
 	Field *string `json:"field,omitempty"`
-	Null *string `json:"null,omitempty"`
+	Null  *string `json:"null,omitempty"`
 }
-

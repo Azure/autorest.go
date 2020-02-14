@@ -6,11 +6,10 @@
 package complexgroup
 
 import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type BasicOperations struct{}
@@ -108,3 +107,4 @@ func (BasicOperations) PutValidHandleResponse(resp *azcore.Response) (*BasicPutV
 	}
 	return &BasicPutValidResponse{StatusCode: resp.StatusCode}, nil
 }
+

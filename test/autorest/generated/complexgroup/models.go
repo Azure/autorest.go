@@ -10,14 +10,28 @@ import azinternal "generatortests/autorest/generated/complexgroup/internal/compl
 type CMYKColors = azinternal.CMYKColors
 
 const (
-	CMYKColorsBlack = azinternal.CMYKColorsBlack
-	CMYKColorsCyan = azinternal.CMYKColorsCyan
+	CMYKColorsBlack   = azinternal.CMYKColorsBlack
+	CMYKColorsCyan    = azinternal.CMYKColorsCyan
 	CMYKColorsMagenta = azinternal.CMYKColorsMagenta
-	CMYKColorsYellow = azinternal.CMYKColorsYellow
+	CMYKColorsYellow  = azinternal.CMYKColorsYellow
 )
 
 func PossibleCMYKColorsValues() []CMYKColors {
 	return azinternal.PossibleCMYKColorsValues()
+}
+
+type FishType = azinternal.FishType
+
+const (
+	FishTypeSalmon      = azinternal.FishTypeSalmon
+	FishTypeSmartSalmon = azinternal.FishTypeSmartSalmon
+	FishTypeShark       = azinternal.FishTypeShark
+	FishTypeSawshark    = azinternal.FishTypeSawshark
+	FishTypeGoblinShark = azinternal.FishTypeGoblinShark
+)
+
+func PossibleFishTypeValues() []FishType {
+	return azinternal.PossibleFishTypeValues()
 }
 
 // GoblinSharkColor - Colors possible
@@ -25,16 +39,27 @@ type GoblinSharkColor = azinternal.GoblinSharkColor
 
 const (
 	GoblinSharkColorBrown = azinternal.GoblinSharkColorBrown
-	GoblinSharkColorGray = azinternal.GoblinSharkColorGray
+	GoblinSharkColorGray  = azinternal.GoblinSharkColorGray
 	// GoblinSharkColorLowerred - Lowercase RED
 	GoblinSharkColorLowerred = azinternal.GoblinSharkColorLowerred
-	GoblinSharkColorPink = azinternal.GoblinSharkColorPink
+	GoblinSharkColorPink     = azinternal.GoblinSharkColorPink
 	// GoblinSharkColorUpperred - Uppercase RED
 	GoblinSharkColorUpperred = azinternal.GoblinSharkColorUpperred
 )
 
 func PossibleGoblinSharkColorValues() []GoblinSharkColor {
 	return azinternal.PossibleGoblinSharkColorValues()
+}
+
+type SalmonType = azinternal.SalmonType
+
+const (
+	SalmonTypeSalmon      = azinternal.SalmonTypeSalmon
+	SalmonTypeSmartSalmon = azinternal.SalmonTypeSmartSalmon
+)
+
+func PossibleSalmonTypeValues() []SalmonType {
+	return azinternal.PossibleSalmonTypeValues()
 }
 
 // ArrayGetEmptyResponse contains the response from method Array.GetEmpty.
@@ -268,3 +293,6 @@ type SmartSalmon = azinternal.SmartSalmon
 
 type StringWrapper = azinternal.StringWrapper
 
+type FishModel = azinternal.FishModel
+
+type SalmonModel = azinternal.SalmonModel
