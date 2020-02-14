@@ -12,17 +12,17 @@ import (
 
 // BasicOperations contains the methods for the Basic group.
 type BasicOperations interface {
-	// GetEmpty - Get a basic complex type that is empty
+	// GetEmpty - Get a basic complex type that is empty 
 	GetEmpty(ctx context.Context) (*BasicGetEmptyResponse, error)
-	// GetInvalid - Get a basic complex type that is invalid for the local strong type
+	// GetInvalid - Get a basic complex type that is invalid for the local strong type 
 	GetInvalid(ctx context.Context) (*BasicGetInvalidResponse, error)
-	// GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
+	// GetNotProvided - Get a basic complex type while the server doesn't provide a response payload 
 	GetNotProvided(ctx context.Context) (*BasicGetNotProvidedResponse, error)
-	// GetNull - Get a basic complex type whose properties are null
+	// GetNull - Get a basic complex type whose properties are null 
 	GetNull(ctx context.Context) (*BasicGetNullResponse, error)
-	// GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
+	// GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'} 
 	GetValid(ctx context.Context) (*BasicGetValidResponse, error)
-	// PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
+	// PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'} 
 	PutValid(ctx context.Context, complexBody Basic) (*BasicPutValidResponse, error)
 }
 
@@ -31,7 +31,7 @@ type basicOperations struct {
 	azinternal.BasicOperations
 }
 
-// GetEmpty - Get a basic complex type that is empty
+// GetEmpty - Get a basic complex type that is empty 
 func (client *basicOperations) GetEmpty(ctx context.Context) (*BasicGetEmptyResponse, error) {
 	req, err := client.GetEmptyCreateRequest(*client.u)
 	if err != nil {
@@ -48,7 +48,7 @@ func (client *basicOperations) GetEmpty(ctx context.Context) (*BasicGetEmptyResp
 	return result, nil
 }
 
-// GetInvalid - Get a basic complex type that is invalid for the local strong type
+// GetInvalid - Get a basic complex type that is invalid for the local strong type 
 func (client *basicOperations) GetInvalid(ctx context.Context) (*BasicGetInvalidResponse, error) {
 	req, err := client.GetInvalidCreateRequest(*client.u)
 	if err != nil {
@@ -65,7 +65,7 @@ func (client *basicOperations) GetInvalid(ctx context.Context) (*BasicGetInvalid
 	return result, nil
 }
 
-// GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
+// GetNotProvided - Get a basic complex type while the server doesn't provide a response payload 
 func (client *basicOperations) GetNotProvided(ctx context.Context) (*BasicGetNotProvidedResponse, error) {
 	req, err := client.GetNotProvidedCreateRequest(*client.u)
 	if err != nil {
@@ -82,7 +82,7 @@ func (client *basicOperations) GetNotProvided(ctx context.Context) (*BasicGetNot
 	return result, nil
 }
 
-// GetNull - Get a basic complex type whose properties are null
+// GetNull - Get a basic complex type whose properties are null 
 func (client *basicOperations) GetNull(ctx context.Context) (*BasicGetNullResponse, error) {
 	req, err := client.GetNullCreateRequest(*client.u)
 	if err != nil {
@@ -99,7 +99,7 @@ func (client *basicOperations) GetNull(ctx context.Context) (*BasicGetNullRespon
 	return result, nil
 }
 
-// GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
+// GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'} 
 func (client *basicOperations) GetValid(ctx context.Context) (*BasicGetValidResponse, error) {
 	req, err := client.GetValidCreateRequest(*client.u)
 	if err != nil {
@@ -116,7 +116,7 @@ func (client *basicOperations) GetValid(ctx context.Context) (*BasicGetValidResp
 	return result, nil
 }
 
-// PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
+// PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'} 
 func (client *basicOperations) PutValid(ctx context.Context, complexBody Basic) (*BasicPutValidResponse, error) {
 	req, err := client.PutValidCreateRequest(*client.u, complexBody)
 	if err != nil {
