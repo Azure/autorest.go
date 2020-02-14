@@ -83,8 +83,7 @@ func (client QueriesClient) ArrayStringMultiEmptyPreparer(ctx context.Context, a
 // ArrayStringMultiEmptySender sends the ArrayStringMultiEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client QueriesClient) ArrayStringMultiEmptySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ArrayStringMultiEmptyResponder handles the response to the ArrayStringMultiEmpty request. The method always
@@ -152,8 +151,7 @@ func (client QueriesClient) ArrayStringMultiNullPreparer(ctx context.Context, ar
 // ArrayStringMultiNullSender sends the ArrayStringMultiNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client QueriesClient) ArrayStringMultiNullSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ArrayStringMultiNullResponder handles the response to the ArrayStringMultiNull request. The method always
@@ -223,8 +221,7 @@ func (client QueriesClient) ArrayStringMultiValidPreparer(ctx context.Context, a
 // ArrayStringMultiValidSender sends the ArrayStringMultiValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client QueriesClient) ArrayStringMultiValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ArrayStringMultiValidResponder handles the response to the ArrayStringMultiValid request. The method always

@@ -85,8 +85,7 @@ func (client PetsClient) CreateAPInPropertiesPreparer(ctx context.Context, creat
 // CreateAPInPropertiesSender sends the CreateAPInProperties request. The method will close the
 // http.Response Body if it receives an error.
 func (client PetsClient) CreateAPInPropertiesSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // CreateAPInPropertiesResponder handles the response to the CreateAPInProperties request. The method always
@@ -157,8 +156,7 @@ func (client PetsClient) CreateAPInPropertiesWithAPStringPreparer(ctx context.Co
 // CreateAPInPropertiesWithAPStringSender sends the CreateAPInPropertiesWithAPString request. The method will close the
 // http.Response Body if it receives an error.
 func (client PetsClient) CreateAPInPropertiesWithAPStringSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // CreateAPInPropertiesWithAPStringResponder handles the response to the CreateAPInPropertiesWithAPString request. The method always
@@ -228,8 +226,7 @@ func (client PetsClient) CreateAPObjectPreparer(ctx context.Context, createParam
 // CreateAPObjectSender sends the CreateAPObject request. The method will close the
 // http.Response Body if it receives an error.
 func (client PetsClient) CreateAPObjectSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // CreateAPObjectResponder handles the response to the CreateAPObject request. The method always
@@ -299,8 +296,7 @@ func (client PetsClient) CreateAPStringPreparer(ctx context.Context, createParam
 // CreateAPStringSender sends the CreateAPString request. The method will close the
 // http.Response Body if it receives an error.
 func (client PetsClient) CreateAPStringSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // CreateAPStringResponder handles the response to the CreateAPString request. The method always
@@ -370,8 +366,7 @@ func (client PetsClient) CreateAPTruePreparer(ctx context.Context, createParamet
 // CreateAPTrueSender sends the CreateAPTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client PetsClient) CreateAPTrueSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // CreateAPTrueResponder handles the response to the CreateAPTrue request. The method always
@@ -434,8 +429,7 @@ func (client PetsClient) CreateCatAPTruePreparer(ctx context.Context, createPara
 // CreateCatAPTrueSender sends the CreateCatAPTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client PetsClient) CreateCatAPTrueSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // CreateCatAPTrueResponder handles the response to the CreateCatAPTrue request. The method always

@@ -77,8 +77,7 @@ func (client HeaderClient) CustomRequestIDPreparer(ctx context.Context) (*http.R
 // CustomRequestIDSender sends the CustomRequestID request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) CustomRequestIDSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // CustomRequestIDResponder handles the response to the CustomRequestID request. The method always
@@ -144,8 +143,7 @@ func (client HeaderClient) ParamBoolPreparer(ctx context.Context, scenario strin
 // ParamBoolSender sends the ParamBool request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamBoolSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamBoolResponder handles the response to the ParamBool request. The method always
@@ -216,8 +214,7 @@ func (client HeaderClient) ParamBytePreparer(ctx context.Context, scenario strin
 // ParamByteSender sends the ParamByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamByteSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamByteResponder handles the response to the ParamByte request. The method always
@@ -283,8 +280,7 @@ func (client HeaderClient) ParamDatePreparer(ctx context.Context, scenario strin
 // ParamDateSender sends the ParamDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamDateResponder handles the response to the ParamDate request. The method always
@@ -350,8 +346,7 @@ func (client HeaderClient) ParamDatetimePreparer(ctx context.Context, scenario s
 // ParamDatetimeSender sends the ParamDatetime request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDatetimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamDatetimeResponder handles the response to the ParamDatetime request. The method always
@@ -421,8 +416,7 @@ func (client HeaderClient) ParamDatetimeRfc1123Preparer(ctx context.Context, sce
 // ParamDatetimeRfc1123Sender sends the ParamDatetimeRfc1123 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDatetimeRfc1123Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamDatetimeRfc1123Responder handles the response to the ParamDatetimeRfc1123 request. The method always
@@ -488,8 +482,7 @@ func (client HeaderClient) ParamDoublePreparer(ctx context.Context, scenario str
 // ParamDoubleSender sends the ParamDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDoubleSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamDoubleResponder handles the response to the ParamDouble request. The method always
@@ -554,8 +547,7 @@ func (client HeaderClient) ParamDurationPreparer(ctx context.Context, scenario s
 // ParamDurationSender sends the ParamDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamDurationSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamDurationResponder handles the response to the ParamDuration request. The method always
@@ -624,8 +616,7 @@ func (client HeaderClient) ParamEnumPreparer(ctx context.Context, scenario strin
 // ParamEnumSender sends the ParamEnum request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamEnumSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamEnumResponder handles the response to the ParamEnum request. The method always
@@ -688,8 +679,7 @@ func (client HeaderClient) ParamExistingKeyPreparer(ctx context.Context, userAge
 // ParamExistingKeySender sends the ParamExistingKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamExistingKeySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamExistingKeyResponder handles the response to the ParamExistingKey request. The method always
@@ -755,8 +745,7 @@ func (client HeaderClient) ParamFloatPreparer(ctx context.Context, scenario stri
 // ParamFloatSender sends the ParamFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamFloatSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamFloatResponder handles the response to the ParamFloat request. The method always
@@ -822,8 +811,7 @@ func (client HeaderClient) ParamIntegerPreparer(ctx context.Context, scenario st
 // ParamIntegerSender sends the ParamInteger request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamIntegerSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamIntegerResponder handles the response to the ParamInteger request. The method always
@@ -889,8 +877,7 @@ func (client HeaderClient) ParamLongPreparer(ctx context.Context, scenario strin
 // ParamLongSender sends the ParamLong request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamLongSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamLongResponder handles the response to the ParamLong request. The method always
@@ -953,8 +940,7 @@ func (client HeaderClient) ParamProtectedKeyPreparer(ctx context.Context, conten
 // ParamProtectedKeySender sends the ParamProtectedKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamProtectedKeySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamProtectedKeyResponder handles the response to the ParamProtectedKey request. The method always
@@ -1023,8 +1009,7 @@ func (client HeaderClient) ParamStringPreparer(ctx context.Context, scenario str
 // ParamStringSender sends the ParamString request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ParamStringSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ParamStringResponder handles the response to the ParamString request. The method always
@@ -1087,8 +1072,7 @@ func (client HeaderClient) ResponseBoolPreparer(ctx context.Context, scenario st
 // ResponseBoolSender sends the ResponseBool request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseBoolSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseBoolResponder handles the response to the ResponseBool request. The method always
@@ -1151,8 +1135,7 @@ func (client HeaderClient) ResponseBytePreparer(ctx context.Context, scenario st
 // ResponseByteSender sends the ResponseByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseByteSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseByteResponder handles the response to the ResponseByte request. The method always
@@ -1215,8 +1198,7 @@ func (client HeaderClient) ResponseDatePreparer(ctx context.Context, scenario st
 // ResponseDateSender sends the ResponseDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseDateResponder handles the response to the ResponseDate request. The method always
@@ -1279,8 +1261,7 @@ func (client HeaderClient) ResponseDatetimePreparer(ctx context.Context, scenari
 // ResponseDatetimeSender sends the ResponseDatetime request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDatetimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseDatetimeResponder handles the response to the ResponseDatetime request. The method always
@@ -1344,8 +1325,7 @@ func (client HeaderClient) ResponseDatetimeRfc1123Preparer(ctx context.Context, 
 // ResponseDatetimeRfc1123Sender sends the ResponseDatetimeRfc1123 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDatetimeRfc1123Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseDatetimeRfc1123Responder handles the response to the ResponseDatetimeRfc1123 request. The method always
@@ -1408,8 +1388,7 @@ func (client HeaderClient) ResponseDoublePreparer(ctx context.Context, scenario 
 // ResponseDoubleSender sends the ResponseDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDoubleSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseDoubleResponder handles the response to the ResponseDouble request. The method always
@@ -1472,8 +1451,7 @@ func (client HeaderClient) ResponseDurationPreparer(ctx context.Context, scenari
 // ResponseDurationSender sends the ResponseDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseDurationSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseDurationResponder handles the response to the ResponseDuration request. The method always
@@ -1536,8 +1514,7 @@ func (client HeaderClient) ResponseEnumPreparer(ctx context.Context, scenario st
 // ResponseEnumSender sends the ResponseEnum request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseEnumSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseEnumResponder handles the response to the ResponseEnum request. The method always
@@ -1597,8 +1574,7 @@ func (client HeaderClient) ResponseExistingKeyPreparer(ctx context.Context) (*ht
 // ResponseExistingKeySender sends the ResponseExistingKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseExistingKeySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseExistingKeyResponder handles the response to the ResponseExistingKey request. The method always
@@ -1661,8 +1637,7 @@ func (client HeaderClient) ResponseFloatPreparer(ctx context.Context, scenario s
 // ResponseFloatSender sends the ResponseFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseFloatSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseFloatResponder handles the response to the ResponseFloat request. The method always
@@ -1725,8 +1700,7 @@ func (client HeaderClient) ResponseIntegerPreparer(ctx context.Context, scenario
 // ResponseIntegerSender sends the ResponseInteger request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseIntegerSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseIntegerResponder handles the response to the ResponseInteger request. The method always
@@ -1789,8 +1763,7 @@ func (client HeaderClient) ResponseLongPreparer(ctx context.Context, scenario st
 // ResponseLongSender sends the ResponseLong request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseLongSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseLongResponder handles the response to the ResponseLong request. The method always
@@ -1850,8 +1823,7 @@ func (client HeaderClient) ResponseProtectedKeyPreparer(ctx context.Context) (*h
 // ResponseProtectedKeySender sends the ResponseProtectedKey request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseProtectedKeySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseProtectedKeyResponder handles the response to the ResponseProtectedKey request. The method always
@@ -1914,8 +1886,7 @@ func (client HeaderClient) ResponseStringPreparer(ctx context.Context, scenario 
 // ResponseStringSender sends the ResponseString request. The method will close the
 // http.Response Body if it receives an error.
 func (client HeaderClient) ResponseStringSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // ResponseStringResponder handles the response to the ResponseString request. The method always

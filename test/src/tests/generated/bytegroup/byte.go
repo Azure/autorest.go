@@ -76,8 +76,7 @@ func (client ByteClient) GetEmptyPreparer(ctx context.Context) (*http.Request, e
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ByteClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetEmptyResponder handles the response to the GetEmpty request. The method always
@@ -138,8 +137,7 @@ func (client ByteClient) GetInvalidPreparer(ctx context.Context) (*http.Request,
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ByteClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
@@ -200,8 +198,7 @@ func (client ByteClient) GetNonASCIIPreparer(ctx context.Context) (*http.Request
 // GetNonASCIISender sends the GetNonASCII request. The method will close the
 // http.Response Body if it receives an error.
 func (client ByteClient) GetNonASCIISender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNonASCIIResponder handles the response to the GetNonASCII request. The method always
@@ -262,8 +259,7 @@ func (client ByteClient) GetNullPreparer(ctx context.Context) (*http.Request, er
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client ByteClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -334,8 +330,7 @@ func (client ByteClient) PutNonASCIIPreparer(ctx context.Context, byteBody []byt
 // PutNonASCIISender sends the PutNonASCII request. The method will close the
 // http.Response Body if it receives an error.
 func (client ByteClient) PutNonASCIISender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutNonASCIIResponder handles the response to the PutNonASCII request. The method always

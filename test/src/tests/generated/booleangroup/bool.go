@@ -75,8 +75,7 @@ func (client BoolClient) GetFalsePreparer(ctx context.Context) (*http.Request, e
 // GetFalseSender sends the GetFalse request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolClient) GetFalseSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetFalseResponder handles the response to the GetFalse request. The method always
@@ -137,8 +136,7 @@ func (client BoolClient) GetInvalidPreparer(ctx context.Context) (*http.Request,
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
@@ -199,8 +197,7 @@ func (client BoolClient) GetNullPreparer(ctx context.Context) (*http.Request, er
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -261,8 +258,7 @@ func (client BoolClient) GetTruePreparer(ctx context.Context) (*http.Request, er
 // GetTrueSender sends the GetTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolClient) GetTrueSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetTrueResponder handles the response to the GetTrue request. The method always
@@ -325,8 +321,7 @@ func (client BoolClient) PutFalsePreparer(ctx context.Context) (*http.Request, e
 // PutFalseSender sends the PutFalse request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolClient) PutFalseSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutFalseResponder handles the response to the PutFalse request. The method always
@@ -388,8 +383,7 @@ func (client BoolClient) PutTruePreparer(ctx context.Context) (*http.Request, er
 // PutTrueSender sends the PutTrue request. The method will close the
 // http.Response Body if it receives an error.
 func (client BoolClient) PutTrueSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutTrueResponder handles the response to the PutTrue request. The method always

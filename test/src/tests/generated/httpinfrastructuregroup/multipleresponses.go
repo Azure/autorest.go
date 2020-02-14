@@ -76,8 +76,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidPre
 // Get200Model201ModelDefaultError200ValidSender sends the Get200Model201ModelDefaultError200Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError200ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model201ModelDefaultError200ValidResponder handles the response to the Get200Model201ModelDefaultError200Valid request. The method always
@@ -139,8 +138,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidPre
 // Get200Model201ModelDefaultError201ValidSender sends the Get200Model201ModelDefaultError201Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError201ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model201ModelDefaultError201ValidResponder handles the response to the Get200Model201ModelDefaultError201Valid request. The method always
@@ -202,8 +200,7 @@ func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidPre
 // Get200Model201ModelDefaultError400ValidSender sends the Get200Model201ModelDefaultError400Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model201ModelDefaultError400ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model201ModelDefaultError400ValidResponder handles the response to the Get200Model201ModelDefaultError400Valid request. The method always
@@ -264,8 +261,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidP
 // Get200Model204NoModelDefaultError200ValidSender sends the Get200Model204NoModelDefaultError200Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError200ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model204NoModelDefaultError200ValidResponder handles the response to the Get200Model204NoModelDefaultError200Valid request. The method always
@@ -326,8 +322,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201Invali
 // Get200Model204NoModelDefaultError201InvalidSender sends the Get200Model204NoModelDefaultError201Invalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError201InvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model204NoModelDefaultError201InvalidResponder handles the response to the Get200Model204NoModelDefaultError201Invalid request. The method always
@@ -388,8 +383,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NonePr
 // Get200Model204NoModelDefaultError202NoneSender sends the Get200Model204NoModelDefaultError202None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError202NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model204NoModelDefaultError202NoneResponder handles the response to the Get200Model204NoModelDefaultError202None request. The method always
@@ -450,8 +444,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidP
 // Get200Model204NoModelDefaultError204ValidSender sends the Get200Model204NoModelDefaultError204Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError204ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model204NoModelDefaultError204ValidResponder handles the response to the Get200Model204NoModelDefaultError204Valid request. The method always
@@ -513,8 +506,7 @@ func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidP
 // Get200Model204NoModelDefaultError400ValidSender sends the Get200Model204NoModelDefaultError400Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200Model204NoModelDefaultError400ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Model204NoModelDefaultError400ValidResponder handles the response to the Get200Model204NoModelDefaultError400Valid request. The method always
@@ -575,8 +567,7 @@ func (client MultipleResponsesClient) Get200ModelA200InvalidPreparer(ctx context
 // Get200ModelA200InvalidSender sends the Get200ModelA200Invalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA200InvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA200InvalidResponder handles the response to the Get200ModelA200Invalid request. The method always
@@ -638,8 +629,7 @@ func (client MultipleResponsesClient) Get200ModelA200NonePreparer(ctx context.Co
 // Get200ModelA200NoneSender sends the Get200ModelA200None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA200NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA200NoneResponder handles the response to the Get200ModelA200None request. The method always
@@ -700,8 +690,7 @@ func (client MultipleResponsesClient) Get200ModelA200ValidPreparer(ctx context.C
 // Get200ModelA200ValidSender sends the Get200ModelA200Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA200ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA200ValidResponder handles the response to the Get200ModelA200Valid request. The method always
@@ -762,8 +751,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 // Get200ModelA201ModelC404ModelDDefaultError200ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError200Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError200ValidResponder handles the response to the Get200ModelA201ModelC404ModelDDefaultError200Valid request. The method always
@@ -824,8 +812,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 // Get200ModelA201ModelC404ModelDDefaultError201ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError201Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError201ValidResponder handles the response to the Get200ModelA201ModelC404ModelDDefaultError201Valid request. The method always
@@ -887,8 +874,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 // Get200ModelA201ModelC404ModelDDefaultError400ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError400Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError400ValidResponder handles the response to the Get200ModelA201ModelC404ModelDDefaultError400Valid request. The method always
@@ -949,8 +935,7 @@ func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError
 // Get200ModelA201ModelC404ModelDDefaultError404ValidSender sends the Get200ModelA201ModelC404ModelDDefaultError404Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError404ValidResponder handles the response to the Get200ModelA201ModelC404ModelDDefaultError404Valid request. The method always
@@ -1011,8 +996,7 @@ func (client MultipleResponsesClient) Get200ModelA202ValidPreparer(ctx context.C
 // Get200ModelA202ValidSender sends the Get200ModelA202Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA202ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA202ValidResponder handles the response to the Get200ModelA202Valid request. The method always
@@ -1073,8 +1057,7 @@ func (client MultipleResponsesClient) Get200ModelA400InvalidPreparer(ctx context
 // Get200ModelA400InvalidSender sends the Get200ModelA400Invalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA400InvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA400InvalidResponder handles the response to the Get200ModelA400Invalid request. The method always
@@ -1135,8 +1118,7 @@ func (client MultipleResponsesClient) Get200ModelA400NonePreparer(ctx context.Co
 // Get200ModelA400NoneSender sends the Get200ModelA400None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA400NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA400NoneResponder handles the response to the Get200ModelA400None request. The method always
@@ -1197,8 +1179,7 @@ func (client MultipleResponsesClient) Get200ModelA400ValidPreparer(ctx context.C
 // Get200ModelA400ValidSender sends the Get200ModelA400Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get200ModelA400ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200ModelA400ValidResponder handles the response to the Get200ModelA400Valid request. The method always
@@ -1259,8 +1240,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError202NonePrepar
 // Get202None204NoneDefaultError202NoneSender sends the Get202None204NoneDefaultError202None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get202None204NoneDefaultError202NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get202None204NoneDefaultError202NoneResponder handles the response to the Get202None204NoneDefaultError202None request. The method always
@@ -1320,8 +1300,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError204NonePrepar
 // Get202None204NoneDefaultError204NoneSender sends the Get202None204NoneDefaultError204None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get202None204NoneDefaultError204NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get202None204NoneDefaultError204NoneResponder handles the response to the Get202None204NoneDefaultError204None request. The method always
@@ -1382,8 +1361,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidPrepa
 // Get202None204NoneDefaultError400ValidSender sends the Get202None204NoneDefaultError400Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get202None204NoneDefaultError400ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get202None204NoneDefaultError400ValidResponder handles the response to the Get202None204NoneDefaultError400Valid request. The method always
@@ -1443,8 +1421,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidPrep
 // Get202None204NoneDefaultNone202InvalidSender sends the Get202None204NoneDefaultNone202Invalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone202InvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get202None204NoneDefaultNone202InvalidResponder handles the response to the Get202None204NoneDefaultNone202Invalid request. The method always
@@ -1504,8 +1481,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NonePrepare
 // Get202None204NoneDefaultNone204NoneSender sends the Get202None204NoneDefaultNone204None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone204NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get202None204NoneDefaultNone204NoneResponder handles the response to the Get202None204NoneDefaultNone204None request. The method always
@@ -1565,8 +1541,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidPrep
 // Get202None204NoneDefaultNone400InvalidSender sends the Get202None204NoneDefaultNone400Invalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400InvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get202None204NoneDefaultNone400InvalidResponder handles the response to the Get202None204NoneDefaultNone400Invalid request. The method always
@@ -1626,8 +1601,7 @@ func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NonePrepare
 // Get202None204NoneDefaultNone400NoneSender sends the Get202None204NoneDefaultNone400None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) Get202None204NoneDefaultNone400NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get202None204NoneDefaultNone400NoneResponder handles the response to the Get202None204NoneDefaultNone400None request. The method always
@@ -1687,8 +1661,7 @@ func (client MultipleResponsesClient) GetDefaultModelA200NonePreparer(ctx contex
 // GetDefaultModelA200NoneSender sends the GetDefaultModelA200None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultModelA200NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultModelA200NoneResponder handles the response to the GetDefaultModelA200None request. The method always
@@ -1749,8 +1722,7 @@ func (client MultipleResponsesClient) GetDefaultModelA200ValidPreparer(ctx conte
 // GetDefaultModelA200ValidSender sends the GetDefaultModelA200Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultModelA200ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultModelA200ValidResponder handles the response to the GetDefaultModelA200Valid request. The method always
@@ -1811,8 +1783,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400NonePreparer(ctx contex
 // GetDefaultModelA400NoneSender sends the GetDefaultModelA400None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultModelA400NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultModelA400NoneResponder handles the response to the GetDefaultModelA400None request. The method always
@@ -1872,8 +1843,7 @@ func (client MultipleResponsesClient) GetDefaultModelA400ValidPreparer(ctx conte
 // GetDefaultModelA400ValidSender sends the GetDefaultModelA400Valid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultModelA400ValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultModelA400ValidResponder handles the response to the GetDefaultModelA400Valid request. The method always
@@ -1933,8 +1903,7 @@ func (client MultipleResponsesClient) GetDefaultNone200InvalidPreparer(ctx conte
 // GetDefaultNone200InvalidSender sends the GetDefaultNone200Invalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultNone200InvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultNone200InvalidResponder handles the response to the GetDefaultNone200Invalid request. The method always
@@ -1994,8 +1963,7 @@ func (client MultipleResponsesClient) GetDefaultNone200NonePreparer(ctx context.
 // GetDefaultNone200NoneSender sends the GetDefaultNone200None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultNone200NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultNone200NoneResponder handles the response to the GetDefaultNone200None request. The method always
@@ -2055,8 +2023,7 @@ func (client MultipleResponsesClient) GetDefaultNone400InvalidPreparer(ctx conte
 // GetDefaultNone400InvalidSender sends the GetDefaultNone400Invalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultNone400InvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultNone400InvalidResponder handles the response to the GetDefaultNone400Invalid request. The method always
@@ -2116,8 +2083,7 @@ func (client MultipleResponsesClient) GetDefaultNone400NonePreparer(ctx context.
 // GetDefaultNone400NoneSender sends the GetDefaultNone400None request. The method will close the
 // http.Response Body if it receives an error.
 func (client MultipleResponsesClient) GetDefaultNone400NoneSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDefaultNone400NoneResponder handles the response to the GetDefaultNone400None request. The method always

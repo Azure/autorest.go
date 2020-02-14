@@ -75,8 +75,7 @@ func (client ArrayClient) GetEmptyPreparer(ctx context.Context) (*http.Request, 
 // GetEmptySender sends the GetEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) GetEmptySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetEmptyResponder handles the response to the GetEmpty request. The method always
@@ -137,8 +136,7 @@ func (client ArrayClient) GetNotProvidedPreparer(ctx context.Context) (*http.Req
 // GetNotProvidedSender sends the GetNotProvided request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) GetNotProvidedSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNotProvidedResponder handles the response to the GetNotProvided request. The method always
@@ -199,8 +197,7 @@ func (client ArrayClient) GetValidPreparer(ctx context.Context) (*http.Request, 
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
@@ -265,8 +262,7 @@ func (client ArrayClient) PutEmptyPreparer(ctx context.Context, complexBody Arra
 // PutEmptySender sends the PutEmpty request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) PutEmptySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutEmptyResponder handles the response to the PutEmpty request. The method always
@@ -331,8 +327,7 @@ func (client ArrayClient) PutValidPreparer(ctx context.Context, complexBody Arra
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client ArrayClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always
