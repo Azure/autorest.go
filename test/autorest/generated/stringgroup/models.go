@@ -7,18 +7,6 @@ package stringgroup
 
 import azinternal "generatortests/autorest/generated/stringgroup/internal/stringgroup"
 
-type Colors = azinternal.Colors
-
-const (
-	ColorsRedColor = azinternal.ColorsRedColor
-	ColorsGreenColor = azinternal.ColorsGreenColor
-	ColorsBlueColor = azinternal.ColorsBlueColor
-)
-
-func PossibleColorsValues() []Colors {
-	return azinternal.PossibleColorsValues()
-}
-
 // EnumGetNotExpandableResponse contains the response from method Enum.GetNotExpandable.
 type EnumGetNotExpandableResponse = azinternal.EnumGetNotExpandableResponse
 
@@ -79,4 +67,3 @@ type StringPutNullResponse = azinternal.StringPutNullResponse
 
 // StringPutWhitespaceResponse contains the response from method String.PutWhitespace.
 type StringPutWhitespaceResponse = azinternal.StringPutWhitespaceResponse
-
