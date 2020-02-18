@@ -15,27 +15,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   let text = await ContentPreamble(session);
   text += `import ${InternalPackage} "${await InternalPackagePath(session)}"\n\n`;
 
-  // create type aliases for enums
-
-  const enums = getEnums(session.model.schemas);
-  for (const enm of values(enums)) {
-    if (enm.desc) {
-      text += `${comment(enm.name, '// ')} - ${enm.desc}\n`;
-    }
-    text += `type ${enm.name} = ${InternalPackage}.${enm.name}\n\n`;
-    text += 'const (\n'
-    for (const val of values(enm.choices)) {
-      if (HasDescription(val.language.go!)) {
-        text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
-      }
-      text += `\t${val.language.go!.name} = ${InternalPackage}.${val.language.go!.name}\n`;
-    }
-    text += ")\n\n"
-    text += `func ${enm.funcName}() []${enm.name} {\n`;
-    text += `\treturn ${InternalPackage}.${enm.funcName}()\n`;
-    text += '}\n\n';
-  }
-
   // create type aliases for structs
 
   // create a sorted list of struct type names/descriptions

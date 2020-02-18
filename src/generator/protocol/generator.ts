@@ -9,6 +9,7 @@ import { codeModelSchema, CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations'
 import { generateModels } from './models'
+import { generateEnums } from './enums'
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
@@ -28,6 +29,11 @@ export async function protocolGen(host: Host) {
 
     for (const op of values(operations)) {
       host.WriteFile(`internal/${namespace}/${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
+    }
+
+    const enums = await generateEnums(session);
+    if (enums.length > 0) {
+      host.WriteFile(`internal/${namespace}/enums.go`, enums, undefined, 'source-file-go');
     }
 
     const models = await generateModels(session);
