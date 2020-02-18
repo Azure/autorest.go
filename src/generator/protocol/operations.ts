@@ -100,7 +100,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   text += `\tu.Path = path.Join(u.Path, "${op.request.protocol.http!.path}")\n`;
   const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)`;
-  const headerParamCount = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; }).count()
+  const headerParamCount = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; }).count();
   if (getMediaType(op.request.protocol) === 'none' &&  headerParamCount == 0) {
     // no request body so nothing to marshal
     text += `\treturn ${reqObj}, nil\n`;
@@ -108,6 +108,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     const bodyParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     text += `\treq := ${reqObj}\n`;
     // default to the body param name
+    // have to check if bodyParam is null since we can enter the else if there are headers that need to be added to the request
     if (bodyParam != null) {
       let body = bodyParam!.language.go!.name;
       if (bodyParam!.schema.type === SchemaType.Constant) {
@@ -120,11 +121,13 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       text += `\t}\n`;
     }
     // add specific request headers
-    const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
-    imports.add("fmt");
-    headerParam.forEach(header => {
-      text += `\treq.Header.Set("${header.language.go!.name}", fmt.Sprintf("%v", ${header.language.go!.name}))\n`;
-    });
+    if (headerParamCount > 0) {
+      imports.add("fmt");
+      const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
+      headerParam.forEach(header => {
+        text += `\treq.Header.Set("${header.language.go!.name}", fmt.Sprintf("%v", ${header.language.go!.name}))\n`;
+      });
+    }
     text += `\treturn req, nil\n`;
   }
   text += '}\n\n';
