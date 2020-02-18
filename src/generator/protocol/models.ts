@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, joinComma } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, Schemas, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
+import { comment } from '@azure-tools/codegen';
+import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, getEnums, HasDescription, ImportManager, SortAscending } from '../common/helpers';
+import { ContentPreamble, HasDescription, ImportManager, SortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -33,7 +33,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   session.model.schemas.choices?.sort(
     (a: ChoiceSchema<StringSchema>, b: ChoiceSchema<StringSchema>) => { return SortAscending(a.language.go!.name, b.language.go!.name); }
   );
-  text += generateEnums(session.model.schemas);
 
   // structs
   structs.sort((a: StructDef, b: StructDef) => { return SortAscending(a.Language.name, b.Language.name) });
@@ -112,31 +111,6 @@ class StructDef {
     }
     return '*';
   }
-}
-
-function generateEnums(schemas: Schemas): string {
-  const enums = getEnums(schemas);
-  let text = '';
-  for (const enm of values(enums)) {
-    if (enm.desc) {
-      text += `${comment(enm.name, '// ')} - ${enm.desc}\n`;
-    }
-    text += `type ${enm.name} ${enm.type}\n\n`;
-    const vals = new Array<string>();
-    text += 'const (\n'
-    for (const val of values(enm.choices)) {
-      if (HasDescription(val.language.go!)) {
-        text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
-      }
-      text += `\t${val.language.go!.name} ${enm.name} = "${val.value}"\n`;
-      vals.push(val.language.go!.name);
-    }
-    text += ")\n\n"
-    text += `func ${enm.funcName}() []${enm.name} {\n`;
-    text += `\treturn []${enm.name}{${joinComma(vals, (item: string) => item)}}\n`;
-    text += '}\n\n';
-  }
-  return text;
 }
 
 function generateStructs(objects?: ObjectSchema[]): StructDef[] {
