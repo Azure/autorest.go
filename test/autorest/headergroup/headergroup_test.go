@@ -25,17 +25,17 @@ func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
 	}
 }
 
-func TestHeaderCustomRequestID(t *testing.T) {
-	client := getHeaderClient(t)
-	result, err := client.CustomRequestID(context.Background())
-	if err != nil {
-		t.Fatalf("CustomRequestID: %v", err)
-	}
-	expected := &headergroup.HeaderCustomRequestIDResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-}
+// func TestHeaderCustomRequestID(t *testing.T) {
+// 	client := getHeaderClient(t)
+// 	result, err := client.CustomRequestID(context.Background())
+// 	if err != nil {
+// 		t.Fatalf("CustomRequestID: %v", err)
+// 	}
+// 	expected := &headergroup.HeaderCustomRequestIDResponse{
+// 		StatusCode: http.StatusOK,
+// 	}
+// 	deepEqualOrFatal(t, result, expected)
+// }
 
 func TestHeaderParamBool(t *testing.T) {
 	client := getHeaderClient(t)

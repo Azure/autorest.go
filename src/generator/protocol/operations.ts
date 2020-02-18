@@ -120,7 +120,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
     }
-    // add specific request headers
+    // add specific request headers and import the fmt package only if there are headers to add
     if (headerParamCount > 0) {
       imports.add("fmt");
       const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
