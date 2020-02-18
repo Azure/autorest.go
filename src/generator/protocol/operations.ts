@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
-import { CodeModel, ConstantSchema, ImplementationLocation, Language, Operation, Parameter, Protocols, SchemaResponse, SchemaType } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
@@ -83,6 +83,70 @@ class methodSig implements MethodSig {
   }
 }
 
+function formatQueryParamValue(param: Parameter, imports: ImportManager): string {
+  let separator = ',';
+  switch (param.protocol.http?.style) {
+    case SerializationStyle.PipeDelimited:
+      separator = '|';
+      break;
+    case SerializationStyle.SpaceDelimited:
+      separator = ' ';
+      break;
+    case SerializationStyle.TabDelimited:
+      separator = '\\t';
+      break;
+  }
+  switch (param.schema.type) {
+    case SchemaType.Array:
+      const arraySchema = <ArraySchema>param.schema;
+      switch (arraySchema.elementType.type) {
+        case SchemaType.Choice:
+        case SchemaType.SealedChoice:
+        case SchemaType.String:
+          imports.add('strings');
+          return `strings.Join(${param.language.go!.name}, "${separator}")`;
+        default:
+          imports.add('fmt');
+          imports.add('strings');
+          return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${param.language.go!.name}), "[]")), "${separator}")`;
+      }
+    case SchemaType.Boolean:
+      imports.add('strconv');
+      return `strconv.FormatBool(${param.language.go!.name})`;
+    case SchemaType.ByteArray:
+      // ByteArray is a base-64 encoded value in string format
+      return `string(${param.language.go!.name})`;
+    case SchemaType.Choice:
+    case SchemaType.SealedChoice:
+      return `string(${param.language.go!.name})`;
+    case SchemaType.Constant:
+      const constSchema = <ConstantSchema>param.schema;
+      // cannot use formatConstantValue() since all values are treated as strings
+      return `"${constSchema.value.value}"`;
+    case SchemaType.Date:
+    case SchemaType.DateTime:
+      return `${param.language.go!.name}.String()`;
+    case SchemaType.Integer:
+      imports.add('strconv');
+      const intSchema = <NumberSchema>param.schema;
+      let intParam = param.language.go!.name;
+      if (intSchema.precision === 32) {
+        intParam = `int64(${intParam})`;
+      }
+      return `strconv.FormatInt(${intParam}, 10)`;
+    case SchemaType.Number:
+      imports.add('strconv');
+      const numberSchema = <NumberSchema>param.schema;
+      let floatParam = param.language.go!.name;
+      if (numberSchema.precision === 32) {
+        floatParam = `float64(${floatParam})`;
+      }
+      return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;
+    default:
+      return param.language.go!.name;
+  }
+}
+
 function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
@@ -99,6 +163,14 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   text += `\tu.Path = path.Join(u.Path, "${op.request.protocol.http!.path}")\n`;
+  if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
+    // add query parameters
+    text += '\tquery := u.Query()\n';
+    for (const qp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
+      text += `\tquery.Set("${qp.language.go!.name}", ${formatQueryParamValue(qp, imports)})\n`;
+    }
+    text += '\tu.RawQuery = query.Encode()\n';
+  }
   const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)`;
   if (getMediaType(op.request.protocol) === 'none') {
     // no request body so nothing to marshal
