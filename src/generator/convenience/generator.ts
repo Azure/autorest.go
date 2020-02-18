@@ -10,6 +10,7 @@ import { values } from '@azure-tools/linq';
 import { generateClient } from './client';
 import { generateModels } from './models';
 import { generateOperations } from './operations';
+import { generateEnums } from './enums';
 
 // The generator emits Go source code files to disk.
 export async function convenienceGen(host: Host) {
@@ -30,6 +31,11 @@ export async function convenienceGen(host: Host) {
     const operations = await generateOperations(session);
     for (const op of values(operations)) {
       host.WriteFile(`${op.name.toLowerCase()}.go`, op.content, undefined, 'source-file-go');
+    }
+
+    const enums = await generateEnums(session);
+    if (enums.length > 0) {
+      host.WriteFile('enums.go', enums, undefined, 'source-file-go');
     }
 
     const models = await generateModels(session);
