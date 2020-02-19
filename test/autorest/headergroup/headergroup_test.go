@@ -252,3 +252,313 @@ func TestHeaderParamLong(t *testing.T) {
 	}
 	deepEqualOrFatal(t, result, expected)
 }
+
+func TestHeaderParamProtectedKey(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ParamProtectedKey(context.Background(), "text/html")
+	if err != nil {
+		t.Fatalf("ParamProtectedKey: %v", err)
+	}
+	expected := &headergroup.HeaderParamProtectedKeyResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderParamString(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ParamString(context.Background(), "valid", "The quick brown fox jumps over the lazy dog")
+	if err != nil {
+		t.Fatalf("ParamString: %v", err)
+	}
+	expected := &headergroup.HeaderParamStringResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	// result, err = client.ParamString(context.Background(), "null", "")
+	// if err != nil {
+	// 	t.Fatalf("ParamString: %v", err)
+	// }
+	// expected = &headergroup.HeaderParamStringResponse{
+	// 	StatusCode: http.StatusOK,
+	// }
+	// deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ParamString(context.Background(), "empty", "")
+	if err != nil {
+		t.Fatalf("ParamString: %v", err)
+	}
+	expected = &headergroup.HeaderParamStringResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+// TODO check why we dont check for the value returned in all of the tests below this comment
+func TestHeaderResponseBool(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseBool(context.Background(), "true")
+	if err != nil {
+		t.Fatalf("ResponseBool: %v", err)
+	}
+	expected := &headergroup.HeaderResponseBoolResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseBool(context.Background(), "false")
+	if err != nil {
+		t.Fatalf("ResponseBool: %v", err)
+	}
+	expected = &headergroup.HeaderResponseBoolResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseByte(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseByte(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseByte: %v", err)
+	}
+	expected := &headergroup.HeaderResponseByteResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseDate(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDate(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDate: %v", err)
+	}
+	expected := &headergroup.HeaderResponseDateResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseDate(context.Background(), "min")
+	if err != nil {
+		t.Fatalf("ResponseDate: %v", err)
+	}
+	expected = &headergroup.HeaderResponseDateResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseDatetime(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDatetime(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDatetime: %v", err)
+	}
+	expected := &headergroup.HeaderResponseDatetimeResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseDatetime(context.Background(), "min")
+	if err != nil {
+		t.Fatalf("ResponseDatetime: %v", err)
+	}
+	expected = &headergroup.HeaderResponseDatetimeResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDatetimeRFC1123(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
+	}
+	expected := &headergroup.HeaderResponseDatetimeRFC1123Response{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseDatetimeRFC1123(context.Background(), "min")
+	if err != nil {
+		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
+	}
+	expected = &headergroup.HeaderResponseDatetimeRFC1123Response{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseDouble(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDouble(context.Background(), "positive")
+	if err != nil {
+		t.Fatalf("ResponseDouble: %v", err)
+	}
+	expected := &headergroup.HeaderResponseDoubleResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseDouble(context.Background(), "negative")
+	if err != nil {
+		t.Fatalf("ResponseDouble: %v", err)
+	}
+	expected = &headergroup.HeaderResponseDoubleResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseDuration(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDuration(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDuration: %v", err)
+	}
+	expected := &headergroup.HeaderResponseDurationResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseEnum(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseEnum(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseEnum: %v", err)
+	}
+	expected := &headergroup.HeaderResponseEnumResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseEnum(context.Background(), "null")
+	if err != nil {
+		t.Fatalf("ResponseEnum: %v", err)
+	}
+	expected = &headergroup.HeaderResponseEnumResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseExistingKey(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseExistingKey(context.Background())
+	if err != nil {
+		t.Fatalf("ResponseExistingKey: %v", err)
+	}
+	expected := &headergroup.HeaderResponseExistingKeyResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseFloat(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseFloat(context.Background(), "positive")
+	if err != nil {
+		t.Fatalf("ResponseFloat: %v", err)
+	}
+	expected := &headergroup.HeaderResponseFloatResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseFloat(context.Background(), "negative")
+	if err != nil {
+		t.Fatalf("ResponseFloat: %v", err)
+	}
+	expected = &headergroup.HeaderResponseFloatResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseInteger(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseInteger(context.Background(), "positive")
+	if err != nil {
+		t.Fatalf("ResponseInteger: %v", err)
+	}
+	expected := &headergroup.HeaderResponseIntegerResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseInteger(context.Background(), "negative")
+	if err != nil {
+		t.Fatalf("ResponseInteger: %v", err)
+	}
+	expected = &headergroup.HeaderResponseIntegerResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseLong(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseLong(context.Background(), "positive")
+	if err != nil {
+		t.Fatalf("ResponseLong: %v", err)
+	}
+	expected := &headergroup.HeaderResponseLongResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseLong(context.Background(), "negative")
+	if err != nil {
+		t.Fatalf("ResponseLong: %v", err)
+	}
+	expected = &headergroup.HeaderResponseLongResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseProtectedKey(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseProtectedKey(context.Background())
+	if err != nil {
+		t.Fatalf("ResponseProtectedKey: %v", err)
+	}
+	expected := &headergroup.HeaderResponseProtectedKeyResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
+
+func TestHeaderResponseString(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseString(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseString: %v", err)
+	}
+	expected := &headergroup.HeaderResponseStringResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseString(context.Background(), "null")
+	if err != nil {
+		t.Fatalf("ResponseString: %v", err)
+	}
+	expected = &headergroup.HeaderResponseStringResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+
+	result, err = client.ResponseString(context.Background(), "empty")
+	if err != nil {
+		t.Fatalf("ResponseString: %v", err)
+	}
+	expected = &headergroup.HeaderResponseStringResponse{
+		StatusCode: http.StatusOK,
+	}
+	deepEqualOrFatal(t, result, expected)
+}
