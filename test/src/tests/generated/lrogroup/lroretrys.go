@@ -70,9 +70,8 @@ func (client LRORetrysClient) Delete202Retry200Preparer(ctx context.Context) (*h
 // Delete202Retry200Sender sends the Delete202Retry200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LRORetrysClient) Delete202Retry200Sender(req *http.Request) (future LRORetrysDelete202Retry200Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -132,9 +131,8 @@ func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededPreparer(ctx cont
 // DeleteAsyncRelativeRetrySucceededSender sends the DeleteAsyncRelativeRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceededSender(req *http.Request) (future LRORetrysDeleteAsyncRelativeRetrySucceededFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -195,9 +193,8 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededPreparer(
 // DeleteProvisioning202Accepted200SucceededSender sends the DeleteProvisioning202Accepted200Succeeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LRORetrysClient) DeleteProvisioning202Accepted200SucceededSender(req *http.Request) (future LRORetrysDeleteProvisioning202Accepted200SucceededFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -265,9 +262,8 @@ func (client LRORetrysClient) Post202Retry200Preparer(ctx context.Context, produ
 // Post202Retry200Sender sends the Post202Retry200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LRORetrysClient) Post202Retry200Sender(req *http.Request) (future LRORetrysPost202Retry200Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -335,9 +331,8 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceededPreparer(ctx contex
 // PostAsyncRelativeRetrySucceededSender sends the PostAsyncRelativeRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LRORetrysClient) PostAsyncRelativeRetrySucceededSender(req *http.Request) (future LRORetrysPostAsyncRelativeRetrySucceededFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -405,9 +400,8 @@ func (client LRORetrysClient) Put201CreatingSucceeded200Preparer(ctx context.Con
 // Put201CreatingSucceeded200Sender sends the Put201CreatingSucceeded200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LRORetrysClient) Put201CreatingSucceeded200Sender(req *http.Request) (future LRORetrysPut201CreatingSucceeded200Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -476,9 +470,8 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceededPreparer(ctx context
 // PutAsyncRelativeRetrySucceededSender sends the PutAsyncRelativeRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LRORetrysClient) PutAsyncRelativeRetrySucceededSender(req *http.Request) (future LRORetrysPutAsyncRelativeRetrySucceededFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}

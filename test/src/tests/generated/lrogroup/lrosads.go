@@ -69,9 +69,8 @@ func (client LROSADsClient) Delete202NonRetry400Preparer(ctx context.Context) (*
 // Delete202NonRetry400Sender sends the Delete202NonRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) Delete202NonRetry400Sender(req *http.Request) (future LROSADsDelete202NonRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -131,9 +130,8 @@ func (client LROSADsClient) Delete202RetryInvalidHeaderPreparer(ctx context.Cont
 // Delete202RetryInvalidHeaderSender sends the Delete202RetryInvalidHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) Delete202RetryInvalidHeaderSender(req *http.Request) (future LROSADsDelete202RetryInvalidHeaderFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -192,9 +190,8 @@ func (client LROSADsClient) Delete204SucceededPreparer(ctx context.Context) (*ht
 // Delete204SucceededSender sends the Delete204Succeeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) Delete204SucceededSender(req *http.Request) (future LROSADsDelete204SucceededFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -254,9 +251,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400Preparer(ctx context.Cont
 // DeleteAsyncRelativeRetry400Sender sends the DeleteAsyncRelativeRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) DeleteAsyncRelativeRetry400Sender(req *http.Request) (future LROSADsDeleteAsyncRelativeRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -316,9 +312,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderPreparer(ctx co
 // DeleteAsyncRelativeRetryInvalidHeaderSender sends the DeleteAsyncRelativeRetryInvalidHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeaderSender(req *http.Request) (future LROSADsDeleteAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -378,9 +373,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingPreparer(c
 // DeleteAsyncRelativeRetryInvalidJSONPollingSender sends the DeleteAsyncRelativeRetryInvalidJSONPolling request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPollingSender(req *http.Request) (future LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -440,9 +434,8 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusPreparer(ctx context
 // DeleteAsyncRelativeRetryNoStatusSender sends the DeleteAsyncRelativeRetryNoStatus request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatusSender(req *http.Request) (future LROSADsDeleteAsyncRelativeRetryNoStatusFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -501,9 +494,8 @@ func (client LROSADsClient) DeleteNonRetry400Preparer(ctx context.Context) (*htt
 // DeleteNonRetry400Sender sends the DeleteNonRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) DeleteNonRetry400Sender(req *http.Request) (future LROSADsDeleteNonRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -570,9 +562,8 @@ func (client LROSADsClient) Post202NoLocationPreparer(ctx context.Context, produ
 // Post202NoLocationSender sends the Post202NoLocation request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) Post202NoLocationSender(req *http.Request) (future LROSADsPost202NoLocationFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -638,9 +629,8 @@ func (client LROSADsClient) Post202NonRetry400Preparer(ctx context.Context, prod
 // Post202NonRetry400Sender sends the Post202NonRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) Post202NonRetry400Sender(req *http.Request) (future LROSADsPost202NonRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -707,9 +697,8 @@ func (client LROSADsClient) Post202RetryInvalidHeaderPreparer(ctx context.Contex
 // Post202RetryInvalidHeaderSender sends the Post202RetryInvalidHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) Post202RetryInvalidHeaderSender(req *http.Request) (future LROSADsPost202RetryInvalidHeaderFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -776,9 +765,8 @@ func (client LROSADsClient) PostAsyncRelativeRetry400Preparer(ctx context.Contex
 // PostAsyncRelativeRetry400Sender sends the PostAsyncRelativeRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PostAsyncRelativeRetry400Sender(req *http.Request) (future LROSADsPostAsyncRelativeRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -846,9 +834,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderPreparer(ctx cont
 // PostAsyncRelativeRetryInvalidHeaderSender sends the PostAsyncRelativeRetryInvalidHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeaderSender(req *http.Request) (future LROSADsPostAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -916,9 +903,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingPreparer(ctx
 // PostAsyncRelativeRetryInvalidJSONPollingSender sends the PostAsyncRelativeRetryInvalidJSONPolling request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPollingSender(req *http.Request) (future LROSADsPostAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -986,9 +972,8 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadPreparer(ctx context.
 // PostAsyncRelativeRetryNoPayloadSender sends the PostAsyncRelativeRetryNoPayload request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PostAsyncRelativeRetryNoPayloadSender(req *http.Request) (future LROSADsPostAsyncRelativeRetryNoPayloadFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1054,9 +1039,8 @@ func (client LROSADsClient) PostNonRetry400Preparer(ctx context.Context, product
 // PostNonRetry400Sender sends the PostNonRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PostNonRetry400Sender(req *http.Request) (future LROSADsPostNonRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1123,9 +1107,8 @@ func (client LROSADsClient) Put200InvalidJSONPreparer(ctx context.Context, produ
 // Put200InvalidJSONSender sends the Put200InvalidJSON request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) Put200InvalidJSONSender(req *http.Request) (future LROSADsPut200InvalidJSONFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1193,9 +1176,8 @@ func (client LROSADsClient) PutAsyncRelativeRetry400Preparer(ctx context.Context
 // PutAsyncRelativeRetry400Sender sends the PutAsyncRelativeRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutAsyncRelativeRetry400Sender(req *http.Request) (future LROSADsPutAsyncRelativeRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1264,9 +1246,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderPreparer(ctx conte
 // PutAsyncRelativeRetryInvalidHeaderSender sends the PutAsyncRelativeRetryInvalidHeader request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeaderSender(req *http.Request) (future LROSADsPutAsyncRelativeRetryInvalidHeaderFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1335,9 +1316,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingPreparer(ctx 
 // PutAsyncRelativeRetryInvalidJSONPollingSender sends the PutAsyncRelativeRetryInvalidJSONPolling request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPollingSender(req *http.Request) (future LROSADsPutAsyncRelativeRetryInvalidJSONPollingFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1406,9 +1386,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPreparer(ctx context.Co
 // PutAsyncRelativeRetryNoStatusSender sends the PutAsyncRelativeRetryNoStatus request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatusSender(req *http.Request) (future LROSADsPutAsyncRelativeRetryNoStatusFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1477,9 +1456,8 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadPreparer(ctx con
 // PutAsyncRelativeRetryNoStatusPayloadSender sends the PutAsyncRelativeRetryNoStatusPayload request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayloadSender(req *http.Request) (future LROSADsPutAsyncRelativeRetryNoStatusPayloadFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1547,9 +1525,8 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayloadPreparer(ctx co
 // PutError201NoProvisioningStatePayloadSender sends the PutError201NoProvisioningStatePayload request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutError201NoProvisioningStatePayloadSender(req *http.Request) (future LROSADsPutError201NoProvisioningStatePayloadFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1617,9 +1594,8 @@ func (client LROSADsClient) PutNonRetry201Creating400Preparer(ctx context.Contex
 // PutNonRetry201Creating400Sender sends the PutNonRetry201Creating400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutNonRetry201Creating400Sender(req *http.Request) (future LROSADsPutNonRetry201Creating400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1687,9 +1663,8 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONPreparer(ctx con
 // PutNonRetry201Creating400InvalidJSONSender sends the PutNonRetry201Creating400InvalidJSON request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutNonRetry201Creating400InvalidJSONSender(req *http.Request) (future LROSADsPutNonRetry201Creating400InvalidJSONFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -1756,9 +1731,8 @@ func (client LROSADsClient) PutNonRetry400Preparer(ctx context.Context, product 
 // PutNonRetry400Sender sends the PutNonRetry400 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROSADsClient) PutNonRetry400Sender(req *http.Request) (future LROSADsPutNonRetry400Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}

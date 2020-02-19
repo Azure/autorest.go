@@ -75,8 +75,7 @@ func (client PrimitiveClient) GetBoolPreparer(ctx context.Context) (*http.Reques
 // GetBoolSender sends the GetBool request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetBoolSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetBoolResponder handles the response to the GetBool request. The method always
@@ -137,8 +136,7 @@ func (client PrimitiveClient) GetBytePreparer(ctx context.Context) (*http.Reques
 // GetByteSender sends the GetByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetByteSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetByteResponder handles the response to the GetByte request. The method always
@@ -199,8 +197,7 @@ func (client PrimitiveClient) GetDatePreparer(ctx context.Context) (*http.Reques
 // GetDateSender sends the GetDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetDateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDateResponder handles the response to the GetDate request. The method always
@@ -261,8 +258,7 @@ func (client PrimitiveClient) GetDateTimePreparer(ctx context.Context) (*http.Re
 // GetDateTimeSender sends the GetDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDateTimeResponder handles the response to the GetDateTime request. The method always
@@ -323,8 +319,7 @@ func (client PrimitiveClient) GetDateTimeRfc1123Preparer(ctx context.Context) (*
 // GetDateTimeRfc1123Sender sends the GetDateTimeRfc1123 request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetDateTimeRfc1123Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDateTimeRfc1123Responder handles the response to the GetDateTimeRfc1123 request. The method always
@@ -385,8 +380,7 @@ func (client PrimitiveClient) GetDoublePreparer(ctx context.Context) (*http.Requ
 // GetDoubleSender sends the GetDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetDoubleSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDoubleResponder handles the response to the GetDouble request. The method always
@@ -447,8 +441,7 @@ func (client PrimitiveClient) GetDurationPreparer(ctx context.Context) (*http.Re
 // GetDurationSender sends the GetDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetDurationSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDurationResponder handles the response to the GetDuration request. The method always
@@ -509,8 +502,7 @@ func (client PrimitiveClient) GetFloatPreparer(ctx context.Context) (*http.Reque
 // GetFloatSender sends the GetFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetFloatSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetFloatResponder handles the response to the GetFloat request. The method always
@@ -571,8 +563,7 @@ func (client PrimitiveClient) GetIntPreparer(ctx context.Context) (*http.Request
 // GetIntSender sends the GetInt request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetIntSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetIntResponder handles the response to the GetInt request. The method always
@@ -633,8 +624,7 @@ func (client PrimitiveClient) GetLongPreparer(ctx context.Context) (*http.Reques
 // GetLongSender sends the GetLong request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetLongSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLongResponder handles the response to the GetLong request. The method always
@@ -695,8 +685,7 @@ func (client PrimitiveClient) GetStringPreparer(ctx context.Context) (*http.Requ
 // GetStringSender sends the GetString request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) GetStringSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetStringResponder handles the response to the GetString request. The method always
@@ -761,8 +750,7 @@ func (client PrimitiveClient) PutBoolPreparer(ctx context.Context, complexBody B
 // PutBoolSender sends the PutBool request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutBoolSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutBoolResponder handles the response to the PutBool request. The method always
@@ -826,8 +814,7 @@ func (client PrimitiveClient) PutBytePreparer(ctx context.Context, complexBody B
 // PutByteSender sends the PutByte request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutByteSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutByteResponder handles the response to the PutByte request. The method always
@@ -891,8 +878,7 @@ func (client PrimitiveClient) PutDatePreparer(ctx context.Context, complexBody D
 // PutDateSender sends the PutDate request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutDateSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutDateResponder handles the response to the PutDate request. The method always
@@ -956,8 +942,7 @@ func (client PrimitiveClient) PutDateTimePreparer(ctx context.Context, complexBo
 // PutDateTimeSender sends the PutDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutDateTimeResponder handles the response to the PutDateTime request. The method always
@@ -1021,8 +1006,7 @@ func (client PrimitiveClient) PutDateTimeRfc1123Preparer(ctx context.Context, co
 // PutDateTimeRfc1123Sender sends the PutDateTimeRfc1123 request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutDateTimeRfc1123Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutDateTimeRfc1123Responder handles the response to the PutDateTimeRfc1123 request. The method always
@@ -1086,8 +1070,7 @@ func (client PrimitiveClient) PutDoublePreparer(ctx context.Context, complexBody
 // PutDoubleSender sends the PutDouble request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutDoubleSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutDoubleResponder handles the response to the PutDouble request. The method always
@@ -1151,8 +1134,7 @@ func (client PrimitiveClient) PutDurationPreparer(ctx context.Context, complexBo
 // PutDurationSender sends the PutDuration request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutDurationSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutDurationResponder handles the response to the PutDuration request. The method always
@@ -1216,8 +1198,7 @@ func (client PrimitiveClient) PutFloatPreparer(ctx context.Context, complexBody 
 // PutFloatSender sends the PutFloat request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutFloatSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutFloatResponder handles the response to the PutFloat request. The method always
@@ -1281,8 +1262,7 @@ func (client PrimitiveClient) PutIntPreparer(ctx context.Context, complexBody In
 // PutIntSender sends the PutInt request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutIntSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutIntResponder handles the response to the PutInt request. The method always
@@ -1346,8 +1326,7 @@ func (client PrimitiveClient) PutLongPreparer(ctx context.Context, complexBody L
 // PutLongSender sends the PutLong request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutLongSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutLongResponder handles the response to the PutLong request. The method always
@@ -1411,8 +1390,7 @@ func (client PrimitiveClient) PutStringPreparer(ctx context.Context, complexBody
 // PutStringSender sends the PutString request. The method will close the
 // http.Response Body if it receives an error.
 func (client PrimitiveClient) PutStringSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutStringResponder handles the response to the PutString request. The method always

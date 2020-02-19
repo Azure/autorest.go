@@ -79,9 +79,8 @@ func (client LROsCustomHeaderClient) Post202Retry200Preparer(ctx context.Context
 // Post202Retry200Sender sends the Post202Retry200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsCustomHeaderClient) Post202Retry200Sender(req *http.Request) (future LROsCustomHeaderPost202Retry200Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -149,9 +148,8 @@ func (client LROsCustomHeaderClient) PostAsyncRetrySucceededPreparer(ctx context
 // PostAsyncRetrySucceededSender sends the PostAsyncRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsCustomHeaderClient) PostAsyncRetrySucceededSender(req *http.Request) (future LROsCustomHeaderPostAsyncRetrySucceededFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -220,9 +218,8 @@ func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Preparer(ctx cont
 // Put201CreatingSucceeded200Sender sends the Put201CreatingSucceeded200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsCustomHeaderClient) Put201CreatingSucceeded200Sender(req *http.Request) (future LROsCustomHeaderPut201CreatingSucceeded200Future, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}
@@ -291,9 +288,8 @@ func (client LROsCustomHeaderClient) PutAsyncRetrySucceededPreparer(ctx context.
 // PutAsyncRetrySucceededSender sends the PutAsyncRetrySucceeded request. The method will close the
 // http.Response Body if it receives an error.
 func (client LROsCustomHeaderClient) PutAsyncRetrySucceededSender(req *http.Request) (future LROsCustomHeaderPutAsyncRetrySucceededFuture, err error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	var resp *http.Response
-	resp, err = autorest.SendWithSender(client, req, sd...)
+	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
 	}

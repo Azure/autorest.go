@@ -82,8 +82,7 @@ func (client HTTPSuccessClient) Delete200Preparer(ctx context.Context, booleanVa
 // Delete200Sender sends the Delete200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Delete200Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Delete200Responder handles the response to the Delete200 request. The method always
@@ -150,8 +149,7 @@ func (client HTTPSuccessClient) Delete202Preparer(ctx context.Context, booleanVa
 // Delete202Sender sends the Delete202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Delete202Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Delete202Responder handles the response to the Delete202 request. The method always
@@ -218,8 +216,7 @@ func (client HTTPSuccessClient) Delete204Preparer(ctx context.Context, booleanVa
 // Delete204Sender sends the Delete204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Delete204Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Delete204Responder handles the response to the Delete204 request. The method always
@@ -279,8 +276,7 @@ func (client HTTPSuccessClient) Get200Preparer(ctx context.Context) (*http.Reque
 // Get200Sender sends the Get200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Get200Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get200Responder handles the response to the Get200 request. The method always
@@ -341,8 +337,7 @@ func (client HTTPSuccessClient) Head200Preparer(ctx context.Context) (*http.Requ
 // Head200Sender sends the Head200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Head200Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Head200Responder handles the response to the Head200 request. The method always
@@ -402,8 +397,7 @@ func (client HTTPSuccessClient) Head204Preparer(ctx context.Context) (*http.Requ
 // Head204Sender sends the Head204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Head204Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Head204Responder handles the response to the Head204 request. The method always
@@ -463,8 +457,7 @@ func (client HTTPSuccessClient) Head404Preparer(ctx context.Context) (*http.Requ
 // Head404Sender sends the Head404 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Head404Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Head404Responder handles the response to the Head404 request. The method always
@@ -531,8 +524,7 @@ func (client HTTPSuccessClient) Patch200Preparer(ctx context.Context, booleanVal
 // Patch200Sender sends the Patch200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Patch200Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Patch200Responder handles the response to the Patch200 request. The method always
@@ -599,8 +591,7 @@ func (client HTTPSuccessClient) Patch202Preparer(ctx context.Context, booleanVal
 // Patch202Sender sends the Patch202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Patch202Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Patch202Responder handles the response to the Patch202 request. The method always
@@ -667,8 +658,7 @@ func (client HTTPSuccessClient) Patch204Preparer(ctx context.Context, booleanVal
 // Patch204Sender sends the Patch204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Patch204Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Patch204Responder handles the response to the Patch204 request. The method always
@@ -735,8 +725,7 @@ func (client HTTPSuccessClient) Post200Preparer(ctx context.Context, booleanValu
 // Post200Sender sends the Post200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post200Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Post200Responder handles the response to the Post200 request. The method always
@@ -803,8 +792,7 @@ func (client HTTPSuccessClient) Post201Preparer(ctx context.Context, booleanValu
 // Post201Sender sends the Post201 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post201Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Post201Responder handles the response to the Post201 request. The method always
@@ -871,8 +859,7 @@ func (client HTTPSuccessClient) Post202Preparer(ctx context.Context, booleanValu
 // Post202Sender sends the Post202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post202Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Post202Responder handles the response to the Post202 request. The method always
@@ -939,8 +926,7 @@ func (client HTTPSuccessClient) Post204Preparer(ctx context.Context, booleanValu
 // Post204Sender sends the Post204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Post204Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Post204Responder handles the response to the Post204 request. The method always
@@ -1007,8 +993,7 @@ func (client HTTPSuccessClient) Put200Preparer(ctx context.Context, booleanValue
 // Put200Sender sends the Put200 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put200Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Put200Responder handles the response to the Put200 request. The method always
@@ -1075,8 +1060,7 @@ func (client HTTPSuccessClient) Put201Preparer(ctx context.Context, booleanValue
 // Put201Sender sends the Put201 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put201Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Put201Responder handles the response to the Put201 request. The method always
@@ -1143,8 +1127,7 @@ func (client HTTPSuccessClient) Put202Preparer(ctx context.Context, booleanValue
 // Put202Sender sends the Put202 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put202Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Put202Responder handles the response to the Put202 request. The method always
@@ -1211,8 +1194,7 @@ func (client HTTPSuccessClient) Put204Preparer(ctx context.Context, booleanValue
 // Put204Sender sends the Put204 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPSuccessClient) Put204Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Put204Responder handles the response to the Put204 request. The method always

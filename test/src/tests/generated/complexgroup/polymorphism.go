@@ -77,8 +77,7 @@ func (client PolymorphismClient) GetComplicatedPreparer(ctx context.Context) (*h
 // GetComplicatedSender sends the GetComplicated request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) GetComplicatedSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetComplicatedResponder handles the response to the GetComplicated request. The method always
@@ -141,8 +140,7 @@ func (client PolymorphismClient) GetComposedWithDiscriminatorPreparer(ctx contex
 // GetComposedWithDiscriminatorSender sends the GetComposedWithDiscriminator request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) GetComposedWithDiscriminatorSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetComposedWithDiscriminatorResponder handles the response to the GetComposedWithDiscriminator request. The method always
@@ -205,8 +203,7 @@ func (client PolymorphismClient) GetComposedWithoutDiscriminatorPreparer(ctx con
 // GetComposedWithoutDiscriminatorSender sends the GetComposedWithoutDiscriminator request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) GetComposedWithoutDiscriminatorSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetComposedWithoutDiscriminatorResponder handles the response to the GetComposedWithoutDiscriminator request. The method always
@@ -267,8 +264,7 @@ func (client PolymorphismClient) GetDotSyntaxPreparer(ctx context.Context) (*htt
 // GetDotSyntaxSender sends the GetDotSyntax request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) GetDotSyntaxSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDotSyntaxResponder handles the response to the GetDotSyntax request. The method always
@@ -329,8 +325,7 @@ func (client PolymorphismClient) GetValidPreparer(ctx context.Context) (*http.Re
 // GetValidSender sends the GetValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) GetValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetValidResponder handles the response to the GetValid request. The method always
@@ -394,8 +389,7 @@ func (client PolymorphismClient) PutComplicatedPreparer(ctx context.Context, com
 // PutComplicatedSender sends the PutComplicated request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutComplicatedSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutComplicatedResponder handles the response to the PutComplicated request. The method always
@@ -457,8 +451,7 @@ func (client PolymorphismClient) PutMissingDiscriminatorPreparer(ctx context.Con
 // PutMissingDiscriminatorSender sends the PutMissingDiscriminator request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutMissingDiscriminatorSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutMissingDiscriminatorResponder handles the response to the PutMissingDiscriminator request. The method always
@@ -561,8 +554,7 @@ func (client PolymorphismClient) PutValidPreparer(ctx context.Context, complexBo
 // PutValidSender sends the PutValid request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutValidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutValidResponder handles the response to the PutValid request. The method always
@@ -659,8 +651,7 @@ func (client PolymorphismClient) PutValidMissingRequiredPreparer(ctx context.Con
 // PutValidMissingRequiredSender sends the PutValidMissingRequired request. The method will close the
 // http.Response Body if it receives an error.
 func (client PolymorphismClient) PutValidMissingRequiredSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutValidMissingRequiredResponder handles the response to the PutValidMissingRequired request. The method always

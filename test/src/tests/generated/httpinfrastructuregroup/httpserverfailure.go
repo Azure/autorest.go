@@ -83,8 +83,7 @@ func (client HTTPServerFailureClient) Delete505Preparer(ctx context.Context, boo
 // Delete505Sender sends the Delete505 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPServerFailureClient) Delete505Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Delete505Responder handles the response to the Delete505 request. The method always
@@ -145,8 +144,7 @@ func (client HTTPServerFailureClient) Get501Preparer(ctx context.Context) (*http
 // Get501Sender sends the Get501 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPServerFailureClient) Get501Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Get501Responder handles the response to the Get501 request. The method always
@@ -207,8 +205,7 @@ func (client HTTPServerFailureClient) Head501Preparer(ctx context.Context) (*htt
 // Head501Sender sends the Head501 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPServerFailureClient) Head501Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Head501Responder handles the response to the Head501 request. The method always
@@ -276,8 +273,7 @@ func (client HTTPServerFailureClient) Post505Preparer(ctx context.Context, boole
 // Post505Sender sends the Post505 request. The method will close the
 // http.Response Body if it receives an error.
 func (client HTTPServerFailureClient) Post505Sender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // Post505Responder handles the response to the Post505 request. The method always

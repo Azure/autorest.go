@@ -88,8 +88,7 @@ func (client BaseClient) GetArrayPreparer(ctx context.Context) (*http.Request, e
 // GetArraySender sends the GetArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) GetArraySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetArrayResponder handles the response to the GetArray request. The method always
@@ -150,8 +149,7 @@ func (client BaseClient) GetDictionaryPreparer(ctx context.Context) (*http.Reque
 // GetDictionarySender sends the GetDictionary request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) GetDictionarySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetDictionaryResponder handles the response to the GetDictionary request. The method always
@@ -212,8 +210,7 @@ func (client BaseClient) GetResourceCollectionPreparer(ctx context.Context) (*ht
 // GetResourceCollectionSender sends the GetResourceCollection request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) GetResourceCollectionSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetResourceCollectionResponder handles the response to the GetResourceCollection request. The method always
@@ -275,8 +272,7 @@ func (client BaseClient) GetWrappedArrayPreparer(ctx context.Context) (*http.Req
 // GetWrappedArraySender sends the GetWrappedArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) GetWrappedArraySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetWrappedArrayResponder handles the response to the GetWrappedArray request. The method always
@@ -355,8 +351,7 @@ func (client BaseClient) PostFlattenedSimpleProductPreparer(ctx context.Context,
 // PostFlattenedSimpleProductSender sends the PostFlattenedSimpleProduct request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PostFlattenedSimpleProductSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PostFlattenedSimpleProductResponder handles the response to the PostFlattenedSimpleProduct request. The method always
@@ -424,8 +419,7 @@ func (client BaseClient) PutArrayPreparer(ctx context.Context, resourceArray []R
 // PutArraySender sends the PutArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PutArraySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutArrayResponder handles the response to the PutArray request. The method always
@@ -492,8 +486,7 @@ func (client BaseClient) PutDictionaryPreparer(ctx context.Context, resourceDict
 // PutDictionarySender sends the PutDictionary request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PutDictionarySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutDictionaryResponder handles the response to the PutDictionary request. The method always
@@ -560,8 +553,7 @@ func (client BaseClient) PutResourceCollectionPreparer(ctx context.Context, reso
 // PutResourceCollectionSender sends the PutResourceCollection request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PutResourceCollectionSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutResourceCollectionResponder handles the response to the PutResourceCollection request. The method always
@@ -639,8 +631,7 @@ func (client BaseClient) PutSimpleProductPreparer(ctx context.Context, simpleBod
 // PutSimpleProductSender sends the PutSimpleProduct request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PutSimpleProductSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutSimpleProductResponder handles the response to the PutSimpleProduct request. The method always
@@ -724,8 +715,7 @@ func (client BaseClient) PutSimpleProductWithGroupingPreparer(ctx context.Contex
 // PutSimpleProductWithGroupingSender sends the PutSimpleProductWithGrouping request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PutSimpleProductWithGroupingSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutSimpleProductWithGroupingResponder handles the response to the PutSimpleProductWithGrouping request. The method always
@@ -794,8 +784,7 @@ func (client BaseClient) PutWrappedArrayPreparer(ctx context.Context, resourceAr
 // PutWrappedArraySender sends the PutWrappedArray request. The method will close the
 // http.Response Body if it receives an error.
 func (client BaseClient) PutWrappedArraySender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutWrappedArrayResponder handles the response to the PutWrappedArray request. The method always

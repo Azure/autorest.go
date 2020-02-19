@@ -75,8 +75,7 @@ func (client FilesClient) GetEmptyFilePreparer(ctx context.Context) (*http.Reque
 // GetEmptyFileSender sends the GetEmptyFile request. The method will close the
 // http.Response Body if it receives an error.
 func (client FilesClient) GetEmptyFileSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetEmptyFileResponder handles the response to the GetEmptyFile request. The method always
@@ -136,8 +135,7 @@ func (client FilesClient) GetFilePreparer(ctx context.Context) (*http.Request, e
 // GetFileSender sends the GetFile request. The method will close the
 // http.Response Body if it receives an error.
 func (client FilesClient) GetFileSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetFileResponder handles the response to the GetFile request. The method always
@@ -197,8 +195,7 @@ func (client FilesClient) GetFileLargePreparer(ctx context.Context) (*http.Reque
 // GetFileLargeSender sends the GetFileLarge request. The method will close the
 // http.Response Body if it receives an error.
 func (client FilesClient) GetFileLargeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetFileLargeResponder handles the response to the GetFileLarge request. The method always

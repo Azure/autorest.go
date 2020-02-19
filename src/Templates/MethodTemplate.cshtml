@@ -268,12 +268,11 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
     // @(Model.SenderMethodName) sends the @(Model.Name) request. The method will close the
     // http.Response Body if it receives an error.
     func (client @(Model.Owner)) @(Model.SenderMethodName)(req *http.Request) (@senderRetSig) {
-        sd := autorest.GetSendDecorators(req.Context(), @Model.SendDecorators.EmitAsArguments())
     @if (Model.IsLongRunningOperation())
     {
         <text>
             var resp *http.Response
-            resp, err = autorest.SendWithSender(client, req, sd...)
+            resp, err = client.Send(req, @Model.SendDecorators.EmitAsArguments())
             if err != nil {
             return
             }
@@ -284,7 +283,7 @@ func (client @(Model.Owner)) @(Model.Name)(@Model.MethodParametersSignature()) (
     else
     {
         <text>
-            return autorest.SendWithSender(client, req, sd...)
+            return client.Send(req, @Model.SendDecorators.EmitAsArguments())
         </text>
     }
     }
@@ -362,8 +361,7 @@ func (client @(Model.Owner)) @(Model.ResponderMethodName)(resp *http.Response) (
             {
                 <text>
                 var resp *http.Response
-                resp, err = autorest.SendWithSender(client, req,
-                autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
+                resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
                 if err != nil {
                 return result, @(Model.AutorestError("Failure sending next results request", "resp", null, Model.NextMethodName))
                 }

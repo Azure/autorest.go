@@ -76,8 +76,7 @@ func (client DatetimeClient) GetInvalidPreparer(ctx context.Context) (*http.Requ
 // GetInvalidSender sends the GetInvalid request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetInvalidSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetInvalidResponder handles the response to the GetInvalid request. The method always
@@ -139,8 +138,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimePreparer(
 // GetLocalNegativeOffsetLowercaseMaxDateTimeSender sends the GetLocalNegativeOffsetLowercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLocalNegativeOffsetLowercaseMaxDateTimeResponder handles the response to the GetLocalNegativeOffsetLowercaseMaxDateTime request. The method always
@@ -201,8 +199,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimePreparer(ctx conte
 // GetLocalNegativeOffsetMinDateTimeSender sends the GetLocalNegativeOffsetMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetLocalNegativeOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLocalNegativeOffsetMinDateTimeResponder handles the response to the GetLocalNegativeOffsetMinDateTime request. The method always
@@ -264,8 +261,7 @@ func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimePreparer(
 // GetLocalNegativeOffsetUppercaseMaxDateTimeSender sends the GetLocalNegativeOffsetUppercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLocalNegativeOffsetUppercaseMaxDateTimeResponder handles the response to the GetLocalNegativeOffsetUppercaseMaxDateTime request. The method always
@@ -327,8 +323,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimePreparer(
 // GetLocalPositiveOffsetLowercaseMaxDateTimeSender sends the GetLocalPositiveOffsetLowercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLocalPositiveOffsetLowercaseMaxDateTimeResponder handles the response to the GetLocalPositiveOffsetLowercaseMaxDateTime request. The method always
@@ -389,8 +384,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimePreparer(ctx conte
 // GetLocalPositiveOffsetMinDateTimeSender sends the GetLocalPositiveOffsetMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetLocalPositiveOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLocalPositiveOffsetMinDateTimeResponder handles the response to the GetLocalPositiveOffsetMinDateTime request. The method always
@@ -452,8 +446,7 @@ func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimePreparer(
 // GetLocalPositiveOffsetUppercaseMaxDateTimeSender sends the GetLocalPositiveOffsetUppercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetLocalPositiveOffsetUppercaseMaxDateTimeResponder handles the response to the GetLocalPositiveOffsetUppercaseMaxDateTime request. The method always
@@ -514,8 +507,7 @@ func (client DatetimeClient) GetNullPreparer(ctx context.Context) (*http.Request
 // GetNullSender sends the GetNull request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetNullSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetNullResponder handles the response to the GetNull request. The method always
@@ -576,8 +568,7 @@ func (client DatetimeClient) GetOverflowPreparer(ctx context.Context) (*http.Req
 // GetOverflowSender sends the GetOverflow request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetOverflowSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetOverflowResponder handles the response to the GetOverflow request. The method always
@@ -638,8 +629,7 @@ func (client DatetimeClient) GetUnderflowPreparer(ctx context.Context) (*http.Re
 // GetUnderflowSender sends the GetUnderflow request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetUnderflowSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetUnderflowResponder handles the response to the GetUnderflow request. The method always
@@ -700,8 +690,7 @@ func (client DatetimeClient) GetUtcLowercaseMaxDateTimePreparer(ctx context.Cont
 // GetUtcLowercaseMaxDateTimeSender sends the GetUtcLowercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetUtcLowercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetUtcLowercaseMaxDateTimeResponder handles the response to the GetUtcLowercaseMaxDateTime request. The method always
@@ -762,8 +751,7 @@ func (client DatetimeClient) GetUtcMinDateTimePreparer(ctx context.Context) (*ht
 // GetUtcMinDateTimeSender sends the GetUtcMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetUtcMinDateTimeResponder handles the response to the GetUtcMinDateTime request. The method always
@@ -824,8 +812,7 @@ func (client DatetimeClient) GetUtcUppercaseMaxDateTimePreparer(ctx context.Cont
 // GetUtcUppercaseMaxDateTimeSender sends the GetUtcUppercaseMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) GetUtcUppercaseMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // GetUtcUppercaseMaxDateTimeResponder handles the response to the GetUtcUppercaseMaxDateTime request. The method always
@@ -888,8 +875,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimePreparer(ctx conte
 // PutLocalNegativeOffsetMaxDateTimeSender sends the PutLocalNegativeOffsetMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) PutLocalNegativeOffsetMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutLocalNegativeOffsetMaxDateTimeResponder handles the response to the PutLocalNegativeOffsetMaxDateTime request. The method always
@@ -951,8 +937,7 @@ func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimePreparer(ctx conte
 // PutLocalNegativeOffsetMinDateTimeSender sends the PutLocalNegativeOffsetMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) PutLocalNegativeOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutLocalNegativeOffsetMinDateTimeResponder handles the response to the PutLocalNegativeOffsetMinDateTime request. The method always
@@ -1014,8 +999,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimePreparer(ctx conte
 // PutLocalPositiveOffsetMaxDateTimeSender sends the PutLocalPositiveOffsetMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) PutLocalPositiveOffsetMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutLocalPositiveOffsetMaxDateTimeResponder handles the response to the PutLocalPositiveOffsetMaxDateTime request. The method always
@@ -1077,8 +1061,7 @@ func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimePreparer(ctx conte
 // PutLocalPositiveOffsetMinDateTimeSender sends the PutLocalPositiveOffsetMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) PutLocalPositiveOffsetMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutLocalPositiveOffsetMinDateTimeResponder handles the response to the PutLocalPositiveOffsetMinDateTime request. The method always
@@ -1140,8 +1123,7 @@ func (client DatetimeClient) PutUtcMaxDateTimePreparer(ctx context.Context, date
 // PutUtcMaxDateTimeSender sends the PutUtcMaxDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) PutUtcMaxDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutUtcMaxDateTimeResponder handles the response to the PutUtcMaxDateTime request. The method always
@@ -1203,8 +1185,7 @@ func (client DatetimeClient) PutUtcMinDateTimePreparer(ctx context.Context, date
 // PutUtcMinDateTimeSender sends the PutUtcMinDateTime request. The method will close the
 // http.Response Body if it receives an error.
 func (client DatetimeClient) PutUtcMinDateTimeSender(req *http.Request) (*http.Response, error) {
-	sd := autorest.GetSendDecorators(req.Context(), autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
-	return autorest.SendWithSender(client, req, sd...)
+	return client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 }
 
 // PutUtcMinDateTimeResponder handles the response to the PutUtcMinDateTime request. The method always
