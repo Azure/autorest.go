@@ -6,12 +6,14 @@
 package headergroup
 
 import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"encoding/base64"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type HeaderOperations struct{}
@@ -52,7 +54,7 @@ func (HeaderOperations) ParamByteCreateRequest(u url.URL, scenario string, value
 	u.Path = path.Join(u.Path, "/header/param/prim/byte")
 	req := azcore.NewRequest(http.MethodPost, u)
 	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", string(value))
+	req.Header.Set("value", base64.StdEncoding.EncodeToString(value))
 	return req, nil
 }
 
@@ -170,7 +172,7 @@ func (HeaderOperations) ParamEnumHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamExistingKeyCreateRequest(u url.URL, userAgent string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/existingkey")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("userAgent", userAgent)
+	req.Header.Set("User-Agent", userAgent)
 	return req, nil
 }
 
@@ -237,7 +239,7 @@ func (HeaderOperations) ParamLongHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamProtectedKeyCreateRequest(u url.URL, contentType string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/protectedkey")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("contentType", contentType)
+	req.Header.Set("Content-Type", contentType)
 	return req, nil
 }
 
@@ -485,4 +487,3 @@ func (HeaderOperations) ResponseStringHandleResponse(resp *azcore.Response) (*He
 	}
 	return &HeaderResponseStringResponse{StatusCode: resp.StatusCode}, nil
 }
-
