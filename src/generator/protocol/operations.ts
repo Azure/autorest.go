@@ -83,7 +83,7 @@ class methodSig implements MethodSig {
   }
 }
 
-function formatQueryParamValue(param: Parameter, imports: ImportManager): string {
+function formatParamValue(param: Parameter, imports: ImportManager): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
     case SerializationStyle.PipeDelimited:
@@ -125,6 +125,7 @@ function formatQueryParamValue(param: Parameter, imports: ImportManager): string
       return `"${constSchema.value.value}"`;
     case SchemaType.Date:
     case SchemaType.DateTime:
+    case SchemaType.Duration:
       return `${param.language.go!.name}.String()`;
     case SchemaType.Integer:
       imports.add('strconv');
@@ -167,27 +168,36 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     // add query parameters
     text += '\tquery := u.Query()\n';
     for (const qp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
-      text += `\tquery.Set("${qp.language.go!.name}", ${formatQueryParamValue(qp, imports)})\n`;
+      text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
     }
     text += '\tu.RawQuery = query.Encode()\n';
   }
   const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)`;
-  if (getMediaType(op.request.protocol) === 'none') {
+  const headerParamCount = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; }).count();
+  if (getMediaType(op.request.protocol) === 'none' &&  headerParamCount == 0) {
     // no request body so nothing to marshal
     text += `\treturn ${reqObj}, nil\n`;
   } else {
     const bodyParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     text += `\treq := ${reqObj}\n`;
     // default to the body param name
-    let body = bodyParam!.language.go!.name;
-    if (bodyParam!.schema.type === SchemaType.Constant) {
-      // if the value is constant, embed it directly
-      body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
+    // have to check if bodyParam is null since we can enter the else if there are headers that need to be added to the request
+    if (bodyParam != null) {
+      let body = bodyParam!.language.go!.name;
+      if (bodyParam!.schema.type === SchemaType.Constant) {
+        // if the value is constant, embed it directly
+        body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
+      }
+      text += `\terr := req.MarshalAs${getMediaType(op.request.protocol)}(${body})\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
     }
-    text += `\terr := req.MarshalAs${getMediaType(op.request.protocol)}(${body})\n`;
-    text += `\tif err != nil {\n`;
-    text += `\t\treturn nil, err\n`;
-    text += `\t}\n`;
+    // add specific request headers
+    const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
+    headerParam.forEach(header => {
+      text += `\treq.Header.Set("${header.language.go!.name}", ${formatParamValue(header, imports)})\n`;
+    });
     text += `\treturn req, nil\n`;
   }
   text += '}\n\n';
