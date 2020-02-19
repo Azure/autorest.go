@@ -8,9 +8,9 @@ package stringgroup
 type Colors string
 
 const (
-	ColorsRedColor   Colors = "red color"
+	ColorsRedColor Colors = "red color"
 	ColorsGreenColor Colors = "green-color"
-	ColorsBlueColor  Colors = "blue_color"
+	ColorsBlueColor Colors = "blue_color"
 )
 
 func PossibleColorsValues() []Colors {
@@ -20,3 +20,4 @@ func PossibleColorsValues() []Colors {
 func (c Colors) ToPtr() *Colors {
 	return &c
 }
+

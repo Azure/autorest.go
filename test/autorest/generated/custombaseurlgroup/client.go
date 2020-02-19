@@ -6,9 +6,8 @@
 package custombaseurlgroup
 
 import (
-	"net/url"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/url"
 )
 
 type ClientOptions struct {
@@ -26,15 +25,23 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry:      azcore.DefaultRetryOptions(),
+		Retry: azcore.DefaultRetryOptions(),
 	}
 }
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u               *url.URL
-	p               azcore.Pipeline
+	u *url.URL
+	p azcore.Pipeline
 	pathsOperations PathsOperations
+}
+
+// DefaultEndpoint is the default service endpoint.
+const DefaultEndpoint = "host"
+
+// NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.
+func NewDefaultClient(options *ClientOptions) (*Client, error) {
+	return NewClient(DefaultEndpoint, options)
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
@@ -66,3 +73,4 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 func (client *Client) PathsOperations() PathsOperations {
 	return client.pathsOperations
 }
+

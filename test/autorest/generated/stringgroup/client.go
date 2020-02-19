@@ -25,16 +25,16 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry:      azcore.DefaultRetryOptions(),
+		Retry: azcore.DefaultRetryOptions(),
 	}
 }
 
 // Client - Test Infrastructure for AutoRest Swagger BAT
 type Client struct {
-	u                *url.URL
-	p                azcore.Pipeline
+	u *url.URL
+	p azcore.Pipeline
 	stringOperations StringOperations
-	enumOperations   EnumOperations
+	enumOperations EnumOperations
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -80,3 +80,4 @@ func (client *Client) StringOperations() StringOperations {
 func (client *Client) EnumOperations() EnumOperations {
 	return client.enumOperations
 }
+

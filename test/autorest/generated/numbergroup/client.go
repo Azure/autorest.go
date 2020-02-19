@@ -6,9 +6,8 @@
 package numbergroup
 
 import (
-	"net/url"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/url"
 )
 
 type ClientOptions struct {
@@ -26,14 +25,14 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry:      azcore.DefaultRetryOptions(),
+		Retry: azcore.DefaultRetryOptions(),
 	}
 }
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u                *url.URL
-	p                azcore.Pipeline
+	u *url.URL
+	p azcore.Pipeline
 	numberOperations NumberOperations
 }
 
@@ -74,3 +73,4 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 func (client *Client) NumberOperations() NumberOperations {
 	return client.numberOperations
 }
+

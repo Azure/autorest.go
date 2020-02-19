@@ -67,3 +67,4 @@ type StringPutNullResponse = azinternal.StringPutNullResponse
 
 // StringPutWhitespaceResponse contains the response from method String.PutWhitespace.
 type StringPutWhitespaceResponse = azinternal.StringPutWhitespaceResponse
+

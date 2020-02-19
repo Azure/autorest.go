@@ -6,15 +6,13 @@
 package urlgroup
 
 import (
-	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type QueriesOperations struct{}
@@ -159,7 +157,7 @@ func (QueriesOperations) ByteMultiByteHandleResponse(resp *azcore.Response) (*Qu
 func (QueriesOperations) ByteNullCreateRequest(u url.URL, byteQuery []byte) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/queries/byte/null")
 	query := u.Query()
-	query.Set("byteQuery", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(byteQuery), "[]")), ","))
+	query.Set("byteQuery", string(byteQuery))
 	u.RawQuery = query.Encode()
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
@@ -596,3 +594,4 @@ func (QueriesOperations) StringUnicodeHandleResponse(resp *azcore.Response) (*Qu
 	}
 	return &QueriesStringUnicodeResponse{StatusCode: resp.StatusCode}, nil
 }
+

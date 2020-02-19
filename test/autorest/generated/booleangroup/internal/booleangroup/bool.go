@@ -6,11 +6,10 @@
 package booleangroup
 
 import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type BoolOperations struct{}
@@ -112,3 +111,4 @@ func (BoolOperations) PutTrueHandleResponse(resp *azcore.Response) (*BoolPutTrue
 	}
 	return &BoolPutTrueResponse{StatusCode: resp.StatusCode}, nil
 }
+

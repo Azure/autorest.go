@@ -6,11 +6,10 @@
 package custombaseurlgroup
 
 import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type PathsOperations struct{}
@@ -28,3 +27,4 @@ func (PathsOperations) GetEmptyHandleResponse(resp *azcore.Response) (*PathsGetE
 	}
 	return &PathsGetEmptyResponse{StatusCode: resp.StatusCode}, nil
 }
+

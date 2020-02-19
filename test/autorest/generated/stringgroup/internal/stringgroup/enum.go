@@ -115,3 +115,4 @@ func (EnumOperations) PutReferencedConstantHandleResponse(resp *azcore.Response)
 	}
 	return &EnumPutReferencedConstantResponse{StatusCode: resp.StatusCode}, nil
 }
+

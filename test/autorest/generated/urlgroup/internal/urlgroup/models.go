@@ -10,18 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-type UriColor string
-
-const (
-	UriColorRedColor UriColor = "red color"
-	UriColorGreenColor UriColor = "green color"
-	UriColorBlueColor UriColor = "blue color"
-)
-
-func PossibleUriColorValues() []UriColor {
-	return []UriColor{UriColorRedColor, UriColorGreenColor, UriColorBlueColor}
-}
-
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status *int32 `json:"status,omitempty"`

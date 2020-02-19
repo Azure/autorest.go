@@ -7,18 +7,6 @@ package urlgroup
 
 import azinternal "generatortests/autorest/generated/urlgroup/internal/urlgroup"
 
-type UriColor = azinternal.UriColor
-
-const (
-	UriColorRedColor = azinternal.UriColorRedColor
-	UriColorGreenColor = azinternal.UriColorGreenColor
-	UriColorBlueColor = azinternal.UriColorBlueColor
-)
-
-func PossibleUriColorValues() []UriColor {
-	return azinternal.PossibleUriColorValues()
-}
-
 type Error = azinternal.Error
 
 // PathItemsGetAllWithValuesResponse contains the response from method PathItems.GetAllWithValues.

@@ -15,7 +15,7 @@ type ByteGetEmptyResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
 	// The empty byte value ''
-	Value []byte
+	Value *[]byte
 }
 
 // ByteGetInvalidResponse contains the response from method Byte.GetInvalid.
@@ -23,7 +23,7 @@ type ByteGetInvalidResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-	Value []byte
+	Value *[]byte
 }
 
 // ByteGetNonASCIIResponse contains the response from method Byte.GetNonASCII.
@@ -31,7 +31,7 @@ type ByteGetNonASCIIResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-	Value []byte
+	Value *[]byte
 }
 
 // ByteGetNullResponse contains the response from method Byte.GetNull.
@@ -39,7 +39,7 @@ type ByteGetNullResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
 	// The null byte value
-	Value []byte
+	Value *[]byte
 }
 
 // BytePutNonASCIIResponse contains the response from method Byte.PutNonASCII.

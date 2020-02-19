@@ -6,9 +6,8 @@
 package urlgroup
 
 import (
-	"net/url"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/url"
 )
 
 type ClientOptions struct {
@@ -26,15 +25,17 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry:      azcore.DefaultRetryOptions(),
+		Retry: azcore.DefaultRetryOptions(),
 	}
 }
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u                 *url.URL
-	p                 azcore.Pipeline
+	u *url.URL
+	p azcore.Pipeline
+	pathsOperations PathsOperations
 	queriesOperations QueriesOperations
+	pathItemsOperations PathItemsOperations
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -66,11 +67,24 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 		return nil, err
 	}
 	c := &Client{u: u, p: p}
+	c.pathsOperations = &pathsOperations{Client: c}
 	c.queriesOperations = &queriesOperations{Client: c}
+	c.pathItemsOperations = &pathItemsOperations{Client: c}
 	return c, nil
+}
+
+// PathsOperations returns the PathsOperations associated with this client.
+func (client *Client) PathsOperations() PathsOperations {
+	return client.pathsOperations
 }
 
 // QueriesOperations returns the QueriesOperations associated with this client.
 func (client *Client) QueriesOperations() QueriesOperations {
 	return client.queriesOperations
 }
+
+// PathItemsOperations returns the PathItemsOperations associated with this client.
+func (client *Client) PathItemsOperations() PathItemsOperations {
+	return client.pathItemsOperations
+}
+
