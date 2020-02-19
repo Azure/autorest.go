@@ -83,7 +83,7 @@ class methodSig implements MethodSig {
   }
 }
 
-function formatQueryParamValue(param: Parameter, imports: ImportManager): string {
+function formatParamValue(param: Parameter, imports: ImportManager): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
     case SerializationStyle.PipeDelimited:
@@ -125,6 +125,7 @@ function formatQueryParamValue(param: Parameter, imports: ImportManager): string
       return `"${constSchema.value.value}"`;
     case SchemaType.Date:
     case SchemaType.DateTime:
+    case SchemaType.Duration:
       return `${param.language.go!.name}.String()`;
     case SchemaType.Integer:
       imports.add('strconv');
@@ -167,7 +168,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     // add query parameters
     text += '\tquery := u.Query()\n';
     for (const qp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
-      text += `\tquery.Set("${qp.language.go!.name}", ${formatQueryParamValue(qp, imports)})\n`;
+      text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
     }
     text += '\tu.RawQuery = query.Encode()\n';
   }
@@ -194,10 +195,9 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     // add specific request headers and import the fmt package only if there are headers to add
     if (headerParamCount > 0) {
-      imports.add("fmt");
       const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
       headerParam.forEach(header => {
-        text += `\treq.Header.Set("${header.language.go!.name}", fmt.Sprintf("%v", ${header.language.go!.name}))\n`;
+        text += `\treq.Header.Set("${header.language.go!.name}", ${formatParamValue(header, imports)})\n`;
       });
     }
     text += `\treturn req, nil\n`;
