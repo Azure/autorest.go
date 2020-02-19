@@ -193,13 +193,11 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
     }
-    // add specific request headers and import the fmt package only if there are headers to add
-    if (headerParamCount > 0) {
-      const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
-      headerParam.forEach(header => {
-        text += `\treq.Header.Set("${header.language.go!.name}", ${formatParamValue(header, imports)})\n`;
-      });
-    }
+    // add specific request headers
+    const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
+    headerParam.forEach(header => {
+      text += `\treq.Header.Set("${header.language.go!.name}", ${formatParamValue(header, imports)})\n`;
+    });
     text += `\treturn req, nil\n`;
   }
   text += '}\n\n';
