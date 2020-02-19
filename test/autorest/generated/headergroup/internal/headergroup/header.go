@@ -6,13 +6,12 @@
 package headergroup
 
 import (
-	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
+	"strconv"
 	"time"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type HeaderOperations struct{}
@@ -35,8 +34,8 @@ func (HeaderOperations) CustomRequestIDHandleResponse(resp *azcore.Response) (*H
 func (HeaderOperations) ParamBoolCreateRequest(u url.URL, scenario string, value bool) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/bool")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", strconv.FormatBool(value))
 	return req, nil
 }
 
@@ -52,8 +51,8 @@ func (HeaderOperations) ParamBoolHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamByteCreateRequest(u url.URL, scenario string, value []byte) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/byte")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", string(value))
 	return req, nil
 }
 
@@ -69,8 +68,8 @@ func (HeaderOperations) ParamByteHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamDateCreateRequest(u url.URL, scenario string, value time.Time) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/date")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", value.String())
 	return req, nil
 }
 
@@ -86,8 +85,8 @@ func (HeaderOperations) ParamDateHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamDatetimeCreateRequest(u url.URL, scenario string, value time.Time) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/datetime")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", value.String())
 	return req, nil
 }
 
@@ -103,8 +102,8 @@ func (HeaderOperations) ParamDatetimeHandleResponse(resp *azcore.Response) (*Hea
 func (HeaderOperations) ParamDatetimeRFC1123CreateRequest(u url.URL, scenario string, value time.Time) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/datetimerfc1123")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", value.String())
 	return req, nil
 }
 
@@ -120,8 +119,8 @@ func (HeaderOperations) ParamDatetimeRFC1123HandleResponse(resp *azcore.Response
 func (HeaderOperations) ParamDoubleCreateRequest(u url.URL, scenario string, value float64) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/double")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", strconv.FormatFloat(value, 'f', -1, 64))
 	return req, nil
 }
 
@@ -137,8 +136,8 @@ func (HeaderOperations) ParamDoubleHandleResponse(resp *azcore.Response) (*Heade
 func (HeaderOperations) ParamDurationCreateRequest(u url.URL, scenario string, value time.Duration) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/duration")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", value.String())
 	return req, nil
 }
 
@@ -154,8 +153,8 @@ func (HeaderOperations) ParamDurationHandleResponse(resp *azcore.Response) (*Hea
 func (HeaderOperations) ParamEnumCreateRequest(u url.URL, scenario string, value GreyscaleColors) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/enum")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", string(value))
 	return req, nil
 }
 
@@ -171,7 +170,7 @@ func (HeaderOperations) ParamEnumHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamExistingKeyCreateRequest(u url.URL, userAgent string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/existingkey")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("userAgent", fmt.Sprintf("%v", userAgent))
+	req.Header.Set("userAgent", userAgent)
 	return req, nil
 }
 
@@ -187,8 +186,8 @@ func (HeaderOperations) ParamExistingKeyHandleResponse(resp *azcore.Response) (*
 func (HeaderOperations) ParamFloatCreateRequest(u url.URL, scenario string, value float32) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/float")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", strconv.FormatFloat(float64(value), 'f', -1, 32))
 	return req, nil
 }
 
@@ -204,8 +203,8 @@ func (HeaderOperations) ParamFloatHandleResponse(resp *azcore.Response) (*Header
 func (HeaderOperations) ParamIntegerCreateRequest(u url.URL, scenario string, value int32) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/integer")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", strconv.FormatInt(int64(value), 10))
 	return req, nil
 }
 
@@ -221,8 +220,8 @@ func (HeaderOperations) ParamIntegerHandleResponse(resp *azcore.Response) (*Head
 func (HeaderOperations) ParamLongCreateRequest(u url.URL, scenario string, value int64) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/long")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", strconv.FormatInt(value, 10))
 	return req, nil
 }
 
@@ -238,7 +237,7 @@ func (HeaderOperations) ParamLongHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamProtectedKeyCreateRequest(u url.URL, contentType string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/protectedkey")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("contentType", fmt.Sprintf("%v", contentType))
+	req.Header.Set("contentType", contentType)
 	return req, nil
 }
 
@@ -254,8 +253,8 @@ func (HeaderOperations) ParamProtectedKeyHandleResponse(resp *azcore.Response) (
 func (HeaderOperations) ParamStringCreateRequest(u url.URL, scenario string, value string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/prim/string")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
-	req.Header.Set("value", fmt.Sprintf("%v", value))
+	req.Header.Set("scenario", scenario)
+	req.Header.Set("value", value)
 	return req, nil
 }
 
@@ -271,7 +270,7 @@ func (HeaderOperations) ParamStringHandleResponse(resp *azcore.Response) (*Heade
 func (HeaderOperations) ResponseBoolCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/bool")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -287,7 +286,7 @@ func (HeaderOperations) ResponseBoolHandleResponse(resp *azcore.Response) (*Head
 func (HeaderOperations) ResponseByteCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/byte")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -303,7 +302,7 @@ func (HeaderOperations) ResponseByteHandleResponse(resp *azcore.Response) (*Head
 func (HeaderOperations) ResponseDateCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/date")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -319,7 +318,7 @@ func (HeaderOperations) ResponseDateHandleResponse(resp *azcore.Response) (*Head
 func (HeaderOperations) ResponseDatetimeCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/datetime")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -335,7 +334,7 @@ func (HeaderOperations) ResponseDatetimeHandleResponse(resp *azcore.Response) (*
 func (HeaderOperations) ResponseDatetimeRFC1123CreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/datetimerfc1123")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -351,7 +350,7 @@ func (HeaderOperations) ResponseDatetimeRFC1123HandleResponse(resp *azcore.Respo
 func (HeaderOperations) ResponseDoubleCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/double")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -367,7 +366,7 @@ func (HeaderOperations) ResponseDoubleHandleResponse(resp *azcore.Response) (*He
 func (HeaderOperations) ResponseDurationCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/duration")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -383,7 +382,7 @@ func (HeaderOperations) ResponseDurationHandleResponse(resp *azcore.Response) (*
 func (HeaderOperations) ResponseEnumCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/enum")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -413,7 +412,7 @@ func (HeaderOperations) ResponseExistingKeyHandleResponse(resp *azcore.Response)
 func (HeaderOperations) ResponseFloatCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/float")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -429,7 +428,7 @@ func (HeaderOperations) ResponseFloatHandleResponse(resp *azcore.Response) (*Hea
 func (HeaderOperations) ResponseIntegerCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/integer")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -445,7 +444,7 @@ func (HeaderOperations) ResponseIntegerHandleResponse(resp *azcore.Response) (*H
 func (HeaderOperations) ResponseLongCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/long")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -475,7 +474,7 @@ func (HeaderOperations) ResponseProtectedKeyHandleResponse(resp *azcore.Response
 func (HeaderOperations) ResponseStringCreateRequest(u url.URL, scenario string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/response/prim/string")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("scenario", fmt.Sprintf("%v", scenario))
+	req.Header.Set("scenario", scenario)
 	return req, nil
 }
 
@@ -486,3 +485,4 @@ func (HeaderOperations) ResponseStringHandleResponse(resp *azcore.Response) (*He
 	}
 	return &HeaderResponseStringResponse{StatusCode: resp.StatusCode}, nil
 }
+

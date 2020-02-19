@@ -10,18 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-type GreyscaleColors string
-
-const (
-	GreyscaleColorsWhite GreyscaleColors = "White"
-	GreyscaleColorsBlack GreyscaleColors = "black"
-	GreyscaleColorsGrey GreyscaleColors = "GREY"
-)
-
-func PossibleGreyscaleColorsValues() []GreyscaleColors {
-	return []GreyscaleColors{GreyscaleColorsWhite, GreyscaleColorsBlack, GreyscaleColorsGrey}
-}
-
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status *int32 `json:"status,omitempty"`

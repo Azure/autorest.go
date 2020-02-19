@@ -7,18 +7,6 @@ package headergroup
 
 import azinternal "generatortests/autorest/generated/headergroup/internal/headergroup"
 
-type GreyscaleColors = azinternal.GreyscaleColors
-
-const (
-	GreyscaleColorsWhite = azinternal.GreyscaleColorsWhite
-	GreyscaleColorsBlack = azinternal.GreyscaleColorsBlack
-	GreyscaleColorsGrey = azinternal.GreyscaleColorsGrey
-)
-
-func PossibleGreyscaleColorsValues() []GreyscaleColors {
-	return azinternal.PossibleGreyscaleColorsValues()
-}
-
 type Error = azinternal.Error
 
 // HeaderCustomRequestIDResponse contains the response from method Header.CustomRequestID.
