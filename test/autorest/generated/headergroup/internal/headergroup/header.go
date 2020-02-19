@@ -239,7 +239,7 @@ func (HeaderOperations) ParamLongHandleResponse(resp *azcore.Response) (*HeaderP
 func (HeaderOperations) ParamProtectedKeyCreateRequest(u url.URL, contentType string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/header/param/protectedkey")
 	req := azcore.NewRequest(http.MethodPost, u)
-	req.Header.Set("contentType", contentType)
+	req.Header.Set("Content-Type", contentType)
 	return req, nil
 }
 
