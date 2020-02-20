@@ -164,7 +164,7 @@ function createResponseType(op: Operation) {
   const resp = op.responses![0];
   resp.language.go!.responseType = true;
   resp.language.go!.properties = [
-    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
+    newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
   ];
   // if the response defines a schema then add it as a field to the response type
   if (isSchemaResponse(resp)) {
@@ -180,10 +180,10 @@ function createResponseType(op: Operation) {
   }
 }
 
-function newNumber(name: string, desc: string, type: SchemaType.Integer | SchemaType.Number, precisioin: number): NumberSchema {
-  let num = new NumberSchema(name, desc, type, precisioin);
-  num.language.go = num.language.default;
-  return num;
+function newObject(name: string, desc: string): ObjectSchema {
+  let obj = new ObjectSchema(name, desc);
+  obj.language.go = obj.language.default;
+  return obj;
 }
 
 function newProperty(name: string, desc: string, schema: Schema): Property {
