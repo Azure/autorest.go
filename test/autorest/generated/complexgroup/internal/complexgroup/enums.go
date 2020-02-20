@@ -8,10 +8,10 @@ package complexgroup
 type CMYKColors string
 
 const (
-	CMYKColorsBlack CMYKColors = "blacK"
-	CMYKColorsCyan CMYKColors = "cyan"
+	CMYKColorsBlack   CMYKColors = "blacK"
+	CMYKColorsCyan    CMYKColors = "cyan"
 	CMYKColorsMagenta CMYKColors = "Magenta"
-	CMYKColorsYellow CMYKColors = "YELLOW"
+	CMYKColorsYellow  CMYKColors = "YELLOW"
 )
 
 func PossibleCMYKColorsValues() []CMYKColors {
@@ -22,15 +22,29 @@ func (c CMYKColors) ToPtr() *CMYKColors {
 	return &c
 }
 
+type FishType string
+
+const (
+	FishTypeSalmon      FishType = "salmon"
+	FishTypeSmartSalmon FishType = "smart_salmon"
+	FishTypeShark       FishType = "shark"
+	FishTypeSawshark    FishType = "sawshark"
+	FishTypeGoblinShark FishType = "goblin_shark"
+)
+
+func PossibleFishTypeValues() []FishType {
+	return []FishType{FishTypeSalmon, FishTypeSmartSalmon, FishTypeShark, FishTypeSawshark, FishTypeGoblinShark}
+}
+
 // GoblinSharkColor - Colors possible
 type GoblinSharkColor string
 
 const (
 	GoblinSharkColorBrown GoblinSharkColor = "brown"
-	GoblinSharkColorGray GoblinSharkColor = "gray"
+	GoblinSharkColorGray  GoblinSharkColor = "gray"
 	// GoblinSharkColorLowerred - Lowercase RED
 	GoblinSharkColorLowerred GoblinSharkColor = "red"
-	GoblinSharkColorPink GoblinSharkColor = "pink"
+	GoblinSharkColorPink     GoblinSharkColor = "pink"
 	// GoblinSharkColorUpperred - Uppercase RED
 	GoblinSharkColorUpperred GoblinSharkColor = "RED"
 )
@@ -43,3 +57,13 @@ func (c GoblinSharkColor) ToPtr() *GoblinSharkColor {
 	return &c
 }
 
+type SalmonType string
+
+const (
+	SalmonTypeSalmon      SalmonType = "salmon"
+	SalmonTypeSmartSalmon SalmonType = "smart_salmon"
+)
+
+func PossibleSalmonTypeValues() []SalmonType {
+	return []SalmonType{SalmonTypeSalmon, SalmonTypeSmartSalmon}
+}

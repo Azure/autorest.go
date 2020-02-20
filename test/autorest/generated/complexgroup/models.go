@@ -238,3 +238,6 @@ type SmartSalmon = azinternal.SmartSalmon
 
 type StringWrapper = azinternal.StringWrapper
 
+type FishModel = azinternal.FishModel
+
+type SalmonModel = azinternal.SalmonModel

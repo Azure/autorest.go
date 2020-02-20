@@ -6,10 +6,12 @@
 package complexgroup
 
 import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"errors"
 	"net/http"
 	"net/url"
 	"path"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type PolymorphismOperations struct{}
@@ -26,7 +28,28 @@ func (PolymorphismOperations) GetComplicatedHandleResponse(resp *azcore.Response
 		return nil, newError(resp)
 	}
 	result := PolymorphismGetComplicatedResponse{StatusCode: resp.StatusCode}
-	return &result, resp.UnmarshalAsJSON(&result.Salmon)
+	var m map[string]interface{}
+	err := resp.UnmarshalAsJSON(&m)
+	if err != nil {
+		return nil, err
+	}
+
+	switch m["fishtype"] {
+	case string(FishTypeSmartSalmon):
+		var ss SmartSalmon
+		err = resp.UnmarshalAsJSON(&ss)
+		result.Salmon = ss
+	case string(FishTypeSalmon):
+		var s Salmon
+		err = resp.UnmarshalAsJSON(&s)
+		result.Salmon = s
+	default:
+		return nil, errors.New("unknown fish")
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
 }
 
 // GetComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
@@ -165,4 +188,3 @@ func (PolymorphismOperations) PutValidMissingRequiredHandleResponse(resp *azcore
 	}
 	return &PolymorphismPutValidMissingRequiredResponse{StatusCode: resp.StatusCode}, nil
 }
-
