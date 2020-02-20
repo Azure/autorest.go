@@ -6,17 +6,18 @@
 package morecustombaseurigroup
 
 import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type PathsOperations struct{}
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (PathsOperations) GetEmptyCreateRequest(u url.URL, vault string, secret string, keyName string, keyVersion string) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/customuri/{subscriptionId}/{keyName}")
+func (PathsOperations) GetEmptyCreateRequest(u url.URL, vault string, secret string, keyName string, keyVersion string, subscriptionID string) (*azcore.Request, error) {
+	u.Path = path.Join(u.Path, "/customuri", subscriptionID, keyName)
 	query := u.Query()
 	query.Set("keyVersion", keyVersion)
 	u.RawQuery = query.Encode()
@@ -30,4 +31,3 @@ func (PathsOperations) GetEmptyHandleResponse(resp *azcore.Response) (*PathsGetE
 	}
 	return &PathsGetEmptyResponse{StatusCode: resp.StatusCode}, nil
 }
-
