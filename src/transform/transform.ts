@@ -164,7 +164,7 @@ function createResponseType(op: Operation) {
   const resp = op.responses![0];
   resp.language.go!.responseType = true;
   resp.language.go!.properties = [
-    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32), true)
+    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
   ];
   // if the response defines a schema then add it as a field to the response type
   if (isSchemaResponse(resp)) {
@@ -176,7 +176,7 @@ function createResponseType(op: Operation) {
     }
     resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
     resp.schema.language.go!.responseValue = propName;
-    (<Array<Property>>resp.language.go!.properties).push(newProperty(propName, resp.schema.language.go!.description, resp.schema, false));
+    (<Array<Property>>resp.language.go!.properties).push(newProperty(propName, resp.schema.language.go!.description, resp.schema));
   }
 }
 
@@ -186,10 +186,9 @@ function newNumber(name: string, desc: string, type: SchemaType.Integer | Schema
   return num;
 }
 
-function newProperty(name: string, desc: string, schema: Schema, noByRef?: boolean): Property {
+function newProperty(name: string, desc: string, schema: Schema): Property {
   let prop = new Property(name, desc, schema);
   prop.language.go = prop.language.default;
-  prop.language.go.noByRef = noByRef;
   return prop;
 }
 
