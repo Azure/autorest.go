@@ -6,8 +6,8 @@ package bytegrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/bytegroup"
+	"generatortests/helpers"
 	"net/http"
-	"reflect"
 	"testing"
 )
 
@@ -19,24 +19,14 @@ func getByteClient(t *testing.T) bytegroup.ByteOperations {
 	return client.ByteOperations()
 }
 
-func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
-	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("got %+v, want %+v", result, expected)
-	}
-}
-
 func TestGetEmpty(t *testing.T) {
 	client := getByteClient(t)
 	result, err := client.GetEmpty(context.Background())
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	val := []byte{}
-	expected := &bytegroup.ByteGetEmptyResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &[]byte{})
 }
 
 func TestGetInvalid(t *testing.T) {
@@ -57,12 +47,8 @@ func TestGetNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNonASCII: %v", err)
 	}
-	val := []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6}
-	expected := &bytegroup.ByteGetNonASCIIResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &[]byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6})
 }
 
 func TestGetNull(t *testing.T) {
@@ -71,10 +57,8 @@ func TestGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	expected := &bytegroup.ByteGetNullResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, (*[]byte)(nil))
 }
 
 func TestPutNonASCII(t *testing.T) {
@@ -83,8 +67,5 @@ func TestPutNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNonASCII: %v", err)
 	}
-	expected := &bytegroup.BytePutNonASCIIResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }

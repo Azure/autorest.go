@@ -25,7 +25,7 @@ func (NumberOperations) GetBigDecimalHandleResponse(resp *azcore.Response) (*Num
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetBigDecimalResponse{StatusCode: resp.StatusCode}
+	result := NumberGetBigDecimalResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -40,7 +40,7 @@ func (NumberOperations) GetBigDecimalNegativeDecimalHandleResponse(resp *azcore.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetBigDecimalNegativeDecimalResponse{StatusCode: resp.StatusCode}
+	result := NumberGetBigDecimalNegativeDecimalResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -55,7 +55,7 @@ func (NumberOperations) GetBigDecimalPositiveDecimalHandleResponse(resp *azcore.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetBigDecimalPositiveDecimalResponse{StatusCode: resp.StatusCode}
+	result := NumberGetBigDecimalPositiveDecimalResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -70,7 +70,7 @@ func (NumberOperations) GetBigDoubleHandleResponse(resp *azcore.Response) (*Numb
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetBigDoubleResponse{StatusCode: resp.StatusCode}
+	result := NumberGetBigDoubleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -85,7 +85,7 @@ func (NumberOperations) GetBigDoubleNegativeDecimalHandleResponse(resp *azcore.R
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetBigDoubleNegativeDecimalResponse{StatusCode: resp.StatusCode}
+	result := NumberGetBigDoubleNegativeDecimalResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -100,7 +100,7 @@ func (NumberOperations) GetBigDoublePositiveDecimalHandleResponse(resp *azcore.R
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetBigDoublePositiveDecimalResponse{StatusCode: resp.StatusCode}
+	result := NumberGetBigDoublePositiveDecimalResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -115,7 +115,7 @@ func (NumberOperations) GetBigFloatHandleResponse(resp *azcore.Response) (*Numbe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetBigFloatResponse{StatusCode: resp.StatusCode}
+	result := NumberGetBigFloatResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -130,7 +130,7 @@ func (NumberOperations) GetInvalidDecimalHandleResponse(resp *azcore.Response) (
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetInvalidDecimalResponse{StatusCode: resp.StatusCode}
+	result := NumberGetInvalidDecimalResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -145,7 +145,7 @@ func (NumberOperations) GetInvalidDoubleHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetInvalidDoubleResponse{StatusCode: resp.StatusCode}
+	result := NumberGetInvalidDoubleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -160,7 +160,7 @@ func (NumberOperations) GetInvalidFloatHandleResponse(resp *azcore.Response) (*N
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetInvalidFloatResponse{StatusCode: resp.StatusCode}
+	result := NumberGetInvalidFloatResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -175,7 +175,7 @@ func (NumberOperations) GetNullHandleResponse(resp *azcore.Response) (*NumberGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetNullResponse{StatusCode: resp.StatusCode}
+	result := NumberGetNullResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -190,7 +190,7 @@ func (NumberOperations) GetSmallDecimalHandleResponse(resp *azcore.Response) (*N
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetSmallDecimalResponse{StatusCode: resp.StatusCode}
+	result := NumberGetSmallDecimalResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -205,7 +205,7 @@ func (NumberOperations) GetSmallDoubleHandleResponse(resp *azcore.Response) (*Nu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetSmallDoubleResponse{StatusCode: resp.StatusCode}
+	result := NumberGetSmallDoubleResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -220,7 +220,7 @@ func (NumberOperations) GetSmallFloatHandleResponse(resp *azcore.Response) (*Num
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := NumberGetSmallFloatResponse{StatusCode: resp.StatusCode}
+	result := NumberGetSmallFloatResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -240,7 +240,7 @@ func (NumberOperations) PutBigDecimalHandleResponse(resp *azcore.Response) (*Num
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutBigDecimalResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutBigDecimalResponse{RawResponse: resp.Response}, nil
 }
 
 // PutBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
@@ -259,7 +259,7 @@ func (NumberOperations) PutBigDecimalNegativeDecimalHandleResponse(resp *azcore.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutBigDecimalNegativeDecimalResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutBigDecimalNegativeDecimalResponse{RawResponse: resp.Response}, nil
 }
 
 // PutBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
@@ -278,7 +278,7 @@ func (NumberOperations) PutBigDecimalPositiveDecimalHandleResponse(resp *azcore.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutBigDecimalPositiveDecimalResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutBigDecimalPositiveDecimalResponse{RawResponse: resp.Response}, nil
 }
 
 // PutBigDoubleCreateRequest creates the PutBigDouble request.
@@ -297,7 +297,7 @@ func (NumberOperations) PutBigDoubleHandleResponse(resp *azcore.Response) (*Numb
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutBigDoubleResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutBigDoubleResponse{RawResponse: resp.Response}, nil
 }
 
 // PutBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
@@ -316,7 +316,7 @@ func (NumberOperations) PutBigDoubleNegativeDecimalHandleResponse(resp *azcore.R
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutBigDoubleNegativeDecimalResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutBigDoubleNegativeDecimalResponse{RawResponse: resp.Response}, nil
 }
 
 // PutBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
@@ -335,7 +335,7 @@ func (NumberOperations) PutBigDoublePositiveDecimalHandleResponse(resp *azcore.R
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutBigDoublePositiveDecimalResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutBigDoublePositiveDecimalResponse{RawResponse: resp.Response}, nil
 }
 
 // PutBigFloatCreateRequest creates the PutBigFloat request.
@@ -354,7 +354,7 @@ func (NumberOperations) PutBigFloatHandleResponse(resp *azcore.Response) (*Numbe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutBigFloatResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutBigFloatResponse{RawResponse: resp.Response}, nil
 }
 
 // PutSmallDecimalCreateRequest creates the PutSmallDecimal request.
@@ -373,7 +373,7 @@ func (NumberOperations) PutSmallDecimalHandleResponse(resp *azcore.Response) (*N
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutSmallDecimalResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutSmallDecimalResponse{RawResponse: resp.Response}, nil
 }
 
 // PutSmallDoubleCreateRequest creates the PutSmallDouble request.
@@ -392,7 +392,7 @@ func (NumberOperations) PutSmallDoubleHandleResponse(resp *azcore.Response) (*Nu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutSmallDoubleResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutSmallDoubleResponse{RawResponse: resp.Response}, nil
 }
 
 // PutSmallFloatCreateRequest creates the PutSmallFloat request.
@@ -411,6 +411,5 @@ func (NumberOperations) PutSmallFloatHandleResponse(resp *azcore.Response) (*Num
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &NumberPutSmallFloatResponse{StatusCode: resp.StatusCode}, nil
+	return &NumberPutSmallFloatResponse{RawResponse: resp.Response}, nil
 }
-

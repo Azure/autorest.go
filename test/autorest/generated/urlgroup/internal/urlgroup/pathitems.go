@@ -31,7 +31,7 @@ func (PathItemsOperations) GetAllWithValuesHandleResponse(resp *azcore.Response)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathItemsGetAllWithValuesResponse{StatusCode: resp.StatusCode}, nil
+	return &PathItemsGetAllWithValuesResponse{RawResponse: resp.Response}, nil
 }
 
 // GetGlobalAndLocalQueryNullCreateRequest creates the GetGlobalAndLocalQueryNull request.
@@ -50,7 +50,7 @@ func (PathItemsOperations) GetGlobalAndLocalQueryNullHandleResponse(resp *azcore
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathItemsGetGlobalAndLocalQueryNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathItemsGetGlobalAndLocalQueryNullResponse{RawResponse: resp.Response}, nil
 }
 
 // GetGlobalQueryNullCreateRequest creates the GetGlobalQueryNull request.
@@ -69,7 +69,7 @@ func (PathItemsOperations) GetGlobalQueryNullHandleResponse(resp *azcore.Respons
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathItemsGetGlobalQueryNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathItemsGetGlobalQueryNullResponse{RawResponse: resp.Response}, nil
 }
 
 // GetLocalPathItemQueryNullCreateRequest creates the GetLocalPathItemQueryNull request.
@@ -88,5 +88,5 @@ func (PathItemsOperations) GetLocalPathItemQueryNullHandleResponse(resp *azcore.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathItemsGetLocalPathItemQueryNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathItemsGetLocalPathItemQueryNullResponse{RawResponse: resp.Response}, nil
 }

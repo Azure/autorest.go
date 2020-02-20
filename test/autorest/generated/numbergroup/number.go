@@ -12,53 +12,53 @@ import (
 
 // NumberOperations contains the methods for the Number group.
 type NumberOperations interface {
-	// GetBigDecimal - Get big decimal value 2.5976931e+101 
+	// GetBigDecimal - Get big decimal value 2.5976931e+101
 	GetBigDecimal(ctx context.Context) (*NumberGetBigDecimalResponse, error)
-	// GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99 
+	// GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
 	GetBigDecimalNegativeDecimal(ctx context.Context) (*NumberGetBigDecimalNegativeDecimalResponse, error)
-	// GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99 
+	// GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
 	GetBigDecimalPositiveDecimal(ctx context.Context) (*NumberGetBigDecimalPositiveDecimalResponse, error)
-	// GetBigDouble - Get big double value 2.5976931e+101 
+	// GetBigDouble - Get big double value 2.5976931e+101
 	GetBigDouble(ctx context.Context) (*NumberGetBigDoubleResponse, error)
-	// GetBigDoubleNegativeDecimal - Get big double value -99999999.99 
+	// GetBigDoubleNegativeDecimal - Get big double value -99999999.99
 	GetBigDoubleNegativeDecimal(ctx context.Context) (*NumberGetBigDoubleNegativeDecimalResponse, error)
-	// GetBigDoublePositiveDecimal - Get big double value 99999999.99 
+	// GetBigDoublePositiveDecimal - Get big double value 99999999.99
 	GetBigDoublePositiveDecimal(ctx context.Context) (*NumberGetBigDoublePositiveDecimalResponse, error)
-	// GetBigFloat - Get big float value 3.402823e+20 
+	// GetBigFloat - Get big float value 3.402823e+20
 	GetBigFloat(ctx context.Context) (*NumberGetBigFloatResponse, error)
-	// GetInvalidDecimal - Get invalid decimal Number value 
+	// GetInvalidDecimal - Get invalid decimal Number value
 	GetInvalidDecimal(ctx context.Context) (*NumberGetInvalidDecimalResponse, error)
-	// GetInvalidDouble - Get invalid double Number value 
+	// GetInvalidDouble - Get invalid double Number value
 	GetInvalidDouble(ctx context.Context) (*NumberGetInvalidDoubleResponse, error)
-	// GetInvalidFloat - Get invalid float Number value 
+	// GetInvalidFloat - Get invalid float Number value
 	GetInvalidFloat(ctx context.Context) (*NumberGetInvalidFloatResponse, error)
-	// GetNull - Get null Number value 
+	// GetNull - Get null Number value
 	GetNull(ctx context.Context) (*NumberGetNullResponse, error)
-	// GetSmallDecimal - Get small decimal value 2.5976931e-101 
+	// GetSmallDecimal - Get small decimal value 2.5976931e-101
 	GetSmallDecimal(ctx context.Context) (*NumberGetSmallDecimalResponse, error)
-	// GetSmallDouble - Get big double value 2.5976931e-101 
+	// GetSmallDouble - Get big double value 2.5976931e-101
 	GetSmallDouble(ctx context.Context) (*NumberGetSmallDoubleResponse, error)
-	// GetSmallFloat - Get big double value 3.402823e-20 
+	// GetSmallFloat - Get big double value 3.402823e-20
 	GetSmallFloat(ctx context.Context) (*NumberGetSmallFloatResponse, error)
-	// PutBigDecimal - Put big decimal value 2.5976931e+101 
+	// PutBigDecimal - Put big decimal value 2.5976931e+101
 	PutBigDecimal(ctx context.Context, numberBody float64) (*NumberPutBigDecimalResponse, error)
-	// PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99 
+	// PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
 	PutBigDecimalNegativeDecimal(ctx context.Context) (*NumberPutBigDecimalNegativeDecimalResponse, error)
-	// PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99 
+	// PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
 	PutBigDecimalPositiveDecimal(ctx context.Context) (*NumberPutBigDecimalPositiveDecimalResponse, error)
-	// PutBigDouble - Put big double value 2.5976931e+101 
+	// PutBigDouble - Put big double value 2.5976931e+101
 	PutBigDouble(ctx context.Context, numberBody float64) (*NumberPutBigDoubleResponse, error)
-	// PutBigDoubleNegativeDecimal - Put big double value -99999999.99 
+	// PutBigDoubleNegativeDecimal - Put big double value -99999999.99
 	PutBigDoubleNegativeDecimal(ctx context.Context) (*NumberPutBigDoubleNegativeDecimalResponse, error)
-	// PutBigDoublePositiveDecimal - Put big double value 99999999.99 
+	// PutBigDoublePositiveDecimal - Put big double value 99999999.99
 	PutBigDoublePositiveDecimal(ctx context.Context) (*NumberPutBigDoublePositiveDecimalResponse, error)
-	// PutBigFloat - Put big float value 3.402823e+20 
+	// PutBigFloat - Put big float value 3.402823e+20
 	PutBigFloat(ctx context.Context, numberBody float32) (*NumberPutBigFloatResponse, error)
-	// PutSmallDecimal - Put small decimal value 2.5976931e-101 
+	// PutSmallDecimal - Put small decimal value 2.5976931e-101
 	PutSmallDecimal(ctx context.Context, numberBody float64) (*NumberPutSmallDecimalResponse, error)
-	// PutSmallDouble - Put small double value 2.5976931e-101 
+	// PutSmallDouble - Put small double value 2.5976931e-101
 	PutSmallDouble(ctx context.Context, numberBody float64) (*NumberPutSmallDoubleResponse, error)
-	// PutSmallFloat - Put small float value 3.402823e-20 
+	// PutSmallFloat - Put small float value 3.402823e-20
 	PutSmallFloat(ctx context.Context, numberBody float32) (*NumberPutSmallFloatResponse, error)
 }
 
@@ -67,7 +67,7 @@ type numberOperations struct {
 	azinternal.NumberOperations
 }
 
-// GetBigDecimal - Get big decimal value 2.5976931e+101 
+// GetBigDecimal - Get big decimal value 2.5976931e+101
 func (client *numberOperations) GetBigDecimal(ctx context.Context) (*NumberGetBigDecimalResponse, error) {
 	req, err := client.GetBigDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *numberOperations) GetBigDecimal(ctx context.Context) (*NumberGetBi
 	return result, nil
 }
 
-// GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99 
+// GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
 func (client *numberOperations) GetBigDecimalNegativeDecimal(ctx context.Context) (*NumberGetBigDecimalNegativeDecimalResponse, error) {
 	req, err := client.GetBigDecimalNegativeDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -101,7 +101,7 @@ func (client *numberOperations) GetBigDecimalNegativeDecimal(ctx context.Context
 	return result, nil
 }
 
-// GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99 
+// GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
 func (client *numberOperations) GetBigDecimalPositiveDecimal(ctx context.Context) (*NumberGetBigDecimalPositiveDecimalResponse, error) {
 	req, err := client.GetBigDecimalPositiveDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -118,7 +118,7 @@ func (client *numberOperations) GetBigDecimalPositiveDecimal(ctx context.Context
 	return result, nil
 }
 
-// GetBigDouble - Get big double value 2.5976931e+101 
+// GetBigDouble - Get big double value 2.5976931e+101
 func (client *numberOperations) GetBigDouble(ctx context.Context) (*NumberGetBigDoubleResponse, error) {
 	req, err := client.GetBigDoubleCreateRequest(*client.u)
 	if err != nil {
@@ -135,7 +135,7 @@ func (client *numberOperations) GetBigDouble(ctx context.Context) (*NumberGetBig
 	return result, nil
 }
 
-// GetBigDoubleNegativeDecimal - Get big double value -99999999.99 
+// GetBigDoubleNegativeDecimal - Get big double value -99999999.99
 func (client *numberOperations) GetBigDoubleNegativeDecimal(ctx context.Context) (*NumberGetBigDoubleNegativeDecimalResponse, error) {
 	req, err := client.GetBigDoubleNegativeDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -152,7 +152,7 @@ func (client *numberOperations) GetBigDoubleNegativeDecimal(ctx context.Context)
 	return result, nil
 }
 
-// GetBigDoublePositiveDecimal - Get big double value 99999999.99 
+// GetBigDoublePositiveDecimal - Get big double value 99999999.99
 func (client *numberOperations) GetBigDoublePositiveDecimal(ctx context.Context) (*NumberGetBigDoublePositiveDecimalResponse, error) {
 	req, err := client.GetBigDoublePositiveDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -169,7 +169,7 @@ func (client *numberOperations) GetBigDoublePositiveDecimal(ctx context.Context)
 	return result, nil
 }
 
-// GetBigFloat - Get big float value 3.402823e+20 
+// GetBigFloat - Get big float value 3.402823e+20
 func (client *numberOperations) GetBigFloat(ctx context.Context) (*NumberGetBigFloatResponse, error) {
 	req, err := client.GetBigFloatCreateRequest(*client.u)
 	if err != nil {
@@ -186,7 +186,7 @@ func (client *numberOperations) GetBigFloat(ctx context.Context) (*NumberGetBigF
 	return result, nil
 }
 
-// GetInvalidDecimal - Get invalid decimal Number value 
+// GetInvalidDecimal - Get invalid decimal Number value
 func (client *numberOperations) GetInvalidDecimal(ctx context.Context) (*NumberGetInvalidDecimalResponse, error) {
 	req, err := client.GetInvalidDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -203,7 +203,7 @@ func (client *numberOperations) GetInvalidDecimal(ctx context.Context) (*NumberG
 	return result, nil
 }
 
-// GetInvalidDouble - Get invalid double Number value 
+// GetInvalidDouble - Get invalid double Number value
 func (client *numberOperations) GetInvalidDouble(ctx context.Context) (*NumberGetInvalidDoubleResponse, error) {
 	req, err := client.GetInvalidDoubleCreateRequest(*client.u)
 	if err != nil {
@@ -220,7 +220,7 @@ func (client *numberOperations) GetInvalidDouble(ctx context.Context) (*NumberGe
 	return result, nil
 }
 
-// GetInvalidFloat - Get invalid float Number value 
+// GetInvalidFloat - Get invalid float Number value
 func (client *numberOperations) GetInvalidFloat(ctx context.Context) (*NumberGetInvalidFloatResponse, error) {
 	req, err := client.GetInvalidFloatCreateRequest(*client.u)
 	if err != nil {
@@ -237,7 +237,7 @@ func (client *numberOperations) GetInvalidFloat(ctx context.Context) (*NumberGet
 	return result, nil
 }
 
-// GetNull - Get null Number value 
+// GetNull - Get null Number value
 func (client *numberOperations) GetNull(ctx context.Context) (*NumberGetNullResponse, error) {
 	req, err := client.GetNullCreateRequest(*client.u)
 	if err != nil {
@@ -254,7 +254,7 @@ func (client *numberOperations) GetNull(ctx context.Context) (*NumberGetNullResp
 	return result, nil
 }
 
-// GetSmallDecimal - Get small decimal value 2.5976931e-101 
+// GetSmallDecimal - Get small decimal value 2.5976931e-101
 func (client *numberOperations) GetSmallDecimal(ctx context.Context) (*NumberGetSmallDecimalResponse, error) {
 	req, err := client.GetSmallDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -271,7 +271,7 @@ func (client *numberOperations) GetSmallDecimal(ctx context.Context) (*NumberGet
 	return result, nil
 }
 
-// GetSmallDouble - Get big double value 2.5976931e-101 
+// GetSmallDouble - Get big double value 2.5976931e-101
 func (client *numberOperations) GetSmallDouble(ctx context.Context) (*NumberGetSmallDoubleResponse, error) {
 	req, err := client.GetSmallDoubleCreateRequest(*client.u)
 	if err != nil {
@@ -288,7 +288,7 @@ func (client *numberOperations) GetSmallDouble(ctx context.Context) (*NumberGetS
 	return result, nil
 }
 
-// GetSmallFloat - Get big double value 3.402823e-20 
+// GetSmallFloat - Get big double value 3.402823e-20
 func (client *numberOperations) GetSmallFloat(ctx context.Context) (*NumberGetSmallFloatResponse, error) {
 	req, err := client.GetSmallFloatCreateRequest(*client.u)
 	if err != nil {
@@ -305,7 +305,7 @@ func (client *numberOperations) GetSmallFloat(ctx context.Context) (*NumberGetSm
 	return result, nil
 }
 
-// PutBigDecimal - Put big decimal value 2.5976931e+101 
+// PutBigDecimal - Put big decimal value 2.5976931e+101
 func (client *numberOperations) PutBigDecimal(ctx context.Context, numberBody float64) (*NumberPutBigDecimalResponse, error) {
 	req, err := client.PutBigDecimalCreateRequest(*client.u, numberBody)
 	if err != nil {
@@ -322,7 +322,7 @@ func (client *numberOperations) PutBigDecimal(ctx context.Context, numberBody fl
 	return result, nil
 }
 
-// PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99 
+// PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
 func (client *numberOperations) PutBigDecimalNegativeDecimal(ctx context.Context) (*NumberPutBigDecimalNegativeDecimalResponse, error) {
 	req, err := client.PutBigDecimalNegativeDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -339,7 +339,7 @@ func (client *numberOperations) PutBigDecimalNegativeDecimal(ctx context.Context
 	return result, nil
 }
 
-// PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99 
+// PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
 func (client *numberOperations) PutBigDecimalPositiveDecimal(ctx context.Context) (*NumberPutBigDecimalPositiveDecimalResponse, error) {
 	req, err := client.PutBigDecimalPositiveDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -356,7 +356,7 @@ func (client *numberOperations) PutBigDecimalPositiveDecimal(ctx context.Context
 	return result, nil
 }
 
-// PutBigDouble - Put big double value 2.5976931e+101 
+// PutBigDouble - Put big double value 2.5976931e+101
 func (client *numberOperations) PutBigDouble(ctx context.Context, numberBody float64) (*NumberPutBigDoubleResponse, error) {
 	req, err := client.PutBigDoubleCreateRequest(*client.u, numberBody)
 	if err != nil {
@@ -373,7 +373,7 @@ func (client *numberOperations) PutBigDouble(ctx context.Context, numberBody flo
 	return result, nil
 }
 
-// PutBigDoubleNegativeDecimal - Put big double value -99999999.99 
+// PutBigDoubleNegativeDecimal - Put big double value -99999999.99
 func (client *numberOperations) PutBigDoubleNegativeDecimal(ctx context.Context) (*NumberPutBigDoubleNegativeDecimalResponse, error) {
 	req, err := client.PutBigDoubleNegativeDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -390,7 +390,7 @@ func (client *numberOperations) PutBigDoubleNegativeDecimal(ctx context.Context)
 	return result, nil
 }
 
-// PutBigDoublePositiveDecimal - Put big double value 99999999.99 
+// PutBigDoublePositiveDecimal - Put big double value 99999999.99
 func (client *numberOperations) PutBigDoublePositiveDecimal(ctx context.Context) (*NumberPutBigDoublePositiveDecimalResponse, error) {
 	req, err := client.PutBigDoublePositiveDecimalCreateRequest(*client.u)
 	if err != nil {
@@ -407,7 +407,7 @@ func (client *numberOperations) PutBigDoublePositiveDecimal(ctx context.Context)
 	return result, nil
 }
 
-// PutBigFloat - Put big float value 3.402823e+20 
+// PutBigFloat - Put big float value 3.402823e+20
 func (client *numberOperations) PutBigFloat(ctx context.Context, numberBody float32) (*NumberPutBigFloatResponse, error) {
 	req, err := client.PutBigFloatCreateRequest(*client.u, numberBody)
 	if err != nil {
@@ -424,7 +424,7 @@ func (client *numberOperations) PutBigFloat(ctx context.Context, numberBody floa
 	return result, nil
 }
 
-// PutSmallDecimal - Put small decimal value 2.5976931e-101 
+// PutSmallDecimal - Put small decimal value 2.5976931e-101
 func (client *numberOperations) PutSmallDecimal(ctx context.Context, numberBody float64) (*NumberPutSmallDecimalResponse, error) {
 	req, err := client.PutSmallDecimalCreateRequest(*client.u, numberBody)
 	if err != nil {
@@ -441,7 +441,7 @@ func (client *numberOperations) PutSmallDecimal(ctx context.Context, numberBody 
 	return result, nil
 }
 
-// PutSmallDouble - Put small double value 2.5976931e-101 
+// PutSmallDouble - Put small double value 2.5976931e-101
 func (client *numberOperations) PutSmallDouble(ctx context.Context, numberBody float64) (*NumberPutSmallDoubleResponse, error) {
 	req, err := client.PutSmallDoubleCreateRequest(*client.u, numberBody)
 	if err != nil {
@@ -458,7 +458,7 @@ func (client *numberOperations) PutSmallDouble(ctx context.Context, numberBody f
 	return result, nil
 }
 
-// PutSmallFloat - Put small float value 3.402823e-20 
+// PutSmallFloat - Put small float value 3.402823e-20
 func (client *numberOperations) PutSmallFloat(ctx context.Context, numberBody float32) (*NumberPutSmallFloatResponse, error) {
 	req, err := client.PutSmallFloatCreateRequest(*client.u, numberBody)
 	if err != nil {

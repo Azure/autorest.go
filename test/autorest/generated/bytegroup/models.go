@@ -23,4 +23,3 @@ type ByteGetNullResponse = azinternal.ByteGetNullResponse
 type BytePutNonASCIIResponse = azinternal.BytePutNonASCIIResponse
 
 type Error = azinternal.Error
-

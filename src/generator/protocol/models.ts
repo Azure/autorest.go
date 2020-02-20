@@ -119,6 +119,9 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     imports.add('fmt');
   }
+  if (lang.responseType) {
+    imports.add("net/http");
+  }
   const st = new StructDef(lang, props);
   for (const prop of values(props)) {
     imports.addImportForSchemaType(prop.schema);

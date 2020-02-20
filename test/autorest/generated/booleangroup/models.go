@@ -26,4 +26,3 @@ type BoolPutFalseResponse = azinternal.BoolPutFalseResponse
 type BoolPutTrueResponse = azinternal.BoolPutTrueResponse
 
 type Error = azinternal.Error
-

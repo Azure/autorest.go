@@ -174,7 +174,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   }
   const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)`;
   const headerParamCount = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; }).count();
-  if (getMediaType(op.request.protocol) === 'none' &&  headerParamCount == 0) {
+  if (getMediaType(op.request.protocol) === 'none' && headerParamCount == 0) {
     // no request body so nothing to marshal
     text += `\treturn ${reqObj}, nil\n`;
   } else {
@@ -219,7 +219,7 @@ function createProtocolResponse(client: string, op: Operation): string {
   text += '\t}\n';
 
   const resp = op.responses![0];
-  const respObj = `${resp.language.go!.name}{StatusCode: resp.StatusCode}`;
+  const respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
   if (getMediaType(resp.protocol) === 'none') {
     // no response body so nothing to unmarshal
     text += `\treturn &${respObj}, nil\n`;

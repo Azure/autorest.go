@@ -8,11 +8,12 @@ package urlgroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -39,391 +40,390 @@ func (e Error) Error() string {
 
 // PathItemsGetAllWithValuesResponse contains the response from method PathItems.GetAllWithValues.
 type PathItemsGetAllWithValuesResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathItemsGetGlobalAndLocalQueryNullResponse contains the response from method PathItems.GetGlobalAndLocalQueryNull.
 type PathItemsGetGlobalAndLocalQueryNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathItemsGetGlobalQueryNullResponse contains the response from method PathItems.GetGlobalQueryNull.
 type PathItemsGetGlobalQueryNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathItemsGetLocalPathItemQueryNullResponse contains the response from method PathItems.GetLocalPathItemQueryNull.
 type PathItemsGetLocalPathItemQueryNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsArrayCsvInPathResponse contains the response from method Paths.ArrayCsvInPath.
 type PathsArrayCsvInPathResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsBase64URLResponse contains the response from method Paths.Base64URL.
 type PathsBase64URLResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsByteEmptyResponse contains the response from method Paths.ByteEmpty.
 type PathsByteEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsByteMultiByteResponse contains the response from method Paths.ByteMultiByte.
 type PathsByteMultiByteResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsByteNullResponse contains the response from method Paths.ByteNull.
 type PathsByteNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsDateNullResponse contains the response from method Paths.DateNull.
 type PathsDateNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsDateTimeNullResponse contains the response from method Paths.DateTimeNull.
 type PathsDateTimeNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsDateTimeValidResponse contains the response from method Paths.DateTimeValid.
 type PathsDateTimeValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsDateValidResponse contains the response from method Paths.DateValid.
 type PathsDateValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsDoubleDecimalNegativeResponse contains the response from method Paths.DoubleDecimalNegative.
 type PathsDoubleDecimalNegativeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsDoubleDecimalPositiveResponse contains the response from method Paths.DoubleDecimalPositive.
 type PathsDoubleDecimalPositiveResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsEnumNullResponse contains the response from method Paths.EnumNull.
 type PathsEnumNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsEnumValidResponse contains the response from method Paths.EnumValid.
 type PathsEnumValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsFloatScientificNegativeResponse contains the response from method Paths.FloatScientificNegative.
 type PathsFloatScientificNegativeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsFloatScientificPositiveResponse contains the response from method Paths.FloatScientificPositive.
 type PathsFloatScientificPositiveResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsGetBooleanFalseResponse contains the response from method Paths.GetBooleanFalse.
 type PathsGetBooleanFalseResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsGetBooleanTrueResponse contains the response from method Paths.GetBooleanTrue.
 type PathsGetBooleanTrueResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsGetIntNegativeOneMillionResponse contains the response from method Paths.GetIntNegativeOneMillion.
 type PathsGetIntNegativeOneMillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsGetIntOneMillionResponse contains the response from method Paths.GetIntOneMillion.
 type PathsGetIntOneMillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsGetNegativeTenBillionResponse contains the response from method Paths.GetNegativeTenBillion.
 type PathsGetNegativeTenBillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsGetTenBillionResponse contains the response from method Paths.GetTenBillion.
 type PathsGetTenBillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsStringEmptyResponse contains the response from method Paths.StringEmpty.
 type PathsStringEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsStringNullResponse contains the response from method Paths.StringNull.
 type PathsStringNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsStringURLEncodedResponse contains the response from method Paths.StringURLEncoded.
 type PathsStringURLEncodedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsStringURLNonEncodedResponse contains the response from method Paths.StringURLNonEncoded.
 type PathsStringURLNonEncodedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsStringUnicodeResponse contains the response from method Paths.StringUnicode.
 type PathsStringUnicodeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PathsUnixTimeURLResponse contains the response from method Paths.UnixTimeURL.
 type PathsUnixTimeURLResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesArrayStringCsvEmptyResponse contains the response from method Queries.ArrayStringCsvEmpty.
 type QueriesArrayStringCsvEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesArrayStringCsvNullResponse contains the response from method Queries.ArrayStringCsvNull.
 type QueriesArrayStringCsvNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesArrayStringCsvValidResponse contains the response from method Queries.ArrayStringCsvValid.
 type QueriesArrayStringCsvValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesArrayStringPipesValidResponse contains the response from method Queries.ArrayStringPipesValid.
 type QueriesArrayStringPipesValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesArrayStringSsvValidResponse contains the response from method Queries.ArrayStringSsvValid.
 type QueriesArrayStringSsvValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesArrayStringTsvValidResponse contains the response from method Queries.ArrayStringTsvValid.
 type QueriesArrayStringTsvValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesByteEmptyResponse contains the response from method Queries.ByteEmpty.
 type QueriesByteEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesByteMultiByteResponse contains the response from method Queries.ByteMultiByte.
 type QueriesByteMultiByteResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesByteNullResponse contains the response from method Queries.ByteNull.
 type QueriesByteNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesDateNullResponse contains the response from method Queries.DateNull.
 type QueriesDateNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesDateTimeNullResponse contains the response from method Queries.DateTimeNull.
 type QueriesDateTimeNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesDateTimeValidResponse contains the response from method Queries.DateTimeValid.
 type QueriesDateTimeValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesDateValidResponse contains the response from method Queries.DateValid.
 type QueriesDateValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesDoubleDecimalNegativeResponse contains the response from method Queries.DoubleDecimalNegative.
 type QueriesDoubleDecimalNegativeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesDoubleDecimalPositiveResponse contains the response from method Queries.DoubleDecimalPositive.
 type QueriesDoubleDecimalPositiveResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesDoubleNullResponse contains the response from method Queries.DoubleNull.
 type QueriesDoubleNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesEnumNullResponse contains the response from method Queries.EnumNull.
 type QueriesEnumNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesEnumValidResponse contains the response from method Queries.EnumValid.
 type QueriesEnumValidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesFloatNullResponse contains the response from method Queries.FloatNull.
 type QueriesFloatNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesFloatScientificNegativeResponse contains the response from method Queries.FloatScientificNegative.
 type QueriesFloatScientificNegativeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesFloatScientificPositiveResponse contains the response from method Queries.FloatScientificPositive.
 type QueriesFloatScientificPositiveResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetBooleanFalseResponse contains the response from method Queries.GetBooleanFalse.
 type QueriesGetBooleanFalseResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetBooleanNullResponse contains the response from method Queries.GetBooleanNull.
 type QueriesGetBooleanNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetBooleanTrueResponse contains the response from method Queries.GetBooleanTrue.
 type QueriesGetBooleanTrueResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetIntNegativeOneMillionResponse contains the response from method Queries.GetIntNegativeOneMillion.
 type QueriesGetIntNegativeOneMillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetIntNullResponse contains the response from method Queries.GetIntNull.
 type QueriesGetIntNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetIntOneMillionResponse contains the response from method Queries.GetIntOneMillion.
 type QueriesGetIntOneMillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetLongNullResponse contains the response from method Queries.GetLongNull.
 type QueriesGetLongNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetNegativeTenBillionResponse contains the response from method Queries.GetNegativeTenBillion.
 type QueriesGetNegativeTenBillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesGetTenBillionResponse contains the response from method Queries.GetTenBillion.
 type QueriesGetTenBillionResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesStringEmptyResponse contains the response from method Queries.StringEmpty.
 type QueriesStringEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesStringNullResponse contains the response from method Queries.StringNull.
 type QueriesStringNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesStringURLEncodedResponse contains the response from method Queries.StringURLEncoded.
 type QueriesStringURLEncodedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // QueriesStringUnicodeResponse contains the response from method Queries.StringUnicode.
 type QueriesStringUnicodeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
-

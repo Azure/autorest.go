@@ -6,8 +6,8 @@ package numbergrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/numbergroup"
+	"generatortests/helpers"
 	"net/http"
-	"reflect"
 	"testing"
 )
 
@@ -19,12 +19,6 @@ func getNumberClient(t *testing.T) numbergroup.NumberOperations {
 	return client.NumberOperations()
 }
 
-func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
-	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("got %+v, want %+v", result, expected)
-	}
-}
-
 func TestNumberGetBigDecimal(t *testing.T) {
 	client := getNumberClient(t)
 	result, err := client.GetBigDecimal(context.Background())
@@ -32,11 +26,8 @@ func TestNumberGetBigDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimal: %v", err)
 	}
 	val := 2.5976931e+101
-	expected := &numbergroup.NumberGetBigDecimalResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
@@ -46,11 +37,8 @@ func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimalNegativeDecimal: %v", err)
 	}
 	val := -99999999.99
-	expected := &numbergroup.NumberGetBigDecimalNegativeDecimalResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
@@ -60,11 +48,8 @@ func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimalPositiveDecimal: %v", err)
 	}
 	val := 99999999.99
-	expected := &numbergroup.NumberGetBigDecimalPositiveDecimalResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetBigDouble(t *testing.T) {
@@ -74,11 +59,8 @@ func TestNumberGetBigDouble(t *testing.T) {
 		t.Fatalf("GetBigDouble: %v", err)
 	}
 	val := 2.5976931e+101
-	expected := &numbergroup.NumberGetBigDoubleResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
@@ -88,11 +70,8 @@ func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
 		t.Fatalf("GetBigDoubleNegativeDecimal: %v", err)
 	}
 	val := -99999999.99
-	expected := &numbergroup.NumberGetBigDoubleNegativeDecimalResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
@@ -102,11 +81,8 @@ func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
 		t.Fatalf("GetBigDoublePositiveDecimal: %v", err)
 	}
 	val := 99999999.99
-	expected := &numbergroup.NumberGetBigDoublePositiveDecimalResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetBigFloat(t *testing.T) {
@@ -116,11 +92,8 @@ func TestNumberGetBigFloat(t *testing.T) {
 		t.Fatalf("GetBigFloat: %v", err)
 	}
 	val := float32(3.402823e+20)
-	expected := &numbergroup.NumberGetBigFloatResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetInvalidDecimal(t *testing.T) {
@@ -162,11 +135,8 @@ func TestNumberGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	expected := &numbergroup.NumberGetNullResponse{
-		StatusCode: http.StatusOK,
-		Value:      nil,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, (*float32)(nil))
 }
 
 func TestNumberGetSmallDecimal(t *testing.T) {
@@ -176,11 +146,8 @@ func TestNumberGetSmallDecimal(t *testing.T) {
 		t.Fatalf("GetSmallDecimal: %v", err)
 	}
 	val := 2.5976931e-101
-	expected := &numbergroup.NumberGetSmallDecimalResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetSmallDouble(t *testing.T) {
@@ -190,11 +157,8 @@ func TestNumberGetSmallDouble(t *testing.T) {
 		t.Fatalf("GetSmallDouble: %v", err)
 	}
 	val := 2.5976931e-101
-	expected := &numbergroup.NumberGetSmallDoubleResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberGetSmallFloat(t *testing.T) {
@@ -204,11 +168,8 @@ func TestNumberGetSmallFloat(t *testing.T) {
 		t.Fatalf("GetSmallFloat: %v", err)
 	}
 	val := 3.402823e-20
-	expected := &numbergroup.NumberGetSmallFloatResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestNumberPutBigDecimal(t *testing.T) {
@@ -217,10 +178,7 @@ func TestNumberPutBigDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimal: %v", err)
 	}
-	expected := &numbergroup.NumberPutBigDecimalResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
@@ -229,10 +187,7 @@ func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalNegativeDecimal: %v", err)
 	}
-	expected := &numbergroup.NumberPutBigDecimalNegativeDecimalResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
@@ -241,10 +196,7 @@ func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalPositiveDecimal: %v", err)
 	}
-	expected := &numbergroup.NumberPutBigDecimalPositiveDecimalResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutBigDouble(t *testing.T) {
@@ -253,10 +205,7 @@ func TestNumberPutBigDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDouble: %v", err)
 	}
-	expected := &numbergroup.NumberPutBigDoubleResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
@@ -265,10 +214,7 @@ func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDoubleNegativeDecimal: %v", err)
 	}
-	expected := &numbergroup.NumberPutBigDoubleNegativeDecimalResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
@@ -277,10 +223,7 @@ func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDeoublePositiveDecimal: %v", err)
 	}
-	expected := &numbergroup.NumberPutBigDoublePositiveDecimalResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutBigFloat(t *testing.T) {
@@ -289,10 +232,7 @@ func TestNumberPutBigFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigFloat: %v", err)
 	}
-	expected := &numbergroup.NumberPutBigFloatResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutSmallDecimal(t *testing.T) {
@@ -301,10 +241,7 @@ func TestNumberPutSmallDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDecimal: %v", err)
 	}
-	expected := &numbergroup.NumberPutSmallDecimalResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutSmallDouble(t *testing.T) {
@@ -313,10 +250,7 @@ func TestNumberPutSmallDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDouble: %v", err)
 	}
-	expected := &numbergroup.NumberPutSmallDoubleResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestNumberPutSmallFloat(t *testing.T) {
@@ -325,8 +259,5 @@ func TestNumberPutSmallFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallFloat: %v", err)
 	}
-	expected := &numbergroup.NumberPutSmallFloatResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }

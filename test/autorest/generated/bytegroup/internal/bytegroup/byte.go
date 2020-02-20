@@ -25,7 +25,7 @@ func (ByteOperations) GetEmptyHandleResponse(resp *azcore.Response) (*ByteGetEmp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := ByteGetEmptyResponse{StatusCode: resp.StatusCode}
+	result := ByteGetEmptyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -40,7 +40,7 @@ func (ByteOperations) GetInvalidHandleResponse(resp *azcore.Response) (*ByteGetI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := ByteGetInvalidResponse{StatusCode: resp.StatusCode}
+	result := ByteGetInvalidResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -55,7 +55,7 @@ func (ByteOperations) GetNonASCIIHandleResponse(resp *azcore.Response) (*ByteGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := ByteGetNonASCIIResponse{StatusCode: resp.StatusCode}
+	result := ByteGetNonASCIIResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -70,7 +70,7 @@ func (ByteOperations) GetNullHandleResponse(resp *azcore.Response) (*ByteGetNull
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := ByteGetNullResponse{StatusCode: resp.StatusCode}
+	result := ByteGetNullResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -90,6 +90,5 @@ func (ByteOperations) PutNonASCIIHandleResponse(resp *azcore.Response) (*BytePut
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &BytePutNonASCIIResponse{StatusCode: resp.StatusCode}, nil
+	return &BytePutNonASCIIResponse{RawResponse: resp.Response}, nil
 }
-

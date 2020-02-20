@@ -13,59 +13,59 @@ import (
 
 // PathsOperations contains the methods for the Paths group.
 type PathsOperations interface {
-	// ArrayCsvInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format 
+	// ArrayCsvInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayCsvInPath(ctx context.Context, arrayPath []string) (*PathsArrayCsvInPathResponse, error)
-	// Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url) 
+	// Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
 	Base64URL(ctx context.Context, base64UrlPath []byte) (*PathsBase64URLResponse, error)
-	// ByteEmpty - Get '' as byte array 
+	// ByteEmpty - Get '' as byte array
 	ByteEmpty(ctx context.Context) (*PathsByteEmptyResponse, error)
-	// ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array 
+	// ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 	ByteMultiByte(ctx context.Context, bytePath []byte) (*PathsByteMultiByteResponse, error)
-	// ByteNull - Get null as byte array (should throw) 
+	// ByteNull - Get null as byte array (should throw)
 	ByteNull(ctx context.Context, bytePath []byte) (*PathsByteNullResponse, error)
-	// DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation 
+	// DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
 	DateNull(ctx context.Context, datePath time.Time) (*PathsDateNullResponse, error)
-	// DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time 
+	// DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
 	DateTimeNull(ctx context.Context, dateTimePath time.Time) (*PathsDateTimeNullResponse, error)
-	// DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time 
+	// DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 	DateTimeValid(ctx context.Context) (*PathsDateTimeValidResponse, error)
-	// DateValid - Get '2012-01-01' as date 
+	// DateValid - Get '2012-01-01' as date
 	DateValid(ctx context.Context) (*PathsDateValidResponse, error)
-	// DoubleDecimalNegative - Get '-9999999.999' numeric value 
+	// DoubleDecimalNegative - Get '-9999999.999' numeric value
 	DoubleDecimalNegative(ctx context.Context) (*PathsDoubleDecimalNegativeResponse, error)
-	// DoubleDecimalPositive - Get '9999999.999' numeric value 
+	// DoubleDecimalPositive - Get '9999999.999' numeric value
 	DoubleDecimalPositive(ctx context.Context) (*PathsDoubleDecimalPositiveResponse, error)
-	// EnumNull - Get null (should throw on the client before the request is sent on wire) 
+	// EnumNull - Get null (should throw on the client before the request is sent on wire)
 	EnumNull(ctx context.Context, enumPath UriColor) (*PathsEnumNullResponse, error)
-	// EnumValid - Get using uri with 'green color' in path parameter 
+	// EnumValid - Get using uri with 'green color' in path parameter
 	EnumValid(ctx context.Context, enumPath UriColor) (*PathsEnumValidResponse, error)
-	// FloatScientificNegative - Get '-1.034E-20' numeric value 
+	// FloatScientificNegative - Get '-1.034E-20' numeric value
 	FloatScientificNegative(ctx context.Context) (*PathsFloatScientificNegativeResponse, error)
-	// FloatScientificPositive - Get '1.034E+20' numeric value 
+	// FloatScientificPositive - Get '1.034E+20' numeric value
 	FloatScientificPositive(ctx context.Context) (*PathsFloatScientificPositiveResponse, error)
-	// GetBooleanFalse - Get false Boolean value on path 
+	// GetBooleanFalse - Get false Boolean value on path
 	GetBooleanFalse(ctx context.Context) (*PathsGetBooleanFalseResponse, error)
-	// GetBooleanTrue - Get true Boolean value on path 
+	// GetBooleanTrue - Get true Boolean value on path
 	GetBooleanTrue(ctx context.Context) (*PathsGetBooleanTrueResponse, error)
-	// GetIntNegativeOneMillion - Get '-1000000' integer value 
+	// GetIntNegativeOneMillion - Get '-1000000' integer value
 	GetIntNegativeOneMillion(ctx context.Context) (*PathsGetIntNegativeOneMillionResponse, error)
-	// GetIntOneMillion - Get '1000000' integer value 
+	// GetIntOneMillion - Get '1000000' integer value
 	GetIntOneMillion(ctx context.Context) (*PathsGetIntOneMillionResponse, error)
-	// GetNegativeTenBillion - Get '-10000000000' 64 bit integer value 
+	// GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 	GetNegativeTenBillion(ctx context.Context) (*PathsGetNegativeTenBillionResponse, error)
-	// GetTenBillion - Get '10000000000' 64 bit integer value 
+	// GetTenBillion - Get '10000000000' 64 bit integer value
 	GetTenBillion(ctx context.Context) (*PathsGetTenBillionResponse, error)
-	// StringEmpty - Get '' 
+	// StringEmpty - Get ''
 	StringEmpty(ctx context.Context) (*PathsStringEmptyResponse, error)
-	// StringNull - Get null (should throw) 
+	// StringNull - Get null (should throw)
 	StringNull(ctx context.Context, stringPath string) (*PathsStringNullResponse, error)
-	// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end 
+	// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 	StringURLEncoded(ctx context.Context) (*PathsStringURLEncodedResponse, error)
-	// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end 
+	// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
 	StringURLNonEncoded(ctx context.Context) (*PathsStringURLNonEncodedResponse, error)
-	// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value 
+	// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 	StringUnicode(ctx context.Context) (*PathsStringUnicodeResponse, error)
-	// UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time) 
+	// UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
 	UnixTimeURL(ctx context.Context, unixTimeUrlPath time.Time) (*PathsUnixTimeURLResponse, error)
 }
 
@@ -74,7 +74,7 @@ type pathsOperations struct {
 	azinternal.PathsOperations
 }
 
-// ArrayCsvInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format 
+// ArrayCsvInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 func (client *pathsOperations) ArrayCsvInPath(ctx context.Context, arrayPath []string) (*PathsArrayCsvInPathResponse, error) {
 	req, err := client.ArrayCsvInPathCreateRequest(*client.u, arrayPath)
 	if err != nil {
@@ -91,7 +91,7 @@ func (client *pathsOperations) ArrayCsvInPath(ctx context.Context, arrayPath []s
 	return result, nil
 }
 
-// Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url) 
+// Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
 func (client *pathsOperations) Base64URL(ctx context.Context, base64UrlPath []byte) (*PathsBase64URLResponse, error) {
 	req, err := client.Base64URLCreateRequest(*client.u, base64UrlPath)
 	if err != nil {
@@ -108,7 +108,7 @@ func (client *pathsOperations) Base64URL(ctx context.Context, base64UrlPath []by
 	return result, nil
 }
 
-// ByteEmpty - Get '' as byte array 
+// ByteEmpty - Get '' as byte array
 func (client *pathsOperations) ByteEmpty(ctx context.Context) (*PathsByteEmptyResponse, error) {
 	req, err := client.ByteEmptyCreateRequest(*client.u)
 	if err != nil {
@@ -125,7 +125,7 @@ func (client *pathsOperations) ByteEmpty(ctx context.Context) (*PathsByteEmptyRe
 	return result, nil
 }
 
-// ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array 
+// ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 func (client *pathsOperations) ByteMultiByte(ctx context.Context, bytePath []byte) (*PathsByteMultiByteResponse, error) {
 	req, err := client.ByteMultiByteCreateRequest(*client.u, bytePath)
 	if err != nil {
@@ -142,7 +142,7 @@ func (client *pathsOperations) ByteMultiByte(ctx context.Context, bytePath []byt
 	return result, nil
 }
 
-// ByteNull - Get null as byte array (should throw) 
+// ByteNull - Get null as byte array (should throw)
 func (client *pathsOperations) ByteNull(ctx context.Context, bytePath []byte) (*PathsByteNullResponse, error) {
 	req, err := client.ByteNullCreateRequest(*client.u, bytePath)
 	if err != nil {
@@ -159,7 +159,7 @@ func (client *pathsOperations) ByteNull(ctx context.Context, bytePath []byte) (*
 	return result, nil
 }
 
-// DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation 
+// DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
 func (client *pathsOperations) DateNull(ctx context.Context, datePath time.Time) (*PathsDateNullResponse, error) {
 	req, err := client.DateNullCreateRequest(*client.u, datePath)
 	if err != nil {
@@ -176,7 +176,7 @@ func (client *pathsOperations) DateNull(ctx context.Context, datePath time.Time)
 	return result, nil
 }
 
-// DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time 
+// DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
 func (client *pathsOperations) DateTimeNull(ctx context.Context, dateTimePath time.Time) (*PathsDateTimeNullResponse, error) {
 	req, err := client.DateTimeNullCreateRequest(*client.u, dateTimePath)
 	if err != nil {
@@ -193,7 +193,7 @@ func (client *pathsOperations) DateTimeNull(ctx context.Context, dateTimePath ti
 	return result, nil
 }
 
-// DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time 
+// DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 func (client *pathsOperations) DateTimeValid(ctx context.Context) (*PathsDateTimeValidResponse, error) {
 	req, err := client.DateTimeValidCreateRequest(*client.u)
 	if err != nil {
@@ -210,7 +210,7 @@ func (client *pathsOperations) DateTimeValid(ctx context.Context) (*PathsDateTim
 	return result, nil
 }
 
-// DateValid - Get '2012-01-01' as date 
+// DateValid - Get '2012-01-01' as date
 func (client *pathsOperations) DateValid(ctx context.Context) (*PathsDateValidResponse, error) {
 	req, err := client.DateValidCreateRequest(*client.u)
 	if err != nil {
@@ -227,7 +227,7 @@ func (client *pathsOperations) DateValid(ctx context.Context) (*PathsDateValidRe
 	return result, nil
 }
 
-// DoubleDecimalNegative - Get '-9999999.999' numeric value 
+// DoubleDecimalNegative - Get '-9999999.999' numeric value
 func (client *pathsOperations) DoubleDecimalNegative(ctx context.Context) (*PathsDoubleDecimalNegativeResponse, error) {
 	req, err := client.DoubleDecimalNegativeCreateRequest(*client.u)
 	if err != nil {
@@ -244,7 +244,7 @@ func (client *pathsOperations) DoubleDecimalNegative(ctx context.Context) (*Path
 	return result, nil
 }
 
-// DoubleDecimalPositive - Get '9999999.999' numeric value 
+// DoubleDecimalPositive - Get '9999999.999' numeric value
 func (client *pathsOperations) DoubleDecimalPositive(ctx context.Context) (*PathsDoubleDecimalPositiveResponse, error) {
 	req, err := client.DoubleDecimalPositiveCreateRequest(*client.u)
 	if err != nil {
@@ -261,7 +261,7 @@ func (client *pathsOperations) DoubleDecimalPositive(ctx context.Context) (*Path
 	return result, nil
 }
 
-// EnumNull - Get null (should throw on the client before the request is sent on wire) 
+// EnumNull - Get null (should throw on the client before the request is sent on wire)
 func (client *pathsOperations) EnumNull(ctx context.Context, enumPath UriColor) (*PathsEnumNullResponse, error) {
 	req, err := client.EnumNullCreateRequest(*client.u, enumPath)
 	if err != nil {
@@ -278,7 +278,7 @@ func (client *pathsOperations) EnumNull(ctx context.Context, enumPath UriColor) 
 	return result, nil
 }
 
-// EnumValid - Get using uri with 'green color' in path parameter 
+// EnumValid - Get using uri with 'green color' in path parameter
 func (client *pathsOperations) EnumValid(ctx context.Context, enumPath UriColor) (*PathsEnumValidResponse, error) {
 	req, err := client.EnumValidCreateRequest(*client.u, enumPath)
 	if err != nil {
@@ -295,7 +295,7 @@ func (client *pathsOperations) EnumValid(ctx context.Context, enumPath UriColor)
 	return result, nil
 }
 
-// FloatScientificNegative - Get '-1.034E-20' numeric value 
+// FloatScientificNegative - Get '-1.034E-20' numeric value
 func (client *pathsOperations) FloatScientificNegative(ctx context.Context) (*PathsFloatScientificNegativeResponse, error) {
 	req, err := client.FloatScientificNegativeCreateRequest(*client.u)
 	if err != nil {
@@ -312,7 +312,7 @@ func (client *pathsOperations) FloatScientificNegative(ctx context.Context) (*Pa
 	return result, nil
 }
 
-// FloatScientificPositive - Get '1.034E+20' numeric value 
+// FloatScientificPositive - Get '1.034E+20' numeric value
 func (client *pathsOperations) FloatScientificPositive(ctx context.Context) (*PathsFloatScientificPositiveResponse, error) {
 	req, err := client.FloatScientificPositiveCreateRequest(*client.u)
 	if err != nil {
@@ -329,7 +329,7 @@ func (client *pathsOperations) FloatScientificPositive(ctx context.Context) (*Pa
 	return result, nil
 }
 
-// GetBooleanFalse - Get false Boolean value on path 
+// GetBooleanFalse - Get false Boolean value on path
 func (client *pathsOperations) GetBooleanFalse(ctx context.Context) (*PathsGetBooleanFalseResponse, error) {
 	req, err := client.GetBooleanFalseCreateRequest(*client.u)
 	if err != nil {
@@ -346,7 +346,7 @@ func (client *pathsOperations) GetBooleanFalse(ctx context.Context) (*PathsGetBo
 	return result, nil
 }
 
-// GetBooleanTrue - Get true Boolean value on path 
+// GetBooleanTrue - Get true Boolean value on path
 func (client *pathsOperations) GetBooleanTrue(ctx context.Context) (*PathsGetBooleanTrueResponse, error) {
 	req, err := client.GetBooleanTrueCreateRequest(*client.u)
 	if err != nil {
@@ -363,7 +363,7 @@ func (client *pathsOperations) GetBooleanTrue(ctx context.Context) (*PathsGetBoo
 	return result, nil
 }
 
-// GetIntNegativeOneMillion - Get '-1000000' integer value 
+// GetIntNegativeOneMillion - Get '-1000000' integer value
 func (client *pathsOperations) GetIntNegativeOneMillion(ctx context.Context) (*PathsGetIntNegativeOneMillionResponse, error) {
 	req, err := client.GetIntNegativeOneMillionCreateRequest(*client.u)
 	if err != nil {
@@ -380,7 +380,7 @@ func (client *pathsOperations) GetIntNegativeOneMillion(ctx context.Context) (*P
 	return result, nil
 }
 
-// GetIntOneMillion - Get '1000000' integer value 
+// GetIntOneMillion - Get '1000000' integer value
 func (client *pathsOperations) GetIntOneMillion(ctx context.Context) (*PathsGetIntOneMillionResponse, error) {
 	req, err := client.GetIntOneMillionCreateRequest(*client.u)
 	if err != nil {
@@ -397,7 +397,7 @@ func (client *pathsOperations) GetIntOneMillion(ctx context.Context) (*PathsGetI
 	return result, nil
 }
 
-// GetNegativeTenBillion - Get '-10000000000' 64 bit integer value 
+// GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 func (client *pathsOperations) GetNegativeTenBillion(ctx context.Context) (*PathsGetNegativeTenBillionResponse, error) {
 	req, err := client.GetNegativeTenBillionCreateRequest(*client.u)
 	if err != nil {
@@ -414,7 +414,7 @@ func (client *pathsOperations) GetNegativeTenBillion(ctx context.Context) (*Path
 	return result, nil
 }
 
-// GetTenBillion - Get '10000000000' 64 bit integer value 
+// GetTenBillion - Get '10000000000' 64 bit integer value
 func (client *pathsOperations) GetTenBillion(ctx context.Context) (*PathsGetTenBillionResponse, error) {
 	req, err := client.GetTenBillionCreateRequest(*client.u)
 	if err != nil {
@@ -431,7 +431,7 @@ func (client *pathsOperations) GetTenBillion(ctx context.Context) (*PathsGetTenB
 	return result, nil
 }
 
-// StringEmpty - Get '' 
+// StringEmpty - Get ''
 func (client *pathsOperations) StringEmpty(ctx context.Context) (*PathsStringEmptyResponse, error) {
 	req, err := client.StringEmptyCreateRequest(*client.u)
 	if err != nil {
@@ -448,7 +448,7 @@ func (client *pathsOperations) StringEmpty(ctx context.Context) (*PathsStringEmp
 	return result, nil
 }
 
-// StringNull - Get null (should throw) 
+// StringNull - Get null (should throw)
 func (client *pathsOperations) StringNull(ctx context.Context, stringPath string) (*PathsStringNullResponse, error) {
 	req, err := client.StringNullCreateRequest(*client.u, stringPath)
 	if err != nil {
@@ -465,7 +465,7 @@ func (client *pathsOperations) StringNull(ctx context.Context, stringPath string
 	return result, nil
 }
 
-// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end 
+// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 func (client *pathsOperations) StringURLEncoded(ctx context.Context) (*PathsStringURLEncodedResponse, error) {
 	req, err := client.StringURLEncodedCreateRequest(*client.u)
 	if err != nil {
@@ -482,7 +482,7 @@ func (client *pathsOperations) StringURLEncoded(ctx context.Context) (*PathsStri
 	return result, nil
 }
 
-// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end 
+// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
 func (client *pathsOperations) StringURLNonEncoded(ctx context.Context) (*PathsStringURLNonEncodedResponse, error) {
 	req, err := client.StringURLNonEncodedCreateRequest(*client.u)
 	if err != nil {
@@ -499,7 +499,7 @@ func (client *pathsOperations) StringURLNonEncoded(ctx context.Context) (*PathsS
 	return result, nil
 }
 
-// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value 
+// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 func (client *pathsOperations) StringUnicode(ctx context.Context) (*PathsStringUnicodeResponse, error) {
 	req, err := client.StringUnicodeCreateRequest(*client.u)
 	if err != nil {
@@ -516,7 +516,7 @@ func (client *pathsOperations) StringUnicode(ctx context.Context) (*PathsStringU
 	return result, nil
 }
 
-// UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time) 
+// UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
 func (client *pathsOperations) UnixTimeURL(ctx context.Context, unixTimeUrlPath time.Time) (*PathsUnixTimeURLResponse, error) {
 	req, err := client.UnixTimeURLCreateRequest(*client.u, unixTimeUrlPath)
 	if err != nil {

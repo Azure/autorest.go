@@ -8,53 +8,54 @@ package booleangroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // BoolGetFalseResponse contains the response from method Bool.GetFalse.
 type BoolGetFalseResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 	// simple boolean
 	Value *bool
 }
 
 // BoolGetInvalidResponse contains the response from method Bool.GetInvalid.
 type BoolGetInvalidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *bool
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *bool
 }
 
 // BoolGetNullResponse contains the response from method Bool.GetNull.
 type BoolGetNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *bool
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *bool
 }
 
 // BoolGetTrueResponse contains the response from method Bool.GetTrue.
 type BoolGetTrueResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 	// simple boolean
 	Value *bool
 }
 
 // BoolPutFalseResponse contains the response from method Bool.PutFalse.
 type BoolPutFalseResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // BoolPutTrueResponse contains the response from method Bool.PutTrue.
 type BoolPutTrueResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -78,4 +79,3 @@ func (e Error) Error() string {
 	}
 	return msg
 }
-

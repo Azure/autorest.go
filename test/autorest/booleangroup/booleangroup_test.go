@@ -6,8 +6,8 @@ package booleangrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/booleangroup"
+	"generatortests/helpers"
 	"net/http"
-	"reflect"
 	"testing"
 )
 
@@ -19,12 +19,6 @@ func getBoolClient(t *testing.T) booleangroup.BoolOperations {
 	return client.BoolOperations()
 }
 
-func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
-	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("got %+v, want %+v", result, expected)
-	}
-}
-
 func TestGetTrue(t *testing.T) {
 	client := getBoolClient(t)
 	result, err := client.GetTrue(context.Background())
@@ -32,11 +26,8 @@ func TestGetTrue(t *testing.T) {
 		t.Fatalf("GetTrue: %v", err)
 	}
 	val := true
-	expected := &booleangroup.BoolGetTrueResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestGetFalse(t *testing.T) {
@@ -46,11 +37,8 @@ func TestGetFalse(t *testing.T) {
 		t.Fatalf("GetFalse: %v", err)
 	}
 	val := false
-	expected := &booleangroup.BoolGetFalseResponse{
-		StatusCode: http.StatusOK,
-		Value:      &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, &val)
 }
 
 func TestGetNull(t *testing.T) {
@@ -59,10 +47,8 @@ func TestGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	expected := &booleangroup.BoolGetNullResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, (*bool)(nil))
 }
 
 func TestGetInvalid(t *testing.T) {
@@ -83,10 +69,7 @@ func TestPutTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutTrue: %v", err)
 	}
-	expected := &booleangroup.BoolPutTrueResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestPutFalse(t *testing.T) {
@@ -95,8 +78,5 @@ func TestPutFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFalse: %v", err)
 	}
-	expected := &booleangroup.BoolPutFalseResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
