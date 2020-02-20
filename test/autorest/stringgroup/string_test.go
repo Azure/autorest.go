@@ -49,9 +49,10 @@ func TestStringGetBase64Encoded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetBase64Encoded: %v", err)
 	}
+	val := []byte("a string that gets encoded with base64")
 	expected := &stringgroup.StringGetBase64EncodedResponse{
 		StatusCode: http.StatusOK,
-		Value:      []byte("a string that gets encoded with base64"),
+		Value:      &val,
 	}
 	deepEqualOrFatal(t, result, expected)
 }
@@ -112,10 +113,9 @@ func TestStringGetNullBase64URLEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNullBase64URLEncoded: %v", err)
 	}
-	var val []byte
 	expected := &stringgroup.StringGetNullBase64URLEncodedResponse{
 		StatusCode: http.StatusOK,
-		Value:      val,
+		Value:      nil,
 	}
 	deepEqualOrFatal(t, result, expected)
 }

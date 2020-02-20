@@ -14,7 +14,7 @@ import (
 type EnumGetNotExpandableResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *Colors
+	Value *Colors
 }
 
 // EnumGetReferencedConstantResponse contains the response from method Enum.GetReferencedConstant.
@@ -28,7 +28,7 @@ type EnumGetReferencedConstantResponse struct {
 type EnumGetReferencedResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *Colors
+	Value *Colors
 }
 
 // EnumPutNotExpandableResponse contains the response from method Enum.PutNotExpandable.
@@ -51,7 +51,7 @@ type EnumPutReferencedResponse struct {
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
+	Status *int32 `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -87,14 +87,14 @@ type RefColorConstant struct {
 type StringGetBase64EncodedResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      []byte
+	Value *[]byte
 }
 
 // StringGetBase64URLEncodedResponse contains the response from method String.GetBase64URLEncoded.
 type StringGetBase64URLEncodedResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      []byte
+	Value *[]byte
 }
 
 // StringGetEmptyResponse contains the response from method String.GetEmpty.
@@ -117,14 +117,14 @@ type StringGetMBCSResponse struct {
 type StringGetNotProvidedResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *string
+	Value *string
 }
 
 // StringGetNullBase64URLEncodedResponse contains the response from method String.GetNullBase64URLEncoded.
 type StringGetNullBase64URLEncodedResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      []byte
+	Value *[]byte
 }
 
 // StringGetNullResponse contains the response from method String.GetNull.
@@ -172,3 +172,4 @@ type StringPutWhitespaceResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
 }
+

@@ -34,9 +34,6 @@ async function process(session: Session<CodeModel>) {
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
     for (const prop of values(obj.properties)) {
-      if (noByRef(prop.schema.type)) {
-        prop.language.go!.noByRef = true;
-      }
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(prop.schema)}`;
     }
@@ -167,7 +164,7 @@ function createResponseType(op: Operation) {
   const resp = op.responses![0];
   resp.language.go!.responseType = true;
   resp.language.go!.properties = [
-    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32), true)
+    newProperty('StatusCode', 'StatusCode contains the HTTP status code.', newNumber('int', 'TODO', SchemaType.Integer, 32))
   ];
   // if the response defines a schema then add it as a field to the response type
   if (isSchemaResponse(resp)) {
@@ -179,7 +176,7 @@ function createResponseType(op: Operation) {
     }
     resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
     resp.schema.language.go!.responseValue = propName;
-    (<Array<Property>>resp.language.go!.properties).push(newProperty(propName, resp.schema.language.go!.description, resp.schema, noByRef(resp.schema.type)));
+    (<Array<Property>>resp.language.go!.properties).push(newProperty(propName, resp.schema.language.go!.description, resp.schema));
   }
 }
 
@@ -189,20 +186,14 @@ function newNumber(name: string, desc: string, type: SchemaType.Integer | Schema
   return num;
 }
 
-function newProperty(name: string, desc: string, schema: Schema, noByRef?: boolean): Property {
+function newProperty(name: string, desc: string, schema: Schema): Property {
   let prop = new Property(name, desc, schema);
   prop.language.go = prop.language.default;
-  prop.language.go.noByRef = noByRef;
   return prop;
 }
 
 function isSchemaResponse(resp?: Response): resp is SchemaResponse {
   return (resp as SchemaResponse).schema !== undefined;
-}
-
-// returns true if the type should not be a pointer-to-type
-function noByRef(type: SchemaType): boolean {
-  return type === SchemaType.Array || type === SchemaType.ByteArray || type === SchemaType.Dictionary;
 }
 
 // returns the format used for marshallling/unmarshalling.

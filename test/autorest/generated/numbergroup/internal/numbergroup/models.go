@@ -5,11 +5,14 @@
 
 package numbergroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+)
 
 type Error struct {
-	Message *string
-	Status  *int32
+	Message *string `json:"message,omitempty"`
+	Status *int32 `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -21,105 +24,115 @@ func newError(resp *azcore.Response) error {
 }
 
 func (e Error) Error() string {
-	return "TODO"
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
 }
 
 // NumberGetBigDecimalNegativeDecimalResponse contains the response from method Number.GetBigDecimalNegativeDecimal.
 type NumberGetBigDecimalNegativeDecimalResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetBigDecimalPositiveDecimalResponse contains the response from method Number.GetBigDecimalPositiveDecimal.
 type NumberGetBigDecimalPositiveDecimalResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetBigDecimalResponse contains the response from method Number.GetBigDecimal.
 type NumberGetBigDecimalResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetBigDoubleNegativeDecimalResponse contains the response from method Number.GetBigDoubleNegativeDecimal.
 type NumberGetBigDoubleNegativeDecimalResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetBigDoublePositiveDecimalResponse contains the response from method Number.GetBigDoublePositiveDecimal.
 type NumberGetBigDoublePositiveDecimalResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetBigDoubleResponse contains the response from method Number.GetBigDouble.
 type NumberGetBigDoubleResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetBigFloatResponse contains the response from method Number.GetBigFloat.
 type NumberGetBigFloatResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float32
+	Value *float32
 }
 
 // NumberGetInvalidDecimalResponse contains the response from method Number.GetInvalidDecimal.
 type NumberGetInvalidDecimalResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetInvalidDoubleResponse contains the response from method Number.GetInvalidDouble.
 type NumberGetInvalidDoubleResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetInvalidFloatResponse contains the response from method Number.GetInvalidFloat.
 type NumberGetInvalidFloatResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float32
+	Value *float32
 }
 
 // NumberGetNullResponse contains the response from method Number.GetNull.
 type NumberGetNullResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float32
+	Value *float32
 }
 
 // NumberGetSmallDecimalResponse contains the response from method Number.GetSmallDecimal.
 type NumberGetSmallDecimalResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetSmallDoubleResponse contains the response from method Number.GetSmallDouble.
 type NumberGetSmallDoubleResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberGetSmallFloatResponse contains the response from method Number.GetSmallFloat.
 type NumberGetSmallFloatResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
-	Value      *float64
+	Value *float64
 }
 
 // NumberPutBigDecimalNegativeDecimalResponse contains the response from method Number.PutBigDecimalNegativeDecimal.
@@ -181,3 +194,4 @@ type NumberPutSmallFloatResponse struct {
 	// StatusCode contains the HTTP status code.
 	StatusCode int
 }
+

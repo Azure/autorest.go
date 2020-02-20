@@ -228,3 +228,4 @@ func (StringOperations) PutWhitespaceHandleResponse(resp *azcore.Response) (*Str
 	}
 	return &StringPutWhitespaceResponse{StatusCode: resp.StatusCode}, nil
 }
+

@@ -80,3 +80,4 @@ type NumberPutSmallDoubleResponse = azinternal.NumberPutSmallDoubleResponse
 
 // NumberPutSmallFloatResponse contains the response from method Number.PutSmallFloat.
 type NumberPutSmallFloatResponse = azinternal.NumberPutSmallFloatResponse
+

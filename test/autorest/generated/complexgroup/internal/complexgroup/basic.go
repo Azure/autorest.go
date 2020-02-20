@@ -92,6 +92,9 @@ func (BasicOperations) GetValidHandleResponse(resp *azcore.Response) (*BasicGetV
 // PutValidCreateRequest creates the PutValid request.
 func (BasicOperations) PutValidCreateRequest(u url.URL, complexBody Basic) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/complex/basic/valid")
+	query := u.Query()
+	query.Set("apiVersion", "2016-02-29")
+	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(complexBody)
 	if err != nil {

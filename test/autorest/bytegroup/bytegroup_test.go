@@ -31,9 +31,10 @@ func TestGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
+	val := []byte{}
 	expected := &bytegroup.ByteGetEmptyResponse{
 		StatusCode: http.StatusOK,
-		Value:      []byte{},
+		Value:      &val,
 	}
 	deepEqualOrFatal(t, result, expected)
 }
@@ -56,9 +57,10 @@ func TestGetNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNonASCII: %v", err)
 	}
+	val := []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6}
 	expected := &bytegroup.ByteGetNonASCIIResponse{
 		StatusCode: http.StatusOK,
-		Value:      []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6},
+		Value:      &val,
 	}
 	deepEqualOrFatal(t, result, expected)
 }

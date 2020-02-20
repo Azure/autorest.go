@@ -10,11 +10,12 @@ import azinternal "generatortests/autorest/generated/stringgroup/internal/string
 type Colors = azinternal.Colors
 
 const (
-	ColorsRedColor   = azinternal.ColorsRedColor
+	ColorsRedColor = azinternal.ColorsRedColor
 	ColorsGreenColor = azinternal.ColorsGreenColor
-	ColorsBlueColor  = azinternal.ColorsBlueColor
+	ColorsBlueColor = azinternal.ColorsBlueColor
 )
 
 func PossibleColorsValues() []Colors {
 	return azinternal.PossibleColorsValues()
 }
+

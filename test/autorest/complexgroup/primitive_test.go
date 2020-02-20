@@ -146,9 +146,10 @@ func TestPrimitiveGetByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetByte: %v", err)
 	}
+	val := []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}
 	expected := &complexgroup.PrimitiveGetByteResponse{
 		StatusCode:  http.StatusOK,
-		ByteWrapper: &complexgroup.ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}},
+		ByteWrapper: &complexgroup.ByteWrapper{Field: &val},
 	}
 	deepEqualOrFatal(t, result, expected)
 }
@@ -168,7 +169,8 @@ func TestPrimitivePutBool(t *testing.T) {
 
 func TestPrimitivePutByte(t *testing.T) {
 	client := getPrimitiveOperations(t)
-	result, err := client.PutByte(context.Background(), complexgroup.ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}})
+	val := []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}
+	result, err := client.PutByte(context.Background(), complexgroup.ByteWrapper{Field: &val})
 	if err != nil {
 		t.Fatalf("PutByte: %v", err)
 	}
