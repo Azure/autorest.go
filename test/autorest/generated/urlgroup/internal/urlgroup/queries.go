@@ -31,7 +31,7 @@ func (QueriesOperations) ArrayStringCsvEmptyHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringCsvEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesArrayStringCsvEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // ArrayStringCsvNullCreateRequest creates the ArrayStringCsvNull request.
@@ -48,7 +48,7 @@ func (QueriesOperations) ArrayStringCsvNullHandleResponse(resp *azcore.Response)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringCsvNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesArrayStringCsvNullResponse{RawResponse: resp.Response}, nil
 }
 
 // ArrayStringCsvValidCreateRequest creates the ArrayStringCsvValid request.
@@ -65,7 +65,7 @@ func (QueriesOperations) ArrayStringCsvValidHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringCsvValidResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesArrayStringCsvValidResponse{RawResponse: resp.Response}, nil
 }
 
 // ArrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
@@ -82,7 +82,7 @@ func (QueriesOperations) ArrayStringPipesValidHandleResponse(resp *azcore.Respon
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringPipesValidResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesArrayStringPipesValidResponse{RawResponse: resp.Response}, nil
 }
 
 // ArrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
@@ -99,7 +99,7 @@ func (QueriesOperations) ArrayStringSsvValidHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringSsvValidResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesArrayStringSsvValidResponse{RawResponse: resp.Response}, nil
 }
 
 // ArrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
@@ -116,7 +116,7 @@ func (QueriesOperations) ArrayStringTsvValidHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringTsvValidResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesArrayStringTsvValidResponse{RawResponse: resp.Response}, nil
 }
 
 // ByteEmptyCreateRequest creates the ByteEmpty request.
@@ -133,7 +133,7 @@ func (QueriesOperations) ByteEmptyHandleResponse(resp *azcore.Response) (*Querie
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesByteEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesByteEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // ByteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -150,7 +150,7 @@ func (QueriesOperations) ByteMultiByteHandleResponse(resp *azcore.Response) (*Qu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesByteMultiByteResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesByteMultiByteResponse{RawResponse: resp.Response}, nil
 }
 
 // ByteNullCreateRequest creates the ByteNull request.
@@ -167,7 +167,7 @@ func (QueriesOperations) ByteNullHandleResponse(resp *azcore.Response) (*Queries
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesByteNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesByteNullResponse{RawResponse: resp.Response}, nil
 }
 
 // DateNullCreateRequest creates the DateNull request.
@@ -184,7 +184,7 @@ func (QueriesOperations) DateNullHandleResponse(resp *azcore.Response) (*Queries
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesDateNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesDateNullResponse{RawResponse: resp.Response}, nil
 }
 
 // DateTimeNullCreateRequest creates the DateTimeNull request.
@@ -201,7 +201,7 @@ func (QueriesOperations) DateTimeNullHandleResponse(resp *azcore.Response) (*Que
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesDateTimeNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesDateTimeNullResponse{RawResponse: resp.Response}, nil
 }
 
 // DateTimeValidCreateRequest creates the DateTimeValid request.
@@ -218,7 +218,7 @@ func (QueriesOperations) DateTimeValidHandleResponse(resp *azcore.Response) (*Qu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesDateTimeValidResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesDateTimeValidResponse{RawResponse: resp.Response}, nil
 }
 
 // DateValidCreateRequest creates the DateValid request.
@@ -235,7 +235,7 @@ func (QueriesOperations) DateValidHandleResponse(resp *azcore.Response) (*Querie
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesDateValidResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesDateValidResponse{RawResponse: resp.Response}, nil
 }
 
 // DoubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -252,7 +252,7 @@ func (QueriesOperations) DoubleDecimalNegativeHandleResponse(resp *azcore.Respon
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesDoubleDecimalNegativeResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesDoubleDecimalNegativeResponse{RawResponse: resp.Response}, nil
 }
 
 // DoubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -269,7 +269,7 @@ func (QueriesOperations) DoubleDecimalPositiveHandleResponse(resp *azcore.Respon
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesDoubleDecimalPositiveResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesDoubleDecimalPositiveResponse{RawResponse: resp.Response}, nil
 }
 
 // DoubleNullCreateRequest creates the DoubleNull request.
@@ -286,7 +286,7 @@ func (QueriesOperations) DoubleNullHandleResponse(resp *azcore.Response) (*Queri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesDoubleNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesDoubleNullResponse{RawResponse: resp.Response}, nil
 }
 
 // EnumNullCreateRequest creates the EnumNull request.
@@ -303,7 +303,7 @@ func (QueriesOperations) EnumNullHandleResponse(resp *azcore.Response) (*Queries
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesEnumNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesEnumNullResponse{RawResponse: resp.Response}, nil
 }
 
 // EnumValidCreateRequest creates the EnumValid request.
@@ -320,7 +320,7 @@ func (QueriesOperations) EnumValidHandleResponse(resp *azcore.Response) (*Querie
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesEnumValidResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesEnumValidResponse{RawResponse: resp.Response}, nil
 }
 
 // FloatNullCreateRequest creates the FloatNull request.
@@ -337,7 +337,7 @@ func (QueriesOperations) FloatNullHandleResponse(resp *azcore.Response) (*Querie
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesFloatNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesFloatNullResponse{RawResponse: resp.Response}, nil
 }
 
 // FloatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -354,7 +354,7 @@ func (QueriesOperations) FloatScientificNegativeHandleResponse(resp *azcore.Resp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesFloatScientificNegativeResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesFloatScientificNegativeResponse{RawResponse: resp.Response}, nil
 }
 
 // FloatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -371,7 +371,7 @@ func (QueriesOperations) FloatScientificPositiveHandleResponse(resp *azcore.Resp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesFloatScientificPositiveResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesFloatScientificPositiveResponse{RawResponse: resp.Response}, nil
 }
 
 // GetBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -388,7 +388,7 @@ func (QueriesOperations) GetBooleanFalseHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetBooleanFalseResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetBooleanFalseResponse{RawResponse: resp.Response}, nil
 }
 
 // GetBooleanNullCreateRequest creates the GetBooleanNull request.
@@ -405,7 +405,7 @@ func (QueriesOperations) GetBooleanNullHandleResponse(resp *azcore.Response) (*Q
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetBooleanNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetBooleanNullResponse{RawResponse: resp.Response}, nil
 }
 
 // GetBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -422,7 +422,7 @@ func (QueriesOperations) GetBooleanTrueHandleResponse(resp *azcore.Response) (*Q
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetBooleanTrueResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetBooleanTrueResponse{RawResponse: resp.Response}, nil
 }
 
 // GetIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -439,7 +439,7 @@ func (QueriesOperations) GetIntNegativeOneMillionHandleResponse(resp *azcore.Res
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetIntNegativeOneMillionResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetIntNegativeOneMillionResponse{RawResponse: resp.Response}, nil
 }
 
 // GetIntNullCreateRequest creates the GetIntNull request.
@@ -456,7 +456,7 @@ func (QueriesOperations) GetIntNullHandleResponse(resp *azcore.Response) (*Queri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetIntNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetIntNullResponse{RawResponse: resp.Response}, nil
 }
 
 // GetIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -473,7 +473,7 @@ func (QueriesOperations) GetIntOneMillionHandleResponse(resp *azcore.Response) (
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetIntOneMillionResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetIntOneMillionResponse{RawResponse: resp.Response}, nil
 }
 
 // GetLongNullCreateRequest creates the GetLongNull request.
@@ -490,7 +490,7 @@ func (QueriesOperations) GetLongNullHandleResponse(resp *azcore.Response) (*Quer
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetLongNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetLongNullResponse{RawResponse: resp.Response}, nil
 }
 
 // GetNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -507,7 +507,7 @@ func (QueriesOperations) GetNegativeTenBillionHandleResponse(resp *azcore.Respon
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetNegativeTenBillionResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetNegativeTenBillionResponse{RawResponse: resp.Response}, nil
 }
 
 // GetTenBillionCreateRequest creates the GetTenBillion request.
@@ -524,7 +524,7 @@ func (QueriesOperations) GetTenBillionHandleResponse(resp *azcore.Response) (*Qu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesGetTenBillionResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesGetTenBillionResponse{RawResponse: resp.Response}, nil
 }
 
 // StringEmptyCreateRequest creates the StringEmpty request.
@@ -541,7 +541,7 @@ func (QueriesOperations) StringEmptyHandleResponse(resp *azcore.Response) (*Quer
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesStringEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesStringEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // StringNullCreateRequest creates the StringNull request.
@@ -558,7 +558,7 @@ func (QueriesOperations) StringNullHandleResponse(resp *azcore.Response) (*Queri
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesStringNullResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesStringNullResponse{RawResponse: resp.Response}, nil
 }
 
 // StringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -575,7 +575,7 @@ func (QueriesOperations) StringURLEncodedHandleResponse(resp *azcore.Response) (
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesStringURLEncodedResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesStringURLEncodedResponse{RawResponse: resp.Response}, nil
 }
 
 // StringUnicodeCreateRequest creates the StringUnicode request.
@@ -592,6 +592,5 @@ func (QueriesOperations) StringUnicodeHandleResponse(resp *azcore.Response) (*Qu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesStringUnicodeResponse{StatusCode: resp.StatusCode}, nil
+	return &QueriesStringUnicodeResponse{RawResponse: resp.Response}, nil
 }
-

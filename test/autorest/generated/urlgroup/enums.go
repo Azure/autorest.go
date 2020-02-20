@@ -10,12 +10,11 @@ import azinternal "generatortests/autorest/generated/urlgroup/internal/urlgroup"
 type UriColor = azinternal.UriColor
 
 const (
-	UriColorRedColor = azinternal.UriColorRedColor
+	UriColorRedColor   = azinternal.UriColorRedColor
 	UriColorGreenColor = azinternal.UriColorGreenColor
-	UriColorBlueColor = azinternal.UriColorBlueColor
+	UriColorBlueColor  = azinternal.UriColorBlueColor
 )
 
 func PossibleUriColorValues() []UriColor {
 	return azinternal.PossibleUriColorValues()
 }
-

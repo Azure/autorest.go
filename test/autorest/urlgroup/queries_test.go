@@ -7,6 +7,7 @@ import (
 	"context"
 	"encoding/base64"
 	"generatortests/autorest/generated/urlgroup"
+	"generatortests/helpers"
 	"net/http"
 	"testing"
 )
@@ -27,9 +28,7 @@ func TestArrayStringCsvValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestArrayStringPipesValid(t *testing.T) {
@@ -40,9 +39,7 @@ func TestArrayStringPipesValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestByteMultiByte(t *testing.T) {
@@ -52,9 +49,7 @@ func TestByteMultiByte(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestDateTimeValid(t *testing.T) {
@@ -64,9 +59,7 @@ func TestDateTimeValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestDoubleDecimalNegative(t *testing.T) {
@@ -75,9 +68,7 @@ func TestDoubleDecimalNegative(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestEnumValid(t *testing.T) {
@@ -87,9 +78,7 @@ func TestEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestFloatScientificNegative(t *testing.T) {
@@ -98,9 +87,7 @@ func TestFloatScientificNegative(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestGetBooleanTrue(t *testing.T) {
@@ -109,9 +96,7 @@ func TestGetBooleanTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestGetIntOneMillion(t *testing.T) {
@@ -120,9 +105,7 @@ func TestGetIntOneMillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestGetTenBillion(t *testing.T) {
@@ -131,9 +114,7 @@ func TestGetTenBillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestStringUnicode(t *testing.T) {
@@ -143,7 +124,5 @@ func TestStringUnicode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.StatusCode != http.StatusOK {
-		t.Fatalf("unexpected status code: %d", result.StatusCode)
-	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }

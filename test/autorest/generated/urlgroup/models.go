@@ -203,4 +203,3 @@ type QueriesStringURLEncodedResponse = azinternal.QueriesStringURLEncodedRespons
 
 // QueriesStringUnicodeResponse contains the response from method Queries.StringUnicode.
 type QueriesStringUnicodeResponse = azinternal.QueriesStringUnicodeResponse
-

@@ -8,9 +8,9 @@ package urlgroup
 type UriColor string
 
 const (
-	UriColorRedColor UriColor = "red color"
+	UriColorRedColor   UriColor = "red color"
 	UriColorGreenColor UriColor = "green color"
-	UriColorBlueColor UriColor = "blue color"
+	UriColorBlueColor  UriColor = "blue color"
 )
 
 func PossibleUriColorValues() []UriColor {
@@ -20,4 +20,3 @@ func PossibleUriColorValues() []UriColor {
 func (c UriColor) ToPtr() *UriColor {
 	return &c
 }
-

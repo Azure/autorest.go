@@ -26,7 +26,7 @@ func (PathsOperations) ArrayCsvInPathHandleResponse(resp *azcore.Response) (*Pat
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsArrayCsvInPathResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsArrayCsvInPathResponse{RawResponse: resp.Response}, nil
 }
 
 // Base64URLCreateRequest creates the Base64URL request.
@@ -40,7 +40,7 @@ func (PathsOperations) Base64URLHandleResponse(resp *azcore.Response) (*PathsBas
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsBase64URLResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsBase64URLResponse{RawResponse: resp.Response}, nil
 }
 
 // ByteEmptyCreateRequest creates the ByteEmpty request.
@@ -54,7 +54,7 @@ func (PathsOperations) ByteEmptyHandleResponse(resp *azcore.Response) (*PathsByt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsByteEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsByteEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // ByteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -68,7 +68,7 @@ func (PathsOperations) ByteMultiByteHandleResponse(resp *azcore.Response) (*Path
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsByteMultiByteResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsByteMultiByteResponse{RawResponse: resp.Response}, nil
 }
 
 // ByteNullCreateRequest creates the ByteNull request.
@@ -82,7 +82,7 @@ func (PathsOperations) ByteNullHandleResponse(resp *azcore.Response) (*PathsByte
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsByteNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsByteNullResponse{RawResponse: resp.Response}, nil
 }
 
 // DateNullCreateRequest creates the DateNull request.
@@ -96,7 +96,7 @@ func (PathsOperations) DateNullHandleResponse(resp *azcore.Response) (*PathsDate
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDateNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsDateNullResponse{RawResponse: resp.Response}, nil
 }
 
 // DateTimeNullCreateRequest creates the DateTimeNull request.
@@ -110,7 +110,7 @@ func (PathsOperations) DateTimeNullHandleResponse(resp *azcore.Response) (*Paths
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDateTimeNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsDateTimeNullResponse{RawResponse: resp.Response}, nil
 }
 
 // DateTimeValidCreateRequest creates the DateTimeValid request.
@@ -124,7 +124,7 @@ func (PathsOperations) DateTimeValidHandleResponse(resp *azcore.Response) (*Path
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDateTimeValidResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsDateTimeValidResponse{RawResponse: resp.Response}, nil
 }
 
 // DateValidCreateRequest creates the DateValid request.
@@ -138,7 +138,7 @@ func (PathsOperations) DateValidHandleResponse(resp *azcore.Response) (*PathsDat
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDateValidResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsDateValidResponse{RawResponse: resp.Response}, nil
 }
 
 // DoubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -152,7 +152,7 @@ func (PathsOperations) DoubleDecimalNegativeHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDoubleDecimalNegativeResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsDoubleDecimalNegativeResponse{RawResponse: resp.Response}, nil
 }
 
 // DoubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -166,7 +166,7 @@ func (PathsOperations) DoubleDecimalPositiveHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDoubleDecimalPositiveResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsDoubleDecimalPositiveResponse{RawResponse: resp.Response}, nil
 }
 
 // EnumNullCreateRequest creates the EnumNull request.
@@ -180,7 +180,7 @@ func (PathsOperations) EnumNullHandleResponse(resp *azcore.Response) (*PathsEnum
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsEnumNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsEnumNullResponse{RawResponse: resp.Response}, nil
 }
 
 // EnumValidCreateRequest creates the EnumValid request.
@@ -194,7 +194,7 @@ func (PathsOperations) EnumValidHandleResponse(resp *azcore.Response) (*PathsEnu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsEnumValidResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsEnumValidResponse{RawResponse: resp.Response}, nil
 }
 
 // FloatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -208,7 +208,7 @@ func (PathsOperations) FloatScientificNegativeHandleResponse(resp *azcore.Respon
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsFloatScientificNegativeResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsFloatScientificNegativeResponse{RawResponse: resp.Response}, nil
 }
 
 // FloatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -222,7 +222,7 @@ func (PathsOperations) FloatScientificPositiveHandleResponse(resp *azcore.Respon
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsFloatScientificPositiveResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsFloatScientificPositiveResponse{RawResponse: resp.Response}, nil
 }
 
 // GetBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -236,7 +236,7 @@ func (PathsOperations) GetBooleanFalseHandleResponse(resp *azcore.Response) (*Pa
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetBooleanFalseResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetBooleanFalseResponse{RawResponse: resp.Response}, nil
 }
 
 // GetBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -250,7 +250,7 @@ func (PathsOperations) GetBooleanTrueHandleResponse(resp *azcore.Response) (*Pat
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetBooleanTrueResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetBooleanTrueResponse{RawResponse: resp.Response}, nil
 }
 
 // GetIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -264,7 +264,7 @@ func (PathsOperations) GetIntNegativeOneMillionHandleResponse(resp *azcore.Respo
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetIntNegativeOneMillionResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetIntNegativeOneMillionResponse{RawResponse: resp.Response}, nil
 }
 
 // GetIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -278,7 +278,7 @@ func (PathsOperations) GetIntOneMillionHandleResponse(resp *azcore.Response) (*P
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetIntOneMillionResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetIntOneMillionResponse{RawResponse: resp.Response}, nil
 }
 
 // GetNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -292,7 +292,7 @@ func (PathsOperations) GetNegativeTenBillionHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetNegativeTenBillionResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetNegativeTenBillionResponse{RawResponse: resp.Response}, nil
 }
 
 // GetTenBillionCreateRequest creates the GetTenBillion request.
@@ -306,7 +306,7 @@ func (PathsOperations) GetTenBillionHandleResponse(resp *azcore.Response) (*Path
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetTenBillionResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetTenBillionResponse{RawResponse: resp.Response}, nil
 }
 
 // StringEmptyCreateRequest creates the StringEmpty request.
@@ -320,7 +320,7 @@ func (PathsOperations) StringEmptyHandleResponse(resp *azcore.Response) (*PathsS
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsStringEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // StringNullCreateRequest creates the StringNull request.
@@ -334,7 +334,7 @@ func (PathsOperations) StringNullHandleResponse(resp *azcore.Response) (*PathsSt
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringNullResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsStringNullResponse{RawResponse: resp.Response}, nil
 }
 
 // StringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -348,7 +348,7 @@ func (PathsOperations) StringURLEncodedHandleResponse(resp *azcore.Response) (*P
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringURLEncodedResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsStringURLEncodedResponse{RawResponse: resp.Response}, nil
 }
 
 // StringURLNonEncodedCreateRequest creates the StringURLNonEncoded request.
@@ -362,7 +362,7 @@ func (PathsOperations) StringURLNonEncodedHandleResponse(resp *azcore.Response) 
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringURLNonEncodedResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsStringURLNonEncodedResponse{RawResponse: resp.Response}, nil
 }
 
 // StringUnicodeCreateRequest creates the StringUnicode request.
@@ -376,7 +376,7 @@ func (PathsOperations) StringUnicodeHandleResponse(resp *azcore.Response) (*Path
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringUnicodeResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsStringUnicodeResponse{RawResponse: resp.Response}, nil
 }
 
 // UnixTimeURLCreateRequest creates the UnixTimeURL request.
@@ -390,6 +390,5 @@ func (PathsOperations) UnixTimeURLHandleResponse(resp *azcore.Response) (*PathsU
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsUnixTimeURLResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsUnixTimeURLResponse{RawResponse: resp.Response}, nil
 }
-

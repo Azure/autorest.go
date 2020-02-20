@@ -25,16 +25,16 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry: azcore.DefaultRetryOptions(),
+		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u *url.URL
-	p azcore.Pipeline
-	pathsOperations PathsOperations
-	queriesOperations QueriesOperations
+	u                   *url.URL
+	p                   azcore.Pipeline
+	pathsOperations     PathsOperations
+	queriesOperations   QueriesOperations
 	pathItemsOperations PathItemsOperations
 }
 
@@ -87,4 +87,3 @@ func (client *Client) QueriesOperations() QueriesOperations {
 func (client *Client) PathItemsOperations() PathItemsOperations {
 	return client.pathItemsOperations
 }
-
