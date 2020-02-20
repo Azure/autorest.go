@@ -25,14 +25,14 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry: azcore.DefaultRetryOptions(),
+		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u *url.URL
-	p azcore.Pipeline
+	u              *url.URL
+	p              azcore.Pipeline
 	boolOperations BoolOperations
 }
 
@@ -73,4 +73,3 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 func (client *Client) BoolOperations() BoolOperations {
 	return client.boolOperations
 }
-

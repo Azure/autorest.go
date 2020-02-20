@@ -25,7 +25,7 @@ func (BoolOperations) GetFalseHandleResponse(resp *azcore.Response) (*BoolGetFal
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := BoolGetFalseResponse{StatusCode: resp.StatusCode}
+	result := BoolGetFalseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -40,7 +40,7 @@ func (BoolOperations) GetInvalidHandleResponse(resp *azcore.Response) (*BoolGetI
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := BoolGetInvalidResponse{StatusCode: resp.StatusCode}
+	result := BoolGetInvalidResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -55,7 +55,7 @@ func (BoolOperations) GetNullHandleResponse(resp *azcore.Response) (*BoolGetNull
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := BoolGetNullResponse{StatusCode: resp.StatusCode}
+	result := BoolGetNullResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -70,7 +70,7 @@ func (BoolOperations) GetTrueHandleResponse(resp *azcore.Response) (*BoolGetTrue
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := BoolGetTrueResponse{StatusCode: resp.StatusCode}
+	result := BoolGetTrueResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
@@ -90,7 +90,7 @@ func (BoolOperations) PutFalseHandleResponse(resp *azcore.Response) (*BoolPutFal
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &BoolPutFalseResponse{StatusCode: resp.StatusCode}, nil
+	return &BoolPutFalseResponse{RawResponse: resp.Response}, nil
 }
 
 // PutTrueCreateRequest creates the PutTrue request.
@@ -109,6 +109,5 @@ func (BoolOperations) PutTrueHandleResponse(resp *azcore.Response) (*BoolPutTrue
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &BoolPutTrueResponse{StatusCode: resp.StatusCode}, nil
+	return &BoolPutTrueResponse{RawResponse: resp.Response}, nil
 }
-

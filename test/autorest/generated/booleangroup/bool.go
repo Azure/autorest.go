@@ -12,17 +12,17 @@ import (
 
 // BoolOperations contains the methods for the Bool group.
 type BoolOperations interface {
-	// GetFalse - Get false Boolean value 
+	// GetFalse - Get false Boolean value
 	GetFalse(ctx context.Context) (*BoolGetFalseResponse, error)
-	// GetInvalid - Get invalid Boolean value 
+	// GetInvalid - Get invalid Boolean value
 	GetInvalid(ctx context.Context) (*BoolGetInvalidResponse, error)
-	// GetNull - Get null Boolean value 
+	// GetNull - Get null Boolean value
 	GetNull(ctx context.Context) (*BoolGetNullResponse, error)
-	// GetTrue - Get true Boolean value 
+	// GetTrue - Get true Boolean value
 	GetTrue(ctx context.Context) (*BoolGetTrueResponse, error)
-	// PutFalse - Set Boolean value false 
+	// PutFalse - Set Boolean value false
 	PutFalse(ctx context.Context) (*BoolPutFalseResponse, error)
-	// PutTrue - Set Boolean value true 
+	// PutTrue - Set Boolean value true
 	PutTrue(ctx context.Context) (*BoolPutTrueResponse, error)
 }
 
@@ -31,7 +31,7 @@ type boolOperations struct {
 	azinternal.BoolOperations
 }
 
-// GetFalse - Get false Boolean value 
+// GetFalse - Get false Boolean value
 func (client *boolOperations) GetFalse(ctx context.Context) (*BoolGetFalseResponse, error) {
 	req, err := client.GetFalseCreateRequest(*client.u)
 	if err != nil {
@@ -48,7 +48,7 @@ func (client *boolOperations) GetFalse(ctx context.Context) (*BoolGetFalseRespon
 	return result, nil
 }
 
-// GetInvalid - Get invalid Boolean value 
+// GetInvalid - Get invalid Boolean value
 func (client *boolOperations) GetInvalid(ctx context.Context) (*BoolGetInvalidResponse, error) {
 	req, err := client.GetInvalidCreateRequest(*client.u)
 	if err != nil {
@@ -65,7 +65,7 @@ func (client *boolOperations) GetInvalid(ctx context.Context) (*BoolGetInvalidRe
 	return result, nil
 }
 
-// GetNull - Get null Boolean value 
+// GetNull - Get null Boolean value
 func (client *boolOperations) GetNull(ctx context.Context) (*BoolGetNullResponse, error) {
 	req, err := client.GetNullCreateRequest(*client.u)
 	if err != nil {
@@ -82,7 +82,7 @@ func (client *boolOperations) GetNull(ctx context.Context) (*BoolGetNullResponse
 	return result, nil
 }
 
-// GetTrue - Get true Boolean value 
+// GetTrue - Get true Boolean value
 func (client *boolOperations) GetTrue(ctx context.Context) (*BoolGetTrueResponse, error) {
 	req, err := client.GetTrueCreateRequest(*client.u)
 	if err != nil {
@@ -99,7 +99,7 @@ func (client *boolOperations) GetTrue(ctx context.Context) (*BoolGetTrueResponse
 	return result, nil
 }
 
-// PutFalse - Set Boolean value false 
+// PutFalse - Set Boolean value false
 func (client *boolOperations) PutFalse(ctx context.Context) (*BoolPutFalseResponse, error) {
 	req, err := client.PutFalseCreateRequest(*client.u)
 	if err != nil {
@@ -116,7 +116,7 @@ func (client *boolOperations) PutFalse(ctx context.Context) (*BoolPutFalseRespon
 	return result, nil
 }
 
-// PutTrue - Set Boolean value true 
+// PutTrue - Set Boolean value true
 func (client *boolOperations) PutTrue(ctx context.Context) (*BoolPutTrueResponse, error) {
 	req, err := client.PutTrueCreateRequest(*client.u)
 	if err != nil {
