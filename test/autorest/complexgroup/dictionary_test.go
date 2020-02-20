@@ -24,7 +24,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	val := complexgroup.DictionaryWrapper{DefaultProgram: map[string]*string{}}
+	val := complexgroup.DictionaryWrapper{DefaultProgram: &map[string]*string{}}
 	expected := &complexgroup.DictionaryGetEmptyResponse{
 		StatusCode:        http.StatusOK,
 		DictionaryWrapper: &val,
@@ -65,7 +65,7 @@ func TestDictionaryGetValid(t *testing.T) {
 		t.Fatalf("GetValid: %v", err)
 	}
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
-	val := complexgroup.DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}
+	val := complexgroup.DictionaryWrapper{DefaultProgram: &map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}
 	expected := &complexgroup.DictionaryGetValidResponse{
 		StatusCode:        http.StatusOK,
 		DictionaryWrapper: &val,
@@ -89,7 +89,7 @@ func TestDictionaryGetValid(t *testing.T) {
 func TestDictionaryPutValid(t *testing.T) {
 	client := getDictionaryOperations(t)
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
-	result, err := client.PutValid(context.Background(), complexgroup.DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}})
+	result, err := client.PutValid(context.Background(), complexgroup.DictionaryWrapper{DefaultProgram: &map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}

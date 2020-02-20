@@ -24,7 +24,7 @@ func TestArrayGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	val := complexgroup.ArrayWrapper{Array: []string{}}
+	val := complexgroup.ArrayWrapper{Array: &[]string{}}
 	expected := &complexgroup.ArrayGetEmptyResponse{
 		StatusCode:   http.StatusOK,
 		ArrayWrapper: &val,
@@ -52,7 +52,7 @@ func TestArrayGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	val := complexgroup.ArrayWrapper{Array: []string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}}
+	val := complexgroup.ArrayWrapper{Array: &[]string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}}
 	expected := &complexgroup.ArrayGetValidResponse{
 		StatusCode:   http.StatusOK,
 		ArrayWrapper: &val,
