@@ -12,14 +12,14 @@ import (
 
 // PathItemsOperations contains the methods for the PathItems group.
 type PathItemsOperations interface {
-	// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery' 
-	GetAllWithValues(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetAllWithValuesResponse, error)
-	// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery=null 
-	GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetGlobalAndLocalQueryNullResponse, error)
-	// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery' 
-	GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetGlobalQueryNullResponse, error)
-	// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery=null, localStringQuery=null 
-	GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetLocalPathItemQueryNullResponse, error)
+	// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'
+	GetAllWithValues(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetAllWithValuesResponse, error)
+	// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery=null
+	GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetGlobalAndLocalQueryNullResponse, error)
+	// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'
+	GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetGlobalQueryNullResponse, error)
+	// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery=null, localStringQuery=null
+	GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetLocalPathItemQueryNullResponse, error)
 }
 
 type pathItemsOperations struct {
@@ -27,9 +27,9 @@ type pathItemsOperations struct {
 	azinternal.PathItemsOperations
 }
 
-// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery' 
-func (client *pathItemsOperations) GetAllWithValues(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetAllWithValuesResponse, error) {
-	req, err := client.GetAllWithValuesCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery)
+// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'
+func (client *pathItemsOperations) GetAllWithValues(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetAllWithValuesResponse, error) {
+	req, err := client.GetAllWithValuesCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery, globalStringQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +44,9 @@ func (client *pathItemsOperations) GetAllWithValues(ctx context.Context, pathIte
 	return result, nil
 }
 
-// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery=null 
-func (client *pathItemsOperations) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetGlobalAndLocalQueryNullResponse, error) {
-	req, err := client.GetGlobalAndLocalQueryNullCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery)
+// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery=null
+func (client *pathItemsOperations) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetGlobalAndLocalQueryNullResponse, error) {
+	req, err := client.GetGlobalAndLocalQueryNullCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery, globalStringQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -61,9 +61,9 @@ func (client *pathItemsOperations) GetGlobalAndLocalQueryNull(ctx context.Contex
 	return result, nil
 }
 
-// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery' 
-func (client *pathItemsOperations) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetGlobalQueryNullResponse, error) {
-	req, err := client.GetGlobalQueryNullCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery)
+// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'
+func (client *pathItemsOperations) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetGlobalQueryNullResponse, error) {
+	req, err := client.GetGlobalQueryNullCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery, globalStringQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -78,9 +78,9 @@ func (client *pathItemsOperations) GetGlobalQueryNull(ctx context.Context, pathI
 	return result, nil
 }
 
-// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery=null, localStringQuery=null 
-func (client *pathItemsOperations) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*PathItemsGetLocalPathItemQueryNullResponse, error) {
-	req, err := client.GetLocalPathItemQueryNullCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery)
+// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery=null, localStringQuery=null
+func (client *pathItemsOperations) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*PathItemsGetLocalPathItemQueryNullResponse, error) {
+	req, err := client.GetLocalPathItemQueryNullCreateRequest(*client.u, pathItemStringPath, pathItemStringQuery, localStringPath, localStringQuery, globalStringQuery)
 	if err != nil {
 		return nil, err
 	}

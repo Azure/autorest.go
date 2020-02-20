@@ -6,16 +6,17 @@
 package urlgroup
 
 import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type PathItemsOperations struct{}
 
 // GetAllWithValuesCreateRequest creates the GetAllWithValues request.
-func (PathItemsOperations) GetAllWithValuesCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*azcore.Request, error) {
+func (PathItemsOperations) GetAllWithValuesCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/pathItemStringQuery/localStringQuery")
 	query := u.Query()
 	query.Set("pathItemStringQuery", pathItemStringQuery)
@@ -34,7 +35,7 @@ func (PathItemsOperations) GetAllWithValuesHandleResponse(resp *azcore.Response)
 }
 
 // GetGlobalAndLocalQueryNullCreateRequest creates the GetGlobalAndLocalQueryNull request.
-func (PathItemsOperations) GetGlobalAndLocalQueryNullCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*azcore.Request, error) {
+func (PathItemsOperations) GetGlobalAndLocalQueryNullCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/null")
 	query := u.Query()
 	query.Set("pathItemStringQuery", pathItemStringQuery)
@@ -53,7 +54,7 @@ func (PathItemsOperations) GetGlobalAndLocalQueryNullHandleResponse(resp *azcore
 }
 
 // GetGlobalQueryNullCreateRequest creates the GetGlobalQueryNull request.
-func (PathItemsOperations) GetGlobalQueryNullCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*azcore.Request, error) {
+func (PathItemsOperations) GetGlobalQueryNullCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/localStringQuery")
 	query := u.Query()
 	query.Set("pathItemStringQuery", pathItemStringQuery)
@@ -72,7 +73,7 @@ func (PathItemsOperations) GetGlobalQueryNullHandleResponse(resp *azcore.Respons
 }
 
 // GetLocalPathItemQueryNullCreateRequest creates the GetLocalPathItemQueryNull request.
-func (PathItemsOperations) GetLocalPathItemQueryNullCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string) (*azcore.Request, error) {
+func (PathItemsOperations) GetLocalPathItemQueryNullCreateRequest(u url.URL, pathItemStringPath string, pathItemStringQuery string, localStringPath string, localStringQuery string, globalStringQuery string) (*azcore.Request, error) {
 	u.Path = path.Join(u.Path, "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/null/null")
 	query := u.Query()
 	query.Set("pathItemStringQuery", pathItemStringQuery)
@@ -89,4 +90,3 @@ func (PathItemsOperations) GetLocalPathItemQueryNullHandleResponse(resp *azcore.
 	}
 	return &PathItemsGetLocalPathItemQueryNullResponse{StatusCode: resp.StatusCode}, nil
 }
-
