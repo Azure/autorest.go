@@ -25,14 +25,14 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry: azcore.DefaultRetryOptions(),
+		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
 // Client - Test Infrastructure for AutoRest Swagger BAT
 type Client struct {
-	u *url.URL
-	p azcore.Pipeline
+	u              *url.URL
+	p              azcore.Pipeline
 	byteOperations ByteOperations
 }
 
@@ -73,4 +73,3 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 func (client *Client) ByteOperations() ByteOperations {
 	return client.byteOperations
 }
-

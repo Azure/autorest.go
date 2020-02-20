@@ -8,49 +8,50 @@ package bytegroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // ByteGetEmptyResponse contains the response from method Byte.GetEmpty.
 type ByteGetEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 	// The empty byte value ''
 	Value *[]byte
 }
 
 // ByteGetInvalidResponse contains the response from method Byte.GetInvalid.
 type ByteGetInvalidResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 	Value *[]byte
 }
 
 // ByteGetNonASCIIResponse contains the response from method Byte.GetNonASCII.
 type ByteGetNonASCIIResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 	Value *[]byte
 }
 
 // ByteGetNullResponse contains the response from method Byte.GetNull.
 type ByteGetNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 	// The null byte value
 	Value *[]byte
 }
 
 // BytePutNonASCIIResponse contains the response from method Byte.PutNonASCII.
 type BytePutNonASCIIResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -74,4 +75,3 @@ func (e Error) Error() string {
 	}
 	return msg
 }
-
