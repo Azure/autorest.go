@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"strings"
 	"time"
 )
 
@@ -17,7 +18,9 @@ type PathsOperations struct{}
 
 // ArrayCsvInPathCreateRequest creates the ArrayCsvInPath request.
 func (PathsOperations) ArrayCsvInPathCreateRequest(u url.URL, arrayPath []string) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}")
+	urlPath := "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(strings.Join(arrayPath, ",")))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -31,7 +34,9 @@ func (PathsOperations) ArrayCsvInPathHandleResponse(resp *azcore.Response) (*Pat
 
 // Base64URLCreateRequest creates the Base64URL request.
 func (PathsOperations) Base64URLCreateRequest(u url.URL, base64UrlPath []byte) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/string/bG9yZW0/{base64UrlPath}")
+	urlPath := "/paths/string/bG9yZW0/{base64UrlPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(string(base64UrlPath)))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -45,7 +50,9 @@ func (PathsOperations) Base64URLHandleResponse(resp *azcore.Response) (*PathsBas
 
 // ByteEmptyCreateRequest creates the ByteEmpty request.
 func (PathsOperations) ByteEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/byte/empty/{bytePath}")
+	urlPath := "/paths/byte/empty/{bytePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(""))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -59,7 +66,9 @@ func (PathsOperations) ByteEmptyHandleResponse(resp *azcore.Response) (*PathsByt
 
 // ByteMultiByteCreateRequest creates the ByteMultiByte request.
 func (PathsOperations) ByteMultiByteCreateRequest(u url.URL, bytePath []byte) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/byte/multibyte/{bytePath}")
+	urlPath := "/paths/byte/multibyte/{bytePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(string(bytePath)))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -73,7 +82,9 @@ func (PathsOperations) ByteMultiByteHandleResponse(resp *azcore.Response) (*Path
 
 // ByteNullCreateRequest creates the ByteNull request.
 func (PathsOperations) ByteNullCreateRequest(u url.URL, bytePath []byte) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/byte/null/{bytePath}")
+	urlPath := "/paths/byte/null/{bytePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(string(bytePath)))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -87,7 +98,9 @@ func (PathsOperations) ByteNullHandleResponse(resp *azcore.Response) (*PathsByte
 
 // DateNullCreateRequest creates the DateNull request.
 func (PathsOperations) DateNullCreateRequest(u url.URL, datePath time.Time) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/date/null/{datePath}")
+	urlPath := "/paths/date/null/{datePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.String()))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -101,7 +114,9 @@ func (PathsOperations) DateNullHandleResponse(resp *azcore.Response) (*PathsDate
 
 // DateTimeNullCreateRequest creates the DateTimeNull request.
 func (PathsOperations) DateTimeNullCreateRequest(u url.URL, dateTimePath time.Time) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/datetime/null/{dateTimePath}")
+	urlPath := "/paths/datetime/null/{dateTimePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.String()))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -115,7 +130,9 @@ func (PathsOperations) DateTimeNullHandleResponse(resp *azcore.Response) (*Paths
 
 // DateTimeValidCreateRequest creates the DateTimeValid request.
 func (PathsOperations) DateTimeValidCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}")
+	urlPath := "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape("2012-01-01T01:01:01Z"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -129,7 +146,9 @@ func (PathsOperations) DateTimeValidHandleResponse(resp *azcore.Response) (*Path
 
 // DateValidCreateRequest creates the DateValid request.
 func (PathsOperations) DateValidCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/date/2012-01-01/{datePath}")
+	urlPath := "/paths/date/2012-01-01/{datePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape("2012-01-01"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -143,7 +162,9 @@ func (PathsOperations) DateValidHandleResponse(resp *azcore.Response) (*PathsDat
 
 // DoubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
 func (PathsOperations) DoubleDecimalNegativeCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/double/-9999999.999/{doublePath}")
+	urlPath := "/paths/double/-9999999.999/{doublePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("-9999999.999"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -157,7 +178,9 @@ func (PathsOperations) DoubleDecimalNegativeHandleResponse(resp *azcore.Response
 
 // DoubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
 func (PathsOperations) DoubleDecimalPositiveCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/double/9999999.999/{doublePath}")
+	urlPath := "/paths/double/9999999.999/{doublePath}"
+	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("9999999.999"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -171,7 +194,9 @@ func (PathsOperations) DoubleDecimalPositiveHandleResponse(resp *azcore.Response
 
 // EnumNullCreateRequest creates the EnumNull request.
 func (PathsOperations) EnumNullCreateRequest(u url.URL, enumPath UriColor) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/string/null/{enumPath}")
+	urlPath := "/paths/string/null/{enumPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -185,7 +210,9 @@ func (PathsOperations) EnumNullHandleResponse(resp *azcore.Response) (*PathsEnum
 
 // EnumValidCreateRequest creates the EnumValid request.
 func (PathsOperations) EnumValidCreateRequest(u url.URL, enumPath UriColor) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/enum/green%20color/{enumPath}")
+	urlPath := "/paths/enum/green%20color/{enumPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -199,7 +226,9 @@ func (PathsOperations) EnumValidHandleResponse(resp *azcore.Response) (*PathsEnu
 
 // FloatScientificNegativeCreateRequest creates the FloatScientificNegative request.
 func (PathsOperations) FloatScientificNegativeCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/float/-1.034E-20/{floatPath}")
+	urlPath := "/paths/float/-1.034E-20/{floatPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("-1.034e-20"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -213,7 +242,9 @@ func (PathsOperations) FloatScientificNegativeHandleResponse(resp *azcore.Respon
 
 // FloatScientificPositiveCreateRequest creates the FloatScientificPositive request.
 func (PathsOperations) FloatScientificPositiveCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/float/1.034E+20/{floatPath}")
+	urlPath := "/paths/float/1.034E+20/{floatPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("103400000000000000000"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -227,7 +258,9 @@ func (PathsOperations) FloatScientificPositiveHandleResponse(resp *azcore.Respon
 
 // GetBooleanFalseCreateRequest creates the GetBooleanFalse request.
 func (PathsOperations) GetBooleanFalseCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/bool/false/{boolPath}")
+	urlPath := "/paths/bool/false/{boolPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("false"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -241,7 +274,9 @@ func (PathsOperations) GetBooleanFalseHandleResponse(resp *azcore.Response) (*Pa
 
 // GetBooleanTrueCreateRequest creates the GetBooleanTrue request.
 func (PathsOperations) GetBooleanTrueCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/bool/true/{boolPath}")
+	urlPath := "/paths/bool/true/{boolPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("true"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -255,7 +290,9 @@ func (PathsOperations) GetBooleanTrueHandleResponse(resp *azcore.Response) (*Pat
 
 // GetIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
 func (PathsOperations) GetIntNegativeOneMillionCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/int/-1000000/{intPath}")
+	urlPath := "/paths/int/-1000000/{intPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("-1000000"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -269,7 +306,9 @@ func (PathsOperations) GetIntNegativeOneMillionHandleResponse(resp *azcore.Respo
 
 // GetIntOneMillionCreateRequest creates the GetIntOneMillion request.
 func (PathsOperations) GetIntOneMillionCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/int/1000000/{intPath}")
+	urlPath := "/paths/int/1000000/{intPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("1000000"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -283,7 +322,9 @@ func (PathsOperations) GetIntOneMillionHandleResponse(resp *azcore.Response) (*P
 
 // GetNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
 func (PathsOperations) GetNegativeTenBillionCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/long/-10000000000/{longPath}")
+	urlPath := "/paths/long/-10000000000/{longPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("-10000000000"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -297,7 +338,9 @@ func (PathsOperations) GetNegativeTenBillionHandleResponse(resp *azcore.Response
 
 // GetTenBillionCreateRequest creates the GetTenBillion request.
 func (PathsOperations) GetTenBillionCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/long/10000000000/{longPath}")
+	urlPath := "/paths/long/10000000000/{longPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("10000000000"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -311,7 +354,9 @@ func (PathsOperations) GetTenBillionHandleResponse(resp *azcore.Response) (*Path
 
 // StringEmptyCreateRequest creates the StringEmpty request.
 func (PathsOperations) StringEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/string/empty/{stringPath}")
+	urlPath := "/paths/string/empty/{stringPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(""))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -325,7 +370,9 @@ func (PathsOperations) StringEmptyHandleResponse(resp *azcore.Response) (*PathsS
 
 // StringNullCreateRequest creates the StringNull request.
 func (PathsOperations) StringNullCreateRequest(u url.URL, stringPath string) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/string/null/{stringPath}")
+	urlPath := "/paths/string/null/{stringPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(stringPath))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -339,7 +386,9 @@ func (PathsOperations) StringNullHandleResponse(resp *azcore.Response) (*PathsSt
 
 // StringURLEncodedCreateRequest creates the StringURLEncoded request.
 func (PathsOperations) StringURLEncodedCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}")
+	urlPath := "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("begin!*'();:@ &=+$,/?#[]end"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -353,7 +402,9 @@ func (PathsOperations) StringURLEncodedHandleResponse(resp *azcore.Response) (*P
 
 // StringURLNonEncodedCreateRequest creates the StringURLNonEncoded request.
 func (PathsOperations) StringURLNonEncodedCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/string/begin!*'();:@&=+$,end/{stringPath}")
+	urlPath := "/paths/string/begin!*'();:@&=+$,end/{stringPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("begin!*'();:@&=+$,end"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -367,7 +418,9 @@ func (PathsOperations) StringURLNonEncodedHandleResponse(resp *azcore.Response) 
 
 // StringUnicodeCreateRequest creates the StringUnicode request.
 func (PathsOperations) StringUnicodeCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/string/unicode/{stringPath}")
+	urlPath := "/paths/string/unicode/{stringPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("啊齄丂狛狜隣郎隣兀﨩"))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
@@ -381,7 +434,9 @@ func (PathsOperations) StringUnicodeHandleResponse(resp *azcore.Response) (*Path
 
 // UnixTimeURLCreateRequest creates the UnixTimeURL request.
 func (PathsOperations) UnixTimeURLCreateRequest(u url.URL, unixTimeUrlPath time.Time) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/paths/int/1460505600/{unixTimeUrlPath}")
+	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
+	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(unixTimeUrlPath.String()))
+	u.Path = path.Join(u.Path, urlPath)
 	return azcore.NewRequest(http.MethodGet, u), nil
 }
 
