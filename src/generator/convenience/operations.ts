@@ -8,7 +8,7 @@ import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, ImplementationLocation, Operation } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { InternalPackage, InternalPackagePath } from './helpers';
-import { ContentPreamble, extractParamNames, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager } from '../common/helpers';
+import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, ParamInfo } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 import { ProtocolSig } from '../protocol/operations';
 
@@ -50,9 +50,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (HasDescription(op.language.go!)) {
         interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
       }
-      const params = [{ name: 'ctx', type: 'context.Context' }].concat(generateParameterInfo(op));
+      const params = [{ name: 'ctx', type: 'context.Context', global: false }].concat(generateParameterInfo(op));
       const returns = genereateReturnsInfo(op);
-      interfaceText += `\t${op.language.go!.name}(${generateParamsSig(params)}) (${returns.join(', ')})\n`;
+      interfaceText += `\t${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')})\n`;
     }
     interfaceText += '}\n\n';
 
@@ -65,6 +65,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += `type ${clientName} struct {\n`;
     text += '\t*Client\n';
     text += `\t${InternalPackage}.${group.language.go!.clientName}\n`;
+    if (group.language.go!.globals) {
+      const globals = <Array<ParamInfo>>group.language.go!.globals;
+      globals.forEach((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
+        text += `\t${value.name} ${value.type}\n`;
+      })
+    }
     text += '}\n\n';
 
     for (const op of values(group.operations)) {
@@ -79,14 +85,14 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
 function generateOperation(clientName: string, op: Operation): string {
   const info = <OperationNaming>op.language.go!;
-  const params = [{ name: 'ctx', type: 'context.Context' }].concat(generateParameterInfo(op));
+  const params = [{ name: 'ctx', type: 'context.Context', global: false }].concat(generateParameterInfo(op));
   const returns = genereateReturnsInfo(op);
   const protocol = <ProtocolSig>op.language.go!;
   let text = '';
   if (HasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
   }
-  text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params)}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')}) {\n`;
   // slice off the first param returned from extractParamNames as we know it's the URL (cheating a bit...)
   const protocolReqParams = ['*client.u'].concat(extractParamNames(protocol.protocolSigs.requestMethod.params).slice(1));
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${protocolReqParams.join(', ')})\n`;
@@ -105,4 +111,18 @@ function generateOperation(clientName: string, op: Operation): string {
   text += `\treturn result, nil\n`;
   text += '}\n\n';
   return text;
+}
+
+// returns an array of just the parameter names
+// e.g. [ 'i', 's', 'b' ]
+function extractParamNames(paramInfo: ParamInfo[]): string[] {
+  let paramNames = new Array<string>();
+  for (const param of values(paramInfo)) {
+    let name = param.name;
+    if (param.global) {
+      name = `client.${name}`;
+    }
+    paramNames.push(name);
+  }
+  return paramNames;
 }

@@ -126,6 +126,7 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
     case SchemaType.Date:
     case SchemaType.DateTime:
     case SchemaType.Duration:
+    case SchemaType.UnixTime:
       return `${param.language.go!.name}.String()`;
     case SchemaType.Integer:
       imports.add('strconv');
@@ -159,11 +160,20 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   }
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.requestMethod.params = [{ name: 'u', type: 'url.URL' }].concat(generateParameterInfo(op));
+  sig.protocolSigs.requestMethod.params = [{ name: 'u', type: 'url.URL', global: false }].concat(generateParameterInfo(op));
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
-  text += `\tu.Path = path.Join(u.Path, "${op.request.protocol.http!.path}")\n`;
+  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
+  text += `\turlPath := "${op.request.protocol.http!.path}"\n`;
+  if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+    // replace path parameters
+    imports.add('strings');
+    imports.add('net/url');
+    for (const pp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.name}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
+    }
+  }
+  text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
   if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
     // add query parameters
     text += '\tquery := u.Query()\n';
@@ -209,11 +219,11 @@ function createProtocolResponse(client: string, op: Operation): string {
   const name = info.protocolNaming.responseMethod;
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.responseMethod.params = [{ name: 'resp', type: '*azcore.Response' }];
+  sig.protocolSigs.responseMethod.params = [{ name: 'resp', type: '*azcore.Response', global: false }];
   sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op);
 
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
+  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params, true)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(http.StatusOK) {\n`;
   text += `\t\treturn nil, newError(resp)\n`;
   text += '\t}\n';

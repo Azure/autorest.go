@@ -103,6 +103,7 @@ export interface MethodSig {
 export interface ParamInfo {
   name: string;
   type: string;
+  global: boolean;
 }
 
 // creates ParamInfo for the specified operation.
@@ -113,10 +114,15 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
     if (param.schema.type === SchemaType.Constant) {
       // don't generate a parameter for a constant
       continue;
+
     }
-    if (param.implementation === ImplementationLocation.Method) {
-      params.push({ name: param.language.go!.name, type: param.schema.language.go!.name });
+    if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
+      // don't include the URL param as we include that elsewhere as a url.URL
+      continue;
     }
+    // include client and method params
+    const global = param.implementation === ImplementationLocation.Client;
+    params.push({ name: param.language.go!.name, type: param.schema.language.go!.name, global: global });
   }
   return params;
 }
@@ -133,22 +139,15 @@ export function genereateReturnsInfo(op: Operation): string[] {
 
 // flattens out ParamInfo to return a complete parameter sig string
 // e.g. "i int, s string, b bool"
-export function generateParamsSig(paramInfo: ParamInfo[]): string {
+export function generateParamsSig(paramInfo: ParamInfo[], includeGlobal: boolean): string {
   let params = new Array<string>();
   for (const param of values(paramInfo)) {
+    if (param.global && !includeGlobal) {
+      continue;
+    }
     params.push(`${param.name} ${param.type}`);
   }
   return params.join(', ');
-}
-
-// returns an array of just the parameter names
-// e.g. [ 'i', 's', 'b' ]
-export function extractParamNames(paramInfo: ParamInfo[]): string[] {
-  let paramNames = new Array<string>();
-  for (const param of values(paramInfo)) {
-    paramNames.push(param.name);
-  }
-  return paramNames;
 }
 
 // represents an enum type and its values
