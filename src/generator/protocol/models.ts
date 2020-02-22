@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, SchemaType, StringSchema, Property, HttpHeader, Protocol } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, HasDescription, ImportManager, LanguageHeader, SortAscending } from '../common/helpers';
 
@@ -19,9 +19,11 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.responses![0]) {
+        // check if the response has http headers that it will expect information from. 
         if (op.responses![0].protocol.http!.headers) {
           for (const header of values(op.responses![0].protocol.http!.headers)) {
             const head = <LanguageHeader>header;
+            // convert each header to a property and append it to the response properties list
             op.responses![0].language.go!.properties.push(newProperty(head.name, "", <Schema>head.schema));
           }
         }

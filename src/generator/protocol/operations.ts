@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
@@ -154,9 +154,9 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
   }
 }
 
+// use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager): HeaderResponse {
   let headerText = <HeaderResponse>{}
-  let separator = ',';
   let text = ``;
   switch (header.schema.type) {
     case SchemaType.Boolean:
@@ -310,11 +310,14 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const resp = op.responses![0];
   let respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
   let headResp = <HeaderResponse>{}
+  // check if the response is expecting information from headers
   if (resp.protocol.http!.headers) {
     for (const header of values(resp.protocol.http!.headers)) {
       const head = <LanguageHeader>header;
       headResp = formatHeaderResponseValue(head, imports)
+      // reassign respObj to include the value returned from the headers
       respObj = `${resp.language.go!.name}${headResp.respObj}`;
+      // add the code necessary to process data returned in a header
       if (headResp.body) {
         text += headResp.body
       }

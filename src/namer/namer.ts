@@ -16,7 +16,7 @@ export async function namer(host: Host) {
 
   try {
     const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-    
+
     await process(session);
 
     // output the model to the pipeline
@@ -103,6 +103,7 @@ async function process(session: Session<CodeModel>) {
       const name = `${opGroupName}${op.language.go!.name}Response`;
       resp.language.go!.name = name;
       resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
+      // add a field to headers to include a Go compliant name for when it needs to be used as a field in a type
       if (op.responses![0].protocol.http!.headers) {
         for (const header of values(op.responses![0].protocol.http!.headers)) {
           const head = <LanguageHeader>header;
