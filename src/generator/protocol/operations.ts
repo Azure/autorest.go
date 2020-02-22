@@ -156,7 +156,7 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 
 // use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager): HeaderResponse {
-  let headerText = <HeaderResponse>{}
+  let headerText = <HeaderResponse>{};
   let text = ``;
   switch (header.schema.type) {
     case SchemaType.Boolean:

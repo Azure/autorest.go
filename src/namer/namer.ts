@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *  --------------------------------------------------------------------------------------------  */
 
-import { serialize, pascalCase, camelCase } from '@azure-tools/codegen'
-import { Host, startSession, Session } from '@azure-tools/autorest-extension-base'
-import { codeModelSchema, CodeModel, Language} from '@azure-tools/codemodel'
-import { length, visitor, clone, values } from '@azure-tools/linq'
-import { CommonAcronyms, ReservedWords } from './mappings'
-import { LanguageHeader } from '../generator/common/helpers'
+import { serialize, pascalCase, camelCase } from '@azure-tools/codegen';
+import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
+import { codeModelSchema, CodeModel, Language} from '@azure-tools/codemodel';
+import { length, visitor, clone, values } from '@azure-tools/linq';
+import { CommonAcronyms, ReservedWords } from './mappings';
+import { LanguageHeader } from '../generator/common/helpers';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
