@@ -16,10 +16,7 @@ export async function namer(host: Host) {
 
   try {
     const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-    // await fs.writeFile('testYAMLHeadergroup.yaml', serialize(session.model), (err) => {
-    //   if (err) throw err;
-    //   console.log("File saved!")
-    // })
+    
     await process(session);
 
     // output the model to the pipeline

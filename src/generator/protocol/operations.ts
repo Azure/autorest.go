@@ -158,17 +158,6 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
   let headerText = <HeaderResponse>{}
   let separator = ',';
   let text = ``;
-  // switch (header.protocol.http?.style) {
-  //   case SerializationStyle.PipeDelimited:
-  //     separator = '|';
-  //     break;
-  //   case SerializationStyle.SpaceDelimited:
-  //     separator = ' ';
-  //     break;
-  //   case SerializationStyle.TabDelimited:
-  //     separator = '\\t';
-  //     break;
-  // }
   switch (header.schema.type) {
     case SchemaType.Boolean:
       imports.add('strconv');
