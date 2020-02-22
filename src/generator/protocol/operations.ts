@@ -181,7 +181,6 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       return headerText;
     case SchemaType.Constant:
     case SchemaType.String:
-      // cannot use formatConstantValue() since all values are treated as strings
       headerText.body = `\tval := resp.Header.Get("${header.header}")\n`;
       headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
       return headerText;
