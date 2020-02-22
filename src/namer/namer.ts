@@ -5,9 +5,10 @@
 
 import { serialize, pascalCase, camelCase } from '@azure-tools/codegen'
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base'
-import { codeModelSchema, CodeModel, Language, ObjectSchema, SchemaType, Schema } from '@azure-tools/codemodel'
+import { codeModelSchema, CodeModel, Language} from '@azure-tools/codemodel'
 import { length, visitor, clone, values } from '@azure-tools/linq'
 import { CommonAcronyms, ReservedWords } from './mappings'
+import { LanguageHeader } from '../generator/common/helpers'
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -15,7 +16,10 @@ export async function namer(host: Host) {
 
   try {
     const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-
+    // await fs.writeFile('testYAMLHeadergroup.yaml', serialize(session.model), (err) => {
+    //   if (err) throw err;
+    //   console.log("File saved!")
+    // })
     await process(session);
 
     // output the model to the pipeline
@@ -102,6 +106,12 @@ async function process(session: Session<CodeModel>) {
       const name = `${opGroupName}${op.language.go!.name}Response`;
       resp.language.go!.name = name;
       resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
+      if (op.responses![0].protocol.http!.headers) {
+        for (const header of values(op.responses![0].protocol.http!.headers)) {
+          const head = <LanguageHeader>header;
+          head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+        }
+      }
     }
   }
 

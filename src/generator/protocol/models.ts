@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
+import { comment, pascalCase } from '@azure-tools/codegen';
+import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, SchemaType, StringSchema, Property, HttpHeader, Protocol } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, HasDescription, ImportManager, SortAscending } from '../common/helpers';
+import { ContentPreamble, HasDescription, ImportManager, LanguageHeader, SortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -18,8 +18,14 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   // add structs from operation responses
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      if (op.responses) {
-        structs.push(generateStruct(op.responses[0].language.go!, op.responses[0].language.go!.properties));
+      if (op.responses![0]) {
+        if (op.responses![0].protocol.http!.headers) {
+          for (const header of values(op.responses![0].protocol.http!.headers)) {
+            const head = <LanguageHeader>header;
+            op.responses![0].language.go!.properties.push(newProperty(head.name, "", <Schema>head.schema));
+          }
+        }
+        structs.push(generateStruct(op.responses![0].language.go!, op.responses![0].language.go!.properties));
       }
     }
   }
@@ -109,6 +115,11 @@ class StructDef {
 function generateStructs(objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
+    // for (const header of values(obj.protocol?.http!.headers)) {
+    //   const details = <HttpHeader>header;
+    //   const headerProp = newProperty(details.header, "", <Schema>details.schema);
+    //   obj.properties?.push(headerProp)
+    // }
     structTypes.push(generateStruct(obj.language.go!, obj.properties));
   }
   return structTypes;
@@ -127,4 +138,10 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
     imports.addImportForSchemaType(prop.schema);
   }
   return st;
+}
+
+function newProperty(name: string, desc: string, schema: Schema): Property {
+  let prop = new Property(name, desc, schema);
+  prop.language.go = prop.language.default;
+  return prop;
 }

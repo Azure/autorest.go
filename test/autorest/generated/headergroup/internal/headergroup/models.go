@@ -8,6 +8,7 @@ package headergroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 type Error struct {
@@ -39,175 +40,175 @@ func (e Error) Error() string {
 
 // HeaderCustomRequestIDResponse contains the response from method Header.CustomRequestID.
 type HeaderCustomRequestIDResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamBoolResponse contains the response from method Header.ParamBool.
 type HeaderParamBoolResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamByteResponse contains the response from method Header.ParamByte.
 type HeaderParamByteResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamDateResponse contains the response from method Header.ParamDate.
 type HeaderParamDateResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamDatetimeRFC1123Response contains the response from method Header.ParamDatetimeRFC1123.
 type HeaderParamDatetimeRFC1123Response struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamDatetimeResponse contains the response from method Header.ParamDatetime.
 type HeaderParamDatetimeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamDoubleResponse contains the response from method Header.ParamDouble.
 type HeaderParamDoubleResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamDurationResponse contains the response from method Header.ParamDuration.
 type HeaderParamDurationResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamEnumResponse contains the response from method Header.ParamEnum.
 type HeaderParamEnumResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamExistingKeyResponse contains the response from method Header.ParamExistingKey.
 type HeaderParamExistingKeyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamFloatResponse contains the response from method Header.ParamFloat.
 type HeaderParamFloatResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamIntegerResponse contains the response from method Header.ParamInteger.
 type HeaderParamIntegerResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamLongResponse contains the response from method Header.ParamLong.
 type HeaderParamLongResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamProtectedKeyResponse contains the response from method Header.ParamProtectedKey.
 type HeaderParamProtectedKeyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderParamStringResponse contains the response from method Header.ParamString.
 type HeaderParamStringResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseBoolResponse contains the response from method Header.ResponseBool.
 type HeaderResponseBoolResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseByteResponse contains the response from method Header.ResponseByte.
 type HeaderResponseByteResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseDateResponse contains the response from method Header.ResponseDate.
 type HeaderResponseDateResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseDatetimeRFC1123Response contains the response from method Header.ResponseDatetimeRFC1123.
 type HeaderResponseDatetimeRFC1123Response struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseDatetimeResponse contains the response from method Header.ResponseDatetime.
 type HeaderResponseDatetimeResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseDoubleResponse contains the response from method Header.ResponseDouble.
 type HeaderResponseDoubleResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseDurationResponse contains the response from method Header.ResponseDuration.
 type HeaderResponseDurationResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseEnumResponse contains the response from method Header.ResponseEnum.
 type HeaderResponseEnumResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseExistingKeyResponse contains the response from method Header.ResponseExistingKey.
 type HeaderResponseExistingKeyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseFloatResponse contains the response from method Header.ResponseFloat.
 type HeaderResponseFloatResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseIntegerResponse contains the response from method Header.ResponseInteger.
 type HeaderResponseIntegerResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseLongResponse contains the response from method Header.ResponseLong.
 type HeaderResponseLongResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseProtectedKeyResponse contains the response from method Header.ResponseProtectedKey.
 type HeaderResponseProtectedKeyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderResponseStringResponse contains the response from method Header.ResponseString.
 type HeaderResponseStringResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
