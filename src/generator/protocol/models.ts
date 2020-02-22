@@ -115,11 +115,6 @@ class StructDef {
 function generateStructs(objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    // for (const header of values(obj.protocol?.http!.headers)) {
-    //   const details = <HttpHeader>header;
-    //   const headerProp = newProperty(details.header, "", <Schema>details.schema);
-    //   obj.properties?.push(headerProp)
-    // }
     structTypes.push(generateStruct(obj.language.go!, obj.properties));
   }
   return structTypes;
