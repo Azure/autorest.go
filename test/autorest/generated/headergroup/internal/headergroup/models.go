@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"time"
 )
 
 type Error struct {
@@ -132,76 +133,89 @@ type HeaderParamStringResponse struct {
 type HeaderResponseBoolResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *bool
 }
 
 // HeaderResponseByteResponse contains the response from method Header.ResponseByte.
 type HeaderResponseByteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *[]byte
 }
 
 // HeaderResponseDateResponse contains the response from method Header.ResponseDate.
 type HeaderResponseDateResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *time.Time
 }
 
 // HeaderResponseDatetimeRFC1123Response contains the response from method Header.ResponseDatetimeRFC1123.
 type HeaderResponseDatetimeRFC1123Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *time.Time
 }
 
 // HeaderResponseDatetimeResponse contains the response from method Header.ResponseDatetime.
 type HeaderResponseDatetimeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *time.Time
 }
 
 // HeaderResponseDoubleResponse contains the response from method Header.ResponseDouble.
 type HeaderResponseDoubleResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *float64
 }
 
 // HeaderResponseDurationResponse contains the response from method Header.ResponseDuration.
 type HeaderResponseDurationResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *time.Duration
 }
 
 // HeaderResponseEnumResponse contains the response from method Header.ResponseEnum.
 type HeaderResponseEnumResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *GreyscaleColors
 }
 
 // HeaderResponseExistingKeyResponse contains the response from method Header.ResponseExistingKey.
 type HeaderResponseExistingKeyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	UserAgent *string
 }
 
 // HeaderResponseFloatResponse contains the response from method Header.ResponseFloat.
 type HeaderResponseFloatResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *float32
 }
 
 // HeaderResponseIntegerResponse contains the response from method Header.ResponseInteger.
 type HeaderResponseIntegerResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *int32
 }
 
 // HeaderResponseLongResponse contains the response from method Header.ResponseLong.
 type HeaderResponseLongResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *int64
 }
 
 // HeaderResponseProtectedKeyResponse contains the response from method Header.ResponseProtectedKey.
 type HeaderResponseProtectedKeyResponse struct {
+	ContentType *string
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
@@ -210,5 +224,6 @@ type HeaderResponseProtectedKeyResponse struct {
 type HeaderResponseStringResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+	Value *string
 }
 
