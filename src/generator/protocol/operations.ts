@@ -309,17 +309,17 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
 
   const resp = op.responses![0];
   let respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
-  let headResp = <HeaderResponse>{}
+  let headResp = <HeaderResponse>{};
   // check if the response is expecting information from headers
   if (resp.protocol.http!.headers) {
     for (const header of values(resp.protocol.http!.headers)) {
       const head = <LanguageHeader>header;
-      headResp = formatHeaderResponseValue(head, imports)
+      headResp = formatHeaderResponseValue(head, imports);
       // reassign respObj to include the value returned from the headers
       respObj = `${resp.language.go!.name}${headResp.respObj}`;
       // add the code necessary to process data returned in a header
       if (headResp.body) {
-        text += headResp.body
+        text += headResp.body;
       }
     }
   }
