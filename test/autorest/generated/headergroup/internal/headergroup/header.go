@@ -7,13 +7,12 @@ package headergroup
 
 import (
 	"encoding/base64"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
 	"time"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type HeaderOperations struct{}
@@ -530,3 +529,4 @@ func (HeaderOperations) ResponseStringHandleResponse(resp *azcore.Response) (*He
 	val := resp.Header.Get("value")
 	return &HeaderResponseStringResponse{RawResponse: resp.Response, Value: &val}, nil
 }
+
