@@ -155,7 +155,10 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager): HeaderResponse {
+function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager, respObj: string): HeaderResponse {
+  if (respObj[respObj.length-1] == '}') {
+    respObj = respObj.substring(0, respObj.length-1);
+  }
   let headerText = <HeaderResponse>{};
   let text = ``;
   switch (header.schema.type) {
@@ -166,23 +169,23 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
       headerText.body = text;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
       headerText.body = `\tval := []byte(resp.Header.Get("${header.header}"))\n`;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
       headerText.body = `\tval := ${header.schema.language.go!.name}(resp.Header.Get("${header.header}"))\n`;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Constant:
     case SchemaType.String:
       headerText.body = `\tval := resp.Header.Get("${header.header}")\n`;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Date:
     case SchemaType.DateTime:
@@ -192,7 +195,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
       headerText.body = text;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Duration:
       imports.add('time');
@@ -201,7 +204,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
       headerText.body = text;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Integer:
       imports.add('strconv');
@@ -215,7 +218,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.body += `\tif err != nil {\n`;
       headerText.body += `\t\treturn nil, err\n`;
       headerText.body += `\t}\n`;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Number:
       imports.add('strconv');
@@ -229,10 +232,12 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.body += `\tif err != nil {\n`;
       headerText.body += `\t\treturn nil, err\n`;
       headerText.body += `\t}\n`;
-      headerText.respObj = `{RawResponse: resp.Response, ${header.name}: &val}`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     default:
-      headerText.respObj = `{RawResponse: resp.Response}`;
+      if (respObj[respObj.length-1] == '}') {
+        headerText.respObj = respObj + "}";
+      }
       return headerText;
   }
 }
@@ -285,6 +290,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     // add specific request headers
     const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
     headerParam.forEach(header => {
+      // the default language name is used here for the header key since the header should not be parsed according to any language specific rules and the endpoint will be expecting the value specified by default
       text += `\treq.Header.Set("${header.language.default.name}", ${formatParamValue(header, imports)})\n`;
     });
     text += `\treturn req, nil\n`;
@@ -314,9 +320,9 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   if (resp.protocol.http!.headers) {
     for (const header of values(resp.protocol.http!.headers)) {
       const head = <LanguageHeader>header;
-      headResp = formatHeaderResponseValue(head, imports);
+      headResp = formatHeaderResponseValue(head, imports, respObj);
       // reassign respObj to include the value returned from the headers
-      respObj = `${resp.language.go!.name}${headResp.respObj}`;
+      respObj = headResp.respObj;
       // add the code necessary to process data returned in a header
       if (headResp.body) {
         text += headResp.body;
