@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, SchemaType, StringSchema, Property } from '@azure-tools/codemodel';
+import { comment } from '@azure-tools/codegen';
+import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, SchemaType, StringSchema, Property, HttpHeader } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, HasDescription, ImportManager, LanguageHeader, SortAscending } from '../common/helpers';
 
@@ -24,7 +24,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
           for (const header of values(op.responses![0].protocol.http!.headers)) {
             const head = <LanguageHeader>header;
             // convert each header to a property and append it to the response properties list
-            op.responses![0].language.go!.properties.push(newProperty(head.name, "", <Schema>head.schema));
+            op.responses![0].language.go!.properties.push(newProperty(head.name, `${head.name} contains the information returned from the ${head.name} header response.`, <Schema>head.schema));
           }
         }
         structs.push(generateStruct(op.responses![0].language.go!, op.responses![0].language.go!.properties));
@@ -86,7 +86,7 @@ class StructDef {
         // tags aren't required for response types
         tag = '';
       }
-      text += `\t${prop.language.go!.name} *${typeName}${tag}\n`;
+      text += `\t${prop.language.go!.name} *${typeName}${tag}\n\n`;
     }
     text += '}\n\n';
     if (this.Language.errorType) {
