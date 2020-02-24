@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"time"
 )
 
 type Error struct {
@@ -38,10 +39,27 @@ func (e Error) Error() string {
 	return msg
 }
 
+// PathItemsGetAllWithValuesOptions contains the optional parameters for the PathItems.GetAllWithValues method.
+type PathItemsGetAllWithValuesOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
+}
+
 // PathItemsGetAllWithValuesResponse contains the response from method PathItems.GetAllWithValues.
 type PathItemsGetAllWithValuesResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull
+// method.
+type PathItemsGetGlobalAndLocalQueryNullOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
 }
 
 // PathItemsGetGlobalAndLocalQueryNullResponse contains the response from method PathItems.GetGlobalAndLocalQueryNull.
@@ -50,10 +68,27 @@ type PathItemsGetGlobalAndLocalQueryNullResponse struct {
 	RawResponse *http.Response
 }
 
+// PathItemsGetGlobalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalQueryNull method.
+type PathItemsGetGlobalQueryNullOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
+}
+
 // PathItemsGetGlobalQueryNullResponse contains the response from method PathItems.GetGlobalQueryNull.
 type PathItemsGetGlobalQueryNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull
+// method.
+type PathItemsGetLocalPathItemQueryNullOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
 }
 
 // PathItemsGetLocalPathItemQueryNullResponse contains the response from method PathItems.GetLocalPathItemQueryNull.
@@ -224,10 +259,22 @@ type PathsUnixTimeURLResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesArrayStringCsvEmptyOptions contains the optional parameters for the Queries.ArrayStringCsvEmpty method.
+type QueriesArrayStringCsvEmptyOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayQuery *[]string
+}
+
 // QueriesArrayStringCsvEmptyResponse contains the response from method Queries.ArrayStringCsvEmpty.
 type QueriesArrayStringCsvEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesArrayStringCsvNullOptions contains the optional parameters for the Queries.ArrayStringCsvNull method.
+type QueriesArrayStringCsvNullOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayQuery *[]string
 }
 
 // QueriesArrayStringCsvNullResponse contains the response from method Queries.ArrayStringCsvNull.
@@ -236,10 +283,22 @@ type QueriesArrayStringCsvNullResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesArrayStringCsvValidOptions contains the optional parameters for the Queries.ArrayStringCsvValid method.
+type QueriesArrayStringCsvValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayQuery *[]string
+}
+
 // QueriesArrayStringCsvValidResponse contains the response from method Queries.ArrayStringCsvValid.
 type QueriesArrayStringCsvValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
+type QueriesArrayStringPipesValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
+	ArrayQuery *[]string
 }
 
 // QueriesArrayStringPipesValidResponse contains the response from method Queries.ArrayStringPipesValid.
@@ -248,10 +307,22 @@ type QueriesArrayStringPipesValidResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesArrayStringSsvValidOptions contains the optional parameters for the Queries.ArrayStringSsvValid method.
+type QueriesArrayStringSsvValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
+	ArrayQuery *[]string
+}
+
 // QueriesArrayStringSsvValidResponse contains the response from method Queries.ArrayStringSsvValid.
 type QueriesArrayStringSsvValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesArrayStringTsvValidOptions contains the optional parameters for the Queries.ArrayStringTsvValid method.
+type QueriesArrayStringTsvValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
+	ArrayQuery *[]string
 }
 
 // QueriesArrayStringTsvValidResponse contains the response from method Queries.ArrayStringTsvValid.
@@ -266,10 +337,22 @@ type QueriesByteEmptyResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesByteMultiByteOptions contains the optional parameters for the Queries.ByteMultiByte method.
+type QueriesByteMultiByteOptions struct {
+	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+	ByteQuery *[]byte
+}
+
 // QueriesByteMultiByteResponse contains the response from method Queries.ByteMultiByte.
 type QueriesByteMultiByteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesByteNullOptions contains the optional parameters for the Queries.ByteNull method.
+type QueriesByteNullOptions struct {
+	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+	ByteQuery *[]byte
 }
 
 // QueriesByteNullResponse contains the response from method Queries.ByteNull.
@@ -278,10 +361,22 @@ type QueriesByteNullResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesDateNullOptions contains the optional parameters for the Queries.DateNull method.
+type QueriesDateNullOptions struct {
+	// null as date (no query parameters in uri)
+	DateQuery *time.Time
+}
+
 // QueriesDateNullResponse contains the response from method Queries.DateNull.
 type QueriesDateNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesDateTimeNullOptions contains the optional parameters for the Queries.DateTimeNull method.
+type QueriesDateTimeNullOptions struct {
+	// null as date-time (no query parameters)
+	DateTimeQuery *time.Time
 }
 
 // QueriesDateTimeNullResponse contains the response from method Queries.DateTimeNull.
@@ -314,10 +409,22 @@ type QueriesDoubleDecimalPositiveResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesDoubleNullOptions contains the optional parameters for the Queries.DoubleNull method.
+type QueriesDoubleNullOptions struct {
+	// null numeric value
+	DoubleQuery *float64
+}
+
 // QueriesDoubleNullResponse contains the response from method Queries.DoubleNull.
 type QueriesDoubleNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesEnumNullOptions contains the optional parameters for the Queries.EnumNull method.
+type QueriesEnumNullOptions struct {
+	// 'green color' enum value
+	EnumQuery *UriColor
 }
 
 // QueriesEnumNullResponse contains the response from method Queries.EnumNull.
@@ -326,10 +433,22 @@ type QueriesEnumNullResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesEnumValidOptions contains the optional parameters for the Queries.EnumValid method.
+type QueriesEnumValidOptions struct {
+	// 'green color' enum value
+	EnumQuery *UriColor
+}
+
 // QueriesEnumValidResponse contains the response from method Queries.EnumValid.
 type QueriesEnumValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesFloatNullOptions contains the optional parameters for the Queries.FloatNull method.
+type QueriesFloatNullOptions struct {
+	// null numeric value
+	FloatQuery *float32
 }
 
 // QueriesFloatNullResponse contains the response from method Queries.FloatNull.
@@ -356,6 +475,12 @@ type QueriesGetBooleanFalseResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesGetBooleanNullOptions contains the optional parameters for the Queries.GetBooleanNull method.
+type QueriesGetBooleanNullOptions struct {
+	// null boolean value
+	BoolQuery *bool
+}
+
 // QueriesGetBooleanNullResponse contains the response from method Queries.GetBooleanNull.
 type QueriesGetBooleanNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -374,6 +499,12 @@ type QueriesGetIntNegativeOneMillionResponse struct {
 	RawResponse *http.Response
 }
 
+// QueriesGetIntNullOptions contains the optional parameters for the Queries.GetIntNull method.
+type QueriesGetIntNullOptions struct {
+	// null integer value
+	IntQuery *int32
+}
+
 // QueriesGetIntNullResponse contains the response from method Queries.GetIntNull.
 type QueriesGetIntNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -384,6 +515,12 @@ type QueriesGetIntNullResponse struct {
 type QueriesGetIntOneMillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesGetLongNullOptions contains the optional parameters for the Queries.GetLongNull method.
+type QueriesGetLongNullOptions struct {
+	// null 64 bit integer value
+	LongQuery *int64
 }
 
 // QueriesGetLongNullResponse contains the response from method Queries.GetLongNull.
@@ -408,6 +545,12 @@ type QueriesGetTenBillionResponse struct {
 type QueriesStringEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// QueriesStringNullOptions contains the optional parameters for the Queries.StringNull method.
+type QueriesStringNullOptions struct {
+	// null string value
+	StringQuery *string
 }
 
 // QueriesStringNullResponse contains the response from method Queries.StringNull.

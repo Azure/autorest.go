@@ -29,6 +29,13 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
+      if (op.request.language.go!.optionalParam) {
+        const entry: EntryType = {
+          name: op.request.language.go!.optionalParam.name,
+          desc: op.request.language.go!.optionalParam.description,
+        };
+        structs.push(entry);
+      }
       if (op.responses) {
         const entry: EntryType = {
           name: op.responses[0].language.go!.name,

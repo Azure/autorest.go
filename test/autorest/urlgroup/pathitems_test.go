@@ -9,19 +9,25 @@ import (
 	"generatortests/helpers"
 	"net/http"
 	"testing"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func getPathItemsClient(t *testing.T) urlgroup.PathItemsOperations {
+func getPathItemsClient(t *testing.T) *urlgroup.Client {
 	client, err := urlgroup.NewDefaultClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create enum client: %v", err)
 	}
-	return client.PathItemsOperations("globalStringPath", "globalStringQuery")
+	return client
 }
 
 func TestGetAllWithValues(t *testing.T) {
 	client := getPathItemsClient(t)
-	result, err := client.GetAllWithValues(context.Background(), "pathItemStringPath", "pathItemStringQuery", "localStringPath", "localStringQuery")
+	grp := client.PathItemsOperations("globalStringPath", to.StringPtr("globalStringQuery"))
+	result, err := grp.GetAllWithValues(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetAllWithValuesOptions{
+		LocalStringQuery:    to.StringPtr("localStringQuery"),
+		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -29,9 +35,11 @@ func TestGetAllWithValues(t *testing.T) {
 }
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
-	t.Skip("need optional string params")
 	client := getPathItemsClient(t)
-	result, err := client.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "pathItemStringQuery", "localStringPath", "")
+	grp := client.PathItemsOperations("globalStringPath", nil)
+	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetGlobalAndLocalQueryNullOptions{
+		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,9 +47,12 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 }
 
 func TestGetGlobalQueryNull(t *testing.T) {
-	t.Skip("need optional string params")
 	client := getPathItemsClient(t)
-	result, err := client.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "pathItemStringQuery", "localStringPath", "localStringQuery")
+	grp := client.PathItemsOperations("globalStringPath", nil)
+	result, err := grp.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &urlgroup.PathItemsGetGlobalQueryNullOptions{
+		LocalStringQuery:    to.StringPtr("localStringQuery"),
+		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -49,9 +60,9 @@ func TestGetGlobalQueryNull(t *testing.T) {
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
-	t.Skip("need optional string params")
 	client := getPathItemsClient(t)
-	result, err := client.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "", "localStringPath", "")
+	grp := client.PathItemsOperations("globalStringPath", to.StringPtr("globalStringQuery"))
+	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

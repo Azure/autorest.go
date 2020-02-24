@@ -104,6 +104,28 @@ export interface ParamInfo {
   name: string;
   type: string;
   global: boolean;
+  required: boolean;
+}
+
+export class paramInfo implements ParamInfo {
+  name: string;
+  type: string;
+  global: boolean;
+  required: boolean;
+  constructor(name: string, type: string, global: boolean, required: boolean) {
+    this.name = name;
+    this.type = type;
+    this.global = global;
+    this.required = required;
+  }
+}
+
+// returns the type name with possible * prefix
+export function formatParamInfoTypeName(param: ParamInfo): string {
+  if (param.required) {
+    return param.type;
+  }
+  return `*${param.type}`;
 }
 
 // creates ParamInfo for the specified operation.
@@ -120,11 +142,32 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
       // don't include the URL param as we include that elsewhere as a url.URL
       continue;
     }
+    if (param.implementation === ImplementationLocation.Method && param.required !== true) {
+      // omit method-optional params as they're grouped in the optional params type
+      continue;
+    }
     // include client and method params
     const global = param.implementation === ImplementationLocation.Client;
-    params.push({ name: param.language.go!.name, type: param.schema.language.go!.name, global: global });
+    params.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true));
+  }
+  // move global optional params to the end of the slice
+  params.sort(sortParamInfoByRequired);
+  // if there's a method-optional params struct add it last
+  if (op.request.language.go!.optionalParam) {
+    params.push(new paramInfo("options", op.request.language.go!.optionalParam.name, false, false));
   }
   return params;
+}
+
+// sorts ParamInfo objects by their required state, ordering required before optional
+export function sortParamInfoByRequired(a: ParamInfo, b: ParamInfo): number {
+  if (a.required === b.required) {
+    return 0;
+  }
+  if (a.required && !b.required) {
+    return -1;
+  }
+  return 1;
 }
 
 // returns the return signature where each entry is the type name
@@ -145,7 +188,7 @@ export function generateParamsSig(paramInfo: ParamInfo[], includeGlobal: boolean
     if (param.global && !includeGlobal) {
       continue;
     }
-    params.push(`${param.name} ${param.type}`);
+    params.push(`${param.name} ${formatParamInfoTypeName(param)}`);
   }
   return params.join(', ');
 }

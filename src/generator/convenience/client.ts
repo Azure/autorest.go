@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, ImportManager, ParamInfo } from '../common/helpers';
+import { ContentPreamble, formatParamInfoTypeName, ImportManager, ParamInfo, sortParamInfoByRequired } from '../common/helpers';
 
 // generates content for client.go
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
@@ -82,11 +82,13 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   for (const group of values(session.model.operationGroups)) {
     const clientParams = ['Client: client'];
     const methodParams = new Array<string>();
+    // add global params to the operation group getter method
     if (group.language.go!.globals) {
       const globals = <Array<ParamInfo>>group.language.go!.globals;
+      globals.sort(sortParamInfoByRequired);
       globals.forEach((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
         clientParams.push(`${value.name}: ${value.name}`);
-        methodParams.push(`${value.name} ${value.type}`);
+        methodParams.push(`${value.name} ${formatParamInfoTypeName(value)}`);
       })
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
