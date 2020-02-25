@@ -137,8 +137,8 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
     case SchemaType.DateTime:
     case SchemaType.Duration:
     case SchemaType.UnixTime:
-      if (param.required !== true) {
-        // remove the dereference (bit of a hack but this is the only case where it's necessary)
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
         paramName = paramName.substr(1);
       }
       return `${paramName}.String()`;
