@@ -24,7 +24,10 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
           for (const header of values(op.responses![0].protocol.http!.headers)) {
             const head = <LanguageHeader>header;
             // convert each header to a property and append it to the response properties list
-            op.responses![0].language.go!.properties.push(newProperty(head.name, `${head.name} contains the information returned from the ${head.name} header response.`, <Schema>head.schema));
+            if (!HasDescription(head)) {
+              head.description = `${head.name} contains the information returned from the ${head.name} header response.`
+            }
+            op.responses![0].language.go!.properties.push(newProperty(head.name, head.description, <Schema>head.schema));
           }
         }
         structs.push(generateStruct(op.responses![0].language.go!, op.responses![0].language.go!.properties));
