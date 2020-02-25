@@ -7,8 +7,7 @@ import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
-import { ParamInfo, generateParameterInfo } from '../generator/common/helpers';
-import { stringify } from 'querystring';
+import { ParamInfo, paramInfo } from '../generator/common/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -137,7 +136,7 @@ function processOperationRequests(session: Session<CodeModel>) {
             return false;
           });
           if (index === -1) {
-            globals.push({ name: param.language.go!.name, type: param.schema.language.go!.name, global: true });
+            globals.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, true, param.required === true));
           }
         }
       }

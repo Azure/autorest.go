@@ -8,7 +8,7 @@ import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, ImplementationLocation, Operation } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { InternalPackage, InternalPackagePath } from './helpers';
-import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, ParamInfo } from '../common/helpers';
+import { ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, ParamInfo, paramInfo } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 import { ProtocolSig } from '../protocol/operations';
 
@@ -42,7 +42,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     interfaceText += `type ${group.language.go!.clientName} interface {\n`;
     for (const op of values(group.operations)) {
       for (const param of values(op.request.parameters)) {
-        if (param.implementation !== ImplementationLocation.Method) {
+        if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
           continue;
         }
         imports.addImportForSchemaType(param.schema);
@@ -50,7 +50,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (HasDescription(op.language.go!)) {
         interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
       }
-      const params = [{ name: 'ctx', type: 'context.Context', global: false }].concat(generateParameterInfo(op));
+      const params = [new paramInfo('ctx', 'context.Context', false, true)].concat(generateParameterInfo(op));
       const returns = genereateReturnsInfo(op);
       interfaceText += `\t${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')})\n`;
     }
@@ -68,7 +68,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (group.language.go!.globals) {
       const globals = <Array<ParamInfo>>group.language.go!.globals;
       globals.forEach((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
-        text += `\t${value.name} ${value.type}\n`;
+        text += `\t${value.name} ${formatParamInfoTypeName(value)}\n`;
       })
     }
     text += '}\n\n';
@@ -85,7 +85,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
 function generateOperation(clientName: string, op: Operation): string {
   const info = <OperationNaming>op.language.go!;
-  const params = [{ name: 'ctx', type: 'context.Context', global: false }].concat(generateParameterInfo(op));
+  const params = [new paramInfo('ctx', 'context.Context', false, true)].concat(generateParameterInfo(op));
   const returns = genereateReturnsInfo(op);
   const protocol = <ProtocolSig>op.language.go!;
   let text = '';

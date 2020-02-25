@@ -77,6 +77,6 @@ func (client *Client) QueriesOperations() QueriesOperations {
 }
 
 // PathItemsOperations returns the PathItemsOperations associated with this client.
-func (client *Client) PathItemsOperations(globalStringPath string, globalStringQuery string) PathItemsOperations {
+func (client *Client) PathItemsOperations(globalStringPath string, globalStringQuery *string) PathItemsOperations {
 	return &pathItemsOperations{Client: client, globalStringPath: globalStringPath, globalStringQuery: globalStringQuery}
 }
