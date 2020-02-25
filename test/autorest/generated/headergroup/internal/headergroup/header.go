@@ -7,13 +7,12 @@ package headergroup
 
 import (
 	"encoding/base64"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
 	"time"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 type HeaderOperations struct{}
@@ -29,7 +28,7 @@ func (HeaderOperations) CustomRequestIDHandleResponse(resp *azcore.Response) (*H
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderCustomRequestIDResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderCustomRequestIDResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamBoolCreateRequest creates the ParamBool request.
@@ -46,7 +45,7 @@ func (HeaderOperations) ParamBoolHandleResponse(resp *azcore.Response) (*HeaderP
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamBoolResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamBoolResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamByteCreateRequest creates the ParamByte request.
@@ -63,7 +62,7 @@ func (HeaderOperations) ParamByteHandleResponse(resp *azcore.Response) (*HeaderP
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamByteResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamByteResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamDateCreateRequest creates the ParamDate request.
@@ -80,7 +79,7 @@ func (HeaderOperations) ParamDateHandleResponse(resp *azcore.Response) (*HeaderP
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamDateResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamDateResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamDatetimeCreateRequest creates the ParamDatetime request.
@@ -97,7 +96,7 @@ func (HeaderOperations) ParamDatetimeHandleResponse(resp *azcore.Response) (*Hea
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamDatetimeResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamDatetimeResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
@@ -114,7 +113,7 @@ func (HeaderOperations) ParamDatetimeRFC1123HandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamDatetimeRFC1123Response{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamDatetimeRFC1123Response{RawResponse: resp.Response}, nil
 }
 
 // ParamDoubleCreateRequest creates the ParamDouble request.
@@ -131,7 +130,7 @@ func (HeaderOperations) ParamDoubleHandleResponse(resp *azcore.Response) (*Heade
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamDoubleResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamDoubleResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamDurationCreateRequest creates the ParamDuration request.
@@ -148,7 +147,7 @@ func (HeaderOperations) ParamDurationHandleResponse(resp *azcore.Response) (*Hea
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamDurationResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamDurationResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamEnumCreateRequest creates the ParamEnum request.
@@ -165,7 +164,7 @@ func (HeaderOperations) ParamEnumHandleResponse(resp *azcore.Response) (*HeaderP
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamEnumResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamEnumResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamExistingKeyCreateRequest creates the ParamExistingKey request.
@@ -181,7 +180,7 @@ func (HeaderOperations) ParamExistingKeyHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamExistingKeyResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamExistingKeyResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamFloatCreateRequest creates the ParamFloat request.
@@ -198,7 +197,7 @@ func (HeaderOperations) ParamFloatHandleResponse(resp *azcore.Response) (*Header
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamFloatResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamFloatResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamIntegerCreateRequest creates the ParamInteger request.
@@ -215,7 +214,7 @@ func (HeaderOperations) ParamIntegerHandleResponse(resp *azcore.Response) (*Head
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamIntegerResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamIntegerResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamLongCreateRequest creates the ParamLong request.
@@ -232,7 +231,7 @@ func (HeaderOperations) ParamLongHandleResponse(resp *azcore.Response) (*HeaderP
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamLongResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamLongResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamProtectedKeyCreateRequest creates the ParamProtectedKey request.
@@ -248,7 +247,7 @@ func (HeaderOperations) ParamProtectedKeyHandleResponse(resp *azcore.Response) (
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamProtectedKeyResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamProtectedKeyResponse{RawResponse: resp.Response}, nil
 }
 
 // ParamStringCreateRequest creates the ParamString request.
@@ -265,7 +264,7 @@ func (HeaderOperations) ParamStringHandleResponse(resp *azcore.Response) (*Heade
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderParamStringResponse{StatusCode: resp.StatusCode}, nil
+	return &HeaderParamStringResponse{RawResponse: resp.Response}, nil
 }
 
 // ResponseBoolCreateRequest creates the ResponseBool request.
@@ -281,7 +280,11 @@ func (HeaderOperations) ResponseBoolHandleResponse(resp *azcore.Response) (*Head
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseBoolResponse{StatusCode: resp.StatusCode}, nil
+	val, err := strconv.ParseBool(resp.Header.Get("value"))
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseBoolResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseByteCreateRequest creates the ResponseByte request.
@@ -297,7 +300,8 @@ func (HeaderOperations) ResponseByteHandleResponse(resp *azcore.Response) (*Head
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseByteResponse{StatusCode: resp.StatusCode}, nil
+	val := []byte(resp.Header.Get("value"))
+	return &HeaderResponseByteResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseDateCreateRequest creates the ResponseDate request.
@@ -313,7 +317,11 @@ func (HeaderOperations) ResponseDateHandleResponse(resp *azcore.Response) (*Head
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseDateResponse{StatusCode: resp.StatusCode}, nil
+	val, err := time.Parse(time.RFC3339, resp.Header.Get("value"))
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseDateResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseDatetimeCreateRequest creates the ResponseDatetime request.
@@ -329,7 +337,11 @@ func (HeaderOperations) ResponseDatetimeHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseDatetimeResponse{StatusCode: resp.StatusCode}, nil
+	val, err := time.Parse(time.RFC3339, resp.Header.Get("value"))
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseDatetimeResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseDatetimeRFC1123CreateRequest creates the ResponseDatetimeRFC1123 request.
@@ -345,7 +357,11 @@ func (HeaderOperations) ResponseDatetimeRFC1123HandleResponse(resp *azcore.Respo
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseDatetimeRFC1123Response{StatusCode: resp.StatusCode}, nil
+	val, err := time.Parse(time.RFC3339, resp.Header.Get("value"))
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseDoubleCreateRequest creates the ResponseDouble request.
@@ -361,7 +377,11 @@ func (HeaderOperations) ResponseDoubleHandleResponse(resp *azcore.Response) (*He
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseDoubleResponse{StatusCode: resp.StatusCode}, nil
+	val, err := strconv.ParseFloat(resp.Header.Get("value"), 64)
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseDoubleResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseDurationCreateRequest creates the ResponseDuration request.
@@ -377,7 +397,11 @@ func (HeaderOperations) ResponseDurationHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseDurationResponse{StatusCode: resp.StatusCode}, nil
+	val, err := time.ParseDuration(resp.Header.Get("value"))
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseDurationResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseEnumCreateRequest creates the ResponseEnum request.
@@ -393,7 +417,8 @@ func (HeaderOperations) ResponseEnumHandleResponse(resp *azcore.Response) (*Head
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseEnumResponse{StatusCode: resp.StatusCode}, nil
+	val := GreyscaleColors(resp.Header.Get("value"))
+	return &HeaderResponseEnumResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseExistingKeyCreateRequest creates the ResponseExistingKey request.
@@ -407,7 +432,8 @@ func (HeaderOperations) ResponseExistingKeyHandleResponse(resp *azcore.Response)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseExistingKeyResponse{StatusCode: resp.StatusCode}, nil
+	val := resp.Header.Get("User-Agent")
+	return &HeaderResponseExistingKeyResponse{RawResponse: resp.Response, UserAgent: &val}, nil
 }
 
 // ResponseFloatCreateRequest creates the ResponseFloat request.
@@ -423,7 +449,12 @@ func (HeaderOperations) ResponseFloatHandleResponse(resp *azcore.Response) (*Hea
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseFloatResponse{StatusCode: resp.StatusCode}, nil
+	val32, err := strconv.ParseFloat(resp.Header.Get("value"), 32)
+	val := float32(val32)
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseFloatResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseIntegerCreateRequest creates the ResponseInteger request.
@@ -439,7 +470,12 @@ func (HeaderOperations) ResponseIntegerHandleResponse(resp *azcore.Response) (*H
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseIntegerResponse{StatusCode: resp.StatusCode}, nil
+	val32, err := strconv.ParseInt(resp.Header.Get("value"), 10, 32)
+	val := int32(val32)
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseIntegerResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseLongCreateRequest creates the ResponseLong request.
@@ -455,7 +491,11 @@ func (HeaderOperations) ResponseLongHandleResponse(resp *azcore.Response) (*Head
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseLongResponse{StatusCode: resp.StatusCode}, nil
+	val, err := strconv.ParseInt(resp.Header.Get("value"), 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	return &HeaderResponseLongResponse{RawResponse: resp.Response, Value: &val}, nil
 }
 
 // ResponseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
@@ -469,7 +509,8 @@ func (HeaderOperations) ResponseProtectedKeyHandleResponse(resp *azcore.Response
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseProtectedKeyResponse{StatusCode: resp.StatusCode}, nil
+	val := resp.Header.Get("Content-Type")
+	return &HeaderResponseProtectedKeyResponse{RawResponse: resp.Response, ContentType: &val}, nil
 }
 
 // ResponseStringCreateRequest creates the ResponseString request.
@@ -485,5 +526,7 @@ func (HeaderOperations) ResponseStringHandleResponse(resp *azcore.Response) (*He
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &HeaderResponseStringResponse{StatusCode: resp.StatusCode}, nil
+	val := resp.Header.Get("value")
+	return &HeaderResponseStringResponse{RawResponse: resp.Response, Value: &val}, nil
 }
+

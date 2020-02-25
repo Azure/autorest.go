@@ -3,11 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *  --------------------------------------------------------------------------------------------  */
 
-import { serialize, pascalCase, camelCase } from '@azure-tools/codegen'
-import { Host, startSession, Session } from '@azure-tools/autorest-extension-base'
-import { codeModelSchema, CodeModel, Language, Parameter } from '@azure-tools/codemodel'
-import { length, visitor, clone, values } from '@azure-tools/linq'
-import { CommonAcronyms, ReservedWords } from './mappings'
+import { serialize, pascalCase, camelCase } from '@azure-tools/codegen';
+import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
+import { codeModelSchema, CodeModel, Language, Parameter} from '@azure-tools/codemodel';
+import { length, visitor, clone, values } from '@azure-tools/linq';
+import { CommonAcronyms, ReservedWords } from './mappings';
+import { LanguageHeader } from '../generator/common/helpers';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -116,6 +117,13 @@ async function process(session: Session<CodeModel>) {
       const name = `${opGroupName}${op.language.go!.name}Response`;
       resp.language.go!.name = name;
       resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
+      // add a field to headers to include a Go compliant name for when it needs to be used as a field in a type
+      if (op.responses![0].protocol.http!.headers) {
+        for (const header of values(op.responses![0].protocol.http!.headers)) {
+          const head = <LanguageHeader>header;
+          head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+        }
+      }
     }
   }
 

@@ -8,6 +8,11 @@ import { comment } from '@azure-tools/codegen';
 import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
+export interface LanguageHeader extends Language {
+  schema: Schema;
+  header: string;
+}
+
 type importEntry = { imp: string, alias?: string };
 
 // tracks packages that need to be imported

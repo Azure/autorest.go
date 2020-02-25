@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
+import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 // represents the generated content for an operation group
@@ -42,7 +42,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // it must be done before the imports are written out
       op.language.go!.protocolSigs = new protocolSigs();
       opText += createProtocolRequest(clientName, op, imports);
-      opText += createProtocolResponse(clientName, op);
+      opText += createProtocolResponse(clientName, op, imports);
     }
     // stitch it all together
     let text = await ContentPreamble(session);
@@ -81,6 +81,11 @@ class methodSig implements MethodSig {
     this.params = new Array<ParamInfo>();
     this.returns = new Array<string>();
   }
+}
+
+export interface HeaderResponse {
+  body: string;
+  respObj: string;
 }
 
 function formatParamValue(param: Parameter, imports: ImportManager): string {
@@ -125,7 +130,8 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       return `strconv.FormatBool(${paramName})`;
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
-      return `string(${paramName})`;
+      imports.add('encoding/base64');
+      return `base64.StdEncoding.EncodeToString(${param.language.go!.name})`;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
       return `string(${paramName})`;
@@ -160,6 +166,94 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;
     default:
       return paramName;
+  }
+}
+
+// use this to generate the code that will help process values returned in response headers
+function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager, respObj: string): HeaderResponse {
+  if (respObj[respObj.length-1] == '}') {
+    respObj = respObj.substring(0, respObj.length-1);
+  }
+  let headerText = <HeaderResponse>{};
+  let text = ``;
+  switch (header.schema.type) {
+    case SchemaType.Boolean:
+      imports.add('strconv');
+      text = `\tval, err := strconv.ParseBool(resp.Header.Get("${header.header}"))\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+      headerText.body = text;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    case SchemaType.ByteArray:
+      // ByteArray is a base-64 encoded value in string format
+      imports.add('encoding/base64');
+      headerText.body = `\tval := []byte(resp.Header.Get("${header.header}"))\n`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    case SchemaType.Choice:
+    case SchemaType.SealedChoice:
+      headerText.body = `\tval := ${header.schema.language.go!.name}(resp.Header.Get("${header.header}"))\n`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    case SchemaType.Constant:
+    case SchemaType.String:
+      headerText.body = `\tval := resp.Header.Get("${header.header}")\n`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    case SchemaType.Date:
+    case SchemaType.DateTime:
+      imports.add('time');
+      text = `\tval, err := time.Parse(time.RFC3339, resp.Header.Get("${header.header}"))\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+      headerText.body = text;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    case SchemaType.Duration:
+      imports.add('time');
+      text = `\tval, err := time.ParseDuration(resp.Header.Get("${header.header}"))\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+      headerText.body = text;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    case SchemaType.Integer:
+      imports.add('strconv');
+      const intNum = <NumberSchema>header.schema;
+      if (intNum.precision === 32) {
+        headerText.body = `\tval32, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 32)\n`;
+        headerText.body += `\tval := int32(val32)\n`;
+      } else {
+        headerText.body = `\tval, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 64)\n`;
+      }
+      headerText.body += `\tif err != nil {\n`;
+      headerText.body += `\t\treturn nil, err\n`;
+      headerText.body += `\t}\n`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    case SchemaType.Number:
+      imports.add('strconv');
+      const floatNum = <NumberSchema>header.schema;
+      if (floatNum.precision === 32) {
+        headerText.body = `\tval32, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 32)\n`;
+        headerText.body += `\tval := float32(val32)\n`;
+      } else {
+        headerText.body = `\tval, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 64)\n`;
+      }
+      headerText.body += `\tif err != nil {\n`;
+      headerText.body += `\t\treturn nil, err\n`;
+      headerText.body += `\t}\n`;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
+    default:
+      if (respObj[respObj.length-1] == '}') {
+        headerText.respObj = respObj + "}";
+      }
+      return headerText;
   }
 }
 
@@ -231,7 +325,8 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     // add specific request headers
     const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
     headerParam.forEach(header => {
-      text += `\treq.Header.Set("${header.language.go!.name}", ${formatParamValue(header, imports)})\n`;
+      // the default language name is used here for the header key since the header should not be parsed according to any language specific rules and the endpoint will be expecting the value specified by default
+      text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
     });
     text += `\treturn req, nil\n`;
   }
@@ -239,7 +334,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   return text;
 }
 
-function createProtocolResponse(client: string, op: Operation): string {
+function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
   // stick the method signature info into the code model so other generators can access it later
@@ -254,7 +349,21 @@ function createProtocolResponse(client: string, op: Operation): string {
   text += '\t}\n';
 
   const resp = op.responses![0];
-  const respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
+  let respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
+  let headResp = <HeaderResponse>{};
+  // check if the response is expecting information from headers
+  if (resp.protocol.http!.headers) {
+    for (const header of values(resp.protocol.http!.headers)) {
+      const head = <LanguageHeader>header;
+      headResp = formatHeaderResponseValue(head, imports, respObj);
+      // reassign respObj to include the value returned from the headers
+      respObj = headResp.respObj;
+      // add the code necessary to process data returned in a header
+      if (headResp.body) {
+        text += headResp.body;
+      }
+    }
+  }
   if (getMediaType(resp.protocol) === 'none') {
     // no response body so nothing to unmarshal
     text += `\treturn &${respObj}, nil\n`;

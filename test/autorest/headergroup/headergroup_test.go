@@ -5,7 +5,9 @@ package headergrouptest
 
 import (
 	"context"
+	"encoding/base64"
 	"generatortests/autorest/generated/headergroup"
+	"generatortests/helpers"
 	"net/http"
 	"reflect"
 	"testing"
@@ -43,19 +45,13 @@ func TestHeaderParamBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	expected := &headergroup.HeaderParamBoolResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ParamBool(context.Background(), "false", false)
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	expected = &headergroup.HeaderParamBoolResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 // TODO this required a change in the generated code so that it outputs base64.STDEncoding.EncodeToString()
@@ -65,10 +61,7 @@ func TestHeaderParamByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamByte: %v", err)
 	}
-	expected := &headergroup.HeaderParamByteResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 // func TestHeaderParamDate(t *testing.T) {
@@ -81,10 +74,7 @@ func TestHeaderParamByte(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamDate: %v", err)
 // 	}
-// 	expected := &headergroup.HeaderParamDateResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 // }
 
 // func TestHeaderParamDatetime(t *testing.T) {
@@ -97,10 +87,7 @@ func TestHeaderParamByte(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamDatetime: %v", err)
 // 	}
-// 	expected := &headergroup.HeaderParamDatetimeResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 // }
 
 // func TestHeaderParamDatetimeRFC1123(t *testing.T) {
@@ -113,10 +100,7 @@ func TestHeaderParamByte(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamDatetimeRFC1123: %v", err)
 // 	}
-// 	expected := &headergroup.HeaderParamDatetimeRFC1123Response{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 // }
 
 func TestHeaderParamDouble(t *testing.T) {
@@ -125,19 +109,13 @@ func TestHeaderParamDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	expected := &headergroup.HeaderParamDoubleResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ParamDouble(context.Background(), "negative", -3.0)
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	expected = &headergroup.HeaderParamDoubleResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 // func TestHeaderParamDuration(t *testing.T) {
@@ -150,10 +128,7 @@ func TestHeaderParamDouble(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamDuration: %v", err)
 // 	}
-// 	expected := &headergroup.HeaderParamDurationResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 // }
 
 func TestHeaderParamEnum(t *testing.T) {
@@ -162,20 +137,14 @@ func TestHeaderParamEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	expected := &headergroup.HeaderParamEnumResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	// var color headergroup.GreyscaleColors
 	// result, err = client.ParamEnum(context.Background(), "null", color)
 	// if err != nil {
 	// 	t.Fatalf("ParamEnum: %v", err)
 	// }
-	// expected = &headergroup.HeaderParamEnumResponse{
-	// 	StatusCode: http.StatusOK,
-	// }
-	// deepEqualOrFatal(t, result, expected)
+	// helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 // func TestHeaderParamExistingKey(t *testing.T) {
@@ -184,10 +153,7 @@ func TestHeaderParamEnum(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamExistingKey: %v", err)
 // 	}
-// 	expected := &headergroup.HeaderParamExistingKeyResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 // }
 
 func TestHeaderParamFloat(t *testing.T) {
@@ -196,19 +162,13 @@ func TestHeaderParamFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	expected := &headergroup.HeaderParamFloatResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ParamFloat(context.Background(), "negative", -3.0)
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	expected = &headergroup.HeaderParamFloatResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderParamInteger(t *testing.T) {
@@ -217,19 +177,13 @@ func TestHeaderParamInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	expected := &headergroup.HeaderParamIntegerResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ParamInteger(context.Background(), "negative", -2)
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	expected = &headergroup.HeaderParamIntegerResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderParamLong(t *testing.T) {
@@ -238,19 +192,13 @@ func TestHeaderParamLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	expected := &headergroup.HeaderParamLongResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ParamLong(context.Background(), "negative", -2)
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	expected = &headergroup.HeaderParamLongResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderParamProtectedKey(t *testing.T) {
@@ -259,10 +207,7 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamProtectedKey: %v", err)
 	}
-	expected := &headergroup.HeaderParamProtectedKeyResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderParamString(t *testing.T) {
@@ -271,28 +216,19 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	expected := &headergroup.HeaderParamStringResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	// result, err = client.ParamString(context.Background(), "null", "")
 	// if err != nil {
 	// 	t.Fatalf("ParamString: %v", err)
 	// }
-	// expected = &headergroup.HeaderParamStringResponse{
-	// 	StatusCode: http.StatusOK,
-	// }
-	// deepEqualOrFatal(t, result, expected)
+	// helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ParamString(context.Background(), "empty", "")
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	expected = &headergroup.HeaderParamStringResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 // TODO check why we dont check for the value returned in all of the tests below this comment
@@ -302,19 +238,19 @@ func TestHeaderResponseBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
 	}
-	expected := &headergroup.HeaderResponseBoolResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val := true
+	expected := headergroup.HeaderResponseBoolResponse{RawResponse: result.RawResponse, Value: &val}
+	helpers.DeepEqualOrFatal(t, result, &expected)
 	result, err = client.ResponseBool(context.Background(), "false")
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
 	}
-	expected = &headergroup.HeaderResponseBoolResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val = false
+	expected = headergroup.HeaderResponseBoolResponse{RawResponse: result.RawResponse, Value: &val}
+	helpers.DeepEqualOrFatal(t, result, &expected)
+
 }
 
 func TestHeaderResponseByte(t *testing.T) {
@@ -323,74 +259,56 @@ func TestHeaderResponseByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseByte: %v", err)
 	}
-	expected := &headergroup.HeaderResponseByteResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val := base64.StdEncoding.EncodeToString([]byte("啊齄丂狛狜隣郎隣兀﨩"))
+	valB := []byte(val)
+	helpers.DeepEqualOrFatal(t, result, &headergroup.HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &valB})
 }
 
-func TestHeaderResponseDate(t *testing.T) {
-	client := getHeaderClient(t)
-	result, err := client.ResponseDate(context.Background(), "valid")
-	if err != nil {
-		t.Fatalf("ResponseDate: %v", err)
-	}
-	expected := &headergroup.HeaderResponseDateResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+// func TestHeaderResponseDate(t *testing.T) {
+// 	client := getHeaderClient(t)
+// 	result, err := client.ResponseDate(context.Background(), "valid")
+// 	if err != nil {
+// 		t.Fatalf("ResponseDate: %v", err)
+// 	}
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
-	result, err = client.ResponseDate(context.Background(), "min")
-	if err != nil {
-		t.Fatalf("ResponseDate: %v", err)
-	}
-	expected = &headergroup.HeaderResponseDateResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-}
+// 	result, err = client.ResponseDate(context.Background(), "min")
+// 	if err != nil {
+// 		t.Fatalf("ResponseDate: %v", err)
+// 	}
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// }
 
-func TestHeaderResponseDatetime(t *testing.T) {
-	client := getHeaderClient(t)
-	result, err := client.ResponseDatetime(context.Background(), "valid")
-	if err != nil {
-		t.Fatalf("ResponseDatetime: %v", err)
-	}
-	expected := &headergroup.HeaderResponseDatetimeResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+// func TestHeaderResponseDatetime(t *testing.T) {
+// 	client := getHeaderClient(t)
+// 	result, err := client.ResponseDatetime(context.Background(), "valid")
+// 	if err != nil {
+// 		t.Fatalf("ResponseDatetime: %v", err)
+// 	}
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
-	result, err = client.ResponseDatetime(context.Background(), "min")
-	if err != nil {
-		t.Fatalf("ResponseDatetime: %v", err)
-	}
-	expected = &headergroup.HeaderResponseDatetimeResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-}
+// 	result, err = client.ResponseDatetime(context.Background(), "min")
+// 	if err != nil {
+// 		t.Fatalf("ResponseDatetime: %v", err)
+// 	}
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// }
 
-func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
-	client := getHeaderClient(t)
-	result, err := client.ResponseDatetimeRFC1123(context.Background(), "valid")
-	if err != nil {
-		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
-	}
-	expected := &headergroup.HeaderResponseDatetimeRFC1123Response{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+// func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
+// 	client := getHeaderClient(t)
+// 	result, err := client.ResponseDatetimeRFC1123(context.Background(), "valid")
+// 	if err != nil {
+// 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
+// 	}
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
-	result, err = client.ResponseDatetimeRFC1123(context.Background(), "min")
-	if err != nil {
-		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
-	}
-	expected = &headergroup.HeaderResponseDatetimeRFC1123Response{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-}
+// 	result, err = client.ResponseDatetimeRFC1123(context.Background(), "min")
+// 	if err != nil {
+// 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
+// 	}
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// }
 
 func TestHeaderResponseDouble(t *testing.T) {
 	client := getHeaderClient(t)
@@ -398,32 +316,23 @@ func TestHeaderResponseDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDouble: %v", err)
 	}
-	expected := &headergroup.HeaderResponseDoubleResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ResponseDouble(context.Background(), "negative")
 	if err != nil {
 		t.Fatalf("ResponseDouble: %v", err)
 	}
-	expected = &headergroup.HeaderResponseDoubleResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
-func TestHeaderResponseDuration(t *testing.T) {
-	client := getHeaderClient(t)
-	result, err := client.ResponseDuration(context.Background(), "valid")
-	if err != nil {
-		t.Fatalf("ResponseDuration: %v", err)
-	}
-	expected := &headergroup.HeaderResponseDurationResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-}
+// func TestHeaderResponseDuration(t *testing.T) {
+// 	client := getHeaderClient(t)
+// 	result, err := client.ResponseDuration(context.Background(), "valid")
+// 	if err != nil {
+// 		t.Fatalf("ResponseDuration: %v", err)
+// 	}
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// }
 
 func TestHeaderResponseEnum(t *testing.T) {
 	client := getHeaderClient(t)
@@ -431,19 +340,14 @@ func TestHeaderResponseEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)
 	}
-	expected := &headergroup.HeaderResponseEnumResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
-
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val := headergroup.GreyscaleColors("GREY")
+	helpers.DeepEqualOrFatal(t, result, &headergroup.HeaderResponseEnumResponse{RawResponse: result.RawResponse, Value: &val})
 	result, err = client.ResponseEnum(context.Background(), "null")
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)
 	}
-	expected = &headergroup.HeaderResponseEnumResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderResponseExistingKey(t *testing.T) {
@@ -452,10 +356,7 @@ func TestHeaderResponseExistingKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseExistingKey: %v", err)
 	}
-	expected := &headergroup.HeaderResponseExistingKeyResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderResponseFloat(t *testing.T) {
@@ -464,19 +365,13 @@ func TestHeaderResponseFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseFloat: %v", err)
 	}
-	expected := &headergroup.HeaderResponseFloatResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ResponseFloat(context.Background(), "negative")
 	if err != nil {
 		t.Fatalf("ResponseFloat: %v", err)
 	}
-	expected = &headergroup.HeaderResponseFloatResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderResponseInteger(t *testing.T) {
@@ -485,19 +380,13 @@ func TestHeaderResponseInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseInteger: %v", err)
 	}
-	expected := &headergroup.HeaderResponseIntegerResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ResponseInteger(context.Background(), "negative")
 	if err != nil {
 		t.Fatalf("ResponseInteger: %v", err)
 	}
-	expected = &headergroup.HeaderResponseIntegerResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderResponseLong(t *testing.T) {
@@ -506,19 +395,13 @@ func TestHeaderResponseLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseLong: %v", err)
 	}
-	expected := &headergroup.HeaderResponseLongResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ResponseLong(context.Background(), "negative")
 	if err != nil {
 		t.Fatalf("ResponseLong: %v", err)
 	}
-	expected = &headergroup.HeaderResponseLongResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderResponseProtectedKey(t *testing.T) {
@@ -527,10 +410,7 @@ func TestHeaderResponseProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseProtectedKey: %v", err)
 	}
-	expected := &headergroup.HeaderResponseProtectedKeyResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 func TestHeaderResponseString(t *testing.T) {
@@ -539,26 +419,17 @@ func TestHeaderResponseString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	expected := &headergroup.HeaderResponseStringResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ResponseString(context.Background(), "null")
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	expected = &headergroup.HeaderResponseStringResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
 	result, err = client.ResponseString(context.Background(), "empty")
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	expected = &headergroup.HeaderResponseStringResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
