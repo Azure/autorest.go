@@ -291,7 +291,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
     headerParam.forEach(header => {
       // the default language name is used here for the header key since the header should not be parsed according to any language specific rules and the endpoint will be expecting the value specified by default
-      text += `\treq.Header.Set("${header.language.default.name}", ${formatParamValue(header, imports)})\n`;
+      text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
     });
     text += `\treturn req, nil\n`;
   }
