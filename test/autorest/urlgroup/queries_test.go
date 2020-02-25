@@ -22,8 +22,8 @@ func getQueriesClient(t *testing.T) urlgroup.QueriesOperations {
 
 func TestArrayStringCsvValid(t *testing.T) {
 	client := getQueriesClient(t)
-	result, err := client.ArrayStringCsvValid(context.Background(), []string{
-		"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", "",
+	result, err := client.ArrayStringCsvValid(context.Background(), &urlgroup.QueriesArrayStringCsvValidOptions{
+		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -33,8 +33,8 @@ func TestArrayStringCsvValid(t *testing.T) {
 
 func TestArrayStringPipesValid(t *testing.T) {
 	client := getQueriesClient(t)
-	result, err := client.ArrayStringPipesValid(context.Background(), []string{
-		"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", "",
+	result, err := client.ArrayStringPipesValid(context.Background(), &urlgroup.QueriesArrayStringPipesValidOptions{
+		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -42,10 +42,16 @@ func TestArrayStringPipesValid(t *testing.T) {
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
+func toByteSlicePtr(v []byte) *[]byte {
+	return &v
+}
+
 func TestByteMultiByte(t *testing.T) {
 	client := getQueriesClient(t)
 	encoded := base64.StdEncoding.EncodeToString([]byte("啊齄丂狛狜隣郎隣兀﨩"))
-	result, err := client.ByteMultiByte(context.Background(), []byte(encoded))
+	result, err := client.ByteMultiByte(context.Background(), &urlgroup.QueriesByteMultiByteOptions{
+		ByteQuery: toByteSlicePtr([]byte(encoded)),
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -74,7 +80,9 @@ func TestDoubleDecimalNegative(t *testing.T) {
 func TestEnumValid(t *testing.T) {
 	t.Skip("test fails, needs investigation")
 	client := getQueriesClient(t)
-	result, err := client.EnumValid(context.Background(), urlgroup.UriColorGreenColor)
+	result, err := client.EnumValid(context.Background(), &urlgroup.QueriesEnumValidOptions{
+		EnumQuery: urlgroup.UriColorGreenColor.ToPtr(),
+	})
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -5,8 +5,9 @@
 
 import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
+import { ParamInfo, paramInfo } from '../generator/common/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -116,7 +117,28 @@ function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       for (const param of values(op.request.parameters)) {
+        // skip the host param as we use our own url.URL instead
+        if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
+          continue;
+        }
         param.schema.language.go!.name = schemaTypeToGoType(param.schema);
+        if (param.implementation === ImplementationLocation.Client) {
+          // add global param info to the operation group
+          if (group.language.go!.globals === undefined) {
+            group.language.go!.globals = new Array<ParamInfo>();
+          }
+          const globals = <Array<ParamInfo>>group.language.go!.globals;
+          // check if this global param has already been added
+          const index = globals.findIndex((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
+            if (value.name === param.language.go!.name) {
+              return true;
+            }
+            return false;
+          });
+          if (index === -1) {
+            globals.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, true, param.required === true));
+          }
+        }
       }
       // recursively add the marshalling format to the body param if applicable
       const marshallingFormat = getMarshallingFormat(op.request.protocol);

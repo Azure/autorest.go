@@ -9,14 +9,28 @@ import azinternal "generatortests/autorest/generated/urlgroup/internal/urlgroup"
 
 type Error = azinternal.Error
 
+// PathItemsGetAllWithValuesOptions contains the optional parameters for the PathItems.GetAllWithValues method.
+type PathItemsGetAllWithValuesOptions = azinternal.PathItemsGetAllWithValuesOptions
+
 // PathItemsGetAllWithValuesResponse contains the response from method PathItems.GetAllWithValues.
 type PathItemsGetAllWithValuesResponse = azinternal.PathItemsGetAllWithValuesResponse
+
+// PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull
+// method.
+type PathItemsGetGlobalAndLocalQueryNullOptions = azinternal.PathItemsGetGlobalAndLocalQueryNullOptions
 
 // PathItemsGetGlobalAndLocalQueryNullResponse contains the response from method PathItems.GetGlobalAndLocalQueryNull.
 type PathItemsGetGlobalAndLocalQueryNullResponse = azinternal.PathItemsGetGlobalAndLocalQueryNullResponse
 
+// PathItemsGetGlobalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalQueryNull method.
+type PathItemsGetGlobalQueryNullOptions = azinternal.PathItemsGetGlobalQueryNullOptions
+
 // PathItemsGetGlobalQueryNullResponse contains the response from method PathItems.GetGlobalQueryNull.
 type PathItemsGetGlobalQueryNullResponse = azinternal.PathItemsGetGlobalQueryNullResponse
+
+// PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull
+// method.
+type PathItemsGetLocalPathItemQueryNullOptions = azinternal.PathItemsGetLocalPathItemQueryNullOptions
 
 // PathItemsGetLocalPathItemQueryNullResponse contains the response from method PathItems.GetLocalPathItemQueryNull.
 type PathItemsGetLocalPathItemQueryNullResponse = azinternal.PathItemsGetLocalPathItemQueryNullResponse
@@ -102,20 +116,38 @@ type PathsStringUnicodeResponse = azinternal.PathsStringUnicodeResponse
 // PathsUnixTimeURLResponse contains the response from method Paths.UnixTimeURL.
 type PathsUnixTimeURLResponse = azinternal.PathsUnixTimeURLResponse
 
+// QueriesArrayStringCsvEmptyOptions contains the optional parameters for the Queries.ArrayStringCsvEmpty method.
+type QueriesArrayStringCsvEmptyOptions = azinternal.QueriesArrayStringCsvEmptyOptions
+
 // QueriesArrayStringCsvEmptyResponse contains the response from method Queries.ArrayStringCsvEmpty.
 type QueriesArrayStringCsvEmptyResponse = azinternal.QueriesArrayStringCsvEmptyResponse
+
+// QueriesArrayStringCsvNullOptions contains the optional parameters for the Queries.ArrayStringCsvNull method.
+type QueriesArrayStringCsvNullOptions = azinternal.QueriesArrayStringCsvNullOptions
 
 // QueriesArrayStringCsvNullResponse contains the response from method Queries.ArrayStringCsvNull.
 type QueriesArrayStringCsvNullResponse = azinternal.QueriesArrayStringCsvNullResponse
 
+// QueriesArrayStringCsvValidOptions contains the optional parameters for the Queries.ArrayStringCsvValid method.
+type QueriesArrayStringCsvValidOptions = azinternal.QueriesArrayStringCsvValidOptions
+
 // QueriesArrayStringCsvValidResponse contains the response from method Queries.ArrayStringCsvValid.
 type QueriesArrayStringCsvValidResponse = azinternal.QueriesArrayStringCsvValidResponse
+
+// QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
+type QueriesArrayStringPipesValidOptions = azinternal.QueriesArrayStringPipesValidOptions
 
 // QueriesArrayStringPipesValidResponse contains the response from method Queries.ArrayStringPipesValid.
 type QueriesArrayStringPipesValidResponse = azinternal.QueriesArrayStringPipesValidResponse
 
+// QueriesArrayStringSsvValidOptions contains the optional parameters for the Queries.ArrayStringSsvValid method.
+type QueriesArrayStringSsvValidOptions = azinternal.QueriesArrayStringSsvValidOptions
+
 // QueriesArrayStringSsvValidResponse contains the response from method Queries.ArrayStringSsvValid.
 type QueriesArrayStringSsvValidResponse = azinternal.QueriesArrayStringSsvValidResponse
+
+// QueriesArrayStringTsvValidOptions contains the optional parameters for the Queries.ArrayStringTsvValid method.
+type QueriesArrayStringTsvValidOptions = azinternal.QueriesArrayStringTsvValidOptions
 
 // QueriesArrayStringTsvValidResponse contains the response from method Queries.ArrayStringTsvValid.
 type QueriesArrayStringTsvValidResponse = azinternal.QueriesArrayStringTsvValidResponse
@@ -123,14 +155,26 @@ type QueriesArrayStringTsvValidResponse = azinternal.QueriesArrayStringTsvValidR
 // QueriesByteEmptyResponse contains the response from method Queries.ByteEmpty.
 type QueriesByteEmptyResponse = azinternal.QueriesByteEmptyResponse
 
+// QueriesByteMultiByteOptions contains the optional parameters for the Queries.ByteMultiByte method.
+type QueriesByteMultiByteOptions = azinternal.QueriesByteMultiByteOptions
+
 // QueriesByteMultiByteResponse contains the response from method Queries.ByteMultiByte.
 type QueriesByteMultiByteResponse = azinternal.QueriesByteMultiByteResponse
+
+// QueriesByteNullOptions contains the optional parameters for the Queries.ByteNull method.
+type QueriesByteNullOptions = azinternal.QueriesByteNullOptions
 
 // QueriesByteNullResponse contains the response from method Queries.ByteNull.
 type QueriesByteNullResponse = azinternal.QueriesByteNullResponse
 
+// QueriesDateNullOptions contains the optional parameters for the Queries.DateNull method.
+type QueriesDateNullOptions = azinternal.QueriesDateNullOptions
+
 // QueriesDateNullResponse contains the response from method Queries.DateNull.
 type QueriesDateNullResponse = azinternal.QueriesDateNullResponse
+
+// QueriesDateTimeNullOptions contains the optional parameters for the Queries.DateTimeNull method.
+type QueriesDateTimeNullOptions = azinternal.QueriesDateTimeNullOptions
 
 // QueriesDateTimeNullResponse contains the response from method Queries.DateTimeNull.
 type QueriesDateTimeNullResponse = azinternal.QueriesDateTimeNullResponse
@@ -147,14 +191,26 @@ type QueriesDoubleDecimalNegativeResponse = azinternal.QueriesDoubleDecimalNegat
 // QueriesDoubleDecimalPositiveResponse contains the response from method Queries.DoubleDecimalPositive.
 type QueriesDoubleDecimalPositiveResponse = azinternal.QueriesDoubleDecimalPositiveResponse
 
+// QueriesDoubleNullOptions contains the optional parameters for the Queries.DoubleNull method.
+type QueriesDoubleNullOptions = azinternal.QueriesDoubleNullOptions
+
 // QueriesDoubleNullResponse contains the response from method Queries.DoubleNull.
 type QueriesDoubleNullResponse = azinternal.QueriesDoubleNullResponse
+
+// QueriesEnumNullOptions contains the optional parameters for the Queries.EnumNull method.
+type QueriesEnumNullOptions = azinternal.QueriesEnumNullOptions
 
 // QueriesEnumNullResponse contains the response from method Queries.EnumNull.
 type QueriesEnumNullResponse = azinternal.QueriesEnumNullResponse
 
+// QueriesEnumValidOptions contains the optional parameters for the Queries.EnumValid method.
+type QueriesEnumValidOptions = azinternal.QueriesEnumValidOptions
+
 // QueriesEnumValidResponse contains the response from method Queries.EnumValid.
 type QueriesEnumValidResponse = azinternal.QueriesEnumValidResponse
+
+// QueriesFloatNullOptions contains the optional parameters for the Queries.FloatNull method.
+type QueriesFloatNullOptions = azinternal.QueriesFloatNullOptions
 
 // QueriesFloatNullResponse contains the response from method Queries.FloatNull.
 type QueriesFloatNullResponse = azinternal.QueriesFloatNullResponse
@@ -168,6 +224,9 @@ type QueriesFloatScientificPositiveResponse = azinternal.QueriesFloatScientificP
 // QueriesGetBooleanFalseResponse contains the response from method Queries.GetBooleanFalse.
 type QueriesGetBooleanFalseResponse = azinternal.QueriesGetBooleanFalseResponse
 
+// QueriesGetBooleanNullOptions contains the optional parameters for the Queries.GetBooleanNull method.
+type QueriesGetBooleanNullOptions = azinternal.QueriesGetBooleanNullOptions
+
 // QueriesGetBooleanNullResponse contains the response from method Queries.GetBooleanNull.
 type QueriesGetBooleanNullResponse = azinternal.QueriesGetBooleanNullResponse
 
@@ -177,11 +236,17 @@ type QueriesGetBooleanTrueResponse = azinternal.QueriesGetBooleanTrueResponse
 // QueriesGetIntNegativeOneMillionResponse contains the response from method Queries.GetIntNegativeOneMillion.
 type QueriesGetIntNegativeOneMillionResponse = azinternal.QueriesGetIntNegativeOneMillionResponse
 
+// QueriesGetIntNullOptions contains the optional parameters for the Queries.GetIntNull method.
+type QueriesGetIntNullOptions = azinternal.QueriesGetIntNullOptions
+
 // QueriesGetIntNullResponse contains the response from method Queries.GetIntNull.
 type QueriesGetIntNullResponse = azinternal.QueriesGetIntNullResponse
 
 // QueriesGetIntOneMillionResponse contains the response from method Queries.GetIntOneMillion.
 type QueriesGetIntOneMillionResponse = azinternal.QueriesGetIntOneMillionResponse
+
+// QueriesGetLongNullOptions contains the optional parameters for the Queries.GetLongNull method.
+type QueriesGetLongNullOptions = azinternal.QueriesGetLongNullOptions
 
 // QueriesGetLongNullResponse contains the response from method Queries.GetLongNull.
 type QueriesGetLongNullResponse = azinternal.QueriesGetLongNullResponse
@@ -194,6 +259,9 @@ type QueriesGetTenBillionResponse = azinternal.QueriesGetTenBillionResponse
 
 // QueriesStringEmptyResponse contains the response from method Queries.StringEmpty.
 type QueriesStringEmptyResponse = azinternal.QueriesStringEmptyResponse
+
+// QueriesStringNullOptions contains the optional parameters for the Queries.StringNull method.
+type QueriesStringNullOptions = azinternal.QueriesStringNullOptions
 
 // QueriesStringNullResponse contains the response from method Queries.StringNull.
 type QueriesStringNullResponse = azinternal.QueriesStringNullResponse

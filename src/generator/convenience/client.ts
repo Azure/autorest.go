@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, ImportManager } from '../common/helpers';
+import { ContentPreamble, formatParamInfoTypeName, ImportManager, ParamInfo, sortParamInfoByRequired } from '../common/helpers';
 
 // generates content for client.go
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
@@ -44,9 +44,6 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += 'type Client struct {\n';
   text += `\t${urlVar} *url.URL\n`;
   text += `\t${pipelineVar} azcore.Pipeline\n`;
-  for (const op of values(session.model.operationGroups)) {
-    text += `\t${camelCase(op.language.go!.clientName)} ${op.language.go!.clientName}\n`;
-  }
   text += '}\n\n';
 
   const endpoint = getDefaultEndpoint(session.model.globalParameters);
@@ -79,17 +76,24 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
-  text += `\tc := &Client{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}\n`;
-  for (const op of values(session.model.operationGroups)) {
-    text += `\tc.${camelCase(op.language.go!.clientName)} = &${camelCase(op.language.go!.clientName)}{Client: c}\n`;
-  }
-  text += '\treturn c, nil\n';
+  text += `\treturn &Client{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   text += '}\n\n';
 
-  for (const op of values(session.model.operationGroups)) {
-    text += `// ${op.language.go!.clientName} returns the ${op.language.go!.clientName} associated with this client.\n`;
-    text += `func (client *Client) ${op.language.go!.clientName}() ${op.language.go!.clientName} {\n`;
-    text += `\treturn client.${camelCase(op.language.go!.clientName)}\n`;
+  for (const group of values(session.model.operationGroups)) {
+    const clientParams = ['Client: client'];
+    const methodParams = new Array<string>();
+    // add global params to the operation group getter method
+    if (group.language.go!.globals) {
+      const globals = <Array<ParamInfo>>group.language.go!.globals;
+      globals.sort(sortParamInfoByRequired);
+      globals.forEach((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
+        clientParams.push(`${value.name}: ${value.name}`);
+        methodParams.push(`${value.name} ${formatParamInfoTypeName(value)}`);
+      })
+    }
+    text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
+    text += `func (client *Client) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;
+    text += `\treturn &${camelCase(group.language.go!.clientName)}{${clientParams.join(', ')}}\n`;
     text += '}\n\n';
   }
 

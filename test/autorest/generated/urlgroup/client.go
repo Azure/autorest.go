@@ -31,11 +31,8 @@ func DefaultClientOptions() ClientOptions {
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u                   *url.URL
-	p                   azcore.Pipeline
-	pathsOperations     PathsOperations
-	queriesOperations   QueriesOperations
-	pathItemsOperations PathItemsOperations
+	u *url.URL
+	p azcore.Pipeline
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -66,24 +63,20 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := &Client{u: u, p: p}
-	c.pathsOperations = &pathsOperations{Client: c}
-	c.queriesOperations = &queriesOperations{Client: c}
-	c.pathItemsOperations = &pathItemsOperations{Client: c}
-	return c, nil
+	return &Client{u: u, p: p}, nil
 }
 
 // PathsOperations returns the PathsOperations associated with this client.
 func (client *Client) PathsOperations() PathsOperations {
-	return client.pathsOperations
+	return &pathsOperations{Client: client}
 }
 
 // QueriesOperations returns the QueriesOperations associated with this client.
 func (client *Client) QueriesOperations() QueriesOperations {
-	return client.queriesOperations
+	return &queriesOperations{Client: client}
 }
 
 // PathItemsOperations returns the PathItemsOperations associated with this client.
-func (client *Client) PathItemsOperations() PathItemsOperations {
-	return client.pathItemsOperations
+func (client *Client) PathItemsOperations(globalStringPath string, globalStringQuery *string) PathItemsOperations {
+	return &pathItemsOperations{Client: client, globalStringPath: globalStringPath, globalStringQuery: globalStringQuery}
 }

@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, SortAscending } from '../common/helpers';
+import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 // represents the generated content for an operation group
@@ -101,6 +101,16 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       separator = '\\t';
       break;
   }
+  let paramName = param.language.go!.name;
+  if (param.required !== true) {
+    if (param.implementation === ImplementationLocation.Method) {
+      // optional params at the method level will be in an options struct
+      paramName = `*options.${pascalCase(paramName)}`;
+    } else {
+      // optional globals are passed as just another parameter
+      paramName = `*${paramName}`;
+    }
+  }
   switch (param.schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>param.schema;
@@ -109,22 +119,22 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
         case SchemaType.SealedChoice:
         case SchemaType.String:
           imports.add('strings');
-          return `strings.Join(${param.language.go!.name}, "${separator}")`;
+          return `strings.Join(${paramName}, "${separator}")`;
         default:
           imports.add('fmt');
           imports.add('strings');
-          return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${param.language.go!.name}), "[]")), "${separator}")`;
+          return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
       }
     case SchemaType.Boolean:
       imports.add('strconv');
-      return `strconv.FormatBool(${param.language.go!.name})`;
+      return `strconv.FormatBool(${paramName})`;
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
       return `base64.StdEncoding.EncodeToString(${param.language.go!.name})`;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
-      return `string(${param.language.go!.name})`;
+      return `string(${paramName})`;
     case SchemaType.Constant:
       const constSchema = <ConstantSchema>param.schema;
       // cannot use formatConstantValue() since all values are treated as strings
@@ -132,11 +142,16 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
     case SchemaType.Date:
     case SchemaType.DateTime:
     case SchemaType.Duration:
-      return `${param.language.go!.name}.String()`;
+    case SchemaType.UnixTime:
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substr(1);
+      }
+      return `${paramName}.String()`;
     case SchemaType.Integer:
       imports.add('strconv');
       const intSchema = <NumberSchema>param.schema;
-      let intParam = param.language.go!.name;
+      let intParam = paramName;
       if (intSchema.precision === 32) {
         intParam = `int64(${intParam})`;
       }
@@ -144,13 +159,13 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
     case SchemaType.Number:
       imports.add('strconv');
       const numberSchema = <NumberSchema>param.schema;
-      let floatParam = param.language.go!.name;
+      let floatParam = paramName;
       if (numberSchema.precision === 32) {
         floatParam = `float64(${floatParam})`;
       }
       return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;
     default:
-      return param.language.go!.name;
+      return paramName;
   }
 }
 
@@ -246,23 +261,43 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(op.request.parameters)) {
-    if (param.implementation !== ImplementationLocation.Method) {
+    if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
       continue;
     }
     imports.addImportForSchemaType(param.schema);
   }
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.requestMethod.params = [{ name: 'u', type: 'url.URL' }].concat(generateParameterInfo(op));
+  sig.protocolSigs.requestMethod.params = [new paramInfo('u', 'url.URL', false, true)].concat(generateParameterInfo(op));
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
-  text += `\tu.Path = path.Join(u.Path, "${op.request.protocol.http!.path}")\n`;
+  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
+  text += `\turlPath := "${op.request.protocol.http!.path}"\n`;
+  if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+    // replace path parameters
+    imports.add('strings');
+    imports.add('net/url');
+    for (const pp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.name}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
+    }
+  }
+  text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
   if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
     // add query parameters
     text += '\tquery := u.Query()\n';
     for (const qp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
-      text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+      if (qp.required === true) {
+        text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+      } else if (qp.implementation === ImplementationLocation.Client) {
+        // global optional param
+        text += `\tif ${qp.language.go!.name} != nil {\n`;
+        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+        text += `\t}\n`;
+      } else {
+        text += `\tif options != nil && options.${pascalCase(qp.language.go!.name)} != nil {\n`;
+        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+        text += `\t}\n`;
+      }
     }
     text += '\tu.RawQuery = query.Encode()\n';
   }
@@ -304,11 +339,11 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const name = info.protocolNaming.responseMethod;
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.responseMethod.params = [{ name: 'resp', type: '*azcore.Response' }];
+  sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true)];
   sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op);
 
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
+  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params, true)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(http.StatusOK) {\n`;
   text += `\t\treturn nil, newError(resp)\n`;
   text += '\t}\n';

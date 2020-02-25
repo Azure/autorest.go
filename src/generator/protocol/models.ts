@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, ObjectSchema, ChoiceSchema, Language, Schema, SchemaType, StringSchema, Property, HttpHeader } from '@azure-tools/codemodel';
+import { comment, pascalCase } from '@azure-tools/codegen';
+import { CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, HasDescription, ImportManager, LanguageHeader, SortAscending } from '../common/helpers';
 
@@ -15,10 +15,10 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 
   // we do model generation first as it can add imports to the imports list
   const structs = generateStructs(session.model.schemas.objects);
-  // add structs from operation responses
+  // add types from requests and responses
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      if (op.responses![0]) {
+      if (op.responses) {
         // check if the response has http headers that it will expect information from. 
         if (op.responses![0].protocol.http!.headers) {
           for (const header of values(op.responses![0].protocol.http!.headers)) {
@@ -30,7 +30,12 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
             op.responses![0].language.go!.properties.push(newProperty(head.name, head.description, <Schema>head.schema));
           }
         }
-        structs.push(generateStruct(op.responses![0].language.go!, op.responses![0].language.go!.properties));
+        // add structs from operation responses
+        structs.push(generateStruct(op.responses[0].language.go!, op.responses[0].language.go!.properties));
+      }
+      // add structs from optional operation params
+      if (op.request.language.go!.optionalParam) {
+        structs.push(generateOptionalParamsStruct(op.request.language.go!.optionalParam, op.request.language.go!.optionalParam.params));
       }
     }
   }
@@ -39,11 +44,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   if (imports.length() > 0) {
     text += imports.text();
   }
-
-  // enums
-  session.model.schemas.choices?.sort(
-    (a: ChoiceSchema<StringSchema>, b: ChoiceSchema<StringSchema>) => { return SortAscending(a.language.go!.name, b.language.go!.name); }
-  );
 
   // structs
   structs.sort((a: StructDef, b: StructDef) => { return SortAscending(a.Language.name, b.Language.name) });
@@ -60,12 +60,17 @@ const imports = new ImportManager();
 class StructDef {
   readonly Language: Language;
   readonly Properties?: Property[];
+  readonly Parameters?: Parameter[];
 
-  constructor(language: Language, props?: Property[]) {
+  constructor(language: Language, props?: Property[], params?: Parameter[]) {
     this.Language = language;
     this.Properties = props;
+    this.Parameters = params;
     if (this.Properties) {
       this.Properties.sort((a: Property, b: Property) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
+    }
+    if (this.Parameters) {
+      this.Parameters.sort((a: Parameter, b: Parameter) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
     }
   }
 
@@ -90,6 +95,18 @@ class StructDef {
         tag = '';
       }
       text += `\t${prop.language.go!.name} *${typeName}${tag}\n\n`;
+    }
+    for (const param of values(this.Parameters)) {
+      // if Parameters is set this is an optional args struct
+      // none of its fields need to participate in marshalling
+      if (param.implementation === ImplementationLocation.Client) {
+        // don't add globals to the per-method options struct
+        continue;
+      }
+      if (HasDescription(param.language.go!)) {
+        text += `\t${comment(param.language.go!.description, '// ')}\n`;
+      }
+      text += `\t${pascalCase(param.language.go!.name)} *${param.schema.language.go!.name}\n`;
     }
     text += '}\n\n';
     if (this.Language.errorType) {
@@ -144,4 +161,12 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
   let prop = new Property(name, desc, schema);
   prop.language.go = prop.language.default;
   return prop;
+}
+
+function generateOptionalParamsStruct(lang: Language, params: Parameter[]): StructDef {
+  const st = new StructDef(lang, undefined, params);
+  for (const param of values(params)) {
+    imports.addImportForSchemaType(param.schema);
+  }
+  return st;
 }

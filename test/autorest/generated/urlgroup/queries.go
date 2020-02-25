@@ -8,33 +8,32 @@ package urlgroup
 import (
 	"context"
 	azinternal "generatortests/autorest/generated/urlgroup/internal/urlgroup"
-	"time"
 )
 
 // QueriesOperations contains the methods for the Queries group.
 type QueriesOperations interface {
 	// ArrayStringCsvEmpty - Get an empty array [] of string using the csv-array format
-	ArrayStringCsvEmpty(ctx context.Context, arrayQuery []string) (*QueriesArrayStringCsvEmptyResponse, error)
+	ArrayStringCsvEmpty(ctx context.Context, options *QueriesArrayStringCsvEmptyOptions) (*QueriesArrayStringCsvEmptyResponse, error)
 	// ArrayStringCsvNull - Get a null array of string using the csv-array format
-	ArrayStringCsvNull(ctx context.Context, arrayQuery []string) (*QueriesArrayStringCsvNullResponse, error)
+	ArrayStringCsvNull(ctx context.Context, options *QueriesArrayStringCsvNullOptions) (*QueriesArrayStringCsvNullResponse, error)
 	// ArrayStringCsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-	ArrayStringCsvValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringCsvValidResponse, error)
+	ArrayStringCsvValid(ctx context.Context, options *QueriesArrayStringCsvValidOptions) (*QueriesArrayStringCsvValidResponse, error)
 	// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
-	ArrayStringPipesValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringPipesValidResponse, error)
+	ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*QueriesArrayStringPipesValidResponse, error)
 	// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
-	ArrayStringSsvValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringSsvValidResponse, error)
+	ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*QueriesArrayStringSsvValidResponse, error)
 	// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
-	ArrayStringTsvValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringTsvValidResponse, error)
+	ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*QueriesArrayStringTsvValidResponse, error)
 	// ByteEmpty - Get '' as byte array
 	ByteEmpty(ctx context.Context) (*QueriesByteEmptyResponse, error)
 	// ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-	ByteMultiByte(ctx context.Context, byteQuery []byte) (*QueriesByteMultiByteResponse, error)
+	ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (*QueriesByteMultiByteResponse, error)
 	// ByteNull - Get null as byte array (no query parameters in uri)
-	ByteNull(ctx context.Context, byteQuery []byte) (*QueriesByteNullResponse, error)
+	ByteNull(ctx context.Context, options *QueriesByteNullOptions) (*QueriesByteNullResponse, error)
 	// DateNull - Get null as date - this should result in no query parameters in uri
-	DateNull(ctx context.Context, dateQuery time.Time) (*QueriesDateNullResponse, error)
+	DateNull(ctx context.Context, options *QueriesDateNullOptions) (*QueriesDateNullResponse, error)
 	// DateTimeNull - Get null as date-time, should result in no query parameters in uri
-	DateTimeNull(ctx context.Context, dateTimeQuery time.Time) (*QueriesDateTimeNullResponse, error)
+	DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (*QueriesDateTimeNullResponse, error)
 	// DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 	DateTimeValid(ctx context.Context) (*QueriesDateTimeValidResponse, error)
 	// DateValid - Get '2012-01-01' as date
@@ -44,13 +43,13 @@ type QueriesOperations interface {
 	// DoubleDecimalPositive - Get '9999999.999' numeric value
 	DoubleDecimalPositive(ctx context.Context) (*QueriesDoubleDecimalPositiveResponse, error)
 	// DoubleNull - Get null numeric value (no query parameter)
-	DoubleNull(ctx context.Context, doubleQuery float64) (*QueriesDoubleNullResponse, error)
+	DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (*QueriesDoubleNullResponse, error)
 	// EnumNull - Get null (no query parameter in url)
-	EnumNull(ctx context.Context, enumQuery UriColor) (*QueriesEnumNullResponse, error)
+	EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (*QueriesEnumNullResponse, error)
 	// EnumValid - Get using uri with query parameter 'green color'
-	EnumValid(ctx context.Context, enumQuery UriColor) (*QueriesEnumValidResponse, error)
+	EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (*QueriesEnumValidResponse, error)
 	// FloatNull - Get null numeric value (no query parameter)
-	FloatNull(ctx context.Context, floatQuery float32) (*QueriesFloatNullResponse, error)
+	FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (*QueriesFloatNullResponse, error)
 	// FloatScientificNegative - Get '-1.034E-20' numeric value
 	FloatScientificNegative(ctx context.Context) (*QueriesFloatScientificNegativeResponse, error)
 	// FloatScientificPositive - Get '1.034E+20' numeric value
@@ -58,17 +57,17 @@ type QueriesOperations interface {
 	// GetBooleanFalse - Get false Boolean value on path
 	GetBooleanFalse(ctx context.Context) (*QueriesGetBooleanFalseResponse, error)
 	// GetBooleanNull - Get null Boolean value on query (query string should be absent)
-	GetBooleanNull(ctx context.Context, boolQuery bool) (*QueriesGetBooleanNullResponse, error)
+	GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (*QueriesGetBooleanNullResponse, error)
 	// GetBooleanTrue - Get true Boolean value on path
 	GetBooleanTrue(ctx context.Context) (*QueriesGetBooleanTrueResponse, error)
 	// GetIntNegativeOneMillion - Get '-1000000' integer value
 	GetIntNegativeOneMillion(ctx context.Context) (*QueriesGetIntNegativeOneMillionResponse, error)
 	// GetIntNull - Get null integer value (no query parameter)
-	GetIntNull(ctx context.Context, intQuery int32) (*QueriesGetIntNullResponse, error)
+	GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (*QueriesGetIntNullResponse, error)
 	// GetIntOneMillion - Get '1000000' integer value
 	GetIntOneMillion(ctx context.Context) (*QueriesGetIntOneMillionResponse, error)
 	// GetLongNull - Get 'null 64 bit integer value (no query param in uri)
-	GetLongNull(ctx context.Context, longQuery int64) (*QueriesGetLongNullResponse, error)
+	GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (*QueriesGetLongNullResponse, error)
 	// GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 	GetNegativeTenBillion(ctx context.Context) (*QueriesGetNegativeTenBillionResponse, error)
 	// GetTenBillion - Get '10000000000' 64 bit integer value
@@ -76,7 +75,7 @@ type QueriesOperations interface {
 	// StringEmpty - Get ''
 	StringEmpty(ctx context.Context) (*QueriesStringEmptyResponse, error)
 	// StringNull - Get null (no query parameter in url)
-	StringNull(ctx context.Context, stringQuery string) (*QueriesStringNullResponse, error)
+	StringNull(ctx context.Context, options *QueriesStringNullOptions) (*QueriesStringNullResponse, error)
 	// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 	StringURLEncoded(ctx context.Context) (*QueriesStringURLEncodedResponse, error)
 	// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
@@ -89,8 +88,8 @@ type queriesOperations struct {
 }
 
 // ArrayStringCsvEmpty - Get an empty array [] of string using the csv-array format
-func (client *queriesOperations) ArrayStringCsvEmpty(ctx context.Context, arrayQuery []string) (*QueriesArrayStringCsvEmptyResponse, error) {
-	req, err := client.ArrayStringCsvEmptyCreateRequest(*client.u, arrayQuery)
+func (client *queriesOperations) ArrayStringCsvEmpty(ctx context.Context, options *QueriesArrayStringCsvEmptyOptions) (*QueriesArrayStringCsvEmptyResponse, error) {
+	req, err := client.ArrayStringCsvEmptyCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -106,8 +105,8 @@ func (client *queriesOperations) ArrayStringCsvEmpty(ctx context.Context, arrayQ
 }
 
 // ArrayStringCsvNull - Get a null array of string using the csv-array format
-func (client *queriesOperations) ArrayStringCsvNull(ctx context.Context, arrayQuery []string) (*QueriesArrayStringCsvNullResponse, error) {
-	req, err := client.ArrayStringCsvNullCreateRequest(*client.u, arrayQuery)
+func (client *queriesOperations) ArrayStringCsvNull(ctx context.Context, options *QueriesArrayStringCsvNullOptions) (*QueriesArrayStringCsvNullResponse, error) {
+	req, err := client.ArrayStringCsvNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -123,8 +122,8 @@ func (client *queriesOperations) ArrayStringCsvNull(ctx context.Context, arrayQu
 }
 
 // ArrayStringCsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-func (client *queriesOperations) ArrayStringCsvValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringCsvValidResponse, error) {
-	req, err := client.ArrayStringCsvValidCreateRequest(*client.u, arrayQuery)
+func (client *queriesOperations) ArrayStringCsvValid(ctx context.Context, options *QueriesArrayStringCsvValidOptions) (*QueriesArrayStringCsvValidResponse, error) {
+	req, err := client.ArrayStringCsvValidCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -140,8 +139,8 @@ func (client *queriesOperations) ArrayStringCsvValid(ctx context.Context, arrayQ
 }
 
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
-func (client *queriesOperations) ArrayStringPipesValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringPipesValidResponse, error) {
-	req, err := client.ArrayStringPipesValidCreateRequest(*client.u, arrayQuery)
+func (client *queriesOperations) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*QueriesArrayStringPipesValidResponse, error) {
+	req, err := client.ArrayStringPipesValidCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -157,8 +156,8 @@ func (client *queriesOperations) ArrayStringPipesValid(ctx context.Context, arra
 }
 
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
-func (client *queriesOperations) ArrayStringSsvValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringSsvValidResponse, error) {
-	req, err := client.ArrayStringSsvValidCreateRequest(*client.u, arrayQuery)
+func (client *queriesOperations) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*QueriesArrayStringSsvValidResponse, error) {
+	req, err := client.ArrayStringSsvValidCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -174,8 +173,8 @@ func (client *queriesOperations) ArrayStringSsvValid(ctx context.Context, arrayQ
 }
 
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
-func (client *queriesOperations) ArrayStringTsvValid(ctx context.Context, arrayQuery []string) (*QueriesArrayStringTsvValidResponse, error) {
-	req, err := client.ArrayStringTsvValidCreateRequest(*client.u, arrayQuery)
+func (client *queriesOperations) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*QueriesArrayStringTsvValidResponse, error) {
+	req, err := client.ArrayStringTsvValidCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -208,8 +207,8 @@ func (client *queriesOperations) ByteEmpty(ctx context.Context) (*QueriesByteEmp
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-func (client *queriesOperations) ByteMultiByte(ctx context.Context, byteQuery []byte) (*QueriesByteMultiByteResponse, error) {
-	req, err := client.ByteMultiByteCreateRequest(*client.u, byteQuery)
+func (client *queriesOperations) ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (*QueriesByteMultiByteResponse, error) {
+	req, err := client.ByteMultiByteCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -225,8 +224,8 @@ func (client *queriesOperations) ByteMultiByte(ctx context.Context, byteQuery []
 }
 
 // ByteNull - Get null as byte array (no query parameters in uri)
-func (client *queriesOperations) ByteNull(ctx context.Context, byteQuery []byte) (*QueriesByteNullResponse, error) {
-	req, err := client.ByteNullCreateRequest(*client.u, byteQuery)
+func (client *queriesOperations) ByteNull(ctx context.Context, options *QueriesByteNullOptions) (*QueriesByteNullResponse, error) {
+	req, err := client.ByteNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -242,8 +241,8 @@ func (client *queriesOperations) ByteNull(ctx context.Context, byteQuery []byte)
 }
 
 // DateNull - Get null as date - this should result in no query parameters in uri
-func (client *queriesOperations) DateNull(ctx context.Context, dateQuery time.Time) (*QueriesDateNullResponse, error) {
-	req, err := client.DateNullCreateRequest(*client.u, dateQuery)
+func (client *queriesOperations) DateNull(ctx context.Context, options *QueriesDateNullOptions) (*QueriesDateNullResponse, error) {
+	req, err := client.DateNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -259,8 +258,8 @@ func (client *queriesOperations) DateNull(ctx context.Context, dateQuery time.Ti
 }
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
-func (client *queriesOperations) DateTimeNull(ctx context.Context, dateTimeQuery time.Time) (*QueriesDateTimeNullResponse, error) {
-	req, err := client.DateTimeNullCreateRequest(*client.u, dateTimeQuery)
+func (client *queriesOperations) DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (*QueriesDateTimeNullResponse, error) {
+	req, err := client.DateTimeNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -344,8 +343,8 @@ func (client *queriesOperations) DoubleDecimalPositive(ctx context.Context) (*Qu
 }
 
 // DoubleNull - Get null numeric value (no query parameter)
-func (client *queriesOperations) DoubleNull(ctx context.Context, doubleQuery float64) (*QueriesDoubleNullResponse, error) {
-	req, err := client.DoubleNullCreateRequest(*client.u, doubleQuery)
+func (client *queriesOperations) DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (*QueriesDoubleNullResponse, error) {
+	req, err := client.DoubleNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -361,8 +360,8 @@ func (client *queriesOperations) DoubleNull(ctx context.Context, doubleQuery flo
 }
 
 // EnumNull - Get null (no query parameter in url)
-func (client *queriesOperations) EnumNull(ctx context.Context, enumQuery UriColor) (*QueriesEnumNullResponse, error) {
-	req, err := client.EnumNullCreateRequest(*client.u, enumQuery)
+func (client *queriesOperations) EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (*QueriesEnumNullResponse, error) {
+	req, err := client.EnumNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -378,8 +377,8 @@ func (client *queriesOperations) EnumNull(ctx context.Context, enumQuery UriColo
 }
 
 // EnumValid - Get using uri with query parameter 'green color'
-func (client *queriesOperations) EnumValid(ctx context.Context, enumQuery UriColor) (*QueriesEnumValidResponse, error) {
-	req, err := client.EnumValidCreateRequest(*client.u, enumQuery)
+func (client *queriesOperations) EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (*QueriesEnumValidResponse, error) {
+	req, err := client.EnumValidCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -395,8 +394,8 @@ func (client *queriesOperations) EnumValid(ctx context.Context, enumQuery UriCol
 }
 
 // FloatNull - Get null numeric value (no query parameter)
-func (client *queriesOperations) FloatNull(ctx context.Context, floatQuery float32) (*QueriesFloatNullResponse, error) {
-	req, err := client.FloatNullCreateRequest(*client.u, floatQuery)
+func (client *queriesOperations) FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (*QueriesFloatNullResponse, error) {
+	req, err := client.FloatNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -463,8 +462,8 @@ func (client *queriesOperations) GetBooleanFalse(ctx context.Context) (*QueriesG
 }
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
-func (client *queriesOperations) GetBooleanNull(ctx context.Context, boolQuery bool) (*QueriesGetBooleanNullResponse, error) {
-	req, err := client.GetBooleanNullCreateRequest(*client.u, boolQuery)
+func (client *queriesOperations) GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (*QueriesGetBooleanNullResponse, error) {
+	req, err := client.GetBooleanNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -514,8 +513,8 @@ func (client *queriesOperations) GetIntNegativeOneMillion(ctx context.Context) (
 }
 
 // GetIntNull - Get null integer value (no query parameter)
-func (client *queriesOperations) GetIntNull(ctx context.Context, intQuery int32) (*QueriesGetIntNullResponse, error) {
-	req, err := client.GetIntNullCreateRequest(*client.u, intQuery)
+func (client *queriesOperations) GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (*QueriesGetIntNullResponse, error) {
+	req, err := client.GetIntNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -548,8 +547,8 @@ func (client *queriesOperations) GetIntOneMillion(ctx context.Context) (*Queries
 }
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
-func (client *queriesOperations) GetLongNull(ctx context.Context, longQuery int64) (*QueriesGetLongNullResponse, error) {
-	req, err := client.GetLongNullCreateRequest(*client.u, longQuery)
+func (client *queriesOperations) GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (*QueriesGetLongNullResponse, error) {
+	req, err := client.GetLongNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -616,8 +615,8 @@ func (client *queriesOperations) StringEmpty(ctx context.Context) (*QueriesStrin
 }
 
 // StringNull - Get null (no query parameter in url)
-func (client *queriesOperations) StringNull(ctx context.Context, stringQuery string) (*QueriesStringNullResponse, error) {
-	req, err := client.StringNullCreateRequest(*client.u, stringQuery)
+func (client *queriesOperations) StringNull(ctx context.Context, options *QueriesStringNullOptions) (*QueriesStringNullResponse, error) {
+	req, err := client.StringNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}

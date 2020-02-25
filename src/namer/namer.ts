@@ -5,7 +5,7 @@
 
 import { serialize, pascalCase, camelCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { codeModelSchema, CodeModel, Language} from '@azure-tools/codemodel';
+import { codeModelSchema, CodeModel, Language, Parameter} from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { LanguageHeader } from '../generator/common/helpers';
@@ -90,9 +90,23 @@ async function process(session: Session<CodeModel>) {
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
+      // track any optional parameters
+      const optionalParams = new Array<Parameter>();
       for (const param of values(op.request.parameters)) {
         const paramDetails = <Language>param.language.go;
         paramDetails.name = getEscapedReservedName(camelCase(paramDetails.name), 'Parameter');
+        if (param.required !== true) {
+          optionalParams.push(param);
+        }
+      }
+      if (optionalParams.length > 0) {
+        // create a type named <OperationGroup><Operation>Options
+        const name = `${group.language.go!.name}${op.language.go!.name}Options`;
+        op.request.language.go!.optionalParam = {
+          name: name,
+          description: `${name} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`,
+          params: optionalParams
+        };
       }
       details.protocolNaming = new protocolMethods(details.name);
       // fix up response type name and description
