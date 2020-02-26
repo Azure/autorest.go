@@ -93,9 +93,9 @@ export interface HeaderFormat extends Schema {
 }
 
 function formatParamValue(param: Parameter, imports: ImportManager): string {
-  const dateFormat = "2006-01-02";
-  const datetimeFormat = "time.RFC3339";
-  const datetimeRFC1123Format = "time.RFC1123";
+  const dateFormat = '2006-01-02';
+  const datetimeFormat = 'time.RFC3339';
+  const datetimeRFC1123Format = 'time.RFC1123';
 
   let separator = ',';
   switch (param.protocol.http?.style) {
@@ -153,7 +153,7 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       if (paramName[0] == '*') {
         paramName = paramName.substr(1);
       }
-      if (<string>(<HeaderFormat>param.schema).format === 'date-time-rfc1123') {
+      if ((<HeaderFormat>param.schema).format === 'date-time-rfc1123') {
         return `${paramName}.Format(${datetimeRFC1123Format})`;
       }
       return `${paramName}.Format(${datetimeFormat})`;
@@ -187,9 +187,9 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 
 // use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager, respObj: string): HeaderResponse {
-  const dateFormat = "2006-01-02";
-  const datetimeFormat = "time.RFC3339";
-  const datetimeRFC1123Format = "time.RFC1123";
+  const dateFormat = '2006-01-02';
+  const datetimeFormat = 'time.RFC3339';
+  const datetimeRFC1123Format = 'time.RFC1123';
   if (respObj[respObj.length - 1] == '}') {
     respObj = respObj.substring(0, respObj.length - 1);
   }
@@ -232,7 +232,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       return headerText;
     case SchemaType.DateTime:
       imports.add('time');
-      if (<string>(<HeaderFormat>header.schema).format === 'date-time-rfc1123') {
+      if ((<HeaderFormat>header.schema).format === 'date-time-rfc1123') {
         text = `\tval, err := time.Parse(${datetimeRFC1123Format}, resp.Header.Get("${header.header}"))\n`;
       } else {
         text = `\tval, err := time.Parse(${datetimeFormat}, resp.Header.Get("${header.header}"))\n`;
