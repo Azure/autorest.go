@@ -10,6 +10,10 @@ import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
+const dateFormat = '2006-01-02';
+const datetimeFormat = 'time.RFC3339';
+const datetimeRFC1123Format = 'time.RFC1123';
+
 // represents the generated content for an operation group
 export class OperationGroupContent {
   readonly name: string;
@@ -93,10 +97,6 @@ export interface HeaderFormat extends Schema {
 }
 
 function formatParamValue(param: Parameter, imports: ImportManager): string {
-  const dateFormat = '2006-01-02';
-  const datetimeFormat = 'time.RFC3339';
-  const datetimeRFC1123Format = 'time.RFC1123';
-
   let separator = ',';
   switch (param.protocol.http?.style) {
     case SerializationStyle.PipeDelimited:
@@ -187,9 +187,6 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 
 // use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager, respObj: string): HeaderResponse {
-  const dateFormat = '2006-01-02';
-  const datetimeFormat = 'time.RFC3339';
-  const datetimeRFC1123Format = 'time.RFC1123';
   if (respObj[respObj.length - 1] == '}') {
     respObj = respObj.substring(0, respObj.length - 1);
   }
