@@ -95,6 +95,9 @@ export function SortAscending(a: string, b: string): number {
 
 // returns true if the language contains a description
 export function HasDescription(lang: Language): boolean {
+  if (!lang.description) {
+    return false;
+  }
   return (lang.description.length > 0 && !lang.description.startsWith('MISSING'));
 }
 

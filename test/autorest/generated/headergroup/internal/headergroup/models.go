@@ -69,6 +69,12 @@ type HeaderParamDateResponse struct {
 
 }
 
+// HeaderParamDatetimeRFC1123Options contains the optional parameters for the Header.ParamDatetimeRFC1123 method.
+type HeaderParamDatetimeRFC1123Options struct {
+	// Send a post request with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
+	Value *time.Time
+}
+
 // HeaderParamDatetimeRFC1123Response contains the response from method Header.ParamDatetimeRFC1123.
 type HeaderParamDatetimeRFC1123Response struct {
 	// RawResponse contains the underlying HTTP response.
@@ -95,6 +101,12 @@ type HeaderParamDurationResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
+}
+
+// HeaderParamEnumOptions contains the optional parameters for the Header.ParamEnum method.
+type HeaderParamEnumOptions struct {
+	// Send a post request with header values 'GREY'
+	Value *GreyscaleColors
 }
 
 // HeaderParamEnumResponse contains the response from method Header.ParamEnum.
@@ -137,6 +149,12 @@ type HeaderParamProtectedKeyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
+}
+
+// HeaderParamStringOptions contains the optional parameters for the Header.ParamString method.
+type HeaderParamStringOptions struct {
+	// Send a post request with header values "The quick brown fox jumps over the lazy dog" or null or ""
+	Value *string
 }
 
 // HeaderParamStringResponse contains the response from method Header.ParamString.

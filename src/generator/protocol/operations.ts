@@ -5,10 +5,14 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
+
+const dateFormat = '2006-01-02';
+const datetimeFormat = 'time.RFC3339';
+const datetimeRFC1123Format = 'time.RFC1123';
 
 // represents the generated content for an operation group
 export class OperationGroupContent {
@@ -88,6 +92,10 @@ export interface HeaderResponse {
   respObj: string;
 }
 
+export interface HeaderFormat extends Schema {
+  format: string;
+}
+
 function formatParamValue(param: Parameter, imports: ImportManager): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
@@ -140,7 +148,15 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       // cannot use formatConstantValue() since all values are treated as strings
       return `"${constSchema.value.value}"`;
     case SchemaType.Date:
+      return `${paramName}.Format("${dateFormat}")`;
     case SchemaType.DateTime:
+      if (paramName[0] == '*') {
+        paramName = paramName.substr(1);
+      }
+      if ((<HeaderFormat>param.schema).format === 'date-time-rfc1123') {
+        return `${paramName}.Format(${datetimeRFC1123Format})`;
+      }
+      return `${paramName}.Format(${datetimeFormat})`;
     case SchemaType.Duration:
     case SchemaType.UnixTime:
       if (param.required !== true && paramName[0] === '*') {
@@ -171,8 +187,8 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 
 // use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager, respObj: string): HeaderResponse {
-  if (respObj[respObj.length-1] == '}') {
-    respObj = respObj.substring(0, respObj.length-1);
+  if (respObj[respObj.length - 1] == '}') {
+    respObj = respObj.substring(0, respObj.length - 1);
   }
   let headerText = <HeaderResponse>{};
   let text = ``;
@@ -203,9 +219,21 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Date:
+      imports.add('time');
+      text = `\tval, err := time.Parse("${dateFormat}", resp.Header.Get("${header.header}"))\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+      headerText.body = text;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
     case SchemaType.DateTime:
       imports.add('time');
-      text = `\tval, err := time.Parse(time.RFC3339, resp.Header.Get("${header.header}"))\n`;
+      if ((<HeaderFormat>header.schema).format === 'date-time-rfc1123') {
+        text = `\tval, err := time.Parse(${datetimeRFC1123Format}, resp.Header.Get("${header.header}"))\n`;
+      } else {
+        text = `\tval, err := time.Parse(${datetimeFormat}, resp.Header.Get("${header.header}"))\n`;
+      }
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
@@ -250,7 +278,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     default:
-      if (respObj[respObj.length-1] == '}') {
+      if (respObj[respObj.length - 1] == '}') {
         headerText.respObj = respObj + "}";
       }
       return headerText;

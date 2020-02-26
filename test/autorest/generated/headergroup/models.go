@@ -21,6 +21,9 @@ type HeaderParamByteResponse = azinternal.HeaderParamByteResponse
 // HeaderParamDateResponse contains the response from method Header.ParamDate.
 type HeaderParamDateResponse = azinternal.HeaderParamDateResponse
 
+// HeaderParamDatetimeRFC1123Options contains the optional parameters for the Header.ParamDatetimeRFC1123 method.
+type HeaderParamDatetimeRFC1123Options = azinternal.HeaderParamDatetimeRFC1123Options
+
 // HeaderParamDatetimeRFC1123Response contains the response from method Header.ParamDatetimeRFC1123.
 type HeaderParamDatetimeRFC1123Response = azinternal.HeaderParamDatetimeRFC1123Response
 
@@ -32,6 +35,9 @@ type HeaderParamDoubleResponse = azinternal.HeaderParamDoubleResponse
 
 // HeaderParamDurationResponse contains the response from method Header.ParamDuration.
 type HeaderParamDurationResponse = azinternal.HeaderParamDurationResponse
+
+// HeaderParamEnumOptions contains the optional parameters for the Header.ParamEnum method.
+type HeaderParamEnumOptions = azinternal.HeaderParamEnumOptions
 
 // HeaderParamEnumResponse contains the response from method Header.ParamEnum.
 type HeaderParamEnumResponse = azinternal.HeaderParamEnumResponse
@@ -50,6 +56,9 @@ type HeaderParamLongResponse = azinternal.HeaderParamLongResponse
 
 // HeaderParamProtectedKeyResponse contains the response from method Header.ParamProtectedKey.
 type HeaderParamProtectedKeyResponse = azinternal.HeaderParamProtectedKeyResponse
+
+// HeaderParamStringOptions contains the optional parameters for the Header.ParamString method.
+type HeaderParamStringOptions = azinternal.HeaderParamStringOptions
 
 // HeaderParamStringResponse contains the response from method Header.ParamString.
 type HeaderParamStringResponse = azinternal.HeaderParamStringResponse
