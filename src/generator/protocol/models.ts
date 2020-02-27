@@ -80,8 +80,15 @@ class StructDef {
       text += `${comment(this.Language.description, '// ')}\n`;
     }
     text += `type ${this.Language.name} struct {\n`;
+    // used to track when to add an extra \n between fields that have comments
+    let first = true;
     for (const prop of values(this.Properties)) {
       if (HasDescription(prop.language.go!)) {
+        if (!first) {
+          // add an extra new-line between fields IFF the field
+          // has a comment and it's not the very first one.
+          text += '\n';
+        }
         text += `\t${comment(prop.language.go!.description, '// ')}\n`;
       }
       let typeName = prop.schema.language.go!.name;
@@ -94,7 +101,8 @@ class StructDef {
         // tags aren't required for response types
         tag = '';
       }
-      text += `\t${prop.language.go!.name} *${typeName}${tag}\n\n`;
+      text += `\t${prop.language.go!.name} *${typeName}${tag}\n`;
+      first = false;
     }
     for (const param of values(this.Parameters)) {
       // if Parameters is set this is an optional args struct
