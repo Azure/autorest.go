@@ -33,7 +33,6 @@ func DefaultClientOptions() ClientOptions {
 type Client struct {
 	u *url.URL
 	p azcore.Pipeline
-	headerOperations HeaderOperations
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -64,13 +63,11 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := &Client{u: u, p: p}
-	c.headerOperations = &headerOperations{Client: c}
-	return c, nil
+	return &Client{u: u, p: p}, nil
 }
 
 // HeaderOperations returns the HeaderOperations associated with this client.
 func (client *Client) HeaderOperations() HeaderOperations {
-	return client.headerOperations
+	return &headerOperations{Client: client}
 }
 

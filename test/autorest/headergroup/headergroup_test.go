@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func getHeaderClient(t *testing.T) headergroup.HeaderOperations {
@@ -64,44 +65,44 @@ func TestHeaderParamByte(t *testing.T) {
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
-// func TestHeaderParamDate(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	val, err := time.Parse("2006-01-02", "2010-01-01")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse time: %v", err)
-// 	}
-// 	result, err := client.ParamDate(context.Background(), "valid", date.Date{time.Date(2010, time.January, 01, 0, 0, 0, 0, time.UTC)})
-// 	if err != nil {
-// 		t.Fatalf("ParamDate: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// }
+func TestHeaderParamDate(t *testing.T) {
+	client := getHeaderClient(t)
+	val, err := time.Parse("2006-01-02", "2010-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	result, err := client.ParamDate(context.Background(), "valid", val)
+	if err != nil {
+		t.Fatalf("ParamDate: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+}
 
-// func TestHeaderParamDatetime(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	val, err := time.Parse("2006-01-02T15:04:05Z", "2010-01-01T12:34:56Z")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse time: %v", err)
-// 	}
-// 	result, err := client.ParamDatetime(context.Background(), "valid", val)
-// 	if err != nil {
-// 		t.Fatalf("ParamDatetime: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// }
+func TestHeaderParamDatetime(t *testing.T) {
+	client := getHeaderClient(t)
+	val, err := time.Parse("2006-01-02T15:04:05Z", "2010-01-01T12:34:56Z")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	result, err := client.ParamDatetime(context.Background(), "valid", val)
+	if err != nil {
+		t.Fatalf("ParamDatetime: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+}
 
-// func TestHeaderParamDatetimeRFC1123(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	val, err := time.Parse(time.RFC1123, "Wed, 01 Jan 2010 12:34:56 GMT")
-// 	if err != nil {
-// 		t.Fatalf("Unable to parse time: %v", err)
-// 	}
-// 	result, err := client.ParamDatetimeRFC1123(context.Background(), "valid", val)
-// 	if err != nil {
-// 		t.Fatalf("ParamDatetimeRFC1123: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// }
+func TestHeaderParamDatetimeRFC1123(t *testing.T) {
+	client := getHeaderClient(t)
+	val, err := time.Parse(time.RFC1123, "Wed, 01 Jan 2010 12:34:56 GMT")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	result, err := client.ParamDatetimeRFC1123(context.Background(), "valid", &headergroup.HeaderParamDatetimeRFC1123Options{Value: &val})
+	if err != nil {
+		t.Fatalf("ParamDatetimeRFC1123: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+}
 
 func TestHeaderParamDouble(t *testing.T) {
 	client := getHeaderClient(t)
@@ -133,7 +134,8 @@ func TestHeaderParamDouble(t *testing.T) {
 
 func TestHeaderParamEnum(t *testing.T) {
 	client := getHeaderClient(t)
-	result, err := client.ParamEnum(context.Background(), "valid", headergroup.GreyscaleColorsGrey)
+	val := headergroup.GreyscaleColorsGrey
+	result, err := client.ParamEnum(context.Background(), "valid", &headergroup.HeaderParamEnumOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
@@ -212,7 +214,8 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 
 func TestHeaderParamString(t *testing.T) {
 	client := getHeaderClient(t)
-	result, err := client.ParamString(context.Background(), "valid", "The quick brown fox jumps over the lazy dog")
+	val := "The quick brown fox jumps over the lazy dog"
+	result, err := client.ParamString(context.Background(), "valid", &headergroup.HeaderParamStringOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
@@ -223,8 +226,8 @@ func TestHeaderParamString(t *testing.T) {
 	// 	t.Fatalf("ParamString: %v", err)
 	// }
 	// helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-
-	result, err = client.ParamString(context.Background(), "empty", "")
+	val = ""
+	result, err = client.ParamString(context.Background(), "empty", &headergroup.HeaderParamStringOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}

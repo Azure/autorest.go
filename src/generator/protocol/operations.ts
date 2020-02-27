@@ -5,10 +5,14 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
+
+const dateFormat = '2006-01-02';
+const datetimeFormat = 'time.RFC3339';
+const datetimeRFC1123Format = 'time.RFC1123';
 
 // represents the generated content for an operation group
 export class OperationGroupContent {
@@ -88,6 +92,10 @@ export interface HeaderResponse {
   respObj: string;
 }
 
+export interface HeaderFormat extends Schema {
+  format: string;
+}
+
 function formatParamValue(param: Parameter, imports: ImportManager): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
@@ -140,7 +148,15 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       // cannot use formatConstantValue() since all values are treated as strings
       return `"${constSchema.value.value}"`;
     case SchemaType.Date:
+      return `${paramName}.Format("${dateFormat}")`;
     case SchemaType.DateTime:
+      if (paramName[0] == '*') {
+        paramName = paramName.substr(1);
+      }
+      if ((<HeaderFormat>param.schema).format === 'date-time-rfc1123') {
+        return `${paramName}.Format(${datetimeRFC1123Format})`;
+      }
+      return `${paramName}.Format(${datetimeFormat})`;
     case SchemaType.Duration:
     case SchemaType.UnixTime:
       if (param.required !== true && paramName[0] === '*') {
@@ -171,8 +187,8 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 
 // use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManager, respObj: string): HeaderResponse {
-  if (respObj[respObj.length-1] == '}') {
-    respObj = respObj.substring(0, respObj.length-1);
+  if (respObj[respObj.length - 1] == '}') {
+    respObj = respObj.substring(0, respObj.length - 1);
   }
   let headerText = <HeaderResponse>{};
   let text = ``;
@@ -203,9 +219,21 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Date:
+      imports.add('time');
+      text = `\tval, err := time.Parse("${dateFormat}", resp.Header.Get("${header.header}"))\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+      headerText.body = text;
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
+      return headerText;
     case SchemaType.DateTime:
       imports.add('time');
-      text = `\tval, err := time.Parse(time.RFC3339, resp.Header.Get("${header.header}"))\n`;
+      if ((<HeaderFormat>header.schema).format === 'date-time-rfc1123') {
+        text = `\tval, err := time.Parse(${datetimeRFC1123Format}, resp.Header.Get("${header.header}"))\n`;
+      } else {
+        text = `\tval, err := time.Parse(${datetimeFormat}, resp.Header.Get("${header.header}"))\n`;
+      }
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
@@ -250,7 +278,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     default:
-      if (respObj[respObj.length-1] == '}') {
+      if (respObj[respObj.length - 1] == '}') {
         headerText.respObj = respObj + "}";
       }
       return headerText;
@@ -260,7 +288,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
 function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
-  for (const param of values(op.request.parameters)) {
+  for (const param of values(op.requests![0].parameters)) {
     if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
       continue;
     }
@@ -272,20 +300,20 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
-  text += `\turlPath := "${op.request.protocol.http!.path}"\n`;
-  if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+  text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
+  if (values(op.requests![0].parameters).any((each: Parameter) => { return (<Parameter>each).protocol.http!.in === 'path' })) {
     // replace path parameters
     imports.add('strings');
     imports.add('net/url');
-    for (const pp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+    for (const pp of values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.name}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
     }
   }
   text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
-  if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
+  if (values(op.requests![0].parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
     // add query parameters
     text += '\tquery := u.Query()\n';
-    for (const qp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
+    for (const qp of values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
       if (qp.required === true) {
         text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
@@ -301,13 +329,13 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     text += '\tu.RawQuery = query.Encode()\n';
   }
-  const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)`;
-  const headerParamCount = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; }).count();
-  if (getMediaType(op.request.protocol) === 'none' && headerParamCount == 0) {
+  const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, u)`;
+  const headerParamCount = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; }).count();
+  if (getMediaType(op.requests![0].protocol) === 'none' && headerParamCount == 0) {
     // no request body so nothing to marshal
     text += `\treturn ${reqObj}, nil\n`;
   } else {
-    const bodyParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    const bodyParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     text += `\treq := ${reqObj}\n`;
     // default to the body param name
     // have to check if bodyParam is null since we can enter the else if there are headers that need to be added to the request
@@ -317,13 +345,13 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         // if the value is constant, embed it directly
         body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
       }
-      text += `\terr := req.MarshalAs${getMediaType(op.request.protocol)}(${body})\n`;
+      text += `\terr := req.MarshalAs${getMediaType(op.requests![0].protocol)}(${body})\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
     }
     // add specific request headers
-    const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
+    const headerParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
     headerParam.forEach(header => {
       // the default language name is used here for the header key since the header should not be parsed according to any language specific rules and the endpoint will be expecting the value specified by default
       text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;

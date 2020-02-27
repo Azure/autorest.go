@@ -41,7 +41,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     interfaceText += `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
     interfaceText += `type ${group.language.go!.clientName} interface {\n`;
     for (const op of values(group.operations)) {
-      for (const param of values(op.request.parameters)) {
+      for (const param of values(op.requests![0].parameters)) {
         if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
           continue;
         }

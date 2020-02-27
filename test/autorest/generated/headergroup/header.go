@@ -24,13 +24,13 @@ type HeaderOperations interface {
 	// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z" 
 	ParamDatetime(ctx context.Context, scenario string, value time.Time) (*HeaderParamDatetimeResponse, error)
 	// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT" 
-	ParamDatetimeRFC1123(ctx context.Context, scenario string, value time.Time) (*HeaderParamDatetimeRFC1123Response, error)
+	ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*HeaderParamDatetimeRFC1123Response, error)
 	// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0 
 	ParamDouble(ctx context.Context, scenario string, value float64) (*HeaderParamDoubleResponse, error)
 	// ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S" 
 	ParamDuration(ctx context.Context, scenario string, value time.Duration) (*HeaderParamDurationResponse, error)
 	// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null 
-	ParamEnum(ctx context.Context, scenario string, value GreyscaleColors) (*HeaderParamEnumResponse, error)
+	ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*HeaderParamEnumResponse, error)
 	// ParamExistingKey - Send a post request with header value "User-Agent": "overwrite" 
 	ParamExistingKey(ctx context.Context, userAgent string) (*HeaderParamExistingKeyResponse, error)
 	// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0 
@@ -42,7 +42,7 @@ type HeaderOperations interface {
 	// ParamProtectedKey - Send a post request with header value "Content-Type": "text/html" 
 	ParamProtectedKey(ctx context.Context, contentType string) (*HeaderParamProtectedKeyResponse, error)
 	// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": "" 
-	ParamString(ctx context.Context, scenario string, value string) (*HeaderParamStringResponse, error)
+	ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*HeaderParamStringResponse, error)
 	// ResponseBool - Get a response with header value "value": true or false 
 	ResponseBool(ctx context.Context, scenario string) (*HeaderResponseBoolResponse, error)
 	// ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩" 
@@ -164,8 +164,8 @@ func (client *headerOperations) ParamDatetime(ctx context.Context, scenario stri
 }
 
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT" 
-func (client *headerOperations) ParamDatetimeRFC1123(ctx context.Context, scenario string, value time.Time) (*HeaderParamDatetimeRFC1123Response, error) {
-	req, err := client.ParamDatetimeRFC1123CreateRequest(*client.u, scenario, value)
+func (client *headerOperations) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*HeaderParamDatetimeRFC1123Response, error) {
+	req, err := client.ParamDatetimeRFC1123CreateRequest(*client.u, scenario, options)
 	if err != nil {
 		return nil, err
 	}
@@ -215,8 +215,8 @@ func (client *headerOperations) ParamDuration(ctx context.Context, scenario stri
 }
 
 // ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null 
-func (client *headerOperations) ParamEnum(ctx context.Context, scenario string, value GreyscaleColors) (*HeaderParamEnumResponse, error) {
-	req, err := client.ParamEnumCreateRequest(*client.u, scenario, value)
+func (client *headerOperations) ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*HeaderParamEnumResponse, error) {
+	req, err := client.ParamEnumCreateRequest(*client.u, scenario, options)
 	if err != nil {
 		return nil, err
 	}
@@ -317,8 +317,8 @@ func (client *headerOperations) ParamProtectedKey(ctx context.Context, contentTy
 }
 
 // ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": "" 
-func (client *headerOperations) ParamString(ctx context.Context, scenario string, value string) (*HeaderParamStringResponse, error) {
-	req, err := client.ParamStringCreateRequest(*client.u, scenario, value)
+func (client *headerOperations) ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*HeaderParamStringResponse, error) {
+	req, err := client.ParamStringCreateRequest(*client.u, scenario, options)
 	if err != nil {
 		return nil, err
 	}

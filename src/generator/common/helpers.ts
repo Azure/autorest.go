@@ -95,6 +95,9 @@ export function SortAscending(a: string, b: string): number {
 
 // returns true if the language contains a description
 export function HasDescription(lang: Language): boolean {
+  if (!lang.description) {
+    return false;
+  }
   return (lang.description.length > 0 && !lang.description.startsWith('MISSING'));
 }
 
@@ -137,7 +140,7 @@ export function formatParamInfoTypeName(param: ParamInfo): string {
 // each entry is tuple of param name/param type
 export function generateParameterInfo(op: Operation): ParamInfo[] {
   const params = new Array<ParamInfo>();
-  for (const param of values(op.request.parameters)) {
+  for (const param of values(op.requests![0].parameters)) {
     if (param.schema.type === SchemaType.Constant) {
       // don't generate a parameter for a constant
       continue;
@@ -155,12 +158,14 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
     const global = param.implementation === ImplementationLocation.Client;
     params.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true));
   }
+
   // move global optional params to the end of the slice
   params.sort(sortParamInfoByRequired);
   // if there's a method-optional params struct add it last
-  if (op.request.language.go!.optionalParam) {
-    params.push(new paramInfo("options", op.request.language.go!.optionalParam.name, false, false));
+  if (op.requests![0].language.go!.optionalParam) {
+    params.push(new paramInfo('options', op.requests![0].language.go!.optionalParam.name, false, false));
   }
+
   return params;
 }
 
