@@ -222,9 +222,6 @@ function isSchemaResponse(resp?: Response): resp is SchemaResponse {
 // returns the format used for marshallling/unmarshalling.
 // if the media type isn't applicable then 'na' is returned.
 function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
-  if (!protocol) {
-    return 'na';
-  }
   switch ((<Protocol>protocol).http.knownMediaType) {
     case KnownMediaType.Json:
       return 'json';
