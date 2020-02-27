@@ -301,7 +301,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
-  if (values(op.requests![0].parameters).any((each: Parameter) => { return (<Parameter>each).protocol.http!.in === 'path' })) {
+  if (values(op.requests![0].parameters).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
     // replace path parameters
     imports.add('strings');
     imports.add('net/url');
