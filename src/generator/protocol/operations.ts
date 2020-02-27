@@ -288,7 +288,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
 function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
-  for (const param of values(op.request.parameters)) {
+  for (const param of values(op.requests![0].parameters)) {
     if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
       continue;
     }
@@ -300,20 +300,20 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
-  text += `\turlPath := "${op.request.protocol.http!.path}"\n`;
-  if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+  text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
+  if (values(op.requests![0].parameters).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
     // replace path parameters
     imports.add('strings');
     imports.add('net/url');
-    for (const pp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+    for (const pp of values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.name}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
     }
   }
   text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
-  if (values(op.request.parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
+  if (values(op.requests![0].parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
     // add query parameters
     text += '\tquery := u.Query()\n';
-    for (const qp of values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
+    for (const qp of values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
       if (qp.required === true) {
         text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
@@ -329,19 +329,19 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     text += '\tu.RawQuery = query.Encode()\n';
   }
-  text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.request.protocol.http!.method)}, u)\n`;
+  text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, u)\n`;
   if (hasBinaryResponse(op.responses!)) {
     // skip auto-body downloading for binary stream responses
     text += '\treq.SkipBodyDownload()\n';
   }
   // add specific request headers
-  const headerParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
+  const headerParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
   headerParam.forEach(header => {
     text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
   });
-  const mediaType = getMediaType(op.request.protocol);
+  const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
-    const bodyParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    const bodyParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     // default to the body param name
     let body = bodyParam!.language.go!.name;
     if (bodyParam!.schema.type === SchemaType.Constant) {

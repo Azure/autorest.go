@@ -5,7 +5,7 @@
 
 import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { ParamInfo, paramInfo } from '../generator/common/helpers';
 
@@ -116,7 +116,7 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      for (const param of values(op.request.parameters)) {
+      for (const param of values(op.requests![0].parameters)) {
         // skip the host param as we use our own url.URL instead
         if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
           continue;
@@ -141,13 +141,14 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
       // recursively add the marshalling format to the body param if applicable
-      const marshallingFormat = getMarshallingFormat(op.request.protocol);
+      const marshallingFormat = getMarshallingFormat(op.requests![0].protocol);
       if (marshallingFormat !== 'na') {
-        const bodyParam = values(op.request.parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+        const bodyParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
         }
       }
+
     }
   }
 }
@@ -221,7 +222,7 @@ function isSchemaResponse(resp?: Response): resp is SchemaResponse {
 // returns the format used for marshallling/unmarshalling.
 // if the media type isn't applicable then 'na' is returned.
 function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
-  switch (protocol.http!.knownMediaType) {
+  switch ((<Protocol>protocol).http.knownMediaType) {
     case KnownMediaType.Json:
       return 'json';
     case KnownMediaType.Xml:

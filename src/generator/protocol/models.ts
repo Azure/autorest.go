@@ -34,8 +34,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
         structs.push(generateStruct(op.responses[0].language.go!, op.responses[0].language.go!.properties));
       }
       // add structs from optional operation params
-      if (op.request.language.go!.optionalParam) {
-        structs.push(generateOptionalParamsStruct(op.request.language.go!.optionalParam, op.request.language.go!.optionalParam.params));
+      if (op.requests![0].language.go!.optionalParam) {
+        structs.push(generateOptionalParamsStruct(op.requests![0].language.go!.optionalParam, op.requests![0].language.go!.optionalParam.params));
       }
     }
   }
