@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 var exec = require('child_process').exec;
 
-swaggerDir = "src/node_modules/@microsoft.azure/autorest.testserver/swagger/";
+swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 
 goMappings = {
     'additionalpropertiesgroup':['additionalProperties.json'],
@@ -41,7 +41,7 @@ for (namespace in goMappings) {
     // loop through each file related to a particular namespace 
     for (swagger in goMappings[namespace]) {
         // for each swagger run the autorest-beta command to generate code based on the swagger for the relevant namespace and output to the /generated directory
-        child = exec("autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=" + swaggerDir + goMappings[namespace][swagger] + " --namespace=" + namespace + " --output-folder=test/autorest/generated/" + namespace + " --version:3.0.6192 --module-path=generatortests/autorest/generated/" + namespace,
+        child = exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + swaggerDir + goMappings[namespace][swagger] + ' --namespace=' + namespace + ' --output-folder=test/autorest/generated/' + namespace + ' --version:3.0.6192 --module-path=generatortests/autorest/generated/' + namespace,
         function (error, stdout, stderr) {
             // print any output or error from the autorest-beta command
             if (stdout !== '') {
@@ -55,7 +55,7 @@ for (namespace in goMappings) {
                 console.log('autorest exec error: ' + error);
             }
             // print any output or error from go fmt
-            fmt = exec("go fmt ./test/autorest/generated/" + namespace,
+            fmt = exec('go fmt ./test/autorest/generated/' + namespace,
             function (error, stdout, stderr) {
                 if (stdout !== '') {
                     console.log('fmt stdout: ' + stdout);
