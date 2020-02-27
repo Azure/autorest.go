@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
@@ -329,35 +329,31 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     text += '\tu.RawQuery = query.Encode()\n';
   }
-  const reqObj = `azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, u)`;
-  const headerParamCount = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; }).count();
-  if (getMediaType(op.requests![0].protocol) === 'none' && headerParamCount == 0) {
-    // no request body so nothing to marshal
-    text += `\treturn ${reqObj}, nil\n`;
-  } else {
-    const bodyParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
-    text += `\treq := ${reqObj}\n`;
-    // default to the body param name
-    // have to check if bodyParam is null since we can enter the else if there are headers that need to be added to the request
-    if (bodyParam != null) {
-      let body = bodyParam!.language.go!.name;
-      if (bodyParam!.schema.type === SchemaType.Constant) {
-        // if the value is constant, embed it directly
-        body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
-      }
-      text += `\terr := req.MarshalAs${getMediaType(op.requests![0].protocol)}(${body})\n`;
-      text += `\tif err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
-      text += `\t}\n`;
-    }
-    // add specific request headers
-    const headerParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
-    headerParam.forEach(header => {
-      // the default language name is used here for the header key since the header should not be parsed according to any language specific rules and the endpoint will be expecting the value specified by default
-      text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
-    });
-    text += `\treturn req, nil\n`;
+  text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, u)\n`;
+  if (hasBinaryResponse(op.responses!)) {
+    // skip auto-body downloading for binary stream responses
+    text += '\treq.SkipBodyDownload()\n';
   }
+  // add specific request headers
+  const headerParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
+  headerParam.forEach(header => {
+    text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
+  });
+  const mediaType = getMediaType(op.requests![0].protocol);
+  if (mediaType === 'JSON' || mediaType === 'XML') {
+    const bodyParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    // default to the body param name
+    let body = bodyParam!.language.go!.name;
+    if (bodyParam!.schema.type === SchemaType.Constant) {
+      // if the value is constant, embed it directly
+      body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
+    }
+    text += `\terr := req.MarshalAs${mediaType}(${body})\n`;
+    text += `\tif err != nil {\n`;
+    text += `\t\treturn nil, err\n`;
+    text += `\t}\n`;
+  }
+  text += `\treturn req, nil\n`;
   text += '}\n\n';
   return text;
 }
@@ -425,4 +421,14 @@ function formatConstantValue(schema: ConstantSchema) {
     return `"${schema.value.value}"`;
   }
   return schema.value.value;
+}
+
+// returns true if any responses are a binary stream
+function hasBinaryResponse(responses: Response[]): boolean {
+  for (const resp of values(responses)) {
+    if (resp.protocol.http!.knownMediaType === KnownMediaType.Binary) {
+      return true;
+    }
+  }
+  return false;
 }
