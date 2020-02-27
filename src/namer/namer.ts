@@ -5,7 +5,7 @@
 
 import { serialize, pascalCase, camelCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { codeModelSchema, CodeModel, Language, Parameter} from '@azure-tools/codemodel';
+import { codeModelSchema, CodeModel, Language, Parameter } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { LanguageHeader } from '../generator/common/helpers';
