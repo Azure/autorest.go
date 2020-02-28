@@ -37,7 +37,7 @@ jobs:
           cd $(Build.SourcesDirectory)
           npm install -g "@microsoft/rush"
           rush update --debug
-          npm install -g "@autorest/autorest"
+          npm install -g autorest
         displayName: 'Prepare Generator Environment'
 
       - script: |
