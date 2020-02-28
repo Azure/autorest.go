@@ -52,11 +52,11 @@ function autorestCallback(namespace, inputFile) {
             console.log('autorest stdout: ' + stdout);
         }
         if (stderr !== '') {
-            console.log('autorest stderr: ' + stderr);
+            console.error('autorest stderr: ' + stderr);
         }
         // print any output resulting from executing the autorest command
         if (error !== null) {
-            console.log('autorest exec error: ' + error);
+            console.error('autorest exec error: ' + error);
         }
         // format the output
         // print any output or error from go fmt
@@ -68,11 +68,11 @@ function autorestCallback(namespace, inputFile) {
                 console.log('fmt stdout: ' + stdout);
             }
             if (stderr !== '') {
-                console.log('fmt stderr: ' + stderr);
+                console.error('fmt stderr: ' + stderr);
             }
             // print any output resulting from a failure to execute go fmt
             if (error !== null) {
-                console.log('fmt exec error: ' + error);
+                console.error('fmt exec error: ' + error);
             }
         });
     };

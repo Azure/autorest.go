@@ -100,7 +100,6 @@ async function process(session: Session<CodeModel>) {
         if (param.required !== true && param.schema.type !== SchemaType.Constant) {
           optionalParams.push(param);
         }
-
       }
       if (optionalParams.length > 0) {
         // create a type named <OperationGroup><Operation>Options
