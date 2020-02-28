@@ -9,6 +9,8 @@ import azinternal "generatortests/autorest/generated/morecustombaseurigroup/inte
 
 type Error = azinternal.Error
 
+// PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
+type PathsGetEmptyOptions = azinternal.PathsGetEmptyOptions
+
 // PathsGetEmptyResponse contains the response from method Paths.GetEmpty.
 type PathsGetEmptyResponse = azinternal.PathsGetEmptyResponse
-

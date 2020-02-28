@@ -5,7 +5,6 @@ package urlgrouptest
 
 import (
 	"context"
-	"encoding/base64"
 	"generatortests/autorest/generated/urlgroup"
 	"generatortests/helpers"
 	"net/http"
@@ -22,7 +21,7 @@ func getQueriesClient(t *testing.T) urlgroup.QueriesOperations {
 
 func TestArrayStringCsvValid(t *testing.T) {
 	client := getQueriesClient(t)
-	result, err := client.ArrayStringCsvValid(context.Background(), &urlgroup.QueriesArrayStringCsvValidOptions{
+	result, err := client.ArrayStringCSVValid(context.Background(), &urlgroup.QueriesArrayStringCSVValidOptions{
 		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -48,9 +47,8 @@ func toByteSlicePtr(v []byte) *[]byte {
 
 func TestByteMultiByte(t *testing.T) {
 	client := getQueriesClient(t)
-	encoded := base64.StdEncoding.EncodeToString([]byte("啊齄丂狛狜隣郎隣兀﨩"))
 	result, err := client.ByteMultiByte(context.Background(), &urlgroup.QueriesByteMultiByteOptions{
-		ByteQuery: toByteSlicePtr([]byte(encoded)),
+		ByteQuery: toByteSlicePtr([]byte("啊齄丂狛狜隣郎隣兀﨩")),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -81,7 +79,7 @@ func TestEnumValid(t *testing.T) {
 	t.Skip("test fails, needs investigation")
 	client := getQueriesClient(t)
 	result, err := client.EnumValid(context.Background(), &urlgroup.QueriesEnumValidOptions{
-		EnumQuery: urlgroup.UriColorGreenColor.ToPtr(),
+		EnumQuery: urlgroup.UriColorGreencolor.ToPtr(),
 	})
 	if err != nil {
 		t.Fatal(err)

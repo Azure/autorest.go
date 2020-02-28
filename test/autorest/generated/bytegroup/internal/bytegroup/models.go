@@ -15,6 +15,7 @@ import (
 type ByteGetEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
 	// The empty byte value ''
 	Value *[]byte
 }
@@ -23,6 +24,7 @@ type ByteGetEmptyResponse struct {
 type ByteGetInvalidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 	Value *[]byte
 }
@@ -31,6 +33,7 @@ type ByteGetInvalidResponse struct {
 type ByteGetNonASCIIResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 	Value *[]byte
 }
@@ -39,6 +42,7 @@ type ByteGetNonASCIIResponse struct {
 type ByteGetNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
 	// The null byte value
 	Value *[]byte
 }

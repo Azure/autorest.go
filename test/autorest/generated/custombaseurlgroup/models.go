@@ -11,4 +11,3 @@ type Error = azinternal.Error
 
 // PathsGetEmptyResponse contains the response from method Paths.GetEmpty.
 type PathsGetEmptyResponse = azinternal.PathsGetEmptyResponse
-

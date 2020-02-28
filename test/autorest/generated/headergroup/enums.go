@@ -12,10 +12,9 @@ type GreyscaleColors = azinternal.GreyscaleColors
 const (
 	GreyscaleColorsWhite = azinternal.GreyscaleColorsWhite
 	GreyscaleColorsBlack = azinternal.GreyscaleColorsBlack
-	GreyscaleColorsGrey = azinternal.GreyscaleColorsGrey
+	GreyscaleColorsGrey  = azinternal.GreyscaleColorsGrey
 )
 
 func PossibleGreyscaleColorsValues() []GreyscaleColors {
 	return azinternal.PossibleGreyscaleColorsValues()
 }
-

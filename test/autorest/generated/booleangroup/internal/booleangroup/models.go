@@ -15,6 +15,7 @@ import (
 type BoolGetFalseResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
 	// simple boolean
 	Value *bool
 }
@@ -37,6 +38,7 @@ type BoolGetNullResponse struct {
 type BoolGetTrueResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+
 	// simple boolean
 	Value *bool
 }

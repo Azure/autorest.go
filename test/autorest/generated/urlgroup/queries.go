@@ -12,12 +12,12 @@ import (
 
 // QueriesOperations contains the methods for the Queries group.
 type QueriesOperations interface {
-	// ArrayStringCsvEmpty - Get an empty array [] of string using the csv-array format
-	ArrayStringCsvEmpty(ctx context.Context, options *QueriesArrayStringCsvEmptyOptions) (*QueriesArrayStringCsvEmptyResponse, error)
-	// ArrayStringCsvNull - Get a null array of string using the csv-array format
-	ArrayStringCsvNull(ctx context.Context, options *QueriesArrayStringCsvNullOptions) (*QueriesArrayStringCsvNullResponse, error)
-	// ArrayStringCsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-	ArrayStringCsvValid(ctx context.Context, options *QueriesArrayStringCsvValidOptions) (*QueriesArrayStringCsvValidResponse, error)
+	// ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
+	ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*QueriesArrayStringCSVEmptyResponse, error)
+	// ArrayStringCSVNull - Get a null array of string using the csv-array format
+	ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*QueriesArrayStringCSVNullResponse, error)
+	// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*QueriesArrayStringCSVValidResponse, error)
 	// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
 	ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*QueriesArrayStringPipesValidResponse, error)
 	// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
@@ -87,9 +87,9 @@ type queriesOperations struct {
 	azinternal.QueriesOperations
 }
 
-// ArrayStringCsvEmpty - Get an empty array [] of string using the csv-array format
-func (client *queriesOperations) ArrayStringCsvEmpty(ctx context.Context, options *QueriesArrayStringCsvEmptyOptions) (*QueriesArrayStringCsvEmptyResponse, error) {
-	req, err := client.ArrayStringCsvEmptyCreateRequest(*client.u, options)
+// ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
+func (client *queriesOperations) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*QueriesArrayStringCSVEmptyResponse, error) {
+	req, err := client.ArrayStringCSVEmptyCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -97,16 +97,16 @@ func (client *queriesOperations) ArrayStringCsvEmpty(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringCsvEmptyHandleResponse(resp)
+	result, err := client.ArrayStringCSVEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// ArrayStringCsvNull - Get a null array of string using the csv-array format
-func (client *queriesOperations) ArrayStringCsvNull(ctx context.Context, options *QueriesArrayStringCsvNullOptions) (*QueriesArrayStringCsvNullResponse, error) {
-	req, err := client.ArrayStringCsvNullCreateRequest(*client.u, options)
+// ArrayStringCSVNull - Get a null array of string using the csv-array format
+func (client *queriesOperations) ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*QueriesArrayStringCSVNullResponse, error) {
+	req, err := client.ArrayStringCSVNullCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -114,16 +114,16 @@ func (client *queriesOperations) ArrayStringCsvNull(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringCsvNullHandleResponse(resp)
+	result, err := client.ArrayStringCSVNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// ArrayStringCsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-func (client *queriesOperations) ArrayStringCsvValid(ctx context.Context, options *QueriesArrayStringCsvValidOptions) (*QueriesArrayStringCsvValidResponse, error) {
-	req, err := client.ArrayStringCsvValidCreateRequest(*client.u, options)
+// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+func (client *queriesOperations) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*QueriesArrayStringCSVValidResponse, error) {
+	req, err := client.ArrayStringCSVValidCreateRequest(*client.u, options)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func (client *queriesOperations) ArrayStringCsvValid(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayStringCsvValidHandleResponse(resp)
+	result, err := client.ArrayStringCSVValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}

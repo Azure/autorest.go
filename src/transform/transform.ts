@@ -7,7 +7,7 @@ import { KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
-import { ParamInfo, paramInfo } from '../generator/common/helpers';
+import { aggregateParameters, ParamInfo, paramInfo } from '../generator/common/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -38,6 +38,13 @@ async function process(session: Session<CodeModel>) {
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(prop.schema)}`;
     }
+  }
+  // fix up enum types
+  for (const choice of values(session.model.schemas.choices)) {
+    choice.choiceType.language.go!.name = 'string';
+  }
+  for (const choice of values(session.model.schemas.sealedChoices)) {
+    choice.choiceType.language.go!.name = 'string';
   }
 }
 
@@ -116,7 +123,7 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      for (const param of values(op.requests![0].parameters)) {
+      for (const param of values(aggregateParameters(op))) {
         // skip the host param as we use our own url.URL instead
         if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
           continue;
@@ -143,7 +150,7 @@ function processOperationRequests(session: Session<CodeModel>) {
       // recursively add the marshalling format to the body param if applicable
       const marshallingFormat = getMarshallingFormat(op.requests![0].protocol);
       if (marshallingFormat !== 'na') {
-        const bodyParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+        const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
         }

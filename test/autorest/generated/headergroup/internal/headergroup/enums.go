@@ -10,7 +10,7 @@ type GreyscaleColors string
 const (
 	GreyscaleColorsWhite GreyscaleColors = "White"
 	GreyscaleColorsBlack GreyscaleColors = "black"
-	GreyscaleColorsGrey GreyscaleColors = "GREY"
+	GreyscaleColorsGrey  GreyscaleColors = "GREY"
 )
 
 func PossibleGreyscaleColorsValues() []GreyscaleColors {
@@ -20,4 +20,3 @@ func PossibleGreyscaleColorsValues() []GreyscaleColors {
 func (c GreyscaleColors) ToPtr() *GreyscaleColors {
 	return &c
 }
-

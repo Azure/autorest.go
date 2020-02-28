@@ -6,8 +6,8 @@ package custombaseurlgrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/custombaseurlgroup"
+	"generatortests/helpers"
 	"net/http"
-	"reflect"
 	"testing"
 )
 
@@ -19,20 +19,11 @@ func getCustomBaseURLClient(t *testing.T) custombaseurlgroup.PathsOperations {
 	return client.PathsOperations()
 }
 
-func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
-	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("got %+v, want %+v", result, expected)
-	}
-}
-
 func TestGetEmpty(t *testing.T) {
 	client := getCustomBaseURLClient(t)
 	result, err := client.GetEmpty(context.Background(), "")
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	expected := &custombaseurlgroup.PathsGetEmptyResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }

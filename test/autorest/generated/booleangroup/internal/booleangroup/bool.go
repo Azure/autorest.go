@@ -16,8 +16,10 @@ type BoolOperations struct{}
 
 // GetFalseCreateRequest creates the GetFalse request.
 func (BoolOperations) GetFalseCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/bool/false")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/bool/false"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetFalseHandleResponse handles the GetFalse response.
@@ -31,8 +33,10 @@ func (BoolOperations) GetFalseHandleResponse(resp *azcore.Response) (*BoolGetFal
 
 // GetInvalidCreateRequest creates the GetInvalid request.
 func (BoolOperations) GetInvalidCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/bool/invalid")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/bool/invalid"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetInvalidHandleResponse handles the GetInvalid response.
@@ -46,8 +50,10 @@ func (BoolOperations) GetInvalidHandleResponse(resp *azcore.Response) (*BoolGetI
 
 // GetNullCreateRequest creates the GetNull request.
 func (BoolOperations) GetNullCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/bool/null")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/bool/null"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNullHandleResponse handles the GetNull response.
@@ -61,8 +67,10 @@ func (BoolOperations) GetNullHandleResponse(resp *azcore.Response) (*BoolGetNull
 
 // GetTrueCreateRequest creates the GetTrue request.
 func (BoolOperations) GetTrueCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/bool/true")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/bool/true"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetTrueHandleResponse handles the GetTrue response.
@@ -76,7 +84,8 @@ func (BoolOperations) GetTrueHandleResponse(resp *azcore.Response) (*BoolGetTrue
 
 // PutFalseCreateRequest creates the PutFalse request.
 func (BoolOperations) PutFalseCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/bool/false")
+	urlPath := "/bool/false"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(false)
 	if err != nil {
@@ -95,7 +104,8 @@ func (BoolOperations) PutFalseHandleResponse(resp *azcore.Response) (*BoolPutFal
 
 // PutTrueCreateRequest creates the PutTrue request.
 func (BoolOperations) PutTrueCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/bool/true")
+	urlPath := "/bool/true"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(true)
 	if err != nil {

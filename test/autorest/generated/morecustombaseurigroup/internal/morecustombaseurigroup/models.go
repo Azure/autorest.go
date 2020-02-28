@@ -8,11 +8,12 @@ package morecustombaseurigroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -37,9 +38,14 @@ func (e Error) Error() string {
 	return msg
 }
 
-// PathsGetEmptyResponse contains the response from method Paths.GetEmpty.
-type PathsGetEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+// PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
+type PathsGetEmptyOptions struct {
+	// The key version. Default value 'v1'.
+	KeyVersion *string
 }
 
+// PathsGetEmptyResponse contains the response from method Paths.GetEmpty.
+type PathsGetEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}

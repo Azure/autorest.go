@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema } from '@azure-tools/codemodel';
+import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Parameter, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 export interface LanguageHeader extends Language {
@@ -136,11 +136,26 @@ export function formatParamInfoTypeName(param: ParamInfo): string {
   return `*${param.type}`;
 }
 
+// aggregates the Parameter in op.parameters and the first request
+export function aggregateParameters(op: Operation): Array<Parameter> {
+  if (op.requests!.length > 1) {
+    throw console.error('multiple requests NYI');
+  }
+  let params = new Array<Parameter>();
+  if (op.parameters) {
+    params = params.concat(op.parameters);
+  }
+  if (op.requests![0].parameters) {
+    params = params.concat(op.requests![0].parameters);
+  }
+  return params;
+}
+
 // creates ParamInfo for the specified operation.
 // each entry is tuple of param name/param type
 export function generateParameterInfo(op: Operation): ParamInfo[] {
   const params = new Array<ParamInfo>();
-  for (const param of values(op.requests![0].parameters)) {
+  for (const param of values(aggregateParameters(op))) {
     if (param.schema.type === SchemaType.Constant) {
       // don't generate a parameter for a constant
       continue;
@@ -158,7 +173,6 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
     const global = param.implementation === ImplementationLocation.Client;
     params.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true));
   }
-
   // move global optional params to the end of the slice
   params.sort(sortParamInfoByRequired);
   // if there's a method-optional params struct add it last

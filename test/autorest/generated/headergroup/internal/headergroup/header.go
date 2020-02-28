@@ -21,7 +21,8 @@ type HeaderOperations struct{}
 func (HeaderOperations) CustomRequestIDCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodPost, u), nil
+	req := azcore.NewRequest(http.MethodPost, u)
+	return req, nil
 }
 
 // CustomRequestIDHandleResponse handles the CustomRequestID response.
@@ -448,7 +449,8 @@ func (HeaderOperations) ResponseEnumHandleResponse(resp *azcore.Response) (*Head
 func (HeaderOperations) ResponseExistingKeyCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/header/response/existingkey"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodPost, u), nil
+	req := azcore.NewRequest(http.MethodPost, u)
+	return req, nil
 }
 
 // ResponseExistingKeyHandleResponse handles the ResponseExistingKey response.
@@ -529,7 +531,8 @@ func (HeaderOperations) ResponseLongHandleResponse(resp *azcore.Response) (*Head
 func (HeaderOperations) ResponseProtectedKeyCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/header/response/protectedkey"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodPost, u), nil
+	req := azcore.NewRequest(http.MethodPost, u)
+	return req, nil
 }
 
 // ResponseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
@@ -558,4 +561,3 @@ func (HeaderOperations) ResponseStringHandleResponse(resp *azcore.Response) (*He
 	val := resp.Header.Get("value")
 	return &HeaderResponseStringResponse{RawResponse: resp.Response, Value: &val}, nil
 }
-

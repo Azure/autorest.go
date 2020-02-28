@@ -13,8 +13,7 @@ import (
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {

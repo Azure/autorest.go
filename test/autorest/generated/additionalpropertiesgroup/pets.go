@@ -12,17 +12,17 @@ import (
 
 // PetsOperations contains the methods for the Pets group.
 type PetsOperations interface {
-	// CreateApInProperties - Create a Pet which contains more properties than what is defined. 
+	// CreateApInProperties - Create a Pet which contains more properties than what is defined.
 	CreateApInProperties(ctx context.Context, createParameters PetApInProperties) (*PetsCreateApInPropertiesResponse, error)
-	// CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined. 
+	// CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
 	CreateApInPropertiesWithApstring(ctx context.Context, createParameters PetApInPropertiesWithApstring) (*PetsCreateApInPropertiesWithApstringResponse, error)
-	// CreateApObject - Create a Pet which contains more properties than what is defined. 
+	// CreateApObject - Create a Pet which contains more properties than what is defined.
 	CreateApObject(ctx context.Context, createParameters PetApObject) (*PetsCreateApObjectResponse, error)
-	// CreateApString - Create a Pet which contains more properties than what is defined. 
+	// CreateApString - Create a Pet which contains more properties than what is defined.
 	CreateApString(ctx context.Context, createParameters PetApString) (*PetsCreateApStringResponse, error)
-	// CreateApTrue - Create a Pet which contains more properties than what is defined. 
+	// CreateApTrue - Create a Pet which contains more properties than what is defined.
 	CreateApTrue(ctx context.Context, createParameters PetApTrue) (*PetsCreateApTrueResponse, error)
-	// CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined. 
+	// CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
 	CreateCatApTrue(ctx context.Context, createParameters CatApTrue) (*PetsCreateCatApTrueResponse, error)
 }
 
@@ -31,7 +31,7 @@ type petsOperations struct {
 	azinternal.PetsOperations
 }
 
-// CreateApInProperties - Create a Pet which contains more properties than what is defined. 
+// CreateApInProperties - Create a Pet which contains more properties than what is defined.
 func (client *petsOperations) CreateApInProperties(ctx context.Context, createParameters PetApInProperties) (*PetsCreateApInPropertiesResponse, error) {
 	req, err := client.CreateApInPropertiesCreateRequest(*client.u, createParameters)
 	if err != nil {
@@ -48,7 +48,7 @@ func (client *petsOperations) CreateApInProperties(ctx context.Context, createPa
 	return result, nil
 }
 
-// CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined. 
+// CreateApInPropertiesWithApstring - Create a Pet which contains more properties than what is defined.
 func (client *petsOperations) CreateApInPropertiesWithApstring(ctx context.Context, createParameters PetApInPropertiesWithApstring) (*PetsCreateApInPropertiesWithApstringResponse, error) {
 	req, err := client.CreateApInPropertiesWithApstringCreateRequest(*client.u, createParameters)
 	if err != nil {
@@ -65,7 +65,7 @@ func (client *petsOperations) CreateApInPropertiesWithApstring(ctx context.Conte
 	return result, nil
 }
 
-// CreateApObject - Create a Pet which contains more properties than what is defined. 
+// CreateApObject - Create a Pet which contains more properties than what is defined.
 func (client *petsOperations) CreateApObject(ctx context.Context, createParameters PetApObject) (*PetsCreateApObjectResponse, error) {
 	req, err := client.CreateApObjectCreateRequest(*client.u, createParameters)
 	if err != nil {
@@ -82,7 +82,7 @@ func (client *petsOperations) CreateApObject(ctx context.Context, createParamete
 	return result, nil
 }
 
-// CreateApString - Create a Pet which contains more properties than what is defined. 
+// CreateApString - Create a Pet which contains more properties than what is defined.
 func (client *petsOperations) CreateApString(ctx context.Context, createParameters PetApString) (*PetsCreateApStringResponse, error) {
 	req, err := client.CreateApStringCreateRequest(*client.u, createParameters)
 	if err != nil {
@@ -99,7 +99,7 @@ func (client *petsOperations) CreateApString(ctx context.Context, createParamete
 	return result, nil
 }
 
-// CreateApTrue - Create a Pet which contains more properties than what is defined. 
+// CreateApTrue - Create a Pet which contains more properties than what is defined.
 func (client *petsOperations) CreateApTrue(ctx context.Context, createParameters PetApTrue) (*PetsCreateApTrueResponse, error) {
 	req, err := client.CreateApTrueCreateRequest(*client.u, createParameters)
 	if err != nil {
@@ -116,7 +116,7 @@ func (client *petsOperations) CreateApTrue(ctx context.Context, createParameters
 	return result, nil
 }
 
-// CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined. 
+// CreateCatApTrue - Create a CatAPTrue which contains more properties than what is defined.
 func (client *petsOperations) CreateCatApTrue(ctx context.Context, createParameters CatApTrue) (*PetsCreateCatApTrueResponse, error) {
 	req, err := client.CreateCatApTrueCreateRequest(*client.u, createParameters)
 	if err != nil {

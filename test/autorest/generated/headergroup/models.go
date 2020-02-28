@@ -104,4 +104,3 @@ type HeaderResponseProtectedKeyResponse = azinternal.HeaderResponseProtectedKeyR
 
 // HeaderResponseStringResponse contains the response from method Header.ResponseString.
 type HeaderResponseStringResponse = azinternal.HeaderResponseStringResponse
-

@@ -16,8 +16,10 @@ type StringOperations struct{}
 
 // GetBase64EncodedCreateRequest creates the GetBase64Encoded request.
 func (StringOperations) GetBase64EncodedCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/base64Encoding")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/base64Encoding"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBase64EncodedHandleResponse handles the GetBase64Encoded response.
@@ -25,14 +27,16 @@ func (StringOperations) GetBase64EncodedHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetBase64EncodedResponse{StatusCode: resp.StatusCode}
+	result := StringGetBase64EncodedResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetBase64URLEncodedCreateRequest creates the GetBase64URLEncoded request.
 func (StringOperations) GetBase64URLEncodedCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/base64UrlEncoding")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/base64UrlEncoding"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBase64URLEncodedHandleResponse handles the GetBase64URLEncoded response.
@@ -40,14 +44,16 @@ func (StringOperations) GetBase64URLEncodedHandleResponse(resp *azcore.Response)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetBase64URLEncodedResponse{StatusCode: resp.StatusCode}
+	result := StringGetBase64URLEncodedResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (StringOperations) GetEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/empty")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/empty"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
@@ -55,14 +61,16 @@ func (StringOperations) GetEmptyHandleResponse(resp *azcore.Response) (*StringGe
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetEmptyResponse{StatusCode: resp.StatusCode}
+	result := StringGetEmptyResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetMBCSCreateRequest creates the GetMBCS request.
 func (StringOperations) GetMBCSCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/mbcs")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/mbcs"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetMBCSHandleResponse handles the GetMBCS response.
@@ -70,14 +78,16 @@ func (StringOperations) GetMBCSHandleResponse(resp *azcore.Response) (*StringGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetMBCSResponse{StatusCode: resp.StatusCode}
+	result := StringGetMBCSResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNotProvidedCreateRequest creates the GetNotProvided request.
 func (StringOperations) GetNotProvidedCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/notProvided")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/notProvided"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNotProvidedHandleResponse handles the GetNotProvided response.
@@ -85,14 +95,16 @@ func (StringOperations) GetNotProvidedHandleResponse(resp *azcore.Response) (*St
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetNotProvidedResponse{StatusCode: resp.StatusCode}
+	result := StringGetNotProvidedResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNullCreateRequest creates the GetNull request.
 func (StringOperations) GetNullCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/null")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/null"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNullHandleResponse handles the GetNull response.
@@ -100,14 +112,16 @@ func (StringOperations) GetNullHandleResponse(resp *azcore.Response) (*StringGet
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetNullResponse{StatusCode: resp.StatusCode}
+	result := StringGetNullResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNullBase64URLEncodedCreateRequest creates the GetNullBase64URLEncoded request.
 func (StringOperations) GetNullBase64URLEncodedCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/nullBase64UrlEncoding")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/nullBase64UrlEncoding"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNullBase64URLEncodedHandleResponse handles the GetNullBase64URLEncoded response.
@@ -115,14 +129,16 @@ func (StringOperations) GetNullBase64URLEncodedHandleResponse(resp *azcore.Respo
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetNullBase64URLEncodedResponse{StatusCode: resp.StatusCode}
+	result := StringGetNullBase64URLEncodedResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetWhitespaceCreateRequest creates the GetWhitespace request.
 func (StringOperations) GetWhitespaceCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/whitespace")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/string/whitespace"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetWhitespaceHandleResponse handles the GetWhitespace response.
@@ -130,13 +146,14 @@ func (StringOperations) GetWhitespaceHandleResponse(resp *azcore.Response) (*Str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetWhitespaceResponse{StatusCode: resp.StatusCode}
+	result := StringGetWhitespaceResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // PutBase64URLEncodedCreateRequest creates the PutBase64URLEncoded request.
 func (StringOperations) PutBase64URLEncodedCreateRequest(u url.URL, stringBody []byte) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/base64UrlEncoding")
+	urlPath := "/string/base64UrlEncoding"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(stringBody)
 	if err != nil {
@@ -150,12 +167,13 @@ func (StringOperations) PutBase64URLEncodedHandleResponse(resp *azcore.Response)
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutBase64URLEncodedResponse{StatusCode: resp.StatusCode}, nil
+	return &StringPutBase64URLEncodedResponse{RawResponse: resp.Response}, nil
 }
 
 // PutEmptyCreateRequest creates the PutEmpty request.
 func (StringOperations) PutEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/empty")
+	urlPath := "/string/empty"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON("")
 	if err != nil {
@@ -169,12 +187,13 @@ func (StringOperations) PutEmptyHandleResponse(resp *azcore.Response) (*StringPu
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &StringPutEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // PutMBCSCreateRequest creates the PutMBCS request.
 func (StringOperations) PutMBCSCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/mbcs")
+	urlPath := "/string/mbcs"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 	if err != nil {
@@ -188,12 +207,13 @@ func (StringOperations) PutMBCSHandleResponse(resp *azcore.Response) (*StringPut
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutMBCSResponse{StatusCode: resp.StatusCode}, nil
+	return &StringPutMBCSResponse{RawResponse: resp.Response}, nil
 }
 
 // PutNullCreateRequest creates the PutNull request.
 func (StringOperations) PutNullCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/null")
+	urlPath := "/string/null"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(nil)
 	if err != nil {
@@ -207,12 +227,13 @@ func (StringOperations) PutNullHandleResponse(resp *azcore.Response) (*StringPut
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutNullResponse{StatusCode: resp.StatusCode}, nil
+	return &StringPutNullResponse{RawResponse: resp.Response}, nil
 }
 
 // PutWhitespaceCreateRequest creates the PutWhitespace request.
 func (StringOperations) PutWhitespaceCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/string/whitespace")
+	urlPath := "/string/whitespace"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
 	if err != nil {
@@ -226,6 +247,5 @@ func (StringOperations) PutWhitespaceHandleResponse(resp *azcore.Response) (*Str
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutWhitespaceResponse{StatusCode: resp.StatusCode}, nil
+	return &StringPutWhitespaceResponse{RawResponse: resp.Response}, nil
 }
-

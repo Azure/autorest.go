@@ -31,9 +31,8 @@ func DefaultClientOptions() ClientOptions {
 
 // Client - Test Infrastructure for AutoRest
 type Client struct {
-	u                *url.URL
-	p                azcore.Pipeline
-	numberOperations NumberOperations
+	u *url.URL
+	p azcore.Pipeline
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -64,12 +63,10 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := &Client{u: u, p: p}
-	c.numberOperations = &numberOperations{Client: c}
-	return c, nil
+	return &Client{u: u, p: p}, nil
 }
 
 // NumberOperations returns the NumberOperations associated with this client.
 func (client *Client) NumberOperations() NumberOperations {
-	return client.numberOperations
+	return &numberOperations{Client: client}
 }

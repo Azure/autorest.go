@@ -16,8 +16,10 @@ type NumberOperations struct{}
 
 // GetBigDecimalCreateRequest creates the GetBigDecimal request.
 func (NumberOperations) GetBigDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/decimal/2.5976931e+101")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/big/decimal/2.5976931e+101"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBigDecimalHandleResponse handles the GetBigDecimal response.
@@ -31,8 +33,10 @@ func (NumberOperations) GetBigDecimalHandleResponse(resp *azcore.Response) (*Num
 
 // GetBigDecimalNegativeDecimalCreateRequest creates the GetBigDecimalNegativeDecimal request.
 func (NumberOperations) GetBigDecimalNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/decimal/-99999999.99")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/big/decimal/-99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBigDecimalNegativeDecimalHandleResponse handles the GetBigDecimalNegativeDecimal response.
@@ -46,8 +50,10 @@ func (NumberOperations) GetBigDecimalNegativeDecimalHandleResponse(resp *azcore.
 
 // GetBigDecimalPositiveDecimalCreateRequest creates the GetBigDecimalPositiveDecimal request.
 func (NumberOperations) GetBigDecimalPositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/decimal/99999999.99")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/big/decimal/99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBigDecimalPositiveDecimalHandleResponse handles the GetBigDecimalPositiveDecimal response.
@@ -61,8 +67,10 @@ func (NumberOperations) GetBigDecimalPositiveDecimalHandleResponse(resp *azcore.
 
 // GetBigDoubleCreateRequest creates the GetBigDouble request.
 func (NumberOperations) GetBigDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/double/2.5976931e+101")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/big/double/2.5976931e+101"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBigDoubleHandleResponse handles the GetBigDouble response.
@@ -76,8 +84,10 @@ func (NumberOperations) GetBigDoubleHandleResponse(resp *azcore.Response) (*Numb
 
 // GetBigDoubleNegativeDecimalCreateRequest creates the GetBigDoubleNegativeDecimal request.
 func (NumberOperations) GetBigDoubleNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/double/-99999999.99")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/big/double/-99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBigDoubleNegativeDecimalHandleResponse handles the GetBigDoubleNegativeDecimal response.
@@ -91,8 +101,10 @@ func (NumberOperations) GetBigDoubleNegativeDecimalHandleResponse(resp *azcore.R
 
 // GetBigDoublePositiveDecimalCreateRequest creates the GetBigDoublePositiveDecimal request.
 func (NumberOperations) GetBigDoublePositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/double/99999999.99")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/big/double/99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBigDoublePositiveDecimalHandleResponse handles the GetBigDoublePositiveDecimal response.
@@ -106,8 +118,10 @@ func (NumberOperations) GetBigDoublePositiveDecimalHandleResponse(resp *azcore.R
 
 // GetBigFloatCreateRequest creates the GetBigFloat request.
 func (NumberOperations) GetBigFloatCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/float/3.402823e+20")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/big/float/3.402823e+20"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBigFloatHandleResponse handles the GetBigFloat response.
@@ -121,8 +135,10 @@ func (NumberOperations) GetBigFloatHandleResponse(resp *azcore.Response) (*Numbe
 
 // GetInvalidDecimalCreateRequest creates the GetInvalidDecimal request.
 func (NumberOperations) GetInvalidDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/invaliddecimal")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/invaliddecimal"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetInvalidDecimalHandleResponse handles the GetInvalidDecimal response.
@@ -136,8 +152,10 @@ func (NumberOperations) GetInvalidDecimalHandleResponse(resp *azcore.Response) (
 
 // GetInvalidDoubleCreateRequest creates the GetInvalidDouble request.
 func (NumberOperations) GetInvalidDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/invaliddouble")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/invaliddouble"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetInvalidDoubleHandleResponse handles the GetInvalidDouble response.
@@ -151,8 +169,10 @@ func (NumberOperations) GetInvalidDoubleHandleResponse(resp *azcore.Response) (*
 
 // GetInvalidFloatCreateRequest creates the GetInvalidFloat request.
 func (NumberOperations) GetInvalidFloatCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/invalidfloat")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/invalidfloat"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetInvalidFloatHandleResponse handles the GetInvalidFloat response.
@@ -166,8 +186,10 @@ func (NumberOperations) GetInvalidFloatHandleResponse(resp *azcore.Response) (*N
 
 // GetNullCreateRequest creates the GetNull request.
 func (NumberOperations) GetNullCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/null")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/null"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNullHandleResponse handles the GetNull response.
@@ -181,8 +203,10 @@ func (NumberOperations) GetNullHandleResponse(resp *azcore.Response) (*NumberGet
 
 // GetSmallDecimalCreateRequest creates the GetSmallDecimal request.
 func (NumberOperations) GetSmallDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/small/decimal/2.5976931e-101")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/small/decimal/2.5976931e-101"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetSmallDecimalHandleResponse handles the GetSmallDecimal response.
@@ -196,8 +220,10 @@ func (NumberOperations) GetSmallDecimalHandleResponse(resp *azcore.Response) (*N
 
 // GetSmallDoubleCreateRequest creates the GetSmallDouble request.
 func (NumberOperations) GetSmallDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/small/double/2.5976931e-101")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/small/double/2.5976931e-101"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetSmallDoubleHandleResponse handles the GetSmallDouble response.
@@ -211,8 +237,10 @@ func (NumberOperations) GetSmallDoubleHandleResponse(resp *azcore.Response) (*Nu
 
 // GetSmallFloatCreateRequest creates the GetSmallFloat request.
 func (NumberOperations) GetSmallFloatCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/small/float/3.402823e-20")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/number/small/float/3.402823e-20"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetSmallFloatHandleResponse handles the GetSmallFloat response.
@@ -226,7 +254,8 @@ func (NumberOperations) GetSmallFloatHandleResponse(resp *azcore.Response) (*Num
 
 // PutBigDecimalCreateRequest creates the PutBigDecimal request.
 func (NumberOperations) PutBigDecimalCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/decimal/2.5976931e+101")
+	urlPath := "/number/big/decimal/2.5976931e+101"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(numberBody)
 	if err != nil {
@@ -245,7 +274,8 @@ func (NumberOperations) PutBigDecimalHandleResponse(resp *azcore.Response) (*Num
 
 // PutBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
 func (NumberOperations) PutBigDecimalNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/decimal/-99999999.99")
+	urlPath := "/number/big/decimal/-99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(-99999999.99)
 	if err != nil {
@@ -264,7 +294,8 @@ func (NumberOperations) PutBigDecimalNegativeDecimalHandleResponse(resp *azcore.
 
 // PutBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
 func (NumberOperations) PutBigDecimalPositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/decimal/99999999.99")
+	urlPath := "/number/big/decimal/99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(99999999.99)
 	if err != nil {
@@ -283,7 +314,8 @@ func (NumberOperations) PutBigDecimalPositiveDecimalHandleResponse(resp *azcore.
 
 // PutBigDoubleCreateRequest creates the PutBigDouble request.
 func (NumberOperations) PutBigDoubleCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/double/2.5976931e+101")
+	urlPath := "/number/big/double/2.5976931e+101"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(numberBody)
 	if err != nil {
@@ -302,7 +334,8 @@ func (NumberOperations) PutBigDoubleHandleResponse(resp *azcore.Response) (*Numb
 
 // PutBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
 func (NumberOperations) PutBigDoubleNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/double/-99999999.99")
+	urlPath := "/number/big/double/-99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(-99999999.99)
 	if err != nil {
@@ -321,7 +354,8 @@ func (NumberOperations) PutBigDoubleNegativeDecimalHandleResponse(resp *azcore.R
 
 // PutBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
 func (NumberOperations) PutBigDoublePositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/double/99999999.99")
+	urlPath := "/number/big/double/99999999.99"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(99999999.99)
 	if err != nil {
@@ -340,7 +374,8 @@ func (NumberOperations) PutBigDoublePositiveDecimalHandleResponse(resp *azcore.R
 
 // PutBigFloatCreateRequest creates the PutBigFloat request.
 func (NumberOperations) PutBigFloatCreateRequest(u url.URL, numberBody float32) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/big/float/3.402823e+20")
+	urlPath := "/number/big/float/3.402823e+20"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(numberBody)
 	if err != nil {
@@ -359,7 +394,8 @@ func (NumberOperations) PutBigFloatHandleResponse(resp *azcore.Response) (*Numbe
 
 // PutSmallDecimalCreateRequest creates the PutSmallDecimal request.
 func (NumberOperations) PutSmallDecimalCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/small/decimal/2.5976931e-101")
+	urlPath := "/number/small/decimal/2.5976931e-101"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(numberBody)
 	if err != nil {
@@ -378,7 +414,8 @@ func (NumberOperations) PutSmallDecimalHandleResponse(resp *azcore.Response) (*N
 
 // PutSmallDoubleCreateRequest creates the PutSmallDouble request.
 func (NumberOperations) PutSmallDoubleCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/small/double/2.5976931e-101")
+	urlPath := "/number/small/double/2.5976931e-101"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(numberBody)
 	if err != nil {
@@ -397,7 +434,8 @@ func (NumberOperations) PutSmallDoubleHandleResponse(resp *azcore.Response) (*Nu
 
 // PutSmallFloatCreateRequest creates the PutSmallFloat request.
 func (NumberOperations) PutSmallFloatCreateRequest(u url.URL, numberBody float32) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/number/small/float/3.402823e-20")
+	urlPath := "/number/small/float/3.402823e-20"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(numberBody)
 	if err != nil {

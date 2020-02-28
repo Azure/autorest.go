@@ -12,17 +12,17 @@ import (
 
 // EnumOperations contains the methods for the Enum group.
 type EnumOperations interface {
-	// GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'. 
+	// GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 	GetNotExpandable(ctx context.Context) (*EnumGetNotExpandableResponse, error)
-	// GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'. 
+	// GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 	GetReferenced(ctx context.Context) (*EnumGetReferencedResponse, error)
-	// GetReferencedConstant - Get value 'green-color' from the constant. 
+	// GetReferencedConstant - Get value 'green-color' from the constant.
 	GetReferencedConstant(ctx context.Context) (*EnumGetReferencedConstantResponse, error)
-	// PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color' 
+	// PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 	PutNotExpandable(ctx context.Context, stringBody Colors) (*EnumPutNotExpandableResponse, error)
-	// PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color' 
+	// PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 	PutReferenced(ctx context.Context, enumStringBody Colors) (*EnumPutReferencedResponse, error)
-	// PutReferencedConstant - Sends value 'green-color' from a constant 
+	// PutReferencedConstant - Sends value 'green-color' from a constant
 	PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*EnumPutReferencedConstantResponse, error)
 }
 
@@ -31,7 +31,7 @@ type enumOperations struct {
 	azinternal.EnumOperations
 }
 
-// GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'. 
+// GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client *enumOperations) GetNotExpandable(ctx context.Context) (*EnumGetNotExpandableResponse, error) {
 	req, err := client.GetNotExpandableCreateRequest(*client.u)
 	if err != nil {
@@ -48,7 +48,7 @@ func (client *enumOperations) GetNotExpandable(ctx context.Context) (*EnumGetNot
 	return result, nil
 }
 
-// GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'. 
+// GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client *enumOperations) GetReferenced(ctx context.Context) (*EnumGetReferencedResponse, error) {
 	req, err := client.GetReferencedCreateRequest(*client.u)
 	if err != nil {
@@ -65,7 +65,7 @@ func (client *enumOperations) GetReferenced(ctx context.Context) (*EnumGetRefere
 	return result, nil
 }
 
-// GetReferencedConstant - Get value 'green-color' from the constant. 
+// GetReferencedConstant - Get value 'green-color' from the constant.
 func (client *enumOperations) GetReferencedConstant(ctx context.Context) (*EnumGetReferencedConstantResponse, error) {
 	req, err := client.GetReferencedConstantCreateRequest(*client.u)
 	if err != nil {
@@ -82,7 +82,7 @@ func (client *enumOperations) GetReferencedConstant(ctx context.Context) (*EnumG
 	return result, nil
 }
 
-// PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color' 
+// PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client *enumOperations) PutNotExpandable(ctx context.Context, stringBody Colors) (*EnumPutNotExpandableResponse, error) {
 	req, err := client.PutNotExpandableCreateRequest(*client.u, stringBody)
 	if err != nil {
@@ -99,7 +99,7 @@ func (client *enumOperations) PutNotExpandable(ctx context.Context, stringBody C
 	return result, nil
 }
 
-// PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color' 
+// PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client *enumOperations) PutReferenced(ctx context.Context, enumStringBody Colors) (*EnumPutReferencedResponse, error) {
 	req, err := client.PutReferencedCreateRequest(*client.u, enumStringBody)
 	if err != nil {
@@ -116,7 +116,7 @@ func (client *enumOperations) PutReferenced(ctx context.Context, enumStringBody 
 	return result, nil
 }
 
-// PutReferencedConstant - Sends value 'green-color' from a constant 
+// PutReferencedConstant - Sends value 'green-color' from a constant
 func (client *enumOperations) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*EnumPutReferencedConstantResponse, error) {
 	req, err := client.PutReferencedConstantCreateRequest(*client.u, enumStringBody)
 	if err != nil {

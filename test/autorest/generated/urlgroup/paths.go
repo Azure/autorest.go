@@ -13,8 +13,8 @@ import (
 
 // PathsOperations contains the methods for the Paths group.
 type PathsOperations interface {
-	// ArrayCsvInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-	ArrayCsvInPath(ctx context.Context, arrayPath []string) (*PathsArrayCsvInPathResponse, error)
+	// ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayCSVInPath(ctx context.Context, arrayPath []string) (*PathsArrayCSVInPathResponse, error)
 	// Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
 	Base64URL(ctx context.Context, base64UrlPath []byte) (*PathsBase64URLResponse, error)
 	// ByteEmpty - Get '' as byte array
@@ -74,9 +74,9 @@ type pathsOperations struct {
 	azinternal.PathsOperations
 }
 
-// ArrayCsvInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-func (client *pathsOperations) ArrayCsvInPath(ctx context.Context, arrayPath []string) (*PathsArrayCsvInPathResponse, error) {
-	req, err := client.ArrayCsvInPathCreateRequest(*client.u, arrayPath)
+// ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+func (client *pathsOperations) ArrayCSVInPath(ctx context.Context, arrayPath []string) (*PathsArrayCSVInPathResponse, error) {
+	req, err := client.ArrayCSVInPathCreateRequest(*client.u, arrayPath)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (client *pathsOperations) ArrayCsvInPath(ctx context.Context, arrayPath []s
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.ArrayCsvInPathHandleResponse(resp)
+	result, err := client.ArrayCSVInPathHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}

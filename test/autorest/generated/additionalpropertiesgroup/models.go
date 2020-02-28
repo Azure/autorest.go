@@ -38,4 +38,3 @@ type PetsCreateApTrueResponse = azinternal.PetsCreateApTrueResponse
 
 // PetsCreateCatApTrueResponse contains the response from method Pets.CreateCatApTrue.
 type PetsCreateCatApTrueResponse = azinternal.PetsCreateCatApTrueResponse
-

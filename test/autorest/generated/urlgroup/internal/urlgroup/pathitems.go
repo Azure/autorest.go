@@ -33,7 +33,8 @@ func (PathItemsOperations) GetAllWithValuesCreateRequest(u url.URL, pathItemStri
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetAllWithValuesHandleResponse handles the GetAllWithValues response.
@@ -62,7 +63,8 @@ func (PathItemsOperations) GetGlobalAndLocalQueryNullCreateRequest(u url.URL, pa
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetGlobalAndLocalQueryNullHandleResponse handles the GetGlobalAndLocalQueryNull response.
@@ -91,7 +93,8 @@ func (PathItemsOperations) GetGlobalQueryNullCreateRequest(u url.URL, pathItemSt
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetGlobalQueryNullHandleResponse handles the GetGlobalQueryNull response.
@@ -120,7 +123,8 @@ func (PathItemsOperations) GetLocalPathItemQueryNullCreateRequest(u url.URL, pat
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetLocalPathItemQueryNullHandleResponse handles the GetLocalPathItemQueryNull response.
