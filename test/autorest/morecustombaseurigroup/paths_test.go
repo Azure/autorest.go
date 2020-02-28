@@ -6,9 +6,11 @@ package morecustombaseurigrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/morecustombaseurigroup"
+	"generatortests/helpers"
 	"net/http"
-	"reflect"
 	"testing"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
 func getMoreCustomBaseURIClient(t *testing.T) morecustombaseurigroup.PathsOperations {
@@ -16,23 +18,18 @@ func getMoreCustomBaseURIClient(t *testing.T) morecustombaseurigroup.PathsOperat
 	if err != nil {
 		t.Fatalf("failed to create more custom base URL client: %v", err)
 	}
-	return client.PathsOperations()
-}
-
-func deepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
-	if !reflect.DeepEqual(result, expected) {
-		t.Fatalf("got %+v, want %+v", result, expected)
-	}
+	// dnsSuffix string, subscriptionID string
+	return client.PathsOperations("", "test12")
 }
 
 func TestGetEmpty(t *testing.T) {
 	client := getMoreCustomBaseURIClient(t)
-	result, err := client.GetEmpty(context.Background(), "", "", "key1", "v1", "test12")
+	// vault string, secret string, keyName string, options *PathsGetEmptyOptions
+	result, err := client.GetEmpty(context.Background(), "", "", "key1", &morecustombaseurigroup.PathsGetEmptyOptions{
+		KeyVersion: to.StringPtr("v1"),
+	})
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	expected := &morecustombaseurigroup.PathsGetEmptyResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }

@@ -12,31 +12,31 @@ import (
 
 // StringOperations contains the methods for the String group.
 type StringOperations interface {
-	// GetBase64Encoded - Get value that is base64 encoded 
+	// GetBase64Encoded - Get value that is base64 encoded
 	GetBase64Encoded(ctx context.Context) (*StringGetBase64EncodedResponse, error)
-	// GetBase64URLEncoded - Get value that is base64url encoded 
+	// GetBase64URLEncoded - Get value that is base64url encoded
 	GetBase64URLEncoded(ctx context.Context) (*StringGetBase64URLEncodedResponse, error)
-	// GetEmpty - Get empty string value value '' 
+	// GetEmpty - Get empty string value value ''
 	GetEmpty(ctx context.Context) (*StringGetEmptyResponse, error)
-	// GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€' 
+	// GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 	GetMBCS(ctx context.Context) (*StringGetMBCSResponse, error)
-	// GetNotProvided - Get String value when no string value is sent in response payload 
+	// GetNotProvided - Get String value when no string value is sent in response payload
 	GetNotProvided(ctx context.Context) (*StringGetNotProvidedResponse, error)
-	// GetNull - Get null string value value 
+	// GetNull - Get null string value value
 	GetNull(ctx context.Context) (*StringGetNullResponse, error)
-	// GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded 
+	// GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 	GetNullBase64URLEncoded(ctx context.Context) (*StringGetNullBase64URLEncodedResponse, error)
-	// GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>' 
+	// GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 	GetWhitespace(ctx context.Context) (*StringGetWhitespaceResponse, error)
-	// PutBase64URLEncoded - Put value that is base64url encoded 
+	// PutBase64URLEncoded - Put value that is base64url encoded
 	PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*StringPutBase64URLEncodedResponse, error)
-	// PutEmpty - Set string value empty '' 
+	// PutEmpty - Set string value empty ''
 	PutEmpty(ctx context.Context) (*StringPutEmptyResponse, error)
-	// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€' 
+	// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 	PutMBCS(ctx context.Context) (*StringPutMBCSResponse, error)
-	// PutNull - Set string value null 
+	// PutNull - Set string value null
 	PutNull(ctx context.Context) (*StringPutNullResponse, error)
-	// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>' 
+	// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 	PutWhitespace(ctx context.Context) (*StringPutWhitespaceResponse, error)
 }
 
@@ -45,7 +45,7 @@ type stringOperations struct {
 	azinternal.StringOperations
 }
 
-// GetBase64Encoded - Get value that is base64 encoded 
+// GetBase64Encoded - Get value that is base64 encoded
 func (client *stringOperations) GetBase64Encoded(ctx context.Context) (*StringGetBase64EncodedResponse, error) {
 	req, err := client.GetBase64EncodedCreateRequest(*client.u)
 	if err != nil {
@@ -62,7 +62,7 @@ func (client *stringOperations) GetBase64Encoded(ctx context.Context) (*StringGe
 	return result, nil
 }
 
-// GetBase64URLEncoded - Get value that is base64url encoded 
+// GetBase64URLEncoded - Get value that is base64url encoded
 func (client *stringOperations) GetBase64URLEncoded(ctx context.Context) (*StringGetBase64URLEncodedResponse, error) {
 	req, err := client.GetBase64URLEncodedCreateRequest(*client.u)
 	if err != nil {
@@ -79,7 +79,7 @@ func (client *stringOperations) GetBase64URLEncoded(ctx context.Context) (*Strin
 	return result, nil
 }
 
-// GetEmpty - Get empty string value value '' 
+// GetEmpty - Get empty string value value ''
 func (client *stringOperations) GetEmpty(ctx context.Context) (*StringGetEmptyResponse, error) {
 	req, err := client.GetEmptyCreateRequest(*client.u)
 	if err != nil {
@@ -96,7 +96,7 @@ func (client *stringOperations) GetEmpty(ctx context.Context) (*StringGetEmptyRe
 	return result, nil
 }
 
-// GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€' 
+// GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client *stringOperations) GetMBCS(ctx context.Context) (*StringGetMBCSResponse, error) {
 	req, err := client.GetMBCSCreateRequest(*client.u)
 	if err != nil {
@@ -113,7 +113,7 @@ func (client *stringOperations) GetMBCS(ctx context.Context) (*StringGetMBCSResp
 	return result, nil
 }
 
-// GetNotProvided - Get String value when no string value is sent in response payload 
+// GetNotProvided - Get String value when no string value is sent in response payload
 func (client *stringOperations) GetNotProvided(ctx context.Context) (*StringGetNotProvidedResponse, error) {
 	req, err := client.GetNotProvidedCreateRequest(*client.u)
 	if err != nil {
@@ -130,7 +130,7 @@ func (client *stringOperations) GetNotProvided(ctx context.Context) (*StringGetN
 	return result, nil
 }
 
-// GetNull - Get null string value value 
+// GetNull - Get null string value value
 func (client *stringOperations) GetNull(ctx context.Context) (*StringGetNullResponse, error) {
 	req, err := client.GetNullCreateRequest(*client.u)
 	if err != nil {
@@ -147,7 +147,7 @@ func (client *stringOperations) GetNull(ctx context.Context) (*StringGetNullResp
 	return result, nil
 }
 
-// GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded 
+// GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 func (client *stringOperations) GetNullBase64URLEncoded(ctx context.Context) (*StringGetNullBase64URLEncodedResponse, error) {
 	req, err := client.GetNullBase64URLEncodedCreateRequest(*client.u)
 	if err != nil {
@@ -164,7 +164,7 @@ func (client *stringOperations) GetNullBase64URLEncoded(ctx context.Context) (*S
 	return result, nil
 }
 
-// GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>' 
+// GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 func (client *stringOperations) GetWhitespace(ctx context.Context) (*StringGetWhitespaceResponse, error) {
 	req, err := client.GetWhitespaceCreateRequest(*client.u)
 	if err != nil {
@@ -181,7 +181,7 @@ func (client *stringOperations) GetWhitespace(ctx context.Context) (*StringGetWh
 	return result, nil
 }
 
-// PutBase64URLEncoded - Put value that is base64url encoded 
+// PutBase64URLEncoded - Put value that is base64url encoded
 func (client *stringOperations) PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*StringPutBase64URLEncodedResponse, error) {
 	req, err := client.PutBase64URLEncodedCreateRequest(*client.u, stringBody)
 	if err != nil {
@@ -198,7 +198,7 @@ func (client *stringOperations) PutBase64URLEncoded(ctx context.Context, stringB
 	return result, nil
 }
 
-// PutEmpty - Set string value empty '' 
+// PutEmpty - Set string value empty ''
 func (client *stringOperations) PutEmpty(ctx context.Context) (*StringPutEmptyResponse, error) {
 	req, err := client.PutEmptyCreateRequest(*client.u)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *stringOperations) PutEmpty(ctx context.Context) (*StringPutEmptyRe
 	return result, nil
 }
 
-// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€' 
+// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client *stringOperations) PutMBCS(ctx context.Context) (*StringPutMBCSResponse, error) {
 	req, err := client.PutMBCSCreateRequest(*client.u)
 	if err != nil {
@@ -232,7 +232,7 @@ func (client *stringOperations) PutMBCS(ctx context.Context) (*StringPutMBCSResp
 	return result, nil
 }
 
-// PutNull - Set string value null 
+// PutNull - Set string value null
 func (client *stringOperations) PutNull(ctx context.Context) (*StringPutNullResponse, error) {
 	req, err := client.PutNullCreateRequest(*client.u)
 	if err != nil {
@@ -249,7 +249,7 @@ func (client *stringOperations) PutNull(ctx context.Context) (*StringPutNullResp
 	return result, nil
 }
 
-// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>' 
+// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 func (client *stringOperations) PutWhitespace(ctx context.Context) (*StringPutWhitespaceResponse, error) {
 	req, err := client.PutWhitespaceCreateRequest(*client.u)
 	if err != nil {

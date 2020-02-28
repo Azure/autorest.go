@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
+import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 const dateFormat = '2006-01-02';
@@ -139,7 +139,7 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
-      return `base64.StdEncoding.EncodeToString(${param.language.go!.name})`;
+      return `base64.StdEncoding.EncodeToString(${paramName})`;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
       return `string(${paramName})`;
@@ -148,9 +148,15 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       // cannot use formatConstantValue() since all values are treated as strings
       return `"${constSchema.value.value}"`;
     case SchemaType.Date:
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substr(1);
+      }
       return `${paramName}.Format("${dateFormat}")`;
     case SchemaType.DateTime:
-      if (paramName[0] == '*') {
+      imports.add('time');
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
         paramName = paramName.substr(1);
       }
       if ((<HeaderFormat>param.schema).format === 'date-time-rfc1123') {
@@ -288,7 +294,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
 function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
-  for (const param of values(op.requests![0].parameters)) {
+  for (const param of values(aggregateParameters(op))) {
     if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
       continue;
     }
@@ -301,19 +307,19 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
-  if (values(op.requests![0].parameters).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+  if (values(aggregateParameters(op)).any((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
     // replace path parameters
     imports.add('strings');
     imports.add('net/url');
-    for (const pp of values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
-      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.name}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
+    for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'path' })) {
+      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
     }
   }
   text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
-  if (values(op.requests![0].parameters).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
+  if (values(aggregateParameters(op)).any((each: Parameter) => { return each.protocol.http!.in === 'query' })) {
     // add query parameters
     text += '\tquery := u.Query()\n';
-    for (const qp of values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
+    for (const qp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
       if (qp.required === true) {
         text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
@@ -335,13 +341,13 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     text += '\treq.SkipBodyDownload()\n';
   }
   // add specific request headers
-  const headerParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
+  const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
   headerParam.forEach(header => {
     text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
   });
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
-    const bodyParam = values(op.requests![0].parameters).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     // default to the body param name
     let body = bodyParam!.language.go!.name;
     if (bodyParam!.schema.type === SchemaType.Constant) {

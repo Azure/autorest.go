@@ -8,6 +8,7 @@ package additionalpropertiesgroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 type CatApTrue struct {
@@ -16,7 +17,7 @@ type CatApTrue struct {
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -42,79 +43,84 @@ func (e Error) Error() string {
 }
 
 type PetApInProperties struct {
-	// Dictionary of <components·schemas·petapinproperties·properties·additionalproperties·additionalproperties>
+	// Dictionary of <number>
 	AdditionalProperties *map[string]*float32 `json:"additionalProperties,omitempty"`
-	ID *int32 `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Status *bool `json:"status,omitempty"`
+	ID                   *int32               `json:"id,omitempty"`
+	Name                 *string              `json:"name,omitempty"`
+	Status               *bool                `json:"status,omitempty"`
 }
 
 type PetApInPropertiesWithApstring struct {
-	// Dictionary of <components·schemas·petapinproperties·properties·additionalproperties·additionalproperties>
+	// Dictionary of <number>
 	AdditionalProperties *map[string]*float32 `json:"additionalProperties,omitempty"`
-	ID *int32 `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	OdataLocation *string `json:"@odata.location,omitempty"`
-	Status *bool `json:"status,omitempty"`
+	ID                   *int32               `json:"id,omitempty"`
+	Name                 *string              `json:"name,omitempty"`
+	OdataLocation        *string              `json:"@odata.location,omitempty"`
+	Status               *bool                `json:"status,omitempty"`
 }
 
 type PetApObject struct {
-	ID *int32 `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Status *bool `json:"status,omitempty"`
+	ID     *int32  `json:"id,omitempty"`
+	Name   *string `json:"name,omitempty"`
+	Status *bool   `json:"status,omitempty"`
 }
 
 type PetApString struct {
-	ID *int32 `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Status *bool `json:"status,omitempty"`
+	ID     *int32  `json:"id,omitempty"`
+	Name   *string `json:"name,omitempty"`
+	Status *bool   `json:"status,omitempty"`
 }
 
 type PetApTrue struct {
-	ID *int32 `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Status *bool `json:"status,omitempty"`
+	ID     *int32  `json:"id,omitempty"`
+	Name   *string `json:"name,omitempty"`
+	Status *bool   `json:"status,omitempty"`
 }
 
 // PetsCreateApInPropertiesResponse contains the response from method Pets.CreateApInProperties.
 type PetsCreateApInPropertiesResponse struct {
 	PetApInProperties *PetApInProperties
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PetsCreateApInPropertiesWithApstringResponse contains the response from method Pets.CreateApInPropertiesWithApstring.
 type PetsCreateApInPropertiesWithApstringResponse struct {
 	PetApInPropertiesWithApstring *PetApInPropertiesWithApstring
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PetsCreateApObjectResponse contains the response from method Pets.CreateApObject.
 type PetsCreateApObjectResponse struct {
 	PetApObject *PetApObject
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PetsCreateApStringResponse contains the response from method Pets.CreateApString.
 type PetsCreateApStringResponse struct {
 	PetApString *PetApString
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PetsCreateApTrueResponse contains the response from method Pets.CreateApTrue.
 type PetsCreateApTrueResponse struct {
 	PetApTrue *PetApTrue
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // PetsCreateCatApTrueResponse contains the response from method Pets.CreateCatApTrue.
 type PetsCreateCatApTrueResponse struct {
 	CatApTrue *CatApTrue
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-}
 
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}

@@ -16,8 +16,10 @@ type ByteOperations struct{}
 
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (ByteOperations) GetEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/byte/empty")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/byte/empty"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
@@ -31,8 +33,10 @@ func (ByteOperations) GetEmptyHandleResponse(resp *azcore.Response) (*ByteGetEmp
 
 // GetInvalidCreateRequest creates the GetInvalid request.
 func (ByteOperations) GetInvalidCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/byte/invalid")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/byte/invalid"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetInvalidHandleResponse handles the GetInvalid response.
@@ -46,8 +50,10 @@ func (ByteOperations) GetInvalidHandleResponse(resp *azcore.Response) (*ByteGetI
 
 // GetNonASCIICreateRequest creates the GetNonASCII request.
 func (ByteOperations) GetNonASCIICreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/byte/nonAscii")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/byte/nonAscii"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNonASCIIHandleResponse handles the GetNonASCII response.
@@ -61,8 +67,10 @@ func (ByteOperations) GetNonASCIIHandleResponse(resp *azcore.Response) (*ByteGet
 
 // GetNullCreateRequest creates the GetNull request.
 func (ByteOperations) GetNullCreateRequest(u url.URL) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/byte/null")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/byte/null"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNullHandleResponse handles the GetNull response.
@@ -76,7 +84,8 @@ func (ByteOperations) GetNullHandleResponse(resp *azcore.Response) (*ByteGetNull
 
 // PutNonASCIICreateRequest creates the PutNonASCII request.
 func (ByteOperations) PutNonASCIICreateRequest(u url.URL, byteBody []byte) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/byte/nonAscii")
+	urlPath := "/byte/nonAscii"
+	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
 	err := req.MarshalAsJSON(byteBody)
 	if err != nil {

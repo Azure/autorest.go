@@ -25,7 +25,7 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry: azcore.DefaultRetryOptions(),
+		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
@@ -33,7 +33,6 @@ func DefaultClientOptions() ClientOptions {
 type Client struct {
 	u *url.URL
 	p azcore.Pipeline
-	pathsOperations PathsOperations
 }
 
 // NewClient creates an instance of the Client type with the specified endpoint.
@@ -56,13 +55,10 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := &Client{u: u, p: p}
-	c.pathsOperations = &pathsOperations{Client: c}
-	return c, nil
+	return &Client{u: u, p: p}, nil
 }
 
 // PathsOperations returns the PathsOperations associated with this client.
-func (client *Client) PathsOperations() PathsOperations {
-	return client.pathsOperations
+func (client *Client) PathsOperations(dnsSuffix string, subscriptionID string) PathsOperations {
+	return &pathsOperations{Client: client, dnsSuffix: dnsSuffix, subscriptionID: subscriptionID}
 }
-

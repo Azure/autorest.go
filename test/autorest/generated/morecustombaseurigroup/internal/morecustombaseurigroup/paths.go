@@ -6,22 +6,28 @@
 package morecustombaseurigroup
 
 import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"strings"
 )
 
 type PathsOperations struct{}
 
 // GetEmptyCreateRequest creates the GetEmpty request.
-func (PathsOperations) GetEmptyCreateRequest(u url.URL, vault string, secret string, keyName string, keyVersion string, subscriptionID string) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/customuri", subscriptionID, keyName)
+func (PathsOperations) GetEmptyCreateRequest(u url.URL, vault string, secret string, dnsSuffix string, keyName string, subscriptionID string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+	urlPath := "/customuri/{subscriptionId}/{keyName}"
+	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
-	query.Set("keyVersion", keyVersion)
+	if options != nil && options.KeyVersion != nil {
+		query.Set("keyVersion", *options.KeyVersion)
+	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
@@ -29,5 +35,5 @@ func (PathsOperations) GetEmptyHandleResponse(resp *azcore.Response) (*PathsGetE
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetEmptyResponse{RawResponse: resp.Response}, nil
 }

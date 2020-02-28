@@ -12,7 +12,7 @@ import (
 
 // PathsOperations contains the methods for the Paths group.
 type PathsOperations interface {
-	// GetEmpty - Get a 200 to test a valid base uri 
+	// GetEmpty - Get a 200 to test a valid base uri
 	GetEmpty(ctx context.Context, accountName string) (*PathsGetEmptyResponse, error)
 }
 
@@ -21,7 +21,7 @@ type pathsOperations struct {
 	azinternal.PathsOperations
 }
 
-// GetEmpty - Get a 200 to test a valid base uri 
+// GetEmpty - Get a 200 to test a valid base uri
 func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string) (*PathsGetEmptyResponse, error) {
 	req, err := client.GetEmptyCreateRequest(*client.u, accountName)
 	if err != nil {

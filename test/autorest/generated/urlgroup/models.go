@@ -35,8 +35,8 @@ type PathItemsGetLocalPathItemQueryNullOptions = azinternal.PathItemsGetLocalPat
 // PathItemsGetLocalPathItemQueryNullResponse contains the response from method PathItems.GetLocalPathItemQueryNull.
 type PathItemsGetLocalPathItemQueryNullResponse = azinternal.PathItemsGetLocalPathItemQueryNullResponse
 
-// PathsArrayCsvInPathResponse contains the response from method Paths.ArrayCsvInPath.
-type PathsArrayCsvInPathResponse = azinternal.PathsArrayCsvInPathResponse
+// PathsArrayCSVInPathResponse contains the response from method Paths.ArrayCSVInPath.
+type PathsArrayCSVInPathResponse = azinternal.PathsArrayCSVInPathResponse
 
 // PathsBase64URLResponse contains the response from method Paths.Base64URL.
 type PathsBase64URLResponse = azinternal.PathsBase64URLResponse
@@ -116,23 +116,23 @@ type PathsStringUnicodeResponse = azinternal.PathsStringUnicodeResponse
 // PathsUnixTimeURLResponse contains the response from method Paths.UnixTimeURL.
 type PathsUnixTimeURLResponse = azinternal.PathsUnixTimeURLResponse
 
-// QueriesArrayStringCsvEmptyOptions contains the optional parameters for the Queries.ArrayStringCsvEmpty method.
-type QueriesArrayStringCsvEmptyOptions = azinternal.QueriesArrayStringCsvEmptyOptions
+// QueriesArrayStringCSVEmptyOptions contains the optional parameters for the Queries.ArrayStringCSVEmpty method.
+type QueriesArrayStringCSVEmptyOptions = azinternal.QueriesArrayStringCSVEmptyOptions
 
-// QueriesArrayStringCsvEmptyResponse contains the response from method Queries.ArrayStringCsvEmpty.
-type QueriesArrayStringCsvEmptyResponse = azinternal.QueriesArrayStringCsvEmptyResponse
+// QueriesArrayStringCSVEmptyResponse contains the response from method Queries.ArrayStringCSVEmpty.
+type QueriesArrayStringCSVEmptyResponse = azinternal.QueriesArrayStringCSVEmptyResponse
 
-// QueriesArrayStringCsvNullOptions contains the optional parameters for the Queries.ArrayStringCsvNull method.
-type QueriesArrayStringCsvNullOptions = azinternal.QueriesArrayStringCsvNullOptions
+// QueriesArrayStringCSVNullOptions contains the optional parameters for the Queries.ArrayStringCSVNull method.
+type QueriesArrayStringCSVNullOptions = azinternal.QueriesArrayStringCSVNullOptions
 
-// QueriesArrayStringCsvNullResponse contains the response from method Queries.ArrayStringCsvNull.
-type QueriesArrayStringCsvNullResponse = azinternal.QueriesArrayStringCsvNullResponse
+// QueriesArrayStringCSVNullResponse contains the response from method Queries.ArrayStringCSVNull.
+type QueriesArrayStringCSVNullResponse = azinternal.QueriesArrayStringCSVNullResponse
 
-// QueriesArrayStringCsvValidOptions contains the optional parameters for the Queries.ArrayStringCsvValid method.
-type QueriesArrayStringCsvValidOptions = azinternal.QueriesArrayStringCsvValidOptions
+// QueriesArrayStringCSVValidOptions contains the optional parameters for the Queries.ArrayStringCSVValid method.
+type QueriesArrayStringCSVValidOptions = azinternal.QueriesArrayStringCSVValidOptions
 
-// QueriesArrayStringCsvValidResponse contains the response from method Queries.ArrayStringCsvValid.
-type QueriesArrayStringCsvValidResponse = azinternal.QueriesArrayStringCsvValidResponse
+// QueriesArrayStringCSVValidResponse contains the response from method Queries.ArrayStringCSVValid.
+type QueriesArrayStringCSVValidResponse = azinternal.QueriesArrayStringCSVValidResponse
 
 // QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
 type QueriesArrayStringPipesValidOptions = azinternal.QueriesArrayStringPipesValidOptions

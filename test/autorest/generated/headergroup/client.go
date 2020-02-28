@@ -25,7 +25,7 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry: azcore.DefaultRetryOptions(),
+		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
@@ -70,4 +70,3 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 func (client *Client) HeaderOperations() HeaderOperations {
 	return &headerOperations{Client: client}
 }
-

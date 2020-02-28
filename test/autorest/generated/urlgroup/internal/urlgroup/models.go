@@ -97,8 +97,8 @@ type PathItemsGetLocalPathItemQueryNullResponse struct {
 	RawResponse *http.Response
 }
 
-// PathsArrayCsvInPathResponse contains the response from method Paths.ArrayCsvInPath.
-type PathsArrayCsvInPathResponse struct {
+// PathsArrayCSVInPathResponse contains the response from method Paths.ArrayCSVInPath.
+type PathsArrayCSVInPathResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
@@ -259,38 +259,38 @@ type PathsUnixTimeURLResponse struct {
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringCsvEmptyOptions contains the optional parameters for the Queries.ArrayStringCsvEmpty method.
-type QueriesArrayStringCsvEmptyOptions struct {
+// QueriesArrayStringCSVEmptyOptions contains the optional parameters for the Queries.ArrayStringCSVEmpty method.
+type QueriesArrayStringCSVEmptyOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayQuery *[]string
 }
 
-// QueriesArrayStringCsvEmptyResponse contains the response from method Queries.ArrayStringCsvEmpty.
-type QueriesArrayStringCsvEmptyResponse struct {
+// QueriesArrayStringCSVEmptyResponse contains the response from method Queries.ArrayStringCSVEmpty.
+type QueriesArrayStringCSVEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringCsvNullOptions contains the optional parameters for the Queries.ArrayStringCsvNull method.
-type QueriesArrayStringCsvNullOptions struct {
+// QueriesArrayStringCSVNullOptions contains the optional parameters for the Queries.ArrayStringCSVNull method.
+type QueriesArrayStringCSVNullOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayQuery *[]string
 }
 
-// QueriesArrayStringCsvNullResponse contains the response from method Queries.ArrayStringCsvNull.
-type QueriesArrayStringCsvNullResponse struct {
+// QueriesArrayStringCSVNullResponse contains the response from method Queries.ArrayStringCSVNull.
+type QueriesArrayStringCSVNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringCsvValidOptions contains the optional parameters for the Queries.ArrayStringCsvValid method.
-type QueriesArrayStringCsvValidOptions struct {
+// QueriesArrayStringCSVValidOptions contains the optional parameters for the Queries.ArrayStringCSVValid method.
+type QueriesArrayStringCSVValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayQuery *[]string
 }
 
-// QueriesArrayStringCsvValidResponse contains the response from method Queries.ArrayStringCsvValid.
-type QueriesArrayStringCsvValidResponse struct {
+// QueriesArrayStringCSVValidResponse contains the response from method Queries.ArrayStringCSVValid.
+type QueriesArrayStringCSVValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

@@ -37,13 +37,19 @@ jobs:
           cd $(Build.SourcesDirectory)
           npm install -g "@microsoft/rush"
           rush update --debug
-          npm install -g "@autorest/autorest"
+          npm install -g autorest
         displayName: 'Prepare Generator Environment'
 
       - script: |
           rush rebuild -v
         displayName: 'Build Generator Sources'
 
+      - script: |
+          rush regenerate
+          git add -A ./test/.
+          git diff --staged -w 1>&2
+        displayName: 'Regenerate Autorest Tests'
+        failOnStderr: true
       - script: |
           set -e
           echo '##vso[task.prependpath]$(GOROOT)/bin'

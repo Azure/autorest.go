@@ -6,18 +6,20 @@
 package urlgroup
 
 import (
+	"encoding/base64"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type QueriesOperations struct{}
 
-// ArrayStringCsvEmptyCreateRequest creates the ArrayStringCsvEmpty request.
-func (QueriesOperations) ArrayStringCsvEmptyCreateRequest(u url.URL, options *QueriesArrayStringCsvEmptyOptions) (*azcore.Request, error) {
+// ArrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
+func (QueriesOperations) ArrayStringCSVEmptyCreateRequest(u url.URL, options *QueriesArrayStringCSVEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/empty"
 	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
@@ -25,19 +27,20 @@ func (QueriesOperations) ArrayStringCsvEmptyCreateRequest(u url.URL, options *Qu
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
-// ArrayStringCsvEmptyHandleResponse handles the ArrayStringCsvEmpty response.
-func (QueriesOperations) ArrayStringCsvEmptyHandleResponse(resp *azcore.Response) (*QueriesArrayStringCsvEmptyResponse, error) {
+// ArrayStringCSVEmptyHandleResponse handles the ArrayStringCSVEmpty response.
+func (QueriesOperations) ArrayStringCSVEmptyHandleResponse(resp *azcore.Response) (*QueriesArrayStringCSVEmptyResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringCsvEmptyResponse{RawResponse: resp.Response}, nil
+	return &QueriesArrayStringCSVEmptyResponse{RawResponse: resp.Response}, nil
 }
 
-// ArrayStringCsvNullCreateRequest creates the ArrayStringCsvNull request.
-func (QueriesOperations) ArrayStringCsvNullCreateRequest(u url.URL, options *QueriesArrayStringCsvNullOptions) (*azcore.Request, error) {
+// ArrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
+func (QueriesOperations) ArrayStringCSVNullCreateRequest(u url.URL, options *QueriesArrayStringCSVNullOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/null"
 	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
@@ -45,19 +48,20 @@ func (QueriesOperations) ArrayStringCsvNullCreateRequest(u url.URL, options *Que
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
-// ArrayStringCsvNullHandleResponse handles the ArrayStringCsvNull response.
-func (QueriesOperations) ArrayStringCsvNullHandleResponse(resp *azcore.Response) (*QueriesArrayStringCsvNullResponse, error) {
+// ArrayStringCSVNullHandleResponse handles the ArrayStringCSVNull response.
+func (QueriesOperations) ArrayStringCSVNullHandleResponse(resp *azcore.Response) (*QueriesArrayStringCSVNullResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringCsvNullResponse{RawResponse: resp.Response}, nil
+	return &QueriesArrayStringCSVNullResponse{RawResponse: resp.Response}, nil
 }
 
-// ArrayStringCsvValidCreateRequest creates the ArrayStringCsvValid request.
-func (QueriesOperations) ArrayStringCsvValidCreateRequest(u url.URL, options *QueriesArrayStringCsvValidOptions) (*azcore.Request, error) {
+// ArrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
+func (QueriesOperations) ArrayStringCSVValidCreateRequest(u url.URL, options *QueriesArrayStringCSVValidOptions) (*azcore.Request, error) {
 	urlPath := "/queries/array/csv/string/valid"
 	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
@@ -65,15 +69,16 @@ func (QueriesOperations) ArrayStringCsvValidCreateRequest(u url.URL, options *Qu
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
-// ArrayStringCsvValidHandleResponse handles the ArrayStringCsvValid response.
-func (QueriesOperations) ArrayStringCsvValidHandleResponse(resp *azcore.Response) (*QueriesArrayStringCsvValidResponse, error) {
+// ArrayStringCSVValidHandleResponse handles the ArrayStringCSVValid response.
+func (QueriesOperations) ArrayStringCSVValidHandleResponse(resp *azcore.Response) (*QueriesArrayStringCSVValidResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &QueriesArrayStringCsvValidResponse{RawResponse: resp.Response}, nil
+	return &QueriesArrayStringCSVValidResponse{RawResponse: resp.Response}, nil
 }
 
 // ArrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
@@ -85,7 +90,8 @@ func (QueriesOperations) ArrayStringPipesValidCreateRequest(u url.URL, options *
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, "|"))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ArrayStringPipesValidHandleResponse handles the ArrayStringPipesValid response.
@@ -105,7 +111,8 @@ func (QueriesOperations) ArrayStringSsvValidCreateRequest(u url.URL, options *Qu
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, " "))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ArrayStringSsvValidHandleResponse handles the ArrayStringSsvValid response.
@@ -125,7 +132,8 @@ func (QueriesOperations) ArrayStringTsvValidCreateRequest(u url.URL, options *Qu
 		query.Set("arrayQuery", strings.Join(*options.ArrayQuery, "\t"))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ArrayStringTsvValidHandleResponse handles the ArrayStringTsvValid response.
@@ -143,7 +151,8 @@ func (QueriesOperations) ByteEmptyCreateRequest(u url.URL) (*azcore.Request, err
 	query := u.Query()
 	query.Set("byteQuery", "")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ByteEmptyHandleResponse handles the ByteEmpty response.
@@ -160,10 +169,11 @@ func (QueriesOperations) ByteMultiByteCreateRequest(u url.URL, options *QueriesB
 	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
 	if options != nil && options.ByteQuery != nil {
-		query.Set("byteQuery", string(*options.ByteQuery))
+		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ByteMultiByteHandleResponse handles the ByteMultiByte response.
@@ -180,10 +190,11 @@ func (QueriesOperations) ByteNullCreateRequest(u url.URL, options *QueriesByteNu
 	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
 	if options != nil && options.ByteQuery != nil {
-		query.Set("byteQuery", string(*options.ByteQuery))
+		query.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ByteNullHandleResponse handles the ByteNull response.
@@ -200,10 +211,11 @@ func (QueriesOperations) DateNullCreateRequest(u url.URL, options *QueriesDateNu
 	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
 	if options != nil && options.DateQuery != nil {
-		query.Set("dateQuery", options.DateQuery.String())
+		query.Set("dateQuery", options.DateQuery.Format("2006-01-02"))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // DateNullHandleResponse handles the DateNull response.
@@ -220,10 +232,11 @@ func (QueriesOperations) DateTimeNullCreateRequest(u url.URL, options *QueriesDa
 	u.Path = path.Join(u.Path, urlPath)
 	query := u.Query()
 	if options != nil && options.DateTimeQuery != nil {
-		query.Set("dateTimeQuery", options.DateTimeQuery.String())
+		query.Set("dateTimeQuery", options.DateTimeQuery.Format(time.RFC3339))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // DateTimeNullHandleResponse handles the DateTimeNull response.
@@ -241,7 +254,8 @@ func (QueriesOperations) DateTimeValidCreateRequest(u url.URL) (*azcore.Request,
 	query := u.Query()
 	query.Set("dateTimeQuery", "2012-01-01T01:01:01Z")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // DateTimeValidHandleResponse handles the DateTimeValid response.
@@ -259,7 +273,8 @@ func (QueriesOperations) DateValidCreateRequest(u url.URL) (*azcore.Request, err
 	query := u.Query()
 	query.Set("dateQuery", "2012-01-01")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // DateValidHandleResponse handles the DateValid response.
@@ -277,7 +292,8 @@ func (QueriesOperations) DoubleDecimalNegativeCreateRequest(u url.URL) (*azcore.
 	query := u.Query()
 	query.Set("doubleQuery", "-9999999.999")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // DoubleDecimalNegativeHandleResponse handles the DoubleDecimalNegative response.
@@ -295,7 +311,8 @@ func (QueriesOperations) DoubleDecimalPositiveCreateRequest(u url.URL) (*azcore.
 	query := u.Query()
 	query.Set("doubleQuery", "9999999.999")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // DoubleDecimalPositiveHandleResponse handles the DoubleDecimalPositive response.
@@ -315,7 +332,8 @@ func (QueriesOperations) DoubleNullCreateRequest(u url.URL, options *QueriesDoub
 		query.Set("doubleQuery", strconv.FormatFloat(*options.DoubleQuery, 'f', -1, 64))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // DoubleNullHandleResponse handles the DoubleNull response.
@@ -335,7 +353,8 @@ func (QueriesOperations) EnumNullCreateRequest(u url.URL, options *QueriesEnumNu
 		query.Set("enumQuery", string(*options.EnumQuery))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // EnumNullHandleResponse handles the EnumNull response.
@@ -355,7 +374,8 @@ func (QueriesOperations) EnumValidCreateRequest(u url.URL, options *QueriesEnumV
 		query.Set("enumQuery", string(*options.EnumQuery))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // EnumValidHandleResponse handles the EnumValid response.
@@ -375,7 +395,8 @@ func (QueriesOperations) FloatNullCreateRequest(u url.URL, options *QueriesFloat
 		query.Set("floatQuery", strconv.FormatFloat(float64(*options.FloatQuery), 'f', -1, 32))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // FloatNullHandleResponse handles the FloatNull response.
@@ -393,7 +414,8 @@ func (QueriesOperations) FloatScientificNegativeCreateRequest(u url.URL) (*azcor
 	query := u.Query()
 	query.Set("floatQuery", "-1.034e-20")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // FloatScientificNegativeHandleResponse handles the FloatScientificNegative response.
@@ -411,7 +433,8 @@ func (QueriesOperations) FloatScientificPositiveCreateRequest(u url.URL) (*azcor
 	query := u.Query()
 	query.Set("floatQuery", "103400000000000000000")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // FloatScientificPositiveHandleResponse handles the FloatScientificPositive response.
@@ -429,7 +452,8 @@ func (QueriesOperations) GetBooleanFalseCreateRequest(u url.URL) (*azcore.Reques
 	query := u.Query()
 	query.Set("boolQuery", "false")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBooleanFalseHandleResponse handles the GetBooleanFalse response.
@@ -449,7 +473,8 @@ func (QueriesOperations) GetBooleanNullCreateRequest(u url.URL, options *Queries
 		query.Set("boolQuery", strconv.FormatBool(*options.BoolQuery))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBooleanNullHandleResponse handles the GetBooleanNull response.
@@ -467,7 +492,8 @@ func (QueriesOperations) GetBooleanTrueCreateRequest(u url.URL) (*azcore.Request
 	query := u.Query()
 	query.Set("boolQuery", "true")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetBooleanTrueHandleResponse handles the GetBooleanTrue response.
@@ -485,7 +511,8 @@ func (QueriesOperations) GetIntNegativeOneMillionCreateRequest(u url.URL) (*azco
 	query := u.Query()
 	query.Set("intQuery", "-1000000")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetIntNegativeOneMillionHandleResponse handles the GetIntNegativeOneMillion response.
@@ -505,7 +532,8 @@ func (QueriesOperations) GetIntNullCreateRequest(u url.URL, options *QueriesGetI
 		query.Set("intQuery", strconv.FormatInt(int64(*options.IntQuery), 10))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetIntNullHandleResponse handles the GetIntNull response.
@@ -523,7 +551,8 @@ func (QueriesOperations) GetIntOneMillionCreateRequest(u url.URL) (*azcore.Reque
 	query := u.Query()
 	query.Set("intQuery", "1000000")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetIntOneMillionHandleResponse handles the GetIntOneMillion response.
@@ -543,7 +572,8 @@ func (QueriesOperations) GetLongNullCreateRequest(u url.URL, options *QueriesGet
 		query.Set("longQuery", strconv.FormatInt(*options.LongQuery, 10))
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetLongNullHandleResponse handles the GetLongNull response.
@@ -561,7 +591,8 @@ func (QueriesOperations) GetNegativeTenBillionCreateRequest(u url.URL) (*azcore.
 	query := u.Query()
 	query.Set("longQuery", "-10000000000")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetNegativeTenBillionHandleResponse handles the GetNegativeTenBillion response.
@@ -579,7 +610,8 @@ func (QueriesOperations) GetTenBillionCreateRequest(u url.URL) (*azcore.Request,
 	query := u.Query()
 	query.Set("longQuery", "10000000000")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetTenBillionHandleResponse handles the GetTenBillion response.
@@ -597,7 +629,8 @@ func (QueriesOperations) StringEmptyCreateRequest(u url.URL) (*azcore.Request, e
 	query := u.Query()
 	query.Set("stringQuery", "")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // StringEmptyHandleResponse handles the StringEmpty response.
@@ -617,7 +650,8 @@ func (QueriesOperations) StringNullCreateRequest(u url.URL, options *QueriesStri
 		query.Set("stringQuery", *options.StringQuery)
 	}
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // StringNullHandleResponse handles the StringNull response.
@@ -635,7 +669,8 @@ func (QueriesOperations) StringURLEncodedCreateRequest(u url.URL) (*azcore.Reque
 	query := u.Query()
 	query.Set("stringQuery", "begin!*'();:@ &=+$,/?#[]end")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // StringURLEncodedHandleResponse handles the StringURLEncoded response.
@@ -653,7 +688,8 @@ func (QueriesOperations) StringUnicodeCreateRequest(u url.URL) (*azcore.Request,
 	query := u.Query()
 	query.Set("stringQuery", "啊齄丂狛狜隣郎隣兀﨩")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // StringUnicodeHandleResponse handles the StringUnicode response.

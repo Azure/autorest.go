@@ -16,8 +16,10 @@ type PathsOperations struct{}
 
 // GetEmptyCreateRequest creates the GetEmpty request.
 func (PathsOperations) GetEmptyCreateRequest(u url.URL, accountName string) (*azcore.Request, error) {
-	u.Path = path.Join(u.Path, "/customuri")
-	return azcore.NewRequest(http.MethodGet, u), nil
+	urlPath := "/customuri"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyHandleResponse handles the GetEmpty response.
@@ -25,6 +27,5 @@ func (PathsOperations) GetEmptyHandleResponse(resp *azcore.Response) (*PathsGetE
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetEmptyResponse{StatusCode: resp.StatusCode}, nil
+	return &PathsGetEmptyResponse{RawResponse: resp.Response}, nil
 }
-

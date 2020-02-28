@@ -31,9 +31,8 @@ func DefaultClientOptions() ClientOptions {
 
 // Client - Test Infrastructure for AutoRest Swagger BAT
 type Client struct {
-	u              *url.URL
-	p              azcore.Pipeline
-	byteOperations ByteOperations
+	u *url.URL
+	p azcore.Pipeline
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -64,12 +63,10 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := &Client{u: u, p: p}
-	c.byteOperations = &byteOperations{Client: c}
-	return c, nil
+	return &Client{u: u, p: p}, nil
 }
 
 // ByteOperations returns the ByteOperations associated with this client.
 func (client *Client) ByteOperations() ByteOperations {
-	return client.byteOperations
+	return &byteOperations{Client: client}
 }

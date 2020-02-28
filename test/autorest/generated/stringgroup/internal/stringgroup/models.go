@@ -8,50 +8,51 @@ package stringgroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // EnumGetNotExpandableResponse contains the response from method Enum.GetNotExpandable.
 type EnumGetNotExpandableResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *Colors
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *Colors
 }
 
 // EnumGetReferencedConstantResponse contains the response from method Enum.GetReferencedConstant.
 type EnumGetReferencedConstantResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse      *http.Response
 	RefColorConstant *RefColorConstant
-	// StatusCode contains the HTTP status code.
-	StatusCode int
 }
 
 // EnumGetReferencedResponse contains the response from method Enum.GetReferenced.
 type EnumGetReferencedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *Colors
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *Colors
 }
 
 // EnumPutNotExpandableResponse contains the response from method Enum.PutNotExpandable.
 type EnumPutNotExpandableResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // EnumPutReferencedConstantResponse contains the response from method Enum.PutReferencedConstant.
 type EnumPutReferencedConstantResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // EnumPutReferencedResponse contains the response from method Enum.PutReferenced.
 type EnumPutReferencedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 type Error struct {
 	Message *string `json:"message,omitempty"`
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func newError(resp *azcore.Response) error {
@@ -79,97 +80,101 @@ func (e Error) Error() string {
 type RefColorConstant struct {
 	// Referenced Color Constant Description.
 	ColorConstant *string `json:"ColorConstant,omitempty"`
+
 	// Sample string.
 	Field1 *string `json:"field1,omitempty"`
 }
 
 // StringGetBase64EncodedResponse contains the response from method String.GetBase64Encoded.
 type StringGetBase64EncodedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *[]byte
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *[]byte
 }
 
 // StringGetBase64URLEncodedResponse contains the response from method String.GetBase64URLEncoded.
 type StringGetBase64URLEncodedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *[]byte
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *[]byte
 }
 
 // StringGetEmptyResponse contains the response from method String.GetEmpty.
 type StringGetEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
 	// simple string
 	Value *string
 }
 
 // StringGetMBCSResponse contains the response from method String.GetMBCS.
 type StringGetMBCSResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
 	// simple string
 	Value *string
 }
 
 // StringGetNotProvidedResponse contains the response from method String.GetNotProvided.
 type StringGetNotProvidedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *string
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *string
 }
 
 // StringGetNullBase64URLEncodedResponse contains the response from method String.GetNullBase64URLEncoded.
 type StringGetNullBase64URLEncodedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
-	Value *[]byte
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *[]byte
 }
 
 // StringGetNullResponse contains the response from method String.GetNull.
 type StringGetNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
 	// simple string
 	Value *string
 }
 
 // StringGetWhitespaceResponse contains the response from method String.GetWhitespace.
 type StringGetWhitespaceResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
 	// simple string
 	Value *string
 }
 
 // StringPutBase64URLEncodedResponse contains the response from method String.PutBase64URLEncoded.
 type StringPutBase64URLEncodedResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // StringPutEmptyResponse contains the response from method String.PutEmpty.
 type StringPutEmptyResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // StringPutMBCSResponse contains the response from method String.PutMBCS.
 type StringPutMBCSResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // StringPutNullResponse contains the response from method String.PutNull.
 type StringPutNullResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // StringPutWhitespaceResponse contains the response from method String.PutWhitespace.
 type StringPutWhitespaceResponse struct {
-	// StatusCode contains the HTTP status code.
-	StatusCode int
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
-

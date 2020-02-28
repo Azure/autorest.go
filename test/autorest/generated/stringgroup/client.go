@@ -25,7 +25,7 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry: azcore.DefaultRetryOptions(),
+		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
@@ -33,8 +33,6 @@ func DefaultClientOptions() ClientOptions {
 type Client struct {
 	u *url.URL
 	p azcore.Pipeline
-	stringOperations StringOperations
-	enumOperations EnumOperations
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -65,19 +63,15 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := &Client{u: u, p: p}
-	c.stringOperations = &stringOperations{Client: c}
-	c.enumOperations = &enumOperations{Client: c}
-	return c, nil
+	return &Client{u: u, p: p}, nil
 }
 
 // StringOperations returns the StringOperations associated with this client.
 func (client *Client) StringOperations() StringOperations {
-	return client.stringOperations
+	return &stringOperations{Client: client}
 }
 
 // EnumOperations returns the EnumOperations associated with this client.
 func (client *Client) EnumOperations() EnumOperations {
-	return client.enumOperations
+	return &enumOperations{Client: client}
 }
-

@@ -5,10 +5,10 @@
 
 import { serialize, pascalCase, camelCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { codeModelSchema, CodeModel, Language, Parameter } from '@azure-tools/codemodel';
+import { codeModelSchema, CodeModel, Language, Parameter, SchemaType } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { LanguageHeader } from '../generator/common/helpers';
+import { aggregateParameters, LanguageHeader } from '../generator/common/helpers';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -92,13 +92,14 @@ async function process(session: Session<CodeModel>) {
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       // track any optional parameters
       const optionalParams = new Array<Parameter>();
-      for (const param of values(op.requests![0].parameters)) {
+      for (const param of values(aggregateParameters(op))) {
         const paramDetails = <Language>param.language.go;
         paramDetails.name = getEscapedReservedName(camelCase(paramDetails.name), 'Parameter');
-        if (param.required !== true) {
+        // this is a bit of a weird case and might be due to invalid swagger in the test
+        // server.  how can you have an optional parameter that's also a constant?
+        if (param.required !== true && param.schema.type !== SchemaType.Constant) {
           optionalParams.push(param);
         }
-
       }
       if (optionalParams.length > 0) {
         // create a type named <OperationGroup><Operation>Options
@@ -134,7 +135,7 @@ async function process(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
+      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name))}`;
     }
   }
   for (const enm of values(session.model.schemas.sealedChoices)) {
@@ -142,7 +143,7 @@ async function process(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
+      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name))}`;
     }
   }
 

@@ -8,7 +8,7 @@ import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, ImplementationLocation, Operation } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { InternalPackage, InternalPackagePath } from './helpers';
-import { ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, ParamInfo, paramInfo } from '../common/helpers';
+import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, ParamInfo, paramInfo } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 import { ProtocolSig } from '../protocol/operations';
 
@@ -41,7 +41,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     interfaceText += `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
     interfaceText += `type ${group.language.go!.clientName} interface {\n`;
     for (const op of values(group.operations)) {
-      for (const param of values(op.requests![0].parameters)) {
+      for (const param of values(aggregateParameters(op))) {
         if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
           continue;
         }
