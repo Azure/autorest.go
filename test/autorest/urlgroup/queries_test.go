@@ -79,7 +79,7 @@ func TestEnumValid(t *testing.T) {
 	t.Skip("test fails, needs investigation")
 	client := getQueriesClient(t)
 	result, err := client.EnumValid(context.Background(), &urlgroup.QueriesEnumValidOptions{
-		EnumQuery: urlgroup.UriColorGreencolor.ToPtr(),
+		EnumQuery: urlgroup.UriColorGreenColor.ToPtr(),
 	})
 	if err != nil {
 		t.Fatal(err)

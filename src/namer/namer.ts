@@ -135,7 +135,7 @@ async function process(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
+      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name))}`;
     }
   }
   for (const enm of values(session.model.schemas.sealedChoices)) {
@@ -143,7 +143,7 @@ async function process(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name.toLowerCase()))}`;
+      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name))}`;
     }
   }
 
