@@ -96,7 +96,7 @@ func (PathsOperations) ByteNullCreateRequest(u url.URL, bytePath []byte) (*azcor
 
 // ByteNullHandleResponse handles the ByteNull response.
 func (PathsOperations) ByteNullHandleResponse(resp *azcore.Response) (*PathsByteNullResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
 	return &PathsByteNullResponse{RawResponse: resp.Response}, nil
@@ -113,7 +113,7 @@ func (PathsOperations) DateNullCreateRequest(u url.URL, datePath time.Time) (*az
 
 // DateNullHandleResponse handles the DateNull response.
 func (PathsOperations) DateNullHandleResponse(resp *azcore.Response) (*PathsDateNullResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
 	return &PathsDateNullResponse{RawResponse: resp.Response}, nil
@@ -130,7 +130,7 @@ func (PathsOperations) DateTimeNullCreateRequest(u url.URL, dateTimePath time.Ti
 
 // DateTimeNullHandleResponse handles the DateTimeNull response.
 func (PathsOperations) DateTimeNullHandleResponse(resp *azcore.Response) (*PathsDateTimeNullResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
 	return &PathsDateTimeNullResponse{RawResponse: resp.Response}, nil
@@ -215,7 +215,7 @@ func (PathsOperations) EnumNullCreateRequest(u url.URL, enumPath UriColor) (*azc
 
 // EnumNullHandleResponse handles the EnumNull response.
 func (PathsOperations) EnumNullHandleResponse(resp *azcore.Response) (*PathsEnumNullResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
 	return &PathsEnumNullResponse{RawResponse: resp.Response}, nil
@@ -402,7 +402,7 @@ func (PathsOperations) StringNullCreateRequest(u url.URL, stringPath string) (*a
 
 // StringNullHandleResponse handles the StringNull response.
 func (PathsOperations) StringNullHandleResponse(resp *azcore.Response) (*PathsStringNullResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
 	return &PathsStringNullResponse{RawResponse: resp.Response}, nil

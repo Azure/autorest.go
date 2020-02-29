@@ -5,9 +5,9 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, HasDescription, ImportManager, LanguageHeader, SortAscending } from '../common/helpers';
+import { ContentPreamble, HasDescription, ImportManager, isArraySchema, LanguageHeader, SortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -96,9 +96,57 @@ class StructDef {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
       }
-      let tag = ` \`${prop.schema.language.go!.marshallingFormat}:"${prop.serializedName},omitempty"\``;
-      if (this.Language.responseType) {
-        // tags aren't required for response types
+      let serialization = prop.serializedName;
+      if (prop.schema.language.go!.marshallingFormat === 'json') {
+        serialization += ',omitempty';
+      } else if (prop.schema.language.go!.marshallingFormat === 'xml') {
+        // default to using the serialization name
+        if (prop.schema.serialization?.xml?.name) {
+          // xml can specifiy its own name, prefer that if available
+          serialization = prop.schema.serialization.xml.name;
+        }
+        if (prop.schema.serialization?.xml?.attribute) {
+          // value comes from an xml attribute
+          serialization += ',attr';
+        } else if (isArraySchema(prop.schema)) {
+          // start with the serialized name of the element, preferring xml name if available
+          let inner = prop.schema.elementType.language.go!.name;
+          if (prop.schema.elementType.serialization?.xml?.name) {
+            inner = prop.schema.elementType.serialization.xml.name;
+          }
+          // arrays can be wrapped or unwrapped.  here's a wrapped example
+          // note how the array of apple objects is "wrapped" in GoodApples
+          // <AppleBarrel>
+          //   <GoodApples>
+          //     <Apple>Fuji</Apple>
+          //     <Apple>Gala</Apple>
+          //   </GoodApples>
+          // </AppleBarrel>
+
+          // here's an unwrapped example, the array of slide objects
+          // is embedded directly in the object (no "wrapping")
+          // <slideshow>
+          //   <slide>
+          //     <title>Wake up to WonderWidgets!</title>
+          //   </slide>
+          //   <slide>
+          //     <title>Overview</title>
+          //   </slide>
+          // </slideshow>
+
+          // arrays in the response type are handled slightly different as we
+          // unmarshal directly into them so no need to add the unwrapping.
+          if (prop.schema.serialization?.xml?.wrapped && this.Language.responseType === undefined) {
+            serialization += `>${inner}`;
+          } else {
+            serialization = inner;
+          }
+        }
+      }
+      let tag = ` \`${prop.schema.language.go!.marshallingFormat}:"${serialization}"\``;
+      // if this is a response type then omit the tag IFF the marshalling format is
+      // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
+      if (this.Language.responseType && (prop.schema.language.go!.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) {
         tag = '';
       }
       text += `\t${prop.language.go!.name} *${typeName}${tag}\n`;

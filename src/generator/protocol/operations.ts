@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
+import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 const dateFormat = '2006-01-02';
@@ -353,6 +353,29 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
+    } else if (mediaType === 'XML' && bodyParam!.schema.serialization?.xml) {
+      // for XML payloads, create a wrapper type in the following cases
+      // 1. the type's name doesn't match the XML name (e.g. "Slideshow" vs. "slideshow")
+      // 2. the payload is a wrapped array
+      if (bodyParam!.schema.language.go!.name !== bodyParam!.schema.serialization.xml.name || bodyParam!.schema.type === SchemaType.Array) {
+        imports.add('encoding/xml');
+        text += '\ttype wrapper struct {\n';
+        text += `\t\tXMLName xml.Name \`xml:"${bodyParam!.schema.serialization.xml.name}"\`\n`;
+        let fieldName = bodyParam!.schema.language.go!.name;
+        if (isArraySchema(bodyParam!.schema)) {
+          fieldName = pascalCase(bodyParam!.language.go!.name);
+          let tag = bodyParam!.schema.elementType.language.go!.name;
+          if (bodyParam!.schema.elementType.serialization?.xml?.name) {
+            tag = bodyParam!.schema.elementType.serialization.xml.name;
+          }
+          text += `\t\t${fieldName} *${bodyParam!.schema.language.go!.name} \`xml:"${tag}"\`\n`;
+        } else {
+          // embed as anonymous field
+          text += `\t\t*${bodyParam!.schema.language.go!.name}\n`;
+        }
+        text += '\t}\n';
+        body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
+      }
     }
     text += `\terr := req.MarshalAs${mediaType}(${body})\n`;
     text += `\tif err != nil {\n`;
@@ -372,13 +395,13 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true)];
   sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op);
 
+  const resp = op.responses![0];
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params, true)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
-  text += `\tif !resp.HasStatusCode(http.StatusOK) {\n`;
+  text += `\tif !resp.HasStatusCode(${formatStatusCodes(resp.protocol.http?.statusCodes)}) {\n`;
   text += `\t\treturn nil, newError(resp)\n`;
   text += '\t}\n';
 
-  const resp = op.responses![0];
   let respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
   let headResp = <HeaderResponse>{};
   // check if the response is expecting information from headers
@@ -394,12 +417,18 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       }
     }
   }
-  if (getMediaType(resp.protocol) === 'none') {
+  const mediaType = getMediaType(resp.protocol);
+  if (mediaType === 'none') {
     // no response body so nothing to unmarshal
     text += `\treturn &${respObj}, nil\n`;
   } else {
     text += `\tresult := ${respObj}\n`;
-    text += `\treturn &result, resp.UnmarshalAs${getMediaType(resp.protocol)}(&result.${(<SchemaResponse>resp).schema.language.go!.responseValue})\n`;
+    let target = `result.${(<SchemaResponse>resp).schema.language.go!.responseValue}`;
+    // when unmarshalling a wrapped XML array, unmarshal into the response type, not the field
+    if (mediaType === 'XML' && (<SchemaResponse>resp).schema.type === SchemaType.Array) {
+      target = 'result';
+    }
+    text += `\treturn &result, resp.UnmarshalAs${mediaType}(&${target})\n`;
   }
   text += '}\n\n';
   return text;
@@ -427,6 +456,32 @@ function formatConstantValue(schema: ConstantSchema) {
     return `"${schema.value.value}"`;
   }
   return schema.value.value;
+}
+
+function formatStatusCodes(statusCodes: Array<string>): string {
+  const asHTTPStatus = new Array<string>();
+  for (const rawCode of values(statusCodes)) {
+    switch (rawCode) {
+      case '200':
+        asHTTPStatus.push('http.StatusOK');
+        break;
+      case '201':
+        asHTTPStatus.push('http.StatusCreated');
+        break;
+      case '202':
+        asHTTPStatus.push('http.StatusAccepted');
+        break;
+      case '204':
+        asHTTPStatus.push('http.StatusNoContent');
+        break;
+      case '400':
+        asHTTPStatus.push('http.StatusBadRequest');
+        break;
+      default:
+        throw console.error(`unhandled status code ${rawCode}`);
+    }
+  }
+  return asHTTPStatus.join(', ');
 }
 
 // returns true if any responses are a binary stream

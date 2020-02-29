@@ -95,10 +95,7 @@ export function SortAscending(a: string, b: string): number {
 
 // returns true if the language contains a description
 export function HasDescription(lang: Language): boolean {
-  if (!lang.description) {
-    return false;
-  }
-  return (lang.description.length > 0 && !lang.description.startsWith('MISSING'));
+  return (lang.description !== undefined && lang.description.length > 0 && !lang.description.startsWith('MISSING'));
 }
 
 // describes a method's signature, including parameters and return values
@@ -253,4 +250,9 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
   }
   enums.sort((a: EnumEntry, b: EnumEntry) => { return SortAscending(a.name, b.name) });
   return enums;
+}
+
+// returns ArraySchema type predicate if the schema is an ArraySchema
+export function isArraySchema(resp: Schema): resp is ArraySchema {
+  return (resp as ArraySchema).elementType !== undefined;
 }
