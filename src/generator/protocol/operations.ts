@@ -249,7 +249,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
     case SchemaType.Duration:
       text = '\tpanic("durations are not yet supported")\n';
       headerText.body = text;
-      headerText.respObj = respObj + '}';
+      headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Integer:
       imports.add('strconv');
