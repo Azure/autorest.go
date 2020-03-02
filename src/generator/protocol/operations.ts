@@ -9,7 +9,6 @@ import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Languag
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
-import { skip } from 'mocha-typescript';
 
 const dateFormat = '2006-01-02';
 const datetimeFormat = 'time.RFC3339';
