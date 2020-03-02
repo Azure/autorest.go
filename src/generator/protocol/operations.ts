@@ -247,8 +247,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Duration:
-      text = '\tpanic("durations are not yet supported")\n';
-      headerText.body = text;
+      headerText.body = '\tpanic("durations are not yet supported")\n';
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Integer:
