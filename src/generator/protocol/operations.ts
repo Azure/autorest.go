@@ -164,6 +164,7 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       }
       return `${paramName}.Format(${datetimeFormat})`;
     case SchemaType.Duration:
+      throw console.error('duration NYI');
     case SchemaType.UnixTime:
       if (param.required !== true && paramName[0] === '*') {
         // remove the dereference
@@ -247,14 +248,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Duration:
-      imports.add('time');
-      text = `\tval, err := time.ParseDuration(resp.Header.Get("${header.header}"))\n`;
-      text += `\tif err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
-      text += `\t}\n`;
-      headerText.body = text;
-      headerText.respObj = respObj + `, ${header.name}: &val}`;
-      return headerText;
+      throw console.error('duration NYI');
     case SchemaType.Integer:
       imports.add('strconv');
       const intNum = <NumberSchema>header.schema;
