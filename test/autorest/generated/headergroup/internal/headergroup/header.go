@@ -421,7 +421,6 @@ func (HeaderOperations) ResponseDurationHandleResponse(resp *azcore.Response) (*
 		return nil, newError(resp)
 	}
 	panic("durations are not yet supported")
-	return &HeaderResponseDurationResponse{RawResponse: resp.Response}, nil
 }
 
 // ResponseEnumCreateRequest creates the ResponseEnum request.

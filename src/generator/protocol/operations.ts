@@ -9,6 +9,7 @@ import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Languag
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
+import { skip } from 'mocha-typescript';
 
 const dateFormat = '2006-01-02';
 const datetimeFormat = 'time.RFC3339';
@@ -377,6 +378,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const resp = op.responses![0];
   let respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
   let headResp = <HeaderResponse>{};
+  let skipReturn = false;
   // check if the response is expecting information from headers
   if (resp.protocol.http!.headers) {
     for (const header of values(resp.protocol.http!.headers)) {
@@ -388,7 +390,16 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       if (headResp.body) {
         text += headResp.body;
       }
+
+      if (head.schema.type == SchemaType.Duration) {
+        skipReturn = true;
+      }
     }
+  }
+  // TODO this is a special case where we do not want to parse durations, this will be removed once duration parsing can be handled properly
+  if (skipReturn) {
+    text += '}\n\n';
+    return text;
   }
   if (getMediaType(resp.protocol) === 'none') {
     // no response body so nothing to unmarshal
