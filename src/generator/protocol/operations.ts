@@ -376,6 +376,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const resp = op.responses![0];
   let respObj = `${resp.language.go!.name}{RawResponse: resp.Response}`;
   let headResp = <HeaderResponse>{};
+  // TODO this var was added to skip the return statement only in the case when dealing with durations
   let skipReturn = false;
   // check if the response is expecting information from headers
   if (resp.protocol.http!.headers) {
@@ -388,7 +389,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       if (headResp.body) {
         text += headResp.body;
       }
-
+      // set skipReturn for duration related headers
       if (head.schema.type == SchemaType.Duration) {
         skipReturn = true;
       }
