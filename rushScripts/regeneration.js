@@ -19,7 +19,7 @@ goMappings = {
     //'durationgroup': 'body-duration.json',
     'filegroup': 'body-file.json',
     //'formdatagroup': 'body-formdata.json',
-    // 'headergroup': 'header.json',
+    'headergroup': 'header.json',
     //'httpinfrastructuregroup': 'httpInfrastructure.json',
     //'integergroup': 'body-integer.json',
     //'lrogroup': 'lro.json',

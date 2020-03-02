@@ -69,7 +69,7 @@ function schemaTypeToGoType(schema: Schema): string {
       const dictElem = <Schema>dictSchema.elementType;
       return `map[string]*${schemaTypeToGoType(dictElem)}`;
     case SchemaType.Duration:
-      throw console.error('duration NYI');
+      return 'time.Duration';
     case SchemaType.Integer:
       if ((<NumberSchema>schema).precision === 32) {
         return 'int32';
