@@ -420,11 +420,8 @@ func (HeaderOperations) ResponseDurationHandleResponse(resp *azcore.Response) (*
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	val, err := time.ParseDuration(resp.Header.Get("value"))
-	if err != nil {
-		return nil, err
-	}
-	return &HeaderResponseDurationResponse{RawResponse: resp.Response, Value: &val}, nil
+	panic("durations are not yet supported")
+	return &HeaderResponseDurationResponse{RawResponse: resp.Response}, nil
 }
 
 // ResponseEnumCreateRequest creates the ResponseEnum request.
