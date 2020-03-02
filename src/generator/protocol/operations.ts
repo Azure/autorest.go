@@ -248,7 +248,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       headerText.respObj = respObj + `, ${header.name}: &val}`;
       return headerText;
     case SchemaType.Duration:
-      text = 'panic("duration parsing is not supported yet")';
+      text = 'panic("durations are not yet supported")';
       headerText.body = text;
       headerText.respObj = respObj + '}';
       return headerText;
