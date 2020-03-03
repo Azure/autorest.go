@@ -14,6 +14,6 @@
     "start-wiremock": "node -e \"p = child_process.spawn( 'node' ,['./src/node_modules/wiremock/jdeploy-bundle/jdeploy.js','--root-dir', '../../testserverv2', '--port', '3000'],{ detatched: true,   stdio: 'ignore'} ) ; setTimeout( () => { p.unref(); process.exit()},1000 )  \""
   },
   "dependencies": {
-    "@autorest/autorest": "^3.0.6149"
+    "@autorest/autorest": "^3.0.6173"
   }
 }

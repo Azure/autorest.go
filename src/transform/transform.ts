@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { KnownMediaType, serialize } from '@azure-tools/codegen';
+import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
@@ -203,6 +203,13 @@ function createResponseType(op: Operation) {
     if (resp.schema.type === SchemaType.Object) {
       // for object types use the type's name as the field name
       propName = resp.schema.language.go!.name;
+    } else if (resp.schema.type === SchemaType.Array) {
+      // for array types use the element type's name
+      propName = (<ArraySchema>resp.schema).elementType.language.go!.name;
+    }
+    if (resp.schema.serialization?.xml && resp.schema.serialization.xml.name) {
+      // always prefer the XML name
+      propName = pascalCase(resp.schema.serialization.xml.name);
     }
     resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
     resp.schema.language.go!.responseValue = propName;
