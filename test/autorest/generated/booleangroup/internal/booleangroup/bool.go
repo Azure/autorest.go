@@ -12,6 +12,7 @@ import (
 	"path"
 )
 
+// BoolOperations contains the methods for the Bool group.
 type BoolOperations struct{}
 
 // GetFalseCreateRequest creates the GetFalse request.
