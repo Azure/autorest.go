@@ -15,6 +15,7 @@ import (
 	"time"
 )
 
+// PathsOperations contains the methods for the Paths group.
 type PathsOperations struct{}
 
 // ArrayCSVInPathCreateRequest creates the ArrayCSVInPath request.

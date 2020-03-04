@@ -51,6 +51,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // stitch it all together
     let text = await ContentPreamble(session);
     text += imports.text();
+    text += `// ${clientName} contains the methods for the ${group.language.go!.name} group.\n`;
     text += `type ${clientName} struct{}\n\n`;
     text += opText;
 

@@ -13,6 +13,7 @@ import (
 	"strings"
 )
 
+// PathsOperations contains the methods for the Paths group.
 type PathsOperations struct{}
 
 // GetEmptyCreateRequest creates the GetEmpty request.

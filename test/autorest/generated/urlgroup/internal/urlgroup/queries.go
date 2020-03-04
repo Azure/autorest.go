@@ -16,6 +16,7 @@ import (
 	"time"
 )
 
+// QueriesOperations contains the methods for the Queries group.
 type QueriesOperations struct{}
 
 // ArrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.

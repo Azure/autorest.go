@@ -13,6 +13,7 @@ import (
 	"strings"
 )
 
+// PathItemsOperations contains the methods for the PathItems group.
 type PathItemsOperations struct{}
 
 // GetAllWithValuesCreateRequest creates the GetAllWithValues request.

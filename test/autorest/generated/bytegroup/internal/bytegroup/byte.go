@@ -12,6 +12,7 @@ import (
 	"path"
 )
 
+// ByteOperations contains the methods for the Byte group.
 type ByteOperations struct{}
 
 // GetEmptyCreateRequest creates the GetEmpty request.

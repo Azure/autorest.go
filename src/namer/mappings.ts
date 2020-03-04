@@ -39,6 +39,7 @@ export const CommonAcronyms = [
   'Uuid',
   'Uri',
   'Url',
+  'Utc',
   'Utf8',
   'Vm',
   'Xml',

@@ -12,6 +12,7 @@ import (
 	"path"
 )
 
+// FilesOperations contains the methods for the Files group.
 type FilesOperations struct{}
 
 // GetEmptyFileCreateRequest creates the GetEmptyFile request.

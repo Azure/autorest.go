@@ -15,6 +15,7 @@ import (
 	"time"
 )
 
+// HeaderOperations contains the methods for the Header group.
 type HeaderOperations struct{}
 
 // CustomRequestIDCreateRequest creates the CustomRequestID request.

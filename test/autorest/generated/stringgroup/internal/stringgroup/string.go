@@ -12,6 +12,7 @@ import (
 	"path"
 )
 
+// StringOperations contains the methods for the String group.
 type StringOperations struct{}
 
 // GetBase64EncodedCreateRequest creates the GetBase64Encoded request.
