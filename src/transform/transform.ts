@@ -5,7 +5,7 @@
 
 import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { aggregateParameters, ParamInfo, paramInfo } from '../generator/common/helpers';
 
@@ -102,6 +102,10 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
 }
 
 function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json' | 'xml') {
+  // only recurse if the schema isn't a primitive type
+  const shouldRecurse = function (schema: Schema): boolean {
+    return schema.type === SchemaType.Array || schema.type === SchemaType.Dictionary || schema.type === SchemaType.Object;
+  };
   if (schema.language.go!.marshallingFormat) {
     // this schema has already been processed, don't do it again
     return;
@@ -110,16 +114,22 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
   switch (schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
-      recursiveAddMarshallingFormat(arraySchema.elementType, marshallingFormat);
+      if (shouldRecurse(arraySchema.elementType)) {
+        recursiveAddMarshallingFormat(arraySchema.elementType, marshallingFormat);
+      }
       break;
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
-      recursiveAddMarshallingFormat(dictSchema.elementType, marshallingFormat);
+      if (shouldRecurse(dictSchema.elementType)) {
+        recursiveAddMarshallingFormat(dictSchema.elementType, marshallingFormat);
+      }
       break;
     case SchemaType.Object:
       const os = <ObjectSchema>schema;
       for (const prop of values(os.properties)) {
-        recursiveAddMarshallingFormat(prop.schema, marshallingFormat);
+        if (shouldRecurse(prop.schema)) {
+          recursiveAddMarshallingFormat(prop.schema, marshallingFormat);
+        }
       }
       // if this is a discriminated type, update children and parents
       for (const child of values(os.children?.all)) {
@@ -143,7 +153,7 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
         const inBody = param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
-        if (param.implementation === ImplementationLocation.Client) {
+        if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
           // add global param info to the operation group
           if (group.language.go!.globals === undefined) {
             group.language.go!.globals = new Array<ParamInfo>();
@@ -169,7 +179,6 @@ function processOperationRequests(session: Session<CodeModel>) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
         }
       }
-
     }
   }
 }
@@ -193,6 +202,11 @@ function processOperationResponses(session: Session<CodeModel>) {
         if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
           recursiveAddMarshallingFormat(resp.schema, marshallingFormat);
         }
+        // fix up schema types for header responses
+        const httpResponse = <HttpResponse>resp.protocol.http;
+        for (const header of values(httpResponse.headers)) {
+          header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
+        }
       }
     }
   }
@@ -212,6 +226,8 @@ function createResponseType(codeModel: CodeModel, op: Operation) {
   ];
   // if the response defines a schema then add it as a field to the response type
   if (isSchemaResponse(resp)) {
+    const marshallingFormat = getMarshallingFormat(resp.protocol);
+    resp.language.go!.marshallingFormat = marshallingFormat;
     // for operations that return scalar types we use a fixed field name 'Value'
     let propName = 'Value';
     if (resp.schema.type === SchemaType.Object) {
