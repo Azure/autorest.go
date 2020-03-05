@@ -5,7 +5,7 @@
 
 import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { aggregateParameters, ParamInfo, paramInfo } from '../generator/common/helpers';
 
@@ -36,7 +36,7 @@ async function process(session: Session<CodeModel>) {
   for (const obj of values(session.model.schemas.objects)) {
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.schema.language.go;
-      details.name = `${schemaTypeToGoType(prop.schema)}`;
+      details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
     }
   }
   // fix up enum types
@@ -48,26 +48,39 @@ async function process(session: Session<CodeModel>) {
   }
 }
 
-function schemaTypeToGoType(schema: Schema): string {
+function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
-      return `[]${schemaTypeToGoType(arrayElem)}`;
+      return `[]${schemaTypeToGoType(codeModel, arrayElem, inBody)}`;
     case SchemaType.Boolean:
       return 'bool';
     case SchemaType.ByteArray:
       return '[]byte';
-    case SchemaType.Date:
     case SchemaType.DateTime:
+      // header/query param values are parsed separately so they don't need custom types
+      if (inBody) {
+        // add a marker to the code model indicating that we need
+        // to include support for marshalling/unmarshalling time.
+        const dateTime = <DateTimeSchema>schema;
+        if (dateTime.format === 'date-time-rfc1123') {
+          codeModel.language.go!.hasTimeRFC1123 = true;
+          schema.language.go!.internalTimeType = 'timeRFC1123';
+        } else {
+          codeModel.language.go!.hasTimeRFC3339 = true;
+          schema.language.go!.internalTimeType = 'timeRFC3339';
+        }
+      }
+    case SchemaType.Date:
     case SchemaType.UnixTime:
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
-      return `map[string]*${schemaTypeToGoType(dictElem)}`;
+      return `map[string]*${schemaTypeToGoType(codeModel, dictElem, inBody)}`;
     case SchemaType.Duration:
       return 'time.Duration';
     case SchemaType.Integer:
@@ -128,7 +141,8 @@ function processOperationRequests(session: Session<CodeModel>) {
         if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
           continue;
         }
-        param.schema.language.go!.name = schemaTypeToGoType(param.schema);
+        const inBody = param.protocol.http!.in === 'body';
+        param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
         if (param.implementation === ImplementationLocation.Client) {
           // add global param info to the operation group
           if (group.language.go!.globals === undefined) {
@@ -163,7 +177,7 @@ function processOperationRequests(session: Session<CodeModel>) {
 function processOperationResponses(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      createResponseType(op);
+      createResponseType(session.model, op);
       // annotate all exception types as errors; this is so we know to generate an Error() method
       for (const ex of values(op.exceptions)) {
         const marshallingFormat = getMarshallingFormat(ex.protocol);
@@ -185,12 +199,12 @@ function processOperationResponses(session: Session<CodeModel>) {
 }
 
 // creates the response type to be returned from an operation and updates the operation
-function createResponseType(op: Operation) {
+function createResponseType(codeModel: CodeModel, op: Operation) {
   if (length(op.responses) > 1) {
     throw console.error('multiple responses NYI');
   }
   // create the `type FooResponse struct` response
-  // type with a `StatusCode int` field
+  // type with a `RawResponse *http.Response` field
   const resp = op.responses![0];
   resp.language.go!.responseType = true;
   resp.language.go!.properties = [
@@ -211,7 +225,7 @@ function createResponseType(op: Operation) {
       // always prefer the XML name
       propName = pascalCase(resp.schema.serialization.xml.name);
     }
-    resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
+    resp.schema.language.go!.name = schemaTypeToGoType(codeModel, resp.schema, true);
     resp.schema.language.go!.responseValue = propName;
     (<Array<Property>>resp.language.go!.properties).push(newProperty(propName, resp.schema.language.go!.description, resp.schema));
   }

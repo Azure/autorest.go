@@ -132,20 +132,14 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
-		LastModified *string `xml:"Last-Modified"`
+		LastModified *timeRFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(c),
 	}
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	if aux.LastModified != nil {
-		t, err := time.Parse(time.RFC1123, *aux.LastModified)
-		if err != nil {
-			return err
-		}
-		c.LastModified = &t
-	}
+	c.LastModified = aux.LastModified.ToTime()
 	return nil
 }
 
