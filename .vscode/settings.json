@@ -64,5 +64,11 @@
       "changeProcessCWD": true,
       "directory": "./src",
     },
-  ]
+  ],
+  "go.useLanguageServer": true,
+  "go.languageServerExperimentalFeatures": {
+    "format": true,
+    "diagnostics": true,
+    "documentLink": true
+  }
 }

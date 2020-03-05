@@ -5,13 +5,13 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 const dateFormat = '2006-01-02';
-const datetimeFormat = 'time.RFC3339';
+const datetimeRFC3339Format = 'time.RFC3339';
 const datetimeRFC1123Format = 'time.RFC1123';
 
 // represents the generated content for an operation group
@@ -93,10 +93,6 @@ export interface HeaderResponse {
   respObj: string;
 }
 
-export interface HeaderFormat extends Schema {
-  format: string;
-}
-
 function formatParamValue(param: Parameter, imports: ImportManager): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
@@ -160,10 +156,12 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
         // remove the dereference
         paramName = paramName.substr(1);
       }
-      if ((<HeaderFormat>param.schema).format === 'date-time-rfc1123') {
-        return `${paramName}.Format(${datetimeRFC1123Format})`;
+      let format = datetimeRFC3339Format;
+      const dateTime = <DateTimeSchema>param.schema;
+      if (dateTime.format === 'date-time-rfc1123') {
+        format = datetimeRFC1123Format;
       }
-      return `${paramName}.Format(${datetimeFormat})`;
+      return `${paramName}.Format(${format})`;
     case SchemaType.Duration:
     case SchemaType.UnixTime:
       if (param.required !== true && paramName[0] === '*') {
@@ -236,11 +234,12 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       return headerText;
     case SchemaType.DateTime:
       imports.add('time');
-      if ((<HeaderFormat>header.schema).format === 'date-time-rfc1123') {
-        text = `\tval, err := time.Parse(${datetimeRFC1123Format}, resp.Header.Get("${header.header}"))\n`;
-      } else {
-        text = `\tval, err := time.Parse(${datetimeFormat}, resp.Header.Get("${header.header}"))\n`;
+      let format = datetimeRFC3339Format;
+      const dateTime = <DateTimeSchema>header.schema;
+      if (dateTime.format === 'date-time-rfc1123') {
+        format = datetimeRFC1123Format;
       }
+      text = `\tval, err := time.Parse(${format}, resp.Header.Get("${header.header}"))\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
@@ -377,6 +376,10 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         text += '\t}\n';
         body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
       }
+    } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
+      // wrap the body in the custom RFC1123 type
+      text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
+      body = 'aux';
     }
     text += `\terr := req.MarshalAs${mediaType}(${body})\n`;
     text += `\tif err != nil {\n`;
@@ -422,6 +425,13 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   if (mediaType === 'none') {
     // no response body so nothing to unmarshal
     text += `\treturn &${respObj}, nil\n`;
+  } else if ((<SchemaResponse>resp).schema.type === SchemaType.DateTime) {
+    // use the designated time type for unmarshalling
+    text += `\tvar aux *${(<SchemaResponse>resp).schema.language.go!.internalTimeType}\n`;
+    text += `\terr := resp.UnmarshalAs${mediaType}(&aux)\n`;
+    text += `\tresult := ${respObj}\n`;
+    text += `\tresult.${(<SchemaResponse>resp).schema.language.go!.responseValue} = aux.ToTime()\n`;
+    text += `\treturn &result, err\n`;
   } else {
     text += `\tresult := ${respObj}\n`;
     let target = `result.${(<SchemaResponse>resp).schema.language.go!.responseValue}`;
