@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
 import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, HasDescription, ImportManager, isArraySchema, LanguageHeader, SortAscending } from '../common/helpers';
+import { ContentPreamble, HasDescription, ImportManager, isArraySchema, LanguageHeader, removeDuplicates, SortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -18,20 +18,30 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   // add types from requests and responses
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
+      // add fields related to the operation response
       if (op.responses) {
-        // check if the response has http headers that it will expect information from. 
-        if (op.responses![0].protocol.http!.headers) {
-          for (const header of values(op.responses![0].protocol.http!.headers)) {
-            const head = <LanguageHeader>header;
-            // convert each header to a property and append it to the response properties list
-            if (!HasDescription(head)) {
-              head.description = `${head.name} contains the information returned from the ${head.name} header response.`
+        let firstResp = op.responses![0];
+        let headerArray = new Array<LanguageHeader>();
+        for (const resp of values(op.responses)) {
+          // check if the response is expecting information from headers
+          if (resp.protocol.http!.headers) {
+            for (const header of values(resp.protocol.http!.headers)) {
+              let head = <LanguageHeader>header;
+              // convert each header to a property and append it to the response properties list
+              if (!HasDescription(head)) {
+                head.description = `${head.name} contains the information returned from the ${head.name} header response.`
+              }
+              headerArray.push(head);
             }
-            op.responses![0].language.go!.properties.push(newProperty(head.name, head.description, <Schema>head.schema));
           }
         }
+        const uniqueHeaders = removeDuplicates(headerArray);
+        // const uniqueHeaders = [...new Set(headerArray.map(item => item.name))];
+        for (const header of values(uniqueHeaders)) {
+          firstResp.language.go!.properties.push(newProperty(header.name, header.description, <Schema>header.schema));
+        }
         // add structs from operation responses
-        structs.push(generateStruct(op.responses[0].language.go!, op.responses[0].language.go!.properties));
+        structs.push(generateStruct(firstResp.language.go!, firstResp.language.go!.properties));
       }
       // add structs from optional operation params
       if (op.requests![0].language.go!.optionalParam) {

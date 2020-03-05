@@ -44,7 +44,10 @@ async function process(session: Session<CodeModel>) {
     choice.choiceType.language.go!.name = 'string';
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
-    choice.choiceType.language.go!.name = 'string';
+    // TODO need to see how to add sealed-choices that have a different schema
+    if (choice.choiceType) {
+      choice.choiceType.language.go!.name = 'string';
+    }
   }
 }
 
@@ -186,34 +189,41 @@ function processOperationResponses(session: Session<CodeModel>) {
 
 // creates the response type to be returned from an operation and updates the operation
 function createResponseType(op: Operation) {
-  if (length(op.responses) > 1) {
-    throw console.error('multiple responses NYI');
-  }
   // create the `type FooResponse struct` response
   // type with a `StatusCode int` field
-  const resp = op.responses![0];
-  resp.language.go!.responseType = true;
-  resp.language.go!.properties = [
+  const firstResp = op.responses![0];
+  firstResp.language.go!.responseType = true;
+  firstResp.language.go!.properties = [
     newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
   ];
+  const len = op.responses!.length;
+  // if (len > 1) {
+  //   throw console.error('multiple responses NYI')
+  // for (const resp of values(op.responses)) {
+  //   const schemaResp = <SchemaResponse>resp;
+  //   if (schemaResp.schema.type !== (<SchemaResponse>firstResp).schema.type) {
+  //     throw console.error('multiple schemas NYI');
+  //   }
+  // }
+  // }
   // if the response defines a schema then add it as a field to the response type
-  if (isSchemaResponse(resp)) {
+  if (isSchemaResponse(firstResp)) {
     // for operations that return scalar types we use a fixed field name 'Value'
     let propName = 'Value';
-    if (resp.schema.type === SchemaType.Object) {
+    if (firstResp.schema.type === SchemaType.Object) {
       // for object types use the type's name as the field name
-      propName = resp.schema.language.go!.name;
-    } else if (resp.schema.type === SchemaType.Array) {
+      propName = firstResp.schema.language.go!.name;
+    } else if (firstResp.schema.type === SchemaType.Array) {
       // for array types use the element type's name
-      propName = (<ArraySchema>resp.schema).elementType.language.go!.name;
+      propName = (<ArraySchema>firstResp.schema).elementType.language.go!.name;
     }
-    if (resp.schema.serialization?.xml && resp.schema.serialization.xml.name) {
+    if (firstResp.schema.serialization?.xml && firstResp.schema.serialization.xml.name) {
       // always prefer the XML name
-      propName = pascalCase(resp.schema.serialization.xml.name);
+      propName = pascalCase(firstResp.schema.serialization.xml.name);
     }
-    resp.schema.language.go!.name = schemaTypeToGoType(resp.schema);
-    resp.schema.language.go!.responseValue = propName;
-    (<Array<Property>>resp.language.go!.properties).push(newProperty(propName, resp.schema.language.go!.description, resp.schema));
+    firstResp.schema.language.go!.name = schemaTypeToGoType(firstResp.schema);
+    firstResp.schema.language.go!.responseValue = propName;
+    (<Array<Property>>firstResp.language.go!.properties).push(newProperty(propName, firstResp.schema.language.go!.description, firstResp.schema));
   }
 }
 

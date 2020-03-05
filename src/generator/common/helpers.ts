@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Parameter, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema } from '@azure-tools/codemodel';
+import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Parameter, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema, Response, Property } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 export interface LanguageHeader extends Language {
@@ -194,11 +194,8 @@ export function sortParamInfoByRequired(a: ParamInfo, b: ParamInfo): number {
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
 export function genereateReturnsInfo(op: Operation): string[] {
-  if (length(op.responses) > 1) {
-    throw console.error('multiple responses NYI');
-  }
-  const resp = op.responses![0];
-  return [`*${resp.language.go!.name}`, 'error'];
+  // TODO check this implementation, if any additional return information needs to be included
+  return [`*${op.responses![0].language.go!.name}`, 'error'];
 }
 
 // flattens out ParamInfo to return a complete parameter sig string
@@ -242,11 +239,14 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
     enums.push(entry);
   }
   for (const choice of values(schemas.sealedChoices)) {
-    const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
-    if (HasDescription(choice.language.go!)) {
-      entry.desc = choice.language.go!.description;
+    // TODO check what to do in the case of having a sealedChoice that doesnt have the choiceType field
+    if (choice.choiceType) {
+      const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
+      if (HasDescription(choice.language.go!)) {
+        entry.desc = choice.language.go!.description;
+      }
+      enums.push(entry);
     }
-    enums.push(entry);
   }
   enums.sort((a: EnumEntry, b: EnumEntry) => { return SortAscending(a.name, b.name) });
   return enums;
@@ -255,4 +255,23 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
 // returns ArraySchema type predicate if the schema is an ArraySchema
 export function isArraySchema(resp: Schema): resp is ArraySchema {
   return (resp as ArraySchema).elementType !== undefined;
+}
+
+export function contains(headers: Array<LanguageHeader>, header: LanguageHeader): boolean {
+  for (const head of values(headers)) {
+    if (head.name === header.name) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function removeDuplicates(headers: Array<LanguageHeader>): Array<LanguageHeader> {
+  let unique = new Array<LanguageHeader>();
+  for (const head of values(headers)) {
+    if (!contains(unique, head)) {
+      unique.push(head);
+    }
+  }
+  return unique;
 }

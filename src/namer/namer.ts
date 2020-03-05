@@ -111,19 +111,18 @@ async function process(session: Session<CodeModel>) {
         };
       }
       details.protocolNaming = new protocolMethods(details.name);
-      // fix up response type name and description
-      if (length(op.responses) > 1) {
-        throw console.error('multiple responses NYI');
-      }
-      const resp = op.responses![0];
+      // TODO check if we still need to fix up response type name and description
+      const firstResp = op.responses![0];
       const name = `${opGroupName}${op.language.go!.name}Response`;
-      resp.language.go!.name = name;
-      resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
-      // add a field to headers to include a Go compliant name for when it needs to be used as a field in a type
-      if (op.responses![0].protocol.http!.headers) {
-        for (const header of values(op.responses![0].protocol.http!.headers)) {
-          const head = <LanguageHeader>header;
-          head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+      firstResp.language.go!.name = name;
+      firstResp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
+      for (const resp of values(op.responses)) {
+        // add a field to headers to include a Go compliant name for when it needs to be used as a field in a type
+        if (resp.protocol.http!.headers) {
+          for (const header of values(resp.protocol.http!.headers)) {
+            const head = <LanguageHeader>header;
+            head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+          }
         }
       }
     }
