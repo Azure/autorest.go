@@ -170,6 +170,13 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
         paramName = paramName.substr(1);
       }
       return `${paramName}.String()`;
+    case SchemaType.Uri:
+      imports.add('url');
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substr(1);
+      }
+      return `${paramName}.String()`;
     case SchemaType.Integer:
       imports.add('strconv');
       const intSchema = <NumberSchema>param.schema;
@@ -260,7 +267,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       const intNum = <NumberSchema>header.schema;
       if (intNum.precision === 32) {
         headerText.body = `\t${header.name}0, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 32)\n`;
-        headerText.body += `\t${header.name} := int32(val32)\n`;
+        headerText.body += `\t${header.name} := int32(${header.name}0)\n`;
       } else {
         headerText.body = `\t${header.name}, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 64)\n`;
       }
@@ -274,7 +281,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       const floatNum = <NumberSchema>header.schema;
       if (floatNum.precision === 32) {
         headerText.body = `\t${header.name}0, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 32)\n`;
-        headerText.body += `\t${header.name} := float32(val32)\n`;
+        headerText.body += `\t${header.name} := float32(${header.name}0)\n`;
       } else {
         headerText.body = `\t${header.name}, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 64)\n`;
       }
@@ -309,11 +316,11 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'path'; });
   // const inPathParams = inPathHelper.
-  if (inPathParams) {
+  if (inPathParams.count() > 0) {
     // replace path parameters
     imports.add('strings');
     imports.add('net/url');
-    for (const pp of inPathParams) {
+    for (const pp of values(inPathParams)) {
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
     }
   }
@@ -407,19 +414,19 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
 
   let respObj = `${firstResp.language.go!.name}{RawResponse: resp.Response}`;
   let headResp = <HeaderResponse>{};
-  let headerArray = new Array<LanguageHeader>();
+  let headerArray = new Map<string, LanguageHeader>();
   for (const resp of values(op.responses)) {
     // check if the response is expecting information from headers
     if (resp.protocol.http!.headers) {
       for (const header of values(resp.protocol.http!.headers)) {
         let head = <LanguageHeader>header;
-        headerArray.push(head);
+        if (!headerArray.has(head.header)) {
+          headerArray.set(head.header, head);
+        }
       }
     }
   }
-  const uniqueHeaders = removeDuplicates(headerArray);
-  // const uniqueHeaders = [...new Set(headerArray.map(item => item.name))];
-  for (const header of values(uniqueHeaders)) {
+  for (const header of values(headerArray)) {
     headResp = formatHeaderResponseValue(header, imports, respObj);
     // reassign respObj to include the value returned from the headers
     respObj = headResp.respObj;

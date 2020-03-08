@@ -21,7 +21,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
       // add fields related to the operation response
       if (op.responses) {
         let firstResp = op.responses![0];
-        let headerArray = new Array<LanguageHeader>();
+        let headerArray = new Map<string, LanguageHeader>();
         for (const resp of values(op.responses)) {
           // check if the response is expecting information from headers
           if (resp.protocol.http!.headers) {
@@ -31,13 +31,13 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
               if (!HasDescription(head)) {
                 head.description = `${head.name} contains the information returned from the ${head.name} header response.`
               }
-              headerArray.push(head);
+              if (!headerArray.has(head.header)) {
+                headerArray.set(head.header, head);
+              }
             }
           }
         }
-        const uniqueHeaders = removeDuplicates(headerArray);
-        // const uniqueHeaders = [...new Set(headerArray.map(item => item.name))];
-        for (const header of values(uniqueHeaders)) {
+       for (const header of values(headerArray)) {
           firstResp.language.go!.properties.push(newProperty(header.name, header.description, <Schema>header.schema));
         }
         // add structs from operation responses

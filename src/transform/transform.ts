@@ -5,7 +5,7 @@
 
 import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, HttpHeader } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { aggregateParameters, ParamInfo, paramInfo } from '../generator/common/helpers';
 
@@ -47,6 +47,8 @@ async function process(session: Session<CodeModel>) {
     // TODO need to see how to add sealed-choices that have a different schema
     if (choice.choiceType) {
       choice.choiceType.language.go!.name = 'string';
+    } else if (choice.choices.length > 0) {
+      choice.language.go!.name = 'string';
     }
   }
 }
@@ -59,6 +61,8 @@ function schemaTypeToGoType(schema: Schema): string {
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
       return `[]${schemaTypeToGoType(arrayElem)}`;
+    case SchemaType.Binary:
+      return 'azcore.ReadSeekCloser';
     case SchemaType.Boolean:
       return 'bool';
     case SchemaType.ByteArray:
@@ -86,6 +90,8 @@ function schemaTypeToGoType(schema: Schema): string {
     case SchemaType.String:
     case SchemaType.Uuid:
       return 'string';
+    case SchemaType.Uri:
+      return 'url.URL';
     default:
       return schema.language.go!.name;
   }
@@ -126,6 +132,16 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
+      if (op.requests) {
+        for (const req of values(op.requests)) {
+          if (req.protocol.http!.headers) {
+            for (const header of values(req.protocol.http!.headers)) {
+              const head = <HttpHeader>header;
+              head.schema.language.go!.name = schemaTypeToGoType(head.schema);
+            }
+          }
+        }
+      }
       for (const param of values(aggregateParameters(op))) {
         // skip the host param as we use our own url.URL instead
         if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
@@ -178,6 +194,12 @@ function processOperationResponses(session: Session<CodeModel>) {
       }
       // recursively add the marshalling format to the responses if applicable
       for (const resp of values(op.responses)) {
+        if (resp.protocol.http!.headers) {
+          for (const header of values(resp.protocol.http!.headers)) {
+            const head = <HttpHeader>header;
+            head.schema.language.go!.name = schemaTypeToGoType(head.schema);
+          }
+        }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
         if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
           recursiveAddMarshallingFormat(resp.schema, marshallingFormat);
