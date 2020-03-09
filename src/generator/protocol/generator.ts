@@ -10,6 +10,7 @@ import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations'
 import { generateModels } from './models'
 import { generateEnums } from './enums'
+import { generateTimeHelpers } from './time'
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
@@ -39,6 +40,10 @@ export async function protocolGen(host: Host) {
     const models = await generateModels(session);
     host.WriteFile(`internal/${namespace}/models.go`, models, undefined, 'source-file-go');
 
+    const timeHelpers = await generateTimeHelpers(session);
+    for (const helper of values(timeHelpers)) {
+      host.WriteFile(`internal/${namespace}/${helper.name.toLowerCase()}.go`, helper.content, undefined, 'source-file-go');
+    }
   } catch (E) {
     if (debug) {
       console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);

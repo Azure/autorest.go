@@ -12,6 +12,7 @@ import (
 	"path"
 )
 
+// EnumOperations contains the methods for the Enum group.
 type EnumOperations struct{}
 
 // GetNotExpandableCreateRequest creates the GetNotExpandable request.

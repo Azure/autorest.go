@@ -24,7 +24,7 @@ func DeepEqualOrFatal(t *testing.T, result interface{}, expected interface{}) {
 		if err != nil {
 			t.Fatalf("got %+v, want %+v", result, expected)
 		}
-		t.Fatalf("got %+v, want %+v", resultJSON, expectedJSON)
+		t.Fatalf("got\n\n%+v,\n\nwant\n\n%+v", string(resultJSON), string(expectedJSON))
 	}
 }
 

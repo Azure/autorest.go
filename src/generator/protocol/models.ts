@@ -107,9 +107,9 @@ class StructDef {
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
       }
       let serialization = prop.serializedName;
-      if (prop.schema.language.go!.marshallingFormat === 'json') {
+      if (this.Language.marshallingFormat === 'json') {
         serialization += ',omitempty';
-      } else if (prop.schema.language.go!.marshallingFormat === 'xml') {
+      } else if (this.Language.marshallingFormat === 'xml') {
         // default to using the serialization name
         if (prop.schema.serialization?.xml?.name) {
           // xml can specifiy its own name, prefer that if available
@@ -153,10 +153,10 @@ class StructDef {
           }
         }
       }
-      let tag = ` \`${prop.schema.language.go!.marshallingFormat}:"${serialization}"\``;
+      let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"\``;
       // if this is a response type then omit the tag IFF the marshalling format is
       // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
-      if (this.Language.responseType && (prop.schema.language.go!.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) {
+      if (this.Language.responseType && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) {
         tag = '';
       }
       text += `\t${prop.language.go!.name} *${typeName}${tag}\n`;

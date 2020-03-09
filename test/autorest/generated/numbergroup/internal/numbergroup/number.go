@@ -12,6 +12,7 @@ import (
 	"path"
 )
 
+// NumberOperations contains the methods for the Number group.
 type NumberOperations struct{}
 
 // GetBigDecimalCreateRequest creates the GetBigDecimal request.
