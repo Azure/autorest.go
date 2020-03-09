@@ -161,7 +161,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           if (req.protocol.http!.headers) {
             for (const header of values(req.protocol.http!.headers)) {
               const head = <HttpHeader>header;
-              head.schema.language.go!.name = schemaTypeToGoType(head.schema);
+              head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
             }
           }
         }
@@ -171,7 +171,7 @@ function processOperationRequests(session: Session<CodeModel>) {
         if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
           continue;
         }
-        const inBody = param.protocol.http!.in === 'body';
+        const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
           // add global param info to the operation group
@@ -221,7 +221,7 @@ function processOperationResponses(session: Session<CodeModel>) {
         if (resp.protocol.http!.headers) {
           for (const header of values(resp.protocol.http!.headers)) {
             const head = <HttpHeader>header;
-            head.schema.language.go!.name = schemaTypeToGoType(head.schema);
+            head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
           }
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);

@@ -444,12 +444,12 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   if (mediaType === 'none') {
     // no response body so nothing to unmarshal
     text += `\treturn &${respObj}, nil\n`;
-  } else if ((<SchemaResponse>resp).schema.type === SchemaType.DateTime) {
+  } else if ((<SchemaResponse>firstResp).schema.type === SchemaType.DateTime) {
     // use the designated time type for unmarshalling
-    text += `\tvar aux *${(<SchemaResponse>resp).schema.language.go!.internalTimeType}\n`;
+    text += `\tvar aux *${(<SchemaResponse>firstResp).schema.language.go!.internalTimeType}\n`;
     text += `\terr := resp.UnmarshalAs${mediaType}(&aux)\n`;
     text += `\tresult := ${respObj}\n`;
-    text += `\tresult.${(<SchemaResponse>resp).schema.language.go!.responseValue} = aux.ToTime()\n`;
+    text += `\tresult.${(<SchemaResponse>firstResp).schema.language.go!.responseValue} = aux.ToTime()\n`;
     text += `\treturn &result, err\n`;
   } else {
     text += `\tresult := ${respObj}\n`;
