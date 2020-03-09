@@ -37,6 +37,9 @@ async function process(session: Session<CodeModel>) {
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
+      if (prop.schema.type === SchemaType.DateTime) {
+        obj.language.go!.needsDateTimeMarshalling = true;
+      }
     }
   }
   // fix up enum types
@@ -194,6 +197,10 @@ function processOperationRequests(session: Session<CodeModel>) {
         const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
+          if (marshallingFormat === 'xml' && bodyParam.schema.serialization?.xml?.name) {
+            // mark that this parameter type will need a custom marshaller to handle the XML name
+            bodyParam.schema.language.go!.xmlWrapperName = bodyParam.schema.serialization?.xml?.name;
+          }
         }
       }
     }

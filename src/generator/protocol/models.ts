@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
-import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { ContentPreamble, HasDescription, ImportManager, isArraySchema, LanguageHeader, SortAscending } from '../common/helpers';
 
@@ -61,6 +61,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   structs.sort((a: StructDef, b: StructDef) => { return SortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
     text += struct.text();
+    text += struct.marshaller();
+    text += struct.unmarshaller();
   }
   return text;
 }
@@ -200,6 +202,99 @@ class StructDef {
     }
     return text;
   }
+
+  // creates a custom marshaller for this type
+  marshaller(): string {
+    // only needed for types with time.Time or where the XML name doesn't match the type name
+    if (this.Language.needsDateTimeMarshalling === undefined && this.Language.xmlWrapperName === undefined) {
+      return '';
+    }
+    const receiver = this.Language.name[0].toLowerCase();
+    let formatSig = 'JSON() ([]byte, error)';
+    if (this.Language.marshallingFormat === 'xml') {
+      formatSig = 'XML(e *xml.Encoder, start xml.StartElement) error'
+    }
+    let text = `func (${receiver} ${this.Language.name}) Marshal${formatSig} {\n`;
+    if (this.Language.xmlWrapperName) {
+      text += `\tstart.Name.Local = "${this.Language.xmlWrapperName}"\n`;
+    }
+    text += this.generateAliasType(receiver, true);
+    if (this.Language.marshallingFormat === 'json') {
+      text += '\treturn json.Marshal(aux)\n';
+    } else {
+      text += '\treturn e.EncodeElement(aux, start)\n';
+    }
+    text += '}\n\n';
+    return text;
+  }
+
+  // creates a custom unmarshaller for this type
+  unmarshaller(): string {
+    // only needed for types with time.Time
+    if (this.Language.needsDateTimeMarshalling === undefined) {
+      return '';
+    }
+    const receiver = this.Language.name[0].toLowerCase();
+    let formatSig = 'JSON(data []byte)';
+    if (this.Language.marshallingFormat === 'xml') {
+      formatSig = 'XML(d *xml.Decoder, start xml.StartElement)';
+    }
+    let text = `func (${receiver} *${this.Language.name}) Unmarshal${formatSig} error {\n`;
+    text += this.generateAliasType(receiver, false);
+    if (this.Language.marshallingFormat === 'json') {
+      text += '\tif err := json.Unmarshal(data, aux); err != nil {\n';
+      text += '\t\treturn err\n';
+      text += '\t}\n';
+    } else {
+      text += '\tif err := d.DecodeElement(aux, &start); err != nil {\n';
+      text += '\t\treturn err\n';
+      text += '\t}\n';
+    }
+    for (const prop of values(this.Properties)) {
+      if (prop.schema.type !== SchemaType.DateTime) {
+        continue;
+      }
+      text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
+    }
+    text += '\treturn nil\n';
+    text += '}\n\n';
+    return text;
+  }
+
+  // generates an alias type used by custom marshaller/unmarshaller
+  private generateAliasType(receiver: string, forMarshal: boolean): string {
+    let text = `\ttype alias ${this.Language.name}\n`;
+    text += `\taux := &struct {\n`;
+    text += `\t\t*alias\n`;
+    for (const prop of values(this.Properties)) {
+      if (prop.schema.type !== SchemaType.DateTime) {
+        continue;
+      }
+      let sn = prop.serializedName;
+      if (prop.schema.serialization?.xml?.name) {
+        // xml can specifiy its own name, prefer that if available
+        sn = prop.schema.serialization.xml.name;
+      }
+      text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.internalTimeType} \`${this.Language.marshallingFormat}:"${sn}"\`\n`;
+    }
+    text += `\t}{\n`;
+    let rec = receiver;
+    if (forMarshal) {
+      rec = '&' + rec;
+    }
+    text += `\t\talias: (*alias)(${rec}),\n`;
+    if (forMarshal) {
+      // emit code to initialize time fields
+      for (const prop of values(this.Properties)) {
+        if (prop.schema.type !== SchemaType.DateTime) {
+          continue;
+        }
+        text += `\t\t${prop.language.go!.name}: (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name}),\n`;
+      }
+    }
+    text += `\t}\n`;
+    return text;
+  }
 }
 
 function generateStructs(objects?: ObjectSchema[]): StructDef[] {
@@ -217,6 +312,9 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
   }
   if (lang.responseType) {
     imports.add("net/http");
+  }
+  if (lang.needsDateTimeMarshalling) {
+    imports.add('encoding/' + lang.marshallingFormat);
   }
   const st = new StructDef(lang, props);
   for (const prop of values(props)) {

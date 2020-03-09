@@ -37,7 +37,3 @@ func (t *timeRFC1123) UnmarshalText(data []byte) error {
 	*t = timeRFC1123(p)
 	return err
 }
-
-func (t *timeRFC1123) ToTime() *time.Time {
-	return (*time.Time)(t)
-}

@@ -40,9 +40,9 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 type BlobType = azinternal.BlobType
 
 const (
-	BlobTypeBlockblob  = azinternal.BlobTypeBlockblob
-	BlobTypePageblob   = azinternal.BlobTypePageblob
-	BlobTypeAppendblob = azinternal.BlobTypeAppendblob
+	BlobTypeBlockBlob  = azinternal.BlobTypeBlockBlob
+	BlobTypePageBlob   = azinternal.BlobTypePageBlob
+	BlobTypeAppendBlob = azinternal.BlobTypeAppendBlob
 )
 
 func PossibleBlobTypeValues() []BlobType {

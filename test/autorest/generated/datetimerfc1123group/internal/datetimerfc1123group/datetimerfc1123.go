@@ -32,7 +32,7 @@ func (Datetimerfc1123Operations) GetInvalidHandleResponse(resp *azcore.Response)
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
 	result := Datetimerfc1123GetInvalidResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -52,7 +52,7 @@ func (Datetimerfc1123Operations) GetNullHandleResponse(resp *azcore.Response) (*
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
 	result := Datetimerfc1123GetNullResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -72,7 +72,7 @@ func (Datetimerfc1123Operations) GetOverflowHandleResponse(resp *azcore.Response
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
 	result := Datetimerfc1123GetOverflowResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -92,7 +92,7 @@ func (Datetimerfc1123Operations) GetUTCLowercaseMaxDateTimeHandleResponse(resp *
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
 	result := Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -112,7 +112,7 @@ func (Datetimerfc1123Operations) GetUTCMinDateTimeHandleResponse(resp *azcore.Re
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
 	result := Datetimerfc1123GetUTCMinDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -132,7 +132,7 @@ func (Datetimerfc1123Operations) GetUTCUppercaseMaxDateTimeHandleResponse(resp *
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
 	result := Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -152,7 +152,7 @@ func (Datetimerfc1123Operations) GetUnderflowHandleResponse(resp *azcore.Respons
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
 	result := Datetimerfc1123GetUnderflowResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 

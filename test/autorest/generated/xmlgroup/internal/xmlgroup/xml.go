@@ -13,6 +13,7 @@ import (
 	"path"
 )
 
+// XMLOperations contains the methods for the XML group.
 type XMLOperations struct{}
 
 // GetACLsCreateRequest creates the GetACLs request.
@@ -23,7 +24,8 @@ func (XMLOperations) GetACLsCreateRequest(u url.URL) (*azcore.Request, error) {
 	query.Set("comp", "acl")
 	query.Set("restype", "container")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetACLsHandleResponse handles the GetACLs response.
@@ -39,7 +41,8 @@ func (XMLOperations) GetACLsHandleResponse(resp *azcore.Response) (*XMLGetACLsRe
 func (XMLOperations) GetComplexTypeRefNoMetaCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/complex-type-ref-no-meta"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetComplexTypeRefNoMetaHandleResponse handles the GetComplexTypeRefNoMeta response.
@@ -55,7 +58,8 @@ func (XMLOperations) GetComplexTypeRefNoMetaHandleResponse(resp *azcore.Response
 func (XMLOperations) GetComplexTypeRefWithMetaCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/complex-type-ref-with-meta"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetComplexTypeRefWithMetaHandleResponse handles the GetComplexTypeRefWithMeta response.
@@ -71,7 +75,8 @@ func (XMLOperations) GetComplexTypeRefWithMetaHandleResponse(resp *azcore.Respon
 func (XMLOperations) GetEmptyChildElementCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/empty-child-element"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyChildElementHandleResponse handles the GetEmptyChildElement response.
@@ -87,7 +92,8 @@ func (XMLOperations) GetEmptyChildElementHandleResponse(resp *azcore.Response) (
 func (XMLOperations) GetEmptyListCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/empty-list"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyListHandleResponse handles the GetEmptyList response.
@@ -103,7 +109,8 @@ func (XMLOperations) GetEmptyListHandleResponse(resp *azcore.Response) (*XMLGetE
 func (XMLOperations) GetEmptyRootListCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/empty-root-list"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyRootListHandleResponse handles the GetEmptyRootList response.
@@ -119,7 +126,8 @@ func (XMLOperations) GetEmptyRootListHandleResponse(resp *azcore.Response) (*XML
 func (XMLOperations) GetEmptyWrappedListsCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/empty-wrapped-lists"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetEmptyWrappedListsHandleResponse handles the GetEmptyWrappedLists response.
@@ -135,7 +143,8 @@ func (XMLOperations) GetEmptyWrappedListsHandleResponse(resp *azcore.Response) (
 func (XMLOperations) GetHeadersCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/headers"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetHeadersHandleResponse handles the GetHeaders response.
@@ -143,15 +152,16 @@ func (XMLOperations) GetHeadersHandleResponse(resp *azcore.Response) (*XMLGetHea
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	val := resp.Header.Get("Custom-Header")
-	return &XMLGetHeadersResponse{RawResponse: resp.Response, CustomHeader: &val}, nil
+	customHeader := resp.Header.Get("Custom-Header")
+	return &XMLGetHeadersResponse{RawResponse: resp.Response, CustomHeader: &customHeader}, nil
 }
 
 // GetRootListCreateRequest creates the GetRootList request.
 func (XMLOperations) GetRootListCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/root-list"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetRootListHandleResponse handles the GetRootList response.
@@ -167,7 +177,8 @@ func (XMLOperations) GetRootListHandleResponse(resp *azcore.Response) (*XMLGetRo
 func (XMLOperations) GetRootListSingleItemCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/root-list-single-item"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetRootListSingleItemHandleResponse handles the GetRootListSingleItem response.
@@ -187,7 +198,8 @@ func (XMLOperations) GetServicePropertiesCreateRequest(u url.URL) (*azcore.Reque
 	query.Set("comp", "properties")
 	query.Set("restype", "service")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetServicePropertiesHandleResponse handles the GetServiceProperties response.
@@ -203,7 +215,8 @@ func (XMLOperations) GetServicePropertiesHandleResponse(resp *azcore.Response) (
 func (XMLOperations) GetSimpleCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/simple"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetSimpleHandleResponse handles the GetSimple response.
@@ -219,7 +232,8 @@ func (XMLOperations) GetSimpleHandleResponse(resp *azcore.Response) (*XMLGetSimp
 func (XMLOperations) GetWrappedListsCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/wrapped-lists"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // GetWrappedListsHandleResponse handles the GetWrappedLists response.
@@ -255,7 +269,8 @@ func (XMLOperations) JSONInputHandleResponse(resp *azcore.Response) (*XMLJSONInp
 func (XMLOperations) JSONOutputCreateRequest(u url.URL) (*azcore.Request, error) {
 	urlPath := "/xml/jsonoutput"
 	u.Path = path.Join(u.Path, urlPath)
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // JSONOutputHandleResponse handles the JSONOutput response.
@@ -275,7 +290,8 @@ func (XMLOperations) ListBlobsCreateRequest(u url.URL) (*azcore.Request, error) 
 	query.Set("comp", "list")
 	query.Set("restype", "container")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ListBlobsHandleResponse handles the ListBlobs response.
@@ -294,7 +310,8 @@ func (XMLOperations) ListContainersCreateRequest(u url.URL) (*azcore.Request, er
 	query := u.Query()
 	query.Set("comp", "list")
 	u.RawQuery = query.Encode()
-	return azcore.NewRequest(http.MethodGet, u), nil
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
 }
 
 // ListContainersHandleResponse handles the ListContainers response.
@@ -379,11 +396,7 @@ func (XMLOperations) PutEmptyChildElementCreateRequest(u url.URL, banana Banana)
 	urlPath := "/xml/empty-child-element"
 	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
-	type wrapper struct {
-		XMLName xml.Name `xml:"banana"`
-		*Banana
-	}
-	err := req.MarshalAsXML(wrapper{Banana: &banana})
+	err := req.MarshalAsXML(banana)
 	if err != nil {
 		return nil, err
 	}
@@ -403,11 +416,7 @@ func (XMLOperations) PutEmptyListCreateRequest(u url.URL, slideshow Slideshow) (
 	urlPath := "/xml/empty-list"
 	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
-	type wrapper struct {
-		XMLName xml.Name `xml:"slideshow"`
-		*Slideshow
-	}
-	err := req.MarshalAsXML(wrapper{Slideshow: &slideshow})
+	err := req.MarshalAsXML(slideshow)
 	if err != nil {
 		return nil, err
 	}
@@ -543,11 +552,7 @@ func (XMLOperations) PutSimpleCreateRequest(u url.URL, slideshow Slideshow) (*az
 	urlPath := "/xml/simple"
 	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
-	type wrapper struct {
-		XMLName xml.Name `xml:"slideshow"`
-		*Slideshow
-	}
-	err := req.MarshalAsXML(wrapper{Slideshow: &slideshow})
+	err := req.MarshalAsXML(slideshow)
 	if err != nil {
 		return nil, err
 	}
