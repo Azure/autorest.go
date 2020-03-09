@@ -48,6 +48,7 @@ async function process(session: Session<CodeModel>) {
     if (choice.choiceType) {
       choice.choiceType.language.go!.name = 'string';
     } else if (choice.choices.length > 0) {
+      // sealed choices that do not have the choice type field will need to change the language.go!.name field to string
       choice.language.go!.name = 'string';
     }
   }
@@ -219,15 +220,6 @@ function createResponseType(op: Operation) {
     newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
   ];
   const len = op.responses!.length;
-  // if (len > 1) {
-  //   throw console.error('multiple responses NYI')
-  // for (const resp of values(op.responses)) {
-  //   const schemaResp = <SchemaResponse>resp;
-  //   if (schemaResp.schema.type !== (<SchemaResponse>firstResp).schema.type) {
-  //     throw console.error('multiple schemas NYI');
-  //   }
-  // }
-  // }
   // if the response defines a schema then add it as a field to the response type
   if (isSchemaResponse(firstResp)) {
     // for operations that return scalar types we use a fixed field name 'Value'

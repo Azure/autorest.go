@@ -135,15 +135,14 @@ export function formatParamInfoTypeName(param: ParamInfo): string {
 
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {
-  if (op.requests!.length > 1) {
-    throw console.error('multiple requests NYI');
-  }
   let params = new Array<Parameter>();
   if (op.parameters) {
     params = params.concat(op.parameters);
   }
-  if (op.requests![0].parameters) {
-    params = params.concat(op.requests![0].parameters);
+  for (const req of values(op.requests)) {
+    if (req.parameters) {
+      params = params.concat(req.parameters);
+    }
   }
   return params;
 }
@@ -194,7 +193,7 @@ export function sortParamInfoByRequired(a: ParamInfo, b: ParamInfo): number {
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
 export function genereateReturnsInfo(op: Operation): string[] {
-  // TODO check this implementation, if any additional return information needs to be included
+  // TODO check this implementation, if any additional return information needs to be included for multiple responses
   return [`*${op.responses![0].language.go!.name}`, 'error'];
 }
 
@@ -246,6 +245,12 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
         entry.desc = choice.language.go!.description;
       }
       enums.push(entry);
+    } else if (choice.choices.length > 0) {
+      const entry = new EnumEntry(choice.language.go!.name, choice.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
+      if (HasDescription(choice.language.go!)) {
+        entry.desc = choice.language.go!.description;
+      }
+      enums.push(entry);
     }
   }
   enums.sort((a: EnumEntry, b: EnumEntry) => { return SortAscending(a.name, b.name) });
@@ -255,23 +260,4 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
 // returns ArraySchema type predicate if the schema is an ArraySchema
 export function isArraySchema(resp: Schema): resp is ArraySchema {
   return (resp as ArraySchema).elementType !== undefined;
-}
-
-export function contains(headers: Array<LanguageHeader>, header: LanguageHeader): boolean {
-  for (const head of values(headers)) {
-    if (head.name === header.name) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export function removeDuplicates(headers: Array<LanguageHeader>): Array<LanguageHeader> {
-  let unique = new Array<LanguageHeader>();
-  for (const head of values(headers)) {
-    if (!contains(unique, head)) {
-      unique.push(head);
-    }
-  }
-  return unique;
 }

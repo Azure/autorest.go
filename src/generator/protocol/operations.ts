@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, removeDuplicates, SortAscending } from '../common/helpers';
+import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 const dateFormat = '2006-01-02';
@@ -171,7 +171,7 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       }
       return `${paramName}.String()`;
     case SchemaType.Uri:
-      imports.add('url');
+      imports.add('net/url');
       if (param.required !== true && paramName[0] === '*') {
         // remove the dereference
         paramName = paramName.substr(1);

@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
 import { ArraySchema, CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, HasDescription, ImportManager, isArraySchema, LanguageHeader, removeDuplicates, SortAscending } from '../common/helpers';
+import { ContentPreamble, HasDescription, ImportManager, isArraySchema, LanguageHeader, SortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -37,7 +37,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
             }
           }
         }
-       for (const header of values(headerArray)) {
+        for (const header of values(headerArray)) {
           firstResp.language.go!.properties.push(newProperty(header.name, header.description, <Schema>header.schema));
         }
         // add structs from operation responses
