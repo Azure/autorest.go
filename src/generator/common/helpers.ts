@@ -156,7 +156,6 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
     if (param.schema.type === SchemaType.Constant) {
       // don't generate a parameter for a constant
       continue;
-
     }
     if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
       // don't include the URL param as we include that elsewhere as a url.URL
