@@ -323,26 +323,26 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
   }
   text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
-  const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
-  // if (inQueryParams.count() > 0) {
-  // add query parameters
-  text += '\tquery := u.Query()\n';
-  for (const qp of inQueryParams) {
-    if (qp.required === true) {
-      text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
-    } else if (qp.implementation === ImplementationLocation.Client) {
-      // global optional param
-      text += `\tif ${qp.language.go!.name} != nil {\n`;
-      text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
-      text += `\t}\n`;
-    } else {
-      text += `\tif options != nil && options.${pascalCase(qp.language.go!.name)} != nil {\n`;
-      text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
-      text += `\t}\n`;
+  // const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
+  if (values(aggregateParameters(op)).any((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query' })) {
+    // add query parameters
+    text += '\tquery := u.Query()\n';
+    for (const qp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'query'; })) {
+      if (qp.required === true) {
+        text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+      } else if (qp.implementation === ImplementationLocation.Client) {
+        // global optional param
+        text += `\tif ${qp.language.go!.name} != nil {\n`;
+        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+        text += `\t}\n`;
+      } else {
+        text += `\tif options != nil && options.${pascalCase(qp.language.go!.name)} != nil {\n`;
+        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+        text += `\t}\n`;
+      }
     }
+    text += '\tu.RawQuery = query.Encode()\n';
   }
-  text += '\tu.RawQuery = query.Encode()\n';
-  // }
   text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, u)\n`;
   if (hasBinaryResponse(op.responses!)) {
     // skip auto-body downloading for binary stream responses
