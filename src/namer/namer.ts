@@ -97,7 +97,7 @@ async function process(session: Session<CodeModel>) {
         paramDetails.name = getEscapedReservedName(camelCase(paramDetails.name), 'Parameter');
         // this is a bit of a weird case and might be due to invalid swagger in the test
         // server.  how can you have an optional parameter that's also a constant?
-        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && ((<SealedChoiceSchema>param.schema).choices !== undefined && (<SealedChoiceSchema>param.schema).choices.length === 1))) {
+        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
           optionalParams.push(param);
         }
       }

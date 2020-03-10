@@ -154,15 +154,13 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      if (op.requests) {
-        if (op.requests.length > 1) {
-          throw console.error('multiple requests NYI');
-        }
-        if (op.requests![0].protocol.http!.headers) {
-          for (const header of values(op.requests![0].protocol.http!.headers)) {
-            const head = <HttpHeader>header;
-            head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
-          }
+      if (op.requests!.length > 1) {
+        throw console.error('multiple requests NYI');
+      }
+      if (op.requests![0].protocol.http!.headers) {
+        for (const header of values(op.requests![0].protocol.http!.headers)) {
+          const head = <HttpHeader>header;
+          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
         }
       }
       for (const param of values(aggregateParameters(op))) {
