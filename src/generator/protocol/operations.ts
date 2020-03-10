@@ -218,7 +218,11 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
-      headerText.body = `\t${name} := []byte(resp.Header.Get("${header.header}"))\n`;
+      text = `\t${name}, err := base64.StdEncoding.DecodeString(resp.Header.Get("${header.header}"))\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+      headerText.body = text;
       headerText.respObj = respObj + `, ${header.name}: &${name}}`;
       return headerText;
     case SchemaType.Choice:
