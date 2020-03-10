@@ -68,6 +68,9 @@ export class ImportManager {
       case SchemaType.UnixTime:
         this.add('time');
         break;
+      case SchemaType.Uri:
+        this.add('net/url');
+        break;
     }
   }
 

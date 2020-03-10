@@ -47,10 +47,11 @@ async function process(session: Session<CodeModel>) {
     // TODO need to see how to add sealed-choices that have a different schema
     if (choice.choiceType) {
       choice.choiceType.language.go!.name = 'string';
-    } else if (choice.choices.length > 0) {
-      // sealed choices that do not have the choice type field will need to change the language.go!.name field to string
-      choice.language.go!.name = 'string';
     }
+    // else if (choice.choices.length > 0) {
+    //   // sealed choices that do not have the choice type field will need to change the language.go!.name field to string
+    //   choice.language.go!.name = 'string';
+    // }
   }
 }
 

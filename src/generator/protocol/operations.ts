@@ -246,7 +246,7 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       if (dateTime.format === 'date-time-rfc1123') {
         format = datetimeRFC1123Format;
       }
-      text = `\tval, err := time.Parse(${format}, resp.Header.Get("${header.header}"))\n`;
+      text = `\t${header.name}, err := time.Parse(${format}, resp.Header.Get("${header.header}"))\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
@@ -315,36 +315,34 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'path'; });
-  // const inPathParams = inPathHelper.
-  if (inPathParams.count() > 0) {
-    // replace path parameters
+  // replace path parameters
+  for (const pp of values(inPathParams)) {
+    // TODO this needs to be fixed, this is an ugly solution to guarantee that string and url imports are only added when an in path parameter is actually added
     imports.add('strings');
     imports.add('net/url');
-    for (const pp of values(inPathParams)) {
-      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
-    }
+    text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
   }
   text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
-  const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'query'; });
-  if (inQueryParams) {
-    // add query parameters
-    text += '\tquery := u.Query()\n';
-    for (const qp of inQueryParams) {
-      if (qp.required === true) {
-        text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
-      } else if (qp.implementation === ImplementationLocation.Client) {
-        // global optional param
-        text += `\tif ${qp.language.go!.name} != nil {\n`;
-        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
-        text += `\t}\n`;
-      } else {
-        text += `\tif options != nil && options.${pascalCase(qp.language.go!.name)} != nil {\n`;
-        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
-        text += `\t}\n`;
-      }
+  const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
+  // if (inQueryParams.count() > 0) {
+  // add query parameters
+  text += '\tquery := u.Query()\n';
+  for (const qp of inQueryParams) {
+    if (qp.required === true) {
+      text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+    } else if (qp.implementation === ImplementationLocation.Client) {
+      // global optional param
+      text += `\tif ${qp.language.go!.name} != nil {\n`;
+      text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+      text += `\t}\n`;
+    } else {
+      text += `\tif options != nil && options.${pascalCase(qp.language.go!.name)} != nil {\n`;
+      text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+      text += `\t}\n`;
     }
-    text += '\tu.RawQuery = query.Encode()\n';
   }
+  text += '\tu.RawQuery = query.Encode()\n';
+  // }
   text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, u)\n`;
   if (hasBinaryResponse(op.responses!)) {
     // skip auto-body downloading for binary stream responses
