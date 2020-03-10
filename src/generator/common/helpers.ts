@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Parameter, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema, Response, Property } from '@azure-tools/codemodel';
+import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Parameter, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 
 export interface LanguageHeader extends Language {
@@ -142,10 +142,11 @@ export function aggregateParameters(op: Operation): Array<Parameter> {
   if (op.parameters) {
     params = params.concat(op.parameters);
   }
-  for (const req of values(op.requests)) {
-    if (req.parameters) {
-      params = params.concat(req.parameters);
-    }
+  if (op.requests!.length > 1) {
+    throw console.error('multiple requests NYI');
+  }
+  if (op.requests![0].parameters) {
+    params = params.concat(op.requests![0].parameters);
   }
   return params;
 }
@@ -240,20 +241,14 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
     enums.push(entry);
   }
   for (const choice of values(schemas.sealedChoices)) {
-    // TODO check what to do in the case of having a sealedChoice that doesnt have the choiceType field
-    if (choice.choiceType) {
-      const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
-      if (HasDescription(choice.language.go!)) {
-        entry.desc = choice.language.go!.description;
-      }
-      enums.push(entry);
-    } else if (choice.choices.length > 0) {
-      const entry = new EnumEntry(choice.language.go!.name, choice.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
-      if (HasDescription(choice.language.go!)) {
-        entry.desc = choice.language.go!.description;
-      }
-      enums.push(entry);
+    if (choice.choices.length === 1) {
+      continue;
     }
+    const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
+    if (HasDescription(choice.language.go!)) {
+      entry.desc = choice.language.go!.description;
+    }
+    enums.push(entry);
   }
   enums.sort((a: EnumEntry, b: EnumEntry) => { return SortAscending(a.name, b.name) });
   return enums;

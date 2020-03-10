@@ -5,7 +5,7 @@
 
 import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { aggregateParameters, ParamInfo, paramInfo } from '../generator/common/helpers';
 
@@ -45,13 +45,10 @@ async function process(session: Session<CodeModel>) {
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
     // TODO need to see how to add sealed-choices that have a different schema
-    if (choice.choiceType) {
-      choice.choiceType.language.go!.name = 'string';
+    if (choice.choices.length === 1) {
+      continue;
     }
-    // else if (choice.choices.length > 0) {
-    //   // sealed choices that do not have the choice type field will need to change the language.go!.name field to string
-    //   choice.language.go!.name = 'string';
-    // }
+    choice.choiceType.language.go!.name = 'string';
   }
 }
 
@@ -158,12 +155,13 @@ function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.requests) {
-        for (const req of values(op.requests)) {
-          if (req.protocol.http!.headers) {
-            for (const header of values(req.protocol.http!.headers)) {
-              const head = <HttpHeader>header;
-              head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
-            }
+        if (op.requests.length > 1) {
+          throw console.error('multiple requests NYI');
+        }
+        if (op.requests![0].protocol.http!.headers) {
+          for (const header of values(op.requests![0].protocol.http!.headers)) {
+            const head = <HttpHeader>header;
+            head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
           }
         }
       }
