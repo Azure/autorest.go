@@ -320,7 +320,10 @@ func (HeaderOperations) ResponseByteHandleResponse(resp *azcore.Response) (*Head
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	value := []byte(resp.Header.Get("value"))
+	value, err := base64.StdEncoding.DecodeString(resp.Header.Get("value"))
+	if err != nil {
+		return nil, err
+	}
 	return &HeaderResponseByteResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
