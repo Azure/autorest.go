@@ -5,7 +5,7 @@
 
 import { serialize, pascalCase, camelCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { codeModelSchema, CodeModel, Language, Parameter, SchemaType } from '@azure-tools/codemodel';
+import { codeModelSchema, CodeModel, Language, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters, LanguageHeader } from '../generator/common/helpers';
@@ -97,7 +97,7 @@ async function process(session: Session<CodeModel>) {
         paramDetails.name = getEscapedReservedName(camelCase(paramDetails.name), 'Parameter');
         // this is a bit of a weird case and might be due to invalid swagger in the test
         // server.  how can you have an optional parameter that's also a constant?
-        if (param.required !== true && param.schema.type !== SchemaType.Constant) {
+        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && ((<SealedChoiceSchema>param.schema).choices !== undefined && (<SealedChoiceSchema>param.schema).choices.length === 1))) {
           optionalParams.push(param);
         }
       }
