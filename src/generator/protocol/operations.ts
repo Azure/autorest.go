@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, KnownMediaType, pascalCase } from '@azure-tools/codegen'
+import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
@@ -204,40 +204,41 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
   }
   let headerText = <HeaderResponse>{};
   let text = ``;
+  const name = camelCase(header.name);
   switch (header.schema.type) {
     case SchemaType.Boolean:
       imports.add('strconv');
-      text = `\t${header.name}, err := strconv.ParseBool(resp.Header.Get("${header.header}"))\n`;
+      text = `\t${name}, err := strconv.ParseBool(resp.Header.Get("${header.header}"))\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
       headerText.body = text;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
-      headerText.body = `\t${header.name} := []byte(resp.Header.Get("${header.header}"))\n`;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.body = `\t${name} := []byte(resp.Header.Get("${header.header}"))\n`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
-      headerText.body = `\t${header.name} := ${header.schema.language.go!.name}(resp.Header.Get("${header.header}"))\n`;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.body = `\t${name} := ${header.schema.language.go!.name}(resp.Header.Get("${header.header}"))\n`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.Constant:
     case SchemaType.String:
-      headerText.body = `\t${header.name} := resp.Header.Get("${header.header}")\n`;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.body = `\t${name} := resp.Header.Get("${header.header}")\n`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.Date:
       imports.add('time');
-      text = `\t${header.name}, err := time.Parse("${dateFormat}", resp.Header.Get("${header.header}"))\n`;
+      text = `\t${name}, err := time.Parse("${dateFormat}", resp.Header.Get("${header.header}"))\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
       headerText.body = text;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.DateTime:
       imports.add('time');
@@ -246,49 +247,49 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
       if (dateTime.format === 'date-time-rfc1123') {
         format = datetimeRFC1123Format;
       }
-      text = `\t${header.name}, err := time.Parse(${format}, resp.Header.Get("${header.header}"))\n`;
+      text = `\t${name}, err := time.Parse(${format}, resp.Header.Get("${header.header}"))\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
       headerText.body = text;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.Duration:
       imports.add('time');
-      text = `\t${header.name}, err := time.ParseDuration(resp.Header.Get("${header.header}"))\n`;
+      text = `\t${name}, err := time.ParseDuration(resp.Header.Get("${header.header}"))\n`;
       text += `\tif err != nil {\n`;
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
       headerText.body = text;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.Integer:
       imports.add('strconv');
       const intNum = <NumberSchema>header.schema;
       if (intNum.precision === 32) {
-        headerText.body = `\t${header.name}0, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 32)\n`;
-        headerText.body += `\t${header.name} := int32(${header.name}0)\n`;
+        headerText.body = `\t${name}0, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 32)\n`;
+        headerText.body += `\t${name} := int32(${name}0)\n`;
       } else {
-        headerText.body = `\t${header.name}, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 64)\n`;
+        headerText.body = `\t${name}, err := strconv.ParseInt(resp.Header.Get("${header.header}"), 10, 64)\n`;
       }
       headerText.body += `\tif err != nil {\n`;
       headerText.body += `\t\treturn nil, err\n`;
       headerText.body += `\t}\n`;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     case SchemaType.Number:
       imports.add('strconv');
       const floatNum = <NumberSchema>header.schema;
       if (floatNum.precision === 32) {
-        headerText.body = `\t${header.name}0, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 32)\n`;
-        headerText.body += `\t${header.name} := float32(${header.name}0)\n`;
+        headerText.body = `\t${name}0, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 32)\n`;
+        headerText.body += `\t${name} := float32(${name}0)\n`;
       } else {
-        headerText.body = `\t${header.name}, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 64)\n`;
+        headerText.body = `\t${name}, err := strconv.ParseFloat(resp.Header.Get("${header.header}"), 64)\n`;
       }
       headerText.body += `\tif err != nil {\n`;
       headerText.body += `\t\treturn nil, err\n`;
       headerText.body += `\t}\n`;
-      headerText.respObj = respObj + `, ${header.name}: &${header.name}}`;
+      headerText.respObj = respObj + `, ${name}: &${name}}`;
       return headerText;
     default:
       if (respObj[respObj.length - 1] == '}') {
