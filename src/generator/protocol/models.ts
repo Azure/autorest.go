@@ -21,6 +21,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
       // add fields related to the operation response
       if (op.responses) {
         let firstResp = op.responses![0];
+        // when receiving multiple possible responses, they might expect the same headers in many cases
+        // we use a map to only add unique headers to the response model based on the header name
         let headerArray = new Map<string, LanguageHeader>();
         for (const resp of values(op.responses)) {
           // check if the response is expecting information from headers
