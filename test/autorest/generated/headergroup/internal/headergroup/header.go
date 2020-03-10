@@ -7,12 +7,13 @@ package headergroup
 
 import (
 	"encoding/base64"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 // HeaderOperations contains the methods for the Header group.
@@ -302,7 +303,7 @@ func (HeaderOperations) ResponseBoolHandleResponse(resp *azcore.Response) (*Head
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseBoolResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseBoolResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseByteCreateRequest creates the ResponseByte request.
@@ -320,7 +321,7 @@ func (HeaderOperations) ResponseByteHandleResponse(resp *azcore.Response) (*Head
 		return nil, newError(resp)
 	}
 	value := []byte(resp.Header.Get("value"))
-	return &HeaderResponseByteResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseByteResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseDateCreateRequest creates the ResponseDate request.
@@ -341,7 +342,7 @@ func (HeaderOperations) ResponseDateHandleResponse(resp *azcore.Response) (*Head
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseDateResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseDateResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseDatetimeCreateRequest creates the ResponseDatetime request.
@@ -362,7 +363,7 @@ func (HeaderOperations) ResponseDatetimeHandleResponse(resp *azcore.Response) (*
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseDatetimeResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseDatetimeResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseDatetimeRFC1123CreateRequest creates the ResponseDatetimeRFC1123 request.
@@ -383,7 +384,7 @@ func (HeaderOperations) ResponseDatetimeRFC1123HandleResponse(resp *azcore.Respo
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseDoubleCreateRequest creates the ResponseDouble request.
@@ -404,7 +405,7 @@ func (HeaderOperations) ResponseDoubleHandleResponse(resp *azcore.Response) (*He
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseDoubleResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseDoubleResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseDurationCreateRequest creates the ResponseDuration request.
@@ -425,7 +426,7 @@ func (HeaderOperations) ResponseDurationHandleResponse(resp *azcore.Response) (*
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseDurationResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseDurationResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseEnumCreateRequest creates the ResponseEnum request.
@@ -443,7 +444,7 @@ func (HeaderOperations) ResponseEnumHandleResponse(resp *azcore.Response) (*Head
 		return nil, newError(resp)
 	}
 	value := GreyscaleColors(resp.Header.Get("value"))
-	return &HeaderResponseEnumResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseEnumResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseExistingKeyCreateRequest creates the ResponseExistingKey request.
@@ -460,7 +461,7 @@ func (HeaderOperations) ResponseExistingKeyHandleResponse(resp *azcore.Response)
 		return nil, newError(resp)
 	}
 	userAgent := resp.Header.Get("User-Agent")
-	return &HeaderResponseExistingKeyResponse{RawResponse: resp.Response, userAgent: &userAgent}, nil
+	return &HeaderResponseExistingKeyResponse{RawResponse: resp.Response, UserAgent: &userAgent}, nil
 }
 
 // ResponseFloatCreateRequest creates the ResponseFloat request.
@@ -477,12 +478,12 @@ func (HeaderOperations) ResponseFloatHandleResponse(resp *azcore.Response) (*Hea
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	value0, err := strconv.ParseFloat(resp.Header.Get("value"), 32)
-	value := float32(value0)
+	value32, err := strconv.ParseFloat(resp.Header.Get("value"), 32)
+	value := float32(value32)
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseFloatResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseFloatResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseIntegerCreateRequest creates the ResponseInteger request.
@@ -499,12 +500,12 @@ func (HeaderOperations) ResponseIntegerHandleResponse(resp *azcore.Response) (*H
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	value0, err := strconv.ParseInt(resp.Header.Get("value"), 10, 32)
-	value := int32(value0)
+	value32, err := strconv.ParseInt(resp.Header.Get("value"), 10, 32)
+	value := int32(value32)
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseIntegerResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseIntegerResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseLongCreateRequest creates the ResponseLong request.
@@ -525,7 +526,7 @@ func (HeaderOperations) ResponseLongHandleResponse(resp *azcore.Response) (*Head
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderResponseLongResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseLongResponse{RawResponse: resp.Response, Value: &value}, nil
 }
 
 // ResponseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
@@ -542,7 +543,7 @@ func (HeaderOperations) ResponseProtectedKeyHandleResponse(resp *azcore.Response
 		return nil, newError(resp)
 	}
 	contentType := resp.Header.Get("Content-Type")
-	return &HeaderResponseProtectedKeyResponse{RawResponse: resp.Response, contentType: &contentType}, nil
+	return &HeaderResponseProtectedKeyResponse{RawResponse: resp.Response, ContentType: &contentType}, nil
 }
 
 // ResponseStringCreateRequest creates the ResponseString request.
@@ -560,5 +561,5 @@ func (HeaderOperations) ResponseStringHandleResponse(resp *azcore.Response) (*He
 		return nil, newError(resp)
 	}
 	value := resp.Header.Get("value")
-	return &HeaderResponseStringResponse{RawResponse: resp.Response, value: &value}, nil
+	return &HeaderResponseStringResponse{RawResponse: resp.Response, Value: &value}, nil
 }
