@@ -5,7 +5,7 @@
 
 import { serialize, pascalCase, camelCase } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { codeModelSchema, CodeModel, Language, Parameter, SchemaType } from '@azure-tools/codemodel';
+import { codeModelSchema, CodeModel, Language, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters, LanguageHeader } from '../generator/common/helpers';
@@ -97,7 +97,7 @@ async function process(session: Session<CodeModel>) {
         paramDetails.name = getEscapedReservedName(camelCase(paramDetails.name), 'Parameter');
         // this is a bit of a weird case and might be due to invalid swagger in the test
         // server.  how can you have an optional parameter that's also a constant?
-        if (param.required !== true && param.schema.type !== SchemaType.Constant) {
+        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
           optionalParams.push(param);
         }
       }
@@ -111,19 +111,18 @@ async function process(session: Session<CodeModel>) {
         };
       }
       details.protocolNaming = new protocolMethods(details.name);
-      // fix up response type name and description
-      if (length(op.responses) > 1) {
-        throw console.error('multiple responses NYI');
-      }
-      const resp = op.responses![0];
+      // TODO check if we still need to fix up response type name and description
+      const firstResp = op.responses![0];
       const name = `${opGroupName}${op.language.go!.name}Response`;
-      resp.language.go!.name = name;
-      resp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
-      // add a field to headers to include a Go compliant name for when it needs to be used as a field in a type
-      if (op.responses![0].protocol.http!.headers) {
-        for (const header of values(op.responses![0].protocol.http!.headers)) {
-          const head = <LanguageHeader>header;
-          head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+      firstResp.language.go!.name = name;
+      firstResp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
+      for (const resp of values(op.responses)) {
+        // add a field to headers to include a Go compliant name for when it needs to be used as a field in a type
+        if (resp.protocol.http!.headers) {
+          for (const header of values(resp.protocol.http!.headers)) {
+            const head = <LanguageHeader>header;
+            head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+          }
         }
       }
     }

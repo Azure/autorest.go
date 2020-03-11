@@ -5,7 +5,7 @@
 
 import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { aggregateParameters, ParamInfo, paramInfo } from '../generator/common/helpers';
 
@@ -44,6 +44,10 @@ async function process(session: Session<CodeModel>) {
     choice.choiceType.language.go!.name = 'string';
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
+    // TODO need to see how to add sealed-choices that have a different schema
+    if (choice.choices.length === 1) {
+      continue;
+    }
     choice.choiceType.language.go!.name = 'string';
   }
 }
@@ -56,6 +60,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
       return `[]${schemaTypeToGoType(codeModel, arrayElem, inBody)}`;
+    case SchemaType.Binary:
+      return 'azcore.ReadSeekCloser';
     case SchemaType.Boolean:
       return 'bool';
     case SchemaType.ByteArray:
@@ -96,6 +102,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
     case SchemaType.String:
     case SchemaType.Uuid:
       return 'string';
+    case SchemaType.Uri:
+      return 'url.URL';
     default:
       return schema.language.go!.name;
   }
@@ -146,12 +154,21 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 function processOperationRequests(session: Session<CodeModel>) {
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
+      if (op.requests!.length > 1) {
+        throw console.error('multiple requests NYI');
+      }
+      if (op.requests![0].protocol.http!.headers) {
+        for (const header of values(op.requests![0].protocol.http!.headers)) {
+          const head = <HttpHeader>header;
+          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
+        }
+      }
       for (const param of values(aggregateParameters(op))) {
         // skip the host param as we use our own url.URL instead
         if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
           continue;
         }
-        const inBody = param.protocol.http!.in === 'body';
+        const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
           // add global param info to the operation group
@@ -198,6 +215,12 @@ function processOperationResponses(session: Session<CodeModel>) {
       }
       // recursively add the marshalling format to the responses if applicable
       for (const resp of values(op.responses)) {
+        if (resp.protocol.http!.headers) {
+          for (const header of values(resp.protocol.http!.headers)) {
+            const head = <HttpHeader>header;
+            head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
+          }
+        }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
         if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
           recursiveAddMarshallingFormat(resp.schema, marshallingFormat);
@@ -214,36 +237,34 @@ function processOperationResponses(session: Session<CodeModel>) {
 
 // creates the response type to be returned from an operation and updates the operation
 function createResponseType(codeModel: CodeModel, op: Operation) {
-  if (length(op.responses) > 1) {
-    throw console.error('multiple responses NYI');
-  }
   // create the `type FooResponse struct` response
   // type with a `RawResponse *http.Response` field
-  const resp = op.responses![0];
-  resp.language.go!.responseType = true;
-  resp.language.go!.properties = [
+  const firstResp = op.responses![0];
+  firstResp.language.go!.responseType = true;
+  firstResp.language.go!.properties = [
     newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
   ];
+  const len = op.responses!.length;
   // if the response defines a schema then add it as a field to the response type
-  if (isSchemaResponse(resp)) {
-    const marshallingFormat = getMarshallingFormat(resp.protocol);
-    resp.language.go!.marshallingFormat = marshallingFormat;
+  if (isSchemaResponse(firstResp)) {
+    const marshallingFormat = getMarshallingFormat(firstResp.protocol);
+    firstResp.language.go!.marshallingFormat = marshallingFormat;
     // for operations that return scalar types we use a fixed field name 'Value'
     let propName = 'Value';
-    if (resp.schema.type === SchemaType.Object) {
+    if (firstResp.schema.type === SchemaType.Object) {
       // for object types use the type's name as the field name
-      propName = resp.schema.language.go!.name;
-    } else if (resp.schema.type === SchemaType.Array) {
+      propName = firstResp.schema.language.go!.name;
+    } else if (firstResp.schema.type === SchemaType.Array) {
       // for array types use the element type's name
-      propName = (<ArraySchema>resp.schema).elementType.language.go!.name;
+      propName = (<ArraySchema>firstResp.schema).elementType.language.go!.name;
     }
-    if (resp.schema.serialization?.xml && resp.schema.serialization.xml.name) {
+    if (firstResp.schema.serialization?.xml && firstResp.schema.serialization.xml.name) {
       // always prefer the XML name
-      propName = pascalCase(resp.schema.serialization.xml.name);
+      propName = pascalCase(firstResp.schema.serialization.xml.name);
     }
-    resp.schema.language.go!.name = schemaTypeToGoType(codeModel, resp.schema, true);
-    resp.schema.language.go!.responseValue = propName;
-    (<Array<Property>>resp.language.go!.properties).push(newProperty(propName, resp.schema.language.go!.description, resp.schema));
+    firstResp.schema.language.go!.name = schemaTypeToGoType(codeModel, firstResp.schema, true);
+    firstResp.schema.language.go!.responseValue = propName;
+    (<Array<Property>>firstResp.language.go!.properties).push(newProperty(propName, firstResp.schema.language.go!.description, firstResp.schema));
   }
 }
 

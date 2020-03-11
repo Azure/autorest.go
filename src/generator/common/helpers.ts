@@ -68,6 +68,9 @@ export class ImportManager {
       case SchemaType.UnixTime:
         this.add('time');
         break;
+      case SchemaType.Uri:
+        this.add('net/url');
+        break;
     }
   }
 
@@ -193,11 +196,8 @@ export function sortParamInfoByRequired(a: ParamInfo, b: ParamInfo): number {
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
 export function genereateReturnsInfo(op: Operation): string[] {
-  if (length(op.responses) > 1) {
-    throw console.error('multiple responses NYI');
-  }
-  const resp = op.responses![0];
-  return [`*${resp.language.go!.name}`, 'error'];
+  // TODO check this implementation, if any additional return information needs to be included for multiple responses
+  return [`*${op.responses![0].language.go!.name}`, 'error'];
 }
 
 // flattens out ParamInfo to return a complete parameter sig string
@@ -241,6 +241,9 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
     enums.push(entry);
   }
   for (const choice of values(schemas.sealedChoices)) {
+    if (choice.choices.length === 1) {
+      continue;
+    }
     const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
     if (HasDescription(choice.language.go!)) {
       entry.desc = choice.language.go!.description;

@@ -5,7 +5,6 @@ package headergrouptest
 
 import (
 	"context"
-	"encoding/base64"
 	"generatortests/autorest/generated/headergroup"
 	"generatortests/helpers"
 	"net/http"
@@ -263,9 +262,8 @@ func TestHeaderResponseByte(t *testing.T) {
 		t.Fatalf("ResponseByte: %v", err)
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-	val := base64.StdEncoding.EncodeToString([]byte("啊齄丂狛狜隣郎隣兀﨩"))
-	valB := []byte(val)
-	helpers.DeepEqualOrFatal(t, result, &headergroup.HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &valB})
+	val := []byte("啊齄丂狛狜隣郎隣兀﨩")
+	helpers.DeepEqualOrFatal(t, result, &headergroup.HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &val})
 }
 
 // func TestHeaderResponseDate(t *testing.T) {
