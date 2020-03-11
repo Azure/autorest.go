@@ -70,10 +70,6 @@ func (t *timeRFC1123) UnmarshalText(data []byte) error {
 	*t = timeRFC1123(p)
 	return err
 }
-
-func (t *timeRFC1123) ToTime() *time.Time {
-	return (*time.Time)(t)
-}
 `;
 }
 
@@ -99,6 +95,16 @@ var tzOffsetRegex = regexp.MustCompile(\`(Z|z|\\+|-)(\\d+:\\d+)*"*$\`)
 
 type timeRFC3339 time.Time
 
+func (t timeRFC3339) MarshalJSON() (json []byte, err error) {
+	tt := time.Time(t)
+	return tt.MarshalJSON()
+}
+
+func (t timeRFC3339) MarshalText() (text []byte, err error) {
+	tt := time.Time(t)
+	return tt.MarshalText()
+}
+
 func (t *timeRFC3339) UnmarshalJSON(data []byte) error {
 	layout := utcLayoutJSON
 	if tzOffsetRegex.Match(data) {
@@ -113,10 +119,6 @@ func (t *timeRFC3339) UnmarshalText(data []byte) (err error) {
 		layout = time.RFC3339Nano
 	}
 	return t.Parse(layout, string(data))
-}
-
-func (t *timeRFC3339) ToTime() *time.Time {
-	return (*time.Time)(t)
 }
 
 func (t *timeRFC3339) Parse(layout, value string) error {

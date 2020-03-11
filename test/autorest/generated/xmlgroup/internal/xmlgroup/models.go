@@ -8,10 +8,9 @@ package xmlgroup
 import (
 	"encoding/xml"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 // An Access policy
@@ -26,6 +25,37 @@ type AccessPolicy struct {
 	Start *time.Time `xml:"Start"`
 }
 
+func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias AccessPolicy
+	aux := &struct {
+		*alias
+		Expiry *timeRFC3339 `xml:"Expiry"`
+		Start  *timeRFC3339 `xml:"Start"`
+	}{
+		alias:  (*alias)(&a),
+		Expiry: (*timeRFC3339)(a.Expiry),
+		Start:  (*timeRFC3339)(a.Start),
+	}
+	return e.EncodeElement(aux, start)
+}
+
+func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias AccessPolicy
+	aux := &struct {
+		*alias
+		Expiry *timeRFC3339 `xml:"Expiry"`
+		Start  *timeRFC3339 `xml:"Start"`
+	}{
+		alias: (*alias)(a),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	a.Expiry = (*time.Time)(aux.Expiry)
+	a.Start = (*time.Time)(aux.Start)
+	return nil
+}
+
 // A barrel of apples.
 type AppleBarrel struct {
 	BadApples  *[]string `xml:"BadApples>Apple"`
@@ -38,6 +68,34 @@ type Banana struct {
 	Expiration *time.Time `xml:"expiration"`
 	Flavor     *string    `xml:"flavor"`
 	Name       *string    `xml:"name"`
+}
+
+func (b Banana) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "banana"
+	type alias Banana
+	aux := &struct {
+		*alias
+		Expiration *timeRFC3339 `xml:"expiration"`
+	}{
+		alias:      (*alias)(&b),
+		Expiration: (*timeRFC3339)(b.Expiration),
+	}
+	return e.EncodeElement(aux, start)
+}
+
+func (b *Banana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias Banana
+	aux := &struct {
+		*alias
+		Expiration *timeRFC3339 `xml:"expiration"`
+	}{
+		alias: (*alias)(b),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	b.Expiration = (*time.Time)(aux.Expiration)
+	return nil
 }
 
 // An Azure Storage blob
@@ -91,6 +149,41 @@ type BlobProperties struct {
 	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
 }
 
+func (b BlobProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias BlobProperties
+	aux := &struct {
+		*alias
+		CopyCompletionTime *timeRFC1123 `xml:"CopyCompletionTime"`
+		DeletedTime        *timeRFC1123 `xml:"DeletedTime"`
+		LastModified       *timeRFC1123 `xml:"Last-Modified"`
+	}{
+		alias:              (*alias)(&b),
+		CopyCompletionTime: (*timeRFC1123)(b.CopyCompletionTime),
+		DeletedTime:        (*timeRFC1123)(b.DeletedTime),
+		LastModified:       (*timeRFC1123)(b.LastModified),
+	}
+	return e.EncodeElement(aux, start)
+}
+
+func (b *BlobProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias BlobProperties
+	aux := &struct {
+		*alias
+		CopyCompletionTime *timeRFC1123 `xml:"CopyCompletionTime"`
+		DeletedTime        *timeRFC1123 `xml:"DeletedTime"`
+		LastModified       *timeRFC1123 `xml:"Last-Modified"`
+	}{
+		alias: (*alias)(b),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	b.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
+	b.DeletedTime = (*time.Time)(aux.DeletedTime)
+	b.LastModified = (*time.Time)(aux.LastModified)
+	return nil
+}
+
 type Blobs struct {
 	Blob       *[]Blob       `xml:"Blob"`
 	BlobPrefix *[]BlobPrefix `xml:"BlobPrefix"`
@@ -128,6 +221,18 @@ type ContainerProperties struct {
 	PublicAccess  *PublicAccessType  `xml:"PublicAccess"`
 }
 
+func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias ContainerProperties
+	aux := &struct {
+		*alias
+		LastModified *timeRFC1123 `xml:"Last-Modified"`
+	}{
+		alias:        (*alias)(&c),
+		LastModified: (*timeRFC1123)(c.LastModified),
+	}
+	return e.EncodeElement(aux, start)
+}
+
 func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type alias ContainerProperties
 	aux := &struct {
@@ -139,7 +244,7 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	if err := d.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	c.LastModified = aux.LastModified.ToTime()
+	c.LastModified = (*time.Time)(aux.LastModified)
 	return nil
 }
 
@@ -267,7 +372,7 @@ type RetentionPolicy struct {
 
 // I am root, and I ref a model WITH meta
 type RootWithRefAndMeta struct {
-	// I am a complex type with XML node
+	// XML will use XMLComplexTypeWithMeta
 	RefToModel *ComplexTypeWithMeta `xml:"XMLComplexTypeWithMeta"`
 
 	// Something else (just to avoid flattening)
@@ -276,7 +381,7 @@ type RootWithRefAndMeta struct {
 
 // I am root, and I ref a model with no meta
 type RootWithRefAndNoMeta struct {
-	// I am a complex type with no XML node
+	// XML will use RefToModel
 	RefToModel *ComplexTypeNoMeta `xml:"RefToModel"`
 
 	// Something else (just to avoid flattening)
@@ -285,7 +390,7 @@ type RootWithRefAndNoMeta struct {
 
 // signed identifier
 type SignedIDentifier struct {
-	// An Access policy
+	// The access policy
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
 
 	// a unique id
@@ -307,6 +412,17 @@ type Slideshow struct {
 	Title  *string  `xml:"title,attr"`
 }
 
+func (s Slideshow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "slideshow"
+	type alias Slideshow
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&s),
+	}
+	return e.EncodeElement(aux, start)
+}
+
 // Storage Service Properties.
 type StorageServiceProperties struct {
 	// The set of CORS rules.
@@ -316,12 +432,16 @@ type StorageServiceProperties struct {
 	// values include version 2008-10-27 and all more recent versions
 	DefaultServiceVersion *string `xml:"DefaultServiceVersion"`
 
-	// the retention policy
+	// The Delete Retention Policy for the service
 	DeleteRetentionPolicy *RetentionPolicy `xml:"DeleteRetentionPolicy"`
-	HourMetrics           *Metrics         `xml:"HourMetrics"`
 
-	// Azure Analytics Logging settings.
-	Logging       *Logging `xml:"Logging"`
+	// A summary of request statistics grouped by API in hourly aggregates for blobs
+	HourMetrics *Metrics `xml:"HourMetrics"`
+
+	// Azure Analytics Logging settings
+	Logging *Logging `xml:"Logging"`
+
+	// a summary of request statistics grouped by API in minute aggregates for blobs
 	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
 }
 
@@ -372,6 +492,7 @@ type XMLGetEmptyListResponse struct {
 
 // XMLGetEmptyRootListResponse contains the response from method XML.GetEmptyRootList.
 type XMLGetEmptyRootListResponse struct {
+	// Array of Banana
 	Bananas *[]Banana `xml:"banana"`
 
 	// RawResponse contains the underlying HTTP response.
@@ -390,7 +511,7 @@ type XMLGetEmptyWrappedListsResponse struct {
 // XMLGetHeadersResponse contains the response from method XML.GetHeaders.
 type XMLGetHeadersResponse struct {
 	// CustomHeader contains the information returned from the CustomHeader header response.
-	CustomHeader *string `xml:"CustomHeader"`
+	CustomHeader *string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -398,6 +519,7 @@ type XMLGetHeadersResponse struct {
 
 // XMLGetRootListResponse contains the response from method XML.GetRootList.
 type XMLGetRootListResponse struct {
+	// Array of Banana
 	Bananas *[]Banana `xml:"banana"`
 
 	// RawResponse contains the underlying HTTP response.
@@ -406,6 +528,7 @@ type XMLGetRootListResponse struct {
 
 // XMLGetRootListSingleItemResponse contains the response from method XML.GetRootListSingleItem.
 type XMLGetRootListSingleItemResponse struct {
+	// Array of Banana
 	Bananas *[]Banana `xml:"banana"`
 
 	// RawResponse contains the underlying HTTP response.

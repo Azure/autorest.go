@@ -32,7 +32,7 @@ func (DatetimeOperations) GetInvalidHandleResponse(resp *azcore.Response) (*Date
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetInvalidResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -52,7 +52,7 @@ func (DatetimeOperations) GetLocalNegativeOffsetLowercaseMaxDateTimeHandleRespon
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -72,7 +72,7 @@ func (DatetimeOperations) GetLocalNegativeOffsetMinDateTimeHandleResponse(resp *
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetLocalNegativeOffsetMinDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -92,7 +92,7 @@ func (DatetimeOperations) GetLocalNegativeOffsetUppercaseMaxDateTimeHandleRespon
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -112,7 +112,7 @@ func (DatetimeOperations) GetLocalPositiveOffsetLowercaseMaxDateTimeHandleRespon
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -132,7 +132,7 @@ func (DatetimeOperations) GetLocalPositiveOffsetMinDateTimeHandleResponse(resp *
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetLocalPositiveOffsetMinDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -152,7 +152,7 @@ func (DatetimeOperations) GetLocalPositiveOffsetUppercaseMaxDateTimeHandleRespon
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -172,7 +172,7 @@ func (DatetimeOperations) GetNullHandleResponse(resp *azcore.Response) (*Datetim
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetNullResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -192,7 +192,7 @@ func (DatetimeOperations) GetOverflowHandleResponse(resp *azcore.Response) (*Dat
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetOverflowResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -212,7 +212,7 @@ func (DatetimeOperations) GetUTCLowercaseMaxDateTimeHandleResponse(resp *azcore.
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetUTCLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -232,7 +232,7 @@ func (DatetimeOperations) GetUTCMinDateTimeHandleResponse(resp *azcore.Response)
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetUTCMinDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -252,7 +252,7 @@ func (DatetimeOperations) GetUTCUppercaseMaxDateTimeHandleResponse(resp *azcore.
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetUTCUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -272,7 +272,7 @@ func (DatetimeOperations) GetUTCUppercaseMaxDateTime7DigitsHandleResponse(resp *
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 
@@ -292,7 +292,7 @@ func (DatetimeOperations) GetUnderflowHandleResponse(resp *azcore.Response) (*Da
 	var aux *timeRFC3339
 	err := resp.UnmarshalAsJSON(&aux)
 	result := DatetimeGetUnderflowResponse{RawResponse: resp.Response}
-	result.Value = aux.ToTime()
+	result.Value = (*time.Time)(aux)
 	return &result, err
 }
 

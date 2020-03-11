@@ -34,7 +34,7 @@ goMappings = {
     'urlgroup': 'url.json',
     //'urlmultigroup': 'url-multi-collectionFormat.json',
     //'validationgroup': 'validation.json',
-    //'xmlgroup': 'xml-service.json',
+    'xmlgroup': 'xml-service.json',
   };
 
 // loop through all of the namespaces in goMappings

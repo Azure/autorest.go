@@ -16,6 +16,16 @@ const (
 
 type timeRFC1123 time.Time
 
+func (t timeRFC1123) MarshalJSON() ([]byte, error) {
+	b := []byte(time.Time(t).Format(rfc1123JSON))
+	return b, nil
+}
+
+func (t timeRFC1123) MarshalText() ([]byte, error) {
+	b := []byte(time.Time(t).Format(time.RFC1123))
+	return b, nil
+}
+
 func (t *timeRFC1123) UnmarshalJSON(data []byte) error {
 	p, err := time.Parse(rfc1123JSON, strings.ToUpper(string(data)))
 	*t = timeRFC1123(p)
@@ -26,8 +36,4 @@ func (t *timeRFC1123) UnmarshalText(data []byte) error {
 	p, err := time.Parse(time.RFC1123, string(data))
 	*t = timeRFC1123(p)
 	return err
-}
-
-func (t *timeRFC1123) ToTime() *time.Time {
-	return (*time.Time)(t)
 }

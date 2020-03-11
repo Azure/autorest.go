@@ -368,29 +368,26 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
-    } else if (mediaType === 'XML' && bodyParam!.schema.serialization?.xml) {
-      // for XML payloads, create a wrapper type in the following cases
-      // 1. the type's name doesn't match the XML name (e.g. "Slideshow" vs. "slideshow")
-      // 2. the payload is a wrapped array
-      if (bodyParam!.schema.language.go!.name !== bodyParam!.schema.serialization.xml.name || bodyParam!.schema.type === SchemaType.Array) {
-        imports.add('encoding/xml');
-        text += '\ttype wrapper struct {\n';
-        text += `\t\tXMLName xml.Name \`xml:"${bodyParam!.schema.serialization.xml.name}"\`\n`;
-        let fieldName = bodyParam!.schema.language.go!.name;
-        if (isArraySchema(bodyParam!.schema)) {
-          fieldName = pascalCase(bodyParam!.language.go!.name);
-          let tag = bodyParam!.schema.elementType.language.go!.name;
-          if (bodyParam!.schema.elementType.serialization?.xml?.name) {
-            tag = bodyParam!.schema.elementType.serialization.xml.name;
-          }
-          text += `\t\t${fieldName} *${bodyParam!.schema.language.go!.name} \`xml:"${tag}"\`\n`;
-        } else {
-          // embed as anonymous field
-          text += `\t\t*${bodyParam!.schema.language.go!.name}\n`;
-        }
-        text += '\t}\n';
-        body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
+    } else if (mediaType === 'XML' && bodyParam!.schema.type === SchemaType.Array) {
+      // for XML payloads, create a wrapper type if the payload is an array
+      imports.add('encoding/xml');
+      text += '\ttype wrapper struct {\n';
+      let tagName = bodyParam!.schema.language.go!.name;
+      if (bodyParam!.schema.serialization?.xml?.name) {
+        tagName = bodyParam!.schema.serialization.xml.name;
       }
+      text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
+      let fieldName = bodyParam!.schema.language.go!.name;
+      if (isArraySchema(bodyParam!.schema)) {
+        fieldName = pascalCase(bodyParam!.language.go!.name);
+        let tag = bodyParam!.schema.elementType.language.go!.name;
+        if (bodyParam!.schema.elementType.serialization?.xml?.name) {
+          tag = bodyParam!.schema.elementType.serialization.xml.name;
+        }
+        text += `\t\t${fieldName} *${bodyParam!.schema.language.go!.name} \`xml:"${tag}"\`\n`;
+      }
+      text += '\t}\n';
+      body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
     } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
       // wrap the body in the custom RFC1123 type
       text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
@@ -454,7 +451,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += `\tvar aux *${(<SchemaResponse>firstResp).schema.language.go!.internalTimeType}\n`;
     text += `\terr := resp.UnmarshalAs${mediaType}(&aux)\n`;
     text += `\tresult := ${respObj}\n`;
-    text += `\tresult.${(<SchemaResponse>firstResp).schema.language.go!.responseValue} = aux.ToTime()\n`;
+    text += `\tresult.${(<SchemaResponse>firstResp).schema.language.go!.responseValue} = (*time.Time)(aux)\n`;
     text += `\treturn &result, err\n`;
   } else {
     text += `\tresult := ${respObj}\n`;

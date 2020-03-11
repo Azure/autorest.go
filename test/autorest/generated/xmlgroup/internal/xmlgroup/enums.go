@@ -46,13 +46,13 @@ func (c ArchiveStatus) ToPtr() *ArchiveStatus {
 type BlobType string
 
 const (
-	BlobTypeBlockblob  BlobType = "BlockBlob"
-	BlobTypePageblob   BlobType = "PageBlob"
-	BlobTypeAppendblob BlobType = "AppendBlob"
+	BlobTypeBlockBlob  BlobType = "BlockBlob"
+	BlobTypePageBlob   BlobType = "PageBlob"
+	BlobTypeAppendBlob BlobType = "AppendBlob"
 )
 
 func PossibleBlobTypeValues() []BlobType {
-	return []BlobType{BlobTypeBlockblob, BlobTypePageblob, BlobTypeAppendblob}
+	return []BlobType{BlobTypeBlockBlob, BlobTypePageBlob, BlobTypeAppendBlob}
 }
 
 func (c BlobType) ToPtr() *BlobType {
