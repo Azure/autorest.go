@@ -120,8 +120,6 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>param.schema;
       switch (arraySchema.elementType.type) {
-        case SchemaType.Choice:
-        case SchemaType.SealedChoice:
         case SchemaType.String:
           imports.add('strings');
           return `strings.Join(${paramName}, "${separator}")`;
