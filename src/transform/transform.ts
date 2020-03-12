@@ -215,10 +215,15 @@ function processOperationResponses(session: Session<CodeModel>) {
       for (const ex of values(op.exceptions)) {
         const marshallingFormat = getMarshallingFormat(ex.protocol);
         if (marshallingFormat === 'na') {
-          throw console.error(`unexpected media type none for ${ex.language.go!.name} error type`);
+          // this is for the case where the 'default' response section
+          // doesn't specify a model (legal, mostly in the test server)
+          ex.language.go!.genericError = true;
+          continue;
         }
-        (<SchemaResponse>ex).schema.language.go!.errorType = true;
-        recursiveAddMarshallingFormat((<SchemaResponse>ex).schema, marshallingFormat);
+        const schemaError = (<SchemaResponse>ex).schema;
+        schemaError.language.go!.errorType = true;
+        schemaError.language.go!.constructorName = `new${schemaError.language.go!.name}`;
+        recursiveAddMarshallingFormat(schemaError, marshallingFormat);
       }
       // recursively add the marshalling format to the responses if applicable
       for (const resp of values(op.responses)) {

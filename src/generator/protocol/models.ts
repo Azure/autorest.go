@@ -180,7 +180,7 @@ class StructDef {
     }
     text += '}\n\n';
     if (this.Language.errorType) {
-      text += `func new${this.Language.name}(resp *azcore.Response) error {\n`;
+      text += `func ${this.Language.constructorName}(resp *azcore.Response) error {\n`;
       text += `\terr := ${this.Language.name}{}\n`;
       text += `\tif err := resp.UnmarshalAs${(<string>this.Language.marshallingFormat).toUpperCase()}(&err); err != nil {\n`;
       text += `\t\treturn err\n`;
