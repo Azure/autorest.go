@@ -112,7 +112,9 @@ func (HeaderOperations) ParamDatetimeRFC1123CreateRequest(u url.URL, scenario st
 	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPost, u)
 	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", options.Value.Format(time.RFC1123))
+	if options != nil && options.Value != nil {
+		req.Header.Set("value", options.Value.Format(time.RFC1123))
+	}
 	return req, nil
 }
 
@@ -166,7 +168,9 @@ func (HeaderOperations) ParamEnumCreateRequest(u url.URL, scenario string, optio
 	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPost, u)
 	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", string(*options.Value))
+	if options != nil && options.Value != nil {
+		req.Header.Set("value", string(*options.Value))
+	}
 	return req, nil
 }
 
@@ -272,7 +276,9 @@ func (HeaderOperations) ParamStringCreateRequest(u url.URL, scenario string, opt
 	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPost, u)
 	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", *options.Value)
+	if options != nil && options.Value != nil {
+		req.Header.Set("value", *options.Value)
+	}
 	return req, nil
 }
 
