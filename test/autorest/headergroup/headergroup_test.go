@@ -266,20 +266,37 @@ func TestHeaderResponseByte(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result, &headergroup.HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &val})
 }
 
-// func TestHeaderResponseDate(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	result, err := client.ResponseDate(context.Background(), "valid")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDate: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-
-// 	result, err = client.ResponseDate(context.Background(), "min")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDate: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// }
+func TestHeaderResponseDate(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDate(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDate: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err := time.Parse("2006-01-02", "2010-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDateResponse{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+	result, err = client.ResponseDate(context.Background(), "min")
+	if err != nil {
+		t.Fatalf("ResponseDate: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err = time.Parse("2006-01-02", "0001-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDateResponse{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+}
 
 // func TestHeaderResponseDatetime(t *testing.T) {
 // 	client := getHeaderClient(t)
