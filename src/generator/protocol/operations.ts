@@ -415,7 +415,14 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params, true)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(${formatStatusCodes(firstResp.protocol.http?.statusCodes)}) {\n`;
-  text += `\t\treturn nil, newError(resp)\n`;
+  // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
+  if (op.exceptions![0].language.go!.genericError) {
+    imports.add('errors');
+    text += `\t\treturn nil, ${op.exceptions![0].language.go!.genericError}(resp.Status)\n`;
+  } else {
+    const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
+    text += `\t\treturn nil, ${schemaError.language.go!.constructorName}(resp)\n`;
+  }
   text += '\t}\n';
 
   let respObj = `${firstResp.language.go!.name}{RawResponse: resp.Response}`;
