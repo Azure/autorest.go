@@ -217,7 +217,7 @@ function processOperationResponses(session: Session<CodeModel>) {
         if (marshallingFormat === 'na') {
           // this is for the case where the 'default' response section
           // doesn't specify a model (legal, mostly in the test server)
-          ex.language.go!.genericError = `errors.New`;
+          ex.language.go!.genericError = true;
           continue;
         }
         const schemaError = (<SchemaResponse>ex).schema;
