@@ -140,12 +140,11 @@ func TestHeaderParamEnum(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
-	// var color headergroup.GreyscaleColors
-	// result, err = client.ParamEnum(context.Background(), "null", color)
-	// if err != nil {
-	// 	t.Fatalf("ParamEnum: %v", err)
-	// }
-	// helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	result, err = client.ParamEnum(context.Background(), "null", nil)
+	if err != nil {
+		t.Fatalf("ParamEnum: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 }
 
 // func TestHeaderParamExistingKey(t *testing.T) {
@@ -220,11 +219,12 @@ func TestHeaderParamString(t *testing.T) {
 	}
 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
 
-	// result, err = client.ParamString(context.Background(), "null", "")
-	// if err != nil {
-	// 	t.Fatalf("ParamString: %v", err)
-	// }
-	// helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	result, err = client.ParamString(context.Background(), "null", nil)
+	if err != nil {
+		t.Fatalf("ParamString: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+
 	val = ""
 	result, err = client.ParamString(context.Background(), "empty", &headergroup.HeaderParamStringOptions{Value: &val})
 	if err != nil {

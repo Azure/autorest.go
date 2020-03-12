@@ -358,7 +358,13 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   // add specific request headers
   const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
   headerParam.forEach(header => {
-    text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
+    if (header.required) {
+      text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
+    } else {
+      text += `\tif options != nil && options.${pascalCase(header.language.go!.name)} != nil {\n`;
+      text += `\t\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
+      text += `\t}\n`;
+    }
   });
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
