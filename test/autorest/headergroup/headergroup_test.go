@@ -266,50 +266,101 @@ func TestHeaderResponseByte(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result, &headergroup.HeaderResponseByteResponse{RawResponse: result.RawResponse, Value: &val})
 }
 
-// func TestHeaderResponseDate(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	result, err := client.ResponseDate(context.Background(), "valid")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDate: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+func TestHeaderResponseDate(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDate(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDate: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err := time.Parse("2006-01-02", "2010-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDateResponse{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+	result, err = client.ResponseDate(context.Background(), "min")
+	if err != nil {
+		t.Fatalf("ResponseDate: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err = time.Parse("2006-01-02", "0001-01-01")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDateResponse{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+}
 
-// 	result, err = client.ResponseDate(context.Background(), "min")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDate: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// }
+func TestHeaderResponseDatetime(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDatetime(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDatetime: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err := time.Parse(time.RFC3339, "2010-01-01T12:34:56Z")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDatetimeResponse{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+	result, err = client.ResponseDatetime(context.Background(), "min")
+	if err != nil {
+		t.Fatalf("ResponseDatetime: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err = time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDatetimeResponse{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+}
 
-// func TestHeaderResponseDatetime(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	result, err := client.ResponseDatetime(context.Background(), "valid")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDatetime: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-
-// 	result, err = client.ResponseDatetime(context.Background(), "min")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDatetime: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// }
-
-// func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
-// 	client := getHeaderClient(t)
-// 	result, err := client.ResponseDatetimeRFC1123(context.Background(), "valid")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-
-// 	result, err = client.ResponseDatetimeRFC1123(context.Background(), "min")
-// 	if err != nil {
-// 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
-// }
+func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
+	client := getHeaderClient(t)
+	result, err := client.ResponseDatetimeRFC1123(context.Background(), "valid")
+	if err != nil {
+		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err := time.Parse(time.RFC1123, "Wed, 01 Jan 2010 12:34:56 GMT")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDatetimeRFC1123Response{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+	result, err = client.ResponseDatetimeRFC1123(context.Background(), "min")
+	if err != nil {
+		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	val, err = time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
+	if err != nil {
+		t.Fatalf("Unable to parse time: %v", err)
+	}
+	helpers.DeepEqualOrFatal(t, result,
+		&headergroup.HeaderResponseDatetimeRFC1123Response{
+			RawResponse: result.RawResponse,
+			Value:       &val,
+		})
+}
 
 func TestHeaderResponseDouble(t *testing.T) {
 	client := getHeaderClient(t)
