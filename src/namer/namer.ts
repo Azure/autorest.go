@@ -121,7 +121,7 @@ async function process(session: Session<CodeModel>) {
         if (resp.protocol.http!.headers) {
           for (const header of values(resp.protocol.http!.headers)) {
             const head = <LanguageHeader>header;
-            head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+            head.name = getEscapedReservedName(removePrefix(capitalizeAcronyms(pascalCase(head.header)), 'XMS'), 'Header');
           }
         }
       }
@@ -186,4 +186,21 @@ function getEscapedReservedName(name: string, appendValue: string): string {
   }
 
   return name;
+}
+
+function removePrefix(name: string, prefix: string): string {
+  if (name === null) {
+    throw new Error('removePrefix: Cannot pass in a null value for "name" parameter');
+  }
+  if (prefix === null) {
+    throw new Error('removePrefix: Cannot pass in a null value for "prefix" parameter');
+  }
+
+  for (var i = 0; i < prefix.length; i++) {
+    if (prefix[i] != name[i]) {
+      return name
+    }
+  }
+
+  return name.slice(prefix.length);
 }
