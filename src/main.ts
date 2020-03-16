@@ -6,7 +6,7 @@
 import { AutoRestExtension, } from '@azure-tools/autorest-extension-base';
 import { namer } from './namer/namer';
 import { transform } from './transform/transform';
-import { protocolGen } from './generator/protocol/generator';
+import { protocolGen } from './generator/generator';
 
 require('source-map-support').install();
 

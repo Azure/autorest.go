@@ -7,8 +7,8 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, OperationGroup, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
-import { OperationNaming } from '../../namer/namer';
+import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from './helpers';
+import { OperationNaming } from '../namer/namer';
 
 const dateFormat = '2006-01-02';
 const datetimeRFC3339Format = 'time.RFC3339';

@@ -8,7 +8,7 @@ import { Host, startSession, Session } from '@azure-tools/autorest-extension-bas
 import { codeModelSchema, CodeModel, Language, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, LanguageHeader } from '../generator/common/helpers';
+import { aggregateParameters, LanguageHeader } from '../generator/helpers';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
