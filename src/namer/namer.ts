@@ -72,7 +72,7 @@ async function process(session: Session<CodeModel>) {
     details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Model');
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
-      details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Field');
+      details.name = getEscapedReservedName(removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS'), 'Field');
     }
   }
 
@@ -94,7 +94,7 @@ async function process(session: Session<CodeModel>) {
       const optionalParams = new Array<Parameter>();
       for (const param of values(aggregateParameters(op))) {
         const paramDetails = <Language>param.language.go;
-        paramDetails.name = getEscapedReservedName(camelCase(paramDetails.name), 'Parameter');
+        paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
         // this is a bit of a weird case and might be due to invalid swagger in the test
         // server.  how can you have an optional parameter that's also a constant?
         if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
@@ -121,7 +121,7 @@ async function process(session: Session<CodeModel>) {
         if (resp.protocol.http!.headers) {
           for (const header of values(resp.protocol.http!.headers)) {
             const head = <LanguageHeader>header;
-            head.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(head.header)), 'Header');
+            head.name = getEscapedReservedName(removePrefix(capitalizeAcronyms(pascalCase(head.header)), 'XMS'), 'Header');
           }
         }
       }
@@ -134,7 +134,7 @@ async function process(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name))}`;
+      details.name = `${enm.language.go?.name}${removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS')}`;
     }
   }
   for (const enm of values(session.model.schemas.sealedChoices)) {
@@ -142,13 +142,13 @@ async function process(session: Session<CodeModel>) {
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
       const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${capitalizeAcronyms(pascalCase(details.name))}`;
+      details.name = `${enm.language.go?.name}${removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS')}`;
     }
   }
 
   for (const globalParam of values(session.model.globalParameters)) {
     const details = <Language>globalParam.language.go;
-    details.name = capitalizeAcronyms(details.name);
+    details.name = removePrefix(capitalizeAcronyms(details.name), 'XMS');
   }
   return session;
 }
@@ -186,4 +186,21 @@ function getEscapedReservedName(name: string, appendValue: string): string {
   }
 
   return name;
+}
+
+function removePrefix(name: string, prefix: string): string {
+  if (name === null) {
+    throw new Error('removePrefix: Cannot pass in a null value for "name" parameter');
+  }
+  if (prefix === null) {
+    throw new Error('removePrefix: Cannot pass in a null value for "prefix" parameter');
+  }
+
+  for (var i = 0; i < prefix.length; i++) {
+    if (prefix[i] != name[i]) {
+      return name
+    }
+  }
+
+  return name.slice(prefix.length);
 }
