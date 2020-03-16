@@ -5,269 +5,568 @@
 
 package urlgroup
 
-import azinternal "generatortests/autorest/generated/urlgroup/internal/urlgroup"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"time"
+)
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}
 
 // PathItemsGetAllWithValuesOptions contains the optional parameters for the PathItems.GetAllWithValues method.
-type PathItemsGetAllWithValuesOptions = azinternal.PathItemsGetAllWithValuesOptions
+type PathItemsGetAllWithValuesOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
+}
 
 // PathItemsGetAllWithValuesResponse contains the response from method PathItems.GetAllWithValues.
-type PathItemsGetAllWithValuesResponse = azinternal.PathItemsGetAllWithValuesResponse
+type PathItemsGetAllWithValuesResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull
 // method.
-type PathItemsGetGlobalAndLocalQueryNullOptions = azinternal.PathItemsGetGlobalAndLocalQueryNullOptions
+type PathItemsGetGlobalAndLocalQueryNullOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
+}
 
 // PathItemsGetGlobalAndLocalQueryNullResponse contains the response from method PathItems.GetGlobalAndLocalQueryNull.
-type PathItemsGetGlobalAndLocalQueryNullResponse = azinternal.PathItemsGetGlobalAndLocalQueryNullResponse
+type PathItemsGetGlobalAndLocalQueryNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathItemsGetGlobalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalQueryNull method.
-type PathItemsGetGlobalQueryNullOptions = azinternal.PathItemsGetGlobalQueryNullOptions
+type PathItemsGetGlobalQueryNullOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
+}
 
 // PathItemsGetGlobalQueryNullResponse contains the response from method PathItems.GetGlobalQueryNull.
-type PathItemsGetGlobalQueryNullResponse = azinternal.PathItemsGetGlobalQueryNullResponse
+type PathItemsGetGlobalQueryNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull
 // method.
-type PathItemsGetLocalPathItemQueryNullOptions = azinternal.PathItemsGetLocalPathItemQueryNullOptions
+type PathItemsGetLocalPathItemQueryNullOptions struct {
+	// should contain value 'localStringQuery'
+	LocalStringQuery *string
+	// A string value 'pathItemStringQuery' that appears as a query parameter
+	PathItemStringQuery *string
+}
 
 // PathItemsGetLocalPathItemQueryNullResponse contains the response from method PathItems.GetLocalPathItemQueryNull.
-type PathItemsGetLocalPathItemQueryNullResponse = azinternal.PathItemsGetLocalPathItemQueryNullResponse
+type PathItemsGetLocalPathItemQueryNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsArrayCSVInPathResponse contains the response from method Paths.ArrayCSVInPath.
-type PathsArrayCSVInPathResponse = azinternal.PathsArrayCSVInPathResponse
+type PathsArrayCSVInPathResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsBase64URLResponse contains the response from method Paths.Base64URL.
-type PathsBase64URLResponse = azinternal.PathsBase64URLResponse
+type PathsBase64URLResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsByteEmptyResponse contains the response from method Paths.ByteEmpty.
-type PathsByteEmptyResponse = azinternal.PathsByteEmptyResponse
+type PathsByteEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsByteMultiByteResponse contains the response from method Paths.ByteMultiByte.
-type PathsByteMultiByteResponse = azinternal.PathsByteMultiByteResponse
+type PathsByteMultiByteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsByteNullResponse contains the response from method Paths.ByteNull.
-type PathsByteNullResponse = azinternal.PathsByteNullResponse
+type PathsByteNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsDateNullResponse contains the response from method Paths.DateNull.
-type PathsDateNullResponse = azinternal.PathsDateNullResponse
+type PathsDateNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsDateTimeNullResponse contains the response from method Paths.DateTimeNull.
-type PathsDateTimeNullResponse = azinternal.PathsDateTimeNullResponse
+type PathsDateTimeNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsDateTimeValidResponse contains the response from method Paths.DateTimeValid.
-type PathsDateTimeValidResponse = azinternal.PathsDateTimeValidResponse
+type PathsDateTimeValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsDateValidResponse contains the response from method Paths.DateValid.
-type PathsDateValidResponse = azinternal.PathsDateValidResponse
+type PathsDateValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsDoubleDecimalNegativeResponse contains the response from method Paths.DoubleDecimalNegative.
-type PathsDoubleDecimalNegativeResponse = azinternal.PathsDoubleDecimalNegativeResponse
+type PathsDoubleDecimalNegativeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsDoubleDecimalPositiveResponse contains the response from method Paths.DoubleDecimalPositive.
-type PathsDoubleDecimalPositiveResponse = azinternal.PathsDoubleDecimalPositiveResponse
+type PathsDoubleDecimalPositiveResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsEnumNullResponse contains the response from method Paths.EnumNull.
-type PathsEnumNullResponse = azinternal.PathsEnumNullResponse
+type PathsEnumNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsEnumValidResponse contains the response from method Paths.EnumValid.
-type PathsEnumValidResponse = azinternal.PathsEnumValidResponse
+type PathsEnumValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsFloatScientificNegativeResponse contains the response from method Paths.FloatScientificNegative.
-type PathsFloatScientificNegativeResponse = azinternal.PathsFloatScientificNegativeResponse
+type PathsFloatScientificNegativeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsFloatScientificPositiveResponse contains the response from method Paths.FloatScientificPositive.
-type PathsFloatScientificPositiveResponse = azinternal.PathsFloatScientificPositiveResponse
+type PathsFloatScientificPositiveResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsGetBooleanFalseResponse contains the response from method Paths.GetBooleanFalse.
-type PathsGetBooleanFalseResponse = azinternal.PathsGetBooleanFalseResponse
+type PathsGetBooleanFalseResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsGetBooleanTrueResponse contains the response from method Paths.GetBooleanTrue.
-type PathsGetBooleanTrueResponse = azinternal.PathsGetBooleanTrueResponse
+type PathsGetBooleanTrueResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsGetIntNegativeOneMillionResponse contains the response from method Paths.GetIntNegativeOneMillion.
-type PathsGetIntNegativeOneMillionResponse = azinternal.PathsGetIntNegativeOneMillionResponse
+type PathsGetIntNegativeOneMillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsGetIntOneMillionResponse contains the response from method Paths.GetIntOneMillion.
-type PathsGetIntOneMillionResponse = azinternal.PathsGetIntOneMillionResponse
+type PathsGetIntOneMillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsGetNegativeTenBillionResponse contains the response from method Paths.GetNegativeTenBillion.
-type PathsGetNegativeTenBillionResponse = azinternal.PathsGetNegativeTenBillionResponse
+type PathsGetNegativeTenBillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsGetTenBillionResponse contains the response from method Paths.GetTenBillion.
-type PathsGetTenBillionResponse = azinternal.PathsGetTenBillionResponse
+type PathsGetTenBillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsStringEmptyResponse contains the response from method Paths.StringEmpty.
-type PathsStringEmptyResponse = azinternal.PathsStringEmptyResponse
+type PathsStringEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsStringNullResponse contains the response from method Paths.StringNull.
-type PathsStringNullResponse = azinternal.PathsStringNullResponse
+type PathsStringNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsStringURLEncodedResponse contains the response from method Paths.StringURLEncoded.
-type PathsStringURLEncodedResponse = azinternal.PathsStringURLEncodedResponse
+type PathsStringURLEncodedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsStringURLNonEncodedResponse contains the response from method Paths.StringURLNonEncoded.
-type PathsStringURLNonEncodedResponse = azinternal.PathsStringURLNonEncodedResponse
+type PathsStringURLNonEncodedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsStringUnicodeResponse contains the response from method Paths.StringUnicode.
-type PathsStringUnicodeResponse = azinternal.PathsStringUnicodeResponse
+type PathsStringUnicodeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // PathsUnixTimeURLResponse contains the response from method Paths.UnixTimeURL.
-type PathsUnixTimeURLResponse = azinternal.PathsUnixTimeURLResponse
+type PathsUnixTimeURLResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesArrayStringCSVEmptyOptions contains the optional parameters for the Queries.ArrayStringCSVEmpty method.
-type QueriesArrayStringCSVEmptyOptions = azinternal.QueriesArrayStringCSVEmptyOptions
+type QueriesArrayStringCSVEmptyOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayQuery *[]string
+}
 
 // QueriesArrayStringCSVEmptyResponse contains the response from method Queries.ArrayStringCSVEmpty.
-type QueriesArrayStringCSVEmptyResponse = azinternal.QueriesArrayStringCSVEmptyResponse
+type QueriesArrayStringCSVEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesArrayStringCSVNullOptions contains the optional parameters for the Queries.ArrayStringCSVNull method.
-type QueriesArrayStringCSVNullOptions = azinternal.QueriesArrayStringCSVNullOptions
+type QueriesArrayStringCSVNullOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayQuery *[]string
+}
 
 // QueriesArrayStringCSVNullResponse contains the response from method Queries.ArrayStringCSVNull.
-type QueriesArrayStringCSVNullResponse = azinternal.QueriesArrayStringCSVNullResponse
+type QueriesArrayStringCSVNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesArrayStringCSVValidOptions contains the optional parameters for the Queries.ArrayStringCSVValid method.
-type QueriesArrayStringCSVValidOptions = azinternal.QueriesArrayStringCSVValidOptions
+type QueriesArrayStringCSVValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	ArrayQuery *[]string
+}
 
 // QueriesArrayStringCSVValidResponse contains the response from method Queries.ArrayStringCSVValid.
-type QueriesArrayStringCSVValidResponse = azinternal.QueriesArrayStringCSVValidResponse
+type QueriesArrayStringCSVValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
-type QueriesArrayStringPipesValidOptions = azinternal.QueriesArrayStringPipesValidOptions
+type QueriesArrayStringPipesValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
+	ArrayQuery *[]string
+}
 
 // QueriesArrayStringPipesValidResponse contains the response from method Queries.ArrayStringPipesValid.
-type QueriesArrayStringPipesValidResponse = azinternal.QueriesArrayStringPipesValidResponse
+type QueriesArrayStringPipesValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesArrayStringSsvValidOptions contains the optional parameters for the Queries.ArrayStringSsvValid method.
-type QueriesArrayStringSsvValidOptions = azinternal.QueriesArrayStringSsvValidOptions
+type QueriesArrayStringSsvValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
+	ArrayQuery *[]string
+}
 
 // QueriesArrayStringSsvValidResponse contains the response from method Queries.ArrayStringSsvValid.
-type QueriesArrayStringSsvValidResponse = azinternal.QueriesArrayStringSsvValidResponse
+type QueriesArrayStringSsvValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesArrayStringTsvValidOptions contains the optional parameters for the Queries.ArrayStringTsvValid method.
-type QueriesArrayStringTsvValidOptions = azinternal.QueriesArrayStringTsvValidOptions
+type QueriesArrayStringTsvValidOptions struct {
+	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
+	ArrayQuery *[]string
+}
 
 // QueriesArrayStringTsvValidResponse contains the response from method Queries.ArrayStringTsvValid.
-type QueriesArrayStringTsvValidResponse = azinternal.QueriesArrayStringTsvValidResponse
+type QueriesArrayStringTsvValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesByteEmptyResponse contains the response from method Queries.ByteEmpty.
-type QueriesByteEmptyResponse = azinternal.QueriesByteEmptyResponse
+type QueriesByteEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesByteMultiByteOptions contains the optional parameters for the Queries.ByteMultiByte method.
-type QueriesByteMultiByteOptions = azinternal.QueriesByteMultiByteOptions
+type QueriesByteMultiByteOptions struct {
+	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+	ByteQuery *[]byte
+}
 
 // QueriesByteMultiByteResponse contains the response from method Queries.ByteMultiByte.
-type QueriesByteMultiByteResponse = azinternal.QueriesByteMultiByteResponse
+type QueriesByteMultiByteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesByteNullOptions contains the optional parameters for the Queries.ByteNull method.
-type QueriesByteNullOptions = azinternal.QueriesByteNullOptions
+type QueriesByteNullOptions struct {
+	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+	ByteQuery *[]byte
+}
 
 // QueriesByteNullResponse contains the response from method Queries.ByteNull.
-type QueriesByteNullResponse = azinternal.QueriesByteNullResponse
+type QueriesByteNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesDateNullOptions contains the optional parameters for the Queries.DateNull method.
-type QueriesDateNullOptions = azinternal.QueriesDateNullOptions
+type QueriesDateNullOptions struct {
+	// null as date (no query parameters in uri)
+	DateQuery *time.Time
+}
 
 // QueriesDateNullResponse contains the response from method Queries.DateNull.
-type QueriesDateNullResponse = azinternal.QueriesDateNullResponse
+type QueriesDateNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesDateTimeNullOptions contains the optional parameters for the Queries.DateTimeNull method.
-type QueriesDateTimeNullOptions = azinternal.QueriesDateTimeNullOptions
+type QueriesDateTimeNullOptions struct {
+	// null as date-time (no query parameters)
+	DateTimeQuery *time.Time
+}
 
 // QueriesDateTimeNullResponse contains the response from method Queries.DateTimeNull.
-type QueriesDateTimeNullResponse = azinternal.QueriesDateTimeNullResponse
+type QueriesDateTimeNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesDateTimeValidResponse contains the response from method Queries.DateTimeValid.
-type QueriesDateTimeValidResponse = azinternal.QueriesDateTimeValidResponse
+type QueriesDateTimeValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesDateValidResponse contains the response from method Queries.DateValid.
-type QueriesDateValidResponse = azinternal.QueriesDateValidResponse
+type QueriesDateValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesDoubleDecimalNegativeResponse contains the response from method Queries.DoubleDecimalNegative.
-type QueriesDoubleDecimalNegativeResponse = azinternal.QueriesDoubleDecimalNegativeResponse
+type QueriesDoubleDecimalNegativeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesDoubleDecimalPositiveResponse contains the response from method Queries.DoubleDecimalPositive.
-type QueriesDoubleDecimalPositiveResponse = azinternal.QueriesDoubleDecimalPositiveResponse
+type QueriesDoubleDecimalPositiveResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesDoubleNullOptions contains the optional parameters for the Queries.DoubleNull method.
-type QueriesDoubleNullOptions = azinternal.QueriesDoubleNullOptions
+type QueriesDoubleNullOptions struct {
+	// null numeric value
+	DoubleQuery *float64
+}
 
 // QueriesDoubleNullResponse contains the response from method Queries.DoubleNull.
-type QueriesDoubleNullResponse = azinternal.QueriesDoubleNullResponse
+type QueriesDoubleNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesEnumNullOptions contains the optional parameters for the Queries.EnumNull method.
-type QueriesEnumNullOptions = azinternal.QueriesEnumNullOptions
+type QueriesEnumNullOptions struct {
+	// 'green color' enum value
+	EnumQuery *UriColor
+}
 
 // QueriesEnumNullResponse contains the response from method Queries.EnumNull.
-type QueriesEnumNullResponse = azinternal.QueriesEnumNullResponse
+type QueriesEnumNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesEnumValidOptions contains the optional parameters for the Queries.EnumValid method.
-type QueriesEnumValidOptions = azinternal.QueriesEnumValidOptions
+type QueriesEnumValidOptions struct {
+	// 'green color' enum value
+	EnumQuery *UriColor
+}
 
 // QueriesEnumValidResponse contains the response from method Queries.EnumValid.
-type QueriesEnumValidResponse = azinternal.QueriesEnumValidResponse
+type QueriesEnumValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesFloatNullOptions contains the optional parameters for the Queries.FloatNull method.
-type QueriesFloatNullOptions = azinternal.QueriesFloatNullOptions
+type QueriesFloatNullOptions struct {
+	// null numeric value
+	FloatQuery *float32
+}
 
 // QueriesFloatNullResponse contains the response from method Queries.FloatNull.
-type QueriesFloatNullResponse = azinternal.QueriesFloatNullResponse
+type QueriesFloatNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesFloatScientificNegativeResponse contains the response from method Queries.FloatScientificNegative.
-type QueriesFloatScientificNegativeResponse = azinternal.QueriesFloatScientificNegativeResponse
+type QueriesFloatScientificNegativeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesFloatScientificPositiveResponse contains the response from method Queries.FloatScientificPositive.
-type QueriesFloatScientificPositiveResponse = azinternal.QueriesFloatScientificPositiveResponse
+type QueriesFloatScientificPositiveResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetBooleanFalseResponse contains the response from method Queries.GetBooleanFalse.
-type QueriesGetBooleanFalseResponse = azinternal.QueriesGetBooleanFalseResponse
+type QueriesGetBooleanFalseResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetBooleanNullOptions contains the optional parameters for the Queries.GetBooleanNull method.
-type QueriesGetBooleanNullOptions = azinternal.QueriesGetBooleanNullOptions
+type QueriesGetBooleanNullOptions struct {
+	// null boolean value
+	BoolQuery *bool
+}
 
 // QueriesGetBooleanNullResponse contains the response from method Queries.GetBooleanNull.
-type QueriesGetBooleanNullResponse = azinternal.QueriesGetBooleanNullResponse
+type QueriesGetBooleanNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetBooleanTrueResponse contains the response from method Queries.GetBooleanTrue.
-type QueriesGetBooleanTrueResponse = azinternal.QueriesGetBooleanTrueResponse
+type QueriesGetBooleanTrueResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetIntNegativeOneMillionResponse contains the response from method Queries.GetIntNegativeOneMillion.
-type QueriesGetIntNegativeOneMillionResponse = azinternal.QueriesGetIntNegativeOneMillionResponse
+type QueriesGetIntNegativeOneMillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetIntNullOptions contains the optional parameters for the Queries.GetIntNull method.
-type QueriesGetIntNullOptions = azinternal.QueriesGetIntNullOptions
+type QueriesGetIntNullOptions struct {
+	// null integer value
+	IntQuery *int32
+}
 
 // QueriesGetIntNullResponse contains the response from method Queries.GetIntNull.
-type QueriesGetIntNullResponse = azinternal.QueriesGetIntNullResponse
+type QueriesGetIntNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetIntOneMillionResponse contains the response from method Queries.GetIntOneMillion.
-type QueriesGetIntOneMillionResponse = azinternal.QueriesGetIntOneMillionResponse
+type QueriesGetIntOneMillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetLongNullOptions contains the optional parameters for the Queries.GetLongNull method.
-type QueriesGetLongNullOptions = azinternal.QueriesGetLongNullOptions
+type QueriesGetLongNullOptions struct {
+	// null 64 bit integer value
+	LongQuery *int64
+}
 
 // QueriesGetLongNullResponse contains the response from method Queries.GetLongNull.
-type QueriesGetLongNullResponse = azinternal.QueriesGetLongNullResponse
+type QueriesGetLongNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetNegativeTenBillionResponse contains the response from method Queries.GetNegativeTenBillion.
-type QueriesGetNegativeTenBillionResponse = azinternal.QueriesGetNegativeTenBillionResponse
+type QueriesGetNegativeTenBillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesGetTenBillionResponse contains the response from method Queries.GetTenBillion.
-type QueriesGetTenBillionResponse = azinternal.QueriesGetTenBillionResponse
+type QueriesGetTenBillionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesStringEmptyResponse contains the response from method Queries.StringEmpty.
-type QueriesStringEmptyResponse = azinternal.QueriesStringEmptyResponse
+type QueriesStringEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesStringNullOptions contains the optional parameters for the Queries.StringNull method.
-type QueriesStringNullOptions = azinternal.QueriesStringNullOptions
+type QueriesStringNullOptions struct {
+	// null string value
+	StringQuery *string
+}
 
 // QueriesStringNullResponse contains the response from method Queries.StringNull.
-type QueriesStringNullResponse = azinternal.QueriesStringNullResponse
+type QueriesStringNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesStringURLEncodedResponse contains the response from method Queries.StringURLEncoded.
-type QueriesStringURLEncodedResponse = azinternal.QueriesStringURLEncodedResponse
+type QueriesStringURLEncodedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // QueriesStringUnicodeResponse contains the response from method Queries.StringUnicode.
-type QueriesStringUnicodeResponse = azinternal.QueriesStringUnicodeResponse
+type QueriesStringUnicodeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}

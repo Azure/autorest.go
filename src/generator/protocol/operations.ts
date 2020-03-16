@@ -5,9 +5,9 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, OperationGroup, Parameter, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, ContentPreamble, generateParamsSig, generateParameterInfo, genereateReturnsInfo, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
+import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, LanguageHeader, MethodSig, ParamInfo, paramInfo, SortAscending } from '../common/helpers';
 import { OperationNaming } from '../../namer/namer';
 
 const dateFormat = '2006-01-02';
@@ -33,26 +33,42 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // the list of packages to import
     const imports = new ImportManager();
     // add standard imorts
+    imports.add('context');
     imports.add('net/http');
     imports.add('net/url');
     imports.add('path');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
-    const clientName = group.language.go!.clientName;
+    const clientName = camelCase(group.language.go!.clientName);
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return SortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       op.language.go!.protocolSigs = new protocolSigs();
-      opText += createProtocolRequest(clientName, op, imports);
-      opText += createProtocolResponse(clientName, op, imports);
+      // TODO: generateOperation depends on some work that happens in
+      // protocol request/response creation, fix this
+      const reqText = createProtocolRequest(clientName, op, imports);
+      const respText = createProtocolResponse(clientName, op, imports);
+      opText += generateOperation(clientName, op);
+      opText += reqText;
+      opText += respText;
     }
+    const interfaceText = createInterfaceDefinition(group, imports);
     // stitch it all together
     let text = await ContentPreamble(session);
     text += imports.text();
-    text += `// ${clientName} contains the methods for the ${group.language.go!.name} group.\n`;
-    text += `type ${clientName} struct{}\n\n`;
+    text += interfaceText;
+    text += `// ${clientName} implements the ${group.language.go!.clientName} interface.\n`;
+    text += `type ${clientName} struct{\n`;
+    text += '\t*Client\n';
+    if (group.language.go!.globals) {
+      const globals = <Array<ParamInfo>>group.language.go!.globals;
+      for (const global of values(globals)) {
+        text += `\t${global.name} ${formatParamInfoTypeName(global)}\n`;
+      }
+    }
+    text += '}\n\n';
     text += opText;
 
     operations.push(new OperationGroupContent(group.language.go!.name, text));
@@ -301,6 +317,36 @@ function formatHeaderResponseValue(header: LanguageHeader, imports: ImportManage
   }
 }
 
+function generateOperation(clientName: string, op: Operation): string {
+  const info = <OperationNaming>op.language.go!;
+  const params = [new paramInfo('ctx', 'context.Context', false, true)].concat(generateParameterInfo(op));
+  const returns = genereateReturnsInfo(op);
+  const protocol = <ProtocolSig>op.language.go!;
+  let text = '';
+  if (HasDescription(op.language.go!)) {
+    text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+  }
+  text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')}) {\n`;
+  // slice off the first param returned from extractParamNames as we know it's the URL (cheating a bit...)
+  const protocolReqParams = ['*client.u'].concat(extractParamNames(protocol.protocolSigs.requestMethod.params).slice(1));
+  text += `\treq, err := client.${info.protocolNaming.requestMethod}(${protocolReqParams.join(', ')})\n`;
+  text += `\tif err != nil {\n`;
+  text += `\t\treturn nil, err\n`;
+  text += `\t}\n`;
+  text += `\tresp, err := client.p.Do(ctx, req)\n`;
+  text += `\tif err != nil {\n`;
+  text += `\t\treturn nil, err\n`;
+  text += `\t}\n`;
+  // also cheating here as at present the only param to the responder is an azcore.Response
+  text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
+  text += `\tif err != nil {\n`;
+  text += `\t\treturn nil, err\n`;
+  text += `\t}\n`;
+  text += `\treturn result, nil\n`;
+  text += '}\n\n';
+  return text;
+}
+
 function createProtocolRequest(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
@@ -315,7 +361,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   sig.protocolSigs.requestMethod.params = [new paramInfo('u', 'url.URL', false, true)].concat(generateParameterInfo(op));
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
+  text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
   if (inPathParams.any()) {
@@ -417,7 +463,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
 
   const firstResp = op.responses![0];
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params, true)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
+  text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params, true)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(${formatStatusCodes(firstResp.protocol.http?.statusCodes)}) {\n`;
   // if the response doesn't define a 'default' section return a generic error
   // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
@@ -478,6 +524,27 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   return text;
 }
 
+function createInterfaceDefinition(group: OperationGroup, imports: ImportManager): string {
+  let interfaceText = `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
+  interfaceText += `type ${group.language.go!.clientName} interface {\n`;
+  for (const op of values(group.operations)) {
+    for (const param of values(aggregateParameters(op))) {
+      if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
+        continue;
+      }
+      imports.addImportForSchemaType(param.schema);
+    }
+    if (HasDescription(op.language.go!)) {
+      interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+    }
+    const params = [new paramInfo('ctx', 'context.Context', false, true)].concat(generateParameterInfo(op));
+    const returns = genereateReturnsInfo(op);
+    interfaceText += `\t${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')})\n`;
+  }
+  interfaceText += '}\n\n';
+  return interfaceText;
+}
+
 // returns the media type used by the protocol
 function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'none' {
   // TODO: binary, forms etc
@@ -536,4 +603,18 @@ function hasBinaryResponse(responses: Response[]): boolean {
     }
   }
   return false;
+}
+
+// returns an array of just the parameter names
+// e.g. [ 'i', 's', 'b' ]
+function extractParamNames(paramInfo: ParamInfo[]): string[] {
+  let paramNames = new Array<string>();
+  for (const param of values(paramInfo)) {
+    let name = param.name;
+    if (param.global) {
+      name = `client.${name}`;
+    }
+    paramNames.push(name);
+  }
+  return paramNames;
 }

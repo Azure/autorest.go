@@ -5,69 +5,176 @@
 
 package datetimegroup
 
-import azinternal "generatortests/autorest/generated/datetimegroup/internal/datetimegroup"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"time"
+)
 
 // DatetimeGetInvalidResponse contains the response from method Datetime.GetInvalid.
-type DatetimeGetInvalidResponse = azinternal.DatetimeGetInvalidResponse
+type DatetimeGetInvalidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse contains the response from method Datetime.GetLocalNegativeOffsetLowercaseMaxDateTime.
-type DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse = azinternal.DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse
+type DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetLocalNegativeOffsetMinDateTimeResponse contains the response from method Datetime.GetLocalNegativeOffsetMinDateTime.
-type DatetimeGetLocalNegativeOffsetMinDateTimeResponse = azinternal.DatetimeGetLocalNegativeOffsetMinDateTimeResponse
+type DatetimeGetLocalNegativeOffsetMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse contains the response from method Datetime.GetLocalNegativeOffsetUppercaseMaxDateTime.
-type DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse = azinternal.DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse
+type DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse contains the response from method Datetime.GetLocalPositiveOffsetLowercaseMaxDateTime.
-type DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse = azinternal.DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse
+type DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetLocalPositiveOffsetMinDateTimeResponse contains the response from method Datetime.GetLocalPositiveOffsetMinDateTime.
-type DatetimeGetLocalPositiveOffsetMinDateTimeResponse = azinternal.DatetimeGetLocalPositiveOffsetMinDateTimeResponse
+type DatetimeGetLocalPositiveOffsetMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse contains the response from method Datetime.GetLocalPositiveOffsetUppercaseMaxDateTime.
-type DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse = azinternal.DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse
+type DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetNullResponse contains the response from method Datetime.GetNull.
-type DatetimeGetNullResponse = azinternal.DatetimeGetNullResponse
+type DatetimeGetNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetOverflowResponse contains the response from method Datetime.GetOverflow.
-type DatetimeGetOverflowResponse = azinternal.DatetimeGetOverflowResponse
+type DatetimeGetOverflowResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetUTCLowercaseMaxDateTimeResponse contains the response from method Datetime.GetUTCLowercaseMaxDateTime.
-type DatetimeGetUTCLowercaseMaxDateTimeResponse = azinternal.DatetimeGetUTCLowercaseMaxDateTimeResponse
+type DatetimeGetUTCLowercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetUTCMinDateTimeResponse contains the response from method Datetime.GetUTCMinDateTime.
-type DatetimeGetUTCMinDateTimeResponse = azinternal.DatetimeGetUTCMinDateTimeResponse
+type DatetimeGetUTCMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse contains the response from method Datetime.GetUTCUppercaseMaxDateTime7Digits.
-type DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse = azinternal.DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse
+type DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetUTCUppercaseMaxDateTimeResponse contains the response from method Datetime.GetUTCUppercaseMaxDateTime.
-type DatetimeGetUTCUppercaseMaxDateTimeResponse = azinternal.DatetimeGetUTCUppercaseMaxDateTimeResponse
+type DatetimeGetUTCUppercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimeGetUnderflowResponse contains the response from method Datetime.GetUnderflow.
-type DatetimeGetUnderflowResponse = azinternal.DatetimeGetUnderflowResponse
+type DatetimeGetUnderflowResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // DatetimePutLocalNegativeOffsetMaxDateTimeResponse contains the response from method Datetime.PutLocalNegativeOffsetMaxDateTime.
-type DatetimePutLocalNegativeOffsetMaxDateTimeResponse = azinternal.DatetimePutLocalNegativeOffsetMaxDateTimeResponse
+type DatetimePutLocalNegativeOffsetMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // DatetimePutLocalNegativeOffsetMinDateTimeResponse contains the response from method Datetime.PutLocalNegativeOffsetMinDateTime.
-type DatetimePutLocalNegativeOffsetMinDateTimeResponse = azinternal.DatetimePutLocalNegativeOffsetMinDateTimeResponse
+type DatetimePutLocalNegativeOffsetMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // DatetimePutLocalPositiveOffsetMaxDateTimeResponse contains the response from method Datetime.PutLocalPositiveOffsetMaxDateTime.
-type DatetimePutLocalPositiveOffsetMaxDateTimeResponse = azinternal.DatetimePutLocalPositiveOffsetMaxDateTimeResponse
+type DatetimePutLocalPositiveOffsetMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // DatetimePutLocalPositiveOffsetMinDateTimeResponse contains the response from method Datetime.PutLocalPositiveOffsetMinDateTime.
-type DatetimePutLocalPositiveOffsetMinDateTimeResponse = azinternal.DatetimePutLocalPositiveOffsetMinDateTimeResponse
+type DatetimePutLocalPositiveOffsetMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // DatetimePutUTCMaxDateTime7DigitsResponse contains the response from method Datetime.PutUTCMaxDateTime7Digits.
-type DatetimePutUTCMaxDateTime7DigitsResponse = azinternal.DatetimePutUTCMaxDateTime7DigitsResponse
+type DatetimePutUTCMaxDateTime7DigitsResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // DatetimePutUTCMaxDateTimeResponse contains the response from method Datetime.PutUTCMaxDateTime.
-type DatetimePutUTCMaxDateTimeResponse = azinternal.DatetimePutUTCMaxDateTimeResponse
+type DatetimePutUTCMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // DatetimePutUTCMinDateTimeResponse contains the response from method Datetime.PutUTCMinDateTime.
-type DatetimePutUTCMinDateTimeResponse = azinternal.DatetimePutUTCMinDateTimeResponse
+type DatetimePutUTCMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}

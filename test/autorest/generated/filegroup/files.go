@@ -7,7 +7,10 @@ package filegroup
 
 import (
 	"context"
-	azinternal "generatortests/autorest/generated/filegroup/internal/filegroup"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"net/url"
+	"path"
 )
 
 // FilesOperations contains the methods for the Files group.
@@ -20,14 +23,14 @@ type FilesOperations interface {
 	GetFileLarge(ctx context.Context) (*FilesGetFileLargeResponse, error)
 }
 
+// filesOperations implements the FilesOperations interface.
 type filesOperations struct {
 	*Client
-	azinternal.FilesOperations
 }
 
 // GetEmptyFile - Get empty file
 func (client *filesOperations) GetEmptyFile(ctx context.Context) (*FilesGetEmptyFileResponse, error) {
-	req, err := client.GetEmptyFileCreateRequest(*client.u)
+	req, err := client.getEmptyFileCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -35,16 +38,33 @@ func (client *filesOperations) GetEmptyFile(ctx context.Context) (*FilesGetEmpty
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEmptyFileHandleResponse(resp)
+	result, err := client.getEmptyFileHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getEmptyFileCreateRequest creates the GetEmptyFile request.
+func (client *filesOperations) getEmptyFileCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/files/stream/empty"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	req.SkipBodyDownload()
+	return req, nil
+}
+
+// getEmptyFileHandleResponse handles the GetEmptyFile response.
+func (client *filesOperations) getEmptyFileHandleResponse(resp *azcore.Response) (*FilesGetEmptyFileResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &FilesGetEmptyFileResponse{RawResponse: resp.Response}, nil
 }
 
 // GetFile - Get file
 func (client *filesOperations) GetFile(ctx context.Context) (*FilesGetFileResponse, error) {
-	req, err := client.GetFileCreateRequest(*client.u)
+	req, err := client.getFileCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -52,16 +72,33 @@ func (client *filesOperations) GetFile(ctx context.Context) (*FilesGetFileRespon
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetFileHandleResponse(resp)
+	result, err := client.getFileHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getFileCreateRequest creates the GetFile request.
+func (client *filesOperations) getFileCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/files/stream/nonempty"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	req.SkipBodyDownload()
+	return req, nil
+}
+
+// getFileHandleResponse handles the GetFile response.
+func (client *filesOperations) getFileHandleResponse(resp *azcore.Response) (*FilesGetFileResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &FilesGetFileResponse{RawResponse: resp.Response}, nil
 }
 
 // GetFileLarge - Get a large file
 func (client *filesOperations) GetFileLarge(ctx context.Context) (*FilesGetFileLargeResponse, error) {
-	req, err := client.GetFileLargeCreateRequest(*client.u)
+	req, err := client.getFileLargeCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -69,11 +106,26 @@ func (client *filesOperations) GetFileLarge(ctx context.Context) (*FilesGetFileL
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetFileLargeHandleResponse(resp)
+	result, err := client.getFileLargeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-var _ FilesOperations = (*filesOperations)(nil)
+// getFileLargeCreateRequest creates the GetFileLarge request.
+func (client *filesOperations) getFileLargeCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/files/stream/verylarge"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	req.SkipBodyDownload()
+	return req, nil
+}
+
+// getFileLargeHandleResponse handles the GetFileLarge response.
+func (client *filesOperations) getFileLargeHandleResponse(resp *azcore.Response) (*FilesGetFileLargeResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &FilesGetFileLargeResponse{RawResponse: resp.Response}, nil
+}

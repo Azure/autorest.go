@@ -7,7 +7,11 @@ package morecustombaseurigroup
 
 import (
 	"context"
-	azinternal "generatortests/autorest/generated/morecustombaseurigroup/internal/morecustombaseurigroup"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"net/url"
+	"path"
+	"strings"
 )
 
 // PathsOperations contains the methods for the Paths group.
@@ -16,16 +20,16 @@ type PathsOperations interface {
 	GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*PathsGetEmptyResponse, error)
 }
 
+// pathsOperations implements the PathsOperations interface.
 type pathsOperations struct {
 	*Client
-	azinternal.PathsOperations
 	dnsSuffix      string
 	subscriptionID string
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*PathsGetEmptyResponse, error) {
-	req, err := client.GetEmptyCreateRequest(*client.u, vault, secret, client.dnsSuffix, keyName, client.subscriptionID, options)
+	req, err := client.getEmptyCreateRequest(*client.u, vault, secret, client.dnsSuffix, keyName, client.subscriptionID, options)
 	if err != nil {
 		return nil, err
 	}
@@ -33,11 +37,32 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secre
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-var _ PathsOperations = (*pathsOperations)(nil)
+// getEmptyCreateRequest creates the GetEmpty request.
+func (client *pathsOperations) getEmptyCreateRequest(u url.URL, vault string, secret string, dnsSuffix string, keyName string, subscriptionID string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+	urlPath := "/customuri/{subscriptionId}/{keyName}"
+	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	u.Path = path.Join(u.Path, urlPath)
+	query := u.Query()
+	if options != nil && options.KeyVersion != nil {
+		query.Set("keyVersion", *options.KeyVersion)
+	}
+	u.RawQuery = query.Encode()
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getEmptyHandleResponse handles the GetEmpty response.
+func (client *pathsOperations) getEmptyHandleResponse(resp *azcore.Response) (*PathsGetEmptyResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &PathsGetEmptyResponse{RawResponse: resp.Response}, nil
+}

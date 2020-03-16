@@ -41,7 +41,7 @@ goMappings = {
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     let inputFile = swaggerDir + goMappings[namespace];
-    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --namespace=' + namespace + ' --output-folder=test/autorest/generated/' + namespace + ' --module-path=generatortests/autorest/generated/' + namespace, autorestCallback(namespace, inputFile));
+    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --namespace=' + namespace + ' --output-folder=test/autorest/generated/' + namespace, autorestCallback(namespace, inputFile));
 } 
 
 // use a function factory to create the closure so that the values of namespace and inputFile are captured on each iteration

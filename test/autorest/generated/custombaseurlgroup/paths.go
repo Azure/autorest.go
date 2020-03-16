@@ -7,7 +7,10 @@ package custombaseurlgroup
 
 import (
 	"context"
-	azinternal "generatortests/autorest/generated/custombaseurlgroup/internal/custombaseurlgroup"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"net/url"
+	"path"
 )
 
 // PathsOperations contains the methods for the Paths group.
@@ -16,14 +19,14 @@ type PathsOperations interface {
 	GetEmpty(ctx context.Context, accountName string) (*PathsGetEmptyResponse, error)
 }
 
+// pathsOperations implements the PathsOperations interface.
 type pathsOperations struct {
 	*Client
-	azinternal.PathsOperations
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string) (*PathsGetEmptyResponse, error) {
-	req, err := client.GetEmptyCreateRequest(*client.u, accountName)
+	req, err := client.getEmptyCreateRequest(*client.u, accountName)
 	if err != nil {
 		return nil, err
 	}
@@ -31,11 +34,25 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string)
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-var _ PathsOperations = (*pathsOperations)(nil)
+// getEmptyCreateRequest creates the GetEmpty request.
+func (client *pathsOperations) getEmptyCreateRequest(u url.URL, accountName string) (*azcore.Request, error) {
+	urlPath := "/customuri"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getEmptyHandleResponse handles the GetEmpty response.
+func (client *pathsOperations) getEmptyHandleResponse(resp *azcore.Response) (*PathsGetEmptyResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &PathsGetEmptyResponse{RawResponse: resp.Response}, nil
+}

@@ -7,7 +7,10 @@ package stringgroup
 
 import (
 	"context"
-	azinternal "generatortests/autorest/generated/stringgroup/internal/stringgroup"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"net/url"
+	"path"
 )
 
 // StringOperations contains the methods for the String group.
@@ -40,14 +43,14 @@ type StringOperations interface {
 	PutWhitespace(ctx context.Context) (*StringPutWhitespaceResponse, error)
 }
 
+// stringOperations implements the StringOperations interface.
 type stringOperations struct {
 	*Client
-	azinternal.StringOperations
 }
 
 // GetBase64Encoded - Get value that is base64 encoded
 func (client *stringOperations) GetBase64Encoded(ctx context.Context) (*StringGetBase64EncodedResponse, error) {
-	req, err := client.GetBase64EncodedCreateRequest(*client.u)
+	req, err := client.getBase64EncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -55,16 +58,33 @@ func (client *stringOperations) GetBase64Encoded(ctx context.Context) (*StringGe
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetBase64EncodedHandleResponse(resp)
+	result, err := client.getBase64EncodedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getBase64EncodedCreateRequest creates the GetBase64Encoded request.
+func (client *stringOperations) getBase64EncodedCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/base64Encoding"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getBase64EncodedHandleResponse handles the GetBase64Encoded response.
+func (client *stringOperations) getBase64EncodedHandleResponse(resp *azcore.Response) (*StringGetBase64EncodedResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetBase64EncodedResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetBase64URLEncoded - Get value that is base64url encoded
 func (client *stringOperations) GetBase64URLEncoded(ctx context.Context) (*StringGetBase64URLEncodedResponse, error) {
-	req, err := client.GetBase64URLEncodedCreateRequest(*client.u)
+	req, err := client.getBase64UrlEncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -72,16 +92,33 @@ func (client *stringOperations) GetBase64URLEncoded(ctx context.Context) (*Strin
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetBase64URLEncodedHandleResponse(resp)
+	result, err := client.getBase64UrlEncodedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getBase64UrlEncodedCreateRequest creates the GetBase64URLEncoded request.
+func (client *stringOperations) getBase64UrlEncodedCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/base64UrlEncoding"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getBase64UrlEncodedHandleResponse handles the GetBase64URLEncoded response.
+func (client *stringOperations) getBase64UrlEncodedHandleResponse(resp *azcore.Response) (*StringGetBase64URLEncodedResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetBase64URLEncodedResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetEmpty - Get empty string value value ''
 func (client *stringOperations) GetEmpty(ctx context.Context) (*StringGetEmptyResponse, error) {
-	req, err := client.GetEmptyCreateRequest(*client.u)
+	req, err := client.getEmptyCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -89,16 +126,33 @@ func (client *stringOperations) GetEmpty(ctx context.Context) (*StringGetEmptyRe
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getEmptyCreateRequest creates the GetEmpty request.
+func (client *stringOperations) getEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/empty"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getEmptyHandleResponse handles the GetEmpty response.
+func (client *stringOperations) getEmptyHandleResponse(resp *azcore.Response) (*StringGetEmptyResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetEmptyResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client *stringOperations) GetMBCS(ctx context.Context) (*StringGetMBCSResponse, error) {
-	req, err := client.GetMBCSCreateRequest(*client.u)
+	req, err := client.getMbcsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -106,16 +160,33 @@ func (client *stringOperations) GetMBCS(ctx context.Context) (*StringGetMBCSResp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetMBCSHandleResponse(resp)
+	result, err := client.getMbcsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getMbcsCreateRequest creates the GetMBCS request.
+func (client *stringOperations) getMbcsCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/mbcs"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getMbcsHandleResponse handles the GetMBCS response.
+func (client *stringOperations) getMbcsHandleResponse(resp *azcore.Response) (*StringGetMBCSResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetMBCSResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNotProvided - Get String value when no string value is sent in response payload
 func (client *stringOperations) GetNotProvided(ctx context.Context) (*StringGetNotProvidedResponse, error) {
-	req, err := client.GetNotProvidedCreateRequest(*client.u)
+	req, err := client.getNotProvidedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -123,16 +194,33 @@ func (client *stringOperations) GetNotProvided(ctx context.Context) (*StringGetN
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNotProvidedHandleResponse(resp)
+	result, err := client.getNotProvidedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getNotProvidedCreateRequest creates the GetNotProvided request.
+func (client *stringOperations) getNotProvidedCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/notProvided"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getNotProvidedHandleResponse handles the GetNotProvided response.
+func (client *stringOperations) getNotProvidedHandleResponse(resp *azcore.Response) (*StringGetNotProvidedResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetNotProvidedResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNull - Get null string value value
 func (client *stringOperations) GetNull(ctx context.Context) (*StringGetNullResponse, error) {
-	req, err := client.GetNullCreateRequest(*client.u)
+	req, err := client.getNullCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -140,16 +228,33 @@ func (client *stringOperations) GetNull(ctx context.Context) (*StringGetNullResp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getNullCreateRequest creates the GetNull request.
+func (client *stringOperations) getNullCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/null"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getNullHandleResponse handles the GetNull response.
+func (client *stringOperations) getNullHandleResponse(resp *azcore.Response) (*StringGetNullResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetNullResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 func (client *stringOperations) GetNullBase64URLEncoded(ctx context.Context) (*StringGetNullBase64URLEncodedResponse, error) {
-	req, err := client.GetNullBase64URLEncodedCreateRequest(*client.u)
+	req, err := client.getNullBase64UrlEncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -157,16 +262,33 @@ func (client *stringOperations) GetNullBase64URLEncoded(ctx context.Context) (*S
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNullBase64URLEncodedHandleResponse(resp)
+	result, err := client.getNullBase64UrlEncodedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getNullBase64UrlEncodedCreateRequest creates the GetNullBase64URLEncoded request.
+func (client *stringOperations) getNullBase64UrlEncodedCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/nullBase64UrlEncoding"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getNullBase64UrlEncodedHandleResponse handles the GetNullBase64URLEncoded response.
+func (client *stringOperations) getNullBase64UrlEncodedHandleResponse(resp *azcore.Response) (*StringGetNullBase64URLEncodedResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetNullBase64URLEncodedResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 func (client *stringOperations) GetWhitespace(ctx context.Context) (*StringGetWhitespaceResponse, error) {
-	req, err := client.GetWhitespaceCreateRequest(*client.u)
+	req, err := client.getWhitespaceCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -174,16 +296,33 @@ func (client *stringOperations) GetWhitespace(ctx context.Context) (*StringGetWh
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetWhitespaceHandleResponse(resp)
+	result, err := client.getWhitespaceHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getWhitespaceCreateRequest creates the GetWhitespace request.
+func (client *stringOperations) getWhitespaceCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/whitespace"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getWhitespaceHandleResponse handles the GetWhitespace response.
+func (client *stringOperations) getWhitespaceHandleResponse(resp *azcore.Response) (*StringGetWhitespaceResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := StringGetWhitespaceResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // PutBase64URLEncoded - Put value that is base64url encoded
 func (client *stringOperations) PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*StringPutBase64URLEncodedResponse, error) {
-	req, err := client.PutBase64URLEncodedCreateRequest(*client.u, stringBody)
+	req, err := client.putBase64UrlEncodedCreateRequest(*client.u, stringBody)
 	if err != nil {
 		return nil, err
 	}
@@ -191,16 +330,36 @@ func (client *stringOperations) PutBase64URLEncoded(ctx context.Context, stringB
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutBase64URLEncodedHandleResponse(resp)
+	result, err := client.putBase64UrlEncodedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// putBase64UrlEncodedCreateRequest creates the PutBase64URLEncoded request.
+func (client *stringOperations) putBase64UrlEncodedCreateRequest(u url.URL, stringBody []byte) (*azcore.Request, error) {
+	urlPath := "/string/base64UrlEncoding"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON(stringBody)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putBase64UrlEncodedHandleResponse handles the PutBase64URLEncoded response.
+func (client *stringOperations) putBase64UrlEncodedHandleResponse(resp *azcore.Response) (*StringPutBase64URLEncodedResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &StringPutBase64URLEncodedResponse{RawResponse: resp.Response}, nil
 }
 
 // PutEmpty - Set string value empty ''
 func (client *stringOperations) PutEmpty(ctx context.Context) (*StringPutEmptyResponse, error) {
-	req, err := client.PutEmptyCreateRequest(*client.u)
+	req, err := client.putEmptyCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -208,16 +367,36 @@ func (client *stringOperations) PutEmpty(ctx context.Context) (*StringPutEmptyRe
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutEmptyHandleResponse(resp)
+	result, err := client.putEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// putEmptyCreateRequest creates the PutEmpty request.
+func (client *stringOperations) putEmptyCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/empty"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON("")
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putEmptyHandleResponse handles the PutEmpty response.
+func (client *stringOperations) putEmptyHandleResponse(resp *azcore.Response) (*StringPutEmptyResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &StringPutEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 func (client *stringOperations) PutMBCS(ctx context.Context) (*StringPutMBCSResponse, error) {
-	req, err := client.PutMBCSCreateRequest(*client.u)
+	req, err := client.putMbcsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -225,16 +404,36 @@ func (client *stringOperations) PutMBCS(ctx context.Context) (*StringPutMBCSResp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutMBCSHandleResponse(resp)
+	result, err := client.putMbcsHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// putMbcsCreateRequest creates the PutMBCS request.
+func (client *stringOperations) putMbcsCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/mbcs"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putMbcsHandleResponse handles the PutMBCS response.
+func (client *stringOperations) putMbcsHandleResponse(resp *azcore.Response) (*StringPutMBCSResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &StringPutMBCSResponse{RawResponse: resp.Response}, nil
 }
 
 // PutNull - Set string value null
 func (client *stringOperations) PutNull(ctx context.Context) (*StringPutNullResponse, error) {
-	req, err := client.PutNullCreateRequest(*client.u)
+	req, err := client.putNullCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -242,16 +441,36 @@ func (client *stringOperations) PutNull(ctx context.Context) (*StringPutNullResp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutNullHandleResponse(resp)
+	result, err := client.putNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// putNullCreateRequest creates the PutNull request.
+func (client *stringOperations) putNullCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/null"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON(nil)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putNullHandleResponse handles the PutNull response.
+func (client *stringOperations) putNullHandleResponse(resp *azcore.Response) (*StringPutNullResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &StringPutNullResponse{RawResponse: resp.Response}, nil
 }
 
 // PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 func (client *stringOperations) PutWhitespace(ctx context.Context) (*StringPutWhitespaceResponse, error) {
-	req, err := client.PutWhitespaceCreateRequest(*client.u)
+	req, err := client.putWhitespaceCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -259,11 +478,29 @@ func (client *stringOperations) PutWhitespace(ctx context.Context) (*StringPutWh
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutWhitespaceHandleResponse(resp)
+	result, err := client.putWhitespaceHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-var _ StringOperations = (*stringOperations)(nil)
+// putWhitespaceCreateRequest creates the PutWhitespace request.
+func (client *stringOperations) putWhitespaceCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/whitespace"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putWhitespaceHandleResponse handles the PutWhitespace response.
+func (client *stringOperations) putWhitespaceHandleResponse(resp *azcore.Response) (*StringPutWhitespaceResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &StringPutWhitespaceResponse{RawResponse: resp.Response}, nil
+}

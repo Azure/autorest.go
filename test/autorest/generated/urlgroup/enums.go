@@ -5,16 +5,18 @@
 
 package urlgroup
 
-import azinternal "generatortests/autorest/generated/urlgroup/internal/urlgroup"
-
-type UriColor = azinternal.UriColor
+type UriColor string
 
 const (
-	UriColorRedColor   = azinternal.UriColorRedColor
-	UriColorGreenColor = azinternal.UriColorGreenColor
-	UriColorBlueColor  = azinternal.UriColorBlueColor
+	UriColorRedColor   UriColor = "red color"
+	UriColorGreenColor UriColor = "green color"
+	UriColorBlueColor  UriColor = "blue color"
 )
 
 func PossibleUriColorValues() []UriColor {
-	return azinternal.PossibleUriColorValues()
+	return []UriColor{UriColorRedColor, UriColorGreenColor, UriColorBlueColor}
+}
+
+func (c UriColor) ToPtr() *UriColor {
+	return &c
 }

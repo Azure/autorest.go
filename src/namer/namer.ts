@@ -110,7 +110,7 @@ async function process(session: Session<CodeModel>) {
           params: optionalParams
         };
       }
-      details.protocolNaming = new protocolMethods(details.name);
+      details.protocolNaming = new protocolMethods(camelCase(details.name));
       // TODO check if we still need to fix up response type name and description
       const firstResp = op.responses![0];
       const name = `${opGroupName}${op.language.go!.name}Response`;
