@@ -448,13 +448,12 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         body = `wrapper{${fieldName}: ${bodyParam!.language.go!.name}}`;
       }
     } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
+      // wrap the body in the custom RFC1123 type
       if (!bodyParam!.required) {
         text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(options.${body})\n`;
       } else {
         text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
       }
-      // // wrap the body in the custom RFC1123 type
-      // text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
       body = 'aux';
     } else {
       // final check for each body param to know if it is optional
