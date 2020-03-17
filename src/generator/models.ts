@@ -97,6 +97,9 @@ class StructDef {
     // used to track when to add an extra \n between fields that have comments
     let first = true;
     for (const prop of values(this.Properties)) {
+      if (this.Language.errorType && prop.language.go!.name === 'Error') {
+        prop.language.go!.name = 'Inner' + prop.language.go!.name;
+      }
       if (HasDescription(prop.language.go!)) {
         if (!first) {
           // add an extra new-line between fields IFF the field
