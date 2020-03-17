@@ -103,9 +103,7 @@ type StringGetBase64URLEncodedResponse struct {
 type StringGetEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// simple string
-	Value *string
+	Value       *string
 }
 
 // StringGetMBCSResponse contains the response from method String.GetMBCS.
@@ -135,9 +133,7 @@ type StringGetNullBase64URLEncodedResponse struct {
 type StringGetNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// simple string
-	Value *string
+	Value       *string
 }
 
 // StringGetWhitespaceResponse contains the response from method String.GetWhitespace.
@@ -165,6 +161,11 @@ type StringPutEmptyResponse struct {
 type StringPutMBCSResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// StringPutNullOptions contains the optional parameters for the String.PutNull method.
+type StringPutNullOptions struct {
+	StringBody *string
 }
 
 // StringPutNullResponse contains the response from method String.PutNull.
