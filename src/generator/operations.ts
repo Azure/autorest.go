@@ -445,7 +445,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       if (!bodyParam!.required) {
         body = `wrapper{${fieldName}: options.${pascalCase(bodyParam!.language.go!.name)}}`;
       } else {
-        body = `wrapper{${fieldName}: ${bodyParam!.language.go!.name}}`;
+        body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
       }
     } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
       // wrap the body in the custom RFC1123 type
