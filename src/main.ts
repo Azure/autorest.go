@@ -6,8 +6,7 @@
 import { AutoRestExtension, } from '@azure-tools/autorest-extension-base';
 import { namer } from './namer/namer';
 import { transform } from './transform/transform';
-import { protocolGen } from './generator/protocol/generator';
-import { convenienceGen } from './generator/convenience/generator';
+import { protocolGen } from './generator/generator';
 
 require('source-map-support').install();
 
@@ -16,7 +15,6 @@ export async function main() {
   pluginHost.Add('go-namer', namer);
   pluginHost.Add('go-transform', transform);
   pluginHost.Add('go-protocol', protocolGen);
-  pluginHost.Add('go-convenience', convenienceGen);
   await pluginHost.Run();
 }
 

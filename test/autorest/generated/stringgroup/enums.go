@@ -5,16 +5,18 @@
 
 package stringgroup
 
-import azinternal "generatortests/autorest/generated/stringgroup/internal/stringgroup"
-
-type Colors = azinternal.Colors
+type Colors string
 
 const (
-	ColorsRedColor   = azinternal.ColorsRedColor
-	ColorsGreenColor = azinternal.ColorsGreenColor
-	ColorsBlueColor  = azinternal.ColorsBlueColor
+	ColorsRedColor   Colors = "red color"
+	ColorsGreenColor Colors = "green-color"
+	ColorsBlueColor  Colors = "blue_color"
 )
 
 func PossibleColorsValues() []Colors {
-	return azinternal.PossibleColorsValues()
+	return []Colors{ColorsRedColor, ColorsGreenColor, ColorsBlueColor}
+}
+
+func (c Colors) ToPtr() *Colors {
+	return &c
 }

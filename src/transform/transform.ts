@@ -7,7 +7,7 @@ import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema } from '@azure-tools/codemodel';
 import { length, values } from '@azure-tools/linq';
-import { aggregateParameters, ParamInfo, paramInfo } from '../generator/common/helpers';
+import { aggregateParameters, ParamInfo, paramInfo } from '../generator/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {

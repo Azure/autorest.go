@@ -36,19 +36,14 @@ pipeline:
   go-protocol:
     input: go-transform
 
-  # generates code for the convenience layer
-  go-convenience:
-    input: go-protocol
-
   # extensibility: allow text-transforms after the code gen
   go/text-transform:
-    input: go-convenience
+    input: go-protocol
 
   # output the files to disk
   go/emitter:
     input: 
       - go-protocol
-      - go-convenience
       - go-transform  # this allows us to dump out the code model after the namer (add --output-artifact:code-model-v4 on the command line)
       - go/text-transform # this grabs the outputs after the last step.
       

@@ -7,7 +7,10 @@ package datetimerfc1123group
 
 import (
 	"context"
-	azinternal "generatortests/autorest/generated/datetimerfc1123group/internal/datetimerfc1123group"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"net/url"
+	"path"
 	"time"
 )
 
@@ -33,14 +36,14 @@ type Datetimerfc1123Operations interface {
 	PutUTCMinDateTime(ctx context.Context, datetimeBody time.Time) (*Datetimerfc1123PutUTCMinDateTimeResponse, error)
 }
 
+// datetimerfc1123Operations implements the Datetimerfc1123Operations interface.
 type datetimerfc1123Operations struct {
 	*Client
-	azinternal.Datetimerfc1123Operations
 }
 
 // GetInvalid - Get invalid datetime value
 func (client *datetimerfc1123Operations) GetInvalid(ctx context.Context) (*Datetimerfc1123GetInvalidResponse, error) {
-	req, err := client.GetInvalidCreateRequest(*client.u)
+	req, err := client.getInvalidCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -48,16 +51,36 @@ func (client *datetimerfc1123Operations) GetInvalid(ctx context.Context) (*Datet
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetInvalidHandleResponse(resp)
+	result, err := client.getInvalidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getInvalidCreateRequest creates the GetInvalid request.
+func (client *datetimerfc1123Operations) getInvalidCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/invalid"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getInvalidHandleResponse handles the GetInvalid response.
+func (client *datetimerfc1123Operations) getInvalidHandleResponse(resp *azcore.Response) (*Datetimerfc1123GetInvalidResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	var aux *timeRFC1123
+	err := resp.UnmarshalAsJSON(&aux)
+	result := Datetimerfc1123GetInvalidResponse{RawResponse: resp.Response}
+	result.Value = (*time.Time)(aux)
+	return &result, err
 }
 
 // GetNull - Get null datetime value
 func (client *datetimerfc1123Operations) GetNull(ctx context.Context) (*Datetimerfc1123GetNullResponse, error) {
-	req, err := client.GetNullCreateRequest(*client.u)
+	req, err := client.getNullCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -65,16 +88,36 @@ func (client *datetimerfc1123Operations) GetNull(ctx context.Context) (*Datetime
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNullHandleResponse(resp)
+	result, err := client.getNullHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getNullCreateRequest creates the GetNull request.
+func (client *datetimerfc1123Operations) getNullCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/null"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getNullHandleResponse handles the GetNull response.
+func (client *datetimerfc1123Operations) getNullHandleResponse(resp *azcore.Response) (*Datetimerfc1123GetNullResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	var aux *timeRFC1123
+	err := resp.UnmarshalAsJSON(&aux)
+	result := Datetimerfc1123GetNullResponse{RawResponse: resp.Response}
+	result.Value = (*time.Time)(aux)
+	return &result, err
 }
 
 // GetOverflow - Get overflow datetime value
 func (client *datetimerfc1123Operations) GetOverflow(ctx context.Context) (*Datetimerfc1123GetOverflowResponse, error) {
-	req, err := client.GetOverflowCreateRequest(*client.u)
+	req, err := client.getOverflowCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -82,16 +125,36 @@ func (client *datetimerfc1123Operations) GetOverflow(ctx context.Context) (*Date
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetOverflowHandleResponse(resp)
+	result, err := client.getOverflowHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getOverflowCreateRequest creates the GetOverflow request.
+func (client *datetimerfc1123Operations) getOverflowCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/overflow"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getOverflowHandleResponse handles the GetOverflow response.
+func (client *datetimerfc1123Operations) getOverflowHandleResponse(resp *azcore.Response) (*Datetimerfc1123GetOverflowResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	var aux *timeRFC1123
+	err := resp.UnmarshalAsJSON(&aux)
+	result := Datetimerfc1123GetOverflowResponse{RawResponse: resp.Response}
+	result.Value = (*time.Time)(aux)
+	return &result, err
 }
 
 // GetUTCLowercaseMaxDateTime - Get max datetime value fri, 31 dec 9999 23:59:59 gmt
 func (client *datetimerfc1123Operations) GetUTCLowercaseMaxDateTime(ctx context.Context) (*Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse, error) {
-	req, err := client.GetUTCLowercaseMaxDateTimeCreateRequest(*client.u)
+	req, err := client.getUtcLowercaseMaxDateTimeCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -99,16 +162,36 @@ func (client *datetimerfc1123Operations) GetUTCLowercaseMaxDateTime(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetUTCLowercaseMaxDateTimeHandleResponse(resp)
+	result, err := client.getUtcLowercaseMaxDateTimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getUtcLowercaseMaxDateTimeCreateRequest creates the GetUTCLowercaseMaxDateTime request.
+func (client *datetimerfc1123Operations) getUtcLowercaseMaxDateTimeCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/max/lowercase"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getUtcLowercaseMaxDateTimeHandleResponse handles the GetUTCLowercaseMaxDateTime response.
+func (client *datetimerfc1123Operations) getUtcLowercaseMaxDateTimeHandleResponse(resp *azcore.Response) (*Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	var aux *timeRFC1123
+	err := resp.UnmarshalAsJSON(&aux)
+	result := Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
+	result.Value = (*time.Time)(aux)
+	return &result, err
 }
 
 // GetUTCMinDateTime - Get min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 func (client *datetimerfc1123Operations) GetUTCMinDateTime(ctx context.Context) (*Datetimerfc1123GetUTCMinDateTimeResponse, error) {
-	req, err := client.GetUTCMinDateTimeCreateRequest(*client.u)
+	req, err := client.getUtcMinDateTimeCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -116,16 +199,36 @@ func (client *datetimerfc1123Operations) GetUTCMinDateTime(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetUTCMinDateTimeHandleResponse(resp)
+	result, err := client.getUtcMinDateTimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getUtcMinDateTimeCreateRequest creates the GetUTCMinDateTime request.
+func (client *datetimerfc1123Operations) getUtcMinDateTimeCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/min"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getUtcMinDateTimeHandleResponse handles the GetUTCMinDateTime response.
+func (client *datetimerfc1123Operations) getUtcMinDateTimeHandleResponse(resp *azcore.Response) (*Datetimerfc1123GetUTCMinDateTimeResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	var aux *timeRFC1123
+	err := resp.UnmarshalAsJSON(&aux)
+	result := Datetimerfc1123GetUTCMinDateTimeResponse{RawResponse: resp.Response}
+	result.Value = (*time.Time)(aux)
+	return &result, err
 }
 
 // GetUTCUppercaseMaxDateTime - Get max datetime value FRI, 31 DEC 9999 23:59:59 GMT
 func (client *datetimerfc1123Operations) GetUTCUppercaseMaxDateTime(ctx context.Context) (*Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse, error) {
-	req, err := client.GetUTCUppercaseMaxDateTimeCreateRequest(*client.u)
+	req, err := client.getUtcUppercaseMaxDateTimeCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -133,16 +236,36 @@ func (client *datetimerfc1123Operations) GetUTCUppercaseMaxDateTime(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetUTCUppercaseMaxDateTimeHandleResponse(resp)
+	result, err := client.getUtcUppercaseMaxDateTimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getUtcUppercaseMaxDateTimeCreateRequest creates the GetUTCUppercaseMaxDateTime request.
+func (client *datetimerfc1123Operations) getUtcUppercaseMaxDateTimeCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/max/uppercase"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getUtcUppercaseMaxDateTimeHandleResponse handles the GetUTCUppercaseMaxDateTime response.
+func (client *datetimerfc1123Operations) getUtcUppercaseMaxDateTimeHandleResponse(resp *azcore.Response) (*Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	var aux *timeRFC1123
+	err := resp.UnmarshalAsJSON(&aux)
+	result := Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
+	result.Value = (*time.Time)(aux)
+	return &result, err
 }
 
 // GetUnderflow - Get underflow datetime value
 func (client *datetimerfc1123Operations) GetUnderflow(ctx context.Context) (*Datetimerfc1123GetUnderflowResponse, error) {
-	req, err := client.GetUnderflowCreateRequest(*client.u)
+	req, err := client.getUnderflowCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -150,16 +273,36 @@ func (client *datetimerfc1123Operations) GetUnderflow(ctx context.Context) (*Dat
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetUnderflowHandleResponse(resp)
+	result, err := client.getUnderflowHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getUnderflowCreateRequest creates the GetUnderflow request.
+func (client *datetimerfc1123Operations) getUnderflowCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/underflow"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getUnderflowHandleResponse handles the GetUnderflow response.
+func (client *datetimerfc1123Operations) getUnderflowHandleResponse(resp *azcore.Response) (*Datetimerfc1123GetUnderflowResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	var aux *timeRFC1123
+	err := resp.UnmarshalAsJSON(&aux)
+	result := Datetimerfc1123GetUnderflowResponse{RawResponse: resp.Response}
+	result.Value = (*time.Time)(aux)
+	return &result, err
 }
 
 // PutUTCMaxDateTime - Put max datetime value Fri, 31 Dec 9999 23:59:59 GMT
 func (client *datetimerfc1123Operations) PutUTCMaxDateTime(ctx context.Context, datetimeBody time.Time) (*Datetimerfc1123PutUTCMaxDateTimeResponse, error) {
-	req, err := client.PutUTCMaxDateTimeCreateRequest(*client.u, datetimeBody)
+	req, err := client.putUtcMaxDateTimeCreateRequest(*client.u, datetimeBody)
 	if err != nil {
 		return nil, err
 	}
@@ -167,16 +310,37 @@ func (client *datetimerfc1123Operations) PutUTCMaxDateTime(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutUTCMaxDateTimeHandleResponse(resp)
+	result, err := client.putUtcMaxDateTimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// putUtcMaxDateTimeCreateRequest creates the PutUTCMaxDateTime request.
+func (client *datetimerfc1123Operations) putUtcMaxDateTimeCreateRequest(u url.URL, datetimeBody time.Time) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/max"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	aux := timeRFC1123(datetimeBody)
+	err := req.MarshalAsJSON(aux)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putUtcMaxDateTimeHandleResponse handles the PutUTCMaxDateTime response.
+func (client *datetimerfc1123Operations) putUtcMaxDateTimeHandleResponse(resp *azcore.Response) (*Datetimerfc1123PutUTCMaxDateTimeResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &Datetimerfc1123PutUTCMaxDateTimeResponse{RawResponse: resp.Response}, nil
 }
 
 // PutUTCMinDateTime - Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 func (client *datetimerfc1123Operations) PutUTCMinDateTime(ctx context.Context, datetimeBody time.Time) (*Datetimerfc1123PutUTCMinDateTimeResponse, error) {
-	req, err := client.PutUTCMinDateTimeCreateRequest(*client.u, datetimeBody)
+	req, err := client.putUtcMinDateTimeCreateRequest(*client.u, datetimeBody)
 	if err != nil {
 		return nil, err
 	}
@@ -184,11 +348,30 @@ func (client *datetimerfc1123Operations) PutUTCMinDateTime(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutUTCMinDateTimeHandleResponse(resp)
+	result, err := client.putUtcMinDateTimeHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-var _ Datetimerfc1123Operations = (*datetimerfc1123Operations)(nil)
+// putUtcMinDateTimeCreateRequest creates the PutUTCMinDateTime request.
+func (client *datetimerfc1123Operations) putUtcMinDateTimeCreateRequest(u url.URL, datetimeBody time.Time) (*azcore.Request, error) {
+	urlPath := "/datetimerfc1123/min"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	aux := timeRFC1123(datetimeBody)
+	err := req.MarshalAsJSON(aux)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putUtcMinDateTimeHandleResponse handles the PutUTCMinDateTime response.
+func (client *datetimerfc1123Operations) putUtcMinDateTimeHandleResponse(resp *azcore.Response) (*Datetimerfc1123PutUTCMinDateTimeResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &Datetimerfc1123PutUTCMinDateTimeResponse{RawResponse: resp.Response}, nil
+}

@@ -5,16 +5,18 @@
 
 package headergroup
 
-import azinternal "generatortests/autorest/generated/headergroup/internal/headergroup"
-
-type GreyscaleColors = azinternal.GreyscaleColors
+type GreyscaleColors string
 
 const (
-	GreyscaleColorsWhite = azinternal.GreyscaleColorsWhite
-	GreyscaleColorsBlack = azinternal.GreyscaleColorsBlack
-	GreyscaleColorsGrey  = azinternal.GreyscaleColorsGrey
+	GreyscaleColorsWhite GreyscaleColors = "White"
+	GreyscaleColorsBlack GreyscaleColors = "black"
+	GreyscaleColorsGrey  GreyscaleColors = "GREY"
 )
 
 func PossibleGreyscaleColorsValues() []GreyscaleColors {
-	return azinternal.PossibleGreyscaleColorsValues()
+	return []GreyscaleColors{GreyscaleColorsWhite, GreyscaleColorsBlack, GreyscaleColorsGrey}
+}
+
+func (c GreyscaleColors) ToPtr() *GreyscaleColors {
+	return &c
 }

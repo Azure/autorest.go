@@ -8,7 +8,7 @@ import { Host, startSession, Session } from '@azure-tools/autorest-extension-bas
 import { codeModelSchema, CodeModel, Language, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, LanguageHeader } from '../generator/common/helpers';
+import { aggregateParameters, LanguageHeader } from '../generator/helpers';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -110,7 +110,7 @@ async function process(session: Session<CodeModel>) {
           params: optionalParams
         };
       }
-      details.protocolNaming = new protocolMethods(details.name);
+      details.protocolNaming = new protocolMethods(camelCase(details.name));
       // TODO check if we still need to fix up response type name and description
       const firstResp = op.responses![0];
       const name = `${opGroupName}${op.language.go!.name}Response`;

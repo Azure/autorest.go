@@ -5,24 +5,79 @@
 
 package booleangroup
 
-import azinternal "generatortests/autorest/generated/booleangroup/internal/booleangroup"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+)
 
 // BoolGetFalseResponse contains the response from method Bool.GetFalse.
-type BoolGetFalseResponse = azinternal.BoolGetFalseResponse
+type BoolGetFalseResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// simple boolean
+	Value *bool
+}
 
 // BoolGetInvalidResponse contains the response from method Bool.GetInvalid.
-type BoolGetInvalidResponse = azinternal.BoolGetInvalidResponse
+type BoolGetInvalidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *bool
+}
 
 // BoolGetNullResponse contains the response from method Bool.GetNull.
-type BoolGetNullResponse = azinternal.BoolGetNullResponse
+type BoolGetNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *bool
+}
 
 // BoolGetTrueResponse contains the response from method Bool.GetTrue.
-type BoolGetTrueResponse = azinternal.BoolGetTrueResponse
+type BoolGetTrueResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// simple boolean
+	Value *bool
+}
 
 // BoolPutFalseResponse contains the response from method Bool.PutFalse.
-type BoolPutFalseResponse = azinternal.BoolPutFalseResponse
+type BoolPutFalseResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // BoolPutTrueResponse contains the response from method Bool.PutTrue.
-type BoolPutTrueResponse = azinternal.BoolPutTrueResponse
+type BoolPutTrueResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}

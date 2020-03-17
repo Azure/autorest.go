@@ -5,106 +5,136 @@
 
 package xmlgroup
 
-import azinternal "generatortests/autorest/generated/xmlgroup/internal/xmlgroup"
-
-type AccessTier = azinternal.AccessTier
+type AccessTier string
 
 const (
-	AccessTierArchive = azinternal.AccessTierArchive
-	AccessTierCool    = azinternal.AccessTierCool
-	AccessTierHot     = azinternal.AccessTierHot
-	AccessTierP10     = azinternal.AccessTierP10
-	AccessTierP20     = azinternal.AccessTierP20
-	AccessTierP30     = azinternal.AccessTierP30
-	AccessTierP4      = azinternal.AccessTierP4
-	AccessTierP40     = azinternal.AccessTierP40
-	AccessTierP50     = azinternal.AccessTierP50
-	AccessTierP6      = azinternal.AccessTierP6
+	AccessTierArchive AccessTier = "Archive"
+	AccessTierCool    AccessTier = "Cool"
+	AccessTierHot     AccessTier = "Hot"
+	AccessTierP10     AccessTier = "P10"
+	AccessTierP20     AccessTier = "P20"
+	AccessTierP30     AccessTier = "P30"
+	AccessTierP4      AccessTier = "P4"
+	AccessTierP40     AccessTier = "P40"
+	AccessTierP50     AccessTier = "P50"
+	AccessTierP6      AccessTier = "P6"
 )
 
 func PossibleAccessTierValues() []AccessTier {
-	return azinternal.PossibleAccessTierValues()
+	return []AccessTier{AccessTierArchive, AccessTierCool, AccessTierHot, AccessTierP10, AccessTierP20, AccessTierP30, AccessTierP4, AccessTierP40, AccessTierP50, AccessTierP6}
 }
 
-type ArchiveStatus = azinternal.ArchiveStatus
+func (c AccessTier) ToPtr() *AccessTier {
+	return &c
+}
+
+type ArchiveStatus string
 
 const (
-	ArchiveStatusRehydratePendingToCool = azinternal.ArchiveStatusRehydratePendingToCool
-	ArchiveStatusRehydratePendingToHot  = azinternal.ArchiveStatusRehydratePendingToHot
+	ArchiveStatusRehydratePendingToCool ArchiveStatus = "rehydrate-pending-to-cool"
+	ArchiveStatusRehydratePendingToHot  ArchiveStatus = "rehydrate-pending-to-hot"
 )
 
 func PossibleArchiveStatusValues() []ArchiveStatus {
-	return azinternal.PossibleArchiveStatusValues()
+	return []ArchiveStatus{ArchiveStatusRehydratePendingToCool, ArchiveStatusRehydratePendingToHot}
 }
 
-type BlobType = azinternal.BlobType
+func (c ArchiveStatus) ToPtr() *ArchiveStatus {
+	return &c
+}
+
+type BlobType string
 
 const (
-	BlobTypeBlockBlob  = azinternal.BlobTypeBlockBlob
-	BlobTypePageBlob   = azinternal.BlobTypePageBlob
-	BlobTypeAppendBlob = azinternal.BlobTypeAppendBlob
+	BlobTypeBlockBlob  BlobType = "BlockBlob"
+	BlobTypePageBlob   BlobType = "PageBlob"
+	BlobTypeAppendBlob BlobType = "AppendBlob"
 )
 
 func PossibleBlobTypeValues() []BlobType {
-	return azinternal.PossibleBlobTypeValues()
+	return []BlobType{BlobTypeBlockBlob, BlobTypePageBlob, BlobTypeAppendBlob}
 }
 
-type CopyStatusType = azinternal.CopyStatusType
+func (c BlobType) ToPtr() *BlobType {
+	return &c
+}
+
+type CopyStatusType string
 
 const (
-	CopyStatusTypePending = azinternal.CopyStatusTypePending
-	CopyStatusTypeSuccess = azinternal.CopyStatusTypeSuccess
-	CopyStatusTypeAborted = azinternal.CopyStatusTypeAborted
-	CopyStatusTypeFailed  = azinternal.CopyStatusTypeFailed
+	CopyStatusTypePending CopyStatusType = "pending"
+	CopyStatusTypeSuccess CopyStatusType = "success"
+	CopyStatusTypeAborted CopyStatusType = "aborted"
+	CopyStatusTypeFailed  CopyStatusType = "failed"
 )
 
 func PossibleCopyStatusTypeValues() []CopyStatusType {
-	return azinternal.PossibleCopyStatusTypeValues()
+	return []CopyStatusType{CopyStatusTypePending, CopyStatusTypeSuccess, CopyStatusTypeAborted, CopyStatusTypeFailed}
 }
 
-type LeaseDurationType = azinternal.LeaseDurationType
+func (c CopyStatusType) ToPtr() *CopyStatusType {
+	return &c
+}
+
+type LeaseDurationType string
 
 const (
-	LeaseDurationTypeInfinite = azinternal.LeaseDurationTypeInfinite
-	LeaseDurationTypeFixed    = azinternal.LeaseDurationTypeFixed
+	LeaseDurationTypeInfinite LeaseDurationType = "infinite"
+	LeaseDurationTypeFixed    LeaseDurationType = "fixed"
 )
 
 func PossibleLeaseDurationTypeValues() []LeaseDurationType {
-	return azinternal.PossibleLeaseDurationTypeValues()
+	return []LeaseDurationType{LeaseDurationTypeInfinite, LeaseDurationTypeFixed}
 }
 
-type LeaseStateType = azinternal.LeaseStateType
+func (c LeaseDurationType) ToPtr() *LeaseDurationType {
+	return &c
+}
+
+type LeaseStateType string
 
 const (
-	LeaseStateTypeAvailable = azinternal.LeaseStateTypeAvailable
-	LeaseStateTypeLeased    = azinternal.LeaseStateTypeLeased
-	LeaseStateTypeExpired   = azinternal.LeaseStateTypeExpired
-	LeaseStateTypeBreaking  = azinternal.LeaseStateTypeBreaking
-	LeaseStateTypeBroken    = azinternal.LeaseStateTypeBroken
+	LeaseStateTypeAvailable LeaseStateType = "available"
+	LeaseStateTypeLeased    LeaseStateType = "leased"
+	LeaseStateTypeExpired   LeaseStateType = "expired"
+	LeaseStateTypeBreaking  LeaseStateType = "breaking"
+	LeaseStateTypeBroken    LeaseStateType = "broken"
 )
 
 func PossibleLeaseStateTypeValues() []LeaseStateType {
-	return azinternal.PossibleLeaseStateTypeValues()
+	return []LeaseStateType{LeaseStateTypeAvailable, LeaseStateTypeLeased, LeaseStateTypeExpired, LeaseStateTypeBreaking, LeaseStateTypeBroken}
 }
 
-type LeaseStatusType = azinternal.LeaseStatusType
+func (c LeaseStateType) ToPtr() *LeaseStateType {
+	return &c
+}
+
+type LeaseStatusType string
 
 const (
-	LeaseStatusTypeLocked   = azinternal.LeaseStatusTypeLocked
-	LeaseStatusTypeUnlocked = azinternal.LeaseStatusTypeUnlocked
+	LeaseStatusTypeLocked   LeaseStatusType = "locked"
+	LeaseStatusTypeUnlocked LeaseStatusType = "unlocked"
 )
 
 func PossibleLeaseStatusTypeValues() []LeaseStatusType {
-	return azinternal.PossibleLeaseStatusTypeValues()
+	return []LeaseStatusType{LeaseStatusTypeLocked, LeaseStatusTypeUnlocked}
 }
 
-type PublicAccessType = azinternal.PublicAccessType
+func (c LeaseStatusType) ToPtr() *LeaseStatusType {
+	return &c
+}
+
+type PublicAccessType string
 
 const (
-	PublicAccessTypeBlob      = azinternal.PublicAccessTypeBlob
-	PublicAccessTypeContainer = azinternal.PublicAccessTypeContainer
+	PublicAccessTypeBlob      PublicAccessType = "blob"
+	PublicAccessTypeContainer PublicAccessType = "container"
 )
 
 func PossiblePublicAccessTypeValues() []PublicAccessType {
-	return azinternal.PossiblePublicAccessTypeValues()
+	return []PublicAccessType{PublicAccessTypeBlob, PublicAccessTypeContainer}
+}
+
+func (c PublicAccessType) ToPtr() *PublicAccessType {
+	return &c
 }

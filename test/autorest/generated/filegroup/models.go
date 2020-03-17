@@ -5,15 +5,53 @@
 
 package filegroup
 
-import azinternal "generatortests/autorest/generated/filegroup/internal/filegroup"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+)
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}
 
 // FilesGetEmptyFileResponse contains the response from method Files.GetEmptyFile.
-type FilesGetEmptyFileResponse = azinternal.FilesGetEmptyFileResponse
+type FilesGetEmptyFileResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // FilesGetFileLargeResponse contains the response from method Files.GetFileLarge.
-type FilesGetFileLargeResponse = azinternal.FilesGetFileLargeResponse
+type FilesGetFileLargeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // FilesGetFileResponse contains the response from method Files.GetFile.
-type FilesGetFileResponse = azinternal.FilesGetFileResponse
+type FilesGetFileResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}

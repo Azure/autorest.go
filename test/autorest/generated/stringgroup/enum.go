@@ -7,7 +7,10 @@ package stringgroup
 
 import (
 	"context"
-	azinternal "generatortests/autorest/generated/stringgroup/internal/stringgroup"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"net/url"
+	"path"
 )
 
 // EnumOperations contains the methods for the Enum group.
@@ -26,14 +29,14 @@ type EnumOperations interface {
 	PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*EnumPutReferencedConstantResponse, error)
 }
 
+// enumOperations implements the EnumOperations interface.
 type enumOperations struct {
 	*Client
-	azinternal.EnumOperations
 }
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client *enumOperations) GetNotExpandable(ctx context.Context) (*EnumGetNotExpandableResponse, error) {
-	req, err := client.GetNotExpandableCreateRequest(*client.u)
+	req, err := client.getNotExpandableCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -41,16 +44,33 @@ func (client *enumOperations) GetNotExpandable(ctx context.Context) (*EnumGetNot
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNotExpandableHandleResponse(resp)
+	result, err := client.getNotExpandableHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getNotExpandableCreateRequest creates the GetNotExpandable request.
+func (client *enumOperations) getNotExpandableCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/enum/notExpandable"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getNotExpandableHandleResponse handles the GetNotExpandable response.
+func (client *enumOperations) getNotExpandableHandleResponse(resp *azcore.Response) (*EnumGetNotExpandableResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := EnumGetNotExpandableResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 func (client *enumOperations) GetReferenced(ctx context.Context) (*EnumGetReferencedResponse, error) {
-	req, err := client.GetReferencedCreateRequest(*client.u)
+	req, err := client.getReferencedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -58,16 +78,33 @@ func (client *enumOperations) GetReferenced(ctx context.Context) (*EnumGetRefere
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetReferencedHandleResponse(resp)
+	result, err := client.getReferencedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getReferencedCreateRequest creates the GetReferenced request.
+func (client *enumOperations) getReferencedCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/enum/Referenced"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getReferencedHandleResponse handles the GetReferenced response.
+func (client *enumOperations) getReferencedHandleResponse(resp *azcore.Response) (*EnumGetReferencedResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := EnumGetReferencedResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetReferencedConstant - Get value 'green-color' from the constant.
 func (client *enumOperations) GetReferencedConstant(ctx context.Context) (*EnumGetReferencedConstantResponse, error) {
-	req, err := client.GetReferencedConstantCreateRequest(*client.u)
+	req, err := client.getReferencedConstantCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
 	}
@@ -75,16 +112,33 @@ func (client *enumOperations) GetReferencedConstant(ctx context.Context) (*EnumG
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetReferencedConstantHandleResponse(resp)
+	result, err := client.getReferencedConstantHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// getReferencedConstantCreateRequest creates the GetReferencedConstant request.
+func (client *enumOperations) getReferencedConstantCreateRequest(u url.URL) (*azcore.Request, error) {
+	urlPath := "/string/enum/ReferencedConstant"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodGet, u)
+	return req, nil
+}
+
+// getReferencedConstantHandleResponse handles the GetReferencedConstant response.
+func (client *enumOperations) getReferencedConstantHandleResponse(resp *azcore.Response) (*EnumGetReferencedConstantResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := EnumGetReferencedConstantResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.RefColorConstant)
 }
 
 // PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client *enumOperations) PutNotExpandable(ctx context.Context, stringBody Colors) (*EnumPutNotExpandableResponse, error) {
-	req, err := client.PutNotExpandableCreateRequest(*client.u, stringBody)
+	req, err := client.putNotExpandableCreateRequest(*client.u, stringBody)
 	if err != nil {
 		return nil, err
 	}
@@ -92,16 +146,36 @@ func (client *enumOperations) PutNotExpandable(ctx context.Context, stringBody C
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutNotExpandableHandleResponse(resp)
+	result, err := client.putNotExpandableHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// putNotExpandableCreateRequest creates the PutNotExpandable request.
+func (client *enumOperations) putNotExpandableCreateRequest(u url.URL, stringBody Colors) (*azcore.Request, error) {
+	urlPath := "/string/enum/notExpandable"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON(stringBody)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putNotExpandableHandleResponse handles the PutNotExpandable response.
+func (client *enumOperations) putNotExpandableHandleResponse(resp *azcore.Response) (*EnumPutNotExpandableResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &EnumPutNotExpandableResponse{RawResponse: resp.Response}, nil
 }
 
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 func (client *enumOperations) PutReferenced(ctx context.Context, enumStringBody Colors) (*EnumPutReferencedResponse, error) {
-	req, err := client.PutReferencedCreateRequest(*client.u, enumStringBody)
+	req, err := client.putReferencedCreateRequest(*client.u, enumStringBody)
 	if err != nil {
 		return nil, err
 	}
@@ -109,16 +183,36 @@ func (client *enumOperations) PutReferenced(ctx context.Context, enumStringBody 
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutReferencedHandleResponse(resp)
+	result, err := client.putReferencedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+// putReferencedCreateRequest creates the PutReferenced request.
+func (client *enumOperations) putReferencedCreateRequest(u url.URL, enumStringBody Colors) (*azcore.Request, error) {
+	urlPath := "/string/enum/Referenced"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON(enumStringBody)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putReferencedHandleResponse handles the PutReferenced response.
+func (client *enumOperations) putReferencedHandleResponse(resp *azcore.Response) (*EnumPutReferencedResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &EnumPutReferencedResponse{RawResponse: resp.Response}, nil
 }
 
 // PutReferencedConstant - Sends value 'green-color' from a constant
 func (client *enumOperations) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant) (*EnumPutReferencedConstantResponse, error) {
-	req, err := client.PutReferencedConstantCreateRequest(*client.u, enumStringBody)
+	req, err := client.putReferencedConstantCreateRequest(*client.u, enumStringBody)
 	if err != nil {
 		return nil, err
 	}
@@ -126,11 +220,29 @@ func (client *enumOperations) PutReferencedConstant(ctx context.Context, enumStr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutReferencedConstantHandleResponse(resp)
+	result, err := client.putReferencedConstantHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-var _ EnumOperations = (*enumOperations)(nil)
+// putReferencedConstantCreateRequest creates the PutReferencedConstant request.
+func (client *enumOperations) putReferencedConstantCreateRequest(u url.URL, enumStringBody RefColorConstant) (*azcore.Request, error) {
+	urlPath := "/string/enum/ReferencedConstant"
+	u.Path = path.Join(u.Path, urlPath)
+	req := azcore.NewRequest(http.MethodPut, u)
+	err := req.MarshalAsJSON(enumStringBody)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putReferencedConstantHandleResponse handles the PutReferencedConstant response.
+func (client *enumOperations) putReferencedConstantHandleResponse(resp *azcore.Response) (*EnumPutReferencedConstantResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return &EnumPutReferencedConstantResponse{RawResponse: resp.Response}, nil
+}

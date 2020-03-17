@@ -5,33 +5,97 @@
 
 package datetimerfc1123group
 
-import azinternal "generatortests/autorest/generated/datetimerfc1123group/internal/datetimerfc1123group"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"time"
+)
 
 // Datetimerfc1123GetInvalidResponse contains the response from method Datetimerfc1123.GetInvalid.
-type Datetimerfc1123GetInvalidResponse = azinternal.Datetimerfc1123GetInvalidResponse
+type Datetimerfc1123GetInvalidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // Datetimerfc1123GetNullResponse contains the response from method Datetimerfc1123.GetNull.
-type Datetimerfc1123GetNullResponse = azinternal.Datetimerfc1123GetNullResponse
+type Datetimerfc1123GetNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // Datetimerfc1123GetOverflowResponse contains the response from method Datetimerfc1123.GetOverflow.
-type Datetimerfc1123GetOverflowResponse = azinternal.Datetimerfc1123GetOverflowResponse
+type Datetimerfc1123GetOverflowResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse contains the response from method Datetimerfc1123.GetUTCLowercaseMaxDateTime.
-type Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse = azinternal.Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse
+type Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // Datetimerfc1123GetUTCMinDateTimeResponse contains the response from method Datetimerfc1123.GetUTCMinDateTime.
-type Datetimerfc1123GetUTCMinDateTimeResponse = azinternal.Datetimerfc1123GetUTCMinDateTimeResponse
+type Datetimerfc1123GetUTCMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse contains the response from method Datetimerfc1123.GetUTCUppercaseMaxDateTime.
-type Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse = azinternal.Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse
+type Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // Datetimerfc1123GetUnderflowResponse contains the response from method Datetimerfc1123.GetUnderflow.
-type Datetimerfc1123GetUnderflowResponse = azinternal.Datetimerfc1123GetUnderflowResponse
+type Datetimerfc1123GetUnderflowResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
+}
 
 // Datetimerfc1123PutUTCMaxDateTimeResponse contains the response from method Datetimerfc1123.PutUTCMaxDateTime.
-type Datetimerfc1123PutUTCMaxDateTimeResponse = azinternal.Datetimerfc1123PutUTCMaxDateTimeResponse
+type Datetimerfc1123PutUTCMaxDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // Datetimerfc1123PutUTCMinDateTimeResponse contains the response from method Datetimerfc1123.PutUTCMinDateTime.
-type Datetimerfc1123PutUTCMinDateTimeResponse = azinternal.Datetimerfc1123PutUTCMinDateTimeResponse
+type Datetimerfc1123PutUTCMinDateTimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}

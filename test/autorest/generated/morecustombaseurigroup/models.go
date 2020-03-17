@@ -5,12 +5,47 @@
 
 package morecustombaseurigroup
 
-import azinternal "generatortests/autorest/generated/morecustombaseurigroup/internal/morecustombaseurigroup"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+)
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}
 
 // PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
-type PathsGetEmptyOptions = azinternal.PathsGetEmptyOptions
+type PathsGetEmptyOptions struct {
+	// The key version. Default value 'v1'.
+	KeyVersion *string
+}
 
 // PathsGetEmptyResponse contains the response from method Paths.GetEmpty.
-type PathsGetEmptyResponse = azinternal.PathsGetEmptyResponse
+type PathsGetEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}

@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, joinComma } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, getEnums, HasDescription } from '../common/helpers';
+import { ContentPreamble, getEnums, HasDescription } from './helpers';
 
 // Creates the content in enums.go
 export async function generateEnums(session: Session<CodeModel>): Promise<string> {

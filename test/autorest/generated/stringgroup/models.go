@@ -5,65 +5,176 @@
 
 package stringgroup
 
-import azinternal "generatortests/autorest/generated/stringgroup/internal/stringgroup"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+)
 
 // EnumGetNotExpandableResponse contains the response from method Enum.GetNotExpandable.
-type EnumGetNotExpandableResponse = azinternal.EnumGetNotExpandableResponse
+type EnumGetNotExpandableResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *Colors
+}
 
 // EnumGetReferencedConstantResponse contains the response from method Enum.GetReferencedConstant.
-type EnumGetReferencedConstantResponse = azinternal.EnumGetReferencedConstantResponse
+type EnumGetReferencedConstantResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse      *http.Response
+	RefColorConstant *RefColorConstant
+}
 
 // EnumGetReferencedResponse contains the response from method Enum.GetReferenced.
-type EnumGetReferencedResponse = azinternal.EnumGetReferencedResponse
+type EnumGetReferencedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *Colors
+}
 
 // EnumPutNotExpandableResponse contains the response from method Enum.PutNotExpandable.
-type EnumPutNotExpandableResponse = azinternal.EnumPutNotExpandableResponse
+type EnumPutNotExpandableResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // EnumPutReferencedConstantResponse contains the response from method Enum.PutReferencedConstant.
-type EnumPutReferencedConstantResponse = azinternal.EnumPutReferencedConstantResponse
+type EnumPutReferencedConstantResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // EnumPutReferencedResponse contains the response from method Enum.PutReferenced.
-type EnumPutReferencedResponse = azinternal.EnumPutReferencedResponse
+type EnumPutReferencedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
 
-type RefColorConstant = azinternal.RefColorConstant
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}
+
+type RefColorConstant struct {
+	// Referenced Color Constant Description.
+	ColorConstant *string `json:"ColorConstant,omitempty"`
+
+	// Sample string.
+	Field1 *string `json:"field1,omitempty"`
+}
 
 // StringGetBase64EncodedResponse contains the response from method String.GetBase64Encoded.
-type StringGetBase64EncodedResponse = azinternal.StringGetBase64EncodedResponse
+type StringGetBase64EncodedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *[]byte
+}
 
 // StringGetBase64URLEncodedResponse contains the response from method String.GetBase64URLEncoded.
-type StringGetBase64URLEncodedResponse = azinternal.StringGetBase64URLEncodedResponse
+type StringGetBase64URLEncodedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *[]byte
+}
 
 // StringGetEmptyResponse contains the response from method String.GetEmpty.
-type StringGetEmptyResponse = azinternal.StringGetEmptyResponse
+type StringGetEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// simple string
+	Value *string
+}
 
 // StringGetMBCSResponse contains the response from method String.GetMBCS.
-type StringGetMBCSResponse = azinternal.StringGetMBCSResponse
+type StringGetMBCSResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// simple string
+	Value *string
+}
 
 // StringGetNotProvidedResponse contains the response from method String.GetNotProvided.
-type StringGetNotProvidedResponse = azinternal.StringGetNotProvidedResponse
+type StringGetNotProvidedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *string
+}
 
 // StringGetNullBase64URLEncodedResponse contains the response from method String.GetNullBase64URLEncoded.
-type StringGetNullBase64URLEncodedResponse = azinternal.StringGetNullBase64URLEncodedResponse
+type StringGetNullBase64URLEncodedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *[]byte
+}
 
 // StringGetNullResponse contains the response from method String.GetNull.
-type StringGetNullResponse = azinternal.StringGetNullResponse
+type StringGetNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// simple string
+	Value *string
+}
 
 // StringGetWhitespaceResponse contains the response from method String.GetWhitespace.
-type StringGetWhitespaceResponse = azinternal.StringGetWhitespaceResponse
+type StringGetWhitespaceResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// simple string
+	Value *string
+}
 
 // StringPutBase64URLEncodedResponse contains the response from method String.PutBase64URLEncoded.
-type StringPutBase64URLEncodedResponse = azinternal.StringPutBase64URLEncodedResponse
+type StringPutBase64URLEncodedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // StringPutEmptyResponse contains the response from method String.PutEmpty.
-type StringPutEmptyResponse = azinternal.StringPutEmptyResponse
+type StringPutEmptyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // StringPutMBCSResponse contains the response from method String.PutMBCS.
-type StringPutMBCSResponse = azinternal.StringPutMBCSResponse
+type StringPutMBCSResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // StringPutNullResponse contains the response from method String.PutNull.
-type StringPutNullResponse = azinternal.StringPutNullResponse
+type StringPutNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // StringPutWhitespaceResponse contains the response from method String.PutWhitespace.
-type StringPutWhitespaceResponse = azinternal.StringPutWhitespaceResponse
+type StringPutWhitespaceResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}

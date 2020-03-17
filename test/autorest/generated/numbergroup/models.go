@@ -5,78 +5,193 @@
 
 package numbergroup
 
-import azinternal "generatortests/autorest/generated/numbergroup/internal/numbergroup"
+import (
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+)
 
-type Error = azinternal.Error
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}
 
 // NumberGetBigDecimalNegativeDecimalResponse contains the response from method Number.GetBigDecimalNegativeDecimal.
-type NumberGetBigDecimalNegativeDecimalResponse = azinternal.NumberGetBigDecimalNegativeDecimalResponse
+type NumberGetBigDecimalNegativeDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetBigDecimalPositiveDecimalResponse contains the response from method Number.GetBigDecimalPositiveDecimal.
-type NumberGetBigDecimalPositiveDecimalResponse = azinternal.NumberGetBigDecimalPositiveDecimalResponse
+type NumberGetBigDecimalPositiveDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetBigDecimalResponse contains the response from method Number.GetBigDecimal.
-type NumberGetBigDecimalResponse = azinternal.NumberGetBigDecimalResponse
+type NumberGetBigDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetBigDoubleNegativeDecimalResponse contains the response from method Number.GetBigDoubleNegativeDecimal.
-type NumberGetBigDoubleNegativeDecimalResponse = azinternal.NumberGetBigDoubleNegativeDecimalResponse
+type NumberGetBigDoubleNegativeDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetBigDoublePositiveDecimalResponse contains the response from method Number.GetBigDoublePositiveDecimal.
-type NumberGetBigDoublePositiveDecimalResponse = azinternal.NumberGetBigDoublePositiveDecimalResponse
+type NumberGetBigDoublePositiveDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetBigDoubleResponse contains the response from method Number.GetBigDouble.
-type NumberGetBigDoubleResponse = azinternal.NumberGetBigDoubleResponse
+type NumberGetBigDoubleResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetBigFloatResponse contains the response from method Number.GetBigFloat.
-type NumberGetBigFloatResponse = azinternal.NumberGetBigFloatResponse
+type NumberGetBigFloatResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float32
+}
 
 // NumberGetInvalidDecimalResponse contains the response from method Number.GetInvalidDecimal.
-type NumberGetInvalidDecimalResponse = azinternal.NumberGetInvalidDecimalResponse
+type NumberGetInvalidDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetInvalidDoubleResponse contains the response from method Number.GetInvalidDouble.
-type NumberGetInvalidDoubleResponse = azinternal.NumberGetInvalidDoubleResponse
+type NumberGetInvalidDoubleResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetInvalidFloatResponse contains the response from method Number.GetInvalidFloat.
-type NumberGetInvalidFloatResponse = azinternal.NumberGetInvalidFloatResponse
+type NumberGetInvalidFloatResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float32
+}
 
 // NumberGetNullResponse contains the response from method Number.GetNull.
-type NumberGetNullResponse = azinternal.NumberGetNullResponse
+type NumberGetNullResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float32
+}
 
 // NumberGetSmallDecimalResponse contains the response from method Number.GetSmallDecimal.
-type NumberGetSmallDecimalResponse = azinternal.NumberGetSmallDecimalResponse
+type NumberGetSmallDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetSmallDoubleResponse contains the response from method Number.GetSmallDouble.
-type NumberGetSmallDoubleResponse = azinternal.NumberGetSmallDoubleResponse
+type NumberGetSmallDoubleResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberGetSmallFloatResponse contains the response from method Number.GetSmallFloat.
-type NumberGetSmallFloatResponse = azinternal.NumberGetSmallFloatResponse
+type NumberGetSmallFloatResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *float64
+}
 
 // NumberPutBigDecimalNegativeDecimalResponse contains the response from method Number.PutBigDecimalNegativeDecimal.
-type NumberPutBigDecimalNegativeDecimalResponse = azinternal.NumberPutBigDecimalNegativeDecimalResponse
+type NumberPutBigDecimalNegativeDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutBigDecimalPositiveDecimalResponse contains the response from method Number.PutBigDecimalPositiveDecimal.
-type NumberPutBigDecimalPositiveDecimalResponse = azinternal.NumberPutBigDecimalPositiveDecimalResponse
+type NumberPutBigDecimalPositiveDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutBigDecimalResponse contains the response from method Number.PutBigDecimal.
-type NumberPutBigDecimalResponse = azinternal.NumberPutBigDecimalResponse
+type NumberPutBigDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutBigDoubleNegativeDecimalResponse contains the response from method Number.PutBigDoubleNegativeDecimal.
-type NumberPutBigDoubleNegativeDecimalResponse = azinternal.NumberPutBigDoubleNegativeDecimalResponse
+type NumberPutBigDoubleNegativeDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutBigDoublePositiveDecimalResponse contains the response from method Number.PutBigDoublePositiveDecimal.
-type NumberPutBigDoublePositiveDecimalResponse = azinternal.NumberPutBigDoublePositiveDecimalResponse
+type NumberPutBigDoublePositiveDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutBigDoubleResponse contains the response from method Number.PutBigDouble.
-type NumberPutBigDoubleResponse = azinternal.NumberPutBigDoubleResponse
+type NumberPutBigDoubleResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutBigFloatResponse contains the response from method Number.PutBigFloat.
-type NumberPutBigFloatResponse = azinternal.NumberPutBigFloatResponse
+type NumberPutBigFloatResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutSmallDecimalResponse contains the response from method Number.PutSmallDecimal.
-type NumberPutSmallDecimalResponse = azinternal.NumberPutSmallDecimalResponse
+type NumberPutSmallDecimalResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutSmallDoubleResponse contains the response from method Number.PutSmallDouble.
-type NumberPutSmallDoubleResponse = azinternal.NumberPutSmallDoubleResponse
+type NumberPutSmallDoubleResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
 // NumberPutSmallFloatResponse contains the response from method Number.PutSmallFloat.
-type NumberPutSmallFloatResponse = azinternal.NumberPutSmallFloatResponse
+type NumberPutSmallFloatResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
