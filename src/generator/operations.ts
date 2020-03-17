@@ -413,7 +413,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
-    // adding this variable to control whether a options. needs to be added before optional body parameters
+    // adding this variable to control whether a 'options.' needs to be added before optional body parameters
     let setOptionsPrefix = false;
     // default to the body param name
     let body = bodyParam!.language.go!.name;
