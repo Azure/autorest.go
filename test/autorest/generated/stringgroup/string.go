@@ -453,9 +453,11 @@ func (client *stringOperations) putNullCreateRequest(u url.URL, options *StringP
 	urlPath := "/string/null"
 	u.Path = path.Join(u.Path, urlPath)
 	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(options.StringBody)
-	if err != nil {
-		return nil, err
+	if options != nil {
+		err := req.MarshalAsJSON(options.StringBody)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
