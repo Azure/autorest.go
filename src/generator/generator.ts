@@ -33,11 +33,11 @@ export async function protocolGen(host: Host) {
 
     const enums = await generateEnums(session);
     if (enums.length > 0) {
-      host.WriteFile(`enums.go`, enums, undefined, 'source-file-go');
+      host.WriteFile('enums.go', enums, undefined, 'source-file-go');
     }
 
     const models = await generateModels(session);
-    host.WriteFile(`models.go`, models, undefined, 'source-file-go');
+    host.WriteFile('models.go', models, undefined, 'source-file-go');
 
     const client = await generateClient(session);
     host.WriteFile('client.go', client, undefined, 'source-file-go');
