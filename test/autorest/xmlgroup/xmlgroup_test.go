@@ -308,7 +308,7 @@ func TestPutACLs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutComplexTypeRefNoMeta(t *testing.T) {
@@ -322,7 +322,7 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutComplexTypeRefWithMeta(t *testing.T) {
@@ -339,7 +339,7 @@ func TestPutEmptyChildElement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutEmptyList(t *testing.T) {
@@ -350,7 +350,7 @@ func TestPutEmptyList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutEmptyRootList(t *testing.T) {
@@ -359,7 +359,7 @@ func TestPutEmptyRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutEmptyWrappedLists(t *testing.T) {
@@ -371,7 +371,7 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutRootList(t *testing.T) {
@@ -391,7 +391,7 @@ func TestPutRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutRootListSingleItem(t *testing.T) {
@@ -406,7 +406,7 @@ func TestPutRootListSingleItem(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutServiceProperties(t *testing.T) {
@@ -444,7 +444,7 @@ func TestPutServiceProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutSimple(t *testing.T) {
@@ -468,7 +468,7 @@ func TestPutSimple(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }
 
 func TestPutWrappedLists(t *testing.T) {
@@ -480,5 +480,5 @@ func TestPutWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusCreated)
+	helpers.VerifyStatusCode(t, result, http.StatusCreated)
 }

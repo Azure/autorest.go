@@ -53,28 +53,30 @@ function autorestCallback(namespace, inputFile) {
             console.log('autorest stdout: ' + stdout);
         }
         if (stderr !== '') {
-            console.error('autorest stderr: ' + stderr);
+            console.error('\x1b[91m%s\x1b[0m', 'autorest stderr: ' + stderr);
         }
         // print any output resulting from executing the autorest command
         if (error !== null) {
-            console.error('autorest exec error: ' + error);
+            console.error('\x1b[91m%s\x1b[0m', 'autorest exec error: ' + error);
         }
-        // format the output
+        // format the output on success
         // print any output or error from go fmt
-        let formatDir = './test/autorest/generated/' + namespace + '/...';
-        exec('go fmt ' + formatDir,
-        function (error, stdout, stderr) {
-            console.log('formatting ' + formatDir);
-            if (stdout !== '') {
-                console.log('fmt stdout: ' + stdout);
-            }
-            if (stderr !== '') {
-                console.error('fmt stderr: ' + stderr);
-            }
-            // print any output resulting from a failure to execute go fmt
-            if (error !== null) {
-                console.error('fmt exec error: ' + error);
-            }
-        });
+        if (stderr === '' && error === null) {
+            let formatDir = './test/autorest/generated/' + namespace + '/...';
+            exec('go fmt ' + formatDir,
+            function (error, stdout, stderr) {
+                console.log('formatting ' + formatDir);
+                if (stdout !== '') {
+                    console.log('fmt stdout: ' + stdout);
+                }
+                if (stderr !== '') {
+                    console.error('\x1b[91m%s\x1b[0m', 'fmt stderr: ' + stderr);
+                }
+                // print any output resulting from a failure to execute go fmt
+                if (error !== null) {
+                    console.error('\x1b[91m%s\x1b[0m', 'fmt exec error: ' + error);
+                }
+            });
+        }
     };
 }

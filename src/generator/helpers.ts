@@ -5,13 +5,8 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Parameter, Schema, Schemas, SchemaType, ArraySchema, DictionarySchema } from '@azure-tools/codemodel';
-import { length, values } from '@azure-tools/linq';
-
-export interface LanguageHeader extends Language {
-  schema: Schema;
-  header: string;
-}
+import { CodeModel, ChoiceValue, ImplementationLocation, Language, Operation, Parameter, Response, Schema, SchemaResponse, Schemas, SchemaType, ArraySchema, DictionarySchema } from '@azure-tools/codemodel';
+import { values } from '@azure-tools/linq';
 
 type importEntry = { imp: string, alias?: string };
 
@@ -197,7 +192,12 @@ export function sortParamInfoByRequired(a: ParamInfo, b: ParamInfo): number {
 // e.g. [ '*string', 'error' ]
 export function genereateReturnsInfo(op: Operation): string[] {
   // TODO check this implementation, if any additional return information needs to be included for multiple responses
-  return [`*${op.responses![0].language.go!.name}`, 'error'];
+  const firstResp = op.responses![0];
+  let returnType = 'http.Response';
+  if (isSchemaResponse(firstResp)) {
+    returnType = firstResp.schema.language.go!.responseType.name;
+  }
+  return [`*${returnType}`, 'error'];
 }
 
 // flattens out ParamInfo to return a complete parameter sig string
@@ -257,4 +257,9 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
 // returns ArraySchema type predicate if the schema is an ArraySchema
 export function isArraySchema(resp: Schema): resp is ArraySchema {
   return (resp as ArraySchema).elementType !== undefined;
+}
+
+// returns SchemaResponse type predicate if the response has a schema
+export function isSchemaResponse(resp?: Response): resp is SchemaResponse {
+  return (resp as SchemaResponse).schema !== undefined;
 }

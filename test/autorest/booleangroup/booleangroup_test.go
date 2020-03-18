@@ -69,7 +69,7 @@ func TestPutTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutTrue: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPutFalse(t *testing.T) {
@@ -78,5 +78,5 @@ func TestPutFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFalse: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

@@ -8,7 +8,6 @@ package custombaseurlgroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 )
 
 type Error struct {
@@ -36,10 +35,4 @@ func (e Error) Error() string {
 		msg = "missing error info"
 	}
 	return msg
-}
-
-// PathsGetEmptyResponse contains the response from method Paths.GetEmpty.
-type PathsGetEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

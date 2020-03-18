@@ -11,43 +11,18 @@ import (
 	"net/http"
 )
 
-// EnumGetNotExpandableResponse contains the response from method Enum.GetNotExpandable.
-type EnumGetNotExpandableResponse struct {
+// ByteArrayResponse is the response envelope for operations that return a []byte type.
+type ByteArrayResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *[]byte
+}
+
+// ColorsResponse is the response envelope for operations that return a Colors type.
+type ColorsResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 	Value       *Colors
-}
-
-// EnumGetReferencedConstantResponse contains the response from method Enum.GetReferencedConstant.
-type EnumGetReferencedConstantResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse      *http.Response
-	RefColorConstant *RefColorConstant
-}
-
-// EnumGetReferencedResponse contains the response from method Enum.GetReferenced.
-type EnumGetReferencedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *Colors
-}
-
-// EnumPutNotExpandableResponse contains the response from method Enum.PutNotExpandable.
-type EnumPutNotExpandableResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EnumPutReferencedConstantResponse contains the response from method Enum.PutReferencedConstant.
-type EnumPutReferencedConstantResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EnumPutReferencedResponse contains the response from method Enum.PutReferenced.
-type EnumPutReferencedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Error struct {
@@ -85,96 +60,18 @@ type RefColorConstant struct {
 	Field1 *string `json:"field1,omitempty"`
 }
 
-// StringGetBase64EncodedResponse contains the response from method String.GetBase64Encoded.
-type StringGetBase64EncodedResponse struct {
+// RefColorConstantResponse is the response envelope for operations that return a RefColorConstant type.
+type RefColorConstantResponse struct {
 	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *[]byte
+	RawResponse      *http.Response
+	RefColorConstant *RefColorConstant
 }
 
-// StringGetBase64URLEncodedResponse contains the response from method String.GetBase64URLEncoded.
-type StringGetBase64URLEncodedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *[]byte
-}
-
-// StringGetEmptyResponse contains the response from method String.GetEmpty.
-type StringGetEmptyResponse struct {
+// StringResponse is the response envelope for operations that return a string type.
+type StringResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// simple string
 	Value *string
-}
-
-// StringGetMBCSResponse contains the response from method String.GetMBCS.
-type StringGetMBCSResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// simple string
-	Value *string
-}
-
-// StringGetNotProvidedResponse contains the response from method String.GetNotProvided.
-type StringGetNotProvidedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
-}
-
-// StringGetNullBase64URLEncodedResponse contains the response from method String.GetNullBase64URLEncoded.
-type StringGetNullBase64URLEncodedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *[]byte
-}
-
-// StringGetNullResponse contains the response from method String.GetNull.
-type StringGetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// simple string
-	Value *string
-}
-
-// StringGetWhitespaceResponse contains the response from method String.GetWhitespace.
-type StringGetWhitespaceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// simple string
-	Value *string
-}
-
-// StringPutBase64URLEncodedResponse contains the response from method String.PutBase64URLEncoded.
-type StringPutBase64URLEncodedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// StringPutEmptyResponse contains the response from method String.PutEmpty.
-type StringPutEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// StringPutMBCSResponse contains the response from method String.PutMBCS.
-type StringPutMBCSResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// StringPutNullResponse contains the response from method String.PutNull.
-type StringPutNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// StringPutWhitespaceResponse contains the response from method String.PutWhitespace.
-type StringPutWhitespaceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

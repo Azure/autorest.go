@@ -8,7 +8,7 @@ import { Host, startSession, Session } from '@azure-tools/autorest-extension-bas
 import { codeModelSchema, CodeModel, Language, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, LanguageHeader } from '../generator/helpers';
+import { aggregateParameters } from '../generator/helpers';
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(host: Host) {
@@ -91,6 +91,7 @@ async function process(session: Session<CodeModel>) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       // track any optional parameters
+      // TODO: move this to the transformer and track at the code model level
       const optionalParams = new Array<Parameter>();
       for (const param of values(aggregateParameters(op))) {
         const paramDetails = <Language>param.language.go;
@@ -111,20 +112,6 @@ async function process(session: Session<CodeModel>) {
         };
       }
       details.protocolNaming = new protocolMethods(camelCase(details.name));
-      // TODO check if we still need to fix up response type name and description
-      const firstResp = op.responses![0];
-      const name = `${opGroupName}${op.language.go!.name}Response`;
-      firstResp.language.go!.name = name;
-      firstResp.language.go!.description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
-      for (const resp of values(op.responses)) {
-        // add a field to headers to include a Go compliant name for when it needs to be used as a field in a type
-        if (resp.protocol.http!.headers) {
-          for (const header of values(resp.protocol.http!.headers)) {
-            const head = <LanguageHeader>header;
-            head.name = getEscapedReservedName(removePrefix(capitalizeAcronyms(pascalCase(head.header)), 'XMS'), 'Header');
-          }
-        }
-      }
     }
   }
 

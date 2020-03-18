@@ -178,7 +178,7 @@ func TestNumberPutBigDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
@@ -187,7 +187,7 @@ func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalNegativeDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
@@ -196,7 +196,7 @@ func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalPositiveDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutBigDouble(t *testing.T) {
@@ -205,7 +205,7 @@ func TestNumberPutBigDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
@@ -214,7 +214,7 @@ func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDoubleNegativeDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
@@ -223,7 +223,7 @@ func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDeoublePositiveDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutBigFloat(t *testing.T) {
@@ -232,7 +232,7 @@ func TestNumberPutBigFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutSmallDecimal(t *testing.T) {
@@ -241,7 +241,7 @@ func TestNumberPutSmallDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDecimal: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutSmallDouble(t *testing.T) {
@@ -250,7 +250,7 @@ func TestNumberPutSmallDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestNumberPutSmallFloat(t *testing.T) {
@@ -259,5 +259,5 @@ func TestNumberPutSmallFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

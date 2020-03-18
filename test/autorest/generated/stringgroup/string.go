@@ -16,31 +16,31 @@ import (
 // StringOperations contains the methods for the String group.
 type StringOperations interface {
 	// GetBase64Encoded - Get value that is base64 encoded
-	GetBase64Encoded(ctx context.Context) (*StringGetBase64EncodedResponse, error)
+	GetBase64Encoded(ctx context.Context) (*ByteArrayResponse, error)
 	// GetBase64URLEncoded - Get value that is base64url encoded
-	GetBase64URLEncoded(ctx context.Context) (*StringGetBase64URLEncodedResponse, error)
+	GetBase64URLEncoded(ctx context.Context) (*ByteArrayResponse, error)
 	// GetEmpty - Get empty string value value ''
-	GetEmpty(ctx context.Context) (*StringGetEmptyResponse, error)
+	GetEmpty(ctx context.Context) (*StringResponse, error)
 	// GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-	GetMBCS(ctx context.Context) (*StringGetMBCSResponse, error)
+	GetMBCS(ctx context.Context) (*StringResponse, error)
 	// GetNotProvided - Get String value when no string value is sent in response payload
-	GetNotProvided(ctx context.Context) (*StringGetNotProvidedResponse, error)
+	GetNotProvided(ctx context.Context) (*StringResponse, error)
 	// GetNull - Get null string value value
-	GetNull(ctx context.Context) (*StringGetNullResponse, error)
+	GetNull(ctx context.Context) (*StringResponse, error)
 	// GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
-	GetNullBase64URLEncoded(ctx context.Context) (*StringGetNullBase64URLEncodedResponse, error)
+	GetNullBase64URLEncoded(ctx context.Context) (*ByteArrayResponse, error)
 	// GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
-	GetWhitespace(ctx context.Context) (*StringGetWhitespaceResponse, error)
+	GetWhitespace(ctx context.Context) (*StringResponse, error)
 	// PutBase64URLEncoded - Put value that is base64url encoded
-	PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*StringPutBase64URLEncodedResponse, error)
+	PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*http.Response, error)
 	// PutEmpty - Set string value empty ''
-	PutEmpty(ctx context.Context) (*StringPutEmptyResponse, error)
+	PutEmpty(ctx context.Context) (*http.Response, error)
 	// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-	PutMBCS(ctx context.Context) (*StringPutMBCSResponse, error)
+	PutMBCS(ctx context.Context) (*http.Response, error)
 	// PutNull - Set string value null
-	PutNull(ctx context.Context) (*StringPutNullResponse, error)
+	PutNull(ctx context.Context) (*http.Response, error)
 	// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
-	PutWhitespace(ctx context.Context) (*StringPutWhitespaceResponse, error)
+	PutWhitespace(ctx context.Context) (*http.Response, error)
 }
 
 // stringOperations implements the StringOperations interface.
@@ -49,7 +49,7 @@ type stringOperations struct {
 }
 
 // GetBase64Encoded - Get value that is base64 encoded
-func (client *stringOperations) GetBase64Encoded(ctx context.Context) (*StringGetBase64EncodedResponse, error) {
+func (client *stringOperations) GetBase64Encoded(ctx context.Context) (*ByteArrayResponse, error) {
 	req, err := client.getBase64EncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -74,16 +74,16 @@ func (client *stringOperations) getBase64EncodedCreateRequest(u url.URL) (*azcor
 }
 
 // getBase64EncodedHandleResponse handles the GetBase64Encoded response.
-func (client *stringOperations) getBase64EncodedHandleResponse(resp *azcore.Response) (*StringGetBase64EncodedResponse, error) {
+func (client *stringOperations) getBase64EncodedHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetBase64EncodedResponse{RawResponse: resp.Response}
+	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetBase64URLEncoded - Get value that is base64url encoded
-func (client *stringOperations) GetBase64URLEncoded(ctx context.Context) (*StringGetBase64URLEncodedResponse, error) {
+func (client *stringOperations) GetBase64URLEncoded(ctx context.Context) (*ByteArrayResponse, error) {
 	req, err := client.getBase64UrlEncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -108,16 +108,16 @@ func (client *stringOperations) getBase64UrlEncodedCreateRequest(u url.URL) (*az
 }
 
 // getBase64UrlEncodedHandleResponse handles the GetBase64URLEncoded response.
-func (client *stringOperations) getBase64UrlEncodedHandleResponse(resp *azcore.Response) (*StringGetBase64URLEncodedResponse, error) {
+func (client *stringOperations) getBase64UrlEncodedHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetBase64URLEncodedResponse{RawResponse: resp.Response}
+	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetEmpty - Get empty string value value ''
-func (client *stringOperations) GetEmpty(ctx context.Context) (*StringGetEmptyResponse, error) {
+func (client *stringOperations) GetEmpty(ctx context.Context) (*StringResponse, error) {
 	req, err := client.getEmptyCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -142,16 +142,16 @@ func (client *stringOperations) getEmptyCreateRequest(u url.URL) (*azcore.Reques
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *stringOperations) getEmptyHandleResponse(resp *azcore.Response) (*StringGetEmptyResponse, error) {
+func (client *stringOperations) getEmptyHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetEmptyResponse{RawResponse: resp.Response}
+	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-func (client *stringOperations) GetMBCS(ctx context.Context) (*StringGetMBCSResponse, error) {
+func (client *stringOperations) GetMBCS(ctx context.Context) (*StringResponse, error) {
 	req, err := client.getMbcsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -176,16 +176,16 @@ func (client *stringOperations) getMbcsCreateRequest(u url.URL) (*azcore.Request
 }
 
 // getMbcsHandleResponse handles the GetMBCS response.
-func (client *stringOperations) getMbcsHandleResponse(resp *azcore.Response) (*StringGetMBCSResponse, error) {
+func (client *stringOperations) getMbcsHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetMBCSResponse{RawResponse: resp.Response}
+	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNotProvided - Get String value when no string value is sent in response payload
-func (client *stringOperations) GetNotProvided(ctx context.Context) (*StringGetNotProvidedResponse, error) {
+func (client *stringOperations) GetNotProvided(ctx context.Context) (*StringResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -210,16 +210,16 @@ func (client *stringOperations) getNotProvidedCreateRequest(u url.URL) (*azcore.
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *stringOperations) getNotProvidedHandleResponse(resp *azcore.Response) (*StringGetNotProvidedResponse, error) {
+func (client *stringOperations) getNotProvidedHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetNotProvidedResponse{RawResponse: resp.Response}
+	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNull - Get null string value value
-func (client *stringOperations) GetNull(ctx context.Context) (*StringGetNullResponse, error) {
+func (client *stringOperations) GetNull(ctx context.Context) (*StringResponse, error) {
 	req, err := client.getNullCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -244,16 +244,16 @@ func (client *stringOperations) getNullCreateRequest(u url.URL) (*azcore.Request
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *stringOperations) getNullHandleResponse(resp *azcore.Response) (*StringGetNullResponse, error) {
+func (client *stringOperations) getNullHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetNullResponse{RawResponse: resp.Response}
+	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
-func (client *stringOperations) GetNullBase64URLEncoded(ctx context.Context) (*StringGetNullBase64URLEncodedResponse, error) {
+func (client *stringOperations) GetNullBase64URLEncoded(ctx context.Context) (*ByteArrayResponse, error) {
 	req, err := client.getNullBase64UrlEncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -278,16 +278,16 @@ func (client *stringOperations) getNullBase64UrlEncodedCreateRequest(u url.URL) 
 }
 
 // getNullBase64UrlEncodedHandleResponse handles the GetNullBase64URLEncoded response.
-func (client *stringOperations) getNullBase64UrlEncodedHandleResponse(resp *azcore.Response) (*StringGetNullBase64URLEncodedResponse, error) {
+func (client *stringOperations) getNullBase64UrlEncodedHandleResponse(resp *azcore.Response) (*ByteArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetNullBase64URLEncodedResponse{RawResponse: resp.Response}
+	result := ByteArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetWhitespace - Get string value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
-func (client *stringOperations) GetWhitespace(ctx context.Context) (*StringGetWhitespaceResponse, error) {
+func (client *stringOperations) GetWhitespace(ctx context.Context) (*StringResponse, error) {
 	req, err := client.getWhitespaceCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -312,16 +312,16 @@ func (client *stringOperations) getWhitespaceCreateRequest(u url.URL) (*azcore.R
 }
 
 // getWhitespaceHandleResponse handles the GetWhitespace response.
-func (client *stringOperations) getWhitespaceHandleResponse(resp *azcore.Response) (*StringGetWhitespaceResponse, error) {
+func (client *stringOperations) getWhitespaceHandleResponse(resp *azcore.Response) (*StringResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := StringGetWhitespaceResponse{RawResponse: resp.Response}
+	result := StringResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // PutBase64URLEncoded - Put value that is base64url encoded
-func (client *stringOperations) PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*StringPutBase64URLEncodedResponse, error) {
+func (client *stringOperations) PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*http.Response, error) {
 	req, err := client.putBase64UrlEncodedCreateRequest(*client.u, stringBody)
 	if err != nil {
 		return nil, err
@@ -350,15 +350,15 @@ func (client *stringOperations) putBase64UrlEncodedCreateRequest(u url.URL, stri
 }
 
 // putBase64UrlEncodedHandleResponse handles the PutBase64URLEncoded response.
-func (client *stringOperations) putBase64UrlEncodedHandleResponse(resp *azcore.Response) (*StringPutBase64URLEncodedResponse, error) {
+func (client *stringOperations) putBase64UrlEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutBase64URLEncodedResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutEmpty - Set string value empty ''
-func (client *stringOperations) PutEmpty(ctx context.Context) (*StringPutEmptyResponse, error) {
+func (client *stringOperations) PutEmpty(ctx context.Context) (*http.Response, error) {
 	req, err := client.putEmptyCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -387,15 +387,15 @@ func (client *stringOperations) putEmptyCreateRequest(u url.URL) (*azcore.Reques
 }
 
 // putEmptyHandleResponse handles the PutEmpty response.
-func (client *stringOperations) putEmptyHandleResponse(resp *azcore.Response) (*StringPutEmptyResponse, error) {
+func (client *stringOperations) putEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutEmptyResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-func (client *stringOperations) PutMBCS(ctx context.Context) (*StringPutMBCSResponse, error) {
+func (client *stringOperations) PutMBCS(ctx context.Context) (*http.Response, error) {
 	req, err := client.putMbcsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -424,15 +424,15 @@ func (client *stringOperations) putMbcsCreateRequest(u url.URL) (*azcore.Request
 }
 
 // putMbcsHandleResponse handles the PutMBCS response.
-func (client *stringOperations) putMbcsHandleResponse(resp *azcore.Response) (*StringPutMBCSResponse, error) {
+func (client *stringOperations) putMbcsHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutMBCSResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutNull - Set string value null
-func (client *stringOperations) PutNull(ctx context.Context) (*StringPutNullResponse, error) {
+func (client *stringOperations) PutNull(ctx context.Context) (*http.Response, error) {
 	req, err := client.putNullCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -461,15 +461,15 @@ func (client *stringOperations) putNullCreateRequest(u url.URL) (*azcore.Request
 }
 
 // putNullHandleResponse handles the PutNull response.
-func (client *stringOperations) putNullHandleResponse(resp *azcore.Response) (*StringPutNullResponse, error) {
+func (client *stringOperations) putNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutNullResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
-func (client *stringOperations) PutWhitespace(ctx context.Context) (*StringPutWhitespaceResponse, error) {
+func (client *stringOperations) PutWhitespace(ctx context.Context) (*http.Response, error) {
 	req, err := client.putWhitespaceCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -498,9 +498,9 @@ func (client *stringOperations) putWhitespaceCreateRequest(u url.URL) (*azcore.R
 }
 
 // putWhitespaceHandleResponse handles the PutWhitespace response.
-func (client *stringOperations) putWhitespaceHandleResponse(resp *azcore.Response) (*StringPutWhitespaceResponse, error) {
+func (client *stringOperations) putWhitespaceHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &StringPutWhitespaceResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }

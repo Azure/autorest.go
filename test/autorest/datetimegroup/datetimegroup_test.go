@@ -195,7 +195,7 @@ func TestPutLocalNegativeOffsetMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
@@ -208,7 +208,7 @@ func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
@@ -221,7 +221,7 @@ func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
@@ -234,7 +234,7 @@ func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPutUTCMaxDateTime(t *testing.T) {
@@ -247,7 +247,7 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPutUTCMaxDateTime7Digits(t *testing.T) {
@@ -260,7 +260,7 @@ func TestPutUTCMaxDateTime7Digits(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPutUTCMinDateTime(t *testing.T) {
@@ -273,5 +273,5 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

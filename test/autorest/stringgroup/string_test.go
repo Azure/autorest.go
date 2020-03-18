@@ -37,7 +37,7 @@ func TestStringPutMBCS(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMBCS: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestStringGetBase64Encoded(t *testing.T) {
@@ -57,11 +57,8 @@ func TestStringGetBase64Encoded(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("GetBase64URLEncoded: %v", err)
 // 	}
-// 	expected := &stringgroup.StringGetBase64URLEncodedResponse{
-// 		StatusCode: http.StatusOK,
-// 		Value:      []byte("a string that gets encoded with base64url"),
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// 	helpers.DeepEqualOrFatal(t, result.Value, []byte("a string that gets encoded with base64url"))
 // }
 
 func TestStringGetEmpty(t *testing.T) {
@@ -118,10 +115,7 @@ func TestStringGetWhitespace(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("PutBase64URLEncoded: %v", err)
 // 	}
-// 	expected := &stringgroup.StringPutBase64URLEncodedResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 // }
 
 func TestStringPutEmpty(t *testing.T) {
@@ -130,7 +124,7 @@ func TestStringPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 // func TestStringPutNull(t *testing.T) {
@@ -139,10 +133,7 @@ func TestStringPutEmpty(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("PutNull: %v", err)
 // 	}
-// 	expected := &stringgroup.StringPutNullResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
+// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 // }
 
 func TestStringPutWhitespace(t *testing.T) {
@@ -151,5 +142,5 @@ func TestStringPutWhitespace(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutWhitespace: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

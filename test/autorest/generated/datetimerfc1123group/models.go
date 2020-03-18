@@ -12,67 +12,6 @@ import (
 	"time"
 )
 
-// Datetimerfc1123GetInvalidResponse contains the response from method Datetimerfc1123.GetInvalid.
-type Datetimerfc1123GetInvalidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
-}
-
-// Datetimerfc1123GetNullResponse contains the response from method Datetimerfc1123.GetNull.
-type Datetimerfc1123GetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
-}
-
-// Datetimerfc1123GetOverflowResponse contains the response from method Datetimerfc1123.GetOverflow.
-type Datetimerfc1123GetOverflowResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
-}
-
-// Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse contains the response from method Datetimerfc1123.GetUTCLowercaseMaxDateTime.
-type Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
-}
-
-// Datetimerfc1123GetUTCMinDateTimeResponse contains the response from method Datetimerfc1123.GetUTCMinDateTime.
-type Datetimerfc1123GetUTCMinDateTimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
-}
-
-// Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse contains the response from method Datetimerfc1123.GetUTCUppercaseMaxDateTime.
-type Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
-}
-
-// Datetimerfc1123GetUnderflowResponse contains the response from method Datetimerfc1123.GetUnderflow.
-type Datetimerfc1123GetUnderflowResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
-}
-
-// Datetimerfc1123PutUTCMaxDateTimeResponse contains the response from method Datetimerfc1123.PutUTCMaxDateTime.
-type Datetimerfc1123PutUTCMaxDateTimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// Datetimerfc1123PutUTCMinDateTimeResponse contains the response from method Datetimerfc1123.PutUTCMinDateTime.
-type Datetimerfc1123PutUTCMinDateTimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
@@ -98,4 +37,11 @@ func (e Error) Error() string {
 		msg = "missing error info"
 	}
 	return msg
+}
+
+// TimeResponse is the response envelope for operations that return a time.Time type.
+type TimeResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Value       *time.Time
 }

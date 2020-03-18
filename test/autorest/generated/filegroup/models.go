@@ -8,7 +8,6 @@ package filegroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 )
 
 type Error struct {
@@ -36,22 +35,4 @@ func (e Error) Error() string {
 		msg = "missing error info"
 	}
 	return msg
-}
-
-// FilesGetEmptyFileResponse contains the response from method Files.GetEmptyFile.
-type FilesGetEmptyFileResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FilesGetFileLargeResponse contains the response from method Files.GetFileLarge.
-type FilesGetFileLargeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FilesGetFileResponse contains the response from method Files.GetFile.
-type FilesGetFileResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

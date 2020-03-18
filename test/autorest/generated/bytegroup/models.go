@@ -11,46 +11,13 @@ import (
 	"net/http"
 )
 
-// ByteGetEmptyResponse contains the response from method Byte.GetEmpty.
-type ByteGetEmptyResponse struct {
+// ByteArrayResponse is the response envelope for operations that return a []byte type.
+type ByteArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// The null byte value
 	Value *[]byte
-}
-
-// ByteGetInvalidResponse contains the response from method Byte.GetInvalid.
-type ByteGetInvalidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The null byte value
-	Value *[]byte
-}
-
-// ByteGetNonASCIIResponse contains the response from method Byte.GetNonASCII.
-type ByteGetNonASCIIResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The null byte value
-	Value *[]byte
-}
-
-// ByteGetNullResponse contains the response from method Byte.GetNull.
-type ByteGetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The null byte value
-	Value *[]byte
-}
-
-// BytePutNonASCIIResponse contains the response from method Byte.PutNonASCII.
-type BytePutNonASCIIResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Error struct {

@@ -39,58 +39,10 @@ func (e Error) Error() string {
 	return msg
 }
 
-// HeaderCustomRequestIDResponse contains the response from method Header.CustomRequestID.
-type HeaderCustomRequestIDResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamBoolResponse contains the response from method Header.ParamBool.
-type HeaderParamBoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamByteResponse contains the response from method Header.ParamByte.
-type HeaderParamByteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamDateResponse contains the response from method Header.ParamDate.
-type HeaderParamDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HeaderParamDatetimeRFC1123Options contains the optional parameters for the Header.ParamDatetimeRFC1123 method.
 type HeaderParamDatetimeRFC1123Options struct {
 	// Send a post request with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
 	Value *time.Time
-}
-
-// HeaderParamDatetimeRFC1123Response contains the response from method Header.ParamDatetimeRFC1123.
-type HeaderParamDatetimeRFC1123Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamDatetimeResponse contains the response from method Header.ParamDatetime.
-type HeaderParamDatetimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamDoubleResponse contains the response from method Header.ParamDouble.
-type HeaderParamDoubleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamDurationResponse contains the response from method Header.ParamDuration.
-type HeaderParamDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HeaderParamEnumOptions contains the optional parameters for the Header.ParamEnum method.
@@ -99,52 +51,10 @@ type HeaderParamEnumOptions struct {
 	Value *GreyscaleColors
 }
 
-// HeaderParamEnumResponse contains the response from method Header.ParamEnum.
-type HeaderParamEnumResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamExistingKeyResponse contains the response from method Header.ParamExistingKey.
-type HeaderParamExistingKeyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamFloatResponse contains the response from method Header.ParamFloat.
-type HeaderParamFloatResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamIntegerResponse contains the response from method Header.ParamInteger.
-type HeaderParamIntegerResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamLongResponse contains the response from method Header.ParamLong.
-type HeaderParamLongResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderParamProtectedKeyResponse contains the response from method Header.ParamProtectedKey.
-type HeaderParamProtectedKeyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HeaderParamStringOptions contains the optional parameters for the Header.ParamString method.
 type HeaderParamStringOptions struct {
 	// Send a post request with header values "The quick brown fox jumps over the lazy dog" or null or ""
 	Value *string
-}
-
-// HeaderParamStringResponse contains the response from method Header.ParamString.
-type HeaderParamStringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HeaderResponseBoolResponse contains the response from method Header.ResponseBool.
@@ -152,7 +62,7 @@ type HeaderResponseBoolResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *bool
 }
 
@@ -161,7 +71,7 @@ type HeaderResponseByteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *[]byte
 }
 
@@ -170,7 +80,7 @@ type HeaderResponseDateResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *time.Time
 }
 
@@ -179,7 +89,7 @@ type HeaderResponseDatetimeRFC1123Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *time.Time
 }
 
@@ -188,7 +98,7 @@ type HeaderResponseDatetimeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *time.Time
 }
 
@@ -197,7 +107,7 @@ type HeaderResponseDoubleResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *float64
 }
 
@@ -206,7 +116,7 @@ type HeaderResponseDurationResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *time.Duration
 }
 
@@ -215,7 +125,7 @@ type HeaderResponseEnumResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *GreyscaleColors
 }
 
@@ -224,7 +134,7 @@ type HeaderResponseExistingKeyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// UserAgent contains the information returned from the UserAgent header response.
+	// UserAgent contains the information returned from the User-Agent header response.
 	UserAgent *string
 }
 
@@ -233,7 +143,7 @@ type HeaderResponseFloatResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *float32
 }
 
@@ -242,7 +152,7 @@ type HeaderResponseIntegerResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *int32
 }
 
@@ -251,13 +161,13 @@ type HeaderResponseLongResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *int64
 }
 
 // HeaderResponseProtectedKeyResponse contains the response from method Header.ResponseProtectedKey.
 type HeaderResponseProtectedKeyResponse struct {
-	// ContentType contains the information returned from the ContentType header response.
+	// ContentType contains the information returned from the Content-Type header response.
 	ContentType *string
 
 	// RawResponse contains the underlying HTTP response.
@@ -269,6 +179,6 @@ type HeaderResponseStringResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// Value contains the information returned from the Value header response.
+	// Value contains the information returned from the value header response.
 	Value *string
 }
