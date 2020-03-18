@@ -11,48 +11,13 @@ import (
 	"net/http"
 )
 
-// BoolGetFalseResponse contains the response from method Bool.GetFalse.
-type BoolGetFalseResponse struct {
+// BoolResponse is the response envelope for operations that return a bool type.
+type BoolResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// simple boolean
 	Value *bool
-}
-
-// BoolGetInvalidResponse contains the response from method Bool.GetInvalid.
-type BoolGetInvalidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *bool
-}
-
-// BoolGetNullResponse contains the response from method Bool.GetNull.
-type BoolGetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *bool
-}
-
-// BoolGetTrueResponse contains the response from method Bool.GetTrue.
-type BoolGetTrueResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// simple boolean
-	Value *bool
-}
-
-// BoolPutFalseResponse contains the response from method Bool.PutFalse.
-type BoolPutFalseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BoolPutTrueResponse contains the response from method Bool.PutTrue.
-type BoolPutTrueResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Error struct {

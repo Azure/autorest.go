@@ -16,7 +16,7 @@ import (
 // PathsOperations contains the methods for the Paths group.
 type PathsOperations interface {
 	// GetEmpty - Get a 200 to test a valid base uri
-	GetEmpty(ctx context.Context, accountName string) (*PathsGetEmptyResponse, error)
+	GetEmpty(ctx context.Context, accountName string) (*http.Response, error)
 }
 
 // pathsOperations implements the PathsOperations interface.
@@ -25,7 +25,7 @@ type pathsOperations struct {
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
-func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string) (*PathsGetEmptyResponse, error) {
+func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string) (*http.Response, error) {
 	req, err := client.getEmptyCreateRequest(*client.u, accountName)
 	if err != nil {
 		return nil, err
@@ -50,9 +50,9 @@ func (client *pathsOperations) getEmptyCreateRequest(u url.URL, accountName stri
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *pathsOperations) getEmptyHandleResponse(resp *azcore.Response) (*PathsGetEmptyResponse, error) {
+func (client *pathsOperations) getEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetEmptyResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }

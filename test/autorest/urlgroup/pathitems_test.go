@@ -31,7 +31,7 @@ func TestGetAllWithValues(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
@@ -43,7 +43,7 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestGetGlobalQueryNull(t *testing.T) {
@@ -56,7 +56,7 @@ func TestGetGlobalQueryNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
@@ -66,5 +66,5 @@ func TestGetLocalPathItemQueryNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

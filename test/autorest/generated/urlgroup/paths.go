@@ -19,59 +19,59 @@ import (
 // PathsOperations contains the methods for the Paths group.
 type PathsOperations interface {
 	// ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-	ArrayCSVInPath(ctx context.Context, arrayPath []string) (*PathsArrayCSVInPathResponse, error)
+	ArrayCSVInPath(ctx context.Context, arrayPath []string) (*http.Response, error)
 	// Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
-	Base64URL(ctx context.Context, base64UrlPath []byte) (*PathsBase64URLResponse, error)
+	Base64URL(ctx context.Context, base64UrlPath []byte) (*http.Response, error)
 	// ByteEmpty - Get '' as byte array
-	ByteEmpty(ctx context.Context) (*PathsByteEmptyResponse, error)
+	ByteEmpty(ctx context.Context) (*http.Response, error)
 	// ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-	ByteMultiByte(ctx context.Context, bytePath []byte) (*PathsByteMultiByteResponse, error)
+	ByteMultiByte(ctx context.Context, bytePath []byte) (*http.Response, error)
 	// ByteNull - Get null as byte array (should throw)
-	ByteNull(ctx context.Context, bytePath []byte) (*PathsByteNullResponse, error)
+	ByteNull(ctx context.Context, bytePath []byte) (*http.Response, error)
 	// DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
-	DateNull(ctx context.Context, datePath time.Time) (*PathsDateNullResponse, error)
+	DateNull(ctx context.Context, datePath time.Time) (*http.Response, error)
 	// DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
-	DateTimeNull(ctx context.Context, dateTimePath time.Time) (*PathsDateTimeNullResponse, error)
+	DateTimeNull(ctx context.Context, dateTimePath time.Time) (*http.Response, error)
 	// DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
-	DateTimeValid(ctx context.Context) (*PathsDateTimeValidResponse, error)
+	DateTimeValid(ctx context.Context) (*http.Response, error)
 	// DateValid - Get '2012-01-01' as date
-	DateValid(ctx context.Context) (*PathsDateValidResponse, error)
+	DateValid(ctx context.Context) (*http.Response, error)
 	// DoubleDecimalNegative - Get '-9999999.999' numeric value
-	DoubleDecimalNegative(ctx context.Context) (*PathsDoubleDecimalNegativeResponse, error)
+	DoubleDecimalNegative(ctx context.Context) (*http.Response, error)
 	// DoubleDecimalPositive - Get '9999999.999' numeric value
-	DoubleDecimalPositive(ctx context.Context) (*PathsDoubleDecimalPositiveResponse, error)
+	DoubleDecimalPositive(ctx context.Context) (*http.Response, error)
 	// EnumNull - Get null (should throw on the client before the request is sent on wire)
-	EnumNull(ctx context.Context, enumPath UriColor) (*PathsEnumNullResponse, error)
+	EnumNull(ctx context.Context, enumPath UriColor) (*http.Response, error)
 	// EnumValid - Get using uri with 'green color' in path parameter
-	EnumValid(ctx context.Context, enumPath UriColor) (*PathsEnumValidResponse, error)
+	EnumValid(ctx context.Context, enumPath UriColor) (*http.Response, error)
 	// FloatScientificNegative - Get '-1.034E-20' numeric value
-	FloatScientificNegative(ctx context.Context) (*PathsFloatScientificNegativeResponse, error)
+	FloatScientificNegative(ctx context.Context) (*http.Response, error)
 	// FloatScientificPositive - Get '1.034E+20' numeric value
-	FloatScientificPositive(ctx context.Context) (*PathsFloatScientificPositiveResponse, error)
+	FloatScientificPositive(ctx context.Context) (*http.Response, error)
 	// GetBooleanFalse - Get false Boolean value on path
-	GetBooleanFalse(ctx context.Context) (*PathsGetBooleanFalseResponse, error)
+	GetBooleanFalse(ctx context.Context) (*http.Response, error)
 	// GetBooleanTrue - Get true Boolean value on path
-	GetBooleanTrue(ctx context.Context) (*PathsGetBooleanTrueResponse, error)
+	GetBooleanTrue(ctx context.Context) (*http.Response, error)
 	// GetIntNegativeOneMillion - Get '-1000000' integer value
-	GetIntNegativeOneMillion(ctx context.Context) (*PathsGetIntNegativeOneMillionResponse, error)
+	GetIntNegativeOneMillion(ctx context.Context) (*http.Response, error)
 	// GetIntOneMillion - Get '1000000' integer value
-	GetIntOneMillion(ctx context.Context) (*PathsGetIntOneMillionResponse, error)
+	GetIntOneMillion(ctx context.Context) (*http.Response, error)
 	// GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
-	GetNegativeTenBillion(ctx context.Context) (*PathsGetNegativeTenBillionResponse, error)
+	GetNegativeTenBillion(ctx context.Context) (*http.Response, error)
 	// GetTenBillion - Get '10000000000' 64 bit integer value
-	GetTenBillion(ctx context.Context) (*PathsGetTenBillionResponse, error)
+	GetTenBillion(ctx context.Context) (*http.Response, error)
 	// StringEmpty - Get ''
-	StringEmpty(ctx context.Context) (*PathsStringEmptyResponse, error)
+	StringEmpty(ctx context.Context) (*http.Response, error)
 	// StringNull - Get null (should throw)
-	StringNull(ctx context.Context, stringPath string) (*PathsStringNullResponse, error)
+	StringNull(ctx context.Context, stringPath string) (*http.Response, error)
 	// StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
-	StringURLEncoded(ctx context.Context) (*PathsStringURLEncodedResponse, error)
+	StringURLEncoded(ctx context.Context) (*http.Response, error)
 	// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
-	StringURLNonEncoded(ctx context.Context) (*PathsStringURLNonEncodedResponse, error)
+	StringURLNonEncoded(ctx context.Context) (*http.Response, error)
 	// StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-	StringUnicode(ctx context.Context) (*PathsStringUnicodeResponse, error)
+	StringUnicode(ctx context.Context) (*http.Response, error)
 	// UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
-	UnixTimeURL(ctx context.Context, unixTimeUrlPath time.Time) (*PathsUnixTimeURLResponse, error)
+	UnixTimeURL(ctx context.Context, unixTimeUrlPath time.Time) (*http.Response, error)
 }
 
 // pathsOperations implements the PathsOperations interface.
@@ -80,7 +80,7 @@ type pathsOperations struct {
 }
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-func (client *pathsOperations) ArrayCSVInPath(ctx context.Context, arrayPath []string) (*PathsArrayCSVInPathResponse, error) {
+func (client *pathsOperations) ArrayCSVInPath(ctx context.Context, arrayPath []string) (*http.Response, error) {
 	req, err := client.arrayCsvInPathCreateRequest(*client.u, arrayPath)
 	if err != nil {
 		return nil, err
@@ -106,15 +106,15 @@ func (client *pathsOperations) arrayCsvInPathCreateRequest(u url.URL, arrayPath 
 }
 
 // arrayCsvInPathHandleResponse handles the ArrayCSVInPath response.
-func (client *pathsOperations) arrayCsvInPathHandleResponse(resp *azcore.Response) (*PathsArrayCSVInPathResponse, error) {
+func (client *pathsOperations) arrayCsvInPathHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsArrayCSVInPathResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
-func (client *pathsOperations) Base64URL(ctx context.Context, base64UrlPath []byte) (*PathsBase64URLResponse, error) {
+func (client *pathsOperations) Base64URL(ctx context.Context, base64UrlPath []byte) (*http.Response, error) {
 	req, err := client.base64UrlCreateRequest(*client.u, base64UrlPath)
 	if err != nil {
 		return nil, err
@@ -140,15 +140,15 @@ func (client *pathsOperations) base64UrlCreateRequest(u url.URL, base64UrlPath [
 }
 
 // base64UrlHandleResponse handles the Base64URL response.
-func (client *pathsOperations) base64UrlHandleResponse(resp *azcore.Response) (*PathsBase64URLResponse, error) {
+func (client *pathsOperations) base64UrlHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsBase64URLResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // ByteEmpty - Get '' as byte array
-func (client *pathsOperations) ByteEmpty(ctx context.Context) (*PathsByteEmptyResponse, error) {
+func (client *pathsOperations) ByteEmpty(ctx context.Context) (*http.Response, error) {
 	req, err := client.byteEmptyCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -174,15 +174,15 @@ func (client *pathsOperations) byteEmptyCreateRequest(u url.URL) (*azcore.Reques
 }
 
 // byteEmptyHandleResponse handles the ByteEmpty response.
-func (client *pathsOperations) byteEmptyHandleResponse(resp *azcore.Response) (*PathsByteEmptyResponse, error) {
+func (client *pathsOperations) byteEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsByteEmptyResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-func (client *pathsOperations) ByteMultiByte(ctx context.Context, bytePath []byte) (*PathsByteMultiByteResponse, error) {
+func (client *pathsOperations) ByteMultiByte(ctx context.Context, bytePath []byte) (*http.Response, error) {
 	req, err := client.byteMultiByteCreateRequest(*client.u, bytePath)
 	if err != nil {
 		return nil, err
@@ -208,15 +208,15 @@ func (client *pathsOperations) byteMultiByteCreateRequest(u url.URL, bytePath []
 }
 
 // byteMultiByteHandleResponse handles the ByteMultiByte response.
-func (client *pathsOperations) byteMultiByteHandleResponse(resp *azcore.Response) (*PathsByteMultiByteResponse, error) {
+func (client *pathsOperations) byteMultiByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsByteMultiByteResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // ByteNull - Get null as byte array (should throw)
-func (client *pathsOperations) ByteNull(ctx context.Context, bytePath []byte) (*PathsByteNullResponse, error) {
+func (client *pathsOperations) ByteNull(ctx context.Context, bytePath []byte) (*http.Response, error) {
 	req, err := client.byteNullCreateRequest(*client.u, bytePath)
 	if err != nil {
 		return nil, err
@@ -242,15 +242,15 @@ func (client *pathsOperations) byteNullCreateRequest(u url.URL, bytePath []byte)
 }
 
 // byteNullHandleResponse handles the ByteNull response.
-func (client *pathsOperations) byteNullHandleResponse(resp *azcore.Response) (*PathsByteNullResponse, error) {
+func (client *pathsOperations) byteNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
-	return &PathsByteNullResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
-func (client *pathsOperations) DateNull(ctx context.Context, datePath time.Time) (*PathsDateNullResponse, error) {
+func (client *pathsOperations) DateNull(ctx context.Context, datePath time.Time) (*http.Response, error) {
 	req, err := client.dateNullCreateRequest(*client.u, datePath)
 	if err != nil {
 		return nil, err
@@ -276,15 +276,15 @@ func (client *pathsOperations) dateNullCreateRequest(u url.URL, datePath time.Ti
 }
 
 // dateNullHandleResponse handles the DateNull response.
-func (client *pathsOperations) dateNullHandleResponse(resp *azcore.Response) (*PathsDateNullResponse, error) {
+func (client *pathsOperations) dateNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
-	return &PathsDateNullResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
-func (client *pathsOperations) DateTimeNull(ctx context.Context, dateTimePath time.Time) (*PathsDateTimeNullResponse, error) {
+func (client *pathsOperations) DateTimeNull(ctx context.Context, dateTimePath time.Time) (*http.Response, error) {
 	req, err := client.dateTimeNullCreateRequest(*client.u, dateTimePath)
 	if err != nil {
 		return nil, err
@@ -310,15 +310,15 @@ func (client *pathsOperations) dateTimeNullCreateRequest(u url.URL, dateTimePath
 }
 
 // dateTimeNullHandleResponse handles the DateTimeNull response.
-func (client *pathsOperations) dateTimeNullHandleResponse(resp *azcore.Response) (*PathsDateTimeNullResponse, error) {
+func (client *pathsOperations) dateTimeNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
-	return &PathsDateTimeNullResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
-func (client *pathsOperations) DateTimeValid(ctx context.Context) (*PathsDateTimeValidResponse, error) {
+func (client *pathsOperations) DateTimeValid(ctx context.Context) (*http.Response, error) {
 	req, err := client.dateTimeValidCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -344,15 +344,15 @@ func (client *pathsOperations) dateTimeValidCreateRequest(u url.URL) (*azcore.Re
 }
 
 // dateTimeValidHandleResponse handles the DateTimeValid response.
-func (client *pathsOperations) dateTimeValidHandleResponse(resp *azcore.Response) (*PathsDateTimeValidResponse, error) {
+func (client *pathsOperations) dateTimeValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDateTimeValidResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // DateValid - Get '2012-01-01' as date
-func (client *pathsOperations) DateValid(ctx context.Context) (*PathsDateValidResponse, error) {
+func (client *pathsOperations) DateValid(ctx context.Context) (*http.Response, error) {
 	req, err := client.dateValidCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -378,15 +378,15 @@ func (client *pathsOperations) dateValidCreateRequest(u url.URL) (*azcore.Reques
 }
 
 // dateValidHandleResponse handles the DateValid response.
-func (client *pathsOperations) dateValidHandleResponse(resp *azcore.Response) (*PathsDateValidResponse, error) {
+func (client *pathsOperations) dateValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDateValidResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
-func (client *pathsOperations) DoubleDecimalNegative(ctx context.Context) (*PathsDoubleDecimalNegativeResponse, error) {
+func (client *pathsOperations) DoubleDecimalNegative(ctx context.Context) (*http.Response, error) {
 	req, err := client.doubleDecimalNegativeCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -412,15 +412,15 @@ func (client *pathsOperations) doubleDecimalNegativeCreateRequest(u url.URL) (*a
 }
 
 // doubleDecimalNegativeHandleResponse handles the DoubleDecimalNegative response.
-func (client *pathsOperations) doubleDecimalNegativeHandleResponse(resp *azcore.Response) (*PathsDoubleDecimalNegativeResponse, error) {
+func (client *pathsOperations) doubleDecimalNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDoubleDecimalNegativeResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
-func (client *pathsOperations) DoubleDecimalPositive(ctx context.Context) (*PathsDoubleDecimalPositiveResponse, error) {
+func (client *pathsOperations) DoubleDecimalPositive(ctx context.Context) (*http.Response, error) {
 	req, err := client.doubleDecimalPositiveCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -446,15 +446,15 @@ func (client *pathsOperations) doubleDecimalPositiveCreateRequest(u url.URL) (*a
 }
 
 // doubleDecimalPositiveHandleResponse handles the DoubleDecimalPositive response.
-func (client *pathsOperations) doubleDecimalPositiveHandleResponse(resp *azcore.Response) (*PathsDoubleDecimalPositiveResponse, error) {
+func (client *pathsOperations) doubleDecimalPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsDoubleDecimalPositiveResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
-func (client *pathsOperations) EnumNull(ctx context.Context, enumPath UriColor) (*PathsEnumNullResponse, error) {
+func (client *pathsOperations) EnumNull(ctx context.Context, enumPath UriColor) (*http.Response, error) {
 	req, err := client.enumNullCreateRequest(*client.u, enumPath)
 	if err != nil {
 		return nil, err
@@ -480,15 +480,15 @@ func (client *pathsOperations) enumNullCreateRequest(u url.URL, enumPath UriColo
 }
 
 // enumNullHandleResponse handles the EnumNull response.
-func (client *pathsOperations) enumNullHandleResponse(resp *azcore.Response) (*PathsEnumNullResponse, error) {
+func (client *pathsOperations) enumNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
-	return &PathsEnumNullResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // EnumValid - Get using uri with 'green color' in path parameter
-func (client *pathsOperations) EnumValid(ctx context.Context, enumPath UriColor) (*PathsEnumValidResponse, error) {
+func (client *pathsOperations) EnumValid(ctx context.Context, enumPath UriColor) (*http.Response, error) {
 	req, err := client.enumValidCreateRequest(*client.u, enumPath)
 	if err != nil {
 		return nil, err
@@ -514,15 +514,15 @@ func (client *pathsOperations) enumValidCreateRequest(u url.URL, enumPath UriCol
 }
 
 // enumValidHandleResponse handles the EnumValid response.
-func (client *pathsOperations) enumValidHandleResponse(resp *azcore.Response) (*PathsEnumValidResponse, error) {
+func (client *pathsOperations) enumValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsEnumValidResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
-func (client *pathsOperations) FloatScientificNegative(ctx context.Context) (*PathsFloatScientificNegativeResponse, error) {
+func (client *pathsOperations) FloatScientificNegative(ctx context.Context) (*http.Response, error) {
 	req, err := client.floatScientificNegativeCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -548,15 +548,15 @@ func (client *pathsOperations) floatScientificNegativeCreateRequest(u url.URL) (
 }
 
 // floatScientificNegativeHandleResponse handles the FloatScientificNegative response.
-func (client *pathsOperations) floatScientificNegativeHandleResponse(resp *azcore.Response) (*PathsFloatScientificNegativeResponse, error) {
+func (client *pathsOperations) floatScientificNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsFloatScientificNegativeResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
-func (client *pathsOperations) FloatScientificPositive(ctx context.Context) (*PathsFloatScientificPositiveResponse, error) {
+func (client *pathsOperations) FloatScientificPositive(ctx context.Context) (*http.Response, error) {
 	req, err := client.floatScientificPositiveCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -582,15 +582,15 @@ func (client *pathsOperations) floatScientificPositiveCreateRequest(u url.URL) (
 }
 
 // floatScientificPositiveHandleResponse handles the FloatScientificPositive response.
-func (client *pathsOperations) floatScientificPositiveHandleResponse(resp *azcore.Response) (*PathsFloatScientificPositiveResponse, error) {
+func (client *pathsOperations) floatScientificPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsFloatScientificPositiveResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // GetBooleanFalse - Get false Boolean value on path
-func (client *pathsOperations) GetBooleanFalse(ctx context.Context) (*PathsGetBooleanFalseResponse, error) {
+func (client *pathsOperations) GetBooleanFalse(ctx context.Context) (*http.Response, error) {
 	req, err := client.getBooleanFalseCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -616,15 +616,15 @@ func (client *pathsOperations) getBooleanFalseCreateRequest(u url.URL) (*azcore.
 }
 
 // getBooleanFalseHandleResponse handles the GetBooleanFalse response.
-func (client *pathsOperations) getBooleanFalseHandleResponse(resp *azcore.Response) (*PathsGetBooleanFalseResponse, error) {
+func (client *pathsOperations) getBooleanFalseHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetBooleanFalseResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // GetBooleanTrue - Get true Boolean value on path
-func (client *pathsOperations) GetBooleanTrue(ctx context.Context) (*PathsGetBooleanTrueResponse, error) {
+func (client *pathsOperations) GetBooleanTrue(ctx context.Context) (*http.Response, error) {
 	req, err := client.getBooleanTrueCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -650,15 +650,15 @@ func (client *pathsOperations) getBooleanTrueCreateRequest(u url.URL) (*azcore.R
 }
 
 // getBooleanTrueHandleResponse handles the GetBooleanTrue response.
-func (client *pathsOperations) getBooleanTrueHandleResponse(resp *azcore.Response) (*PathsGetBooleanTrueResponse, error) {
+func (client *pathsOperations) getBooleanTrueHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetBooleanTrueResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
-func (client *pathsOperations) GetIntNegativeOneMillion(ctx context.Context) (*PathsGetIntNegativeOneMillionResponse, error) {
+func (client *pathsOperations) GetIntNegativeOneMillion(ctx context.Context) (*http.Response, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -684,15 +684,15 @@ func (client *pathsOperations) getIntNegativeOneMillionCreateRequest(u url.URL) 
 }
 
 // getIntNegativeOneMillionHandleResponse handles the GetIntNegativeOneMillion response.
-func (client *pathsOperations) getIntNegativeOneMillionHandleResponse(resp *azcore.Response) (*PathsGetIntNegativeOneMillionResponse, error) {
+func (client *pathsOperations) getIntNegativeOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetIntNegativeOneMillionResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // GetIntOneMillion - Get '1000000' integer value
-func (client *pathsOperations) GetIntOneMillion(ctx context.Context) (*PathsGetIntOneMillionResponse, error) {
+func (client *pathsOperations) GetIntOneMillion(ctx context.Context) (*http.Response, error) {
 	req, err := client.getIntOneMillionCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -718,15 +718,15 @@ func (client *pathsOperations) getIntOneMillionCreateRequest(u url.URL) (*azcore
 }
 
 // getIntOneMillionHandleResponse handles the GetIntOneMillion response.
-func (client *pathsOperations) getIntOneMillionHandleResponse(resp *azcore.Response) (*PathsGetIntOneMillionResponse, error) {
+func (client *pathsOperations) getIntOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetIntOneMillionResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
-func (client *pathsOperations) GetNegativeTenBillion(ctx context.Context) (*PathsGetNegativeTenBillionResponse, error) {
+func (client *pathsOperations) GetNegativeTenBillion(ctx context.Context) (*http.Response, error) {
 	req, err := client.getNegativeTenBillionCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -752,15 +752,15 @@ func (client *pathsOperations) getNegativeTenBillionCreateRequest(u url.URL) (*a
 }
 
 // getNegativeTenBillionHandleResponse handles the GetNegativeTenBillion response.
-func (client *pathsOperations) getNegativeTenBillionHandleResponse(resp *azcore.Response) (*PathsGetNegativeTenBillionResponse, error) {
+func (client *pathsOperations) getNegativeTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetNegativeTenBillionResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
-func (client *pathsOperations) GetTenBillion(ctx context.Context) (*PathsGetTenBillionResponse, error) {
+func (client *pathsOperations) GetTenBillion(ctx context.Context) (*http.Response, error) {
 	req, err := client.getTenBillionCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -786,15 +786,15 @@ func (client *pathsOperations) getTenBillionCreateRequest(u url.URL) (*azcore.Re
 }
 
 // getTenBillionHandleResponse handles the GetTenBillion response.
-func (client *pathsOperations) getTenBillionHandleResponse(resp *azcore.Response) (*PathsGetTenBillionResponse, error) {
+func (client *pathsOperations) getTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsGetTenBillionResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // StringEmpty - Get ''
-func (client *pathsOperations) StringEmpty(ctx context.Context) (*PathsStringEmptyResponse, error) {
+func (client *pathsOperations) StringEmpty(ctx context.Context) (*http.Response, error) {
 	req, err := client.stringEmptyCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -820,15 +820,15 @@ func (client *pathsOperations) stringEmptyCreateRequest(u url.URL) (*azcore.Requ
 }
 
 // stringEmptyHandleResponse handles the StringEmpty response.
-func (client *pathsOperations) stringEmptyHandleResponse(resp *azcore.Response) (*PathsStringEmptyResponse, error) {
+func (client *pathsOperations) stringEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringEmptyResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // StringNull - Get null (should throw)
-func (client *pathsOperations) StringNull(ctx context.Context, stringPath string) (*PathsStringNullResponse, error) {
+func (client *pathsOperations) StringNull(ctx context.Context, stringPath string) (*http.Response, error) {
 	req, err := client.stringNullCreateRequest(*client.u, stringPath)
 	if err != nil {
 		return nil, err
@@ -854,15 +854,15 @@ func (client *pathsOperations) stringNullCreateRequest(u url.URL, stringPath str
 }
 
 // stringNullHandleResponse handles the StringNull response.
-func (client *pathsOperations) stringNullHandleResponse(resp *azcore.Response) (*PathsStringNullResponse, error) {
+func (client *pathsOperations) stringNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
 		return nil, newError(resp)
 	}
-	return &PathsStringNullResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
-func (client *pathsOperations) StringURLEncoded(ctx context.Context) (*PathsStringURLEncodedResponse, error) {
+func (client *pathsOperations) StringURLEncoded(ctx context.Context) (*http.Response, error) {
 	req, err := client.stringUrlEncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -888,15 +888,15 @@ func (client *pathsOperations) stringUrlEncodedCreateRequest(u url.URL) (*azcore
 }
 
 // stringUrlEncodedHandleResponse handles the StringURLEncoded response.
-func (client *pathsOperations) stringUrlEncodedHandleResponse(resp *azcore.Response) (*PathsStringURLEncodedResponse, error) {
+func (client *pathsOperations) stringUrlEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringURLEncodedResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
-func (client *pathsOperations) StringURLNonEncoded(ctx context.Context) (*PathsStringURLNonEncodedResponse, error) {
+func (client *pathsOperations) StringURLNonEncoded(ctx context.Context) (*http.Response, error) {
 	req, err := client.stringUrlNonEncodedCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -922,15 +922,15 @@ func (client *pathsOperations) stringUrlNonEncodedCreateRequest(u url.URL) (*azc
 }
 
 // stringUrlNonEncodedHandleResponse handles the StringURLNonEncoded response.
-func (client *pathsOperations) stringUrlNonEncodedHandleResponse(resp *azcore.Response) (*PathsStringURLNonEncodedResponse, error) {
+func (client *pathsOperations) stringUrlNonEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringURLNonEncodedResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-func (client *pathsOperations) StringUnicode(ctx context.Context) (*PathsStringUnicodeResponse, error) {
+func (client *pathsOperations) StringUnicode(ctx context.Context) (*http.Response, error) {
 	req, err := client.stringUnicodeCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -956,15 +956,15 @@ func (client *pathsOperations) stringUnicodeCreateRequest(u url.URL) (*azcore.Re
 }
 
 // stringUnicodeHandleResponse handles the StringUnicode response.
-func (client *pathsOperations) stringUnicodeHandleResponse(resp *azcore.Response) (*PathsStringUnicodeResponse, error) {
+func (client *pathsOperations) stringUnicodeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsStringUnicodeResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
-func (client *pathsOperations) UnixTimeURL(ctx context.Context, unixTimeUrlPath time.Time) (*PathsUnixTimeURLResponse, error) {
+func (client *pathsOperations) UnixTimeURL(ctx context.Context, unixTimeUrlPath time.Time) (*http.Response, error) {
 	req, err := client.unixTimeUrlCreateRequest(*client.u, unixTimeUrlPath)
 	if err != nil {
 		return nil, err
@@ -990,9 +990,9 @@ func (client *pathsOperations) unixTimeUrlCreateRequest(u url.URL, unixTimeUrlPa
 }
 
 // unixTimeUrlHandleResponse handles the UnixTimeURL response.
-func (client *pathsOperations) unixTimeUrlHandleResponse(resp *azcore.Response) (*PathsUnixTimeURLResponse, error) {
+func (client *pathsOperations) unixTimeUrlHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	return &PathsUnixTimeURLResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }

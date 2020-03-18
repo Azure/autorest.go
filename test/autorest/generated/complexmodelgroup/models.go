@@ -21,6 +21,14 @@ type CatalogArrayOfDictionary struct {
 	ProductArrayOfDictionary *[]map[string]*Product `json:"productArrayOfDictionary,omitempty"`
 }
 
+// CatalogArrayResponse is the response envelope for operations that return a CatalogArray type.
+type CatalogArrayResponse struct {
+	CatalogArray *CatalogArray
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 type CatalogDictionary struct {
 	// Dictionary of products
 	ProductDictionary *map[string]*Product `json:"productDictionary,omitempty"`
@@ -31,8 +39,8 @@ type CatalogDictionaryOfArray struct {
 	ProductDictionaryOfArray *map[string]*[]Product `json:"productDictionaryOfArray,omitempty"`
 }
 
-// CreateResponse contains the response from method Operations.Create.
-type CreateResponse struct {
+// CatalogDictionaryResponse is the response envelope for operations that return a CatalogDictionary type.
+type CatalogDictionaryResponse struct {
 	CatalogDictionary *CatalogDictionary
 
 	// RawResponse contains the underlying HTTP response.
@@ -66,14 +74,6 @@ func (e Error) Error() string {
 	return msg
 }
 
-// ListResponse contains the response from method Operations.List.
-type ListResponse struct {
-	CatalogArray *CatalogArray
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // The product documentation.
 type Product struct {
 	// Capacity of product. For example, 4 people.
@@ -91,12 +91,4 @@ type Product struct {
 	// Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco
 	// will have a different product_id than uberX in Los Angeles.
 	ProductID *string `json:"product_id,omitempty"`
-}
-
-// UpdateResponse contains the response from method Operations.Update.
-type UpdateResponse struct {
-	CatalogArray *CatalogArray
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

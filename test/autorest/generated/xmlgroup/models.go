@@ -62,6 +62,15 @@ type AppleBarrel struct {
 	GoodApples *[]string `xml:"GoodApples>Apple"`
 }
 
+// AppleBarrelResponse is the response envelope for operations that return a AppleBarrel type.
+type AppleBarrelResponse struct {
+	// A barrel of apples.
+	AppleBarrel *AppleBarrel `xml:"AppleBarrel"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // A banana.
 type Banana struct {
 	// The time at which you should reconsider eating this banana
@@ -96,6 +105,24 @@ func (b *Banana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	b.Expiration = (*time.Time)(aux.Expiration)
 	return nil
+}
+
+// BananaArrayResponse is the response envelope for operations that return a []Banana type.
+type BananaArrayResponse struct {
+	// Array of Banana
+	Bananas *[]Banana `xml:"banana"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// BananaResponse is the response envelope for operations that return a Banana type.
+type BananaResponse struct {
+	// A banana.
+	Banana *Banana `xml:"banana"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // An Azure Storage blob
@@ -306,6 +333,14 @@ type JSONOutput struct {
 	ID *int32 `json:"id,omitempty"`
 }
 
+// JSONOutputResponse is the response envelope for operations that return a JSONOutput type.
+type JSONOutputResponse struct {
+	JSONOutput *JSONOutput
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // An enumeration of blobs
 type ListBlobsResponse struct {
 	Blobs           *Blobs  `xml:"Blobs"`
@@ -318,6 +353,15 @@ type ListBlobsResponse struct {
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
 }
 
+// ListBlobsResponseResponse is the response envelope for operations that return a ListBlobsResponse type.
+type ListBlobsResponseResponse struct {
+	// An enumeration of blobs
+	EnumerationResults *ListBlobsResponse `xml:"EnumerationResults"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // An enumeration of containers
 type ListContainersResponse struct {
 	Containers      *[]Container `xml:"Containers>Container"`
@@ -326,6 +370,15 @@ type ListContainersResponse struct {
 	NextMarker      *string      `xml:"NextMarker"`
 	Prefix          *string      `xml:"Prefix"`
 	ServiceEndpoint *string      `xml:"ServiceEndpoint,attr"`
+}
+
+// ListContainersResponseResponse is the response envelope for operations that return a ListContainersResponse type.
+type ListContainersResponseResponse struct {
+	// An enumeration of containers
+	EnumerationResults *ListContainersResponse `xml:"EnumerationResults"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // Azure Analytics Logging settings.
@@ -379,6 +432,15 @@ type RootWithRefAndMeta struct {
 	Something *string `xml:"Something"`
 }
 
+// RootWithRefAndMetaResponse is the response envelope for operations that return a RootWithRefAndMeta type.
+type RootWithRefAndMetaResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// I am root, and I ref a model WITH meta
+	RootWithRefAndMeta *RootWithRefAndMeta `xml:"RootWithRefAndMeta"`
+}
+
 // I am root, and I ref a model with no meta
 type RootWithRefAndNoMeta struct {
 	// XML will use RefToModel
@@ -388,6 +450,15 @@ type RootWithRefAndNoMeta struct {
 	Something *string `xml:"Something"`
 }
 
+// RootWithRefAndNoMetaResponse is the response envelope for operations that return a RootWithRefAndNoMeta type.
+type RootWithRefAndNoMetaResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// I am root, and I ref a model with no meta
+	RootWithRefAndNoMeta *RootWithRefAndNoMeta `xml:"RootWithRefAndNoMeta"`
+}
+
 // signed identifier
 type SignedIDentifier struct {
 	// The access policy
@@ -395,6 +466,15 @@ type SignedIDentifier struct {
 
 	// a unique id
 	ID *string `xml:"Id"`
+}
+
+// SignedIDentifierArrayResponse is the response envelope for operations that return a []SignedIDentifier type.
+type SignedIDentifierArrayResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// a collection of signed identifiers
+	SignedIdentifiers *[]SignedIDentifier `xml:"SignedIdentifier"`
 }
 
 // A slide in a slideshow
@@ -423,6 +503,15 @@ func (s Slideshow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(aux, start)
 }
 
+// SlideshowResponse is the response envelope for operations that return a Slideshow type.
+type SlideshowResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// Data about a slideshow
+	Slideshow *Slideshow `xml:"slideshow"`
+}
+
 // Storage Service Properties.
 type StorageServiceProperties struct {
 	// The set of CORS rules.
@@ -445,98 +534,8 @@ type StorageServiceProperties struct {
 	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
 }
 
-// XMLGetACLsResponse contains the response from method XML.GetACLs.
-type XMLGetACLsResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// a collection of signed identifiers
-	SignedIdentifiers *[]SignedIDentifier `xml:"SignedIdentifier"`
-}
-
-// XMLGetComplexTypeRefNoMetaResponse contains the response from method XML.GetComplexTypeRefNoMeta.
-type XMLGetComplexTypeRefNoMetaResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// I am root, and I ref a model with no meta
-	RootWithRefAndNoMeta *RootWithRefAndNoMeta `xml:"RootWithRefAndNoMeta"`
-}
-
-// XMLGetComplexTypeRefWithMetaResponse contains the response from method XML.GetComplexTypeRefWithMeta.
-type XMLGetComplexTypeRefWithMetaResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// I am root, and I ref a model WITH meta
-	RootWithRefAndMeta *RootWithRefAndMeta `xml:"RootWithRefAndMeta"`
-}
-
-// XMLGetEmptyChildElementResponse contains the response from method XML.GetEmptyChildElement.
-type XMLGetEmptyChildElementResponse struct {
-	// A banana.
-	Banana *Banana `xml:"banana"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLGetEmptyListResponse contains the response from method XML.GetEmptyList.
-type XMLGetEmptyListResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Data about a slideshow
-	Slideshow *Slideshow `xml:"slideshow"`
-}
-
-// XMLGetEmptyRootListResponse contains the response from method XML.GetEmptyRootList.
-type XMLGetEmptyRootListResponse struct {
-	// Array of Banana
-	Bananas *[]Banana `xml:"banana"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLGetEmptyWrappedListsResponse contains the response from method XML.GetEmptyWrappedLists.
-type XMLGetEmptyWrappedListsResponse struct {
-	// A barrel of apples.
-	AppleBarrel *AppleBarrel `xml:"AppleBarrel"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLGetHeadersResponse contains the response from method XML.GetHeaders.
-type XMLGetHeadersResponse struct {
-	// CustomHeader contains the information returned from the CustomHeader header response.
-	CustomHeader *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLGetRootListResponse contains the response from method XML.GetRootList.
-type XMLGetRootListResponse struct {
-	// Array of Banana
-	Bananas *[]Banana `xml:"banana"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLGetRootListSingleItemResponse contains the response from method XML.GetRootListSingleItem.
-type XMLGetRootListSingleItemResponse struct {
-	// Array of Banana
-	Bananas *[]Banana `xml:"banana"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLGetServicePropertiesResponse contains the response from method XML.GetServiceProperties.
-type XMLGetServicePropertiesResponse struct {
+// StorageServicePropertiesResponse is the response envelope for operations that return a StorageServiceProperties type.
+type StorageServicePropertiesResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
@@ -544,124 +543,11 @@ type XMLGetServicePropertiesResponse struct {
 	StorageServiceProperties *StorageServiceProperties `xml:"StorageServiceProperties"`
 }
 
-// XMLGetSimpleResponse contains the response from method XML.GetSimple.
-type XMLGetSimpleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// XMLGetHeadersResponse contains the response from method XML.GetHeaders.
+type XMLGetHeadersResponse struct {
+	// CustomHeader contains the information returned from the Custom-Header header response.
+	CustomHeader *string
 
-	// Data about a slideshow
-	Slideshow *Slideshow `xml:"slideshow"`
-}
-
-// XMLGetWrappedListsResponse contains the response from method XML.GetWrappedLists.
-type XMLGetWrappedListsResponse struct {
-	// A barrel of apples.
-	AppleBarrel *AppleBarrel `xml:"AppleBarrel"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLJSONInputResponse contains the response from method XML.JSONInput.
-type XMLJSONInputResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLJSONOutputResponse contains the response from method XML.JSONOutput.
-type XMLJSONOutputResponse struct {
-	JSONOutput *JSONOutput
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLListBlobsResponse contains the response from method XML.ListBlobs.
-type XMLListBlobsResponse struct {
-	// An enumeration of blobs
-	EnumerationResults *ListBlobsResponse `xml:"EnumerationResults"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLListContainersResponse contains the response from method XML.ListContainers.
-type XMLListContainersResponse struct {
-	// An enumeration of containers
-	EnumerationResults *ListContainersResponse `xml:"EnumerationResults"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutACLsResponse contains the response from method XML.PutACLs.
-type XMLPutACLsResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutComplexTypeRefNoMetaResponse contains the response from method XML.PutComplexTypeRefNoMeta.
-type XMLPutComplexTypeRefNoMetaResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutComplexTypeRefWithMetaResponse contains the response from method XML.PutComplexTypeRefWithMeta.
-type XMLPutComplexTypeRefWithMetaResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutEmptyChildElementResponse contains the response from method XML.PutEmptyChildElement.
-type XMLPutEmptyChildElementResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutEmptyListResponse contains the response from method XML.PutEmptyList.
-type XMLPutEmptyListResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutEmptyRootListResponse contains the response from method XML.PutEmptyRootList.
-type XMLPutEmptyRootListResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutEmptyWrappedListsResponse contains the response from method XML.PutEmptyWrappedLists.
-type XMLPutEmptyWrappedListsResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutRootListResponse contains the response from method XML.PutRootList.
-type XMLPutRootListResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutRootListSingleItemResponse contains the response from method XML.PutRootListSingleItem.
-type XMLPutRootListSingleItemResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutServicePropertiesResponse contains the response from method XML.PutServiceProperties.
-type XMLPutServicePropertiesResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutSimpleResponse contains the response from method XML.PutSimple.
-type XMLPutSimpleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLPutWrappedListsResponse contains the response from method XML.PutWrappedLists.
-type XMLPutWrappedListsResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

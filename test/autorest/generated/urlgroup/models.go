@@ -8,7 +8,6 @@ package urlgroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"time"
 )
 
@@ -47,12 +46,6 @@ type PathItemsGetAllWithValuesOptions struct {
 	PathItemStringQuery *string
 }
 
-// PathItemsGetAllWithValuesResponse contains the response from method PathItems.GetAllWithValues.
-type PathItemsGetAllWithValuesResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull
 // method.
 type PathItemsGetGlobalAndLocalQueryNullOptions struct {
@@ -62,24 +55,12 @@ type PathItemsGetGlobalAndLocalQueryNullOptions struct {
 	PathItemStringQuery *string
 }
 
-// PathItemsGetGlobalAndLocalQueryNullResponse contains the response from method PathItems.GetGlobalAndLocalQueryNull.
-type PathItemsGetGlobalAndLocalQueryNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PathItemsGetGlobalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalQueryNull method.
 type PathItemsGetGlobalQueryNullOptions struct {
 	// should contain value 'localStringQuery'
 	LocalStringQuery *string
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
-}
-
-// PathItemsGetGlobalQueryNullResponse contains the response from method PathItems.GetGlobalQueryNull.
-type PathItemsGetGlobalQueryNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull
@@ -91,184 +72,10 @@ type PathItemsGetLocalPathItemQueryNullOptions struct {
 	PathItemStringQuery *string
 }
 
-// PathItemsGetLocalPathItemQueryNullResponse contains the response from method PathItems.GetLocalPathItemQueryNull.
-type PathItemsGetLocalPathItemQueryNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsArrayCSVInPathResponse contains the response from method Paths.ArrayCSVInPath.
-type PathsArrayCSVInPathResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsBase64URLResponse contains the response from method Paths.Base64URL.
-type PathsBase64URLResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsByteEmptyResponse contains the response from method Paths.ByteEmpty.
-type PathsByteEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsByteMultiByteResponse contains the response from method Paths.ByteMultiByte.
-type PathsByteMultiByteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsByteNullResponse contains the response from method Paths.ByteNull.
-type PathsByteNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsDateNullResponse contains the response from method Paths.DateNull.
-type PathsDateNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsDateTimeNullResponse contains the response from method Paths.DateTimeNull.
-type PathsDateTimeNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsDateTimeValidResponse contains the response from method Paths.DateTimeValid.
-type PathsDateTimeValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsDateValidResponse contains the response from method Paths.DateValid.
-type PathsDateValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsDoubleDecimalNegativeResponse contains the response from method Paths.DoubleDecimalNegative.
-type PathsDoubleDecimalNegativeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsDoubleDecimalPositiveResponse contains the response from method Paths.DoubleDecimalPositive.
-type PathsDoubleDecimalPositiveResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsEnumNullResponse contains the response from method Paths.EnumNull.
-type PathsEnumNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsEnumValidResponse contains the response from method Paths.EnumValid.
-type PathsEnumValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsFloatScientificNegativeResponse contains the response from method Paths.FloatScientificNegative.
-type PathsFloatScientificNegativeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsFloatScientificPositiveResponse contains the response from method Paths.FloatScientificPositive.
-type PathsFloatScientificPositiveResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsGetBooleanFalseResponse contains the response from method Paths.GetBooleanFalse.
-type PathsGetBooleanFalseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsGetBooleanTrueResponse contains the response from method Paths.GetBooleanTrue.
-type PathsGetBooleanTrueResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsGetIntNegativeOneMillionResponse contains the response from method Paths.GetIntNegativeOneMillion.
-type PathsGetIntNegativeOneMillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsGetIntOneMillionResponse contains the response from method Paths.GetIntOneMillion.
-type PathsGetIntOneMillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsGetNegativeTenBillionResponse contains the response from method Paths.GetNegativeTenBillion.
-type PathsGetNegativeTenBillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsGetTenBillionResponse contains the response from method Paths.GetTenBillion.
-type PathsGetTenBillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsStringEmptyResponse contains the response from method Paths.StringEmpty.
-type PathsStringEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsStringNullResponse contains the response from method Paths.StringNull.
-type PathsStringNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsStringURLEncodedResponse contains the response from method Paths.StringURLEncoded.
-type PathsStringURLEncodedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsStringURLNonEncodedResponse contains the response from method Paths.StringURLNonEncoded.
-type PathsStringURLNonEncodedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsStringUnicodeResponse contains the response from method Paths.StringUnicode.
-type PathsStringUnicodeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PathsUnixTimeURLResponse contains the response from method Paths.UnixTimeURL.
-type PathsUnixTimeURLResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesArrayStringCSVEmptyOptions contains the optional parameters for the Queries.ArrayStringCSVEmpty method.
 type QueriesArrayStringCSVEmptyOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayQuery *[]string
-}
-
-// QueriesArrayStringCSVEmptyResponse contains the response from method Queries.ArrayStringCSVEmpty.
-type QueriesArrayStringCSVEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesArrayStringCSVNullOptions contains the optional parameters for the Queries.ArrayStringCSVNull method.
@@ -277,22 +84,10 @@ type QueriesArrayStringCSVNullOptions struct {
 	ArrayQuery *[]string
 }
 
-// QueriesArrayStringCSVNullResponse contains the response from method Queries.ArrayStringCSVNull.
-type QueriesArrayStringCSVNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesArrayStringCSVValidOptions contains the optional parameters for the Queries.ArrayStringCSVValid method.
 type QueriesArrayStringCSVValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayQuery *[]string
-}
-
-// QueriesArrayStringCSVValidResponse contains the response from method Queries.ArrayStringCSVValid.
-type QueriesArrayStringCSVValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
@@ -301,22 +96,10 @@ type QueriesArrayStringPipesValidOptions struct {
 	ArrayQuery *[]string
 }
 
-// QueriesArrayStringPipesValidResponse contains the response from method Queries.ArrayStringPipesValid.
-type QueriesArrayStringPipesValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesArrayStringSsvValidOptions contains the optional parameters for the Queries.ArrayStringSsvValid method.
 type QueriesArrayStringSsvValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
 	ArrayQuery *[]string
-}
-
-// QueriesArrayStringSsvValidResponse contains the response from method Queries.ArrayStringSsvValid.
-type QueriesArrayStringSsvValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesArrayStringTsvValidOptions contains the optional parameters for the Queries.ArrayStringTsvValid method.
@@ -325,28 +108,10 @@ type QueriesArrayStringTsvValidOptions struct {
 	ArrayQuery *[]string
 }
 
-// QueriesArrayStringTsvValidResponse contains the response from method Queries.ArrayStringTsvValid.
-type QueriesArrayStringTsvValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesByteEmptyResponse contains the response from method Queries.ByteEmpty.
-type QueriesByteEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesByteMultiByteOptions contains the optional parameters for the Queries.ByteMultiByte method.
 type QueriesByteMultiByteOptions struct {
 	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 	ByteQuery *[]byte
-}
-
-// QueriesByteMultiByteResponse contains the response from method Queries.ByteMultiByte.
-type QueriesByteMultiByteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesByteNullOptions contains the optional parameters for the Queries.ByteNull method.
@@ -355,22 +120,10 @@ type QueriesByteNullOptions struct {
 	ByteQuery *[]byte
 }
 
-// QueriesByteNullResponse contains the response from method Queries.ByteNull.
-type QueriesByteNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesDateNullOptions contains the optional parameters for the Queries.DateNull method.
 type QueriesDateNullOptions struct {
 	// null as date (no query parameters in uri)
 	DateQuery *time.Time
-}
-
-// QueriesDateNullResponse contains the response from method Queries.DateNull.
-type QueriesDateNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesDateTimeNullOptions contains the optional parameters for the Queries.DateTimeNull method.
@@ -379,46 +132,10 @@ type QueriesDateTimeNullOptions struct {
 	DateTimeQuery *time.Time
 }
 
-// QueriesDateTimeNullResponse contains the response from method Queries.DateTimeNull.
-type QueriesDateTimeNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesDateTimeValidResponse contains the response from method Queries.DateTimeValid.
-type QueriesDateTimeValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesDateValidResponse contains the response from method Queries.DateValid.
-type QueriesDateValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesDoubleDecimalNegativeResponse contains the response from method Queries.DoubleDecimalNegative.
-type QueriesDoubleDecimalNegativeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesDoubleDecimalPositiveResponse contains the response from method Queries.DoubleDecimalPositive.
-type QueriesDoubleDecimalPositiveResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesDoubleNullOptions contains the optional parameters for the Queries.DoubleNull method.
 type QueriesDoubleNullOptions struct {
 	// null numeric value
 	DoubleQuery *float64
-}
-
-// QueriesDoubleNullResponse contains the response from method Queries.DoubleNull.
-type QueriesDoubleNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesEnumNullOptions contains the optional parameters for the Queries.EnumNull method.
@@ -427,22 +144,10 @@ type QueriesEnumNullOptions struct {
 	EnumQuery *UriColor
 }
 
-// QueriesEnumNullResponse contains the response from method Queries.EnumNull.
-type QueriesEnumNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesEnumValidOptions contains the optional parameters for the Queries.EnumValid method.
 type QueriesEnumValidOptions struct {
 	// 'green color' enum value
 	EnumQuery *UriColor
-}
-
-// QueriesEnumValidResponse contains the response from method Queries.EnumValid.
-type QueriesEnumValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesFloatNullOptions contains the optional parameters for the Queries.FloatNull method.
@@ -451,52 +156,10 @@ type QueriesFloatNullOptions struct {
 	FloatQuery *float32
 }
 
-// QueriesFloatNullResponse contains the response from method Queries.FloatNull.
-type QueriesFloatNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesFloatScientificNegativeResponse contains the response from method Queries.FloatScientificNegative.
-type QueriesFloatScientificNegativeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesFloatScientificPositiveResponse contains the response from method Queries.FloatScientificPositive.
-type QueriesFloatScientificPositiveResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesGetBooleanFalseResponse contains the response from method Queries.GetBooleanFalse.
-type QueriesGetBooleanFalseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesGetBooleanNullOptions contains the optional parameters for the Queries.GetBooleanNull method.
 type QueriesGetBooleanNullOptions struct {
 	// null boolean value
 	BoolQuery *bool
-}
-
-// QueriesGetBooleanNullResponse contains the response from method Queries.GetBooleanNull.
-type QueriesGetBooleanNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesGetBooleanTrueResponse contains the response from method Queries.GetBooleanTrue.
-type QueriesGetBooleanTrueResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesGetIntNegativeOneMillionResponse contains the response from method Queries.GetIntNegativeOneMillion.
-type QueriesGetIntNegativeOneMillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QueriesGetIntNullOptions contains the optional parameters for the Queries.GetIntNull method.
@@ -505,68 +168,14 @@ type QueriesGetIntNullOptions struct {
 	IntQuery *int32
 }
 
-// QueriesGetIntNullResponse contains the response from method Queries.GetIntNull.
-type QueriesGetIntNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesGetIntOneMillionResponse contains the response from method Queries.GetIntOneMillion.
-type QueriesGetIntOneMillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesGetLongNullOptions contains the optional parameters for the Queries.GetLongNull method.
 type QueriesGetLongNullOptions struct {
 	// null 64 bit integer value
 	LongQuery *int64
 }
 
-// QueriesGetLongNullResponse contains the response from method Queries.GetLongNull.
-type QueriesGetLongNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesGetNegativeTenBillionResponse contains the response from method Queries.GetNegativeTenBillion.
-type QueriesGetNegativeTenBillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesGetTenBillionResponse contains the response from method Queries.GetTenBillion.
-type QueriesGetTenBillionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesStringEmptyResponse contains the response from method Queries.StringEmpty.
-type QueriesStringEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // QueriesStringNullOptions contains the optional parameters for the Queries.StringNull method.
 type QueriesStringNullOptions struct {
 	// null string value
 	StringQuery *string
-}
-
-// QueriesStringNullResponse contains the response from method Queries.StringNull.
-type QueriesStringNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesStringURLEncodedResponse contains the response from method Queries.StringURLEncoded.
-type QueriesStringURLEncodedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueriesStringUnicodeResponse contains the response from method Queries.StringUnicode.
-type QueriesStringUnicodeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

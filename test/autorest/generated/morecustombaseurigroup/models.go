@@ -8,7 +8,6 @@ package morecustombaseurigroup
 import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 )
 
 type Error struct {
@@ -42,10 +41,4 @@ func (e Error) Error() string {
 type PathsGetEmptyOptions struct {
 	// The key version. Default value 'v1'.
 	KeyVersion *string
-}
-
-// PathsGetEmptyResponse contains the response from method Paths.GetEmpty.
-type PathsGetEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

@@ -17,11 +17,11 @@ import (
 // Operations contains the methods for the Operations group.
 type Operations interface {
 	// Create - Resets products.
-	Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CreateResponse, error)
+	Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CatalogDictionaryResponse, error)
 	// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
-	List(ctx context.Context, resourceGroupName string) (*ListResponse, error)
+	List(ctx context.Context, resourceGroupName string) (*CatalogArrayResponse, error)
 	// Update - Resets products.
-	Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*UpdateResponse, error)
+	Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*CatalogArrayResponse, error)
 }
 
 // operations implements the Operations interface.
@@ -30,7 +30,7 @@ type operations struct {
 }
 
 // Create - Resets products.
-func (client *operations) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CreateResponse, error) {
+func (client *operations) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CatalogDictionaryResponse, error) {
 	req, err := client.createCreateRequest(*client.u, subscriptionId, resourceGroupName, bodyParameter)
 	if err != nil {
 		return nil, err
@@ -64,16 +64,16 @@ func (client *operations) createCreateRequest(u url.URL, subscriptionId string, 
 }
 
 // createHandleResponse handles the Create response.
-func (client *operations) createHandleResponse(resp *azcore.Response) (*CreateResponse, error) {
+func (client *operations) createHandleResponse(resp *azcore.Response) (*CatalogDictionaryResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := CreateResponse{RawResponse: resp.Response}
+	result := CatalogDictionaryResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogDictionary)
 }
 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
-func (client *operations) List(ctx context.Context, resourceGroupName string) (*ListResponse, error) {
+func (client *operations) List(ctx context.Context, resourceGroupName string) (*CatalogArrayResponse, error) {
 	req, err := client.listCreateRequest(*client.u, resourceGroupName)
 	if err != nil {
 		return nil, err
@@ -103,16 +103,16 @@ func (client *operations) listCreateRequest(u url.URL, resourceGroupName string)
 }
 
 // listHandleResponse handles the List response.
-func (client *operations) listHandleResponse(resp *azcore.Response) (*ListResponse, error) {
+func (client *operations) listHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := ListResponse{RawResponse: resp.Response}
+	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }
 
 // Update - Resets products.
-func (client *operations) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*UpdateResponse, error) {
+func (client *operations) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*CatalogArrayResponse, error) {
 	req, err := client.updateCreateRequest(*client.u, subscriptionId, resourceGroupName, bodyParameter)
 	if err != nil {
 		return nil, err
@@ -146,10 +146,10 @@ func (client *operations) updateCreateRequest(u url.URL, subscriptionId string, 
 }
 
 // updateHandleResponse handles the Update response.
-func (client *operations) updateHandleResponse(resp *azcore.Response) (*UpdateResponse, error) {
+func (client *operations) updateHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := UpdateResponse{RawResponse: resp.Response}
+	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
 }

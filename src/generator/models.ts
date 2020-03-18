@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
 import { CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, HasDescription, ImportManager, isArraySchema, LanguageHeader, SortAscending } from './helpers';
+import { ContentPreamble, HasDescription, ImportManager, isArraySchema, SortAscending } from './helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -15,36 +15,13 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 
   // we do model generation first as it can add imports to the imports list
   const structs = generateStructs(session.model.schemas.objects);
+  const responseSchemas = <Array<Schema>>session.model.language.go!.responseSchemas;
+  for (const schema of values(responseSchemas)) {
+    structs.push(generateStruct(schema.language.go!.responseType, schema.language.go!.properties));
+  }
   // add types from requests and responses
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      // add fields related to the operation response
-      if (op.responses) {
-        let firstResp = op.responses![0];
-        // when receiving multiple possible responses, they might expect the same headers in many cases
-        // we use a map to only add unique headers to the response model based on the header name
-        let headerArray = new Map<string, LanguageHeader>();
-        for (const resp of values(op.responses)) {
-          // check if the response is expecting information from headers
-          if (resp.protocol.http!.headers) {
-            for (const header of values(resp.protocol.http!.headers)) {
-              let head = <LanguageHeader>header;
-              // convert each header to a property and append it to the response properties list
-              if (!HasDescription(head)) {
-                head.description = `${head.name} contains the information returned from the ${head.name} header response.`
-              }
-              if (!headerArray.has(head.header)) {
-                headerArray.set(head.header, head);
-              }
-            }
-          }
-        }
-        for (const header of values(headerArray)) {
-          firstResp.language.go!.properties.push(newProperty(header.name, header.description, <Schema>header.schema));
-        }
-        // add structs from operation responses
-        structs.push(generateStruct(firstResp.language.go!, firstResp.language.go!.properties));
-      }
       // add structs from optional operation params
       if (op.requests![0].language.go!.optionalParam) {
         structs.push(generateOptionalParamsStruct(op.requests![0].language.go!.optionalParam, op.requests![0].language.go!.optionalParam.params));
@@ -156,7 +133,7 @@ class StructDef {
 
           // arrays in the response type are handled slightly different as we
           // unmarshal directly into them so no need to add the unwrapping.
-          if (prop.schema.serialization?.xml?.wrapped && this.Language.responseType === undefined) {
+          if (prop.schema.serialization?.xml?.wrapped && this.Language.responseType !== true) {
             serialization += `>${inner}`;
           } else {
             serialization = inner;
@@ -166,7 +143,7 @@ class StructDef {
       let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"\``;
       // if this is a response type then omit the tag IFF the marshalling format is
       // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
-      if (this.Language.responseType && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) {
+      if (this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) {
         tag = '';
       }
       text += `\t${prop.language.go!.name} *${typeName}${tag}\n`;

@@ -56,7 +56,7 @@ func TestEnumPutNotExpandable(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNotExpandable: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestEnumPutReferenced(t *testing.T) {
@@ -65,7 +65,7 @@ func TestEnumPutReferenced(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferenced: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestEnumPutReferencedConstant(t *testing.T) {
@@ -75,6 +75,6 @@ func TestEnumPutReferencedConstant(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferencedConstant: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 }

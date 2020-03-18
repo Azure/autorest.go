@@ -18,63 +18,63 @@ import (
 // XMLOperations contains the methods for the XML group.
 type XMLOperations interface {
 	// GetACLs - Gets storage ACLs for a container.
-	GetACLs(ctx context.Context) (*XMLGetACLsResponse, error)
+	GetACLs(ctx context.Context) (*SignedIDentifierArrayResponse, error)
 	// GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
-	GetComplexTypeRefNoMeta(ctx context.Context) (*XMLGetComplexTypeRefNoMetaResponse, error)
+	GetComplexTypeRefNoMeta(ctx context.Context) (*RootWithRefAndNoMetaResponse, error)
 	// GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
-	GetComplexTypeRefWithMeta(ctx context.Context) (*XMLGetComplexTypeRefWithMetaResponse, error)
+	GetComplexTypeRefWithMeta(ctx context.Context) (*RootWithRefAndMetaResponse, error)
 	// GetEmptyChildElement - Gets an XML document with an empty child element.
-	GetEmptyChildElement(ctx context.Context) (*XMLGetEmptyChildElementResponse, error)
+	GetEmptyChildElement(ctx context.Context) (*BananaResponse, error)
 	// GetEmptyList - Get an empty list.
-	GetEmptyList(ctx context.Context) (*XMLGetEmptyListResponse, error)
+	GetEmptyList(ctx context.Context) (*SlideshowResponse, error)
 	// GetEmptyRootList - Gets an empty list as the root element.
-	GetEmptyRootList(ctx context.Context) (*XMLGetEmptyRootListResponse, error)
+	GetEmptyRootList(ctx context.Context) (*BananaArrayResponse, error)
 	// GetEmptyWrappedLists - Gets some empty wrapped lists.
-	GetEmptyWrappedLists(ctx context.Context) (*XMLGetEmptyWrappedListsResponse, error)
+	GetEmptyWrappedLists(ctx context.Context) (*AppleBarrelResponse, error)
 	// GetHeaders - Get strongly-typed response headers.
 	GetHeaders(ctx context.Context) (*XMLGetHeadersResponse, error)
 	// GetRootList - Gets a list as the root element.
-	GetRootList(ctx context.Context) (*XMLGetRootListResponse, error)
+	GetRootList(ctx context.Context) (*BananaArrayResponse, error)
 	// GetRootListSingleItem - Gets a list with a single item.
-	GetRootListSingleItem(ctx context.Context) (*XMLGetRootListSingleItemResponse, error)
+	GetRootListSingleItem(ctx context.Context) (*BananaArrayResponse, error)
 	// GetServiceProperties - Gets storage service properties.
-	GetServiceProperties(ctx context.Context) (*XMLGetServicePropertiesResponse, error)
+	GetServiceProperties(ctx context.Context) (*StorageServicePropertiesResponse, error)
 	// GetSimple - Get a simple XML document
-	GetSimple(ctx context.Context) (*XMLGetSimpleResponse, error)
+	GetSimple(ctx context.Context) (*SlideshowResponse, error)
 	// GetWrappedLists - Get an XML document with multiple wrapped lists
-	GetWrappedLists(ctx context.Context) (*XMLGetWrappedListsResponse, error)
+	GetWrappedLists(ctx context.Context) (*AppleBarrelResponse, error)
 	// JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
-	JSONInput(ctx context.Context, properties JSONInput) (*XMLJSONInputResponse, error)
+	JSONInput(ctx context.Context, properties JSONInput) (*http.Response, error)
 	// JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
-	JSONOutput(ctx context.Context) (*XMLJSONOutputResponse, error)
+	JSONOutput(ctx context.Context) (*JSONOutputResponse, error)
 	// ListBlobs - Lists blobs in a storage container.
-	ListBlobs(ctx context.Context) (*XMLListBlobsResponse, error)
+	ListBlobs(ctx context.Context) (*ListBlobsResponseResponse, error)
 	// ListContainers - Lists containers in a storage account.
-	ListContainers(ctx context.Context) (*XMLListContainersResponse, error)
+	ListContainers(ctx context.Context) (*ListContainersResponseResponse, error)
 	// PutACLs - Puts storage ACLs for a container.
-	PutACLs(ctx context.Context, properties []SignedIDentifier) (*XMLPutACLsResponse, error)
+	PutACLs(ctx context.Context, properties []SignedIDentifier) (*http.Response, error)
 	// PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
-	PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta) (*XMLPutComplexTypeRefNoMetaResponse, error)
+	PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta) (*http.Response, error)
 	// PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
-	PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta) (*XMLPutComplexTypeRefWithMetaResponse, error)
+	PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta) (*http.Response, error)
 	// PutEmptyChildElement - Puts a value with an empty child element.
-	PutEmptyChildElement(ctx context.Context, banana Banana) (*XMLPutEmptyChildElementResponse, error)
+	PutEmptyChildElement(ctx context.Context, banana Banana) (*http.Response, error)
 	// PutEmptyList - Puts an empty list.
-	PutEmptyList(ctx context.Context, slideshow Slideshow) (*XMLPutEmptyListResponse, error)
+	PutEmptyList(ctx context.Context, slideshow Slideshow) (*http.Response, error)
 	// PutEmptyRootList - Puts an empty list as the root element.
-	PutEmptyRootList(ctx context.Context, bananas []Banana) (*XMLPutEmptyRootListResponse, error)
+	PutEmptyRootList(ctx context.Context, bananas []Banana) (*http.Response, error)
 	// PutEmptyWrappedLists - Puts some empty wrapped lists.
-	PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel) (*XMLPutEmptyWrappedListsResponse, error)
+	PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel) (*http.Response, error)
 	// PutRootList - Puts a list as the root element.
-	PutRootList(ctx context.Context, bananas []Banana) (*XMLPutRootListResponse, error)
+	PutRootList(ctx context.Context, bananas []Banana) (*http.Response, error)
 	// PutRootListSingleItem - Puts a list with a single item.
-	PutRootListSingleItem(ctx context.Context, bananas []Banana) (*XMLPutRootListSingleItemResponse, error)
+	PutRootListSingleItem(ctx context.Context, bananas []Banana) (*http.Response, error)
 	// PutServiceProperties - Puts storage service properties.
-	PutServiceProperties(ctx context.Context, properties StorageServiceProperties) (*XMLPutServicePropertiesResponse, error)
+	PutServiceProperties(ctx context.Context, properties StorageServiceProperties) (*http.Response, error)
 	// PutSimple - Put a simple XML document
-	PutSimple(ctx context.Context, slideshow Slideshow) (*XMLPutSimpleResponse, error)
+	PutSimple(ctx context.Context, slideshow Slideshow) (*http.Response, error)
 	// PutWrappedLists - Put an XML document with multiple wrapped lists
-	PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel) (*XMLPutWrappedListsResponse, error)
+	PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel) (*http.Response, error)
 }
 
 // xmlOperations implements the XMLOperations interface.
@@ -83,7 +83,7 @@ type xmlOperations struct {
 }
 
 // GetACLs - Gets storage ACLs for a container.
-func (client *xmlOperations) GetACLs(ctx context.Context) (*XMLGetACLsResponse, error) {
+func (client *xmlOperations) GetACLs(ctx context.Context) (*SignedIDentifierArrayResponse, error) {
 	req, err := client.getAcLsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -112,16 +112,16 @@ func (client *xmlOperations) getAcLsCreateRequest(u url.URL) (*azcore.Request, e
 }
 
 // getAcLsHandleResponse handles the GetACLs response.
-func (client *xmlOperations) getAcLsHandleResponse(resp *azcore.Response) (*XMLGetACLsResponse, error) {
+func (client *xmlOperations) getAcLsHandleResponse(resp *azcore.Response) (*SignedIDentifierArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetACLsResponse{RawResponse: resp.Response}
+	result := SignedIDentifierArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
-func (client *xmlOperations) GetComplexTypeRefNoMeta(ctx context.Context) (*XMLGetComplexTypeRefNoMetaResponse, error) {
+func (client *xmlOperations) GetComplexTypeRefNoMeta(ctx context.Context) (*RootWithRefAndNoMetaResponse, error) {
 	req, err := client.getComplexTypeRefNoMetaCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -146,16 +146,16 @@ func (client *xmlOperations) getComplexTypeRefNoMetaCreateRequest(u url.URL) (*a
 }
 
 // getComplexTypeRefNoMetaHandleResponse handles the GetComplexTypeRefNoMeta response.
-func (client *xmlOperations) getComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (*XMLGetComplexTypeRefNoMetaResponse, error) {
+func (client *xmlOperations) getComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndNoMetaResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetComplexTypeRefNoMetaResponse{RawResponse: resp.Response}
+	result := RootWithRefAndNoMetaResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.RootWithRefAndNoMeta)
 }
 
 // GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
-func (client *xmlOperations) GetComplexTypeRefWithMeta(ctx context.Context) (*XMLGetComplexTypeRefWithMetaResponse, error) {
+func (client *xmlOperations) GetComplexTypeRefWithMeta(ctx context.Context) (*RootWithRefAndMetaResponse, error) {
 	req, err := client.getComplexTypeRefWithMetaCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -180,16 +180,16 @@ func (client *xmlOperations) getComplexTypeRefWithMetaCreateRequest(u url.URL) (
 }
 
 // getComplexTypeRefWithMetaHandleResponse handles the GetComplexTypeRefWithMeta response.
-func (client *xmlOperations) getComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (*XMLGetComplexTypeRefWithMetaResponse, error) {
+func (client *xmlOperations) getComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (*RootWithRefAndMetaResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetComplexTypeRefWithMetaResponse{RawResponse: resp.Response}
+	result := RootWithRefAndMetaResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.RootWithRefAndMeta)
 }
 
 // GetEmptyChildElement - Gets an XML document with an empty child element.
-func (client *xmlOperations) GetEmptyChildElement(ctx context.Context) (*XMLGetEmptyChildElementResponse, error) {
+func (client *xmlOperations) GetEmptyChildElement(ctx context.Context) (*BananaResponse, error) {
 	req, err := client.getEmptyChildElementCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -214,16 +214,16 @@ func (client *xmlOperations) getEmptyChildElementCreateRequest(u url.URL) (*azco
 }
 
 // getEmptyChildElementHandleResponse handles the GetEmptyChildElement response.
-func (client *xmlOperations) getEmptyChildElementHandleResponse(resp *azcore.Response) (*XMLGetEmptyChildElementResponse, error) {
+func (client *xmlOperations) getEmptyChildElementHandleResponse(resp *azcore.Response) (*BananaResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetEmptyChildElementResponse{RawResponse: resp.Response}
+	result := BananaResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.Banana)
 }
 
 // GetEmptyList - Get an empty list.
-func (client *xmlOperations) GetEmptyList(ctx context.Context) (*XMLGetEmptyListResponse, error) {
+func (client *xmlOperations) GetEmptyList(ctx context.Context) (*SlideshowResponse, error) {
 	req, err := client.getEmptyListCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -248,16 +248,16 @@ func (client *xmlOperations) getEmptyListCreateRequest(u url.URL) (*azcore.Reque
 }
 
 // getEmptyListHandleResponse handles the GetEmptyList response.
-func (client *xmlOperations) getEmptyListHandleResponse(resp *azcore.Response) (*XMLGetEmptyListResponse, error) {
+func (client *xmlOperations) getEmptyListHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetEmptyListResponse{RawResponse: resp.Response}
+	result := SlideshowResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.Slideshow)
 }
 
 // GetEmptyRootList - Gets an empty list as the root element.
-func (client *xmlOperations) GetEmptyRootList(ctx context.Context) (*XMLGetEmptyRootListResponse, error) {
+func (client *xmlOperations) GetEmptyRootList(ctx context.Context) (*BananaArrayResponse, error) {
 	req, err := client.getEmptyRootListCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -282,16 +282,16 @@ func (client *xmlOperations) getEmptyRootListCreateRequest(u url.URL) (*azcore.R
 }
 
 // getEmptyRootListHandleResponse handles the GetEmptyRootList response.
-func (client *xmlOperations) getEmptyRootListHandleResponse(resp *azcore.Response) (*XMLGetEmptyRootListResponse, error) {
+func (client *xmlOperations) getEmptyRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetEmptyRootListResponse{RawResponse: resp.Response}
+	result := BananaArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
 // GetEmptyWrappedLists - Gets some empty wrapped lists.
-func (client *xmlOperations) GetEmptyWrappedLists(ctx context.Context) (*XMLGetEmptyWrappedListsResponse, error) {
+func (client *xmlOperations) GetEmptyWrappedLists(ctx context.Context) (*AppleBarrelResponse, error) {
 	req, err := client.getEmptyWrappedListsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -316,11 +316,11 @@ func (client *xmlOperations) getEmptyWrappedListsCreateRequest(u url.URL) (*azco
 }
 
 // getEmptyWrappedListsHandleResponse handles the GetEmptyWrappedLists response.
-func (client *xmlOperations) getEmptyWrappedListsHandleResponse(resp *azcore.Response) (*XMLGetEmptyWrappedListsResponse, error) {
+func (client *xmlOperations) getEmptyWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetEmptyWrappedListsResponse{RawResponse: resp.Response}
+	result := AppleBarrelResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.AppleBarrel)
 }
 
@@ -354,12 +354,14 @@ func (client *xmlOperations) getHeadersHandleResponse(resp *azcore.Response) (*X
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
+	result := XMLGetHeadersResponse{RawResponse: resp.Response}
 	customHeader := resp.Header.Get("Custom-Header")
-	return &XMLGetHeadersResponse{RawResponse: resp.Response, CustomHeader: &customHeader}, nil
+	result.CustomHeader = &customHeader
+	return &result, nil
 }
 
 // GetRootList - Gets a list as the root element.
-func (client *xmlOperations) GetRootList(ctx context.Context) (*XMLGetRootListResponse, error) {
+func (client *xmlOperations) GetRootList(ctx context.Context) (*BananaArrayResponse, error) {
 	req, err := client.getRootListCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -384,16 +386,16 @@ func (client *xmlOperations) getRootListCreateRequest(u url.URL) (*azcore.Reques
 }
 
 // getRootListHandleResponse handles the GetRootList response.
-func (client *xmlOperations) getRootListHandleResponse(resp *azcore.Response) (*XMLGetRootListResponse, error) {
+func (client *xmlOperations) getRootListHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetRootListResponse{RawResponse: resp.Response}
+	result := BananaArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
 // GetRootListSingleItem - Gets a list with a single item.
-func (client *xmlOperations) GetRootListSingleItem(ctx context.Context) (*XMLGetRootListSingleItemResponse, error) {
+func (client *xmlOperations) GetRootListSingleItem(ctx context.Context) (*BananaArrayResponse, error) {
 	req, err := client.getRootListSingleItemCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -418,16 +420,16 @@ func (client *xmlOperations) getRootListSingleItemCreateRequest(u url.URL) (*azc
 }
 
 // getRootListSingleItemHandleResponse handles the GetRootListSingleItem response.
-func (client *xmlOperations) getRootListSingleItemHandleResponse(resp *azcore.Response) (*XMLGetRootListSingleItemResponse, error) {
+func (client *xmlOperations) getRootListSingleItemHandleResponse(resp *azcore.Response) (*BananaArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetRootListSingleItemResponse{RawResponse: resp.Response}
+	result := BananaArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result)
 }
 
 // GetServiceProperties - Gets storage service properties.
-func (client *xmlOperations) GetServiceProperties(ctx context.Context) (*XMLGetServicePropertiesResponse, error) {
+func (client *xmlOperations) GetServiceProperties(ctx context.Context) (*StorageServicePropertiesResponse, error) {
 	req, err := client.getServicePropertiesCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -456,16 +458,16 @@ func (client *xmlOperations) getServicePropertiesCreateRequest(u url.URL) (*azco
 }
 
 // getServicePropertiesHandleResponse handles the GetServiceProperties response.
-func (client *xmlOperations) getServicePropertiesHandleResponse(resp *azcore.Response) (*XMLGetServicePropertiesResponse, error) {
+func (client *xmlOperations) getServicePropertiesHandleResponse(resp *azcore.Response) (*StorageServicePropertiesResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetServicePropertiesResponse{RawResponse: resp.Response}
+	result := StorageServicePropertiesResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.StorageServiceProperties)
 }
 
 // GetSimple - Get a simple XML document
-func (client *xmlOperations) GetSimple(ctx context.Context) (*XMLGetSimpleResponse, error) {
+func (client *xmlOperations) GetSimple(ctx context.Context) (*SlideshowResponse, error) {
 	req, err := client.getSimpleCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -490,16 +492,16 @@ func (client *xmlOperations) getSimpleCreateRequest(u url.URL) (*azcore.Request,
 }
 
 // getSimpleHandleResponse handles the GetSimple response.
-func (client *xmlOperations) getSimpleHandleResponse(resp *azcore.Response) (*XMLGetSimpleResponse, error) {
+func (client *xmlOperations) getSimpleHandleResponse(resp *azcore.Response) (*SlideshowResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := XMLGetSimpleResponse{RawResponse: resp.Response}
+	result := SlideshowResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.Slideshow)
 }
 
 // GetWrappedLists - Get an XML document with multiple wrapped lists
-func (client *xmlOperations) GetWrappedLists(ctx context.Context) (*XMLGetWrappedListsResponse, error) {
+func (client *xmlOperations) GetWrappedLists(ctx context.Context) (*AppleBarrelResponse, error) {
 	req, err := client.getWrappedListsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -524,16 +526,16 @@ func (client *xmlOperations) getWrappedListsCreateRequest(u url.URL) (*azcore.Re
 }
 
 // getWrappedListsHandleResponse handles the GetWrappedLists response.
-func (client *xmlOperations) getWrappedListsHandleResponse(resp *azcore.Response) (*XMLGetWrappedListsResponse, error) {
+func (client *xmlOperations) getWrappedListsHandleResponse(resp *azcore.Response) (*AppleBarrelResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLGetWrappedListsResponse{RawResponse: resp.Response}
+	result := AppleBarrelResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.AppleBarrel)
 }
 
 // JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
-func (client *xmlOperations) JSONInput(ctx context.Context, properties JSONInput) (*XMLJSONInputResponse, error) {
+func (client *xmlOperations) JSONInput(ctx context.Context, properties JSONInput) (*http.Response, error) {
 	req, err := client.jsonInputCreateRequest(*client.u, properties)
 	if err != nil {
 		return nil, err
@@ -562,15 +564,15 @@ func (client *xmlOperations) jsonInputCreateRequest(u url.URL, properties JSONIn
 }
 
 // jsonInputHandleResponse handles the JSONInput response.
-func (client *xmlOperations) jsonInputHandleResponse(resp *azcore.Response) (*XMLJSONInputResponse, error) {
+func (client *xmlOperations) jsonInputHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLJSONInputResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
-func (client *xmlOperations) JSONOutput(ctx context.Context) (*XMLJSONOutputResponse, error) {
+func (client *xmlOperations) JSONOutput(ctx context.Context) (*JSONOutputResponse, error) {
 	req, err := client.jsonOutputCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -595,16 +597,16 @@ func (client *xmlOperations) jsonOutputCreateRequest(u url.URL) (*azcore.Request
 }
 
 // jsonOutputHandleResponse handles the JSONOutput response.
-func (client *xmlOperations) jsonOutputHandleResponse(resp *azcore.Response) (*XMLJSONOutputResponse, error) {
+func (client *xmlOperations) jsonOutputHandleResponse(resp *azcore.Response) (*JSONOutputResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLJSONOutputResponse{RawResponse: resp.Response}
+	result := JSONOutputResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.JSONOutput)
 }
 
 // ListBlobs - Lists blobs in a storage container.
-func (client *xmlOperations) ListBlobs(ctx context.Context) (*XMLListBlobsResponse, error) {
+func (client *xmlOperations) ListBlobs(ctx context.Context) (*ListBlobsResponseResponse, error) {
 	req, err := client.listBlobsCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -633,16 +635,16 @@ func (client *xmlOperations) listBlobsCreateRequest(u url.URL) (*azcore.Request,
 }
 
 // listBlobsHandleResponse handles the ListBlobs response.
-func (client *xmlOperations) listBlobsHandleResponse(resp *azcore.Response) (*XMLListBlobsResponse, error) {
+func (client *xmlOperations) listBlobsHandleResponse(resp *azcore.Response) (*ListBlobsResponseResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLListBlobsResponse{RawResponse: resp.Response}
+	result := ListBlobsResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
 }
 
 // ListContainers - Lists containers in a storage account.
-func (client *xmlOperations) ListContainers(ctx context.Context) (*XMLListContainersResponse, error) {
+func (client *xmlOperations) ListContainers(ctx context.Context) (*ListContainersResponseResponse, error) {
 	req, err := client.listContainersCreateRequest(*client.u)
 	if err != nil {
 		return nil, err
@@ -670,16 +672,16 @@ func (client *xmlOperations) listContainersCreateRequest(u url.URL) (*azcore.Req
 }
 
 // listContainersHandleResponse handles the ListContainers response.
-func (client *xmlOperations) listContainersHandleResponse(resp *azcore.Response) (*XMLListContainersResponse, error) {
+func (client *xmlOperations) listContainersHandleResponse(resp *azcore.Response) (*ListContainersResponseResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, errors.New(resp.Status)
 	}
-	result := XMLListContainersResponse{RawResponse: resp.Response}
+	result := ListContainersResponseResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
 }
 
 // PutACLs - Puts storage ACLs for a container.
-func (client *xmlOperations) PutACLs(ctx context.Context, properties []SignedIDentifier) (*XMLPutACLsResponse, error) {
+func (client *xmlOperations) PutACLs(ctx context.Context, properties []SignedIDentifier) (*http.Response, error) {
 	req, err := client.putAcLsCreateRequest(*client.u, properties)
 	if err != nil {
 		return nil, err
@@ -716,15 +718,15 @@ func (client *xmlOperations) putAcLsCreateRequest(u url.URL, properties []Signed
 }
 
 // putAcLsHandleResponse handles the PutACLs response.
-func (client *xmlOperations) putAcLsHandleResponse(resp *azcore.Response) (*XMLPutACLsResponse, error) {
+func (client *xmlOperations) putAcLsHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutACLsResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
-func (client *xmlOperations) PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta) (*XMLPutComplexTypeRefNoMetaResponse, error) {
+func (client *xmlOperations) PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta) (*http.Response, error) {
 	req, err := client.putComplexTypeRefNoMetaCreateRequest(*client.u, model)
 	if err != nil {
 		return nil, err
@@ -753,15 +755,15 @@ func (client *xmlOperations) putComplexTypeRefNoMetaCreateRequest(u url.URL, mod
 }
 
 // putComplexTypeRefNoMetaHandleResponse handles the PutComplexTypeRefNoMeta response.
-func (client *xmlOperations) putComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (*XMLPutComplexTypeRefNoMetaResponse, error) {
+func (client *xmlOperations) putComplexTypeRefNoMetaHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutComplexTypeRefNoMetaResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
-func (client *xmlOperations) PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta) (*XMLPutComplexTypeRefWithMetaResponse, error) {
+func (client *xmlOperations) PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta) (*http.Response, error) {
 	req, err := client.putComplexTypeRefWithMetaCreateRequest(*client.u, model)
 	if err != nil {
 		return nil, err
@@ -790,15 +792,15 @@ func (client *xmlOperations) putComplexTypeRefWithMetaCreateRequest(u url.URL, m
 }
 
 // putComplexTypeRefWithMetaHandleResponse handles the PutComplexTypeRefWithMeta response.
-func (client *xmlOperations) putComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (*XMLPutComplexTypeRefWithMetaResponse, error) {
+func (client *xmlOperations) putComplexTypeRefWithMetaHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutComplexTypeRefWithMetaResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutEmptyChildElement - Puts a value with an empty child element.
-func (client *xmlOperations) PutEmptyChildElement(ctx context.Context, banana Banana) (*XMLPutEmptyChildElementResponse, error) {
+func (client *xmlOperations) PutEmptyChildElement(ctx context.Context, banana Banana) (*http.Response, error) {
 	req, err := client.putEmptyChildElementCreateRequest(*client.u, banana)
 	if err != nil {
 		return nil, err
@@ -827,15 +829,15 @@ func (client *xmlOperations) putEmptyChildElementCreateRequest(u url.URL, banana
 }
 
 // putEmptyChildElementHandleResponse handles the PutEmptyChildElement response.
-func (client *xmlOperations) putEmptyChildElementHandleResponse(resp *azcore.Response) (*XMLPutEmptyChildElementResponse, error) {
+func (client *xmlOperations) putEmptyChildElementHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutEmptyChildElementResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutEmptyList - Puts an empty list.
-func (client *xmlOperations) PutEmptyList(ctx context.Context, slideshow Slideshow) (*XMLPutEmptyListResponse, error) {
+func (client *xmlOperations) PutEmptyList(ctx context.Context, slideshow Slideshow) (*http.Response, error) {
 	req, err := client.putEmptyListCreateRequest(*client.u, slideshow)
 	if err != nil {
 		return nil, err
@@ -864,15 +866,15 @@ func (client *xmlOperations) putEmptyListCreateRequest(u url.URL, slideshow Slid
 }
 
 // putEmptyListHandleResponse handles the PutEmptyList response.
-func (client *xmlOperations) putEmptyListHandleResponse(resp *azcore.Response) (*XMLPutEmptyListResponse, error) {
+func (client *xmlOperations) putEmptyListHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutEmptyListResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutEmptyRootList - Puts an empty list as the root element.
-func (client *xmlOperations) PutEmptyRootList(ctx context.Context, bananas []Banana) (*XMLPutEmptyRootListResponse, error) {
+func (client *xmlOperations) PutEmptyRootList(ctx context.Context, bananas []Banana) (*http.Response, error) {
 	req, err := client.putEmptyRootListCreateRequest(*client.u, bananas)
 	if err != nil {
 		return nil, err
@@ -905,15 +907,15 @@ func (client *xmlOperations) putEmptyRootListCreateRequest(u url.URL, bananas []
 }
 
 // putEmptyRootListHandleResponse handles the PutEmptyRootList response.
-func (client *xmlOperations) putEmptyRootListHandleResponse(resp *azcore.Response) (*XMLPutEmptyRootListResponse, error) {
+func (client *xmlOperations) putEmptyRootListHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutEmptyRootListResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutEmptyWrappedLists - Puts some empty wrapped lists.
-func (client *xmlOperations) PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel) (*XMLPutEmptyWrappedListsResponse, error) {
+func (client *xmlOperations) PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel) (*http.Response, error) {
 	req, err := client.putEmptyWrappedListsCreateRequest(*client.u, appleBarrel)
 	if err != nil {
 		return nil, err
@@ -942,15 +944,15 @@ func (client *xmlOperations) putEmptyWrappedListsCreateRequest(u url.URL, appleB
 }
 
 // putEmptyWrappedListsHandleResponse handles the PutEmptyWrappedLists response.
-func (client *xmlOperations) putEmptyWrappedListsHandleResponse(resp *azcore.Response) (*XMLPutEmptyWrappedListsResponse, error) {
+func (client *xmlOperations) putEmptyWrappedListsHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutEmptyWrappedListsResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutRootList - Puts a list as the root element.
-func (client *xmlOperations) PutRootList(ctx context.Context, bananas []Banana) (*XMLPutRootListResponse, error) {
+func (client *xmlOperations) PutRootList(ctx context.Context, bananas []Banana) (*http.Response, error) {
 	req, err := client.putRootListCreateRequest(*client.u, bananas)
 	if err != nil {
 		return nil, err
@@ -983,15 +985,15 @@ func (client *xmlOperations) putRootListCreateRequest(u url.URL, bananas []Banan
 }
 
 // putRootListHandleResponse handles the PutRootList response.
-func (client *xmlOperations) putRootListHandleResponse(resp *azcore.Response) (*XMLPutRootListResponse, error) {
+func (client *xmlOperations) putRootListHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutRootListResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutRootListSingleItem - Puts a list with a single item.
-func (client *xmlOperations) PutRootListSingleItem(ctx context.Context, bananas []Banana) (*XMLPutRootListSingleItemResponse, error) {
+func (client *xmlOperations) PutRootListSingleItem(ctx context.Context, bananas []Banana) (*http.Response, error) {
 	req, err := client.putRootListSingleItemCreateRequest(*client.u, bananas)
 	if err != nil {
 		return nil, err
@@ -1024,15 +1026,15 @@ func (client *xmlOperations) putRootListSingleItemCreateRequest(u url.URL, banan
 }
 
 // putRootListSingleItemHandleResponse handles the PutRootListSingleItem response.
-func (client *xmlOperations) putRootListSingleItemHandleResponse(resp *azcore.Response) (*XMLPutRootListSingleItemResponse, error) {
+func (client *xmlOperations) putRootListSingleItemHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutRootListSingleItemResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutServiceProperties - Puts storage service properties.
-func (client *xmlOperations) PutServiceProperties(ctx context.Context, properties StorageServiceProperties) (*XMLPutServicePropertiesResponse, error) {
+func (client *xmlOperations) PutServiceProperties(ctx context.Context, properties StorageServiceProperties) (*http.Response, error) {
 	req, err := client.putServicePropertiesCreateRequest(*client.u, properties)
 	if err != nil {
 		return nil, err
@@ -1065,15 +1067,15 @@ func (client *xmlOperations) putServicePropertiesCreateRequest(u url.URL, proper
 }
 
 // putServicePropertiesHandleResponse handles the PutServiceProperties response.
-func (client *xmlOperations) putServicePropertiesHandleResponse(resp *azcore.Response) (*XMLPutServicePropertiesResponse, error) {
+func (client *xmlOperations) putServicePropertiesHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, errors.New(resp.Status)
 	}
-	return &XMLPutServicePropertiesResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutSimple - Put a simple XML document
-func (client *xmlOperations) PutSimple(ctx context.Context, slideshow Slideshow) (*XMLPutSimpleResponse, error) {
+func (client *xmlOperations) PutSimple(ctx context.Context, slideshow Slideshow) (*http.Response, error) {
 	req, err := client.putSimpleCreateRequest(*client.u, slideshow)
 	if err != nil {
 		return nil, err
@@ -1102,15 +1104,15 @@ func (client *xmlOperations) putSimpleCreateRequest(u url.URL, slideshow Slidesh
 }
 
 // putSimpleHandleResponse handles the PutSimple response.
-func (client *xmlOperations) putSimpleHandleResponse(resp *azcore.Response) (*XMLPutSimpleResponse, error) {
+func (client *xmlOperations) putSimpleHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, newError(resp)
 	}
-	return &XMLPutSimpleResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }
 
 // PutWrappedLists - Put an XML document with multiple wrapped lists
-func (client *xmlOperations) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel) (*XMLPutWrappedListsResponse, error) {
+func (client *xmlOperations) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel) (*http.Response, error) {
 	req, err := client.putWrappedListsCreateRequest(*client.u, wrappedLists)
 	if err != nil {
 		return nil, err
@@ -1139,9 +1141,9 @@ func (client *xmlOperations) putWrappedListsCreateRequest(u url.URL, wrappedList
 }
 
 // putWrappedListsHandleResponse handles the PutWrappedLists response.
-func (client *xmlOperations) putWrappedListsHandleResponse(resp *azcore.Response) (*XMLPutWrappedListsResponse, error) {
+func (client *xmlOperations) putWrappedListsHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
 		return nil, newError(resp)
 	}
-	return &XMLPutWrappedListsResponse{RawResponse: resp.Response}, nil
+	return resp.Response, nil
 }

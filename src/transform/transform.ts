@@ -5,9 +5,9 @@
 
 import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema } from '@azure-tools/codemodel';
-import { length, values } from '@azure-tools/linq';
-import { aggregateParameters, ParamInfo, paramInfo } from '../generator/helpers';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
+import { items, values } from '@azure-tools/linq';
+import { aggregateParameters, isSchemaResponse, ParamInfo, paramInfo } from '../generator/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -208,9 +208,11 @@ function processOperationRequests(session: Session<CodeModel>) {
 }
 
 function processOperationResponses(session: Session<CodeModel>) {
+  if (session.model.language.go!.responseSchemas === undefined) {
+    session.model.language.go!.responseSchemas = new Array<Schema>();
+  }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      createResponseType(session.model, op);
       // annotate all exception types as errors; this is so we know to generate an Error() method
       for (const ex of values(op.exceptions)) {
         const marshallingFormat = getMarshallingFormat(ex.protocol);
@@ -227,11 +229,8 @@ function processOperationResponses(session: Session<CodeModel>) {
       }
       // recursively add the marshalling format to the responses if applicable
       for (const resp of values(op.responses)) {
-        if (resp.protocol.http!.headers) {
-          for (const header of values(resp.protocol.http!.headers)) {
-            const head = <HttpHeader>header;
-            head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
-          }
+        if (isSchemaResponse(resp)) {
+          resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true);
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
         if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
@@ -243,24 +242,80 @@ function processOperationResponses(session: Session<CodeModel>) {
           header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
         }
       }
+      createResponseType(session.model, group.language.go!.name, op);
     }
   }
 }
 
+interface HttpHeaderWithDescription extends HttpHeader {
+  description: string;
+}
+
 // creates the response type to be returned from an operation and updates the operation
-function createResponseType(codeModel: CodeModel, op: Operation) {
-  // create the `type FooResponse struct` response
+function createResponseType(codeModel: CodeModel, grouopName: string, op: Operation) {
+  // create the `type <type>Response struct` response
   // type with a `RawResponse *http.Response` field
   const firstResp = op.responses![0];
-  firstResp.language.go!.responseType = true;
-  firstResp.language.go!.properties = [
-    newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
-  ];
-  const len = op.responses!.length;
-  // if the response defines a schema then add it as a field to the response type
-  if (isSchemaResponse(firstResp)) {
+
+  // when receiving multiple possible responses, they might expect the same headers in many cases
+  // we use a map to only add unique headers to the response model based on the header name
+  const headers = new Map<string, HttpHeaderWithDescription>();
+  for (const resp of values(op.responses)) {
+    // check if the response is expecting information from headers
+    if (resp.protocol.http!.headers) {
+      for (const header of values(resp.protocol.http!.headers)) {
+        const head = <HttpHeader>header;
+        // convert each header to a property and append it to the response properties list
+        const name = pascalCase(head.header);
+        if (!headers.has(name)) {
+          const description = `${name} contains the information returned from the ${head.header} header response.`
+          headers.set(name, <HttpHeaderWithDescription>{
+            ...head,
+            description: description
+          });
+        }
+      }
+    }
+  }
+
+  // if the response defines a schema then add it as a field to the response type.
+  // only do this if the response schema hasn't been processed yet.
+
+  if (!isSchemaResponse(firstResp)) {
+    // the response doesn't return a model.  if it returns
+    // headers then create a model that contains them.
+    if (headers.size > 0) {
+      const name = `${grouopName}${op.language.go!.name}Response`;
+      const description = `${name} contains the response from method ${grouopName}.${op.language.go!.name}.`;
+      const object = new ObjectSchema(name, description);
+      object.language.go = object.language.default;
+      object.language.go!.properties = [
+        newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'))
+      ];
+      for (const item of items(headers)) {
+        const prop = newProperty(item.key, item.value.description, item.value.schema);
+        prop.language.go!.fromHeader = item.value.header;
+        (<Array<Property>>object.language.go!.properties).push(prop);
+      }
+      // mark as a response type
+      object.language.go!.responseType = {
+        name: name,
+        description: description,
+        responseType: true,
+      }
+      // add this response schema to the global list of response
+      const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+      responseSchemas.push(object);
+      // attach it to the response
+      (<SchemaResponse>firstResp).schema = object;
+    }
+  } else if (!responseTypeCreated(codeModel, firstResp.schema)) {
+    firstResp.schema.language.go!.responseType = generateResponseTypeName(firstResp.schema);
+    firstResp.schema.language.go!.properties = [
+      newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
+    ];
     const marshallingFormat = getMarshallingFormat(firstResp.protocol);
-    firstResp.language.go!.marshallingFormat = marshallingFormat;
+    firstResp.schema.language.go!.responseType.marshallingFormat = marshallingFormat;
     // for operations that return scalar types we use a fixed field name 'Value'
     let propName = 'Value';
     if (firstResp.schema.type === SchemaType.Object) {
@@ -274,9 +329,17 @@ function createResponseType(codeModel: CodeModel, op: Operation) {
       // always prefer the XML name
       propName = pascalCase(firstResp.schema.serialization.xml.name);
     }
-    firstResp.schema.language.go!.name = schemaTypeToGoType(codeModel, firstResp.schema, true);
-    firstResp.schema.language.go!.responseValue = propName;
-    (<Array<Property>>firstResp.language.go!.properties).push(newProperty(propName, firstResp.schema.language.go!.description, firstResp.schema));
+    firstResp.schema.language.go!.responseType.value = propName;
+    (<Array<Property>>firstResp.schema.language.go!.properties).push(newProperty(propName, firstResp.schema.language.go!.description, firstResp.schema));
+    // add any headers to the response type
+    for (const item of items(headers)) {
+      const prop = newProperty(item.key, item.value.description, item.value.schema);
+      prop.language.go!.fromHeader = item.value.header;
+      (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
+    }
+    // add this response schema to the global list of response
+    const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+    responseSchemas.push(firstResp.schema);
   }
 }
 
@@ -292,10 +355,6 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
   return prop;
 }
 
-function isSchemaResponse(resp?: Response): resp is SchemaResponse {
-  return (resp as SchemaResponse).schema !== undefined;
-}
-
 // returns the format used for marshallling/unmarshalling.
 // if the media type isn't applicable then 'na' is returned.
 function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
@@ -306,5 +365,93 @@ function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
       return 'xml';
     default:
       return 'na';
+  }
+}
+
+function responseTypeCreated(codeModel: CodeModel, schema: Schema): boolean {
+  const responseType = generateResponseTypeName(schema);
+  const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+  for (const responseSchema of values(responseSchemas)) {
+    if (responseSchema.language.go!.responseType.name === responseType.name) {
+      // unnamed string enum responses and string responses are different schemas
+      // but with identical layouts.  so we have a corner-case where we've already
+      // created a response type (i.e. StringResponse) for one of the schemas but
+      // not for the other.  so if the response type has already been created and
+      // the responseType hasn't been set, copy it over.
+      if (schema.language.go!.responseType === undefined) {
+        schema.language.go!.responseType = responseSchema.language.go!.responseType;
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
+function generateResponseTypeName(schema: Schema): Language {
+  let name = '';
+  switch (schema.type) {
+    case SchemaType.Any:
+      name = 'InterfaceResponse';
+      break;
+    case SchemaType.Array:
+      const arraySchema = <ArraySchema>schema;
+      const arrayElem = <Schema>arraySchema.elementType;
+      name = `${pascalCase(arrayElem.language.go!.name)}ArrayResponse`;
+      break;
+    case SchemaType.Boolean:
+      name = 'BoolResponse';
+      break;
+    case SchemaType.ByteArray:
+      name = 'ByteArrayResponse';
+      break;
+    case SchemaType.Choice:
+      const choiceSchema = <ChoiceSchema>schema;
+      name = `${choiceSchema.language.go!.name}Response`;
+      break;
+    case SchemaType.SealedChoice:
+      const sealedChoiceSchema = <SealedChoiceSchema>schema;
+      name = `${sealedChoiceSchema.language.go!.name}Response`;
+      break;
+    case SchemaType.Date:
+    case SchemaType.DateTime:
+    case SchemaType.UnixTime:
+      name = 'TimeResponse';
+      break;
+    case SchemaType.Dictionary:
+      const dictSchema = <DictionarySchema>schema;
+      const dictElem = <Schema>dictSchema.elementType;
+      name = `MapOf${pascalCase(dictElem.language.go!.name)}Response`;
+      break;
+    case SchemaType.Duration:
+      name = 'DurationResponse';
+      break;
+    case SchemaType.Integer:
+      if ((<NumberSchema>schema).precision === 32) {
+        name = 'Int32Response';
+        break;
+      }
+      name = 'Int64Response';
+      break;
+    case SchemaType.Number:
+      if ((<NumberSchema>schema).precision === 32) {
+        name = 'Float32Response';
+        break;
+      }
+      name = 'Float64Response';
+      break;
+    case SchemaType.Object:
+      name = `${schema.language.go!.name}Response`;
+      break;
+    case SchemaType.String:
+    case SchemaType.Uuid:
+      name = 'StringResponse';
+      break;
+    default:
+      throw console.error(`unhandled response schema type ${schema.type}`);
+  }
+  return {
+    name: name,
+    description: `${name} is the response envelope for operations that return a ${schema.language.go!.name} type.`,
+    responseType: true,
   }
 }

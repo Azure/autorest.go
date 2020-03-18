@@ -67,5 +67,5 @@ func TestPutNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNonASCII: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

@@ -45,13 +45,13 @@ func TestHeaderParamBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	result, err = client.ParamBool(context.Background(), "false", false)
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 // TODO this required a change in the generated code so that it outputs base64.STDEncoding.EncodeToString()
@@ -61,7 +61,7 @@ func TestHeaderParamByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamByte: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamDate(t *testing.T) {
@@ -74,7 +74,7 @@ func TestHeaderParamDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDate: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamDatetime(t *testing.T) {
@@ -87,7 +87,7 @@ func TestHeaderParamDatetime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetime: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamDatetimeRFC1123(t *testing.T) {
@@ -100,7 +100,7 @@ func TestHeaderParamDatetimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetimeRFC1123: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamDouble(t *testing.T) {
@@ -109,13 +109,13 @@ func TestHeaderParamDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	result, err = client.ParamDouble(context.Background(), "negative", -3.0)
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 // func TestHeaderParamDuration(t *testing.T) {
@@ -128,7 +128,7 @@ func TestHeaderParamDouble(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamDuration: %v", err)
 // 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 // }
 
 func TestHeaderParamEnum(t *testing.T) {
@@ -138,13 +138,13 @@ func TestHeaderParamEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	result, err = client.ParamEnum(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 // func TestHeaderParamExistingKey(t *testing.T) {
@@ -153,7 +153,7 @@ func TestHeaderParamEnum(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamExistingKey: %v", err)
 // 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 // }
 
 func TestHeaderParamFloat(t *testing.T) {
@@ -162,13 +162,13 @@ func TestHeaderParamFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	result, err = client.ParamFloat(context.Background(), "negative", -3.0)
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamInteger(t *testing.T) {
@@ -177,13 +177,13 @@ func TestHeaderParamInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	result, err = client.ParamInteger(context.Background(), "negative", -2)
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamLong(t *testing.T) {
@@ -192,13 +192,13 @@ func TestHeaderParamLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	result, err = client.ParamLong(context.Background(), "negative", -2)
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamProtectedKey(t *testing.T) {
@@ -207,7 +207,7 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamProtectedKey: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestHeaderParamString(t *testing.T) {
@@ -217,20 +217,20 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	result, err = client.ParamString(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 
 	val = ""
 	result, err = client.ParamString(context.Background(), "empty", &headergroup.HeaderParamStringOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 // TODO check why we dont check for the value returned in all of the tests below this comment
@@ -383,7 +383,7 @@ func TestHeaderResponseDouble(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ResponseDuration: %v", err)
 // 	}
-// 	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 // }
 
 func TestHeaderResponseEnum(t *testing.T) {
