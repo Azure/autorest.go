@@ -156,7 +156,6 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
       continue;
     }
     if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
-      // don't include the URL param as we include that elsewhere as a url.URL
       continue;
     }
     if (param.implementation === ImplementationLocation.Method && param.required !== true) {
@@ -262,4 +261,12 @@ export function isArraySchema(resp: Schema): resp is ArraySchema {
 // returns SchemaResponse type predicate if the response has a schema
 export function isSchemaResponse(resp?: Response): resp is SchemaResponse {
   return (resp as SchemaResponse).schema !== undefined;
+}
+
+// returns true if the parameter should not be URL encoded
+export function skipURLEncoding(param: Parameter): boolean {
+  if (param.extensions) {
+    return param.extensions['x-ms-skip-url-encoding'] === true;
+  }
+  return false;
 }

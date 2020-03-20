@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // PathsOperations contains the methods for the Paths group.
@@ -26,7 +24,7 @@ type pathsOperations struct {
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string) (*http.Response, error) {
-	req, err := client.getEmptyCreateRequest(*client.u, accountName)
+	req, err := client.getEmptyCreateRequest(accountName)
 	if err != nil {
 		return nil, err
 	}
@@ -42,10 +40,13 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *pathsOperations) getEmptyCreateRequest(u url.URL, accountName string) (*azcore.Request, error) {
+func (client *pathsOperations) getEmptyCreateRequest(accountName string) (*azcore.Request, error) {
 	urlPath := "/customuri"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 

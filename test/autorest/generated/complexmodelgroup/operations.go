@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -31,7 +30,7 @@ type operations struct {
 
 // Create - Resets products.
 func (client *operations) Create(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*CatalogDictionaryResponse, error) {
-	req, err := client.createCreateRequest(*client.u, subscriptionId, resourceGroupName, bodyParameter)
+	req, err := client.createCreateRequest(subscriptionId, resourceGroupName, bodyParameter)
 	if err != nil {
 		return nil, err
 	}
@@ -47,16 +46,19 @@ func (client *operations) Create(ctx context.Context, subscriptionId string, res
 }
 
 // createCreateRequest creates the Create request.
-func (client *operations) createCreateRequest(u url.URL, subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*azcore.Request, error) {
+func (client *operations) createCreateRequest(subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("apiVersion", "2014-04-01-preview")
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPost, u)
-	err := req.MarshalAsJSON(bodyParameter)
+	req := azcore.NewRequest(http.MethodPost, *u)
+	err = req.MarshalAsJSON(bodyParameter)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +76,7 @@ func (client *operations) createHandleResponse(resp *azcore.Response) (*CatalogD
 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
 func (client *operations) List(ctx context.Context, resourceGroupName string) (*CatalogArrayResponse, error) {
-	req, err := client.listCreateRequest(*client.u, resourceGroupName)
+	req, err := client.listCreateRequest(resourceGroupName)
 	if err != nil {
 		return nil, err
 	}
@@ -90,15 +92,18 @@ func (client *operations) List(ctx context.Context, resourceGroupName string) (*
 }
 
 // listCreateRequest creates the List request.
-func (client *operations) listCreateRequest(u url.URL, resourceGroupName string) (*azcore.Request, error) {
+func (client *operations) listCreateRequest(resourceGroupName string) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape("123456"))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("apiVersion", "2014-04-01-preview")
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, u)
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -113,7 +118,7 @@ func (client *operations) listHandleResponse(resp *azcore.Response) (*CatalogArr
 
 // Update - Resets products.
 func (client *operations) Update(ctx context.Context, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*CatalogArrayResponse, error) {
-	req, err := client.updateCreateRequest(*client.u, subscriptionId, resourceGroupName, bodyParameter)
+	req, err := client.updateCreateRequest(subscriptionId, resourceGroupName, bodyParameter)
 	if err != nil {
 		return nil, err
 	}
@@ -129,16 +134,19 @@ func (client *operations) Update(ctx context.Context, subscriptionId string, res
 }
 
 // updateCreateRequest creates the Update request.
-func (client *operations) updateCreateRequest(u url.URL, subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*azcore.Request, error) {
+func (client *operations) updateCreateRequest(subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*azcore.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	query.Set("apiVersion", "2014-04-01-preview")
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(bodyParameter)
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(bodyParameter)
 	if err != nil {
 		return nil, err
 	}
