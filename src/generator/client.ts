@@ -12,6 +12,7 @@ import { ContentPreamble, formatParamInfoTypeName, ImportManager, ParamInfo, sor
 // generates content for client.go
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
   // add standard imports
+  imports.add('fmt');
   imports.add('net/url');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
@@ -75,6 +76,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += `\t${urlVar}, err := url.Parse(endpoint)\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
+  text += '\t}\n';
+  text += `\tif ${urlVar}.Scheme == "" {\n`;
+  text += '\t\treturn nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)\n';
   text += '\t}\n';
   text += `\treturn &Client{${urlVar}: ${urlVar}, ${pipelineVar}: ${pipelineVar}}, nil\n`;
   text += '}\n\n';

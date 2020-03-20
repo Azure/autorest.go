@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -35,7 +34,7 @@ type pathItemsOperations struct {
 
 // GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'
 func (client *pathItemsOperations) GetAllWithValues(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetAllWithValuesOptions) (*http.Response, error) {
-	req, err := client.getAllWithValuesCreateRequest(*client.u, pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
+	req, err := client.getAllWithValuesCreateRequest(pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
 	if err != nil {
 		return nil, err
 	}
@@ -51,12 +50,15 @@ func (client *pathItemsOperations) GetAllWithValues(ctx context.Context, pathIte
 }
 
 // getAllWithValuesCreateRequest creates the GetAllWithValues request.
-func (client *pathItemsOperations) getAllWithValuesCreateRequest(u url.URL, pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetAllWithValuesOptions) (*azcore.Request, error) {
+func (client *pathItemsOperations) getAllWithValuesCreateRequest(pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetAllWithValuesOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/pathItemStringQuery/localStringQuery"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
@@ -68,7 +70,7 @@ func (client *pathItemsOperations) getAllWithValuesCreateRequest(u url.URL, path
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, u)
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -82,7 +84,7 @@ func (client *pathItemsOperations) getAllWithValuesHandleResponse(resp *azcore.R
 
 // GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery=null
 func (client *pathItemsOperations) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalAndLocalQueryNullOptions) (*http.Response, error) {
-	req, err := client.getGlobalAndLocalQueryNullCreateRequest(*client.u, pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
+	req, err := client.getGlobalAndLocalQueryNullCreateRequest(pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
 	if err != nil {
 		return nil, err
 	}
@@ -98,12 +100,15 @@ func (client *pathItemsOperations) GetGlobalAndLocalQueryNull(ctx context.Contex
 }
 
 // getGlobalAndLocalQueryNullCreateRequest creates the GetGlobalAndLocalQueryNull request.
-func (client *pathItemsOperations) getGlobalAndLocalQueryNullCreateRequest(u url.URL, pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetGlobalAndLocalQueryNullOptions) (*azcore.Request, error) {
+func (client *pathItemsOperations) getGlobalAndLocalQueryNullCreateRequest(pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetGlobalAndLocalQueryNullOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/null"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
@@ -115,7 +120,7 @@ func (client *pathItemsOperations) getGlobalAndLocalQueryNullCreateRequest(u url
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, u)
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -129,7 +134,7 @@ func (client *pathItemsOperations) getGlobalAndLocalQueryNullHandleResponse(resp
 
 // GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null, pathItemStringQuery='pathItemStringQuery', localStringQuery='localStringQuery'
 func (client *pathItemsOperations) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalQueryNullOptions) (*http.Response, error) {
-	req, err := client.getGlobalQueryNullCreateRequest(*client.u, pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
+	req, err := client.getGlobalQueryNullCreateRequest(pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
 	if err != nil {
 		return nil, err
 	}
@@ -145,12 +150,15 @@ func (client *pathItemsOperations) GetGlobalQueryNull(ctx context.Context, pathI
 }
 
 // getGlobalQueryNullCreateRequest creates the GetGlobalQueryNull request.
-func (client *pathItemsOperations) getGlobalQueryNullCreateRequest(u url.URL, pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetGlobalQueryNullOptions) (*azcore.Request, error) {
+func (client *pathItemsOperations) getGlobalQueryNullCreateRequest(pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetGlobalQueryNullOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/null/pathItemStringQuery/localStringQuery"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
@@ -162,7 +170,7 @@ func (client *pathItemsOperations) getGlobalQueryNullCreateRequest(u url.URL, pa
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, u)
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -176,7 +184,7 @@ func (client *pathItemsOperations) getGlobalQueryNullHandleResponse(resp *azcore
 
 // GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery', pathItemStringQuery=null, localStringQuery=null
 func (client *pathItemsOperations) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetLocalPathItemQueryNullOptions) (*http.Response, error) {
-	req, err := client.getLocalPathItemQueryNullCreateRequest(*client.u, pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
+	req, err := client.getLocalPathItemQueryNullCreateRequest(pathItemStringPath, client.globalStringPath, localStringPath, client.globalStringQuery, options)
 	if err != nil {
 		return nil, err
 	}
@@ -192,12 +200,15 @@ func (client *pathItemsOperations) GetLocalPathItemQueryNull(ctx context.Context
 }
 
 // getLocalPathItemQueryNullCreateRequest creates the GetLocalPathItemQueryNull request.
-func (client *pathItemsOperations) getLocalPathItemQueryNullCreateRequest(u url.URL, pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetLocalPathItemQueryNullOptions) (*azcore.Request, error) {
+func (client *pathItemsOperations) getLocalPathItemQueryNullCreateRequest(pathItemStringPath string, globalStringPath string, localStringPath string, globalStringQuery *string, options *PathItemsGetLocalPathItemQueryNullOptions) (*azcore.Request, error) {
 	urlPath := "/pathitem/nullable/globalStringPath/{globalStringPath}/pathItemStringPath/{pathItemStringPath}/localStringPath/{localStringPath}/globalStringQuery/null/null"
 	urlPath = strings.ReplaceAll(urlPath, "{pathItemStringPath}", url.PathEscape(pathItemStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{globalStringPath}", url.PathEscape(globalStringPath))
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if options != nil && options.PathItemStringQuery != nil {
 		query.Set("pathItemStringQuery", *options.PathItemStringQuery)
@@ -209,7 +220,7 @@ func (client *pathItemsOperations) getLocalPathItemQueryNullCreateRequest(u url.
 		query.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, u)
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 

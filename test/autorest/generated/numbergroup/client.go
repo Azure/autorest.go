@@ -6,6 +6,7 @@
 package numbergroup
 
 import (
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/url"
 )
@@ -62,6 +63,9 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	u, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, err
+	}
+	if u.Scheme == "" {
+		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
 	}
 	return &Client{u: u, p: p}, nil
 }

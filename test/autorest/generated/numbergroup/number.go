@@ -9,8 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"net/url"
-	"path"
 )
 
 // NumberOperations contains the methods for the Number group.
@@ -72,7 +70,7 @@ type numberOperations struct {
 
 // GetBigDecimal - Get big decimal value 2.5976931e+101
 func (client *numberOperations) GetBigDecimal(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getBigDecimalCreateRequest(*client.u)
+	req, err := client.getBigDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -88,10 +86,13 @@ func (client *numberOperations) GetBigDecimal(ctx context.Context) (*Float64Resp
 }
 
 // getBigDecimalCreateRequest creates the GetBigDecimal request.
-func (client *numberOperations) getBigDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getBigDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/decimal/2.5976931e+101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -106,7 +107,7 @@ func (client *numberOperations) getBigDecimalHandleResponse(resp *azcore.Respons
 
 // GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
 func (client *numberOperations) GetBigDecimalNegativeDecimal(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getBigDecimalNegativeDecimalCreateRequest(*client.u)
+	req, err := client.getBigDecimalNegativeDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -122,10 +123,13 @@ func (client *numberOperations) GetBigDecimalNegativeDecimal(ctx context.Context
 }
 
 // getBigDecimalNegativeDecimalCreateRequest creates the GetBigDecimalNegativeDecimal request.
-func (client *numberOperations) getBigDecimalNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getBigDecimalNegativeDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/decimal/-99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -140,7 +144,7 @@ func (client *numberOperations) getBigDecimalNegativeDecimalHandleResponse(resp 
 
 // GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
 func (client *numberOperations) GetBigDecimalPositiveDecimal(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getBigDecimalPositiveDecimalCreateRequest(*client.u)
+	req, err := client.getBigDecimalPositiveDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -156,10 +160,13 @@ func (client *numberOperations) GetBigDecimalPositiveDecimal(ctx context.Context
 }
 
 // getBigDecimalPositiveDecimalCreateRequest creates the GetBigDecimalPositiveDecimal request.
-func (client *numberOperations) getBigDecimalPositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getBigDecimalPositiveDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/decimal/99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -174,7 +181,7 @@ func (client *numberOperations) getBigDecimalPositiveDecimalHandleResponse(resp 
 
 // GetBigDouble - Get big double value 2.5976931e+101
 func (client *numberOperations) GetBigDouble(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getBigDoubleCreateRequest(*client.u)
+	req, err := client.getBigDoubleCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -190,10 +197,13 @@ func (client *numberOperations) GetBigDouble(ctx context.Context) (*Float64Respo
 }
 
 // getBigDoubleCreateRequest creates the GetBigDouble request.
-func (client *numberOperations) getBigDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getBigDoubleCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/double/2.5976931e+101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -208,7 +218,7 @@ func (client *numberOperations) getBigDoubleHandleResponse(resp *azcore.Response
 
 // GetBigDoubleNegativeDecimal - Get big double value -99999999.99
 func (client *numberOperations) GetBigDoubleNegativeDecimal(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getBigDoubleNegativeDecimalCreateRequest(*client.u)
+	req, err := client.getBigDoubleNegativeDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -224,10 +234,13 @@ func (client *numberOperations) GetBigDoubleNegativeDecimal(ctx context.Context)
 }
 
 // getBigDoubleNegativeDecimalCreateRequest creates the GetBigDoubleNegativeDecimal request.
-func (client *numberOperations) getBigDoubleNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getBigDoubleNegativeDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/double/-99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -242,7 +255,7 @@ func (client *numberOperations) getBigDoubleNegativeDecimalHandleResponse(resp *
 
 // GetBigDoublePositiveDecimal - Get big double value 99999999.99
 func (client *numberOperations) GetBigDoublePositiveDecimal(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getBigDoublePositiveDecimalCreateRequest(*client.u)
+	req, err := client.getBigDoublePositiveDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -258,10 +271,13 @@ func (client *numberOperations) GetBigDoublePositiveDecimal(ctx context.Context)
 }
 
 // getBigDoublePositiveDecimalCreateRequest creates the GetBigDoublePositiveDecimal request.
-func (client *numberOperations) getBigDoublePositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getBigDoublePositiveDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/double/99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -276,7 +292,7 @@ func (client *numberOperations) getBigDoublePositiveDecimalHandleResponse(resp *
 
 // GetBigFloat - Get big float value 3.402823e+20
 func (client *numberOperations) GetBigFloat(ctx context.Context) (*Float32Response, error) {
-	req, err := client.getBigFloatCreateRequest(*client.u)
+	req, err := client.getBigFloatCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -292,10 +308,13 @@ func (client *numberOperations) GetBigFloat(ctx context.Context) (*Float32Respon
 }
 
 // getBigFloatCreateRequest creates the GetBigFloat request.
-func (client *numberOperations) getBigFloatCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getBigFloatCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/float/3.402823e+20"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -310,7 +329,7 @@ func (client *numberOperations) getBigFloatHandleResponse(resp *azcore.Response)
 
 // GetInvalidDecimal - Get invalid decimal Number value
 func (client *numberOperations) GetInvalidDecimal(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getInvalidDecimalCreateRequest(*client.u)
+	req, err := client.getInvalidDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -326,10 +345,13 @@ func (client *numberOperations) GetInvalidDecimal(ctx context.Context) (*Float64
 }
 
 // getInvalidDecimalCreateRequest creates the GetInvalidDecimal request.
-func (client *numberOperations) getInvalidDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getInvalidDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/invaliddecimal"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -344,7 +366,7 @@ func (client *numberOperations) getInvalidDecimalHandleResponse(resp *azcore.Res
 
 // GetInvalidDouble - Get invalid double Number value
 func (client *numberOperations) GetInvalidDouble(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getInvalidDoubleCreateRequest(*client.u)
+	req, err := client.getInvalidDoubleCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -360,10 +382,13 @@ func (client *numberOperations) GetInvalidDouble(ctx context.Context) (*Float64R
 }
 
 // getInvalidDoubleCreateRequest creates the GetInvalidDouble request.
-func (client *numberOperations) getInvalidDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getInvalidDoubleCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/invaliddouble"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -378,7 +403,7 @@ func (client *numberOperations) getInvalidDoubleHandleResponse(resp *azcore.Resp
 
 // GetInvalidFloat - Get invalid float Number value
 func (client *numberOperations) GetInvalidFloat(ctx context.Context) (*Float32Response, error) {
-	req, err := client.getInvalidFloatCreateRequest(*client.u)
+	req, err := client.getInvalidFloatCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -394,10 +419,13 @@ func (client *numberOperations) GetInvalidFloat(ctx context.Context) (*Float32Re
 }
 
 // getInvalidFloatCreateRequest creates the GetInvalidFloat request.
-func (client *numberOperations) getInvalidFloatCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getInvalidFloatCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/invalidfloat"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -412,7 +440,7 @@ func (client *numberOperations) getInvalidFloatHandleResponse(resp *azcore.Respo
 
 // GetNull - Get null Number value
 func (client *numberOperations) GetNull(ctx context.Context) (*Float32Response, error) {
-	req, err := client.getNullCreateRequest(*client.u)
+	req, err := client.getNullCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -428,10 +456,13 @@ func (client *numberOperations) GetNull(ctx context.Context) (*Float32Response, 
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *numberOperations) getNullCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getNullCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/null"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -446,7 +477,7 @@ func (client *numberOperations) getNullHandleResponse(resp *azcore.Response) (*F
 
 // GetSmallDecimal - Get small decimal value 2.5976931e-101
 func (client *numberOperations) GetSmallDecimal(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getSmallDecimalCreateRequest(*client.u)
+	req, err := client.getSmallDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -462,10 +493,13 @@ func (client *numberOperations) GetSmallDecimal(ctx context.Context) (*Float64Re
 }
 
 // getSmallDecimalCreateRequest creates the GetSmallDecimal request.
-func (client *numberOperations) getSmallDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getSmallDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/small/decimal/2.5976931e-101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -480,7 +514,7 @@ func (client *numberOperations) getSmallDecimalHandleResponse(resp *azcore.Respo
 
 // GetSmallDouble - Get big double value 2.5976931e-101
 func (client *numberOperations) GetSmallDouble(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getSmallDoubleCreateRequest(*client.u)
+	req, err := client.getSmallDoubleCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -496,10 +530,13 @@ func (client *numberOperations) GetSmallDouble(ctx context.Context) (*Float64Res
 }
 
 // getSmallDoubleCreateRequest creates the GetSmallDouble request.
-func (client *numberOperations) getSmallDoubleCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getSmallDoubleCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/small/double/2.5976931e-101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -514,7 +551,7 @@ func (client *numberOperations) getSmallDoubleHandleResponse(resp *azcore.Respon
 
 // GetSmallFloat - Get big double value 3.402823e-20
 func (client *numberOperations) GetSmallFloat(ctx context.Context) (*Float64Response, error) {
-	req, err := client.getSmallFloatCreateRequest(*client.u)
+	req, err := client.getSmallFloatCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -530,10 +567,13 @@ func (client *numberOperations) GetSmallFloat(ctx context.Context) (*Float64Resp
 }
 
 // getSmallFloatCreateRequest creates the GetSmallFloat request.
-func (client *numberOperations) getSmallFloatCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) getSmallFloatCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/small/float/3.402823e-20"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodGet, u)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 
@@ -548,7 +588,7 @@ func (client *numberOperations) getSmallFloatHandleResponse(resp *azcore.Respons
 
 // PutBigDecimal - Put big decimal value 2.5976931e+101
 func (client *numberOperations) PutBigDecimal(ctx context.Context, numberBody float64) (*http.Response, error) {
-	req, err := client.putBigDecimalCreateRequest(*client.u, numberBody)
+	req, err := client.putBigDecimalCreateRequest(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -564,11 +604,14 @@ func (client *numberOperations) PutBigDecimal(ctx context.Context, numberBody fl
 }
 
 // putBigDecimalCreateRequest creates the PutBigDecimal request.
-func (client *numberOperations) putBigDecimalCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
+func (client *numberOperations) putBigDecimalCreateRequest(numberBody float64) (*azcore.Request, error) {
 	urlPath := "/number/big/decimal/2.5976931e+101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(numberBody)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -585,7 +628,7 @@ func (client *numberOperations) putBigDecimalHandleResponse(resp *azcore.Respons
 
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
 func (client *numberOperations) PutBigDecimalNegativeDecimal(ctx context.Context) (*http.Response, error) {
-	req, err := client.putBigDecimalNegativeDecimalCreateRequest(*client.u)
+	req, err := client.putBigDecimalNegativeDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -601,11 +644,14 @@ func (client *numberOperations) PutBigDecimalNegativeDecimal(ctx context.Context
 }
 
 // putBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
-func (client *numberOperations) putBigDecimalNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) putBigDecimalNegativeDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/decimal/-99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(-99999999.99)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(-99999999.99)
 	if err != nil {
 		return nil, err
 	}
@@ -622,7 +668,7 @@ func (client *numberOperations) putBigDecimalNegativeDecimalHandleResponse(resp 
 
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
 func (client *numberOperations) PutBigDecimalPositiveDecimal(ctx context.Context) (*http.Response, error) {
-	req, err := client.putBigDecimalPositiveDecimalCreateRequest(*client.u)
+	req, err := client.putBigDecimalPositiveDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -638,11 +684,14 @@ func (client *numberOperations) PutBigDecimalPositiveDecimal(ctx context.Context
 }
 
 // putBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
-func (client *numberOperations) putBigDecimalPositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) putBigDecimalPositiveDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/decimal/99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(99999999.99)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(99999999.99)
 	if err != nil {
 		return nil, err
 	}
@@ -659,7 +708,7 @@ func (client *numberOperations) putBigDecimalPositiveDecimalHandleResponse(resp 
 
 // PutBigDouble - Put big double value 2.5976931e+101
 func (client *numberOperations) PutBigDouble(ctx context.Context, numberBody float64) (*http.Response, error) {
-	req, err := client.putBigDoubleCreateRequest(*client.u, numberBody)
+	req, err := client.putBigDoubleCreateRequest(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -675,11 +724,14 @@ func (client *numberOperations) PutBigDouble(ctx context.Context, numberBody flo
 }
 
 // putBigDoubleCreateRequest creates the PutBigDouble request.
-func (client *numberOperations) putBigDoubleCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
+func (client *numberOperations) putBigDoubleCreateRequest(numberBody float64) (*azcore.Request, error) {
 	urlPath := "/number/big/double/2.5976931e+101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(numberBody)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -696,7 +748,7 @@ func (client *numberOperations) putBigDoubleHandleResponse(resp *azcore.Response
 
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
 func (client *numberOperations) PutBigDoubleNegativeDecimal(ctx context.Context) (*http.Response, error) {
-	req, err := client.putBigDoubleNegativeDecimalCreateRequest(*client.u)
+	req, err := client.putBigDoubleNegativeDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -712,11 +764,14 @@ func (client *numberOperations) PutBigDoubleNegativeDecimal(ctx context.Context)
 }
 
 // putBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
-func (client *numberOperations) putBigDoubleNegativeDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) putBigDoubleNegativeDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/double/-99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(-99999999.99)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(-99999999.99)
 	if err != nil {
 		return nil, err
 	}
@@ -733,7 +788,7 @@ func (client *numberOperations) putBigDoubleNegativeDecimalHandleResponse(resp *
 
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
 func (client *numberOperations) PutBigDoublePositiveDecimal(ctx context.Context) (*http.Response, error) {
-	req, err := client.putBigDoublePositiveDecimalCreateRequest(*client.u)
+	req, err := client.putBigDoublePositiveDecimalCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -749,11 +804,14 @@ func (client *numberOperations) PutBigDoublePositiveDecimal(ctx context.Context)
 }
 
 // putBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
-func (client *numberOperations) putBigDoublePositiveDecimalCreateRequest(u url.URL) (*azcore.Request, error) {
+func (client *numberOperations) putBigDoublePositiveDecimalCreateRequest() (*azcore.Request, error) {
 	urlPath := "/number/big/double/99999999.99"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(99999999.99)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(99999999.99)
 	if err != nil {
 		return nil, err
 	}
@@ -770,7 +828,7 @@ func (client *numberOperations) putBigDoublePositiveDecimalHandleResponse(resp *
 
 // PutBigFloat - Put big float value 3.402823e+20
 func (client *numberOperations) PutBigFloat(ctx context.Context, numberBody float32) (*http.Response, error) {
-	req, err := client.putBigFloatCreateRequest(*client.u, numberBody)
+	req, err := client.putBigFloatCreateRequest(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -786,11 +844,14 @@ func (client *numberOperations) PutBigFloat(ctx context.Context, numberBody floa
 }
 
 // putBigFloatCreateRequest creates the PutBigFloat request.
-func (client *numberOperations) putBigFloatCreateRequest(u url.URL, numberBody float32) (*azcore.Request, error) {
+func (client *numberOperations) putBigFloatCreateRequest(numberBody float32) (*azcore.Request, error) {
 	urlPath := "/number/big/float/3.402823e+20"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(numberBody)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -807,7 +868,7 @@ func (client *numberOperations) putBigFloatHandleResponse(resp *azcore.Response)
 
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
 func (client *numberOperations) PutSmallDecimal(ctx context.Context, numberBody float64) (*http.Response, error) {
-	req, err := client.putSmallDecimalCreateRequest(*client.u, numberBody)
+	req, err := client.putSmallDecimalCreateRequest(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -823,11 +884,14 @@ func (client *numberOperations) PutSmallDecimal(ctx context.Context, numberBody 
 }
 
 // putSmallDecimalCreateRequest creates the PutSmallDecimal request.
-func (client *numberOperations) putSmallDecimalCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
+func (client *numberOperations) putSmallDecimalCreateRequest(numberBody float64) (*azcore.Request, error) {
 	urlPath := "/number/small/decimal/2.5976931e-101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(numberBody)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -844,7 +908,7 @@ func (client *numberOperations) putSmallDecimalHandleResponse(resp *azcore.Respo
 
 // PutSmallDouble - Put small double value 2.5976931e-101
 func (client *numberOperations) PutSmallDouble(ctx context.Context, numberBody float64) (*http.Response, error) {
-	req, err := client.putSmallDoubleCreateRequest(*client.u, numberBody)
+	req, err := client.putSmallDoubleCreateRequest(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -860,11 +924,14 @@ func (client *numberOperations) PutSmallDouble(ctx context.Context, numberBody f
 }
 
 // putSmallDoubleCreateRequest creates the PutSmallDouble request.
-func (client *numberOperations) putSmallDoubleCreateRequest(u url.URL, numberBody float64) (*azcore.Request, error) {
+func (client *numberOperations) putSmallDoubleCreateRequest(numberBody float64) (*azcore.Request, error) {
 	urlPath := "/number/small/double/2.5976931e-101"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(numberBody)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -881,7 +948,7 @@ func (client *numberOperations) putSmallDoubleHandleResponse(resp *azcore.Respon
 
 // PutSmallFloat - Put small float value 3.402823e-20
 func (client *numberOperations) PutSmallFloat(ctx context.Context, numberBody float32) (*http.Response, error) {
-	req, err := client.putSmallFloatCreateRequest(*client.u, numberBody)
+	req, err := client.putSmallFloatCreateRequest(numberBody)
 	if err != nil {
 		return nil, err
 	}
@@ -897,11 +964,14 @@ func (client *numberOperations) PutSmallFloat(ctx context.Context, numberBody fl
 }
 
 // putSmallFloatCreateRequest creates the PutSmallFloat request.
-func (client *numberOperations) putSmallFloatCreateRequest(u url.URL, numberBody float32) (*azcore.Request, error) {
+func (client *numberOperations) putSmallFloatCreateRequest(numberBody float32) (*azcore.Request, error) {
 	urlPath := "/number/small/float/3.402823e-20"
-	u.Path = path.Join(u.Path, urlPath)
-	req := azcore.NewRequest(http.MethodPut, u)
-	err := req.MarshalAsJSON(numberBody)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	err = req.MarshalAsJSON(numberBody)
 	if err != nil {
 		return nil, err
 	}

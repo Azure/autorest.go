@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"path"
 	"strings"
 )
 
@@ -29,7 +28,7 @@ type pathsOperations struct {
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error) {
-	req, err := client.getEmptyCreateRequest(*client.u, vault, secret, client.dnsSuffix, keyName, client.subscriptionID, options)
+	req, err := client.getEmptyCreateRequest(vault, secret, client.dnsSuffix, keyName, client.subscriptionID, options)
 	if err != nil {
 		return nil, err
 	}
@@ -45,17 +44,20 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secre
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *pathsOperations) getEmptyCreateRequest(u url.URL, vault string, secret string, dnsSuffix string, keyName string, subscriptionID string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string, dnsSuffix string, keyName string, subscriptionID string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
-	u.Path = path.Join(u.Path, urlPath)
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
 	query := u.Query()
 	if options != nil && options.KeyVersion != nil {
 		query.Set("keyVersion", *options.KeyVersion)
 	}
 	u.RawQuery = query.Encode()
-	req := azcore.NewRequest(http.MethodGet, u)
+	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
 }
 

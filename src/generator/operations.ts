@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, MethodSig, ParamInfo, paramInfo, SortAscending, isSchemaResponse } from './helpers';
+import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, MethodSig, ParamInfo, paramInfo, skipURLEncoding, SortAscending, isSchemaResponse } from './helpers';
 import { OperationNaming } from '../namer/namer';
 
 const dateFormat = '2006-01-02';
@@ -35,8 +35,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // add standard imorts
     imports.add('context');
     imports.add('net/http');
-    imports.add('net/url');
-    imports.add('path');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
     const clientName = camelCase(group.language.go!.clientName);
@@ -291,7 +289,7 @@ function generateOperation(clientName: string, op: Operation): string {
   }
   text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')}) {\n`;
   // slice off the first param returned from extractParamNames as we know it's the URL (cheating a bit...)
-  const protocolReqParams = ['*client.u'].concat(extractParamNames(protocol.protocolSigs.requestMethod.params).slice(1));
+  const protocolReqParams = extractParamNames(protocol.protocolSigs.requestMethod.params);
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${protocolReqParams.join(', ')})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
@@ -321,7 +319,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   }
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.requestMethod.params = [new paramInfo('u', 'url.URL', false, true)].concat(generateParameterInfo(op));
+  sig.protocolSigs.requestMethod.params = generateParameterInfo(op);
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
@@ -332,11 +330,18 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     imports.add('net/url');
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
-      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", url.PathEscape(${formatParamValue(pp, imports)}))\n`;
+      let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
+      if (skipURLEncoding(pp)) {
+        paramValue = formatParamValue(pp, imports);
+      }
+      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
 
-  text += `\tu.Path = path.Join(u.Path, urlPath)\n`;
+  text += `\tu, err := client.u.Parse(urlPath)\n`;
+  text += '\tif err != nil {\n';
+  text += '\t\treturn nil, err\n';
+  text += '\t}\n';
   const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
   if (inQueryParams.any()) {
     // add query parameters
@@ -357,7 +362,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     text += '\tu.RawQuery = query.Encode()\n';
   }
-  text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, u)\n`;
+  text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, *u)\n`;
   if (hasBinaryResponse(op.responses!)) {
     // skip auto-body downloading for binary stream responses
     text += '\treq.SkipBodyDownload()\n';
@@ -406,7 +411,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
       body = 'aux';
     }
-    text += `\terr := req.MarshalAs${mediaType}(${body})\n`;
+    text += `\terr = req.MarshalAs${mediaType}(${body})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
