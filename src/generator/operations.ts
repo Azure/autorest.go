@@ -308,18 +308,18 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   text += `\t}\n`;
   if (isPageableOperation(op)) {
     text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
-    text += `\t\tcli: client,\n`;
-    text += `\t\treq: req,\n`;
-    text += `\t\thnd: client.${info.protocolNaming.responseMethod},\n`;
+    text += `\t\tclient: client,\n`;
+    text += `\t\trequest: req,\n`;
+    text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
     if (op.language.go!.paging.member) {
       protocolReqParams.push(`*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
-      text += `\t\tadv: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
       text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${protocolReqParams.join(', ')})\n`;
       text += '\t\t},\n';
     } else {
       imports.add('fmt');
-      text += `\t\tadv: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
       text += `\t\t\tu, err := url.Parse(*resp.${pager.schema.language.go!.name}.${pager.nextLink})\n`;
       text += `\t\t\tif err != nil {\n`;
       text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${pager.nextLink}: %w", err)\n`;

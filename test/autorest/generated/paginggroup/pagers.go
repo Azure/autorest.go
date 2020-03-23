@@ -28,11 +28,17 @@ type odataProductResultHandleResponse func(*azcore.Response) (*OdataProductResul
 type odataProductResultAdvancePage func(*OdataProductResultResponse) (*azcore.Request, error)
 
 type odataProductResultPager struct {
-	cli *pagingOperations
-	req *azcore.Request
-	hnd odataProductResultHandleResponse
-	adv odataProductResultAdvancePage
-	cur *OdataProductResultResponse
+	// the client for making the request
+	client *pagingOperations
+	// contains the pending request
+	request *azcore.Request
+	// callback for handling the HTTP response
+	responder odataProductResultHandleResponse
+	// callback for advancing to the next page
+	advancer odataProductResultAdvancePage
+	// contains the current response
+	current *OdataProductResultResponse
+	// any error encountered
 	err error
 }
 
@@ -41,33 +47,33 @@ func (p *odataProductResultPager) Err() error {
 }
 
 func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
-	if p.cur != nil {
-		if p.cur.OdataProductResult.OdataNextLink == nil || len(*p.cur.OdataProductResult.OdataNextLink) == 0 {
+	if p.current != nil {
+		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
 			return false
 		}
-		req, err := p.adv(p.cur)
+		req, err := p.advancer(p.current)
 		if err != nil {
 			p.err = err
 			return false
 		}
-		p.req = req
+		p.request = req
 	}
-	resp, err := p.cli.p.Do(ctx, p.req)
+	resp, err := p.client.p.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	result, err := p.hnd(resp)
+	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	p.cur = result
+	p.current = result
 	return true
 }
 
 func (p *odataProductResultPager) PageResponse() *OdataProductResultResponse {
-	return p.cur
+	return p.current
 }
 
 // ProductResultPager provides iteration over ProductResult pages.
@@ -88,11 +94,17 @@ type productResultHandleResponse func(*azcore.Response) (*ProductResultResponse,
 type productResultAdvancePage func(*ProductResultResponse) (*azcore.Request, error)
 
 type productResultPager struct {
-	cli *pagingOperations
-	req *azcore.Request
-	hnd productResultHandleResponse
-	adv productResultAdvancePage
-	cur *ProductResultResponse
+	// the client for making the request
+	client *pagingOperations
+	// contains the pending request
+	request *azcore.Request
+	// callback for handling the HTTP response
+	responder productResultHandleResponse
+	// callback for advancing to the next page
+	advancer productResultAdvancePage
+	// contains the current response
+	current *ProductResultResponse
+	// any error encountered
 	err error
 }
 
@@ -101,33 +113,33 @@ func (p *productResultPager) Err() error {
 }
 
 func (p *productResultPager) NextPage(ctx context.Context) bool {
-	if p.cur != nil {
-		if p.cur.ProductResult.NextLink == nil || len(*p.cur.ProductResult.NextLink) == 0 {
+	if p.current != nil {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
 		}
-		req, err := p.adv(p.cur)
+		req, err := p.advancer(p.current)
 		if err != nil {
 			p.err = err
 			return false
 		}
-		p.req = req
+		p.request = req
 	}
-	resp, err := p.cli.p.Do(ctx, p.req)
+	resp, err := p.client.p.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	result, err := p.hnd(resp)
+	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	p.cur = result
+	p.current = result
 	return true
 }
 
 func (p *productResultPager) PageResponse() *ProductResultResponse {
-	return p.cur
+	return p.current
 }
 
 // ProductResultValuePager provides iteration over ProductResultValue pages.
@@ -148,11 +160,17 @@ type productResultValueHandleResponse func(*azcore.Response) (*ProductResultValu
 type productResultValueAdvancePage func(*ProductResultValueResponse) (*azcore.Request, error)
 
 type productResultValuePager struct {
-	cli *pagingOperations
-	req *azcore.Request
-	hnd productResultValueHandleResponse
-	adv productResultValueAdvancePage
-	cur *ProductResultValueResponse
+	// the client for making the request
+	client *pagingOperations
+	// contains the pending request
+	request *azcore.Request
+	// callback for handling the HTTP response
+	responder productResultValueHandleResponse
+	// callback for advancing to the next page
+	advancer productResultValueAdvancePage
+	// contains the current response
+	current *ProductResultValueResponse
+	// any error encountered
 	err error
 }
 
@@ -161,31 +179,31 @@ func (p *productResultValuePager) Err() error {
 }
 
 func (p *productResultValuePager) NextPage(ctx context.Context) bool {
-	if p.cur != nil {
-		if p.cur.ProductResultValue.NextLink == nil || len(*p.cur.ProductResultValue.NextLink) == 0 {
+	if p.current != nil {
+		if p.current.ProductResultValue.NextLink == nil || len(*p.current.ProductResultValue.NextLink) == 0 {
 			return false
 		}
-		req, err := p.adv(p.cur)
+		req, err := p.advancer(p.current)
 		if err != nil {
 			p.err = err
 			return false
 		}
-		p.req = req
+		p.request = req
 	}
-	resp, err := p.cli.p.Do(ctx, p.req)
+	resp, err := p.client.p.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	result, err := p.hnd(resp)
+	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	p.cur = result
+	p.current = result
 	return true
 }
 
 func (p *productResultValuePager) PageResponse() *ProductResultValueResponse {
-	return p.cur
+	return p.current
 }

@@ -60,10 +60,10 @@ func (client *pagingOperations) GetMultiplePages(options *PagingGetMultiplePages
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -112,10 +112,10 @@ func (client *pagingOperations) GetMultiplePagesFailure() (ProductResultPager, e
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesFailureHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesFailureHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -155,10 +155,10 @@ func (client *pagingOperations) GetMultiplePagesFailureURI() (ProductResultPager
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesFailureUriHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesFailureUriHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -198,10 +198,10 @@ func (client *pagingOperations) GetMultiplePagesFragmentNextLink(apiVersion stri
 		return nil, err
 	}
 	return &odataProductResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesFragmentNextLinkHandleResponse,
-		adv: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesFragmentNextLinkHandleResponse,
+		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
 			return client.nextFragmentCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
 		},
 	}, nil
@@ -238,10 +238,10 @@ func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(api
 		return nil, err
 	}
 	return &odataProductResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
-		adv: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
+		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
 			return client.nextFragmentWithGroupingCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
 		},
 	}, nil
@@ -278,10 +278,10 @@ func (client *pagingOperations) GetMultiplePagesLro(options *PagingGetMultiplePa
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesLroHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesLroHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -330,10 +330,10 @@ func (client *pagingOperations) GetMultiplePagesRetryFirst() (ProductResultPager
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesRetryFirstHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesRetryFirstHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -373,10 +373,10 @@ func (client *pagingOperations) GetMultiplePagesRetrySecond() (ProductResultPage
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesRetrySecondHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesRetrySecondHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -416,10 +416,10 @@ func (client *pagingOperations) GetMultiplePagesWithOffset(offset int32, options
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getMultiplePagesWithOffsetHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getMultiplePagesWithOffsetHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -469,10 +469,10 @@ func (client *pagingOperations) GetNoItemNamePages() (ProductResultValuePager, e
 		return nil, err
 	}
 	return &productResultValuePager{
-		cli: client,
-		req: req,
-		hnd: client.getNoItemNamePagesHandleResponse,
-		adv: func(resp *ProductResultValueResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getNoItemNamePagesHandleResponse,
+		advancer: func(resp *ProductResultValueResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResultValue.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -549,10 +549,10 @@ func (client *pagingOperations) GetOdataMultiplePages(options *PagingGetOdataMul
 		return nil, err
 	}
 	return &odataProductResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getOdataMultiplePagesHandleResponse,
-		adv: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getOdataMultiplePagesHandleResponse,
+		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.OdataProductResult.OdataNextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid OdataNextLink: %w", err)
@@ -601,10 +601,10 @@ func (client *pagingOperations) GetSinglePages() (ProductResultPager, error) {
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getSinglePagesHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getSinglePagesHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)
@@ -644,10 +644,10 @@ func (client *pagingOperations) GetSinglePagesFailure() (ProductResultPager, err
 		return nil, err
 	}
 	return &productResultPager{
-		cli: client,
-		req: req,
-		hnd: client.getSinglePagesFailureHandleResponse,
-		adv: func(resp *ProductResultResponse) (*azcore.Request, error) {
+		client:    client,
+		request:   req,
+		responder: client.getSinglePagesFailureHandleResponse,
+		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
 			if err != nil {
 				return nil, fmt.Errorf("invalid NextLink: %w", err)

@@ -48,11 +48,17 @@ type ${responderType} func(*azcore.Response) (*${responseType}, error)
 type ${advanceType} func(*${responseType}) (*azcore.Request, error)
 
 type ${pagerType} struct {
-	cli *${pager.client}
-	req *azcore.Request
-	hnd ${responderType}
-	adv ${advanceType}
-	cur *${responseType}
+	// the client for making the request
+	client *${pager.client}
+	// contains the pending request
+	request *azcore.Request
+	// callback for handling the HTTP response
+	responder ${responderType}
+	// callback for advancing to the next page
+	advancer ${advanceType}
+	// contains the current response
+	current *${responseType}
+	// any error encountered
 	err error
 }
 
@@ -61,33 +67,33 @@ func (p *${pagerType}) Err() error {
 }
 
 func (p *${pagerType}) NextPage(ctx context.Context) bool {
-	if p.cur != nil {
-		if p.cur.${resultType}.${pager.nextLink} == nil || len(*p.cur.${resultType}.${pager.nextLink}) == 0 {
+	if p.current != nil {
+		if p.current.${resultType}.${pager.nextLink} == nil || len(*p.current.${resultType}.${pager.nextLink}) == 0 {
 			return false
 		}
-		req, err := p.adv(p.cur)
+		req, err := p.advancer(p.current)
 		if err != nil {
 			p.err = err
 			return false
 		}
-		p.req = req
+		p.request = req
 	}
-	resp, err := p.cli.p.Do(ctx, p.req)
+	resp, err := p.client.p.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	result, err := p.hnd(resp)
+	result, err := p.responder(resp)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	p.cur = result
+	p.current = result
 	return true
 }
 
 func (p *${pagerType}) PageResponse() *${responseType} {
-	return p.cur
+	return p.current
 }
 
 `;
