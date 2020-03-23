@@ -57,7 +57,7 @@ func TestGetFile(t *testing.T) {
 }
 
 func TestGetFileLarge(t *testing.T) {
-	t.Skip()
+	t.Skip("test is unreliable, can fail when running on a machine with low memory")
 	client := getFileGroupClient(t)
 	result, err := client.GetFileLarge(context.Background())
 	if err != nil {
