@@ -29,7 +29,7 @@ goMappings = {
     'numbergroup': 'body-number.json',
     //'optionalgroup': 'required-optional.json',
     'paginggroup': 'paging.json',
-    //'reportgroup': 'report.json',
+    'reportgroup': 'report.json',
     'stringgroup': 'body-string.json',
     'urlgroup': 'url.json',
     //'urlmultigroup': 'url-multi-collectionFormat.json',
