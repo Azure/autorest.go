@@ -28,6 +28,11 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     const pagerType = camelCase(pager.name);
     const responseType = pager.schema.language.go!.responseType.name;
     const resultType = pager.schema.language.go!.name;
+    let resultTypeName = resultType;
+    if (pager.schema.serialization?.xml?.name) {
+      // xml can specifiy its own name, prefer that if available
+      resultTypeName = pager.schema.serialization.xml.name;
+    }
     const responderType = `${camelCase(resultType)}HandleResponse`;
     const advanceType = `${camelCase(resultType)}AdvancePage`;
     text += `// ${pager.name} provides iteration over ${resultType} pages.
@@ -68,7 +73,7 @@ func (p *${pagerType}) Err() error {
 
 func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	if p.current != nil {
-		if p.current.${resultType}.${pager.nextLink} == nil || len(*p.current.${resultType}.${pager.nextLink}) == 0 {
+		if p.current.${resultTypeName}.${pager.nextLink} == nil || len(*p.current.${resultTypeName}.${pager.nextLink}) == 0 {
 			return false
 		}
 		req, err := p.advancer(p.current)

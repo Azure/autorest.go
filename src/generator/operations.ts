@@ -319,13 +319,19 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       text += '\t\t},\n';
     } else {
       imports.add('fmt');
+      imports.add('net/url');
+      let resultTypeName = pager.schema.language.go!.name;
+      if (pager.schema.serialization?.xml?.name) {
+        // xml can specifiy its own name, prefer that if available
+        resultTypeName = pager.schema.serialization.xml.name;
+      }
       text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\tu, err := url.Parse(*resp.${pager.schema.language.go!.name}.${pager.nextLink})\n`;
+      text += `\t\t\tu, err := url.Parse(*resp.${resultTypeName}.${pager.nextLink})\n`;
       text += `\t\t\tif err != nil {\n`;
       text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${pager.nextLink}: %w", err)\n`;
       text += `\t\t\t}\n`;
       text += `\t\t\tif u.Scheme == "" {\n`;
-      text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${pager.nextLink} %s", *resp.${pager.schema.language.go!.name}.${pager.nextLink})\n`;
+      text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${pager.nextLink} %s", *resp.${resultTypeName}.${pager.nextLink})\n`;
       text += `\t\t\t}\n`;
       text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
       text += `\t\t},\n`;
