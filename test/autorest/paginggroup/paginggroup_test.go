@@ -26,20 +26,13 @@ func getPagingOperations(t *testing.T) paginggroup.PagingOperations {
 	return client.PagingOperations()
 }
 
-// copied from azcore, fix once type is exported
-type transportFunc func(context.Context, *http.Request) (*http.Response, error)
-
-func (tf transportFunc) Do(ctx context.Context, req *http.Request) (*http.Response, error) {
-	return tf(ctx, req)
-}
-
 func httpClientWithCookieJar() azcore.Transport {
 	j, err := cookiejar.New(nil)
 	if err != nil {
 		panic(err)
 	}
 	http.DefaultClient.Jar = j
-	return transportFunc(func(ctx context.Context, req *http.Request) (*http.Response, error) {
+	return azcore.TransportFunc(func(ctx context.Context, req *http.Request) (*http.Response, error) {
 		return http.DefaultClient.Do(req.WithContext(ctx))
 	})
 }
