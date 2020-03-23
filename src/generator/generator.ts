@@ -12,6 +12,7 @@ import { generateModels } from './models';
 import { generateEnums } from './enums';
 import { generateClient } from './client';
 import { generateTimeHelpers } from './time';
+import { generatePagers } from './pagers';
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
@@ -45,6 +46,11 @@ export async function protocolGen(host: Host) {
     const timeHelpers = await generateTimeHelpers(session);
     for (const helper of values(timeHelpers)) {
       host.WriteFile(`${helper.name.toLowerCase()}.go`, helper.content, undefined, 'source-file-go');
+    }
+
+    const pagers = await generatePagers(session);
+    if (pagers.length > 0) {
+      host.WriteFile('pagers.go', pagers, undefined, 'source-file-go');
     }
   } catch (E) {
     if (debug) {

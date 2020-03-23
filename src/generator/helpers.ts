@@ -189,14 +189,17 @@ export function sortParamInfoByRequired(a: ParamInfo, b: ParamInfo): number {
 
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
-export function genereateReturnsInfo(op: Operation): string[] {
+export function genereateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   // TODO check this implementation, if any additional return information needs to be included for multiple responses
   const firstResp = op.responses![0];
-  let returnType = 'http.Response';
-  if (isSchemaResponse(firstResp)) {
-    returnType = firstResp.schema.language.go!.responseType.name;
+  let returnType = '*http.Response';
+  // must check pageable first as all pageable operations are also schema responses
+  if (!forHandler && isPageableOperation(op)) {
+    returnType = op.language.go!.pageableType.name;
+  } else if (isSchemaResponse(firstResp)) {
+    returnType = '*' + firstResp.schema.language.go!.responseType.name;
   }
-  return [`*${returnType}`, 'error'];
+  return [returnType, 'error'];
 }
 
 // flattens out ParamInfo to return a complete parameter sig string
@@ -269,4 +272,16 @@ export function skipURLEncoding(param: Parameter): boolean {
     return param.extensions['x-ms-skip-url-encoding'] === true;
   }
   return false;
+}
+
+export interface PagerInfo {
+  name: string;
+  schema: Schema;
+  client: string;
+  nextLink: string;
+}
+
+// returns true if the operation is pageable
+export function isPageableOperation(op: Operation): boolean {
+  return op.language.go!.paging && op.language.go!.paging.nextLinkName !== null;
 }
