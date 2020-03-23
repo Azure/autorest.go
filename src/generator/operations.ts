@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, MethodSig, ParamInfo, paramInfo, skipURLEncoding, SortAscending, isSchemaResponse } from './helpers';
+import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, isPageableOperation, MethodSig, ParamInfo, paramInfo, skipURLEncoding, SortAscending, isSchemaResponse, PagerInfo } from './helpers';
 import { OperationNaming } from '../namer/namer';
 
 const dateFormat = '2006-01-02';
@@ -33,7 +33,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // the list of packages to import
     const imports = new ImportManager();
     // add standard imorts
-    imports.add('context');
     imports.add('net/http');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
@@ -48,7 +47,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol request/response creation, fix this
       const reqText = createProtocolRequest(clientName, op, imports);
       const respText = createProtocolResponse(clientName, op, imports);
-      opText += generateOperation(clientName, op);
+      opText += generateOperation(clientName, op, imports);
       opText += reqText;
       opText += respText;
     }
@@ -278,10 +277,23 @@ function formatHeaderResponseValue(header: string, schema: Schema, imports: Impo
   return text;
 }
 
-function generateOperation(clientName: string, op: Operation): string {
+function getParamInfo(op: Operation, imports: ImportManager): paramInfo[] {
+  let params = generateParameterInfo(op);
+  if (!isPageableOperation(op)) {
+    imports.add('context');
+    params = [new paramInfo('ctx', 'context.Context', false, true)].concat(params);
+  }
+  return params;
+}
+
+function generateOperation(clientName: string, op: Operation, imports: ImportManager): string {
+  if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
+    // don't generate a public API for the methods used to advance pages
+    return '';
+  }
   const info = <OperationNaming>op.language.go!;
-  const params = [new paramInfo('ctx', 'context.Context', false, true)].concat(generateParameterInfo(op));
-  const returns = genereateReturnsInfo(op);
+  const params = getParamInfo(op, imports);
+  const returns = genereateReturnsInfo(op, false);
   const protocol = <ProtocolSig>op.language.go!;
   let text = '';
   if (HasDescription(op.language.go!)) {
@@ -294,6 +306,34 @@ function generateOperation(clientName: string, op: Operation): string {
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
+  if (isPageableOperation(op)) {
+    text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
+    text += `\t\tcli: client,\n`;
+    text += `\t\treq: req,\n`;
+    text += `\t\thnd: client.${info.protocolNaming.responseMethod},\n`;
+    const pager = <PagerInfo>op.language.go!.pageableType;
+    if (op.language.go!.paging.member) {
+      protocolReqParams.push(`*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
+      text += `\t\tadv: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${protocolReqParams.join(', ')})\n`;
+      text += '\t\t},\n';
+    } else {
+      imports.add('fmt');
+      text += `\t\tadv: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\t\tu, err := url.Parse(*resp.${pager.schema.language.go!.name}.${pager.nextLink})\n`;
+      text += `\t\t\tif err != nil {\n`;
+      text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${pager.nextLink}: %w", err)\n`;
+      text += `\t\t\t}\n`;
+      text += `\t\t\tif u.Scheme == "" {\n`;
+      text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${pager.nextLink} %s", *resp.${pager.schema.language.go!.name}.${pager.nextLink})\n`;
+      text += `\t\t\t}\n`;
+      text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
+      text += `\t\t},\n`;
+    }
+    text += `\t}, nil\n`;
+    text += '}\n\n';
+    return text;
+  }
   text += `\tresp, err := client.p.Do(ctx, req)\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
@@ -348,15 +388,15 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     text += '\tquery := u.Query()\n';
     for (const qp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; })) {
       if (qp.required === true) {
-        text += `\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+        text += `\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
         // global optional param
         text += `\tif ${qp.language.go!.name} != nil {\n`;
-        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+        text += `\t\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
         text += `\t}\n`;
       } else {
         text += `\tif options != nil && options.${pascalCase(qp.language.go!.name)} != nil {\n`;
-        text += `\t\tquery.Set("${qp.language.go!.name}", ${formatParamValue(qp, imports)})\n`;
+        text += `\t\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
         text += `\t}\n`;
       }
     }
@@ -427,7 +467,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
   sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true)];
-  sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op);
+  sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op, true);
 
   const firstResp = op.responses![0];
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
@@ -489,6 +529,10 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
   let interfaceText = `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
   interfaceText += `type ${group.language.go!.clientName} interface {\n`;
   for (const op of values(group.operations)) {
+    if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
+      // don't generate a public API for the methods used to advance pages
+      continue;
+    }
     for (const param of values(aggregateParameters(op))) {
       if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
         continue;
@@ -498,8 +542,8 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     if (HasDescription(op.language.go!)) {
       interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
     }
-    const params = [new paramInfo('ctx', 'context.Context', false, true)].concat(generateParameterInfo(op));
-    const returns = genereateReturnsInfo(op);
+    const params = getParamInfo(op, imports);
+    const returns = genereateReturnsInfo(op, false);
     interfaceText += `\t${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')})\n`;
   }
   interfaceText += '}\n\n';

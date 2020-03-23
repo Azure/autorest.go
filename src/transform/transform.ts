@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
+import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, isSchemaResponse, ParamInfo, paramInfo } from '../generator/helpers';
+import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo, ParamInfo, paramInfo } from '../generator/helpers';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -242,7 +242,7 @@ function processOperationResponses(session: Session<CodeModel>) {
           header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
         }
       }
-      createResponseType(session.model, group.language.go!.name, op);
+      createResponseType(session.model, group, op);
     }
   }
 }
@@ -252,7 +252,7 @@ interface HttpHeaderWithDescription extends HttpHeader {
 }
 
 // creates the response type to be returned from an operation and updates the operation
-function createResponseType(codeModel: CodeModel, grouopName: string, op: Operation) {
+function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
   // type with a `RawResponse *http.Response` field
   const firstResp = op.responses![0];
@@ -285,8 +285,8 @@ function createResponseType(codeModel: CodeModel, grouopName: string, op: Operat
     // the response doesn't return a model.  if it returns
     // headers then create a model that contains them.
     if (headers.size > 0) {
-      const name = `${grouopName}${op.language.go!.name}Response`;
-      const description = `${name} contains the response from method ${grouopName}.${op.language.go!.name}.`;
+      const name = `${group.language.go!.name}${op.language.go!.name}Response`;
+      const description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
       const object = new ObjectSchema(name, description);
       object.language.go = object.language.default;
       object.language.go!.properties = [
@@ -340,6 +340,31 @@ function createResponseType(codeModel: CodeModel, grouopName: string, op: Operat
     // add this response schema to the global list of response
     const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
     responseSchemas.push(firstResp.schema);
+  }
+  // create pageable type info
+  if (isPageableOperation(op)) {
+    if (codeModel.language.go!.pageableTypes === undefined) {
+      codeModel.language.go!.pageableTypes = new Array<PagerInfo>();
+    }
+    const name = `${(<SchemaResponse>firstResp).schema.language.go!.name}Pager`;
+    // check to see if the pager has already been created
+    const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
+    for (const pager of values(pagers)) {
+      if (pager.name === name) {
+        // found a match, hook it up to the method
+        op.language.go!.pageableType = pager;
+        return;
+      }
+    }
+    // create a new one, add to global list and assign to method
+    const pager = {
+      name: name,
+      schema: (<SchemaResponse>firstResp).schema,
+      client: camelCase(group.language.go!.clientName),
+      nextLink: op.language.go!.paging.nextLinkName,
+    };
+    pagers.push(pager);
+    op.language.go!.pageableType = pager;
   }
 }
 

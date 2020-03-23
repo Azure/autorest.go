@@ -112,6 +112,9 @@ async function process(session: Session<CodeModel>) {
         };
       }
       details.protocolNaming = new protocolMethods(camelCase(details.name));
+      if (op.language.go!.paging && op.language.go!.paging.nextLinkName !== null) {
+        op.language.go!.paging.nextLinkName = pascalCase(op.language.go!.paging.nextLinkName);
+      }
     }
   }
 
