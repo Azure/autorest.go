@@ -76,7 +76,5 @@ type StringPutNullOptions struct {
 type StringResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// simple string
-	Value *string
+	Value       *string
 }
