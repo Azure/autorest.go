@@ -58,9 +58,10 @@ func (client *operations) createCreateRequest(subscriptionId string, resourceGro
 	query.Set("api-version", "2014-04-01-preview")
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPost, *u)
-	err = req.MarshalAsJSON(bodyParameter)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(bodyParameter); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -146,9 +147,10 @@ func (client *operations) updateCreateRequest(subscriptionId string, resourceGro
 	query.Set("api-version", "2014-04-01-preview")
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(bodyParameter)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(bodyParameter); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }

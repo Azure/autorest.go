@@ -369,13 +369,23 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
-  text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
+  let includeURLPath = true;
+  let includeParse = false;
+  if (!(<string>op.requests![0].protocol.http!.path).includes('{')) {
+    text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
+    includeURLPath = false;
+  }
   if (inPathParams.any()) {
     imports.add('strings');
     imports.add('net/url');
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
+      if (includeURLPath) {
+        text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
+        includeURLPath = false;
+        includeParse = true;
+      }
       let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       if (skipURLEncoding(pp)) {
         paramValue = formatParamValue(pp, imports);
@@ -383,11 +393,15 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-
-  text += `\tu, err := client.u.Parse(urlPath)\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
+  if (!(<string>op.requests![0].protocol.http!.path).includes('{') || includeParse) {
+    text += `\tu, err := client.u.Parse(urlPath)\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+  } else {
+    imports.add('net/url');
+    text += '\tvar u *url.URL\n';
+  }
   const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
   if (inQueryParams.any()) {
     // add query parameters
@@ -481,15 +495,17 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     if (setOptionsPrefix === true) {
       body = `options.${pascalCase(body)}`;
       text += `\tif options != nil {\n`;
-      text += `\t\terr = req.MarshalAs${mediaType}(${body})\n`;
-      text += `\t\tif err != nil {\n`;
-      text += `\t\t\treturn nil, err\n`;
+      text += `\t\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
+      text += `\t\t\tif err != nil {\n`;
+      text += `\t\t\t\treturn nil, err\n`;
+      text += `\t\t\t}\n`;
       text += `\t\t}\n`;
       text += '\t}\n';
     } else {
-      text += `\terr = req.MarshalAs${mediaType}(${body})\n`;
-      text += `\tif err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
+      text += `\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
+      text += `\t\tif err != nil {\n`;
+      text += `\t\t\treturn nil, err\n`;
+      text += `\t\t}\n`;
       text += `\t}\n`;
     }
   }

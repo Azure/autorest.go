@@ -648,9 +648,10 @@ func (client *datetimeOperations) putLocalNegativeOffsetMaxDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(datetimeBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(datetimeBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -688,9 +689,10 @@ func (client *datetimeOperations) putLocalNegativeOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(datetimeBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(datetimeBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -728,9 +730,10 @@ func (client *datetimeOperations) putLocalPositiveOffsetMaxDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(datetimeBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(datetimeBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -768,9 +771,10 @@ func (client *datetimeOperations) putLocalPositiveOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(datetimeBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(datetimeBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -808,9 +812,10 @@ func (client *datetimeOperations) putUtcMaxDateTimeCreateRequest(datetimeBody ti
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(datetimeBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(datetimeBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -848,9 +853,10 @@ func (client *datetimeOperations) putUtcMaxDateTime7DigitsCreateRequest(datetime
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(datetimeBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(datetimeBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -888,9 +894,10 @@ func (client *datetimeOperations) putUtcMinDateTimeCreateRequest(datetimeBody ti
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(datetimeBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(datetimeBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
