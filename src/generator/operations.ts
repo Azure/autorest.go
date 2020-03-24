@@ -428,14 +428,11 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     // adding this variable to control whether a 'options.' needs to be added before optional body parameters
-    let setOptionsPrefix = false;
+    let setOptionsPrefix = !bodyParam!.required;
     // default to the body param name
     let body = bodyParam!.language.go!.name;
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
-      if (!bodyParam!.required) {
-        setOptionsPrefix = true;
-      }
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
     } else if (mediaType === 'XML' && bodyParam!.schema.type === SchemaType.Array) {
       // for XML payloads, create a wrapper type if the payload is an array
@@ -461,19 +458,19 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       } else {
         body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
       }
+      // wrapper precludes the need for 'options.' prefix
+      setOptionsPrefix = false;
     } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
       // wrap the body in the custom RFC1123 type
+      text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}`;
       if (!bodyParam!.required) {
-        text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(options.${pascalCase(body)})\n`;
+        text += `(options.${pascalCase(body)})\n`;
       } else {
-        text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
+        text += `(${body})\n`;
       }
       body = 'aux';
-    } else {
-      // final check for each body param to know if it is optional
-      if (!bodyParam!.required) {
-        setOptionsPrefix = true;
-      }
+      // aux precludes the need for 'options.' prefix
+      setOptionsPrefix = false;
     }
     if (setOptionsPrefix === true) {
       body = `options.${pascalCase(body)}`;
