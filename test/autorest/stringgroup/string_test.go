@@ -127,14 +127,14 @@ func TestStringPutEmpty(t *testing.T) {
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// func TestStringPutNull(t *testing.T) {
-// 	client := getStringClient(t)
-// 	result, err := client.PutNull(context.Background())
-// 	if err != nil {
-// 		t.Fatalf("PutNull: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
-// }
+func TestStringPutNull(t *testing.T) {
+	client := getStringClient(t)
+	result, err := client.PutNull(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("PutNull: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 func TestStringPutWhitespace(t *testing.T) {
 	client := getStringClient(t)
