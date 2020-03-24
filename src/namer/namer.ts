@@ -79,7 +79,6 @@ async function process(session: Session<CodeModel>) {
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
     const details = <Language>group.language.go;
-    const opGroupName = capitalizeAcronyms(pascalCase(group.$key));
     details.name = capitalizeAcronyms(pascalCase(details.name));
     // we don't call GetEscapedReservedName here since any operation group that uses a reserved word will have 'Operations' attached to it
     details.clientName = `${details.name}Operations`;
@@ -178,7 +177,7 @@ function getEscapedReservedName(name: string, appendValue: string): string {
   return name;
 }
 
-function removePrefix(name: string, prefix: string): string {
+export function removePrefix(name: string, prefix: string): string {
   if (name === null) {
     throw new Error('removePrefix: Cannot pass in a null value for "name" parameter');
   }
