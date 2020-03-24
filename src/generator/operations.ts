@@ -395,6 +395,9 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     for (const qp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; })) {
       if (qp.required === true) {
         text += `\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
+      } else if (qp.schema.type === SchemaType.Constant) {
+        // omit this query param. TODO once non-required constants are fixed
+        console.warn(`omitting non-required constant query parameter ${qp.language.go!.serializedName}`);
       } else if (qp.implementation === ImplementationLocation.Client) {
         // global optional param
         text += `\tif ${qp.language.go!.name} != nil {\n`;
@@ -418,6 +421,9 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   headerParam.forEach(header => {
     if (header.required) {
       text += `\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
+    } else if (header.schema.type === SchemaType.Constant) {
+      // omit this header. TODO once non-required constants are fixed
+      console.warn(`omitting non-required constant header ${header.language.go!.serializedName}`);
     } else {
       text += `\tif options != nil && options.${pascalCase(header.language.go!.name)} != nil {\n`;
       text += `\t\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
