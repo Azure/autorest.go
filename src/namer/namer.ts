@@ -96,9 +96,7 @@ async function process(session: Session<CodeModel>) {
       for (const param of values(aggregateParameters(op))) {
         const paramDetails = <Language>param.language.go;
         paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
-        // this is a bit of a weird case and might be due to invalid swagger in the test
-        // server.  how can you have an optional parameter that's also a constant?
-        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
+        if (param.required !== true && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
           optionalParams.push(param);
         }
       }

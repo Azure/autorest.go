@@ -427,9 +427,14 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    // adding this variable to control whether a 'options.' needs to be added before optional body parameters
+    let setOptionsPrefix = false;
     // default to the body param name
     let body = bodyParam!.language.go!.name;
     if (bodyParam!.schema.type === SchemaType.Constant) {
+      if (!bodyParam!.required) {
+        setOptionsPrefix = true;
+      }
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
     } else if (mediaType === 'XML' && bodyParam!.schema.type === SchemaType.Array) {
@@ -451,16 +456,39 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         text += `\t\t${fieldName} *${bodyParam!.schema.language.go!.name} \`xml:"${tag}"\`\n`;
       }
       text += '\t}\n';
-      body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
+      if (!bodyParam!.required) {
+        body = `wrapper{${fieldName}: options.${pascalCase(bodyParam!.language.go!.name)}}`;
+      } else {
+        body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
+      }
     } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
       // wrap the body in the custom RFC1123 type
-      text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
+      if (!bodyParam!.required) {
+        text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(options.${body})\n`;
+      } else {
+        text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
+      }
       body = 'aux';
+    } else {
+      // final check for each body param to know if it is optional
+      if (!bodyParam!.required) {
+        setOptionsPrefix = true;
+      }
     }
-    text += `\terr = req.MarshalAs${mediaType}(${body})\n`;
-    text += `\tif err != nil {\n`;
-    text += `\t\treturn nil, err\n`;
-    text += `\t}\n`;
+    if (setOptionsPrefix === true) {
+      body = `options.${pascalCase(body)}`;
+      text += `\tif options != nil {\n`;
+      text += `\t\terr := req.MarshalAs${mediaType}(${body})\n`;
+      text += `\t\tif err != nil {\n`;
+      text += `\t\t\treturn nil, err\n`;
+      text += `\t\t}\n`;
+      text += '\t}\n';
+    } else {
+      text += `\terr := req.MarshalAs${mediaType}(${body})\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+    }
   }
   text += `\treturn req, nil\n`;
   text += '}\n\n';
