@@ -478,15 +478,15 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     if (setOptionsPrefix === true) {
       body = `options.${pascalCase(body)}`;
       text += `\tif options != nil {\n`;
-      text += `\t\terrReq := req.MarshalAs${mediaType}(${body})\n`;
-      text += `\t\tif errReq != nil {\n`;
-      text += `\t\t\treturn nil, errReq\n`;
+      text += `\t\terr = req.MarshalAs${mediaType}(${body})\n`;
+      text += `\t\tif err != nil {\n`;
+      text += `\t\t\treturn nil, err\n`;
       text += `\t\t}\n`;
       text += '\t}\n';
     } else {
-      text += `\terrReq := req.MarshalAs${mediaType}(${body})\n`;
-      text += `\tif errReq != nil {\n`;
-      text += `\t\treturn nil, errReq\n`;
+      text += `\terr = req.MarshalAs${mediaType}(${body})\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
     }
   }
