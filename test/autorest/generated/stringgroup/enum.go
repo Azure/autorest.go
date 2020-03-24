@@ -7,8 +7,9 @@ package stringgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 // EnumOperations contains the methods for the Enum group.

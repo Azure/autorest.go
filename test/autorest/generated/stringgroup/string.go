@@ -7,8 +7,9 @@ package stringgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 // StringOperations contains the methods for the String group.
@@ -32,11 +33,11 @@ type StringOperations interface {
 	// PutBase64URLEncoded - Put value that is base64url encoded
 	PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*http.Response, error)
 	// PutEmpty - Set string value empty ''
-	PutEmpty(ctx context.Context) (*http.Response, error)
+	PutEmpty(ctx context.Context, stringBody string) (*http.Response, error)
 	// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 	PutMBCS(ctx context.Context) (*http.Response, error)
 	// PutNull - Set string value null
-	PutNull(ctx context.Context) (*http.Response, error)
+	PutNull(ctx context.Context, options *StringPutNullOptions) (*http.Response, error)
 	// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 	PutWhitespace(ctx context.Context) (*http.Response, error)
 }
@@ -383,8 +384,8 @@ func (client *stringOperations) putBase64UrlEncodedHandleResponse(resp *azcore.R
 }
 
 // PutEmpty - Set string value empty ''
-func (client *stringOperations) PutEmpty(ctx context.Context) (*http.Response, error) {
-	req, err := client.putEmptyCreateRequest()
+func (client *stringOperations) PutEmpty(ctx context.Context, stringBody string) (*http.Response, error) {
+	req, err := client.putEmptyCreateRequest(stringBody)
 	if err != nil {
 		return nil, err
 	}
@@ -400,14 +401,14 @@ func (client *stringOperations) PutEmpty(ctx context.Context) (*http.Response, e
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *stringOperations) putEmptyCreateRequest() (*azcore.Request, error) {
+func (client *stringOperations) putEmptyCreateRequest(stringBody string) (*azcore.Request, error) {
 	urlPath := "/string/empty"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON("")
+	err = req.MarshalAsJSON(stringBody)
 	if err != nil {
 		return nil, err
 	}
@@ -463,8 +464,8 @@ func (client *stringOperations) putMbcsHandleResponse(resp *azcore.Response) (*h
 }
 
 // PutNull - Set string value null
-func (client *stringOperations) PutNull(ctx context.Context) (*http.Response, error) {
-	req, err := client.putNullCreateRequest()
+func (client *stringOperations) PutNull(ctx context.Context, options *StringPutNullOptions) (*http.Response, error) {
+	req, err := client.putNullCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -480,16 +481,18 @@ func (client *stringOperations) PutNull(ctx context.Context) (*http.Response, er
 }
 
 // putNullCreateRequest creates the PutNull request.
-func (client *stringOperations) putNullCreateRequest() (*azcore.Request, error) {
+func (client *stringOperations) putNullCreateRequest(options *StringPutNullOptions) (*azcore.Request, error) {
 	urlPath := "/string/null"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(nil)
-	if err != nil {
-		return nil, err
+	if options != nil {
+		err := req.MarshalAsJSON(options.StringBody)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
