@@ -120,7 +120,7 @@ func TestStringGetWhitespace(t *testing.T) {
 
 func TestStringPutEmpty(t *testing.T) {
 	client := getStringClient(t)
-	result, err := client.PutEmpty(context.Background())
+	result, err := client.PutEmpty(context.Background(), "")
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
