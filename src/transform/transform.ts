@@ -8,6 +8,7 @@ import { Host, startSession, Session } from '@azure-tools/autorest-extension-bas
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo, ParamInfo, paramInfo } from '../generator/helpers';
+import { removePrefix } from '../namer/namer';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -266,7 +267,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       for (const header of values(resp.protocol.http!.headers)) {
         const head = <HttpHeader>header;
         // convert each header to a property and append it to the response properties list
-        const name = pascalCase(head.header);
+        const name = removePrefix(pascalCase(head.header), 'XMS');
         if (!headers.has(name)) {
           const description = `${name} contains the information returned from the ${head.header} header response.`
           headers.set(name, <HttpHeaderWithDescription>{

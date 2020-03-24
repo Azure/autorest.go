@@ -8,6 +8,7 @@ export const CommonAcronyms = [
   'Api',
   'Ascii',
   'Cpu',
+  'Crc',
   'Css',
   'Csv',
   'Dns',

@@ -204,10 +204,10 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(header: string, schema: Schema, imports: ImportManager, respObj: string): string {
+function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string): string {
   let text = '';
   let needsErrorCheck = true;
-  const name = camelCase(header);
+  const name = camelCase(propName);
   switch (schema.type) {
     case SchemaType.Boolean:
       imports.add('strconv');
@@ -273,7 +273,7 @@ function formatHeaderResponseValue(header: string, schema: Schema, imports: Impo
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
   }
-  text += `\t${respObj}.${pascalCase(header)} = &${name}\n`;
+  text += `\t${respObj}.${propName} = &${name}\n`;
   return text;
 }
 
@@ -528,7 +528,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   // assign any header values
   for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
     if (prop.language.go!.fromHeader) {
-      text += formatHeaderResponseValue(prop.language.go!.fromHeader, prop.schema, imports, 'result');
+      text += formatHeaderResponseValue(prop.language.go!.name, prop.language.go!.fromHeader, prop.schema, imports, 'result');
     }
   }
   const mediaType = getMediaType(firstResp.protocol);
