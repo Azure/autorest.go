@@ -367,9 +367,9 @@ func (client *stringOperations) putBase64UrlEncodedCreateRequest(stringBody []by
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	errReq := req.MarshalAsJSON(stringBody)
-	if errReq != nil {
-		return nil, errReq
+	err = req.MarshalAsJSON(stringBody)
+	if err != nil {
+		return nil, err
 	}
 	return req, nil
 }
@@ -407,9 +407,9 @@ func (client *stringOperations) putEmptyCreateRequest(stringBody string) (*azcor
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	errReq := req.MarshalAsJSON(stringBody)
-	if errReq != nil {
-		return nil, errReq
+	err = req.MarshalAsJSON(stringBody)
+	if err != nil {
+		return nil, err
 	}
 	return req, nil
 }
@@ -447,9 +447,9 @@ func (client *stringOperations) putMbcsCreateRequest() (*azcore.Request, error) 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	errReq := req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
-	if errReq != nil {
-		return nil, errReq
+	err = req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
+	if err != nil {
+		return nil, err
 	}
 	return req, nil
 }
@@ -488,9 +488,9 @@ func (client *stringOperations) putNullCreateRequest(options *StringPutNullOptio
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if options != nil {
-		errReq := req.MarshalAsJSON(options.StringBody)
-		if errReq != nil {
-			return nil, errReq
+		err = req.MarshalAsJSON(options.StringBody)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return req, nil
@@ -529,9 +529,9 @@ func (client *stringOperations) putWhitespaceCreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	errReq := req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
-	if errReq != nil {
-		return nil, errReq
+	err = req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
+	if err != nil {
+		return nil, err
 	}
 	return req, nil
 }
