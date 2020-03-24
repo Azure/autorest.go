@@ -7,7 +7,7 @@ swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 goMappings = {
     //'additionalpropertiesgroup': 'additionalProperties.json',
     //'arraygroup': 'body-array.json',
-    //'azurereportgroup': 'azure-report.json',
+    'azurereportgroup': 'azure-report.json',
     'booleangroup': 'body-boolean.json',
     'bytegroup': 'body-byte.json',
     //'complexgroup': 'body-complex.json',
