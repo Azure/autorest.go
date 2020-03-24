@@ -36,7 +36,7 @@ async function process(session: Session<CodeModel>) {
   for (const obj of values(session.model.schemas.objects)) {
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.schema.language.go;
-      details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
+      details.name = `${schemaTypeToGoType(session.model, prop.schema, true, prop.required!)}`;
       if (prop.schema.type === SchemaType.DateTime) {
         obj.language.go!.needsDateTimeMarshalling = true;
       }
@@ -55,20 +55,25 @@ async function process(session: Session<CodeModel>) {
   }
 }
 
-function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
+function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean, required: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
-      return `[]${schemaTypeToGoType(codeModel, arrayElem, inBody)}`;
+      return `[]${schemaTypeToGoType(codeModel, arrayElem, inBody, required)}`;
     case SchemaType.Binary:
       return 'azcore.ReadSeekCloser';
     case SchemaType.Boolean:
       return 'bool';
     case SchemaType.ByteArray:
       return '[]byte';
+    case SchemaType.Constant:
+      if (!required) {
+        return 'bool';
+      }
+      return schema.language.go!.name;
     case SchemaType.DateTime:
       // header/query param values are parsed separately so they don't need custom types
       if (inBody) {
@@ -89,7 +94,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
-      return `map[string]*${schemaTypeToGoType(codeModel, dictElem, inBody)}`;
+      return `map[string]*${schemaTypeToGoType(codeModel, dictElem, inBody, required)}`;
     case SchemaType.Duration:
       return 'time.Duration';
     case SchemaType.Integer:
@@ -163,7 +168,8 @@ function processOperationRequests(session: Session<CodeModel>) {
       if (op.requests![0].protocol.http!.headers) {
         for (const header of values(op.requests![0].protocol.http!.headers)) {
           const head = <HttpHeader>header;
-          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
+          const param = <Parameter>header;
+          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false, param.required!);
         }
       }
       for (const param of values(aggregateParameters(op))) {
@@ -172,7 +178,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           continue;
         }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
-        param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
+        param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody, param.required!);
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
           // add global param info to the operation group
           if (group.language.go!.globals === undefined) {
@@ -230,16 +236,17 @@ function processOperationResponses(session: Session<CodeModel>) {
       // recursively add the marshalling format to the responses if applicable
       for (const resp of values(op.responses)) {
         if (isSchemaResponse(resp)) {
-          resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true);
+          resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true, true);
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
         if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
           recursiveAddMarshallingFormat(resp.schema, marshallingFormat);
         }
         // fix up schema types for header responses
-        const httpResponse = <HttpResponse>resp.protocol.http;
-        for (const header of values(httpResponse.headers)) {
-          header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
+        for (const header of values(resp.protocol.http!.headers)) {
+          const head = <HttpHeader>header;
+          const param = <Parameter>header;
+          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false, param.required!);
         }
       }
       createResponseType(session.model, group, op);
