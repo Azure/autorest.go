@@ -120,21 +120,21 @@ func TestStringGetWhitespace(t *testing.T) {
 
 func TestStringPutEmpty(t *testing.T) {
 	client := getStringClient(t)
-	result, err := client.PutEmpty(context.Background())
+	result, err := client.PutEmpty(context.Background(), "")
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// func TestStringPutNull(t *testing.T) {
-// 	client := getStringClient(t)
-// 	result, err := client.PutNull(context.Background())
-// 	if err != nil {
-// 		t.Fatalf("PutNull: %v", err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
-// }
+func TestStringPutNull(t *testing.T) {
+	client := getStringClient(t)
+	result, err := client.PutNull(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("PutNull: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 func TestStringPutWhitespace(t *testing.T) {
 	client := getStringClient(t)

@@ -57,6 +57,7 @@ func TestGetFile(t *testing.T) {
 }
 
 func TestGetFileLarge(t *testing.T) {
+	t.Skip()
 	client := getFileGroupClient(t)
 	result, err := client.GetFileLarge(context.Background())
 	if err != nil {

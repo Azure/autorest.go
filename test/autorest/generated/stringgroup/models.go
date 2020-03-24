@@ -67,11 +67,14 @@ type RefColorConstantResponse struct {
 	RefColorConstant *RefColorConstant
 }
 
+// StringPutNullOptions contains the optional parameters for the String.PutNull method.
+type StringPutNullOptions struct {
+	StringBody *string
+}
+
 // StringResponse is the response envelope for operations that return a string type.
 type StringResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// simple string
-	Value *string
+	Value       *string
 }
