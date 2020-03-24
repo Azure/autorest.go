@@ -464,7 +464,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
       // wrap the body in the custom RFC1123 type
       if (!bodyParam!.required) {
-        text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(options.${body})\n`;
+        text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(options.${pascalCase(body)})\n`;
       } else {
         text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
       }
