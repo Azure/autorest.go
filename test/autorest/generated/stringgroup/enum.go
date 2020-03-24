@@ -7,9 +7,8 @@ package stringgroup
 
 import (
 	"context"
-	"net/http"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // EnumOperations contains the methods for the Enum group.
@@ -169,9 +168,9 @@ func (client *enumOperations) putNotExpandableCreateRequest(stringBody Colors) (
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(stringBody)
-	if err != nil {
-		return nil, err
+	errReq := req.MarshalAsJSON(stringBody)
+	if errReq != nil {
+		return nil, errReq
 	}
 	return req, nil
 }
@@ -209,9 +208,9 @@ func (client *enumOperations) putReferencedCreateRequest(enumStringBody Colors) 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(enumStringBody)
-	if err != nil {
-		return nil, err
+	errReq := req.MarshalAsJSON(enumStringBody)
+	if errReq != nil {
+		return nil, errReq
 	}
 	return req, nil
 }
@@ -249,9 +248,9 @@ func (client *enumOperations) putReferencedConstantCreateRequest(enumStringBody 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(enumStringBody)
-	if err != nil {
-		return nil, err
+	errReq := req.MarshalAsJSON(enumStringBody)
+	if errReq != nil {
+		return nil, errReq
 	}
 	return req, nil
 }
