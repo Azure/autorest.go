@@ -402,10 +402,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
   } else {
-    text += `\tu, err := client.u.Parse("/")\n`;
-    text += '\tif err != nil {\n';
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
+    text += `\tu := client.u\n`;
   }
   const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
   if (inQueryParams.any()) {

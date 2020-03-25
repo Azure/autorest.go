@@ -61,10 +61,7 @@ func (client *pageBlobOperations) ClearPages(ctx context.Context, contentLength 
 
 // clearPagesCreateRequest creates the ClearPages request.
 func (client *pageBlobOperations) clearPagesCreateRequest(contentLength int64, options *PageBlobClearPagesOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "page")
 	if options != nil && options.Timeout != nil {
@@ -178,10 +175,7 @@ func (client *pageBlobOperations) CopyIncremental(ctx context.Context, copySourc
 
 // copyIncrementalCreateRequest creates the CopyIncremental request.
 func (client *pageBlobOperations) copyIncrementalCreateRequest(copySource url.URL, options *PageBlobCopyIncrementalOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "incrementalcopy")
 	if options != nil && options.Timeout != nil {
@@ -259,10 +253,7 @@ func (client *pageBlobOperations) Create(ctx context.Context, contentLength int6
 
 // createCreateRequest creates the Create request.
 func (client *pageBlobOperations) createCreateRequest(contentLength int64, blobContentLength int64, options *PageBlobCreateOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -390,10 +381,7 @@ func (client *pageBlobOperations) GetPageRanges(ctx context.Context, options *Pa
 
 // getPageRangesCreateRequest creates the GetPageRanges request.
 func (client *pageBlobOperations) getPageRangesCreateRequest(options *PageBlobGetPageRangesOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "pagelist")
 	if options != nil && options.Snapshot != nil {
@@ -480,10 +468,7 @@ func (client *pageBlobOperations) GetPageRangesDiff(ctx context.Context, options
 
 // getPageRangesDiffCreateRequest creates the GetPageRangesDiff request.
 func (client *pageBlobOperations) getPageRangesDiffCreateRequest(options *PageBlobGetPageRangesDiffOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "pagelist")
 	if options != nil && options.Snapshot != nil {
@@ -576,10 +561,7 @@ func (client *pageBlobOperations) Resize(ctx context.Context, blobContentLength 
 
 // resizeCreateRequest creates the Resize request.
 func (client *pageBlobOperations) resizeCreateRequest(blobContentLength int64, options *PageBlobResizeOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "properties")
 	if options != nil && options.Timeout != nil {
@@ -670,10 +652,7 @@ func (client *pageBlobOperations) UpdateSequenceNumber(ctx context.Context, sequ
 
 // updateSequenceNumberCreateRequest creates the UpdateSequenceNumber request.
 func (client *pageBlobOperations) updateSequenceNumberCreateRequest(sequenceNumberAction SequenceNumberActionType, options *PageBlobUpdateSequenceNumberOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "properties")
 	if options != nil && options.Timeout != nil {
@@ -758,10 +737,7 @@ func (client *pageBlobOperations) UploadPages(ctx context.Context, contentLength
 
 // uploadPagesCreateRequest creates the UploadPages request.
 func (client *pageBlobOperations) uploadPagesCreateRequest(contentLength int64, options *PageBlobUploadPagesOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "page")
 	if options != nil && options.Timeout != nil {
@@ -890,10 +866,7 @@ func (client *pageBlobOperations) UploadPagesFromURL(ctx context.Context, source
 
 // uploadPagesFromUrlCreateRequest creates the UploadPagesFromURL request.
 func (client *pageBlobOperations) uploadPagesFromUrlCreateRequest(sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, options *PageBlobUploadPagesFromURLOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "page")
 	if options != nil && options.Timeout != nil {

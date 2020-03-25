@@ -52,10 +52,7 @@ func (client *directoryOperations) Create(ctx context.Context, options *Director
 
 // createCreateRequest creates the Create request.
 func (client *directoryOperations) createCreateRequest(options *DirectoryCreateOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("resource", "directory")
 	if options != nil && options.Timeout != nil {
@@ -160,10 +157,7 @@ func (client *directoryOperations) Delete(ctx context.Context, recursiveDirector
 
 // deleteCreateRequest creates the Delete request.
 func (client *directoryOperations) deleteCreateRequest(recursiveDirectoryDelete bool, options *DirectoryDeleteOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -237,10 +231,7 @@ func (client *directoryOperations) GetAccessControl(ctx context.Context, options
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
 func (client *directoryOperations) getAccessControlCreateRequest(options *DirectoryGetAccessControlOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("action", "getAccessControl")
 	if options != nil && options.Timeout != nil {
@@ -325,10 +316,7 @@ func (client *directoryOperations) Rename(ctx context.Context, renameSource stri
 
 // renameCreateRequest creates the Rename request.
 func (client *directoryOperations) renameCreateRequest(renameSource string, pathRenameMode *PathRenameMode, options *DirectoryRenameOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -456,10 +444,7 @@ func (client *directoryOperations) SetAccessControl(ctx context.Context, options
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
 func (client *directoryOperations) setAccessControlCreateRequest(options *DirectorySetAccessControlOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("action", "setAccessControl")
 	if options != nil && options.Timeout != nil {

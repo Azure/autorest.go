@@ -84,10 +84,7 @@ func (client *blobOperations) AbortCopyFromURL(ctx context.Context, copyId strin
 
 // abortCopyFromUrlCreateRequest creates the AbortCopyFromURL request.
 func (client *blobOperations) abortCopyFromUrlCreateRequest(copyId string, options *BlobAbortCopyFromURLOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "copy")
 	query.Set("copyid", copyId)
@@ -146,10 +143,7 @@ func (client *blobOperations) AcquireLease(ctx context.Context, options *BlobAcq
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
 func (client *blobOperations) acquireLeaseCreateRequest(options *BlobAcquireLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	if options != nil && options.Timeout != nil {
@@ -231,10 +225,7 @@ func (client *blobOperations) BreakLease(ctx context.Context, options *BlobBreak
 
 // breakLeaseCreateRequest creates the BreakLease request.
 func (client *blobOperations) breakLeaseCreateRequest(options *BlobBreakLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	if options != nil && options.Timeout != nil {
@@ -317,10 +308,7 @@ func (client *blobOperations) ChangeLease(ctx context.Context, leaseId string, p
 
 // changeLeaseCreateRequest creates the ChangeLease request.
 func (client *blobOperations) changeLeaseCreateRequest(leaseId string, proposedLeaseId string, options *BlobChangeLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	if options != nil && options.Timeout != nil {
@@ -398,10 +386,7 @@ func (client *blobOperations) CopyFromURL(ctx context.Context, copySource url.UR
 
 // copyFromUrlCreateRequest creates the CopyFromURL request.
 func (client *blobOperations) copyFromUrlCreateRequest(copySource url.URL, options *BlobCopyFromURLOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -513,10 +498,7 @@ func (client *blobOperations) CreateSnapshot(ctx context.Context, options *BlobC
 
 // createSnapshotCreateRequest creates the CreateSnapshot request.
 func (client *blobOperations) createSnapshotCreateRequest(options *BlobCreateSnapshotOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "snapshot")
 	if options != nil && options.Timeout != nil {
@@ -611,10 +593,7 @@ func (client *blobOperations) Delete(ctx context.Context, options *BlobDeleteOpt
 
 // deleteCreateRequest creates the Delete request.
 func (client *blobOperations) deleteCreateRequest(options *BlobDeleteOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Snapshot != nil {
 		query.Set("snapshot", *options.Snapshot)
@@ -688,10 +667,7 @@ func (client *blobOperations) Download(ctx context.Context, options *BlobDownloa
 
 // downloadCreateRequest creates the Download request.
 func (client *blobOperations) downloadCreateRequest(options *BlobDownloadOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Snapshot != nil {
 		query.Set("snapshot", *options.Snapshot)
@@ -863,10 +839,7 @@ func (client *blobOperations) GetAccessControl(ctx context.Context, options *Blo
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
 func (client *blobOperations) getAccessControlCreateRequest(options *BlobGetAccessControlOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("action", "getAccessControl")
 	if options != nil && options.Timeout != nil {
@@ -951,10 +924,7 @@ func (client *blobOperations) GetAccountInfo(ctx context.Context) (*BlobGetAccou
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *blobOperations) getAccountInfoCreateRequest() (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "account")
 	query.Set("comp", "properties")
@@ -1007,10 +977,7 @@ func (client *blobOperations) GetProperties(ctx context.Context, options *BlobGe
 
 // getPropertiesCreateRequest creates the GetProperties request.
 func (client *blobOperations) getPropertiesCreateRequest(options *BlobGetPropertiesOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Snapshot != nil {
 		query.Set("snapshot", *options.Snapshot)
@@ -1187,10 +1154,7 @@ func (client *blobOperations) ReleaseLease(ctx context.Context, leaseId string, 
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
 func (client *blobOperations) releaseLeaseCreateRequest(leaseId string, options *BlobReleaseLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	if options != nil && options.Timeout != nil {
@@ -1265,10 +1229,7 @@ func (client *blobOperations) Rename(ctx context.Context, renameSource string, o
 
 // renameCreateRequest creates the Rename request.
 func (client *blobOperations) renameCreateRequest(renameSource string, pathRenameMode *PathRenameMode, options *BlobRenameOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -1391,10 +1352,7 @@ func (client *blobOperations) RenewLease(ctx context.Context, leaseId string, op
 
 // renewLeaseCreateRequest creates the RenewLease request.
 func (client *blobOperations) renewLeaseCreateRequest(leaseId string, options *BlobRenewLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	if options != nil && options.Timeout != nil {
@@ -1471,10 +1429,7 @@ func (client *blobOperations) SetAccessControl(ctx context.Context, options *Blo
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
 func (client *blobOperations) setAccessControlCreateRequest(options *BlobSetAccessControlOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("action", "setAccessControl")
 	if options != nil && options.Timeout != nil {
@@ -1560,10 +1515,7 @@ func (client *blobOperations) SetHTTPHeaders(ctx context.Context, options *BlobS
 
 // setHttpHeadersCreateRequest creates the SetHTTPHeaders request.
 func (client *blobOperations) setHttpHeadersCreateRequest(options *BlobSetHTTPHeadersOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "properties")
 	if options != nil && options.Timeout != nil {
@@ -1662,10 +1614,7 @@ func (client *blobOperations) SetMetadata(ctx context.Context, options *BlobSetM
 
 // setMetadataCreateRequest creates the SetMetadata request.
 func (client *blobOperations) setMetadataCreateRequest(options *BlobSetMetadataOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "metadata")
 	if options != nil && options.Timeout != nil {
@@ -1762,10 +1711,7 @@ func (client *blobOperations) SetTier(ctx context.Context, tier AccessTier, opti
 
 // setTierCreateRequest creates the SetTier request.
 func (client *blobOperations) setTierCreateRequest(tier AccessTier, options *BlobSetTierOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "tier")
 	if options != nil && options.Timeout != nil {
@@ -1821,10 +1767,7 @@ func (client *blobOperations) StartCopyFromURL(ctx context.Context, copySource u
 
 // startCopyFromUrlCreateRequest creates the StartCopyFromURL request.
 func (client *blobOperations) startCopyFromUrlCreateRequest(copySource url.URL, options *BlobStartCopyFromURLOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -1925,10 +1868,7 @@ func (client *blobOperations) Undelete(ctx context.Context, options *BlobUndelet
 
 // undeleteCreateRequest creates the Undelete request.
 func (client *blobOperations) undeleteCreateRequest(options *BlobUndeleteOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "undelete")
 	if options != nil && options.Timeout != nil {

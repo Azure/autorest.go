@@ -8,37 +8,38 @@ package storage
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 // ServiceOperations contains the methods for the Service group.
 type ServiceOperations interface {
-	// GetAccountInfo - Returns the sku name and account kind  
+	// GetAccountInfo - Returns the sku name and account kind
 	GetAccountInfo(ctx context.Context) (*ServiceGetAccountInfoResponse, error)
-	// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. 
+	// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
 	GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (*StorageServicePropertiesResponse, error)
-	// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. 
+	// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account.
 	GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (*StorageServiceStatsResponse, error)
-	// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication. 
+	// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
 	GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*UserDelegationKeyResponse, error)
-	// ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account 
+	// ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 	ListContainersSegment(options *ServiceListContainersSegmentOptions) (ListContainersSegmentResponsePager, error)
-	// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules 
+	// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules
 	SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*ServiceSetPropertiesResponse, error)
-	// SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request. 
+	// SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 	SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*ServiceSubmitBatchResponse, error)
 }
 
 // serviceOperations implements the ServiceOperations interface.
-type serviceOperations struct{
+type serviceOperations struct {
 	*Client
 }
 
-// GetAccountInfo - Returns the sku name and account kind  
+// GetAccountInfo - Returns the sku name and account kind
 func (client *serviceOperations) GetAccountInfo(ctx context.Context) (*ServiceGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest()
 	if err != nil {
@@ -95,7 +96,7 @@ func (client *serviceOperations) getAccountInfoHandleResponse(resp *azcore.Respo
 	return &result, nil
 }
 
-// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. 
+// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
 func (client *serviceOperations) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (*StorageServicePropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(options)
 	if err != nil {
@@ -149,7 +150,7 @@ func (client *serviceOperations) getPropertiesHandleResponse(resp *azcore.Respon
 	return &result, resp.UnmarshalAsXML(&result.StorageServiceProperties)
 }
 
-// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. 
+// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account.
 func (client *serviceOperations) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (*StorageServiceStatsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(options)
 	if err != nil {
@@ -208,7 +209,7 @@ func (client *serviceOperations) getStatisticsHandleResponse(resp *azcore.Respon
 	return &result, resp.UnmarshalAsXML(&result.StorageServiceStats)
 }
 
-// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication. 
+// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
 func (client *serviceOperations) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*UserDelegationKeyResponse, error) {
 	req, err := client.getUserDelegationKeyCreateRequest(keyInfo, options)
 	if err != nil {
@@ -272,15 +273,15 @@ func (client *serviceOperations) getUserDelegationKeyHandleResponse(resp *azcore
 	return &result, resp.UnmarshalAsXML(&result.UserDelegationKey)
 }
 
-// ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account 
+// ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 func (client *serviceOperations) ListContainersSegment(options *ServiceListContainersSegmentOptions) (ListContainersSegmentResponsePager, error) {
 	req, err := client.listContainersSegmentCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
 	return &listContainersSegmentResponsePager{
-		client: client,
-		request: req,
+		client:    client,
+		request:   req,
 		responder: client.listContainersSegmentHandleResponse,
 		advancer: func(resp *ListContainersSegmentResponseResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.EnumerationResults.NextMarker)
@@ -340,7 +341,7 @@ func (client *serviceOperations) listContainersSegmentHandleResponse(resp *azcor
 	return &result, resp.UnmarshalAsXML(&result.EnumerationResults)
 }
 
-// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules 
+// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules
 func (client *serviceOperations) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*ServiceSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(storageServiceProperties, options)
 	if err != nil {
@@ -399,7 +400,7 @@ func (client *serviceOperations) setPropertiesHandleResponse(resp *azcore.Respon
 	return &result, nil
 }
 
-// SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request. 
+// SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 func (client *serviceOperations) SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*ServiceSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(contentLength, multipartContentType, body, options)
 	if err != nil {
@@ -458,4 +459,3 @@ func (client *serviceOperations) submitBatchHandleResponse(resp *azcore.Response
 	result.Version = &version
 	return &result, nil
 }
-

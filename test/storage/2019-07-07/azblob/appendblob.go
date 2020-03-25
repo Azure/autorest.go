@@ -49,10 +49,7 @@ func (client *appendBlobOperations) AppendBlock(ctx context.Context, contentLeng
 
 // appendBlockCreateRequest creates the AppendBlock request.
 func (client *appendBlobOperations) appendBlockCreateRequest(contentLength int64, options *AppendBlobAppendBlockOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "appendblock")
 	if options != nil && options.Timeout != nil {
@@ -177,10 +174,7 @@ func (client *appendBlobOperations) AppendBlockFromURL(ctx context.Context, sour
 
 // appendBlockFromUrlCreateRequest creates the AppendBlockFromURL request.
 func (client *appendBlobOperations) appendBlockFromUrlCreateRequest(sourceUrl url.URL, contentLength int64, options *AppendBlobAppendBlockFromURLOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "appendblock")
 	if options != nil && options.Timeout != nil {
@@ -322,10 +316,7 @@ func (client *appendBlobOperations) Create(ctx context.Context, contentLength in
 
 // createCreateRequest creates the Create request.
 func (client *appendBlobOperations) createCreateRequest(contentLength int64, options *AppendBlobCreateOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))

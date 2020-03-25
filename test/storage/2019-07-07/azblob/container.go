@@ -73,10 +73,7 @@ func (client *containerOperations) AcquireLease(ctx context.Context, options *Co
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
 func (client *containerOperations) acquireLeaseCreateRequest(options *ContainerAcquireLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -153,10 +150,7 @@ func (client *containerOperations) BreakLease(ctx context.Context, options *Cont
 
 // breakLeaseCreateRequest creates the BreakLease request.
 func (client *containerOperations) breakLeaseCreateRequest(options *ContainerBreakLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -234,10 +228,7 @@ func (client *containerOperations) ChangeLease(ctx context.Context, leaseId stri
 
 // changeLeaseCreateRequest creates the ChangeLease request.
 func (client *containerOperations) changeLeaseCreateRequest(leaseId string, proposedLeaseId string, options *ContainerChangeLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -310,10 +301,7 @@ func (client *containerOperations) Create(ctx context.Context, options *Containe
 
 // createCreateRequest creates the Create request.
 func (client *containerOperations) createCreateRequest(options *ContainerCreateOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	if options != nil && options.Timeout != nil {
@@ -386,10 +374,7 @@ func (client *containerOperations) Delete(ctx context.Context, options *Containe
 
 // deleteCreateRequest creates the Delete request.
 func (client *containerOperations) deleteCreateRequest(options *ContainerDeleteOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	if options != nil && options.Timeout != nil {
@@ -452,10 +437,7 @@ func (client *containerOperations) GetAccessPolicy(ctx context.Context, options 
 
 // getAccessPolicyCreateRequest creates the GetAccessPolicy request.
 func (client *containerOperations) getAccessPolicyCreateRequest(options *ContainerGetAccessPolicyOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "acl")
@@ -522,10 +504,7 @@ func (client *containerOperations) GetAccountInfo(ctx context.Context) (*Contain
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *containerOperations) getAccountInfoCreateRequest() (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "account")
 	query.Set("comp", "properties")
@@ -578,10 +557,7 @@ func (client *containerOperations) GetProperties(ctx context.Context, options *C
 
 // getPropertiesCreateRequest creates the GetProperties request.
 func (client *containerOperations) getPropertiesCreateRequest(options *ContainerGetPropertiesOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	if options != nil && options.Timeout != nil {
@@ -678,10 +654,7 @@ func (client *containerOperations) ListBlobFlatSegment(options *ContainerListBlo
 
 // listBlobFlatSegmentCreateRequest creates the ListBlobFlatSegment request.
 func (client *containerOperations) listBlobFlatSegmentCreateRequest(options *ContainerListBlobFlatSegmentOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "list")
@@ -756,10 +729,7 @@ func (client *containerOperations) ListBlobHierarchySegment(delimiter string, op
 
 // listBlobHierarchySegmentCreateRequest creates the ListBlobHierarchySegment request.
 func (client *containerOperations) listBlobHierarchySegmentCreateRequest(delimiter string, options *ContainerListBlobHierarchySegmentOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "list")
@@ -829,10 +799,7 @@ func (client *containerOperations) ReleaseLease(ctx context.Context, leaseId str
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
 func (client *containerOperations) releaseLeaseCreateRequest(leaseId string, options *ContainerReleaseLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -902,10 +869,7 @@ func (client *containerOperations) RenewLease(ctx context.Context, leaseId strin
 
 // renewLeaseCreateRequest creates the RenewLease request.
 func (client *containerOperations) renewLeaseCreateRequest(leaseId string, options *ContainerRenewLeaseOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "lease")
 	query.Set("restype", "container")
@@ -977,10 +941,7 @@ func (client *containerOperations) SetAccessPolicy(ctx context.Context, options 
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
 func (client *containerOperations) setAccessPolicyCreateRequest(options *ContainerSetAccessPolicyOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "acl")
@@ -1063,10 +1024,7 @@ func (client *containerOperations) SetMetadata(ctx context.Context, options *Con
 
 // setMetadataCreateRequest creates the SetMetadata request.
 func (client *containerOperations) setMetadataCreateRequest(options *ContainerSetMetadataOptions) (*azcore.Request, error) {
-	u, err := client.u.Parse("/")
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "container")
 	query.Set("comp", "metadata")
