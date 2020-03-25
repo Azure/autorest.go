@@ -36,12 +36,11 @@ type ServiceOperations interface {
 // serviceOperations implements the ServiceOperations interface.
 type serviceOperations struct {
 	*Client
-	urlParameter string
 }
 
 // GetAccountInfo - Returns the sku name and account kind
 func (client *serviceOperations) GetAccountInfo(ctx context.Context) (*ServiceGetAccountInfoResponse, error) {
-	req, err := client.getAccountInfoCreateRequest(client.urlParameter)
+	req, err := client.getAccountInfoCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +56,7 @@ func (client *serviceOperations) GetAccountInfo(ctx context.Context) (*ServiceGe
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *serviceOperations) getAccountInfoCreateRequest(urlParameter string) (*azcore.Request, error) {
+func (client *serviceOperations) getAccountInfoCreateRequest() (*azcore.Request, error) {
 	urlPath := "/"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -98,7 +97,7 @@ func (client *serviceOperations) getAccountInfoHandleResponse(resp *azcore.Respo
 
 // GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
 func (client *serviceOperations) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (*StorageServicePropertiesResponse, error) {
-	req, err := client.getPropertiesCreateRequest(client.urlParameter, options)
+	req, err := client.getPropertiesCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +113,7 @@ func (client *serviceOperations) GetProperties(ctx context.Context, options *Ser
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
-func (client *serviceOperations) getPropertiesCreateRequest(urlParameter string, options *ServiceGetPropertiesOptions) (*azcore.Request, error) {
+func (client *serviceOperations) getPropertiesCreateRequest(options *ServiceGetPropertiesOptions) (*azcore.Request, error) {
 	urlPath := "/"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -152,7 +151,7 @@ func (client *serviceOperations) getPropertiesHandleResponse(resp *azcore.Respon
 
 // GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account.
 func (client *serviceOperations) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (*StorageServiceStatsResponse, error) {
-	req, err := client.getStatisticsCreateRequest(client.urlParameter, options)
+	req, err := client.getStatisticsCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +167,7 @@ func (client *serviceOperations) GetStatistics(ctx context.Context, options *Ser
 }
 
 // getStatisticsCreateRequest creates the GetStatistics request.
-func (client *serviceOperations) getStatisticsCreateRequest(urlParameter string, options *ServiceGetStatisticsOptions) (*azcore.Request, error) {
+func (client *serviceOperations) getStatisticsCreateRequest(options *ServiceGetStatisticsOptions) (*azcore.Request, error) {
 	urlPath := "/"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -211,7 +210,7 @@ func (client *serviceOperations) getStatisticsHandleResponse(resp *azcore.Respon
 
 // GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
 func (client *serviceOperations) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*UserDelegationKeyResponse, error) {
-	req, err := client.getUserDelegationKeyCreateRequest(client.urlParameter, keyInfo, options)
+	req, err := client.getUserDelegationKeyCreateRequest(keyInfo, options)
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +226,7 @@ func (client *serviceOperations) GetUserDelegationKey(ctx context.Context, keyIn
 }
 
 // getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
-func (client *serviceOperations) getUserDelegationKeyCreateRequest(urlParameter string, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*azcore.Request, error) {
+func (client *serviceOperations) getUserDelegationKeyCreateRequest(keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*azcore.Request, error) {
 	urlPath := "/"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -245,9 +244,10 @@ func (client *serviceOperations) getUserDelegationKeyCreateRequest(urlParameter 
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	err = req.MarshalAsXML(keyInfo)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsXML(keyInfo); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -274,7 +274,7 @@ func (client *serviceOperations) getUserDelegationKeyHandleResponse(resp *azcore
 
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 func (client *serviceOperations) ListContainersSegment(options *ServiceListContainersSegmentOptions) (ListContainersSegmentResponsePager, error) {
-	req, err := client.listContainersSegmentCreateRequest(client.urlParameter, options)
+	req, err := client.listContainersSegmentCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +296,7 @@ func (client *serviceOperations) ListContainersSegment(options *ServiceListConta
 }
 
 // listContainersSegmentCreateRequest creates the ListContainersSegment request.
-func (client *serviceOperations) listContainersSegmentCreateRequest(urlParameter string, options *ServiceListContainersSegmentOptions) (*azcore.Request, error) {
+func (client *serviceOperations) listContainersSegmentCreateRequest(options *ServiceListContainersSegmentOptions) (*azcore.Request, error) {
 	urlPath := "/"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -342,7 +342,7 @@ func (client *serviceOperations) listContainersSegmentHandleResponse(resp *azcor
 
 // SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules
 func (client *serviceOperations) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*ServiceSetPropertiesResponse, error) {
-	req, err := client.setPropertiesCreateRequest(client.urlParameter, storageServiceProperties, options)
+	req, err := client.setPropertiesCreateRequest(storageServiceProperties, options)
 	if err != nil {
 		return nil, err
 	}
@@ -358,7 +358,7 @@ func (client *serviceOperations) SetProperties(ctx context.Context, storageServi
 }
 
 // setPropertiesCreateRequest creates the SetProperties request.
-func (client *serviceOperations) setPropertiesCreateRequest(urlParameter string, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*azcore.Request, error) {
+func (client *serviceOperations) setPropertiesCreateRequest(storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*azcore.Request, error) {
 	urlPath := "/"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -376,9 +376,10 @@ func (client *serviceOperations) setPropertiesCreateRequest(urlParameter string,
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	err = req.MarshalAsXML(storageServiceProperties)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsXML(storageServiceProperties); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -400,7 +401,7 @@ func (client *serviceOperations) setPropertiesHandleResponse(resp *azcore.Respon
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 func (client *serviceOperations) SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*ServiceSubmitBatchResponse, error) {
-	req, err := client.submitBatchCreateRequest(client.urlParameter, contentLength, multipartContentType, body, options)
+	req, err := client.submitBatchCreateRequest(contentLength, multipartContentType, body, options)
 	if err != nil {
 		return nil, err
 	}
@@ -416,7 +417,7 @@ func (client *serviceOperations) SubmitBatch(ctx context.Context, contentLength 
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.
-func (client *serviceOperations) submitBatchCreateRequest(urlParameter string, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*azcore.Request, error) {
+func (client *serviceOperations) submitBatchCreateRequest(contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*azcore.Request, error) {
 	urlPath := "/"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -435,9 +436,10 @@ func (client *serviceOperations) submitBatchCreateRequest(urlParameter string, c
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	err = req.MarshalAsXML(body)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsXML(body); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }

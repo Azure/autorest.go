@@ -40,12 +40,11 @@ type PageBlobOperations interface {
 // pageBlobOperations implements the PageBlobOperations interface.
 type pageBlobOperations struct {
 	*Client
-	urlParameter string
 }
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
 func (client *pageBlobOperations) ClearPages(ctx context.Context, contentLength int64, options *PageBlobClearPagesOptions) (*PageBlobClearPagesResponse, error) {
-	req, err := client.clearPagesCreateRequest(client.urlParameter, contentLength, options)
+	req, err := client.clearPagesCreateRequest(contentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -61,9 +60,8 @@ func (client *pageBlobOperations) ClearPages(ctx context.Context, contentLength 
 }
 
 // clearPagesCreateRequest creates the ClearPages request.
-func (client *pageBlobOperations) clearPagesCreateRequest(urlParameter string, contentLength int64, options *PageBlobClearPagesOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) clearPagesCreateRequest(contentLength int64, options *PageBlobClearPagesOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +161,7 @@ func (client *pageBlobOperations) clearPagesHandleResponse(resp *azcore.Response
 
 // CopyIncremental - The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31.
 func (client *pageBlobOperations) CopyIncremental(ctx context.Context, copySource url.URL, options *PageBlobCopyIncrementalOptions) (*PageBlobCopyIncrementalResponse, error) {
-	req, err := client.copyIncrementalCreateRequest(client.urlParameter, copySource, options)
+	req, err := client.copyIncrementalCreateRequest(copySource, options)
 	if err != nil {
 		return nil, err
 	}
@@ -179,9 +177,8 @@ func (client *pageBlobOperations) CopyIncremental(ctx context.Context, copySourc
 }
 
 // copyIncrementalCreateRequest creates the CopyIncremental request.
-func (client *pageBlobOperations) copyIncrementalCreateRequest(urlParameter string, copySource url.URL, options *PageBlobCopyIncrementalOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) copyIncrementalCreateRequest(copySource url.URL, options *PageBlobCopyIncrementalOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -245,7 +242,7 @@ func (client *pageBlobOperations) copyIncrementalHandleResponse(resp *azcore.Res
 
 // Create - The Create operation creates a new page blob.
 func (client *pageBlobOperations) Create(ctx context.Context, contentLength int64, blobContentLength int64, options *PageBlobCreateOptions) (*PageBlobCreateResponse, error) {
-	req, err := client.createCreateRequest(client.urlParameter, contentLength, blobContentLength, options)
+	req, err := client.createCreateRequest(contentLength, blobContentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -261,9 +258,8 @@ func (client *pageBlobOperations) Create(ctx context.Context, contentLength int6
 }
 
 // createCreateRequest creates the Create request.
-func (client *pageBlobOperations) createCreateRequest(urlParameter string, contentLength int64, blobContentLength int64, options *PageBlobCreateOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) createCreateRequest(contentLength int64, blobContentLength int64, options *PageBlobCreateOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -377,7 +373,7 @@ func (client *pageBlobOperations) createHandleResponse(resp *azcore.Response) (*
 
 // GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob
 func (client *pageBlobOperations) GetPageRanges(ctx context.Context, options *PageBlobGetPageRangesOptions) (*PageListResponse, error) {
-	req, err := client.getPageRangesCreateRequest(client.urlParameter, options)
+	req, err := client.getPageRangesCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -393,9 +389,8 @@ func (client *pageBlobOperations) GetPageRanges(ctx context.Context, options *Pa
 }
 
 // getPageRangesCreateRequest creates the GetPageRanges request.
-func (client *pageBlobOperations) getPageRangesCreateRequest(urlParameter string, options *PageBlobGetPageRangesOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) getPageRangesCreateRequest(options *PageBlobGetPageRangesOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -468,7 +463,7 @@ func (client *pageBlobOperations) getPageRangesHandleResponse(resp *azcore.Respo
 
 // GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were changed between target blob and previous snapshot.
 func (client *pageBlobOperations) GetPageRangesDiff(ctx context.Context, options *PageBlobGetPageRangesDiffOptions) (*PageListResponse, error) {
-	req, err := client.getPageRangesDiffCreateRequest(client.urlParameter, options)
+	req, err := client.getPageRangesDiffCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -484,9 +479,8 @@ func (client *pageBlobOperations) GetPageRangesDiff(ctx context.Context, options
 }
 
 // getPageRangesDiffCreateRequest creates the GetPageRangesDiff request.
-func (client *pageBlobOperations) getPageRangesDiffCreateRequest(urlParameter string, options *PageBlobGetPageRangesDiffOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) getPageRangesDiffCreateRequest(options *PageBlobGetPageRangesDiffOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +559,7 @@ func (client *pageBlobOperations) getPageRangesDiffHandleResponse(resp *azcore.R
 
 // Resize - Resize the Blob
 func (client *pageBlobOperations) Resize(ctx context.Context, blobContentLength int64, options *PageBlobResizeOptions) (*PageBlobResizeResponse, error) {
-	req, err := client.resizeCreateRequest(client.urlParameter, blobContentLength, options)
+	req, err := client.resizeCreateRequest(blobContentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -581,9 +575,8 @@ func (client *pageBlobOperations) Resize(ctx context.Context, blobContentLength 
 }
 
 // resizeCreateRequest creates the Resize request.
-func (client *pageBlobOperations) resizeCreateRequest(urlParameter string, blobContentLength int64, options *PageBlobResizeOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) resizeCreateRequest(blobContentLength int64, options *PageBlobResizeOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -660,7 +653,7 @@ func (client *pageBlobOperations) resizeHandleResponse(resp *azcore.Response) (*
 
 // UpdateSequenceNumber - Update the sequence number of the blob
 func (client *pageBlobOperations) UpdateSequenceNumber(ctx context.Context, sequenceNumberAction SequenceNumberActionType, options *PageBlobUpdateSequenceNumberOptions) (*PageBlobUpdateSequenceNumberResponse, error) {
-	req, err := client.updateSequenceNumberCreateRequest(client.urlParameter, sequenceNumberAction, options)
+	req, err := client.updateSequenceNumberCreateRequest(sequenceNumberAction, options)
 	if err != nil {
 		return nil, err
 	}
@@ -676,9 +669,8 @@ func (client *pageBlobOperations) UpdateSequenceNumber(ctx context.Context, sequ
 }
 
 // updateSequenceNumberCreateRequest creates the UpdateSequenceNumber request.
-func (client *pageBlobOperations) updateSequenceNumberCreateRequest(urlParameter string, sequenceNumberAction SequenceNumberActionType, options *PageBlobUpdateSequenceNumberOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) updateSequenceNumberCreateRequest(sequenceNumberAction SequenceNumberActionType, options *PageBlobUpdateSequenceNumberOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -749,7 +741,7 @@ func (client *pageBlobOperations) updateSequenceNumberHandleResponse(resp *azcor
 
 // UploadPages - The Upload Pages operation writes a range of pages to a page blob
 func (client *pageBlobOperations) UploadPages(ctx context.Context, contentLength int64, options *PageBlobUploadPagesOptions) (*PageBlobUploadPagesResponse, error) {
-	req, err := client.uploadPagesCreateRequest(client.urlParameter, contentLength, options)
+	req, err := client.uploadPagesCreateRequest(contentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -765,9 +757,8 @@ func (client *pageBlobOperations) UploadPages(ctx context.Context, contentLength
 }
 
 // uploadPagesCreateRequest creates the UploadPages request.
-func (client *pageBlobOperations) uploadPagesCreateRequest(urlParameter string, contentLength int64, options *PageBlobUploadPagesOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) uploadPagesCreateRequest(contentLength int64, options *PageBlobUploadPagesOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -882,7 +873,7 @@ func (client *pageBlobOperations) uploadPagesHandleResponse(resp *azcore.Respons
 
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL
 func (client *pageBlobOperations) UploadPagesFromURL(ctx context.Context, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, options *PageBlobUploadPagesFromURLOptions) (*PageBlobUploadPagesFromURLResponse, error) {
-	req, err := client.uploadPagesFromUrlCreateRequest(client.urlParameter, sourceUrl, sourceRange, contentLength, rangeParameter, options)
+	req, err := client.uploadPagesFromUrlCreateRequest(sourceUrl, sourceRange, contentLength, rangeParameter, options)
 	if err != nil {
 		return nil, err
 	}
@@ -898,9 +889,8 @@ func (client *pageBlobOperations) UploadPagesFromURL(ctx context.Context, source
 }
 
 // uploadPagesFromUrlCreateRequest creates the UploadPagesFromURL request.
-func (client *pageBlobOperations) uploadPagesFromUrlCreateRequest(urlParameter string, sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, options *PageBlobUploadPagesFromURLOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *pageBlobOperations) uploadPagesFromUrlCreateRequest(sourceUrl url.URL, sourceRange string, contentLength int64, rangeParameter string, options *PageBlobUploadPagesFromURLOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}

@@ -28,12 +28,11 @@ type AppendBlobOperations interface {
 // appendBlobOperations implements the AppendBlobOperations interface.
 type appendBlobOperations struct {
 	*Client
-	urlParameter string
 }
 
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 func (client *appendBlobOperations) AppendBlock(ctx context.Context, contentLength int64, options *AppendBlobAppendBlockOptions) (*AppendBlobAppendBlockResponse, error) {
-	req, err := client.appendBlockCreateRequest(client.urlParameter, contentLength, options)
+	req, err := client.appendBlockCreateRequest(contentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -49,9 +48,8 @@ func (client *appendBlobOperations) AppendBlock(ctx context.Context, contentLeng
 }
 
 // appendBlockCreateRequest creates the AppendBlock request.
-func (client *appendBlobOperations) appendBlockCreateRequest(urlParameter string, contentLength int64, options *AppendBlobAppendBlockOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *appendBlobOperations) appendBlockCreateRequest(contentLength int64, options *AppendBlobAppendBlockOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +160,7 @@ func (client *appendBlobOperations) appendBlockHandleResponse(resp *azcore.Respo
 
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 func (client *appendBlobOperations) AppendBlockFromURL(ctx context.Context, sourceUrl url.URL, contentLength int64, options *AppendBlobAppendBlockFromURLOptions) (*AppendBlobAppendBlockFromURLResponse, error) {
-	req, err := client.appendBlockFromUrlCreateRequest(client.urlParameter, sourceUrl, contentLength, options)
+	req, err := client.appendBlockFromUrlCreateRequest(sourceUrl, contentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -178,9 +176,8 @@ func (client *appendBlobOperations) AppendBlockFromURL(ctx context.Context, sour
 }
 
 // appendBlockFromUrlCreateRequest creates the AppendBlockFromURL request.
-func (client *appendBlobOperations) appendBlockFromUrlCreateRequest(urlParameter string, sourceUrl url.URL, contentLength int64, options *AppendBlobAppendBlockFromURLOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *appendBlobOperations) appendBlockFromUrlCreateRequest(sourceUrl url.URL, contentLength int64, options *AppendBlobAppendBlockFromURLOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +305,7 @@ func (client *appendBlobOperations) appendBlockFromUrlHandleResponse(resp *azcor
 
 // Create - The Create Append Blob operation creates a new append blob.
 func (client *appendBlobOperations) Create(ctx context.Context, contentLength int64, options *AppendBlobCreateOptions) (*AppendBlobCreateResponse, error) {
-	req, err := client.createCreateRequest(client.urlParameter, contentLength, options)
+	req, err := client.createCreateRequest(contentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -324,9 +321,8 @@ func (client *appendBlobOperations) Create(ctx context.Context, contentLength in
 }
 
 // createCreateRequest creates the Create request.
-func (client *appendBlobOperations) createCreateRequest(urlParameter string, contentLength int64, options *AppendBlobCreateOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
+func (client *appendBlobOperations) createCreateRequest(contentLength int64, options *AppendBlobCreateOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}

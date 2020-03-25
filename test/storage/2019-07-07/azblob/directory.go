@@ -30,13 +30,12 @@ type DirectoryOperations interface {
 // directoryOperations implements the DirectoryOperations interface.
 type directoryOperations struct {
 	*Client
-	urlParameter   string
 	pathRenameMode *PathRenameMode
 }
 
 // Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).  To fail if the destination already exists, use a conditional request with If-None-Match: "*".
 func (client *directoryOperations) Create(ctx context.Context, options *DirectoryCreateOptions) (*DirectoryCreateResponse, error) {
-	req, err := client.createCreateRequest(client.urlParameter, options)
+	req, err := client.createCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -52,9 +51,8 @@ func (client *directoryOperations) Create(ctx context.Context, options *Director
 }
 
 // createCreateRequest creates the Create request.
-func (client *directoryOperations) createCreateRequest(urlParameter string, options *DirectoryCreateOptions) (*azcore.Request, error) {
-	urlPath := "/{filesystem}/{path}"
-	u, err := client.u.Parse(urlPath)
+func (client *directoryOperations) createCreateRequest(options *DirectoryCreateOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +143,7 @@ func (client *directoryOperations) createHandleResponse(resp *azcore.Response) (
 
 // Delete - Deletes the directory
 func (client *directoryOperations) Delete(ctx context.Context, recursiveDirectoryDelete bool, options *DirectoryDeleteOptions) (*DirectoryDeleteResponse, error) {
-	req, err := client.deleteCreateRequest(client.urlParameter, recursiveDirectoryDelete, options)
+	req, err := client.deleteCreateRequest(recursiveDirectoryDelete, options)
 	if err != nil {
 		return nil, err
 	}
@@ -161,9 +159,8 @@ func (client *directoryOperations) Delete(ctx context.Context, recursiveDirector
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *directoryOperations) deleteCreateRequest(urlParameter string, recursiveDirectoryDelete bool, options *DirectoryDeleteOptions) (*azcore.Request, error) {
-	urlPath := "/{filesystem}/{path}"
-	u, err := client.u.Parse(urlPath)
+func (client *directoryOperations) deleteCreateRequest(recursiveDirectoryDelete bool, options *DirectoryDeleteOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +220,7 @@ func (client *directoryOperations) deleteHandleResponse(resp *azcore.Response) (
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
 func (client *directoryOperations) GetAccessControl(ctx context.Context, options *DirectoryGetAccessControlOptions) (*DirectoryGetAccessControlResponse, error) {
-	req, err := client.getAccessControlCreateRequest(client.urlParameter, options)
+	req, err := client.getAccessControlCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -239,9 +236,8 @@ func (client *directoryOperations) GetAccessControl(ctx context.Context, options
 }
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
-func (client *directoryOperations) getAccessControlCreateRequest(urlParameter string, options *DirectoryGetAccessControlOptions) (*azcore.Request, error) {
-	urlPath := "/{filesystem}/{path}"
-	u, err := client.u.Parse(urlPath)
+func (client *directoryOperations) getAccessControlCreateRequest(options *DirectoryGetAccessControlOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -312,7 +308,7 @@ func (client *directoryOperations) getAccessControlHandleResponse(resp *azcore.R
 
 // Rename - Rename a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). To fail if the destination already exists, use a conditional request with If-None-Match: "*".
 func (client *directoryOperations) Rename(ctx context.Context, renameSource string, options *DirectoryRenameOptions) (*DirectoryRenameResponse, error) {
-	req, err := client.renameCreateRequest(client.urlParameter, renameSource, client.pathRenameMode, options)
+	req, err := client.renameCreateRequest(renameSource, client.pathRenameMode, options)
 	if err != nil {
 		return nil, err
 	}
@@ -328,9 +324,8 @@ func (client *directoryOperations) Rename(ctx context.Context, renameSource stri
 }
 
 // renameCreateRequest creates the Rename request.
-func (client *directoryOperations) renameCreateRequest(urlParameter string, renameSource string, pathRenameMode *PathRenameMode, options *DirectoryRenameOptions) (*azcore.Request, error) {
-	urlPath := "/{filesystem}/{path}"
-	u, err := client.u.Parse(urlPath)
+func (client *directoryOperations) renameCreateRequest(renameSource string, pathRenameMode *PathRenameMode, options *DirectoryRenameOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
@@ -444,7 +439,7 @@ func (client *directoryOperations) renameHandleResponse(resp *azcore.Response) (
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
 func (client *directoryOperations) SetAccessControl(ctx context.Context, options *DirectorySetAccessControlOptions) (*DirectorySetAccessControlResponse, error) {
-	req, err := client.setAccessControlCreateRequest(client.urlParameter, options)
+	req, err := client.setAccessControlCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -460,9 +455,8 @@ func (client *directoryOperations) SetAccessControl(ctx context.Context, options
 }
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
-func (client *directoryOperations) setAccessControlCreateRequest(urlParameter string, options *DirectorySetAccessControlOptions) (*azcore.Request, error) {
-	urlPath := "/{filesystem}/{path}"
-	u, err := client.u.Parse(urlPath)
+func (client *directoryOperations) setAccessControlCreateRequest(options *DirectorySetAccessControlOptions) (*azcore.Request, error) {
+	u, err := client.u.Parse("/")
 	if err != nil {
 		return nil, err
 	}
