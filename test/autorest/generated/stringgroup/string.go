@@ -32,7 +32,7 @@ type StringOperations interface {
 	// PutBase64URLEncoded - Put value that is base64url encoded
 	PutBase64URLEncoded(ctx context.Context, stringBody []byte) (*http.Response, error)
 	// PutEmpty - Set string value empty ''
-	PutEmpty(ctx context.Context, stringBody string) (*http.Response, error)
+	PutEmpty(ctx context.Context) (*http.Response, error)
 	// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 	PutMBCS(ctx context.Context) (*http.Response, error)
 	// PutNull - Set string value null
@@ -384,8 +384,8 @@ func (client *stringOperations) putBase64UrlEncodedHandleResponse(resp *azcore.R
 }
 
 // PutEmpty - Set string value empty ''
-func (client *stringOperations) PutEmpty(ctx context.Context, stringBody string) (*http.Response, error) {
-	req, err := client.putEmptyCreateRequest(stringBody)
+func (client *stringOperations) PutEmpty(ctx context.Context) (*http.Response, error) {
+	req, err := client.putEmptyCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -401,14 +401,14 @@ func (client *stringOperations) PutEmpty(ctx context.Context, stringBody string)
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *stringOperations) putEmptyCreateRequest(stringBody string) (*azcore.Request, error) {
+func (client *stringOperations) putEmptyCreateRequest() (*azcore.Request, error) {
 	urlPath := "/string/empty"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(stringBody); err != nil {
+	if err := req.MarshalAsJSON(""); err != nil {
 		if err != nil {
 			return nil, err
 		}
