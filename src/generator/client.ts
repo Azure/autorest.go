@@ -91,9 +91,11 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       const globals = <Array<ParamInfo>>group.language.go!.globals;
       globals.sort(sortParamInfoByRequired);
       globals.forEach((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
-        clientParams.push(`${value.name}: ${value.name}`);
-        methodParams.push(`${value.name} ${formatParamInfoTypeName(value)}`);
-      })
+        if (value.name !== 'urlParameter') {
+          clientParams.push(`${value.name}: ${value.name}`);
+          methodParams.push(`${value.name} ${formatParamInfoTypeName(value)}`);
+        }
+      });
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
     text += `func (client *Client) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;

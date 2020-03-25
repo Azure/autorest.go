@@ -62,6 +62,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (group.language.go!.globals) {
       const globals = <Array<ParamInfo>>group.language.go!.globals;
       for (const global of values(globals)) {
+        if (global.name === 'urlParameter') {
+          continue;
+        }
         text += `\t${global.name} ${formatParamInfoTypeName(global)}\n`;
       }
     }
@@ -671,6 +674,9 @@ function extractParamNames(paramInfo: ParamInfo[]): string[] {
   let paramNames = new Array<string>();
   for (const param of values(paramInfo)) {
     let name = param.name;
+    if (param.name === 'urlParameter') {
+      continue;
+    }
     if (param.global) {
       name = `client.${name}`;
     }

@@ -207,7 +207,7 @@ export function genereateReturnsInfo(op: Operation, forHandler: boolean): string
 export function generateParamsSig(paramInfo: ParamInfo[], includeGlobal: boolean): string {
   let params = new Array<string>();
   for (const param of values(paramInfo)) {
-    if (param.global && !includeGlobal) {
+    if ((param.global && !includeGlobal) || param.name === 'urlParameter') {
       continue;
     }
     params.push(`${param.name} ${formatParamInfoTypeName(param)}`);
