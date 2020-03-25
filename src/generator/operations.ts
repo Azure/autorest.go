@@ -372,7 +372,6 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
   let includeURLPath = true;
   let includeParse = false;
-  text += `\tu := client.u\n`;
   if (!(<string>op.requests![0].protocol.http!.path).includes('{')) {
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
     includeURLPath = false;
@@ -395,7 +394,12 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
   }
   if (!(<string>op.requests![0].protocol.http!.path).includes('{') || includeParse) {
-    text += `\tu, err := u.Parse(urlPath)\n`;
+    text += `\tu, err := client.u.Parse(urlPath)\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+  } else {
+    text += `\tu, err := client.u.Parse("/")\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';

@@ -49,9 +49,8 @@ func (client *byteOperations) GetEmpty(ctx context.Context) (*ByteArrayResponse,
 
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *byteOperations) getEmptyCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/byte/empty"
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -87,9 +86,8 @@ func (client *byteOperations) GetInvalid(ctx context.Context) (*ByteArrayRespons
 
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *byteOperations) getInvalidCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/byte/invalid"
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -125,9 +123,8 @@ func (client *byteOperations) GetNonASCII(ctx context.Context) (*ByteArrayRespon
 
 // getNonAsciiCreateRequest creates the GetNonASCII request.
 func (client *byteOperations) getNonAsciiCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/byte/nonAscii"
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -163,9 +160,8 @@ func (client *byteOperations) GetNull(ctx context.Context) (*ByteArrayResponse, 
 
 // getNullCreateRequest creates the GetNull request.
 func (client *byteOperations) getNullCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/byte/null"
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -201,9 +197,8 @@ func (client *byteOperations) PutNonASCII(ctx context.Context, byteBody []byte) 
 
 // putNonAsciiCreateRequest creates the PutNonASCII request.
 func (client *byteOperations) putNonAsciiCreateRequest(byteBody []byte) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/byte/nonAscii"
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

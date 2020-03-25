@@ -41,9 +41,8 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, accountName string)
 
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *pathsOperations) getEmptyCreateRequest(accountName string) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/customuri"
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

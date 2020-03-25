@@ -97,10 +97,9 @@ func (client *pathsOperations) ArrayCSVInPath(ctx context.Context, arrayPath []s
 
 // arrayCsvInPathCreateRequest creates the ArrayCSVInPath request.
 func (client *pathsOperations) arrayCsvInPathCreateRequest(arrayPath []string) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(strings.Join(arrayPath, ",")))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -135,10 +134,9 @@ func (client *pathsOperations) Base64URL(ctx context.Context, base64UrlPath []by
 
 // base64UrlCreateRequest creates the Base64URL request.
 func (client *pathsOperations) base64UrlCreateRequest(base64UrlPath []byte) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/string/bG9yZW0/{base64UrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.StdEncoding.EncodeToString(base64UrlPath)))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -173,10 +171,9 @@ func (client *pathsOperations) ByteEmpty(ctx context.Context) (*http.Response, e
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
 func (client *pathsOperations) byteEmptyCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/byte/empty/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(""))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -211,10 +208,9 @@ func (client *pathsOperations) ByteMultiByte(ctx context.Context, bytePath []byt
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
 func (client *pathsOperations) byteMultiByteCreateRequest(bytePath []byte) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/byte/multibyte/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -249,10 +245,9 @@ func (client *pathsOperations) ByteNull(ctx context.Context, bytePath []byte) (*
 
 // byteNullCreateRequest creates the ByteNull request.
 func (client *pathsOperations) byteNullCreateRequest(bytePath []byte) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/byte/null/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -287,10 +282,9 @@ func (client *pathsOperations) DateNull(ctx context.Context, datePath time.Time)
 
 // dateNullCreateRequest creates the DateNull request.
 func (client *pathsOperations) dateNullCreateRequest(datePath time.Time) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/date/null/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.Format("2006-01-02")))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -325,10 +319,9 @@ func (client *pathsOperations) DateTimeNull(ctx context.Context, dateTimePath ti
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
 func (client *pathsOperations) dateTimeNullCreateRequest(dateTimePath time.Time) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/datetime/null/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.Format(time.RFC3339)))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -363,10 +356,9 @@ func (client *pathsOperations) DateTimeValid(ctx context.Context) (*http.Respons
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
 func (client *pathsOperations) dateTimeValidCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape("2012-01-01T01:01:01Z"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -401,10 +393,9 @@ func (client *pathsOperations) DateValid(ctx context.Context) (*http.Response, e
 
 // dateValidCreateRequest creates the DateValid request.
 func (client *pathsOperations) dateValidCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/date/2012-01-01/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape("2012-01-01"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -439,10 +430,9 @@ func (client *pathsOperations) DoubleDecimalNegative(ctx context.Context) (*http
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
 func (client *pathsOperations) doubleDecimalNegativeCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/double/-9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("-9999999.999"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -477,10 +467,9 @@ func (client *pathsOperations) DoubleDecimalPositive(ctx context.Context) (*http
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
 func (client *pathsOperations) doubleDecimalPositiveCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/double/9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("9999999.999"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -515,10 +504,9 @@ func (client *pathsOperations) EnumNull(ctx context.Context, enumPath UriColor) 
 
 // enumNullCreateRequest creates the EnumNull request.
 func (client *pathsOperations) enumNullCreateRequest(enumPath UriColor) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/string/null/{enumPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -553,10 +541,9 @@ func (client *pathsOperations) EnumValid(ctx context.Context, enumPath UriColor)
 
 // enumValidCreateRequest creates the EnumValid request.
 func (client *pathsOperations) enumValidCreateRequest(enumPath UriColor) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/enum/green%20color/{enumPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{enumPath}", url.PathEscape(string(enumPath)))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -591,10 +578,9 @@ func (client *pathsOperations) FloatScientificNegative(ctx context.Context) (*ht
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
 func (client *pathsOperations) floatScientificNegativeCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/float/-1.034E-20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("-1.034e-20"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -629,10 +615,9 @@ func (client *pathsOperations) FloatScientificPositive(ctx context.Context) (*ht
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
 func (client *pathsOperations) floatScientificPositiveCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/float/1.034E+20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("103400000000000000000"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -667,10 +652,9 @@ func (client *pathsOperations) GetBooleanFalse(ctx context.Context) (*http.Respo
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
 func (client *pathsOperations) getBooleanFalseCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/bool/false/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("false"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -705,10 +689,9 @@ func (client *pathsOperations) GetBooleanTrue(ctx context.Context) (*http.Respon
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
 func (client *pathsOperations) getBooleanTrueCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/bool/true/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("true"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -743,10 +726,9 @@ func (client *pathsOperations) GetIntNegativeOneMillion(ctx context.Context) (*h
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
 func (client *pathsOperations) getIntNegativeOneMillionCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/int/-1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("-1000000"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -781,10 +763,9 @@ func (client *pathsOperations) GetIntOneMillion(ctx context.Context) (*http.Resp
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
 func (client *pathsOperations) getIntOneMillionCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/int/1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("1000000"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -819,10 +800,9 @@ func (client *pathsOperations) GetNegativeTenBillion(ctx context.Context) (*http
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
 func (client *pathsOperations) getNegativeTenBillionCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/long/-10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("-10000000000"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -857,10 +837,9 @@ func (client *pathsOperations) GetTenBillion(ctx context.Context) (*http.Respons
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
 func (client *pathsOperations) getTenBillionCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/long/10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("10000000000"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -895,10 +874,9 @@ func (client *pathsOperations) StringEmpty(ctx context.Context) (*http.Response,
 
 // stringEmptyCreateRequest creates the StringEmpty request.
 func (client *pathsOperations) stringEmptyCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/string/empty/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(""))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -933,10 +911,9 @@ func (client *pathsOperations) StringNull(ctx context.Context, stringPath string
 
 // stringNullCreateRequest creates the StringNull request.
 func (client *pathsOperations) stringNullCreateRequest(stringPath string) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/string/null/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(stringPath))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -971,10 +948,9 @@ func (client *pathsOperations) StringURLEncoded(ctx context.Context) (*http.Resp
 
 // stringUrlEncodedCreateRequest creates the StringURLEncoded request.
 func (client *pathsOperations) stringUrlEncodedCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("begin!*'();:@ &=+$,/?#[]end"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1009,10 +985,9 @@ func (client *pathsOperations) StringURLNonEncoded(ctx context.Context) (*http.R
 
 // stringUrlNonEncodedCreateRequest creates the StringURLNonEncoded request.
 func (client *pathsOperations) stringUrlNonEncodedCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/string/begin!*'();:@&=+$,end/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", "begin!*'();:@&=+$,end")
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1047,10 +1022,9 @@ func (client *pathsOperations) StringUnicode(ctx context.Context) (*http.Respons
 
 // stringUnicodeCreateRequest creates the StringUnicode request.
 func (client *pathsOperations) stringUnicodeCreateRequest() (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/string/unicode/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("啊齄丂狛狜隣郎隣兀﨩"))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -1085,10 +1059,9 @@ func (client *pathsOperations) UnixTimeURL(ctx context.Context, unixTimeUrlPath 
 
 // unixTimeUrlCreateRequest creates the UnixTimeURL request.
 func (client *pathsOperations) unixTimeUrlCreateRequest(unixTimeUrlPath time.Time) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(unixTimeUrlPath.String()))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

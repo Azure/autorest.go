@@ -47,11 +47,10 @@ func (client *operations) Create(ctx context.Context, subscriptionId string, res
 
 // createCreateRequest creates the Create request.
 func (client *operations) createCreateRequest(subscriptionId string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -95,11 +94,10 @@ func (client *operations) List(ctx context.Context, resourceGroupName string) (*
 
 // listCreateRequest creates the List request.
 func (client *operations) listCreateRequest(resourceGroupName string) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape("123456"))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -138,11 +136,10 @@ func (client *operations) Update(ctx context.Context, subscriptionId string, res
 
 // updateCreateRequest creates the Update request.
 func (client *operations) updateCreateRequest(subscriptionId string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary) (*azcore.Request, error) {
-	u := client.u
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionId))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	u, err := u.Parse(urlPath)
+	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
