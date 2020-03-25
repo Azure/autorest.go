@@ -45,8 +45,9 @@ func (client *filesOperations) GetEmptyFile(ctx context.Context) (*http.Response
 
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
 func (client *filesOperations) getEmptyFileCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/files/stream/empty"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -82,8 +83,9 @@ func (client *filesOperations) GetFile(ctx context.Context) (*http.Response, err
 
 // getFileCreateRequest creates the GetFile request.
 func (client *filesOperations) getFileCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/files/stream/nonempty"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -119,8 +121,9 @@ func (client *filesOperations) GetFileLarge(ctx context.Context) (*http.Response
 
 // getFileLargeCreateRequest creates the GetFileLarge request.
 func (client *filesOperations) getFileLargeCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/files/stream/verylarge"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

@@ -51,8 +51,9 @@ func (client *boolOperations) GetFalse(ctx context.Context) (*BoolResponse, erro
 
 // getFalseCreateRequest creates the GetFalse request.
 func (client *boolOperations) getFalseCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/bool/false"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -88,8 +89,9 @@ func (client *boolOperations) GetInvalid(ctx context.Context) (*BoolResponse, er
 
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *boolOperations) getInvalidCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/bool/invalid"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -125,8 +127,9 @@ func (client *boolOperations) GetNull(ctx context.Context) (*BoolResponse, error
 
 // getNullCreateRequest creates the GetNull request.
 func (client *boolOperations) getNullCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/bool/null"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -162,8 +165,9 @@ func (client *boolOperations) GetTrue(ctx context.Context) (*BoolResponse, error
 
 // getTrueCreateRequest creates the GetTrue request.
 func (client *boolOperations) getTrueCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/bool/true"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -199,8 +203,9 @@ func (client *boolOperations) PutFalse(ctx context.Context) (*http.Response, err
 
 // putFalseCreateRequest creates the PutFalse request.
 func (client *boolOperations) putFalseCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/bool/false"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
@@ -240,8 +245,9 @@ func (client *boolOperations) PutTrue(ctx context.Context) (*http.Response, erro
 
 // putTrueCreateRequest creates the PutTrue request.
 func (client *boolOperations) putTrueCreateRequest() (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/bool/true"
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}

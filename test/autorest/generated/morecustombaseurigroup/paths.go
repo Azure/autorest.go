@@ -45,10 +45,11 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secre
 
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string, dnsSuffix string, keyName string, subscriptionID string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+	u := client.u
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
-	u, err := client.u.Parse(urlPath)
+	u, err := u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
