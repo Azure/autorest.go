@@ -71,6 +71,7 @@ jobs:
           npm start&
           popd
           go test -v ./... 2>&1 | $(GOBIN)/go-junit-report > report.xml
+          go run ./autorest/covreport/main.go
           pushd ../src/node_modules/@microsoft.azure/autorest.testserver
           npm stop
         displayName: 'Run Acceptance Tests'
@@ -81,3 +82,8 @@ jobs:
           testRunner: JUnit
           testResultsFiles: $(goTestPath)/report.xml
           failTaskOnFailedTests: true
+
+      - script: |
+          npm run coverage-push -- $(Build.Repository.Name) $(Build.SourceBranch) $(github-token) $(storage-coverage-user) $(storage-coverage-pass)
+        displayName: 'Publish AutoRest Test Server Coverage Report'
+        workingDirectory: src/node_modules/@microsoft.azure/autorest.testserver
