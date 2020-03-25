@@ -91,7 +91,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
       const globals = <Array<ParamInfo>>group.language.go!.globals;
       globals.sort(sortParamInfoByRequired);
       globals.forEach((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
-        if (value.name !== 'urlParameter') {
+        if (!value.isHost) {
           clientParams.push(`${value.name}: ${value.name}`);
           methodParams.push(`${value.name} ${formatParamInfoTypeName(value)}`);
         }

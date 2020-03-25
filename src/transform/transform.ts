@@ -188,7 +188,7 @@ function processOperationRequests(session: Session<CodeModel>) {
             return false;
           });
           if (index === -1) {
-            globals.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, true, param.required === true));
+            globals.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, true, param.required === true, (param.extensions!['x-ms-priortity'] === 0 && param.extensions!['x-in'] === 'path')));
           }
         }
       }

@@ -62,7 +62,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (group.language.go!.globals) {
       const globals = <Array<ParamInfo>>group.language.go!.globals;
       for (const global of values(globals)) {
-        if (global.name === 'urlParameter') {
+        if (global.isHost) {
           continue;
         }
         text += `\t${global.name} ${formatParamInfoTypeName(global)}\n`;
@@ -284,7 +284,7 @@ function getParamInfo(op: Operation, imports: ImportManager): paramInfo[] {
   let params = generateParameterInfo(op);
   if (!isPageableOperation(op)) {
     imports.add('context');
-    params = [new paramInfo('ctx', 'context.Context', false, true)].concat(params);
+    params = [new paramInfo('ctx', 'context.Context', false, true, false)].concat(params);
   }
   return params;
 }
@@ -519,7 +519,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const name = info.protocolNaming.responseMethod;
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true)];
+  sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true, false)];
   sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op, true);
 
   const firstResp = op.responses![0];
@@ -669,7 +669,7 @@ function extractParamNames(paramInfo: ParamInfo[]): string[] {
   let paramNames = new Array<string>();
   for (const param of values(paramInfo)) {
     let name = param.name;
-    if (param.name === 'urlParameter') {
+    if (param.isHost) {
       continue;
     }
     if (param.global) {
