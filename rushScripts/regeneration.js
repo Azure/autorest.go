@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-var exec = require('child_process').exec;
+const exec = require('child_process').exec;
 
-swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagger/';
+const swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 
-goMappings = {
+const goMappings = {
     //'additionalpropertiesgroup': 'additionalProperties.json',
     //'arraygroup': 'body-array.json',
     //'azurereportgroup': 'azure-report.json',
@@ -41,13 +41,21 @@ goMappings = {
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     let inputFile = swaggerDir + goMappings[namespace];
-    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --namespace=' + namespace + ' --output-folder=test/autorest/generated/' + namespace, autorestCallback(namespace, inputFile));
+    generate(inputFile, namespace, 'test/autorest/generated/' + namespace);
 } 
 
+const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
+generate(blobStorage, 'azblob', 'test/storage/2019-07-07/azblob');
+
+// helper to log the package being generated before invocation
+function generate(inputFile, namespace, outputDir) {
+    console.log('generating ' + inputFile);
+    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --namespace=' + namespace + ' --output-folder=' + outputDir, autorestCallback(outputDir, inputFile));
+}
+
 // use a function factory to create the closure so that the values of namespace and inputFile are captured on each iteration
-function autorestCallback(namespace, inputFile) {
+function autorestCallback(outputDir, inputFile) {
     return function (error, stdout, stderr) {
-        console.log('generating ' + inputFile);
         // print any output or error from the autorest command
         if (stdout !== '') {
             console.log('autorest stdout: ' + stdout);
@@ -59,13 +67,13 @@ function autorestCallback(namespace, inputFile) {
         if (error !== null) {
             console.error('\x1b[91m%s\x1b[0m', 'autorest exec error: ' + error);
         }
+        console.log('done generating ' + inputFile);
         // format the output on success
         // print any output or error from go fmt
         if (stderr === '' && error === null) {
-            let formatDir = './test/autorest/generated/' + namespace + '/...';
-            exec('go fmt ' + formatDir,
+            exec('go fmt ./' + outputDir,
             function (error, stdout, stderr) {
-                console.log('formatting ' + formatDir);
+                console.log('formatting ' + outputDir);
                 if (stdout !== '') {
                     console.log('fmt stdout: ' + stdout);
                 }
