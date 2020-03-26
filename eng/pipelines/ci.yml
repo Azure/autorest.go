@@ -83,7 +83,10 @@ jobs:
           testResultsFiles: $(goTestPath)/report.xml
           failTaskOnFailedTests: true
 
-      - script: |
-          npm run coverage-push -- $(Build.Repository.Name) $(Build.SourceBranch) $(github-token) $(storage-coverage-user) $(storage-coverage-pass)
-        displayName: 'Publish AutoRest Test Server Coverage Report'
-        workingDirectory: src/node_modules/@microsoft.azure/autorest.testserver
+      - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
+        - pwsh: |
+            $currentVersion = node -p -e "require('./src/package.json').version";
+            $currentVersion="$currentVersion-$(Build.BuildNumber)";
+            cd src/node_modules/@microsoft.azure/autorest.testserver;
+            npm run coverage-push -- $(Build.Repository.Name) $(Build.SourceBranch) $(github-token) $(storage-coverage-user) $(storage-coverage-pass) $currentVersion;
+          displayName: 'Publish AutoRest Test Server Coverage Report'
