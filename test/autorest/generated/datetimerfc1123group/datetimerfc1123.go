@@ -345,9 +345,10 @@ func (client *datetimerfc1123Operations) putUtcMaxDateTimeCreateRequest(datetime
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	aux := timeRFC1123(datetimeBody)
-	err = req.MarshalAsJSON(aux)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(aux); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -386,9 +387,10 @@ func (client *datetimerfc1123Operations) putUtcMinDateTimeCreateRequest(datetime
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	aux := timeRFC1123(datetimeBody)
-	err = req.MarshalAsJSON(aux)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(aux); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }

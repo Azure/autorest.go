@@ -62,6 +62,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (group.language.go!.globals) {
       const globals = <Array<ParamInfo>>group.language.go!.globals;
       for (const global of values(globals)) {
+        if (global.isHost) {
+          continue;
+        }
         text += `\t${global.name} ${formatParamInfoTypeName(global)}\n`;
       }
     }
@@ -281,7 +284,7 @@ function getParamInfo(op: Operation, imports: ImportManager): paramInfo[] {
   let params = generateParameterInfo(op);
   if (!isPageableOperation(op)) {
     imports.add('context');
-    params = [new paramInfo('ctx', 'context.Context', false, true)].concat(params);
+    params = [new paramInfo('ctx', 'context.Context', false, true, false)].concat(params);
   }
   return params;
 }
@@ -369,11 +372,24 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
-  text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
-  if (inPathParams.any()) {
+  // storage needs the client.u to be the source-of-truth for the full path.
+  // however, swagger requires that all operations specify a path, which is at odds with storage.
+  // to work around this, storage specifies x-ms-path paths with path params but doesn't
+  // actually reference the path params (i.e. no params with which to replace the tokens).
+  // so, if a path contains tokens but there are no path params, skip emitting the path.
+  let includeParse = false;
+  const pathStr = <string>op.requests![0].protocol.http!.path;
+  const pathContainsParms = pathStr.includes('{');
+  if (!pathContainsParms && pathStr.length > 1) {
+    // path does NOT include path params and is not "/", emit it
+    text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
+    includeParse = true;
+  } else if (inPathParams.any()) {
+    // swagger defines path params, emit path and replace tokens
     imports.add('strings');
     imports.add('net/url');
+    text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
       let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
@@ -382,12 +398,16 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
+    includeParse = true;
   }
-
-  text += `\tu, err := client.u.Parse(urlPath)\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
+  if (includeParse) {
+    text += `\tu, err := client.u.Parse(urlPath)\n`;
+    text += '\tif err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+  } else {
+    text += `\tu := client.u\n`;
+  }
   const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
   if (inQueryParams.any()) {
     // add query parameters
@@ -479,15 +499,17 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     if (setOptionsPrefix === true) {
       body = `options.${pascalCase(body)}`;
       text += `\tif options != nil {\n`;
-      text += `\t\terr = req.MarshalAs${mediaType}(${body})\n`;
-      text += `\t\tif err != nil {\n`;
-      text += `\t\t\treturn nil, err\n`;
+      text += `\t\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
+      text += `\t\t\tif err != nil {\n`;
+      text += `\t\t\t\treturn nil, err\n`;
+      text += `\t\t\t}\n`;
       text += `\t\t}\n`;
       text += '\t}\n';
     } else {
-      text += `\terr = req.MarshalAs${mediaType}(${body})\n`;
-      text += `\tif err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
+      text += `\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
+      text += `\t\tif err != nil {\n`;
+      text += `\t\t\treturn nil, err\n`;
+      text += `\t\t}\n`;
       text += `\t}\n`;
     }
   }
@@ -501,7 +523,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const name = info.protocolNaming.responseMethod;
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true)];
+  sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true, false)];
   sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op, true);
 
   const firstResp = op.responses![0];
@@ -651,6 +673,9 @@ function extractParamNames(paramInfo: ParamInfo[]): string[] {
   let paramNames = new Array<string>();
   for (const param of values(paramInfo)) {
     let name = param.name;
+    if (param.isHost) {
+      continue;
+    }
     if (param.global) {
       name = `client.${name}`;
     }

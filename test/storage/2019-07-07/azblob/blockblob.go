@@ -32,12 +32,11 @@ type BlockBlobOperations interface {
 // blockBlobOperations implements the BlockBlobOperations interface.
 type blockBlobOperations struct {
 	*Client
-	urlParameter string
 }
 
 // CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as part of a blob, a block must have been successfully written to the server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing the new and existing blocks together. You can do this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded version of the block, whichever list it may belong to.
 func (client *blockBlobOperations) CommitBlockList(ctx context.Context, blocks BlockLookupList, options *BlockBlobCommitBlockListOptions) (*BlockBlobCommitBlockListResponse, error) {
-	req, err := client.commitBlockListCreateRequest(client.urlParameter, blocks, options)
+	req, err := client.commitBlockListCreateRequest(blocks, options)
 	if err != nil {
 		return nil, err
 	}
@@ -53,12 +52,8 @@ func (client *blockBlobOperations) CommitBlockList(ctx context.Context, blocks B
 }
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
-func (client *blockBlobOperations) commitBlockListCreateRequest(urlParameter string, blocks BlockLookupList, options *BlockBlobCommitBlockListOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLookupList, options *BlockBlobCommitBlockListOptions) (*azcore.Request, error) {
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "blocklist")
 	if options != nil && options.Timeout != nil {
@@ -124,9 +119,10 @@ func (client *blockBlobOperations) commitBlockListCreateRequest(urlParameter str
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	err = req.MarshalAsXML(blocks)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsXML(blocks); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -179,7 +175,7 @@ func (client *blockBlobOperations) commitBlockListHandleResponse(resp *azcore.Re
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 func (client *blockBlobOperations) GetBlockList(ctx context.Context, listType BlockListType, options *BlockBlobGetBlockListOptions) (*BlockListResponse, error) {
-	req, err := client.getBlockListCreateRequest(client.urlParameter, listType, options)
+	req, err := client.getBlockListCreateRequest(listType, options)
 	if err != nil {
 		return nil, err
 	}
@@ -195,12 +191,8 @@ func (client *blockBlobOperations) GetBlockList(ctx context.Context, listType Bl
 }
 
 // getBlockListCreateRequest creates the GetBlockList request.
-func (client *blockBlobOperations) getBlockListCreateRequest(urlParameter string, listType BlockListType, options *BlockBlobGetBlockListOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+func (client *blockBlobOperations) getBlockListCreateRequest(listType BlockListType, options *BlockBlobGetBlockListOptions) (*azcore.Request, error) {
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "blocklist")
 	if options != nil && options.Snapshot != nil {
@@ -258,7 +250,7 @@ func (client *blockBlobOperations) getBlockListHandleResponse(resp *azcore.Respo
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
 func (client *blockBlobOperations) StageBlock(ctx context.Context, blockId string, contentLength int64, options *BlockBlobStageBlockOptions) (*BlockBlobStageBlockResponse, error) {
-	req, err := client.stageBlockCreateRequest(client.urlParameter, blockId, contentLength, options)
+	req, err := client.stageBlockCreateRequest(blockId, contentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -274,12 +266,8 @@ func (client *blockBlobOperations) StageBlock(ctx context.Context, blockId strin
 }
 
 // stageBlockCreateRequest creates the StageBlock request.
-func (client *blockBlobOperations) stageBlockCreateRequest(urlParameter string, blockId string, contentLength int64, options *BlockBlobStageBlockOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+func (client *blockBlobOperations) stageBlockCreateRequest(blockId string, contentLength int64, options *BlockBlobStageBlockOptions) (*azcore.Request, error) {
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "block")
 	query.Set("blockid", blockId)
@@ -355,7 +343,7 @@ func (client *blockBlobOperations) stageBlockHandleResponse(resp *azcore.Respons
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
 func (client *blockBlobOperations) StageBlockFromURL(ctx context.Context, blockId string, contentLength int64, sourceUrl url.URL, options *BlockBlobStageBlockFromURLOptions) (*BlockBlobStageBlockFromURLResponse, error) {
-	req, err := client.stageBlockFromUrlCreateRequest(client.urlParameter, blockId, contentLength, sourceUrl, options)
+	req, err := client.stageBlockFromUrlCreateRequest(blockId, contentLength, sourceUrl, options)
 	if err != nil {
 		return nil, err
 	}
@@ -371,12 +359,8 @@ func (client *blockBlobOperations) StageBlockFromURL(ctx context.Context, blockI
 }
 
 // stageBlockFromUrlCreateRequest creates the StageBlockFromURL request.
-func (client *blockBlobOperations) stageBlockFromUrlCreateRequest(urlParameter string, blockId string, contentLength int64, sourceUrl url.URL, options *BlockBlobStageBlockFromURLOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+func (client *blockBlobOperations) stageBlockFromUrlCreateRequest(blockId string, contentLength int64, sourceUrl url.URL, options *BlockBlobStageBlockFromURLOptions) (*azcore.Request, error) {
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "block")
 	query.Set("blockid", blockId)
@@ -468,7 +452,7 @@ func (client *blockBlobOperations) stageBlockFromUrlHandleResponse(resp *azcore.
 
 // Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use the Put Block List operation.
 func (client *blockBlobOperations) Upload(ctx context.Context, contentLength int64, options *BlockBlobUploadOptions) (*BlockBlobUploadResponse, error) {
-	req, err := client.uploadCreateRequest(client.urlParameter, contentLength, options)
+	req, err := client.uploadCreateRequest(contentLength, options)
 	if err != nil {
 		return nil, err
 	}
@@ -484,12 +468,8 @@ func (client *blockBlobOperations) Upload(ctx context.Context, contentLength int
 }
 
 // uploadCreateRequest creates the Upload request.
-func (client *blockBlobOperations) uploadCreateRequest(urlParameter string, contentLength int64, options *BlockBlobUploadOptions) (*azcore.Request, error) {
-	urlPath := "/{containerName}/{blob}"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, options *BlockBlobUploadOptions) (*azcore.Request, error) {
+	u := client.u
 	query := u.Query()
 	if options != nil && options.Timeout != nil {
 		query.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))

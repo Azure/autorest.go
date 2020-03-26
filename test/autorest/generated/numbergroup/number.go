@@ -611,9 +611,10 @@ func (client *numberOperations) putBigDecimalCreateRequest(numberBody float64) (
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(numberBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(numberBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -651,9 +652,10 @@ func (client *numberOperations) putBigDecimalNegativeDecimalCreateRequest() (*az
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(-99999999.99)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(-99999999.99); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -691,9 +693,10 @@ func (client *numberOperations) putBigDecimalPositiveDecimalCreateRequest() (*az
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(99999999.99)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(99999999.99); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -731,9 +734,10 @@ func (client *numberOperations) putBigDoubleCreateRequest(numberBody float64) (*
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(numberBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(numberBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -771,9 +775,10 @@ func (client *numberOperations) putBigDoubleNegativeDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(-99999999.99)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(-99999999.99); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -811,9 +816,10 @@ func (client *numberOperations) putBigDoublePositiveDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(99999999.99)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(99999999.99); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -851,9 +857,10 @@ func (client *numberOperations) putBigFloatCreateRequest(numberBody float32) (*a
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(numberBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(numberBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -891,9 +898,10 @@ func (client *numberOperations) putSmallDecimalCreateRequest(numberBody float64)
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(numberBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(numberBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -931,9 +939,10 @@ func (client *numberOperations) putSmallDoubleCreateRequest(numberBody float64) 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(numberBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(numberBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }
@@ -971,9 +980,10 @@ func (client *numberOperations) putSmallFloatCreateRequest(numberBody float32) (
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	err = req.MarshalAsJSON(numberBody)
-	if err != nil {
-		return nil, err
+	if err := req.MarshalAsJSON(numberBody); err != nil {
+		if err != nil {
+			return nil, err
+		}
 	}
 	return req, nil
 }

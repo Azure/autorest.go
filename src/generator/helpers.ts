@@ -108,6 +108,7 @@ export interface ParamInfo {
   type: string;
   global: boolean;
   required: boolean;
+  isHost: boolean;
 }
 
 export class paramInfo implements ParamInfo {
@@ -115,11 +116,13 @@ export class paramInfo implements ParamInfo {
   type: string;
   global: boolean;
   required: boolean;
-  constructor(name: string, type: string, global: boolean, required: boolean) {
+  isHost: boolean;
+  constructor(name: string, type: string, global: boolean, required: boolean, isHost: boolean) {
     this.name = name;
     this.type = type;
     this.global = global;
     this.required = required;
+    this.isHost = isHost;
   }
 }
 
@@ -164,13 +167,17 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
     }
     // include client and method params
     const global = param.implementation === ImplementationLocation.Client;
-    params.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true));
+    let isHost = false;
+    if (global) {
+      isHost = param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
+    }
+    params.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true, isHost));
   }
   // move global optional params to the end of the slice
   params.sort(sortParamInfoByRequired);
   // if there's a method-optional params struct add it last
   if (op.requests![0].language.go!.optionalParam) {
-    params.push(new paramInfo('options', op.requests![0].language.go!.optionalParam.name, false, false));
+    params.push(new paramInfo('options', op.requests![0].language.go!.optionalParam.name, false, false, false));
   }
 
   return params;
@@ -207,7 +214,7 @@ export function genereateReturnsInfo(op: Operation, forHandler: boolean): string
 export function generateParamsSig(paramInfo: ParamInfo[], includeGlobal: boolean): string {
   let params = new Array<string>();
   for (const param of values(paramInfo)) {
-    if (param.global && !includeGlobal) {
+    if ((param.global && !includeGlobal) || param.isHost) {
       continue;
     }
     params.push(`${param.name} ${formatParamInfoTypeName(param)}`);

@@ -62,36 +62,36 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 }
 
 // ServiceOperations returns the ServiceOperations associated with this client.
-func (client *Client) ServiceOperations(urlParameter string) ServiceOperations {
-	return &serviceOperations{Client: client, urlParameter: urlParameter}
+func (client *Client) ServiceOperations() ServiceOperations {
+	return &serviceOperations{Client: client}
 }
 
 // ContainerOperations returns the ContainerOperations associated with this client.
-func (client *Client) ContainerOperations(urlParameter string) ContainerOperations {
-	return &containerOperations{Client: client, urlParameter: urlParameter}
+func (client *Client) ContainerOperations() ContainerOperations {
+	return &containerOperations{Client: client}
 }
 
 // DirectoryOperations returns the DirectoryOperations associated with this client.
-func (client *Client) DirectoryOperations(urlParameter string, pathRenameMode *PathRenameMode) DirectoryOperations {
-	return &directoryOperations{Client: client, urlParameter: urlParameter, pathRenameMode: pathRenameMode}
+func (client *Client) DirectoryOperations(pathRenameMode *PathRenameMode) DirectoryOperations {
+	return &directoryOperations{Client: client, pathRenameMode: pathRenameMode}
 }
 
 // BlobOperations returns the BlobOperations associated with this client.
-func (client *Client) BlobOperations(urlParameter string, pathRenameMode *PathRenameMode) BlobOperations {
-	return &blobOperations{Client: client, urlParameter: urlParameter, pathRenameMode: pathRenameMode}
+func (client *Client) BlobOperations(pathRenameMode *PathRenameMode) BlobOperations {
+	return &blobOperations{Client: client, pathRenameMode: pathRenameMode}
 }
 
 // PageBlobOperations returns the PageBlobOperations associated with this client.
-func (client *Client) PageBlobOperations(urlParameter string) PageBlobOperations {
-	return &pageBlobOperations{Client: client, urlParameter: urlParameter}
+func (client *Client) PageBlobOperations() PageBlobOperations {
+	return &pageBlobOperations{Client: client}
 }
 
 // AppendBlobOperations returns the AppendBlobOperations associated with this client.
-func (client *Client) AppendBlobOperations(urlParameter string) AppendBlobOperations {
-	return &appendBlobOperations{Client: client, urlParameter: urlParameter}
+func (client *Client) AppendBlobOperations() AppendBlobOperations {
+	return &appendBlobOperations{Client: client}
 }
 
 // BlockBlobOperations returns the BlockBlobOperations associated with this client.
-func (client *Client) BlockBlobOperations(urlParameter string) BlockBlobOperations {
-	return &blockBlobOperations{Client: client, urlParameter: urlParameter}
+func (client *Client) BlockBlobOperations() BlockBlobOperations {
+	return &blockBlobOperations{Client: client}
 }
