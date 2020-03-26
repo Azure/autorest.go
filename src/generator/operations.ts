@@ -373,30 +373,32 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
-  let includeURLPath = true;
+  // storage needs the client.u to be the source-of-truth for the full path.
+  // however, swagger requires that all operations specify a path, which is at odds with storage.
+  // to work around this, storage specifies x-ms-path paths with path params but doesn't
+  // actually reference the path params (i.e. no params with which to replace the tokens).
+  // so, if a path contains tokens but there are no path params, skip emitting the path.
   let includeParse = false;
-  if (!(<string>op.requests![0].protocol.http!.path).includes('{')) {
+  const pathContainsParms = (<string>op.requests![0].protocol.http!.path).includes('{');
+  if (!pathContainsParms) {
+    // path does NOT include path params, emit it
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
-    includeURLPath = false;
-  }
-  if (inPathParams.any()) {
+  } else if (inPathParams.any()) {
+    // swagger defines path params, emit path and replace tokens
     imports.add('strings');
     imports.add('net/url');
+    text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
-      if (includeURLPath) {
-        text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
-        includeURLPath = false;
-        includeParse = true;
-      }
       let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       if (skipURLEncoding(pp)) {
         paramValue = formatParamValue(pp, imports);
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
+    includeParse = true;
   }
-  if (!(<string>op.requests![0].protocol.http!.path).includes('{') || includeParse) {
+  if (!pathContainsParms || includeParse) {
     text += `\tu, err := client.u.Parse(urlPath)\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
