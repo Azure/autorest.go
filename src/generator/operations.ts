@@ -379,10 +379,12 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   // actually reference the path params (i.e. no params with which to replace the tokens).
   // so, if a path contains tokens but there are no path params, skip emitting the path.
   let includeParse = false;
-  const pathContainsParms = (<string>op.requests![0].protocol.http!.path).includes('{');
-  if (!pathContainsParms) {
-    // path does NOT include path params, emit it
+  const pathStr = <string>op.requests![0].protocol.http!.path;
+  const pathContainsParms = pathStr.includes('{');
+  if (!pathContainsParms && pathStr.length > 1) {
+    // path does NOT include path params and is not "/", emit it
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
+    includeParse = true;
   } else if (inPathParams.any()) {
     // swagger defines path params, emit path and replace tokens
     imports.add('strings');
@@ -398,7 +400,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     includeParse = true;
   }
-  if (!pathContainsParms || includeParse) {
+  if (includeParse) {
     text += `\tu, err := client.u.Parse(urlPath)\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';

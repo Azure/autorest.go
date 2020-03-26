@@ -57,11 +57,7 @@ func (client *serviceOperations) GetAccountInfo(ctx context.Context) (*ServiceGe
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *serviceOperations) getAccountInfoCreateRequest() (*azcore.Request, error) {
-	urlPath := "/"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "account")
 	query.Set("comp", "properties")
@@ -114,11 +110,7 @@ func (client *serviceOperations) GetProperties(ctx context.Context, options *Ser
 
 // getPropertiesCreateRequest creates the GetProperties request.
 func (client *serviceOperations) getPropertiesCreateRequest(options *ServiceGetPropertiesOptions) (*azcore.Request, error) {
-	urlPath := "/"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "properties")
@@ -168,11 +160,7 @@ func (client *serviceOperations) GetStatistics(ctx context.Context, options *Ser
 
 // getStatisticsCreateRequest creates the GetStatistics request.
 func (client *serviceOperations) getStatisticsCreateRequest(options *ServiceGetStatisticsOptions) (*azcore.Request, error) {
-	urlPath := "/"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "stats")
@@ -227,11 +215,7 @@ func (client *serviceOperations) GetUserDelegationKey(ctx context.Context, keyIn
 
 // getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
 func (client *serviceOperations) getUserDelegationKeyCreateRequest(keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*azcore.Request, error) {
-	urlPath := "/"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "userdelegationkey")
@@ -297,11 +281,7 @@ func (client *serviceOperations) ListContainersSegment(options *ServiceListConta
 
 // listContainersSegmentCreateRequest creates the ListContainersSegment request.
 func (client *serviceOperations) listContainersSegmentCreateRequest(options *ServiceListContainersSegmentOptions) (*azcore.Request, error) {
-	urlPath := "/"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "list")
 	if options != nil && options.Prefix != nil {
@@ -359,11 +339,7 @@ func (client *serviceOperations) SetProperties(ctx context.Context, storageServi
 
 // setPropertiesCreateRequest creates the SetProperties request.
 func (client *serviceOperations) setPropertiesCreateRequest(storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*azcore.Request, error) {
-	urlPath := "/"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("restype", "service")
 	query.Set("comp", "properties")
@@ -418,11 +394,7 @@ func (client *serviceOperations) SubmitBatch(ctx context.Context, contentLength 
 
 // submitBatchCreateRequest creates the SubmitBatch request.
 func (client *serviceOperations) submitBatchCreateRequest(contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*azcore.Request, error) {
-	urlPath := "/"
-	u, err := client.u.Parse(urlPath)
-	if err != nil {
-		return nil, err
-	}
+	u := client.u
 	query := u.Query()
 	query.Set("comp", "batch")
 	if options != nil && options.Timeout != nil {
