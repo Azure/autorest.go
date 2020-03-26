@@ -169,7 +169,7 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
     const global = param.implementation === ImplementationLocation.Client;
     let isHost = false;
     if (global) {
-      isHost = (param.extensions!['x-ms-priority'] === 0 && param.extensions!['x-in'] === 'path');
+      isHost = (param.extensions ? (param.extensions!['x-ms-priority'] === 0 && param.extensions!['x-in'] === 'path') : false);
     }
     params.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true, isHost));
   }
