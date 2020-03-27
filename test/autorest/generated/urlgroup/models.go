@@ -49,7 +49,7 @@ type PathItemsGetAllWithValuesOptions struct {
 // PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull
 // method.
 type PathItemsGetGlobalAndLocalQueryNullOptions struct {
-	// should contain value 'localStringQuery'
+	// should contain null value
 	LocalStringQuery *string
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
@@ -66,21 +66,21 @@ type PathItemsGetGlobalQueryNullOptions struct {
 // PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull
 // method.
 type PathItemsGetLocalPathItemQueryNullOptions struct {
-	// should contain value 'localStringQuery'
+	// should contain value null
 	LocalStringQuery *string
-	// A string value 'pathItemStringQuery' that appears as a query parameter
+	// should contain value null
 	PathItemStringQuery *string
 }
 
 // QueriesArrayStringCSVEmptyOptions contains the optional parameters for the Queries.ArrayStringCSVEmpty method.
 type QueriesArrayStringCSVEmptyOptions struct {
-	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	// an empty array [] of string using the csv-array format
 	ArrayQuery *[]string
 }
 
 // QueriesArrayStringCSVNullOptions contains the optional parameters for the Queries.ArrayStringCSVNull method.
 type QueriesArrayStringCSVNullOptions struct {
-	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+	// a null array of string using the csv-array format
 	ArrayQuery *[]string
 }
 
@@ -116,7 +116,7 @@ type QueriesByteMultiByteOptions struct {
 
 // QueriesByteNullOptions contains the optional parameters for the Queries.ByteNull method.
 type QueriesByteNullOptions struct {
-	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+	// null as byte array (no query parameters in uri)
 	ByteQuery *[]byte
 }
 
@@ -140,7 +140,7 @@ type QueriesDoubleNullOptions struct {
 
 // QueriesEnumNullOptions contains the optional parameters for the Queries.EnumNull method.
 type QueriesEnumNullOptions struct {
-	// 'green color' enum value
+	// null string value
 	EnumQuery *UriColor
 }
 
