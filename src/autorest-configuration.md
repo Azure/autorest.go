@@ -24,13 +24,9 @@ pipeline-model: v3
 # Pipeline Configuration
 ``` yaml
 pipeline:
-  # Choose names for everything 
-  go-namer:
+  # fix up names add Go-specific data to the code model
+  go-transform:
     input: modelerfour/identity
-
-  # add Go-specific data to the code model
-  go-transform: 
-    input: go-namer 
 
   # generates code for the protocol layer
   go-protocol:

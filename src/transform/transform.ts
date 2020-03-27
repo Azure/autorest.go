@@ -8,7 +8,7 @@ import { Host, startSession, Session } from '@azure-tools/autorest-extension-bas
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo, ParamInfo, paramInfo } from '../generator/helpers';
-import { removePrefix } from '../namer/namer';
+import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -17,6 +17,8 @@ export async function transform(host: Host) {
   try {
     const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
+    // run the namer first, so that any transformations are applied on proper names
+    await namer(session);
     await process(session);
 
     // output the model to the pipeline

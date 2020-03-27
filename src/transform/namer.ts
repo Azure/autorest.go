@@ -10,26 +10,6 @@ import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters } from '../generator/helpers';
 
-// The namer creates idiomatic Go names for types, properties, operations etc.
-export async function namer(host: Host) {
-  const debug = await host.GetValue('debug') || false;
-
-  try {
-    const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-
-    await process(session);
-
-    // output the model to the pipeline
-    host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
-
-  } catch (E) {
-    if (debug) {
-      console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
-    }
-    throw E;
-  }
-}
-
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
 
@@ -53,7 +33,8 @@ class protocolMethods implements protocolNaming {
   }
 }
 
-async function process(session: Session<CodeModel>) {
+// The namer creates idiomatic Go names for types, properties, operations etc.
+export async function namer(session: Session<CodeModel>) {
   const model = session.model;
 
   if (model.language.go) {
