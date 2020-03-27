@@ -351,12 +351,12 @@ func (client *blobOperations) changeLeaseHandleResponse(resp *azcore.Response) (
 		return nil, err
 	}
 	result.LastModified = &lastModified
-	leaseId := resp.Header.Get("x-ms-lease-id")
-	result.LeaseId = &leaseId
 	clientRequestId := resp.Header.Get("x-ms-client-request-id")
 	result.ClientRequestId = &clientRequestId
 	requestId := resp.Header.Get("x-ms-request-id")
 	result.RequestId = &requestId
+	leaseId := resp.Header.Get("x-ms-lease-id")
+	result.LeaseId = &leaseId
 	version := resp.Header.Get("x-ms-version")
 	result.Version = &version
 	date, err := time.Parse(time.RFC1123, resp.Header.Get("Date"))
@@ -677,6 +677,7 @@ func (client *blobOperations) downloadCreateRequest(options *BlobDownloadOptions
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)
+	req.SkipBodyDownload()
 	if options != nil && options.RangeParameter != nil {
 		req.Header.Set("x-ms-range", *options.RangeParameter)
 	}

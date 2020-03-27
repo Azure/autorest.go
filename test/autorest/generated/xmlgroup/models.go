@@ -130,7 +130,7 @@ type Blob struct {
 	Deleted *bool `xml:"Deleted"`
 
 	// Dictionary of <string>
-	Metadata *map[string]*string `xml:"string"`
+	Metadata *map[string]*string `xml:"String"`
 	Name     *string             `xml:"Name"`
 
 	// Properties of a blob
@@ -231,7 +231,7 @@ type ComplexTypeWithMeta struct {
 // An Azure Storage container
 type Container struct {
 	// Dictionary of <string>
-	Metadata *map[string]*string `xml:"string"`
+	Metadata *map[string]*string `xml:"String"`
 	Name     *string             `xml:"Name"`
 
 	// Properties of a container

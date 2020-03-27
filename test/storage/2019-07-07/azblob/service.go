@@ -402,6 +402,7 @@ func (client *serviceOperations) submitBatchCreateRequest(contentLength int64, m
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPost, *u)
+	req.SkipBodyDownload()
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Header.Set("Content-Type", multipartContentType)
 	req.Header.Set("x-ms-version", "2019-07-07")
