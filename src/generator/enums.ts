@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, joinComma } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, getEnums, HasDescription } from './helpers';
+import { contentPreamble, getEnums, hasDescription } from '../common/helpers';
 
 // Creates the content in enums.go
 export async function generateEnums(session: Session<CodeModel>): Promise<string> {
@@ -16,7 +16,7 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
     // no enums to generate
     return '';
   }
-  let text = await ContentPreamble(session);
+  let text = await contentPreamble(session);
   for (const enm of values(enums)) {
     if (enm.desc) {
       text += `${comment(enm.name, '// ')} - ${enm.desc}\n`;
@@ -25,7 +25,7 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
     const vals = new Array<string>();
     text += 'const (\n'
     for (const val of values(enm.choices)) {
-      if (HasDescription(val.language.go!)) {
+      if (hasDescription(val.language.go!)) {
         text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
       }
       text += `\t${val.language.go!.name} ${enm.name} = "${val.value}"\n`;

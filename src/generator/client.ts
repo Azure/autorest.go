@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, formatParamInfoTypeName, ImportManager, ParamInfo, sortParamInfoByRequired } from './helpers';
+import { contentPreamble, formatParamInfoTypeName, ImportManager, ParamInfo, sortParamInfoByRequired } from '../common/helpers';
 
 // generates content for client.go
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
@@ -16,7 +16,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   imports.add('net/url');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
-  let text = await ContentPreamble(session);
+  let text = await contentPreamble(session);
   text += imports.text();
 
   // ClientOptions

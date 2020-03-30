@@ -40,7 +40,7 @@ export class ImportManager {
       const first = this.imports[0];
       return `import ${this.alias(first)}"${first.imp}"\n\n`;
     }
-    this.imports.sort((a: importEntry, b: importEntry) => { return SortAscending(a.imp, b.imp) });
+    this.imports.sort((a: importEntry, b: importEntry) => { return sortAscending(a.imp, b.imp) });
     let text = 'import (\n';
     for (const imp of values(this.imports)) {
       text += `\t${this.alias(imp)}"${imp.imp}"\n`;
@@ -78,7 +78,7 @@ export class ImportManager {
 }
 
 // returns the common source-file preamble (license comment, package name etc)
-export async function ContentPreamble(session: Session<CodeModel>): Promise<string> {
+export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
   const headerText = comment(await session.getValue("header-text", "MISSING LICENSE HEADER"), "// ");
   const namespace = await session.getValue('namespace');
   let text = `${headerText}\n\n`;
@@ -87,12 +87,12 @@ export async function ContentPreamble(session: Session<CodeModel>): Promise<stri
 }
 
 // used to sort strings in ascending order
-export function SortAscending(a: string, b: string): number {
+export function sortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
 // returns true if the language contains a description
-export function HasDescription(lang: Language): boolean {
+export function hasDescription(lang: Language): boolean {
   return (lang.description !== undefined && lang.description.length > 0 && !lang.description.startsWith('MISSING'));
 }
 
@@ -111,7 +111,7 @@ export interface ParamInfo {
   isHost: boolean;
 }
 
-export class paramInfo implements ParamInfo {
+export class ParamInfo implements ParamInfo {
   name: string;
   type: string;
   global: boolean;
@@ -171,13 +171,13 @@ export function generateParameterInfo(op: Operation): ParamInfo[] {
     if (global) {
       isHost = param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
     }
-    params.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true, isHost));
+    params.push(new ParamInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true, isHost));
   }
   // move global optional params to the end of the slice
   params.sort(sortParamInfoByRequired);
   // if there's a method-optional params struct add it last
   if (op.requests![0].language.go!.optionalParam) {
-    params.push(new paramInfo('options', op.requests![0].language.go!.optionalParam.name, false, false, false));
+    params.push(new ParamInfo('options', op.requests![0].language.go!.optionalParam.name, false, false, false));
   }
 
   return params;
@@ -242,9 +242,9 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
   // group all enum categories into a single array so they can be sorted
   const enums = new Array<EnumEntry>();
   for (const choice of values(schemas.choices)) {
-    choice.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
+    choice.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
-    if (HasDescription(choice.language.go!)) {
+    if (hasDescription(choice.language.go!)) {
       entry.desc = choice.language.go!.description;
     }
     enums.push(entry);
@@ -254,12 +254,12 @@ export function getEnums(schemas: Schemas): EnumEntry[] {
       continue;
     }
     const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
-    if (HasDescription(choice.language.go!)) {
+    if (hasDescription(choice.language.go!)) {
       entry.desc = choice.language.go!.description;
     }
     enums.push(entry);
   }
-  enums.sort((a: EnumEntry, b: EnumEntry) => { return SortAscending(a.name, b.name) });
+  enums.sort((a: EnumEntry, b: EnumEntry) => { return sortAscending(a.name, b.name) });
   return enums;
 }
 
