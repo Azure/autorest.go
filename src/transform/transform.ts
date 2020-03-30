@@ -5,9 +5,9 @@
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo, ParamInfo, paramInfo } from '../generator/helpers';
+import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo, ParamInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
@@ -190,7 +190,7 @@ function processOperationRequests(session: Session<CodeModel>) {
             return false;
           });
           if (index === -1) {
-            globals.push(new paramInfo(param.language.go!.name, param.schema.language.go!.name, true, param.required === true, param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path'));
+            globals.push(new ParamInfo(param.language.go!.name, param.schema.language.go!.name, true, param.required === true, param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path'));
           }
         }
       }

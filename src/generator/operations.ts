@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, ContentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, HasDescription, ImportManager, isArraySchema, isPageableOperation, MethodSig, ParamInfo, paramInfo, skipURLEncoding, SortAscending, isSchemaResponse, PagerInfo } from './helpers';
+import { aggregateParameters, contentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, hasDescription, ImportManager, isArraySchema, isPageableOperation, MethodSig, ParamInfo, skipURLEncoding, sortAscending, isSchemaResponse, PagerInfo } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 
 const dateFormat = '2006-01-02';
@@ -38,7 +38,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
     const clientName = camelCase(group.language.go!.clientName);
     let opText = '';
-    group.operations.sort((a: Operation, b: Operation) => { return SortAscending(a.language.go!.name, b.language.go!.name) });
+    group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
@@ -53,7 +53,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     const interfaceText = createInterfaceDefinition(group, imports);
     // stitch it all together
-    let text = await ContentPreamble(session);
+    let text = await contentPreamble(session);
     text += imports.text();
     text += interfaceText;
     text += `// ${clientName} implements the ${group.language.go!.clientName} interface.\n`;
@@ -280,11 +280,11 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   return text;
 }
 
-function getParamInfo(op: Operation, imports: ImportManager): paramInfo[] {
+function getParamInfo(op: Operation, imports: ImportManager): ParamInfo[] {
   let params = generateParameterInfo(op);
   if (!isPageableOperation(op)) {
     imports.add('context');
-    params = [new paramInfo('ctx', 'context.Context', false, true, false)].concat(params);
+    params = [new ParamInfo('ctx', 'context.Context', false, true, false)].concat(params);
   }
   return params;
 }
@@ -299,7 +299,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   const returns = genereateReturnsInfo(op, false);
   const protocol = <ProtocolSig>op.language.go!;
   let text = '';
-  if (HasDescription(op.language.go!)) {
+  if (hasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
   }
   text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')}) {\n`;
@@ -523,7 +523,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const name = info.protocolNaming.responseMethod;
   // stick the method signature info into the code model so other generators can access it later
   const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.responseMethod.params = [new paramInfo('resp', '*azcore.Response', false, true, false)];
+  sig.protocolSigs.responseMethod.params = [new ParamInfo('resp', '*azcore.Response', false, true, false)];
   sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op, true);
 
   const firstResp = op.responses![0];
@@ -596,7 +596,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       }
       imports.addImportForSchemaType(param.schema);
     }
-    if (HasDescription(op.language.go!)) {
+    if (hasDescription(op.language.go!)) {
       interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
     }
     const params = getParamInfo(op, imports);

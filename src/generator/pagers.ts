@@ -7,14 +7,14 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, ImportManager, PagerInfo, SortAscending } from './helpers';
+import { contentPreamble, ImportManager, PagerInfo, sortAscending } from '../common/helpers';
 
 // Creates the content in pagers.go
 export async function generatePagers(session: Session<CodeModel>): Promise<string> {
   if (session.model.language.go!.pageableTypes === undefined) {
     return '';
   }
-  let text = await ContentPreamble(session);
+  let text = await contentPreamble(session);
 
   // add standard imports
   const imports = new ImportManager();
@@ -23,7 +23,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   text += imports.text();
 
   const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
-  pagers.sort((a: PagerInfo, b: PagerInfo) => { return SortAscending(a.name, b.name) });
+  pagers.sort((a: PagerInfo, b: PagerInfo) => { return sortAscending(a.name, b.name) });
   for (const pager of values(pagers)) {
     const pagerType = camelCase(pager.name);
     const responseType = pager.schema.language.go!.responseType.name;

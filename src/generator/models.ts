@@ -7,11 +7,11 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
 import { CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ContentPreamble, HasDescription, ImportManager, isArraySchema, SortAscending } from './helpers';
+import { contentPreamble, hasDescription, ImportManager, isArraySchema, sortAscending } from '../common/helpers';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
-  let text = await ContentPreamble(session);
+  let text = await contentPreamble(session);
 
   // we do model generation first as it can add imports to the imports list
   const structs = generateStructs(session.model.schemas.objects);
@@ -35,7 +35,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
 
   // structs
-  structs.sort((a: StructDef, b: StructDef) => { return SortAscending(a.Language.name, b.Language.name) });
+  structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
     text += struct.text();
     text += struct.marshaller();
@@ -58,16 +58,16 @@ class StructDef {
     this.Properties = props;
     this.Parameters = params;
     if (this.Properties) {
-      this.Properties.sort((a: Property, b: Property) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
+      this.Properties.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     }
     if (this.Parameters) {
-      this.Parameters.sort((a: Parameter, b: Parameter) => { return SortAscending(a.language.go!.name, b.language.go!.name); });
+      this.Parameters.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     }
   }
 
   text(): string {
     let text = '';
-    if (HasDescription(this.Language)) {
+    if (hasDescription(this.Language)) {
       text += `${comment(this.Language.description, '// ')}\n`;
     }
     text += `type ${this.Language.name} struct {\n`;
@@ -80,7 +80,7 @@ class StructDef {
       if (this.Language.errorType && prop.language.go!.name === 'Error') {
         prop.language.go!.name = 'Inner' + prop.language.go!.name;
       }
-      if (HasDescription(prop.language.go!)) {
+      if (hasDescription(prop.language.go!)) {
         if (!first) {
           // add an extra new-line between fields IFF the field
           // has a comment and it's not the very first one.
@@ -156,7 +156,7 @@ class StructDef {
         // don't add globals to the per-method options struct
         continue;
       }
-      if (HasDescription(param.language.go!)) {
+      if (hasDescription(param.language.go!)) {
         text += `\t${comment(param.language.go!.description, '// ')}\n`;
       }
       text += `\t${pascalCase(param.language.go!.name)} *${param.schema.language.go!.name}\n`;
