@@ -7,8 +7,10 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, contentPreamble, formatParamInfoTypeName, generateParamsSig, generateParameterInfo, genereateReturnsInfo, hasDescription, ImportManager, isArraySchema, isPageableOperation, MethodSig, ParamInfo, skipURLEncoding, sortAscending, isSchemaResponse, PagerInfo } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isPageableOperation, MethodSig, ParamInfo, isSchemaResponse, PagerInfo } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
+import { contentPreamble, formatParamInfoTypeName, hasDescription, skipURLEncoding, sortAscending, sortParamInfoByRequired } from './helpers';
+import { ImportManager } from './imports';
 
 const dateFormat = '2006-01-02';
 const datetimeRFC3339Format = 'time.RFC3339';
@@ -682,4 +684,66 @@ function extractParamNames(paramInfo: ParamInfo[]): string[] {
     paramNames.push(name);
   }
   return paramNames;
+}
+
+// flattens out ParamInfo to return a complete parameter sig string
+// e.g. "i int, s string, b bool"
+function generateParamsSig(paramInfo: ParamInfo[], includeGlobal: boolean): string {
+  let params = new Array<string>();
+  for (const param of values(paramInfo)) {
+    if ((param.global && !includeGlobal) || param.isHost) {
+      continue;
+    }
+    params.push(`${param.name} ${formatParamInfoTypeName(param)}`);
+  }
+  return params.join(', ');
+}
+
+// creates ParamInfo for the specified operation.
+// each entry is tuple of param name/param type
+function generateParameterInfo(op: Operation): ParamInfo[] {
+  const params = new Array<ParamInfo>();
+  for (const param of values(aggregateParameters(op))) {
+    if (param.schema.type === SchemaType.Constant) {
+      // don't generate a parameter for a constant
+      continue;
+    }
+    if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
+      continue;
+    }
+    if (param.implementation === ImplementationLocation.Method && param.required !== true) {
+      // omit method-optional params as they're grouped in the optional params type
+      continue;
+    }
+    // include client and method params
+    const global = param.implementation === ImplementationLocation.Client;
+    let isHost = false;
+    if (global) {
+      isHost = param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
+    }
+    params.push(new ParamInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true, isHost));
+  }
+  // move global optional params to the end of the slice
+  params.sort(sortParamInfoByRequired);
+  // if there's a method-optional params struct add it last
+  if (op.requests![0].language.go!.optionalParam) {
+    params.push(new ParamInfo('options', op.requests![0].language.go!.optionalParam.name, false, false, false));
+  }
+
+  return params;
+}
+
+// returns the return signature where each entry is the type name
+// e.g. [ '*string', 'error' ]
+function genereateReturnsInfo(op: Operation, forHandler: boolean): string[] {
+  // TODO check this implementation, if any additional return information needs to be included for multiple responses
+  const firstResp = op.responses![0];
+  let returnType = '*http.Response';
+  // must check pageable first as all pageable operations are also schema responses
+  if (!forHandler && isPageableOperation(op)) {
+    returnType = op.language.go!.pageableType.name;
+  } else if (isSchemaResponse(firstResp)) {
+    returnType = '*' + firstResp.schema.language.go!.responseType.name;
+  }
+  return [returnType, 'error'];
 }
