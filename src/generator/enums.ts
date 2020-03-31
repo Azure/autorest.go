@@ -5,9 +5,9 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, joinComma } from '@azure-tools/codegen';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel, ChoiceValue, Schemas } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, getEnums, hasDescription } from '../common/helpers';
+import { contentPreamble, hasDescription, sortAscending } from './helpers';
 
 // Creates the content in enums.go
 export async function generateEnums(session: Session<CodeModel>): Promise<string> {
@@ -40,4 +40,45 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
     text += `}\n\n`;
   }
   return text;
+}
+
+// returns a collection containing all enum entries and their values
+function getEnums(schemas: Schemas): EnumEntry[] {
+  // group all enum categories into a single array so they can be sorted
+  const enums = new Array<EnumEntry>();
+  for (const choice of values(schemas.choices)) {
+    choice.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
+    const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
+    if (hasDescription(choice.language.go!)) {
+      entry.desc = choice.language.go!.description;
+    }
+    enums.push(entry);
+  }
+  for (const choice of values(schemas.sealedChoices)) {
+    if (choice.choices.length === 1) {
+      continue;
+    }
+    const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
+    if (hasDescription(choice.language.go!)) {
+      entry.desc = choice.language.go!.description;
+    }
+    enums.push(entry);
+  }
+  enums.sort((a: EnumEntry, b: EnumEntry) => { return sortAscending(a.name, b.name) });
+  return enums;
+}
+
+// represents an enum type and its values
+class EnumEntry {
+  name: string;
+  type: string;
+  funcName: string;
+  desc?: string;
+  choices: ChoiceValue[];
+  constructor(name: string, type: string, funcName: string, choices: ChoiceValue[]) {
+    this.name = name;
+    this.type = type;
+    this.funcName = funcName;
+    this.choices = choices;
+  }
 }

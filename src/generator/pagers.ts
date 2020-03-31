@@ -7,7 +7,9 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, ImportManager, PagerInfo, sortAscending } from '../common/helpers';
+import { PagerInfo } from '../common/helpers';
+import { contentPreamble, sortAscending } from './helpers';
+import { ImportManager } from './imports';
 
 // Creates the content in pagers.go
 export async function generatePagers(session: Session<CodeModel>): Promise<string> {

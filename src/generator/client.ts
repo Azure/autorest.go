@@ -7,7 +7,9 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, formatParamInfoTypeName, ImportManager, ParamInfo, sortParamInfoByRequired } from '../common/helpers';
+import { ParamInfo } from '../common/helpers';
+import { contentPreamble, formatParamInfoTypeName, sortParamInfoByRequired } from './helpers';
+import { ImportManager } from './imports';
 
 // generates content for client.go
 export async function generateClient(session: Session<CodeModel>): Promise<string> {
