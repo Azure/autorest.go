@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
@@ -26,7 +26,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     for (const op of values(group.operations)) {
       // add structs from optional operation params
       if (op.requests![0].language.go!.optionalParam) {
-        structs.push(generateOptionalParamsStruct(op.requests![0].language.go!.optionalParam, op.requests![0].language.go!.optionalParam.params));
+        structs.push(generateOptionalParamsStruct(op.requests![0].language.go!.optionalParam));
       }
     }
   }
@@ -308,14 +308,10 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
   return st;
 }
 
-function newProperty(name: string, desc: string, schema: Schema): Property {
-  let prop = new Property(name, desc, schema);
-  prop.language.go = prop.language.default;
-  return prop;
-}
-
-function generateOptionalParamsStruct(lang: Language, params: Parameter[]): StructDef {
-  const st = new StructDef(lang, undefined, params);
+function generateOptionalParamsStruct(optionalParam: Parameter): StructDef {
+  // for the optional params struct, the params are smuggled via GroupProperty
+  const params = (<GroupProperty>(<ObjectSchema>optionalParam.schema).properties![0]).originalParameter;
+  const st = new StructDef(optionalParam.schema.language.go!, undefined, params);
   for (const param of values(params)) {
     imports.addImportForSchemaType(param.schema);
   }

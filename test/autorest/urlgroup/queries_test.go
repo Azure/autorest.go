@@ -57,7 +57,6 @@ func TestByteMultiByte(t *testing.T) {
 }
 
 func TestDateTimeValid(t *testing.T) {
-	t.Skip("test fails, might be bug in test server")
 	client := getQueriesClient(t)
 	result, err := client.DateTimeValid(context.Background())
 	if err != nil {
@@ -76,7 +75,6 @@ func TestDoubleDecimalNegative(t *testing.T) {
 }
 
 func TestEnumValid(t *testing.T) {
-	t.Skip("test fails, needs investigation")
 	client := getQueriesClient(t)
 	result, err := client.EnumValid(context.Background(), &urlgroup.QueriesEnumValidOptions{
 		EnumQuery: urlgroup.UriColorGreenColor.ToPtr(),
@@ -124,7 +122,7 @@ func TestGetTenBillion(t *testing.T) {
 }
 
 func TestStringUnicode(t *testing.T) {
-	t.Skip("test fails, needs investigation")
+	t.Skip("scenario NYI in test server")
 	client := getQueriesClient(t)
 	result, err := client.StringUnicode(context.Background())
 	if err != nil {

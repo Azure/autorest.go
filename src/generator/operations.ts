@@ -5,11 +5,11 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, Language, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, MethodSig, ParamInfo, isSchemaResponse, PagerInfo } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParamInfoTypeName, hasDescription, skipURLEncoding, sortAscending, sortParamInfoByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 const dateFormat = '2006-01-02';
@@ -44,14 +44,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     for (const op of values(group.operations)) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
-      op.language.go!.protocolSigs = new protocolSigs();
-      // TODO: generateOperation depends on some work that happens in
-      // protocol request/response creation, fix this
-      const reqText = createProtocolRequest(clientName, op, imports);
-      const respText = createProtocolResponse(clientName, op, imports);
       opText += generateOperation(clientName, op, imports);
-      opText += reqText;
-      opText += respText;
+      opText += createProtocolRequest(clientName, op, imports);
+      opText += createProtocolResponse(clientName, op, imports);
     }
     const interfaceText = createInterfaceDefinition(group, imports);
     // stitch it all together
@@ -61,13 +56,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += `// ${clientName} implements the ${group.language.go!.clientName} interface.\n`;
     text += `type ${clientName} struct{\n`;
     text += '\t*Client\n';
-    if (group.language.go!.globals) {
-      const globals = <Array<ParamInfo>>group.language.go!.globals;
-      for (const global of values(globals)) {
-        if (global.isHost) {
-          continue;
-        }
-        text += `\t${global.name} ${formatParamInfoTypeName(global)}\n`;
+    if (group.language.go!.clientParams) {
+      const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+      for (const clientParam of values(clientParams)) {
+        text += `\t${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}\n`;
       }
     }
     text += '}\n\n';
@@ -76,34 +68,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     operations.push(new OperationGroupContent(group.language.go!.name, text));
   }
   return operations;
-}
-
-// contains method signature information for request and response methods
-export interface ProtocolSig extends Language {
-  protocolSigs: ProtocolSigs;
-}
-
-interface ProtocolSigs {
-  requestMethod: MethodSig;
-  responseMethod: MethodSig;
-}
-
-class protocolSigs implements ProtocolSigs {
-  requestMethod: MethodSig;
-  responseMethod: MethodSig;
-  constructor() {
-    this.requestMethod = new methodSig();
-    this.responseMethod = new methodSig();
-  }
-}
-
-class methodSig implements MethodSig {
-  params: ParamInfo[];
-  returns: string[];
-  constructor() {
-    this.params = new Array<ParamInfo>();
-    this.returns = new Array<string>();
-  }
 }
 
 function formatParamValue(param: Parameter, imports: ImportManager): string {
@@ -120,12 +84,14 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
       break;
   }
   let paramName = param.language.go!.name;
+  if (param.implementation === ImplementationLocation.Client) {
+    paramName = `client.${paramName}`;
+  }
   if (param.required !== true) {
     if (param.implementation === ImplementationLocation.Method) {
       // optional params at the method level will be in an options struct
       paramName = `*options.${pascalCase(paramName)}`;
     } else {
-      // optional globals are passed as just another parameter
       paramName = `*${paramName}`;
     }
   }
@@ -282,32 +248,26 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   return text;
 }
 
-function getParamInfo(op: Operation, imports: ImportManager): ParamInfo[] {
-  let params = generateParameterInfo(op);
-  if (!isPageableOperation(op)) {
-    imports.add('context');
-    params = [new ParamInfo('ctx', 'context.Context', false, true, false)].concat(params);
-  }
-  return params;
-}
-
 function generateOperation(clientName: string, op: Operation, imports: ImportManager): string {
   if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
     // don't generate a public API for the methods used to advance pages
     return '';
   }
   const info = <OperationNaming>op.language.go!;
-  const params = getParamInfo(op, imports);
+  const params = getAPIParametersSig(op, imports);
   const returns = genereateReturnsInfo(op, false);
-  const protocol = <ProtocolSig>op.language.go!;
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
   }
-  text += `func (client *${clientName}) ${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')}) {\n`;
-  // slice off the first param returned from extractParamNames as we know it's the URL (cheating a bit...)
-  const protocolReqParams = extractParamNames(protocol.protocolSigs.requestMethod.params);
-  text += `\treq, err := client.${info.protocolNaming.requestMethod}(${protocolReqParams.join(', ')})\n`;
+  text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  // split param list into individual params
+  const reqParams = getCreateRequestParametersSig(op).split(',');
+  // slice off the parameter names from the type/type tuples
+  for (let i = 0; i < reqParams.length; ++i) {
+    reqParams[i] = reqParams[i].trim().split(' ')[0];
+  }
+  text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
@@ -318,9 +278,9 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
     if (op.language.go!.paging.member) {
-      protocolReqParams.push(`*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
+      reqParams.push(`*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
       text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${protocolReqParams.join(', ')})\n`;
+      text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${reqParams.join(', ')})\n`;
       text += '\t\t},\n';
     } else {
       imports.add('fmt');
@@ -368,12 +328,9 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     }
     imports.addImportForSchemaType(param.schema);
   }
-  // stick the method signature info into the code model so other generators can access it later
-  const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.requestMethod.params = generateParameterInfo(op);
-  sig.protocolSigs.requestMethod.returns = ['*azcore.Request', 'error'];
+  const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
-  text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.requestMethod.params, true)}) (${sig.protocolSigs.requestMethod.returns.join(', ')}) {\n`;
+  text += `func (client *${client}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
   // storage needs the client.u to be the source-of-truth for the full path.
   // however, swagger requires that all operations specify a path, which is at odds with storage.
@@ -421,7 +378,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         // omit this query param. TODO once non-required constants are fixed
       } else if (qp.implementation === ImplementationLocation.Client) {
         // global optional param
-        text += `\tif ${qp.language.go!.name} != nil {\n`;
+        text += `\tif client.${qp.language.go!.name} != nil {\n`;
         text += `\t\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
         text += `\t}\n`;
       } else {
@@ -523,14 +480,9 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
 function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
-  // stick the method signature info into the code model so other generators can access it later
-  const sig = <ProtocolSig>op.language.go!;
-  sig.protocolSigs.responseMethod.params = [new ParamInfo('resp', '*azcore.Response', false, true, false)];
-  sig.protocolSigs.responseMethod.returns = genereateReturnsInfo(op, true);
-
   const firstResp = op.responses![0];
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${client}) ${name}(${generateParamsSig(sig.protocolSigs.responseMethod.params, true)}) (${sig.protocolSigs.responseMethod.returns.join(', ')}) {\n`;
+  text += `func (client *${client}) ${name}(resp *azcore.Response) (${genereateReturnsInfo(op, true).join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(${formatStatusCodes(firstResp.protocol.http?.statusCodes)}) {\n`;
   // if the response doesn't define a 'default' section return a generic error
   // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
@@ -601,9 +553,8 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     if (hasDescription(op.language.go!)) {
       interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
     }
-    const params = getParamInfo(op, imports);
     const returns = genereateReturnsInfo(op, false);
-    interfaceText += `\t${op.language.go!.name}(${generateParamsSig(params, false)}) (${returns.join(', ')})\n`;
+    interfaceText += `\t${op.language.go!.name}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
   }
   interfaceText += '}\n\n';
   return interfaceText;
@@ -669,65 +620,53 @@ function hasBinaryResponse(responses: Response[]): boolean {
   return false;
 }
 
-// returns an array of just the parameter names
-// e.g. [ 'i', 's', 'b' ]
-function extractParamNames(paramInfo: ParamInfo[]): string[] {
-  let paramNames = new Array<string>();
-  for (const param of values(paramInfo)) {
-    let name = param.name;
-    if (param.isHost) {
-      continue;
-    }
-    if (param.global) {
-      name = `client.${name}`;
-    }
-    paramNames.push(name);
+// returns the parameters for the public API
+// e.g. "ctx context.Context, i int, s string"
+function getAPIParametersSig(op: Operation, imports: ImportManager): string {
+  const methodParams = getMethodParameters(op);
+  const params = new Array<string>();
+  if (!isPageableOperation(op)) {
+    imports.add('context');
+    params.push('ctx context.Context');
   }
-  return paramNames;
-}
-
-// flattens out ParamInfo to return a complete parameter sig string
-// e.g. "i int, s string, b bool"
-function generateParamsSig(paramInfo: ParamInfo[], includeGlobal: boolean): string {
-  let params = new Array<string>();
-  for (const param of values(paramInfo)) {
-    if ((param.global && !includeGlobal) || param.isHost) {
-      continue;
-    }
-    params.push(`${param.name} ${formatParamInfoTypeName(param)}`);
+  for (const methodParam of values(methodParams)) {
+    params.push(`${methodParam.language.go!.name} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
 
-// creates ParamInfo for the specified operation.
-// each entry is tuple of param name/param type
-function generateParameterInfo(op: Operation): ParamInfo[] {
-  const params = new Array<ParamInfo>();
+// returns the parameters for the internal request creator method.
+// e.g. "i int, s string"
+function getCreateRequestParametersSig(op: Operation): string {
+  const methodParams = getMethodParameters(op);
+  const params = new Array<string>();
+  for (const methodParam of values(methodParams)) {
+    params.push(`${methodParam.language.go!.name} ${formatParameterTypeName(methodParam)}`);
+  }
+  return params.join(', ');
+}
+
+// returns the complete collection of method parameters
+function getMethodParameters(op: Operation): Parameter[] {
+  const params = new Array<Parameter>();
   for (const param of values(aggregateParameters(op))) {
-    if (param.schema.type === SchemaType.Constant) {
+    if (param.implementation === ImplementationLocation.Client) {
+      // client params are passed via the receiver
+      continue;
+    } else if (param.schema.type === SchemaType.Constant) {
       // don't generate a parameter for a constant
       continue;
-    }
-    if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
-      continue;
-    }
-    if (param.implementation === ImplementationLocation.Method && param.required !== true) {
+    } else if (param.implementation === ImplementationLocation.Method && param.required !== true) {
       // omit method-optional params as they're grouped in the optional params type
       continue;
     }
-    // include client and method params
-    const global = param.implementation === ImplementationLocation.Client;
-    let isHost = false;
-    if (global) {
-      isHost = param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
-    }
-    params.push(new ParamInfo(param.language.go!.name, param.schema.language.go!.name, global, param.required === true, isHost));
+    params.push(param);
   }
   // move global optional params to the end of the slice
-  params.sort(sortParamInfoByRequired);
+  params.sort(sortParametersByRequired);
   // if there's a method-optional params struct add it last
   if (op.requests![0].language.go!.optionalParam) {
-    params.push(new ParamInfo('options', op.requests![0].language.go!.optionalParam.name, false, false, false));
+    params.push(op.requests![0].language.go!.optionalParam);
   }
 
   return params;

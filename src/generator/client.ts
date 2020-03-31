@@ -7,8 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
 import { CodeModel, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { ParamInfo } from '../common/helpers';
-import { contentPreamble, formatParamInfoTypeName, sortParamInfoByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // generates content for client.go
@@ -86,22 +85,20 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '}\n\n';
 
   for (const group of values(session.model.operationGroups)) {
-    const clientParams = ['Client: client'];
+    const clientLiterals = ['Client: client'];
     const methodParams = new Array<string>();
-    // add global params to the operation group getter method
-    if (group.language.go!.globals) {
-      const globals = <Array<ParamInfo>>group.language.go!.globals;
-      globals.sort(sortParamInfoByRequired);
-      globals.forEach((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
-        if (!value.isHost) {
-          clientParams.push(`${value.name}: ${value.name}`);
-          methodParams.push(`${value.name} ${formatParamInfoTypeName(value)}`);
-        }
-      });
+    // add client params to the operation group getter method
+    if (group.language.go!.clientParams) {
+      const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+      clientParams.sort(sortParametersByRequired);
+      for (const clientParam of values(clientParams)) {
+        clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+        methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+      }
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
     text += `func (client *Client) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;
-    text += `\treturn &${camelCase(group.language.go!.clientName)}{${clientParams.join(', ')}}\n`;
+    text += `\treturn &${camelCase(group.language.go!.clientName)}{${clientLiterals.join(', ')}}\n`;
     text += '}\n\n';
   }
 

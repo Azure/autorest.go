@@ -25,7 +25,7 @@ type operations struct {
 
 // GetReport - Get test coverage report
 func (client *operations) GetReport(ctx context.Context, options *OperationsGetReportOptions) (*MapOfIntegerResponse, error) {
-	req, err := client.getReportCreateRequest(client.Host, options)
+	req, err := client.getReportCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (client *operations) GetReport(ctx context.Context, options *OperationsGetR
 }
 
 // getReportCreateRequest creates the GetReport request.
-func (client *operations) getReportCreateRequest(Host string, options *OperationsGetReportOptions) (*azcore.Request, error) {
+func (client *operations) getReportCreateRequest(options *OperationsGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/azure"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {

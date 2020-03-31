@@ -7,7 +7,7 @@ import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/c
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo, ParamInfo } from '../common/helpers';
+import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
@@ -170,28 +170,23 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
       for (const param of values(aggregateParameters(op))) {
-        // skip the host param as we use our own url.URL instead
-        if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
+        // skip the host param as it's a field on the client
+        if (isHostParameter(param)) {
           continue;
         }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
           // add global param info to the operation group
-          if (group.language.go!.globals === undefined) {
-            group.language.go!.globals = new Array<ParamInfo>();
+          if (group.language.go!.clientParams === undefined) {
+            group.language.go!.clientParams = new Array<Parameter>();
           }
-          const globals = <Array<ParamInfo>>group.language.go!.globals;
+          const clientParams = <Array<Parameter>>group.language.go!.clientParams;
           // check if this global param has already been added
-          const index = globals.findIndex((value: ParamInfo, index: Number, obj: ParamInfo[]) => {
-            if (value.name === param.language.go!.name) {
-              return true;
-            }
-            return false;
-          });
-          if (index === -1) {
-            globals.push(new ParamInfo(param.language.go!.name, param.schema.language.go!.name, true, param.required === true, param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path'));
+          if (clientParams.includes(param)) {
+            continue;
           }
+          clientParams.push(param);
         }
       }
       // recursively add the marshalling format to the body param if applicable
@@ -208,6 +203,13 @@ function processOperationRequests(session: Session<CodeModel>) {
       }
     }
   }
+}
+
+function isHostParameter(param: Parameter): boolean {
+  if (param.language.go!.name === 'host' || param.language.go!.name === '$host') {
+    return true;
+  }
+  return param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
 }
 
 function processOperationResponses(session: Session<CodeModel>) {

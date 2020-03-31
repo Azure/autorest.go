@@ -5,36 +5,6 @@
 
 import { ArraySchema, Operation, Parameter, Response, Schema, SchemaResponse } from '@azure-tools/codemodel';
 
-// describes a method's signature, including parameters and return values
-export interface MethodSig {
-  params: ParamInfo[];
-  returns: string[];
-}
-
-// describes a method paramater
-export interface ParamInfo {
-  name: string;
-  type: string;
-  global: boolean;
-  required: boolean;
-  isHost: boolean;
-}
-
-export class ParamInfo implements ParamInfo {
-  name: string;
-  type: string;
-  global: boolean;
-  required: boolean;
-  isHost: boolean;
-  constructor(name: string, type: string, global: boolean, required: boolean, isHost: boolean) {
-    this.name = name;
-    this.type = type;
-    this.global = global;
-    this.required = required;
-    this.isHost = isHost;
-  }
-}
-
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {
   if (op.requests!.length > 1) {
