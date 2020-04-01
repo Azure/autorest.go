@@ -6,7 +6,6 @@
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
 import { CodeModel, Language, Parameter } from '@azure-tools/codemodel';
-import { ParamInfo } from '../common/helpers';
 
 
 // returns the common source-file preamble (license comment, package name etc)
@@ -29,11 +28,11 @@ export function sortAscending(a: string, b: string): number {
 }
 
 // returns the type name with possible * prefix
-export function formatParamInfoTypeName(param: ParamInfo): string {
+export function formatParameterTypeName(param: Parameter): string {
   if (param.required) {
-    return param.type;
+    return param.schema.language.go!.name;
   }
-  return `*${param.type}`;
+  return `*${param.schema.language.go!.name}`;
 }
 
 // returns true if the parameter should not be URL encoded
@@ -44,8 +43,8 @@ export function skipURLEncoding(param: Parameter): boolean {
   return false;
 }
 
-// sorts ParamInfo objects by their required state, ordering required before optional
-export function sortParamInfoByRequired(a: ParamInfo, b: ParamInfo): number {
+// sorts parameters by their required state, ordering required before optional
+export function sortParametersByRequired(a: Parameter, b: Parameter): number {
   if (a.required === b.required) {
     return 0;
   }

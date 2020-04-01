@@ -28,7 +28,7 @@ type pathsOperations struct {
 
 // GetEmpty - Get a 200 to test a valid base uri
 func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error) {
-	req, err := client.getEmptyCreateRequest(vault, secret, client.dnsSuffix, keyName, client.subscriptionID, options)
+	req, err := client.getEmptyCreateRequest(vault, secret, keyName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -44,10 +44,10 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secre
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string, dnsSuffix string, keyName string, subscriptionID string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err

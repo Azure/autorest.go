@@ -5,7 +5,7 @@
 
 import { pascalCase, camelCase } from '@azure-tools/codegen';
 import { Session } from '@azure-tools/autorest-extension-base';
-import { CodeModel, Language, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
+import { CodeModel, GroupProperty, Language, ObjectSchema, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters } from '../common/helpers';
@@ -86,11 +86,17 @@ export async function namer(session: Session<CodeModel>) {
       if (optionalParams.length > 0) {
         // create a type named <OperationGroup><Operation>Options
         const name = `${group.language.go!.name}${op.language.go!.name}Options`;
-        op.requests![0].language.go!.optionalParam = {
-          name: name,
-          description: `${name} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`,
-          params: optionalParams
-        };
+        const desc = `${name} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
+        const schema = new ObjectSchema(name, desc);
+        schema.language.go = schema.language.default;
+        const gp = new GroupProperty(name, desc, schema);
+        for (const op of values(optionalParams)) {
+          gp.originalParameter.push(op);
+        }
+        schema.addProperty(gp);
+        const optionalParam = new Parameter('options', desc, schema);
+        optionalParam.language.go = optionalParam.language.default;
+        op.requests![0].language.go!.optionalParam = optionalParam;
       }
       details.protocolNaming = new protocolMethods(camelCase(details.name));
       if (op.language.go!.paging && op.language.go!.paging.nextLinkName !== null) {
