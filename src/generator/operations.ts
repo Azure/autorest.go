@@ -459,18 +459,19 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       body = `options.${pascalCase(body)}`;
       text += `\tif options != nil {\n`;
       text += `\t\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
-      text += `\t\t\tif err != nil {\n`;
-      text += `\t\t\t\treturn nil, err\n`;
-      text += `\t\t\t}\n`;
+      text += `\t\t\treturn nil, err\n`;
       text += `\t\t}\n`;
       text += '\t}\n';
     } else {
       text += `\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
-      text += `\t\tif err != nil {\n`;
-      text += `\t\t\treturn nil, err\n`;
-      text += `\t\t}\n`;
+      text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
     }
+  } else if (mediaType === 'binary') {
+    const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    text += `\tif err := req.SetBody(${bodyParam?.language.go!.name}); err != nil {\n`;
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
   }
   text += `\treturn req, nil\n`;
   text += '}\n\n';
@@ -512,7 +513,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     }
   }
   const mediaType = getMediaType(firstResp.protocol);
-  if (mediaType === 'none') {
+  if (mediaType === 'none' || mediaType === 'binary') {
     // nothing to unmarshal
     text += '\treturn &result, nil\n';
     text += '}\n\n';
@@ -561,13 +562,15 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
 }
 
 // returns the media type used by the protocol
-function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'none' {
+function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'none' {
   // TODO: binary, forms etc
   switch (protocol.http!.knownMediaType) {
     case KnownMediaType.Json:
       return 'JSON';
     case KnownMediaType.Xml:
       return 'XML';
+    case KnownMediaType.Binary:
+      return 'binary';
     default:
       return 'none';
   }

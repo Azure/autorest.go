@@ -120,9 +120,7 @@ func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLook
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
 	if err := req.MarshalAsXML(blocks); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -298,6 +296,9 @@ func (client *blockBlobOperations) stageBlockCreateRequest(blockId string, conte
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	}
+	if err := req.SetBody(body); err != nil {
+		return nil, err
 	}
 	return req, nil
 }
@@ -532,6 +533,9 @@ func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, body
 	req.Header.Set("x-ms-version", "2019-07-07")
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
+	}
+	if err := req.SetBody(body); err != nil {
+		return nil, err
 	}
 	return req, nil
 }

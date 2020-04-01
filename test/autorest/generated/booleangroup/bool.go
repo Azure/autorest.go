@@ -206,9 +206,7 @@ func (client *boolOperations) putFalseCreateRequest() (*azcore.Request, error) {
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(false); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -247,9 +245,7 @@ func (client *boolOperations) putTrueCreateRequest() (*azcore.Request, error) {
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(true); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }

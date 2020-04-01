@@ -649,9 +649,7 @@ func (client *datetimeOperations) putLocalNegativeOffsetMaxDateTimeCreateRequest
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -690,9 +688,7 @@ func (client *datetimeOperations) putLocalNegativeOffsetMinDateTimeCreateRequest
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -731,9 +727,7 @@ func (client *datetimeOperations) putLocalPositiveOffsetMaxDateTimeCreateRequest
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -772,9 +766,7 @@ func (client *datetimeOperations) putLocalPositiveOffsetMinDateTimeCreateRequest
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -813,9 +805,7 @@ func (client *datetimeOperations) putUtcMaxDateTimeCreateRequest(datetimeBody ti
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -854,9 +844,7 @@ func (client *datetimeOperations) putUtcMaxDateTime7DigitsCreateRequest(datetime
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -895,9 +883,7 @@ func (client *datetimeOperations) putUtcMinDateTimeCreateRequest(datetimeBody ti
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }

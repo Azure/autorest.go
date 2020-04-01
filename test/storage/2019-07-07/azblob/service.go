@@ -229,9 +229,7 @@ func (client *serviceOperations) getUserDelegationKeyCreateRequest(keyInfo KeyIn
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
 	if err := req.MarshalAsXML(keyInfo); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -353,9 +351,7 @@ func (client *serviceOperations) setPropertiesCreateRequest(storageServiceProper
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
 	if err := req.MarshalAsXML(storageServiceProperties); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -410,9 +406,7 @@ func (client *serviceOperations) submitBatchCreateRequest(contentLength int64, m
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
 	if err := req.MarshalAsXML(body); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }

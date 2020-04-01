@@ -597,9 +597,7 @@ func (client *xmlOperations) jsonInputCreateRequest(properties JSONInput) (*azco
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(properties); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -764,9 +762,7 @@ func (client *xmlOperations) putAcLsCreateRequest(properties []SignedIDentifier)
 		Properties *[]SignedIDentifier `xml:"SignedIdentifier"`
 	}
 	if err := req.MarshalAsXML(wrapper{Properties: &properties}); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -805,9 +801,7 @@ func (client *xmlOperations) putComplexTypeRefNoMetaCreateRequest(model RootWith
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(model); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -846,9 +840,7 @@ func (client *xmlOperations) putComplexTypeRefWithMetaCreateRequest(model RootWi
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(model); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -887,9 +879,7 @@ func (client *xmlOperations) putEmptyChildElementCreateRequest(banana Banana) (*
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(banana); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -928,9 +918,7 @@ func (client *xmlOperations) putEmptyListCreateRequest(slideshow Slideshow) (*az
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(slideshow); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -973,9 +961,7 @@ func (client *xmlOperations) putEmptyRootListCreateRequest(bananas []Banana) (*a
 		Bananas *[]Banana `xml:"banana"`
 	}
 	if err := req.MarshalAsXML(wrapper{Bananas: &bananas}); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -1014,9 +1000,7 @@ func (client *xmlOperations) putEmptyWrappedListsCreateRequest(appleBarrel Apple
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(appleBarrel); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -1059,9 +1043,7 @@ func (client *xmlOperations) putRootListCreateRequest(bananas []Banana) (*azcore
 		Bananas *[]Banana `xml:"banana"`
 	}
 	if err := req.MarshalAsXML(wrapper{Bananas: &bananas}); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -1104,9 +1086,7 @@ func (client *xmlOperations) putRootListSingleItemCreateRequest(bananas []Banana
 		Bananas *[]Banana `xml:"banana"`
 	}
 	if err := req.MarshalAsXML(wrapper{Bananas: &bananas}); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -1149,9 +1129,7 @@ func (client *xmlOperations) putServicePropertiesCreateRequest(properties Storag
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(properties); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -1190,9 +1168,7 @@ func (client *xmlOperations) putSimpleCreateRequest(slideshow Slideshow) (*azcor
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(slideshow); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -1231,9 +1207,7 @@ func (client *xmlOperations) putWrappedListsCreateRequest(wrappedLists AppleBarr
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsXML(wrappedLists); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }

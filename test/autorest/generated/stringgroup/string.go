@@ -368,9 +368,7 @@ func (client *stringOperations) putBase64UrlEncodedCreateRequest(stringBody []by
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(stringBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -409,9 +407,7 @@ func (client *stringOperations) putEmptyCreateRequest() (*azcore.Request, error)
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON(""); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -450,9 +446,7 @@ func (client *stringOperations) putMbcsCreateRequest() (*azcore.Request, error) 
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€"); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
@@ -492,9 +486,7 @@ func (client *stringOperations) putNullCreateRequest(options *StringPutNullOptio
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if options != nil {
 		if err := req.MarshalAsJSON(options.StringBody); err != nil {
-			if err != nil {
-				return nil, err
-			}
+			return nil, err
 		}
 	}
 	return req, nil
@@ -534,9 +526,7 @@ func (client *stringOperations) putWhitespaceCreateRequest() (*azcore.Request, e
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if err := req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    "); err != nil {
-		if err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 	return req, nil
 }
