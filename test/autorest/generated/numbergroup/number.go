@@ -611,12 +611,7 @@ func (client *numberOperations) putBigDecimalCreateRequest(numberBody float64) (
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(numberBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(numberBody)
 }
 
 // putBigDecimalHandleResponse handles the PutBigDecimal response.
@@ -652,12 +647,7 @@ func (client *numberOperations) putBigDecimalNegativeDecimalCreateRequest() (*az
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(-99999999.99); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(-99999999.99)
 }
 
 // putBigDecimalNegativeDecimalHandleResponse handles the PutBigDecimalNegativeDecimal response.
@@ -693,12 +683,7 @@ func (client *numberOperations) putBigDecimalPositiveDecimalCreateRequest() (*az
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(99999999.99); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(99999999.99)
 }
 
 // putBigDecimalPositiveDecimalHandleResponse handles the PutBigDecimalPositiveDecimal response.
@@ -734,12 +719,7 @@ func (client *numberOperations) putBigDoubleCreateRequest(numberBody float64) (*
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(numberBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(numberBody)
 }
 
 // putBigDoubleHandleResponse handles the PutBigDouble response.
@@ -775,12 +755,7 @@ func (client *numberOperations) putBigDoubleNegativeDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(-99999999.99); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(-99999999.99)
 }
 
 // putBigDoubleNegativeDecimalHandleResponse handles the PutBigDoubleNegativeDecimal response.
@@ -816,12 +791,7 @@ func (client *numberOperations) putBigDoublePositiveDecimalCreateRequest() (*azc
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(99999999.99); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(99999999.99)
 }
 
 // putBigDoublePositiveDecimalHandleResponse handles the PutBigDoublePositiveDecimal response.
@@ -857,12 +827,7 @@ func (client *numberOperations) putBigFloatCreateRequest(numberBody float32) (*a
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(numberBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(numberBody)
 }
 
 // putBigFloatHandleResponse handles the PutBigFloat response.
@@ -898,12 +863,7 @@ func (client *numberOperations) putSmallDecimalCreateRequest(numberBody float64)
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(numberBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(numberBody)
 }
 
 // putSmallDecimalHandleResponse handles the PutSmallDecimal response.
@@ -939,12 +899,7 @@ func (client *numberOperations) putSmallDoubleCreateRequest(numberBody float64) 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(numberBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(numberBody)
 }
 
 // putSmallDoubleHandleResponse handles the PutSmallDouble response.
@@ -980,12 +935,7 @@ func (client *numberOperations) putSmallFloatCreateRequest(numberBody float32) (
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(numberBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(numberBody)
 }
 
 // putSmallFloatHandleResponse handles the PutSmallFloat response.

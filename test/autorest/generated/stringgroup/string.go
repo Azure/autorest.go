@@ -367,12 +367,7 @@ func (client *stringOperations) putBase64UrlEncodedCreateRequest(stringBody []by
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(stringBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(stringBody)
 }
 
 // putBase64UrlEncodedHandleResponse handles the PutBase64URLEncoded response.
@@ -408,12 +403,7 @@ func (client *stringOperations) putEmptyCreateRequest() (*azcore.Request, error)
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(""); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON("")
 }
 
 // putEmptyHandleResponse handles the PutEmpty response.
@@ -449,12 +439,7 @@ func (client *stringOperations) putMbcsCreateRequest() (*azcore.Request, error) 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€"); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 }
 
 // putMbcsHandleResponse handles the PutMBCS response.
@@ -491,11 +476,7 @@ func (client *stringOperations) putNullCreateRequest(options *StringPutNullOptio
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	if options != nil {
-		if err := req.MarshalAsJSON(options.StringBody); err != nil {
-			if err != nil {
-				return nil, err
-			}
-		}
+		return req, req.MarshalAsJSON(options.StringBody)
 	}
 	return req, nil
 }
@@ -533,12 +514,7 @@ func (client *stringOperations) putWhitespaceCreateRequest() (*azcore.Request, e
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    "); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON("    Now is the time for all good men to come to the aid of their country    ")
 }
 
 // putWhitespaceHandleResponse handles the PutWhitespace response.

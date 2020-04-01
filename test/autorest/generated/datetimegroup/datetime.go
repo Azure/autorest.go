@@ -648,12 +648,7 @@ func (client *datetimeOperations) putLocalNegativeOffsetMaxDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(datetimeBody)
 }
 
 // putLocalNegativeOffsetMaxDateTimeHandleResponse handles the PutLocalNegativeOffsetMaxDateTime response.
@@ -689,12 +684,7 @@ func (client *datetimeOperations) putLocalNegativeOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(datetimeBody)
 }
 
 // putLocalNegativeOffsetMinDateTimeHandleResponse handles the PutLocalNegativeOffsetMinDateTime response.
@@ -730,12 +720,7 @@ func (client *datetimeOperations) putLocalPositiveOffsetMaxDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(datetimeBody)
 }
 
 // putLocalPositiveOffsetMaxDateTimeHandleResponse handles the PutLocalPositiveOffsetMaxDateTime response.
@@ -771,12 +756,7 @@ func (client *datetimeOperations) putLocalPositiveOffsetMinDateTimeCreateRequest
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(datetimeBody)
 }
 
 // putLocalPositiveOffsetMinDateTimeHandleResponse handles the PutLocalPositiveOffsetMinDateTime response.
@@ -812,12 +792,7 @@ func (client *datetimeOperations) putUtcMaxDateTimeCreateRequest(datetimeBody ti
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(datetimeBody)
 }
 
 // putUtcMaxDateTimeHandleResponse handles the PutUTCMaxDateTime response.
@@ -853,12 +828,7 @@ func (client *datetimeOperations) putUtcMaxDateTime7DigitsCreateRequest(datetime
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(datetimeBody)
 }
 
 // putUtcMaxDateTime7DigitsHandleResponse handles the PutUTCMaxDateTime7Digits response.
@@ -894,12 +864,7 @@ func (client *datetimeOperations) putUtcMinDateTimeCreateRequest(datetimeBody ti
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(datetimeBody); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(datetimeBody)
 }
 
 // putUtcMinDateTimeHandleResponse handles the PutUTCMinDateTime response.

@@ -228,12 +228,7 @@ func (client *serviceOperations) getUserDelegationKeyCreateRequest(keyInfo KeyIn
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	if err := req.MarshalAsXML(keyInfo); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsXML(keyInfo)
 }
 
 // getUserDelegationKeyHandleResponse handles the GetUserDelegationKey response.
@@ -352,12 +347,7 @@ func (client *serviceOperations) setPropertiesCreateRequest(storageServiceProper
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	if err := req.MarshalAsXML(storageServiceProperties); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsXML(storageServiceProperties)
 }
 
 // setPropertiesHandleResponse handles the SetProperties response.
@@ -409,12 +399,7 @@ func (client *serviceOperations) submitBatchCreateRequest(contentLength int64, m
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	if err := req.MarshalAsXML(body); err != nil {
-		if err != nil {
-			return nil, err
-		}
-	}
-	return req, nil
+	return req, req.MarshalAsXML(body)
 }
 
 // submitBatchHandleResponse handles the SubmitBatch response.

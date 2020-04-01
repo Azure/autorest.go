@@ -793,7 +793,7 @@ func (client *pageBlobOperations) uploadPagesCreateRequest(contentLength int64, 
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	return req, nil
+	return req, req.SetBody(body)
 }
 
 // uploadPagesHandleResponse handles the UploadPages response.
