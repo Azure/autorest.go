@@ -176,32 +176,31 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
 
 // use this to generate the code that will help process values returned in response headers
 function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string): string {
-  let text = '';
-  let needsErrorCheck = true;
+  let text = `\tif val := resp.Header.Get("${header}"); val != "" {\n`;
   const name = camelCase(propName);
   switch (schema.type) {
     case SchemaType.Boolean:
       imports.add('strconv');
-      text = `\t${name}, err := strconv.ParseBool(resp.Header.Get("${header}"))\n`;
+      text += `\t\t${name}, err := strconv.ParseBool(val)\n`;
       break;
     case SchemaType.ByteArray:
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
-      text = `\t${name}, err := base64.StdEncoding.DecodeString(resp.Header.Get("${header}"))\n`;
+      text += `\t\t${name}, err := base64.StdEncoding.DecodeString(val)\n`;
       break;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
-      text = `\t${name} := ${schema.language.go!.name}(resp.Header.Get("${header}"))\n`;
-      needsErrorCheck = false;
-      break;
+      text += `\t\t${respObj}.${propName} = (*${schema.language.go!.name})(&val)\n`;
+      text += '\t}\n';
+      return text;
     case SchemaType.Constant:
     case SchemaType.String:
-      text = `\t${name} := resp.Header.Get("${header}")\n`;
-      needsErrorCheck = false;
-      break;
+      text += `\t\t${respObj}.${propName} = &val\n`;
+      text += '\t}\n';
+      return text;
     case SchemaType.Date:
       imports.add('time');
-      text = `\t${name}, err := time.Parse("${dateFormat}", resp.Header.Get("${header}"))\n`;
+      text += `\t\t${name}, err := time.Parse("${dateFormat}", val)\n`;
       break;
     case SchemaType.DateTime:
       imports.add('time');
@@ -210,41 +209,40 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
       if (dateTime.format === 'date-time-rfc1123') {
         format = datetimeRFC1123Format;
       }
-      text = `\t${name}, err := time.Parse(${format}, resp.Header.Get("${header}"))\n`;
+      text += `\t\t${name}, err := time.Parse(${format}, val)\n`;
       break;
     case SchemaType.Duration:
       imports.add('time');
-      text = `\t${name}, err := time.ParseDuration(resp.Header.Get("${header}"))\n`;
+      text += `\t\t${name}, err := time.ParseDuration(val)\n`;
       break;
     case SchemaType.Integer:
       imports.add('strconv');
       const intNum = <NumberSchema>schema;
       if (intNum.precision === 32) {
-        text = `\t${name}32, err := strconv.ParseInt(resp.Header.Get("${header}"), 10, 32)\n`;
-        text += `\t${name} := int32(${name}32)\n`;
+        text += `\t\t${name}32, err := strconv.ParseInt(val, 10, 32)\n`;
+        text += `\t\t${name} := int32(${name}32)\n`;
       } else {
-        text = `\t${name}, err := strconv.ParseInt(resp.Header.Get("${header}"), 10, 64)\n`;
+        text += `\t\t${name}, err := strconv.ParseInt(val, 10, 64)\n`;
       }
       break;
     case SchemaType.Number:
       imports.add('strconv');
       const floatNum = <NumberSchema>schema;
       if (floatNum.precision === 32) {
-        text = `\t${name}32, err := strconv.ParseFloat(resp.Header.Get("${header}"), 32)\n`;
-        text += `\t${name} := float32(${name}32)\n`;
+        text += `\t\t${name}32, err := strconv.ParseFloat(val, 32)\n`;
+        text += `\t\t${name} := float32(${name}32)\n`;
       } else {
-        text = `\t${name}, err := strconv.ParseFloat(resp.Header.Get("${header}"), 64)\n`;
+        text += `\t\t${name}, err := strconv.ParseFloat(val, 64)\n`;
       }
       break;
     default:
       throw console.error(`unsupported header type ${schema.type}`);
   }
-  if (needsErrorCheck) {
-    text += `\tif err != nil {\n`;
-    text += `\t\treturn nil, err\n`;
-    text += `\t}\n`;
-  }
-  text += `\t${respObj}.${propName} = &${name}\n`;
+  text += `\t\tif err != nil {\n`;
+  text += `\t\t\treturn nil, err\n`;
+  text += `\t\t}\n`;
+  text += `\t\t${respObj}.${propName} = &${name}\n`;
+  text += '\t}\n';
   return text;
 }
 

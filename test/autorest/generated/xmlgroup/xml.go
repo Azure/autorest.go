@@ -377,8 +377,9 @@ func (client *xmlOperations) getHeadersHandleResponse(resp *azcore.Response) (*X
 		return nil, errors.New(resp.Status)
 	}
 	result := XMLGetHeadersResponse{RawResponse: resp.Response}
-	customHeader := resp.Header.Get("Custom-Header")
-	result.CustomHeader = &customHeader
+	if val := resp.Header.Get("Custom-Header"); val != "" {
+		result.CustomHeader = &val
+	}
 	return &result, nil
 }
 
