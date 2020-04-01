@@ -688,11 +688,13 @@ func (client *headerOperations) responseBoolHandleResponse(resp *azcore.Response
 		return nil, newError(resp)
 	}
 	result := HeaderResponseBoolResponse{RawResponse: resp.Response}
-	value, err := strconv.ParseBool(resp.Header.Get("value"))
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := strconv.ParseBool(val)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -731,11 +733,13 @@ func (client *headerOperations) responseByteHandleResponse(resp *azcore.Response
 		return nil, newError(resp)
 	}
 	result := HeaderResponseByteResponse{RawResponse: resp.Response}
-	value, err := base64.StdEncoding.DecodeString(resp.Header.Get("value"))
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := base64.StdEncoding.DecodeString(val)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -774,11 +778,13 @@ func (client *headerOperations) responseDateHandleResponse(resp *azcore.Response
 		return nil, newError(resp)
 	}
 	result := HeaderResponseDateResponse{RawResponse: resp.Response}
-	value, err := time.Parse("2006-01-02", resp.Header.Get("value"))
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := time.Parse("2006-01-02", val)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -817,11 +823,13 @@ func (client *headerOperations) responseDatetimeHandleResponse(resp *azcore.Resp
 		return nil, newError(resp)
 	}
 	result := HeaderResponseDatetimeResponse{RawResponse: resp.Response}
-	value, err := time.Parse(time.RFC3339, resp.Header.Get("value"))
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := time.Parse(time.RFC3339, val)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -860,11 +868,13 @@ func (client *headerOperations) responseDatetimeRfc1123HandleResponse(resp *azco
 		return nil, newError(resp)
 	}
 	result := HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response}
-	value, err := time.Parse(time.RFC1123, resp.Header.Get("value"))
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -903,11 +913,13 @@ func (client *headerOperations) responseDoubleHandleResponse(resp *azcore.Respon
 		return nil, newError(resp)
 	}
 	result := HeaderResponseDoubleResponse{RawResponse: resp.Response}
-	value, err := strconv.ParseFloat(resp.Header.Get("value"), 64)
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := strconv.ParseFloat(val, 64)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -946,11 +958,13 @@ func (client *headerOperations) responseDurationHandleResponse(resp *azcore.Resp
 		return nil, newError(resp)
 	}
 	result := HeaderResponseDurationResponse{RawResponse: resp.Response}
-	value, err := time.ParseDuration(resp.Header.Get("value"))
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := time.ParseDuration(val)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -989,8 +1003,9 @@ func (client *headerOperations) responseEnumHandleResponse(resp *azcore.Response
 		return nil, newError(resp)
 	}
 	result := HeaderResponseEnumResponse{RawResponse: resp.Response}
-	value := GreyscaleColors(resp.Header.Get("value"))
-	result.Value = &value
+	if val := resp.Header.Get("value"); val != "" {
+		result.Value = (*GreyscaleColors)(&val)
+	}
 	return &result, nil
 }
 
@@ -1028,8 +1043,9 @@ func (client *headerOperations) responseExistingKeyHandleResponse(resp *azcore.R
 		return nil, newError(resp)
 	}
 	result := HeaderResponseExistingKeyResponse{RawResponse: resp.Response}
-	userAgent := resp.Header.Get("User-Agent")
-	result.UserAgent = &userAgent
+	if val := resp.Header.Get("User-Agent"); val != "" {
+		result.UserAgent = &val
+	}
 	return &result, nil
 }
 
@@ -1068,12 +1084,14 @@ func (client *headerOperations) responseFloatHandleResponse(resp *azcore.Respons
 		return nil, newError(resp)
 	}
 	result := HeaderResponseFloatResponse{RawResponse: resp.Response}
-	value32, err := strconv.ParseFloat(resp.Header.Get("value"), 32)
-	value := float32(value32)
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value32, err := strconv.ParseFloat(val, 32)
+		value := float32(value32)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -1112,12 +1130,14 @@ func (client *headerOperations) responseIntegerHandleResponse(resp *azcore.Respo
 		return nil, newError(resp)
 	}
 	result := HeaderResponseIntegerResponse{RawResponse: resp.Response}
-	value32, err := strconv.ParseInt(resp.Header.Get("value"), 10, 32)
-	value := int32(value32)
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value32, err := strconv.ParseInt(val, 10, 32)
+		value := int32(value32)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -1156,11 +1176,13 @@ func (client *headerOperations) responseLongHandleResponse(resp *azcore.Response
 		return nil, newError(resp)
 	}
 	result := HeaderResponseLongResponse{RawResponse: resp.Response}
-	value, err := strconv.ParseInt(resp.Header.Get("value"), 10, 64)
-	if err != nil {
-		return nil, err
+	if val := resp.Header.Get("value"); val != "" {
+		value, err := strconv.ParseInt(val, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		result.Value = &value
 	}
-	result.Value = &value
 	return &result, nil
 }
 
@@ -1198,8 +1220,9 @@ func (client *headerOperations) responseProtectedKeyHandleResponse(resp *azcore.
 		return nil, newError(resp)
 	}
 	result := HeaderResponseProtectedKeyResponse{RawResponse: resp.Response}
-	contentType := resp.Header.Get("Content-Type")
-	result.ContentType = &contentType
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
 	return &result, nil
 }
 
@@ -1238,7 +1261,8 @@ func (client *headerOperations) responseStringHandleResponse(resp *azcore.Respon
 		return nil, newError(resp)
 	}
 	result := HeaderResponseStringResponse{RawResponse: resp.Response}
-	value := resp.Header.Get("value")
-	result.Value = &value
+	if val := resp.Header.Get("value"); val != "" {
+		result.Value = &val
+	}
 	return &result, nil
 }
