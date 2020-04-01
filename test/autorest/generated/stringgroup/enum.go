@@ -168,10 +168,7 @@ func (client *enumOperations) putNotExpandableCreateRequest(stringBody Colors) (
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(stringBody); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(stringBody)
 }
 
 // putNotExpandableHandleResponse handles the PutNotExpandable response.
@@ -207,10 +204,7 @@ func (client *enumOperations) putReferencedCreateRequest(enumStringBody Colors) 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(enumStringBody); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(enumStringBody)
 }
 
 // putReferencedHandleResponse handles the PutReferenced response.
@@ -246,10 +240,7 @@ func (client *enumOperations) putReferencedConstantCreateRequest(enumStringBody 
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(enumStringBody); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(enumStringBody)
 }
 
 // putReferencedConstantHandleResponse handles the PutReferencedConstant response.

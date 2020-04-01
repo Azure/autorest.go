@@ -458,22 +458,18 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     if (setOptionsPrefix === true) {
       body = `options.${pascalCase(body)}`;
       text += `\tif options != nil {\n`;
-      text += `\t\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
-      text += `\t\t\treturn nil, err\n`;
-      text += `\t\t}\n`;
+      text += `\t\treturn req, req.MarshalAs${mediaType}(${body})\n`;
       text += '\t}\n';
+      text += '\treturn req, nil\n';
     } else {
-      text += `\tif err := req.MarshalAs${mediaType}(${body}); err != nil {\n`;
-      text += `\t\treturn nil, err\n`;
-      text += `\t}\n`;
+      text += `\treturn req, req.MarshalAs${mediaType}(${body})\n`;
     }
   } else if (mediaType === 'binary') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
-    text += `\tif err := req.SetBody(${bodyParam?.language.go!.name}); err != nil {\n`;
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
+    text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name})\n`;
+  } else {
+    text += `\treturn req, nil\n`;
   }
-  text += `\treturn req, nil\n`;
   text += '}\n\n';
   return text;
 }

@@ -345,10 +345,7 @@ func (client *datetimerfc1123Operations) putUtcMaxDateTimeCreateRequest(datetime
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	aux := timeRFC1123(datetimeBody)
-	if err := req.MarshalAsJSON(aux); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(aux)
 }
 
 // putUtcMaxDateTimeHandleResponse handles the PutUTCMaxDateTime response.
@@ -385,10 +382,7 @@ func (client *datetimerfc1123Operations) putUtcMinDateTimeCreateRequest(datetime
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
 	aux := timeRFC1123(datetimeBody)
-	if err := req.MarshalAsJSON(aux); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(aux)
 }
 
 // putUtcMinDateTimeHandleResponse handles the PutUTCMinDateTime response.

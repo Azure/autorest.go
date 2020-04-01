@@ -203,10 +203,7 @@ func (client *byteOperations) putNonAsciiCreateRequest(byteBody []byte) (*azcore
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(byteBody); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(byteBody)
 }
 
 // putNonAsciiHandleResponse handles the PutNonASCII response.

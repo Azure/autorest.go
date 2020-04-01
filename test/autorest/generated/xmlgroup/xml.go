@@ -596,10 +596,7 @@ func (client *xmlOperations) jsonInputCreateRequest(properties JSONInput) (*azco
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(properties); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(properties)
 }
 
 // jsonInputHandleResponse handles the JSONInput response.
@@ -761,10 +758,7 @@ func (client *xmlOperations) putAcLsCreateRequest(properties []SignedIDentifier)
 		XMLName    xml.Name            `xml:"SignedIdentifiers"`
 		Properties *[]SignedIDentifier `xml:"SignedIdentifier"`
 	}
-	if err := req.MarshalAsXML(wrapper{Properties: &properties}); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(wrapper{Properties: &properties})
 }
 
 // putAcLsHandleResponse handles the PutACLs response.
@@ -800,10 +794,7 @@ func (client *xmlOperations) putComplexTypeRefNoMetaCreateRequest(model RootWith
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(model); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(model)
 }
 
 // putComplexTypeRefNoMetaHandleResponse handles the PutComplexTypeRefNoMeta response.
@@ -839,10 +830,7 @@ func (client *xmlOperations) putComplexTypeRefWithMetaCreateRequest(model RootWi
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(model); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(model)
 }
 
 // putComplexTypeRefWithMetaHandleResponse handles the PutComplexTypeRefWithMeta response.
@@ -878,10 +866,7 @@ func (client *xmlOperations) putEmptyChildElementCreateRequest(banana Banana) (*
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(banana); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(banana)
 }
 
 // putEmptyChildElementHandleResponse handles the PutEmptyChildElement response.
@@ -917,10 +902,7 @@ func (client *xmlOperations) putEmptyListCreateRequest(slideshow Slideshow) (*az
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(slideshow); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(slideshow)
 }
 
 // putEmptyListHandleResponse handles the PutEmptyList response.
@@ -960,10 +942,7 @@ func (client *xmlOperations) putEmptyRootListCreateRequest(bananas []Banana) (*a
 		XMLName xml.Name  `xml:"bananas"`
 		Bananas *[]Banana `xml:"banana"`
 	}
-	if err := req.MarshalAsXML(wrapper{Bananas: &bananas}); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
 
 // putEmptyRootListHandleResponse handles the PutEmptyRootList response.
@@ -999,10 +978,7 @@ func (client *xmlOperations) putEmptyWrappedListsCreateRequest(appleBarrel Apple
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(appleBarrel); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(appleBarrel)
 }
 
 // putEmptyWrappedListsHandleResponse handles the PutEmptyWrappedLists response.
@@ -1042,10 +1018,7 @@ func (client *xmlOperations) putRootListCreateRequest(bananas []Banana) (*azcore
 		XMLName xml.Name  `xml:"bananas"`
 		Bananas *[]Banana `xml:"banana"`
 	}
-	if err := req.MarshalAsXML(wrapper{Bananas: &bananas}); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
 
 // putRootListHandleResponse handles the PutRootList response.
@@ -1085,10 +1058,7 @@ func (client *xmlOperations) putRootListSingleItemCreateRequest(bananas []Banana
 		XMLName xml.Name  `xml:"bananas"`
 		Bananas *[]Banana `xml:"banana"`
 	}
-	if err := req.MarshalAsXML(wrapper{Bananas: &bananas}); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(wrapper{Bananas: &bananas})
 }
 
 // putRootListSingleItemHandleResponse handles the PutRootListSingleItem response.
@@ -1128,10 +1098,7 @@ func (client *xmlOperations) putServicePropertiesCreateRequest(properties Storag
 	query.Set("restype", "service")
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(properties); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(properties)
 }
 
 // putServicePropertiesHandleResponse handles the PutServiceProperties response.
@@ -1167,10 +1134,7 @@ func (client *xmlOperations) putSimpleCreateRequest(slideshow Slideshow) (*azcor
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(slideshow); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(slideshow)
 }
 
 // putSimpleHandleResponse handles the PutSimple response.
@@ -1206,10 +1170,7 @@ func (client *xmlOperations) putWrappedListsCreateRequest(wrappedLists AppleBarr
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsXML(wrappedLists); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(wrappedLists)
 }
 
 // putWrappedListsHandleResponse handles the PutWrappedLists response.

@@ -119,10 +119,7 @@ func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLook
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	if err := req.MarshalAsXML(blocks); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsXML(blocks)
 }
 
 // commitBlockListHandleResponse handles the CommitBlockList response.
@@ -297,10 +294,7 @@ func (client *blockBlobOperations) stageBlockCreateRequest(blockId string, conte
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	if err := req.SetBody(body); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.SetBody(body)
 }
 
 // stageBlockHandleResponse handles the StageBlock response.
@@ -534,10 +528,7 @@ func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, body
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	if err := req.SetBody(body); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.SetBody(body)
 }
 
 // uploadHandleResponse handles the Upload response.

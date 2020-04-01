@@ -205,10 +205,7 @@ func (client *boolOperations) putFalseCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(false); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(false)
 }
 
 // putFalseHandleResponse handles the PutFalse response.
@@ -244,10 +241,7 @@ func (client *boolOperations) putTrueCreateRequest() (*azcore.Request, error) {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if err := req.MarshalAsJSON(true); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.MarshalAsJSON(true)
 }
 
 // putTrueHandleResponse handles the PutTrue response.

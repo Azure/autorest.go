@@ -98,10 +98,7 @@ func (client *appendBlobOperations) appendBlockCreateRequest(contentLength int64
 	if options != nil && options.RequestId != nil {
 		req.Header.Set("x-ms-client-request-id", *options.RequestId)
 	}
-	if err := req.SetBody(body); err != nil {
-		return nil, err
-	}
-	return req, nil
+	return req, req.SetBody(body)
 }
 
 // appendBlockHandleResponse handles the AppendBlock response.
