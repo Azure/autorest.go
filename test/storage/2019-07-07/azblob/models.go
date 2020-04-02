@@ -2353,7 +2353,7 @@ type ContainerGetPropertiesResponse struct {
 // An Azure Storage container
 type ContainerItem struct {
 	// Dictionary of <string>
-	Metadata *map[string]*string `xml:"String"`
+	Metadata *map[string]*string `xml:"string"`
 	Name     *string             `xml:"Name"`
 
 	// Properties of a container

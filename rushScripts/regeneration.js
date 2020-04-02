@@ -6,7 +6,7 @@ const swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagge
 
 const goMappings = {
     //'additionalpropertiesgroup': 'additionalProperties.json',
-    //'arraygroup': 'body-array.json',
+    'arraygroup': 'body-array.json',
     'azurereportgroup': 'azure-report.json',
     'booleangroup': 'body-boolean.json',
     'bytegroup': 'body-byte.json',

@@ -14,9 +14,9 @@ import (
 // Operations contains the methods for the Operations group.
 type Operations interface {
 	// GetOptionalReport - Get optional test coverage report
-	GetOptionalReport(ctx context.Context, options *OperationsGetOptionalReportOptions) (*MapOfIntegerResponse, error)
+	GetOptionalReport(ctx context.Context, options *OperationsGetOptionalReportOptions) (*MapOfInt32Response, error)
 	// GetReport - Get test coverage report
-	GetReport(ctx context.Context, options *OperationsGetReportOptions) (*MapOfIntegerResponse, error)
+	GetReport(ctx context.Context, options *OperationsGetReportOptions) (*MapOfInt32Response, error)
 }
 
 // operations implements the Operations interface.
@@ -25,7 +25,7 @@ type operations struct {
 }
 
 // GetOptionalReport - Get optional test coverage report
-func (client *operations) GetOptionalReport(ctx context.Context, options *OperationsGetOptionalReportOptions) (*MapOfIntegerResponse, error) {
+func (client *operations) GetOptionalReport(ctx context.Context, options *OperationsGetOptionalReportOptions) (*MapOfInt32Response, error) {
 	req, err := client.getOptionalReportCreateRequest(options)
 	if err != nil {
 		return nil, err
@@ -58,16 +58,16 @@ func (client *operations) getOptionalReportCreateRequest(options *OperationsGetO
 }
 
 // getOptionalReportHandleResponse handles the GetOptionalReport response.
-func (client *operations) getOptionalReportHandleResponse(resp *azcore.Response) (*MapOfIntegerResponse, error) {
+func (client *operations) getOptionalReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := MapOfIntegerResponse{RawResponse: resp.Response}
+	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
 
 // GetReport - Get test coverage report
-func (client *operations) GetReport(ctx context.Context, options *OperationsGetReportOptions) (*MapOfIntegerResponse, error) {
+func (client *operations) GetReport(ctx context.Context, options *OperationsGetReportOptions) (*MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(options)
 	if err != nil {
 		return nil, err
@@ -100,10 +100,10 @@ func (client *operations) getReportCreateRequest(options *OperationsGetReportOpt
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client *operations) getReportHandleResponse(resp *azcore.Response) (*MapOfIntegerResponse, error) {
+func (client *operations) getReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := MapOfIntegerResponse{RawResponse: resp.Response}
+	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
 }
