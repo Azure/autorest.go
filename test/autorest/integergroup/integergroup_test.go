@@ -1,0 +1,174 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+package integergrouptest
+
+import (
+	"context"
+	"generatortests/autorest/generated/integergroup"
+	"generatortests/helpers"
+	"net/http"
+	"testing"
+	"time"
+)
+
+func getIntegerOperations(t *testing.T) integergroup.IntOperations {
+	client, err := integergroup.NewDefaultClient(nil)
+	if err != nil {
+		t.Fatalf("failed to create integer client: %v", err)
+	}
+	return client.IntOperations()
+}
+
+func TestIntGetInvalid(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetInvalid(context.Background())
+	if err == nil {
+		t.Fatalf("Expected an error but did not receive one")
+	}
+	if result != nil {
+		t.Fatalf("Expected a nil result")
+	}
+}
+
+func TestIntGetInvalidUnixTime(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetInvalidUnixTime(context.Background())
+	if err == nil {
+		t.Fatalf("Expected an error but did not receive one")
+	}
+	if result != nil {
+		t.Fatalf("Expected a nil result")
+	}
+}
+
+func TestIntGetNull(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetNull(context.Background())
+	if err != nil {
+		t.Fatalf("GetNull: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, (*int32)(nil))
+}
+
+func TestIntGetNullUnixTime(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetNullUnixTime(context.Background())
+	if err != nil {
+		t.Fatalf("GetNullUnixTime: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, (*time.Time)(nil))
+}
+
+// TODO check if this is an appropriate check
+func TestIntGetOverflowInt32(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetOverflowInt32(context.Background())
+	if err == nil {
+		t.Fatalf("Expected an error but did not receive one")
+	}
+	if result != nil {
+		t.Fatalf("Expected a nil response but received one")
+	}
+}
+
+// TODO check if this is an appropriate check
+func TestIntGetOverflowInt64(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetOverflowInt64(context.Background())
+	if err == nil {
+		t.Fatalf("Expected an error but did not receive one")
+	}
+	if result != nil {
+		t.Fatalf("Expected a nil response but received one")
+	}
+}
+
+// TODO check if this is an appropriate check
+func TestIntGetUnderflowInt32(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetUnderflowInt32(context.Background())
+	if err == nil {
+		t.Fatalf("Expected an error but did not receive one")
+	}
+	if result != nil {
+		t.Fatalf("Expected a nil response but received one")
+	}
+}
+
+// TODO check if this is an appropriate check
+func TestIntGetUnderflowInt64(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.GetUnderflowInt64(context.Background())
+	if err == nil {
+		t.Fatalf("Expected an error but did not receive one")
+	}
+	if result != nil {
+		t.Fatalf("Expected a nil response but received one")
+	}
+}
+
+func TestIntGetUnixTime(t *testing.T) {
+	t.Skip()
+	client := getIntegerOperations(t)
+	result, err := client.GetUnixTime(context.Background())
+	if err != nil {
+		t.Fatalf("GetUnixTime: %v", err)
+	}
+	t1 := time.Unix(1460505600, 0)
+	helpers.VerifyStatusCode(t, result.RawResponse, http.StatusOK)
+	helpers.DeepEqualOrFatal(t, result.Value, t1)
+}
+
+func TestIntPutMax32(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.PutMax32(context.Background(), int32(2147483647))
+	if err != nil {
+		t.Fatalf("PutMax32: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
+
+// TODO add 0 to end of input number
+func TestIntPutMax64(t *testing.T) {
+	t.Skip()
+	client := getIntegerOperations(t)
+	result, err := client.PutMax64(context.Background(), int64(922337203685477600))
+	if err != nil {
+		t.Fatalf("PutMax64: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
+
+func TestIntPutMin32(t *testing.T) {
+	client := getIntegerOperations(t)
+	result, err := client.PutMin32(context.Background(), int32(-2147483648))
+	if err != nil {
+		t.Fatalf("PutMin32: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
+
+// TODO add 0 to end of input number
+func TestIntPutMin64(t *testing.T) {
+	t.Skip()
+	client := getIntegerOperations(t)
+	result, err := client.PutMin64(context.Background(), int64(-922337203685477600))
+	if err != nil {
+		t.Fatalf("PutMin64: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
+
+func TestIntPutUnixTimeDate(t *testing.T) {
+	t.Skip()
+	client := getIntegerOperations(t)
+	t1 := time.Unix(1460505600, 0)
+	result, err := client.PutUnixTimeDate(context.Background(), t1)
+	if err != nil {
+		t.Fatalf("PutUnixTimeDate: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
