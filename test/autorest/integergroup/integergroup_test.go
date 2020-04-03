@@ -7,6 +7,7 @@ import (
 	"context"
 	"generatortests/autorest/generated/integergroup"
 	"generatortests/helpers"
+	"math"
 	"net/http"
 	"testing"
 	"time"
@@ -62,7 +63,6 @@ func TestIntGetNullUnixTime(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result.Value, (*time.Time)(nil))
 }
 
-// TODO check if this is an appropriate check
 func TestIntGetOverflowInt32(t *testing.T) {
 	client := getIntegerOperations(t)
 	result, err := client.GetOverflowInt32(context.Background())
@@ -74,7 +74,6 @@ func TestIntGetOverflowInt32(t *testing.T) {
 	}
 }
 
-// TODO check if this is an appropriate check
 func TestIntGetOverflowInt64(t *testing.T) {
 	client := getIntegerOperations(t)
 	result, err := client.GetOverflowInt64(context.Background())
@@ -86,7 +85,6 @@ func TestIntGetOverflowInt64(t *testing.T) {
 	}
 }
 
-// TODO check if this is an appropriate check
 func TestIntGetUnderflowInt32(t *testing.T) {
 	client := getIntegerOperations(t)
 	result, err := client.GetUnderflowInt32(context.Background())
@@ -98,7 +96,6 @@ func TestIntGetUnderflowInt32(t *testing.T) {
 	}
 }
 
-// TODO check if this is an appropriate check
 func TestIntGetUnderflowInt64(t *testing.T) {
 	client := getIntegerOperations(t)
 	result, err := client.GetUnderflowInt64(context.Background())
@@ -131,11 +128,9 @@ func TestIntPutMax32(t *testing.T) {
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// TODO add 0 to end of input number
 func TestIntPutMax64(t *testing.T) {
-	t.Skip()
 	client := getIntegerOperations(t)
-	result, err := client.PutMax64(context.Background(), int64(922337203685477600))
+	result, err := client.PutMax64(context.Background(), math.MaxInt64)
 	if err != nil {
 		t.Fatalf("PutMax64: %v", err)
 	}
@@ -151,11 +146,9 @@ func TestIntPutMin32(t *testing.T) {
 	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
-// TODO add 0 to end of input number
 func TestIntPutMin64(t *testing.T) {
-	t.Skip()
 	client := getIntegerOperations(t)
-	result, err := client.PutMin64(context.Background(), int64(-922337203685477600))
+	result, err := client.PutMin64(context.Background(), math.MinInt64)
 	if err != nil {
 		t.Fatalf("PutMin64: %v", err)
 	}
