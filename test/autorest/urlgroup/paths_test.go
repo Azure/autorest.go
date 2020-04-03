@@ -251,25 +251,27 @@ func TestPathsStringURLNonEncoded(t *testing.T) {
 }
 
 // TODO verify how to work with this type of string
-// func TestPathsStringUnicode(t *testing.T) {
-// 	client := getPathsOperations(t)
-// 	result, err := client.StringUnicode(context.Background())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
-// }
+func TestPathsStringUnicode(t *testing.T) {
+	t.Skip()
+	client := getPathsOperations(t)
+	result, err := client.StringUnicode(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 // TODO verify why this is not working
-// func TestPathsUnixTimeURL(t *testing.T) {
-// 	client := getPathsOperations(t)
-// 	d, err := time.Parse("2006-01-02", "2016-04-13")
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	result, err := client.UnixTimeURL(context.Background(), d.Unix())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, result, http.StatusOK)
-// }
+func TestPathsUnixTimeURL(t *testing.T) {
+	t.Skip()
+	client := getPathsOperations(t)
+	d, err := time.Parse("2006-01-02", "2016-04-13")
+	if err != nil {
+		t.Fatal(err)
+	}
+	result, err := client.UnixTimeURL(context.Background(), d)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
