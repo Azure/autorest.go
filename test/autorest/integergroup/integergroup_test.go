@@ -121,7 +121,7 @@ func TestIntGetUnixTime(t *testing.T) {
 
 func TestIntPutMax32(t *testing.T) {
 	client := getIntegerOperations(t)
-	result, err := client.PutMax32(context.Background(), int32(2147483647))
+	result, err := client.PutMax32(context.Background(), math.MaxInt32)
 	if err != nil {
 		t.Fatalf("PutMax32: %v", err)
 	}
@@ -139,7 +139,7 @@ func TestIntPutMax64(t *testing.T) {
 
 func TestIntPutMin32(t *testing.T) {
 	client := getIntegerOperations(t)
-	result, err := client.PutMin32(context.Background(), int32(-2147483648))
+	result, err := client.PutMin32(context.Background(), math.MinInt32)
 	if err != nil {
 		t.Fatalf("PutMin32: %v", err)
 	}
