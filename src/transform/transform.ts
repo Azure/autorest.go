@@ -65,7 +65,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
-      return `[]${schemaTypeToGoType(codeModel, arrayElem, inBody)}`;
+      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, inBody);
+      return `[]${arrayElem.language.go!.name}`;
     case SchemaType.Binary:
       return 'azcore.ReadSeekCloser';
     case SchemaType.Boolean:
@@ -92,7 +93,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
-      return `map[string]*${schemaTypeToGoType(codeModel, dictElem, inBody)}`;
+      dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
+      return `map[string]*${dictElem.language.go!.name}`;
     case SchemaType.Duration:
       return 'time.Duration';
     case SchemaType.Integer:
@@ -328,7 +330,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       propName = firstResp.schema.language.go!.name;
     } else if (firstResp.schema.type === SchemaType.Array) {
       // for array types use the element type's name
-      propName = (<ArraySchema>firstResp.schema).elementType.language.go!.name;
+      propName = recursiveTypeName(firstResp.schema);
     }
     if (firstResp.schema.serialization?.xml && firstResp.schema.serialization.xml.name) {
       // always prefer the XML name
@@ -417,68 +419,56 @@ function responseTypeCreated(codeModel: CodeModel, schema: Schema): boolean {
   return false;
 }
 
-function generateResponseTypeName(schema: Schema): Language {
-  let name = '';
+function recursiveTypeName(schema: Schema): string {
   switch (schema.type) {
     case SchemaType.Any:
-      name = 'InterfaceResponse';
-      break;
+      return 'Interface';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
-      name = `${pascalCase(arrayElem.language.go!.name)}ArrayResponse`;
-      break;
+      return `${recursiveTypeName(arrayElem)}Array`;
     case SchemaType.Boolean:
-      name = 'BoolResponse';
-      break;
+      return 'Bool';
     case SchemaType.ByteArray:
-      name = 'ByteArrayResponse';
-      break;
+      return 'ByteArray';
     case SchemaType.Choice:
       const choiceSchema = <ChoiceSchema>schema;
-      name = `${choiceSchema.language.go!.name}Response`;
-      break;
+      return choiceSchema.language.go!.name;
     case SchemaType.SealedChoice:
       const sealedChoiceSchema = <SealedChoiceSchema>schema;
-      name = `${sealedChoiceSchema.language.go!.name}Response`;
-      break;
+      return sealedChoiceSchema.language.go!.name;
     case SchemaType.Date:
     case SchemaType.DateTime:
     case SchemaType.UnixTime:
-      name = 'TimeResponse';
-      break;
+      return 'Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
-      name = `MapOf${pascalCase(dictElem.language.go!.name)}Response`;
-      break;
+      return `MapOf${recursiveTypeName(dictElem)}`;
     case SchemaType.Duration:
-      name = 'DurationResponse';
-      break;
+      return 'Duration';
     case SchemaType.Integer:
       if ((<NumberSchema>schema).precision === 32) {
-        name = 'Int32Response';
-        break;
+        return 'Int32';
       }
-      name = 'Int64Response';
-      break;
+      return 'Int64';
     case SchemaType.Number:
       if ((<NumberSchema>schema).precision === 32) {
-        name = 'Float32Response';
-        break;
+        return 'Float32';
       }
-      name = 'Float64Response';
-      break;
+      return 'Float64';
     case SchemaType.Object:
-      name = `${schema.language.go!.name}Response`;
-      break;
+      return schema.language.go!.name;
     case SchemaType.String:
     case SchemaType.Uuid:
-      name = 'StringResponse';
-      break;
+      return 'String';
     default:
       throw console.error(`unhandled response schema type ${schema.type}`);
   }
+}
+
+function generateResponseTypeName(schema: Schema): Language {
+  const name = `${recursiveTypeName(schema)}Response`;
   return {
     name: name,
     description: `${name} is the response envelope for operations that return a ${schema.language.go!.name} type.`,

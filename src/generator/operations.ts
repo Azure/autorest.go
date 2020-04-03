@@ -452,6 +452,15 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       body = 'aux';
       // aux precludes the need for 'options.' prefix
       setOptionsPrefix = false;
+    } else if (isArrayOfRFC1123(bodyParam!.schema)) {
+      const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
+      text += `\taux := make([]${timeType}, len(${bodyParam!.language.go!.name}), len(${bodyParam!.language.go!.name}))\n`;
+      text += `\tfor i := 0; i < len(${bodyParam!.language.go!.name}); i++ {\n`;
+      text += `\t\taux[i] = ${timeType}(${bodyParam!.language.go!.name}[i])\n`;
+      text += '\t}\n';
+      body = 'aux';
+      // aux precludes the need for 'options.' prefix
+      setOptionsPrefix = false;
     }
     if (setOptionsPrefix === true) {
       body = `options.${pascalCase(body)}`;
@@ -470,6 +479,18 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   }
   text += '}\n\n';
   return text;
+}
+
+function isArrayOfRFC1123(schema: Schema): boolean {
+  if (schema.type !== SchemaType.Array) {
+    return false;
+  }
+  const arraySchema = <ArraySchema>schema;
+  const arrayElem = <Schema>arraySchema.elementType;
+  if (arrayElem.type !== SchemaType.DateTime) {
+    return false;
+  }
+  return (<DateTimeSchema>arrayElem).format === 'date-time-rfc1123';
 }
 
 function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
@@ -495,6 +516,28 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += `\treturn resp.Response, nil\n`;
     text += '}\n\n';
     return text;
+  } else if (firstResp.schema.type === SchemaType.DateTime) {
+    // use the designated time type for unmarshalling
+    text += `\tvar aux *${firstResp.schema.language.go!.internalTimeType}\n`;
+    text += `\terr := resp.UnmarshalAs${getMediaType(firstResp.protocol)}(&aux)\n`;
+    const resp = `${firstResp.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${firstResp.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
+    text += `\treturn &${resp}, err\n`;
+    text += '}\n\n';
+    return text;
+  } else if (isArrayOfDateTime(firstResp.schema)) {
+    // unmarshalling arrays of date/time is a little more involved
+    text += `\tvar aux *[]${(<ArraySchema>firstResp.schema).elementType.language.go!.internalTimeType}\n`;
+    text += `\tif err := resp.UnmarshalAs${getMediaType(firstResp.protocol)}(&aux); err != nil {\n`;
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += '\tcp := make([]time.Time, len(*aux), len(*aux))\n';
+    text += '\tfor i := 0; i < len(*aux); i++ {\n';
+    text += '\t\tcp[i] = time.Time((*aux)[i])\n';
+    text += '\t}\n';
+    const resp = `${firstResp.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${firstResp.schema.language.go!.responseType.value}: &cp}`;
+    text += `\treturn &${resp}, nil\n`;
+    text += '}\n\n';
+    return text;
   }
 
   const schemaResponse = <SchemaResponse>firstResp;
@@ -513,22 +556,23 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += '}\n\n';
     return text;
   }
-  if (schemaResponse.schema.type === SchemaType.DateTime) {
-    // use the designated time type for unmarshalling
-    text += `\tvar aux *${schemaResponse.schema.language.go!.internalTimeType}\n`;
-    text += `\terr := resp.UnmarshalAs${mediaType}(&aux)\n`;
-    text += `\tresult.${schemaResponse.schema.language.go!.responseType.value} = (*time.Time)(aux)\n`;
-    text += `\treturn &result, err\n`;
-  } else {
-    let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
-    // when unmarshalling a wrapped XML array, unmarshal into the response type, not the field
-    if (mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) {
-      target = 'result';
-    }
-    text += `\treturn &result, resp.UnmarshalAs${mediaType}(&${target})\n`;
+  let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
+  // when unmarshalling a wrapped XML array, unmarshal into the response type, not the field
+  if (mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) {
+    target = 'result';
   }
+  text += `\treturn &result, resp.UnmarshalAs${mediaType}(&${target})\n`;
   text += '}\n\n';
   return text;
+}
+
+function isArrayOfDateTime(schema: Schema): boolean {
+  if (schema.type !== SchemaType.Array) {
+    return false;
+  }
+  const arraySchema = <ArraySchema>schema;
+  const arrayElem = <Schema>arraySchema.elementType;
+  return arrayElem.type === SchemaType.DateTime;
 }
 
 function createInterfaceDefinition(group: OperationGroup, imports: ImportManager): string {

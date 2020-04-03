@@ -72,11 +72,9 @@ func (client *datetimerfc1123Operations) getInvalidHandleResponse(resp *azcore.R
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
-	result.Value = (*time.Time)(aux)
-	return &result, err
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // GetNull - Get null datetime value
@@ -112,11 +110,9 @@ func (client *datetimerfc1123Operations) getNullHandleResponse(resp *azcore.Resp
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
-	result.Value = (*time.Time)(aux)
-	return &result, err
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // GetOverflow - Get overflow datetime value
@@ -152,11 +148,9 @@ func (client *datetimerfc1123Operations) getOverflowHandleResponse(resp *azcore.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
-	result.Value = (*time.Time)(aux)
-	return &result, err
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // GetUTCLowercaseMaxDateTime - Get max datetime value fri, 31 dec 9999 23:59:59 gmt
@@ -192,11 +186,9 @@ func (client *datetimerfc1123Operations) getUtcLowercaseMaxDateTimeHandleRespons
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
-	result.Value = (*time.Time)(aux)
-	return &result, err
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // GetUTCMinDateTime - Get min datetime value Mon, 1 Jan 0001 00:00:00 GMT
@@ -232,11 +224,9 @@ func (client *datetimerfc1123Operations) getUtcMinDateTimeHandleResponse(resp *a
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
-	result.Value = (*time.Time)(aux)
-	return &result, err
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // GetUTCUppercaseMaxDateTime - Get max datetime value FRI, 31 DEC 9999 23:59:59 GMT
@@ -272,11 +262,9 @@ func (client *datetimerfc1123Operations) getUtcUppercaseMaxDateTimeHandleRespons
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
-	result.Value = (*time.Time)(aux)
-	return &result, err
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // GetUnderflow - Get underflow datetime value
@@ -312,11 +300,9 @@ func (client *datetimerfc1123Operations) getUnderflowHandleResponse(resp *azcore
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := TimeResponse{RawResponse: resp.Response}
 	var aux *timeRFC1123
 	err := resp.UnmarshalAsJSON(&aux)
-	result.Value = (*time.Time)(aux)
-	return &result, err
+	return &TimeResponse{RawResponse: resp.Response, Value: (*time.Time)(aux)}, err
 }
 
 // PutUTCMaxDateTime - Put max datetime value Fri, 31 Dec 9999 23:59:59 GMT
