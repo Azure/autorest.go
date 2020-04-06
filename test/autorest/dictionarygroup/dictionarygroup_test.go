@@ -263,7 +263,6 @@ func TestGetDateTimeInvalidNull(t *testing.T) {
 
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 func TestGetDateTimeRFC1123Valid(t *testing.T) {
-	t.Skip("codegen fix")
 	client := getClient(t)
 	resp, err := client.GetDateTimeRFC1123Valid(context.Background())
 	if err != nil {
@@ -281,7 +280,6 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 func TestGetDateTimeValid(t *testing.T) {
-	t.Skip("codegen fix")
 	client := getClient(t)
 	resp, err := client.GetDateTimeValid(context.Background())
 	if err != nil {
@@ -670,12 +668,36 @@ func TestPutComplexValid(t *testing.T) {
 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 func TestPutDateTimeRFC1123Valid(t *testing.T) {
-	t.Skip("needs codegen fix")
+	client := getClient(t)
+	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
+	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
+	dt3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
+	resp, err := client.PutDateTimeRFC1123Valid(context.Background(), map[string]time.Time{
+		"0": dt1,
+		"1": dt2,
+		"2": dt3,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
 // PutDateTimeValid - Set dictionary value  {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 func TestPutDateTimeValid(t *testing.T) {
-	t.Skip("needs codegen fix")
+	client := getClient(t)
+	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
+	dt2, _ := time.Parse(time.RFC3339, "1980-01-01T23:11:35Z")
+	dt3, _ := time.Parse(time.RFC3339, "1492-10-12T18:15:01Z")
+	resp, err := client.PutDateTimeValid(context.Background(), map[string]time.Time{
+		"0": dt1,
+		"1": dt2,
+		"2": dt3,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, http.StatusOK)
 }
 
 // PutDateValid - Set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
