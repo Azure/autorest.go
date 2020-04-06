@@ -57,18 +57,14 @@ func TestDictionaryGetValid(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result.DictionaryWrapper, &val)
 }
 
-// // TODO this works if the DefaultProgram field in DictionaryWrapper is of type map[string]*string without the omitempty JSON tag
-// func TestDictionaryPutEmpty(t *testing.T) {
-// 	client := getDictionaryOperations(t)
-// 	result, err := client.PutEmpty(context.Background(), complexgroup.DictionaryWrapper{DefaultProgram: map[string]*string{}})
-// 	if err != nil {
-// 		t.Fatalf("PutEmpty: %v", err)
-// 	}
-// 	expected := &complexgroup.DictionaryPutEmptyResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
+func TestDictionaryPutEmpty(t *testing.T) {
+	client := getDictionaryOperations(t)
+	result, err := client.PutEmpty(context.Background(), complexgroup.DictionaryWrapper{DefaultProgram: &map[string]*string{}})
+	if err != nil {
+		t.Fatalf("PutEmpty: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
 func TestDictionaryPutValid(t *testing.T) {
 	client := getDictionaryOperations(t)

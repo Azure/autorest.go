@@ -7,6 +7,7 @@ import (
 	"context"
 	"generatortests/autorest/generated/complexgroup"
 	"generatortests/helpers"
+	"net/http"
 	"testing"
 )
 
@@ -49,32 +50,22 @@ func TestArrayGetValid(t *testing.T) {
 	})
 }
 
-// TODO this works if the Array field in ArrayWrapper is of type []*string without the omitempty JSON tag
-// func TestArrayPutEmpty(t *testing.T) {
-// 	client := getArrayOperations(t)
-// 	result, err := client.PutEmpty(context.Background(), complexgroup.ArrayWrapper{Array: []*string{}})
-// 	if err != nil {
-// 		t.Fatalf("PutEmpty: %v", err)
-// 	}
-// 	expected := &complexgroup.ArrayPutEmptyResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
+func TestArrayPutEmpty(t *testing.T) {
+	client := getArrayOperations(t)
+	result, err := client.PutEmpty(context.Background(), complexgroup.ArrayWrapper{Array: &[]string{}})
+	if err != nil {
+		t.Fatalf("PutEmpty: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
 
-// TODO this only works if the Array field on ArrayWrapper is of type []*string
-// func TestArrayPutValid(t *testing.T) {
-// 	client := getArrayOperations(t)
-// 	result, err := client.PutValid(context.Background(), complexgroup.ArrayWrapper{Array: []*string{toStrPtr("1, 2, 3, 4"), toStrPtr(""), nil, toStrPtr("&S#$(*Y"), toStrPtr("The quick brown fox jumps over the lazy dog")}})
-// 	if err != nil {
-// 		t.Fatalf("PutValid: %v", err)
-// 	}
-// 	expected := &complexgroup.ArrayPutValidResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
-
-// func toStrPtr(s string) *string {
-// 	return &s
-// }
+/*
+test is currently invalid, missing x-nullable but expects null
+func TestArrayPutValid(t *testing.T) {
+	client := getArrayOperations(t)
+	result, err := client.PutValid(context.Background(), complexgroup.ArrayWrapper{Array: &[]string{"1, 2, 3, 4", "", nil, "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}})
+	if err != nil {
+		t.Fatalf("PutValid: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}*/
