@@ -318,7 +318,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]*string{})
+	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{})
 }
 
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
@@ -328,17 +328,17 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]*string{
-		map[string]*string{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
+		map[string]string{
+			"1": "one",
+			"2": "two",
+			"3": "three",
 		},
-		map[string]*string{},
-		map[string]*string{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+		map[string]string{},
+		map[string]string{
+			"7": "seven",
+			"8": "eight",
+			"9": "nine",
 		},
 	})
 }
@@ -350,17 +350,17 @@ func TestGetDictionaryItemNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]*string{
-		map[string]*string{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
+		map[string]string{
+			"1": "one",
+			"2": "two",
+			"3": "three",
 		},
 		nil,
-		map[string]*string{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+		map[string]string{
+			"7": "seven",
+			"8": "eight",
+			"9": "nine",
 		},
 	})
 }
@@ -384,21 +384,21 @@ func TestGetDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]*string{
-		map[string]*string{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+	helpers.DeepEqualOrFatal(t, resp.MapOfStringArray, &[]map[string]string{
+		map[string]string{
+			"1": "one",
+			"2": "two",
+			"3": "three",
 		},
-		map[string]*string{
-			"4": to.StringPtr("four"),
-			"5": to.StringPtr("five"),
-			"6": to.StringPtr("six"),
+		map[string]string{
+			"4": "four",
+			"5": "five",
+			"6": "six",
 		},
-		map[string]*string{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+		map[string]string{
+			"7": "seven",
+			"8": "eight",
+			"9": "nine",
 		},
 	})
 }
