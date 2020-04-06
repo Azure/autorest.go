@@ -6,7 +6,7 @@ package complexgrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/complexgroup"
-	"net/http"
+	"generatortests/helpers"
 	"testing"
 )
 
@@ -24,12 +24,9 @@ func TestArrayGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	val := complexgroup.ArrayWrapper{Array: &[]string{}}
-	expected := &complexgroup.ArrayGetEmptyResponse{
-		StatusCode:   http.StatusOK,
-		ArrayWrapper: &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.ArrayWrapper, &complexgroup.ArrayWrapper{
+		Array: &[]string{},
+	})
 }
 
 func TestArrayGetNotProvided(t *testing.T) {
@@ -38,12 +35,7 @@ func TestArrayGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	val := complexgroup.ArrayWrapper{}
-	expected := &complexgroup.ArrayGetNotProvidedResponse{
-		StatusCode:   http.StatusOK,
-		ArrayWrapper: &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.ArrayWrapper, &complexgroup.ArrayWrapper{})
 }
 
 func TestArrayGetValid(t *testing.T) {
@@ -52,12 +44,9 @@ func TestArrayGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	val := complexgroup.ArrayWrapper{Array: &[]string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"}}
-	expected := &complexgroup.ArrayGetValidResponse{
-		StatusCode:   http.StatusOK,
-		ArrayWrapper: &val,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.ArrayWrapper, &complexgroup.ArrayWrapper{
+		Array: &[]string{"1, 2, 3, 4", "", "", "&S#$(*Y", "The quick brown fox jumps over the lazy dog"},
+	})
 }
 
 // TODO this works if the Array field in ArrayWrapper is of type []*string without the omitempty JSON tag

@@ -10,7 +10,7 @@ const goMappings = {
     'azurereportgroup': 'azure-report.json',
     'booleangroup': 'body-boolean.json',
     'bytegroup': 'body-byte.json',
-    //'complexgroup': 'body-complex.json',
+    'complexgroup': 'body-complex.json',
     'complexmodelgroup': 'complex-model.json',
     'custombaseurlgroup': 'custom-baseUrl.json',
     //'dategroup': 'body-date.json',

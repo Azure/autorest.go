@@ -6,8 +6,10 @@ package complexgrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/complexgroup"
-	"net/http"
+	"generatortests/helpers"
 	"testing"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
 func getReadonlypropertyOperations(t *testing.T) complexgroup.ReadonlypropertyOperations {
@@ -24,12 +26,7 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	id, size := "1234", int32(2)
-	expected := &complexgroup.ReadonlypropertyGetValidResponse{
-		StatusCode:  http.StatusOK,
-		ReadonlyObj: &complexgroup.ReadonlyObj{ID: &id, Size: &size},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.ReadonlyObj, &complexgroup.ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)})
 }
 
 // func TestReadonlypropertyPutValid(t *testing.T) {

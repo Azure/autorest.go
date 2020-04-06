@@ -5,239 +5,451 @@
 
 package complexgroup
 
-import azinternal "generatortests/autorest/generated/complexgroup/internal/complexgroup"
-
-// ArrayGetEmptyResponse contains the response from method Array.GetEmpty.
-type ArrayGetEmptyResponse = azinternal.ArrayGetEmptyResponse
-
-// ArrayGetNotProvidedResponse contains the response from method Array.GetNotProvided.
-type ArrayGetNotProvidedResponse = azinternal.ArrayGetNotProvidedResponse
-
-// ArrayGetValidResponse contains the response from method Array.GetValid.
-type ArrayGetValidResponse = azinternal.ArrayGetValidResponse
-
-// ArrayPutEmptyResponse contains the response from method Array.PutEmpty.
-type ArrayPutEmptyResponse = azinternal.ArrayPutEmptyResponse
-
-// ArrayPutValidResponse contains the response from method Array.PutValid.
-type ArrayPutValidResponse = azinternal.ArrayPutValidResponse
-
-type ArrayWrapper = azinternal.ArrayWrapper
-
-type Basic = azinternal.Basic
-
-// BasicGetEmptyResponse contains the response from method Basic.GetEmpty.
-type BasicGetEmptyResponse = azinternal.BasicGetEmptyResponse
-
-// BasicGetInvalidResponse contains the response from method Basic.GetInvalid.
-type BasicGetInvalidResponse = azinternal.BasicGetInvalidResponse
-
-// BasicGetNotProvidedResponse contains the response from method Basic.GetNotProvided.
-type BasicGetNotProvidedResponse = azinternal.BasicGetNotProvidedResponse
-
-// BasicGetNullResponse contains the response from method Basic.GetNull.
-type BasicGetNullResponse = azinternal.BasicGetNullResponse
-
-// BasicGetValidResponse contains the response from method Basic.GetValid.
-type BasicGetValidResponse = azinternal.BasicGetValidResponse
-
-// BasicPutValidResponse contains the response from method Basic.PutValid.
-type BasicPutValidResponse = azinternal.BasicPutValidResponse
-
-type BooleanWrapper = azinternal.BooleanWrapper
-
-type ByteWrapper = azinternal.ByteWrapper
-
-type Cat = azinternal.Cat
-
-type Cookiecuttershark = azinternal.Cookiecuttershark
-
-type DateWrapper = azinternal.DateWrapper
-
-type DatetimeWrapper = azinternal.DatetimeWrapper
-
-type Datetimerfc1123Wrapper = azinternal.Datetimerfc1123Wrapper
-
-// DictionaryGetEmptyResponse contains the response from method Dictionary.GetEmpty.
-type DictionaryGetEmptyResponse = azinternal.DictionaryGetEmptyResponse
-
-// DictionaryGetNotProvidedResponse contains the response from method Dictionary.GetNotProvided.
-type DictionaryGetNotProvidedResponse = azinternal.DictionaryGetNotProvidedResponse
-
-// DictionaryGetNullResponse contains the response from method Dictionary.GetNull.
-type DictionaryGetNullResponse = azinternal.DictionaryGetNullResponse
-
-// DictionaryGetValidResponse contains the response from method Dictionary.GetValid.
-type DictionaryGetValidResponse = azinternal.DictionaryGetValidResponse
-
-// DictionaryPutEmptyResponse contains the response from method Dictionary.PutEmpty.
-type DictionaryPutEmptyResponse = azinternal.DictionaryPutEmptyResponse
-
-// DictionaryPutValidResponse contains the response from method Dictionary.PutValid.
-type DictionaryPutValidResponse = azinternal.DictionaryPutValidResponse
-
-type DictionaryWrapper = azinternal.DictionaryWrapper
-
-type Dog = azinternal.Dog
-
-type DotFish = azinternal.DotFish
-
-type DotFishMarket = azinternal.DotFishMarket
-
-type DotSalmon = azinternal.DotSalmon
-
-type DoubleWrapper = azinternal.DoubleWrapper
-
-type DurationWrapper = azinternal.DurationWrapper
-
-type Error = azinternal.Error
-
-type Fish = azinternal.Fish
-
-// FlattencomplexGetValidResponse contains the response from method Flattencomplex.GetValid.
-type FlattencomplexGetValidResponse = azinternal.FlattencomplexGetValidResponse
-
-type FloatWrapper = azinternal.FloatWrapper
-
-type Goblinshark = azinternal.Goblinshark
-
-// InheritanceGetValidResponse contains the response from method Inheritance.GetValid.
-type InheritanceGetValidResponse = azinternal.InheritanceGetValidResponse
-
-// InheritancePutValidResponse contains the response from method Inheritance.PutValid.
-type InheritancePutValidResponse = azinternal.InheritancePutValidResponse
-
-type IntWrapper = azinternal.IntWrapper
-
-type LongWrapper = azinternal.LongWrapper
-
-type MyBaseHelperType = azinternal.MyBaseHelperType
-
-type MyBaseType = azinternal.MyBaseType
-
-type MyDerivedType = azinternal.MyDerivedType
-
-type Pet = azinternal.Pet
-
-// PolymorphicrecursiveGetValidResponse contains the response from method Polymorphicrecursive.GetValid.
-type PolymorphicrecursiveGetValidResponse = azinternal.PolymorphicrecursiveGetValidResponse
-
-// PolymorphicrecursivePutValidResponse contains the response from method Polymorphicrecursive.PutValid.
-type PolymorphicrecursivePutValidResponse = azinternal.PolymorphicrecursivePutValidResponse
-
-// PolymorphismGetComplicatedResponse contains the response from method Polymorphism.GetComplicated.
-type PolymorphismGetComplicatedResponse = azinternal.PolymorphismGetComplicatedResponse
-
-// PolymorphismGetComposedWithDiscriminatorResponse contains the response from method Polymorphism.GetComposedWithDiscriminator.
-type PolymorphismGetComposedWithDiscriminatorResponse = azinternal.PolymorphismGetComposedWithDiscriminatorResponse
-
-// PolymorphismGetComposedWithoutDiscriminatorResponse contains the response from method Polymorphism.GetComposedWithoutDiscriminator.
-type PolymorphismGetComposedWithoutDiscriminatorResponse = azinternal.PolymorphismGetComposedWithoutDiscriminatorResponse
-
-// PolymorphismGetDotSyntaxResponse contains the response from method Polymorphism.GetDotSyntax.
-type PolymorphismGetDotSyntaxResponse = azinternal.PolymorphismGetDotSyntaxResponse
-
-// PolymorphismGetValidResponse contains the response from method Polymorphism.GetValid.
-type PolymorphismGetValidResponse = azinternal.PolymorphismGetValidResponse
-
-// PolymorphismPutComplicatedResponse contains the response from method Polymorphism.PutComplicated.
-type PolymorphismPutComplicatedResponse = azinternal.PolymorphismPutComplicatedResponse
-
-// PolymorphismPutMissingDiscriminatorResponse contains the response from method Polymorphism.PutMissingDiscriminator.
-type PolymorphismPutMissingDiscriminatorResponse = azinternal.PolymorphismPutMissingDiscriminatorResponse
-
-// PolymorphismPutValidMissingRequiredResponse contains the response from method Polymorphism.PutValidMissingRequired.
-type PolymorphismPutValidMissingRequiredResponse = azinternal.PolymorphismPutValidMissingRequiredResponse
-
-// PolymorphismPutValidResponse contains the response from method Polymorphism.PutValid.
-type PolymorphismPutValidResponse = azinternal.PolymorphismPutValidResponse
-
-// PrimitiveGetBoolResponse contains the response from method Primitive.GetBool.
-type PrimitiveGetBoolResponse = azinternal.PrimitiveGetBoolResponse
-
-// PrimitiveGetByteResponse contains the response from method Primitive.GetByte.
-type PrimitiveGetByteResponse = azinternal.PrimitiveGetByteResponse
-
-// PrimitiveGetDateResponse contains the response from method Primitive.GetDate.
-type PrimitiveGetDateResponse = azinternal.PrimitiveGetDateResponse
-
-// PrimitiveGetDateTimeRFC1123Response contains the response from method Primitive.GetDateTimeRFC1123.
-type PrimitiveGetDateTimeRFC1123Response = azinternal.PrimitiveGetDateTimeRFC1123Response
-
-// PrimitiveGetDateTimeResponse contains the response from method Primitive.GetDateTime.
-type PrimitiveGetDateTimeResponse = azinternal.PrimitiveGetDateTimeResponse
-
-// PrimitiveGetDoubleResponse contains the response from method Primitive.GetDouble.
-type PrimitiveGetDoubleResponse = azinternal.PrimitiveGetDoubleResponse
-
-// PrimitiveGetDurationResponse contains the response from method Primitive.GetDuration.
-type PrimitiveGetDurationResponse = azinternal.PrimitiveGetDurationResponse
-
-// PrimitiveGetFloatResponse contains the response from method Primitive.GetFloat.
-type PrimitiveGetFloatResponse = azinternal.PrimitiveGetFloatResponse
-
-// PrimitiveGetIntResponse contains the response from method Primitive.GetInt.
-type PrimitiveGetIntResponse = azinternal.PrimitiveGetIntResponse
-
-// PrimitiveGetLongResponse contains the response from method Primitive.GetLong.
-type PrimitiveGetLongResponse = azinternal.PrimitiveGetLongResponse
-
-// PrimitiveGetStringResponse contains the response from method Primitive.GetString.
-type PrimitiveGetStringResponse = azinternal.PrimitiveGetStringResponse
-
-// PrimitivePutBoolResponse contains the response from method Primitive.PutBool.
-type PrimitivePutBoolResponse = azinternal.PrimitivePutBoolResponse
-
-// PrimitivePutByteResponse contains the response from method Primitive.PutByte.
-type PrimitivePutByteResponse = azinternal.PrimitivePutByteResponse
-
-// PrimitivePutDateResponse contains the response from method Primitive.PutDate.
-type PrimitivePutDateResponse = azinternal.PrimitivePutDateResponse
-
-// PrimitivePutDateTimeRFC1123Response contains the response from method Primitive.PutDateTimeRFC1123.
-type PrimitivePutDateTimeRFC1123Response = azinternal.PrimitivePutDateTimeRFC1123Response
-
-// PrimitivePutDateTimeResponse contains the response from method Primitive.PutDateTime.
-type PrimitivePutDateTimeResponse = azinternal.PrimitivePutDateTimeResponse
-
-// PrimitivePutDoubleResponse contains the response from method Primitive.PutDouble.
-type PrimitivePutDoubleResponse = azinternal.PrimitivePutDoubleResponse
-
-// PrimitivePutDurationResponse contains the response from method Primitive.PutDuration.
-type PrimitivePutDurationResponse = azinternal.PrimitivePutDurationResponse
-
-// PrimitivePutFloatResponse contains the response from method Primitive.PutFloat.
-type PrimitivePutFloatResponse = azinternal.PrimitivePutFloatResponse
-
-// PrimitivePutIntResponse contains the response from method Primitive.PutInt.
-type PrimitivePutIntResponse = azinternal.PrimitivePutIntResponse
-
-// PrimitivePutLongResponse contains the response from method Primitive.PutLong.
-type PrimitivePutLongResponse = azinternal.PrimitivePutLongResponse
-
-// PrimitivePutStringResponse contains the response from method Primitive.PutString.
-type PrimitivePutStringResponse = azinternal.PrimitivePutStringResponse
-
-type ReadonlyObj = azinternal.ReadonlyObj
-
-// ReadonlypropertyGetValidResponse contains the response from method Readonlyproperty.GetValid.
-type ReadonlypropertyGetValidResponse = azinternal.ReadonlypropertyGetValidResponse
-
-// ReadonlypropertyPutValidResponse contains the response from method Readonlyproperty.PutValid.
-type ReadonlypropertyPutValidResponse = azinternal.ReadonlypropertyPutValidResponse
-
-type Salmon = azinternal.Salmon
-
-type Sawshark = azinternal.Sawshark
-
-type Shark = azinternal.Shark
-
-type Siamese = azinternal.Siamese
-
-type SmartSalmon = azinternal.SmartSalmon
-
-type StringWrapper = azinternal.StringWrapper
-
-type FishModel = azinternal.FishModel
-
-type SalmonModel = azinternal.SalmonModel
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"time"
+)
+
+type ArrayWrapper struct {
+	Array *[]string `json:"array,omitempty"`
+}
+
+// ArrayWrapperResponse is the response envelope for operations that return a ArrayWrapper type.
+type ArrayWrapperResponse struct {
+	ArrayWrapper *ArrayWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type Basic struct {
+	Color *CMYKColors `json:"color,omitempty"`
+
+	// Basic Id
+	ID *int32 `json:"id,omitempty"`
+
+	// Name property with a very long description that does not fit on a single line and a line break.
+	Name *string `json:"name,omitempty"`
+}
+
+// BasicResponse is the response envelope for operations that return a Basic type.
+type BasicResponse struct {
+	Basic *Basic
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type BooleanWrapper struct {
+	FieldFalse *bool `json:"field_false,omitempty"`
+	FieldTrue  *bool `json:"field_true,omitempty"`
+}
+
+// BooleanWrapperResponse is the response envelope for operations that return a BooleanWrapper type.
+type BooleanWrapperResponse struct {
+	BooleanWrapper *BooleanWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type ByteWrapper struct {
+	Field *[]byte `json:"field,omitempty"`
+}
+
+// ByteWrapperResponse is the response envelope for operations that return a ByteWrapper type.
+type ByteWrapperResponse struct {
+	ByteWrapper *ByteWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type Cat struct {
+	Color *string `json:"color,omitempty"`
+	Hates *[]Dog  `json:"hates,omitempty"`
+}
+
+type Cookiecuttershark struct {
+}
+
+type DateWrapper struct {
+	Field *time.Time `json:"field,omitempty"`
+	Leap  *time.Time `json:"leap,omitempty"`
+}
+
+// DateWrapperResponse is the response envelope for operations that return a DateWrapper type.
+type DateWrapperResponse struct {
+	DateWrapper *DateWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type DatetimeWrapper struct {
+	Field *time.Time `json:"field,omitempty"`
+	Now   *time.Time `json:"now,omitempty"`
+}
+
+func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
+	type alias DatetimeWrapper
+	aux := &struct {
+		*alias
+		Field *timeRFC3339 `json:"field"`
+		Now   *timeRFC3339 `json:"now"`
+	}{
+		alias: (*alias)(&d),
+		Field: (*timeRFC3339)(d.Field),
+		Now:   (*timeRFC3339)(d.Now),
+	}
+	return json.Marshal(aux)
+}
+
+func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
+	type alias DatetimeWrapper
+	aux := &struct {
+		*alias
+		Field *timeRFC3339 `json:"field"`
+		Now   *timeRFC3339 `json:"now"`
+	}{
+		alias: (*alias)(d),
+	}
+	if err := json.Unmarshal(data, aux); err != nil {
+		return err
+	}
+	d.Field = (*time.Time)(aux.Field)
+	d.Now = (*time.Time)(aux.Now)
+	return nil
+}
+
+// DatetimeWrapperResponse is the response envelope for operations that return a DatetimeWrapper type.
+type DatetimeWrapperResponse struct {
+	DatetimeWrapper *DatetimeWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type Datetimerfc1123Wrapper struct {
+	Field *time.Time `json:"field,omitempty"`
+	Now   *time.Time `json:"now,omitempty"`
+}
+
+func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
+	type alias Datetimerfc1123Wrapper
+	aux := &struct {
+		*alias
+		Field *timeRFC1123 `json:"field"`
+		Now   *timeRFC1123 `json:"now"`
+	}{
+		alias: (*alias)(&d),
+		Field: (*timeRFC1123)(d.Field),
+		Now:   (*timeRFC1123)(d.Now),
+	}
+	return json.Marshal(aux)
+}
+
+func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
+	type alias Datetimerfc1123Wrapper
+	aux := &struct {
+		*alias
+		Field *timeRFC1123 `json:"field"`
+		Now   *timeRFC1123 `json:"now"`
+	}{
+		alias: (*alias)(d),
+	}
+	if err := json.Unmarshal(data, aux); err != nil {
+		return err
+	}
+	d.Field = (*time.Time)(aux.Field)
+	d.Now = (*time.Time)(aux.Now)
+	return nil
+}
+
+// Datetimerfc1123WrapperResponse is the response envelope for operations that return a Datetimerfc1123Wrapper type.
+type Datetimerfc1123WrapperResponse struct {
+	Datetimerfc1123Wrapper *Datetimerfc1123Wrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type DictionaryWrapper struct {
+	// Dictionary of <string>
+	DefaultProgram *map[string]*string `json:"defaultProgram,omitempty"`
+}
+
+// DictionaryWrapperResponse is the response envelope for operations that return a DictionaryWrapper type.
+type DictionaryWrapperResponse struct {
+	DictionaryWrapper *DictionaryWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type Dog struct {
+	Food *string `json:"food,omitempty"`
+}
+
+type DotFish struct {
+	FishType *string `json:"fish.type,omitempty"`
+	Species  *string `json:"species,omitempty"`
+}
+
+type DotFishMarket struct {
+	Fishes       *[]DotFish   `json:"fishes,omitempty"`
+	Salmons      *[]DotSalmon `json:"salmons,omitempty"`
+	SampleFish   *DotFish     `json:"sampleFish,omitempty"`
+	SampleSalmon *DotSalmon   `json:"sampleSalmon,omitempty"`
+}
+
+// DotFishMarketResponse is the response envelope for operations that return a DotFishMarket type.
+type DotFishMarketResponse struct {
+	DotFishMarket *DotFishMarket
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DotFishResponse is the response envelope for operations that return a DotFish type.
+type DotFishResponse struct {
+	DotFish *DotFish
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type DotSalmon struct {
+	Iswild   *bool   `json:"iswild,omitempty"`
+	Location *string `json:"location,omitempty"`
+}
+
+type DoubleWrapper struct {
+	Field1                                                                          *float64 `json:"field1,omitempty"`
+	Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64 `json:"field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose,omitempty"`
+}
+
+// DoubleWrapperResponse is the response envelope for operations that return a DoubleWrapper type.
+type DoubleWrapperResponse struct {
+	DoubleWrapper *DoubleWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type DurationWrapper struct {
+	Field *time.Duration `json:"field,omitempty"`
+}
+
+// DurationWrapperResponse is the response envelope for operations that return a DurationWrapper type.
+type DurationWrapperResponse struct {
+	DurationWrapper *DurationWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
+func newError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
+func (e Error) Error() string {
+	msg := ""
+	if e.Message != nil {
+		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
+	}
+	if msg == "" {
+		msg = "missing error info"
+	}
+	return msg
+}
+
+type Fish struct {
+	Fishtype *string  `json:"fishtype,omitempty"`
+	Length   *float32 `json:"length,omitempty"`
+	Siblings *[]Fish  `json:"siblings,omitempty"`
+	Species  *string  `json:"species,omitempty"`
+}
+
+// FishResponse is the response envelope for operations that return a Fish type.
+type FishResponse struct {
+	Fish *Fish
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type FloatWrapper struct {
+	Field1 *float32 `json:"field1,omitempty"`
+	Field2 *float32 `json:"field2,omitempty"`
+}
+
+// FloatWrapperResponse is the response envelope for operations that return a FloatWrapper type.
+type FloatWrapperResponse struct {
+	FloatWrapper *FloatWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type Goblinshark struct {
+	// Colors possible
+	Color   *GoblinSharkColor `json:"color,omitempty"`
+	Jawsize *int32            `json:"jawsize,omitempty"`
+}
+
+type IntWrapper struct {
+	Field1 *int32 `json:"field1,omitempty"`
+	Field2 *int32 `json:"field2,omitempty"`
+}
+
+// IntWrapperResponse is the response envelope for operations that return a IntWrapper type.
+type IntWrapperResponse struct {
+	IntWrapper *IntWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type LongWrapper struct {
+	Field1 *int64 `json:"field1,omitempty"`
+	Field2 *int64 `json:"field2,omitempty"`
+}
+
+// LongWrapperResponse is the response envelope for operations that return a LongWrapper type.
+type LongWrapperResponse struct {
+	LongWrapper *LongWrapper
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type MyBaseHelperType struct {
+	PropBh1 *string `json:"propBH1,omitempty"`
+}
+
+type MyBaseType struct {
+	Helper *MyBaseHelperType `json:"helper,omitempty"`
+	Kind   *string           `json:"kind,omitempty"`
+	PropB1 *string           `json:"propB1,omitempty"`
+}
+
+// MyBaseTypeResponse is the response envelope for operations that return a MyBaseType type.
+type MyBaseTypeResponse struct {
+	MyBaseType *MyBaseType
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+type MyDerivedType struct {
+	PropD1 *string `json:"propD1,omitempty"`
+}
+
+type Pet struct {
+	ID   *int32  `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+}
+
+type ReadonlyObj struct {
+	ID   *string `json:"id,omitempty"`
+	Size *int32  `json:"size,omitempty"`
+}
+
+// ReadonlyObjResponse is the response envelope for operations that return a ReadonlyObj type.
+type ReadonlyObjResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	ReadonlyObj *ReadonlyObj
+}
+
+type Salmon struct {
+	Iswild   *bool   `json:"iswild,omitempty"`
+	Location *string `json:"location,omitempty"`
+}
+
+// SalmonResponse is the response envelope for operations that return a Salmon type.
+type SalmonResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Salmon      *Salmon
+}
+
+type Sawshark struct {
+	Picture *[]byte `json:"picture,omitempty"`
+}
+
+type Shark struct {
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *time.Time `json:"birthday,omitempty"`
+}
+
+func (s Shark) MarshalJSON() ([]byte, error) {
+	type alias Shark
+	aux := &struct {
+		*alias
+		Birthday *timeRFC3339 `json:"birthday"`
+	}{
+		alias:    (*alias)(&s),
+		Birthday: (*timeRFC3339)(s.Birthday),
+	}
+	return json.Marshal(aux)
+}
+
+func (s *Shark) UnmarshalJSON(data []byte) error {
+	type alias Shark
+	aux := &struct {
+		*alias
+		Birthday *timeRFC3339 `json:"birthday"`
+	}{
+		alias: (*alias)(s),
+	}
+	if err := json.Unmarshal(data, aux); err != nil {
+		return err
+	}
+	s.Birthday = (*time.Time)(aux.Birthday)
+	return nil
+}
+
+type Siamese struct {
+	Breed *string `json:"breed,omitempty"`
+}
+
+// SiameseResponse is the response envelope for operations that return a Siamese type.
+type SiameseResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+	Siamese     *Siamese
+}
+
+type SmartSalmon struct {
+	CollegeDegree *string `json:"college_degree,omitempty"`
+}
+
+type StringWrapper struct {
+	Empty *string `json:"empty,omitempty"`
+	Field *string `json:"field,omitempty"`
+	Null  *string `json:"null,omitempty"`
+}
+
+// StringWrapperResponse is the response envelope for operations that return a StringWrapper type.
+type StringWrapperResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse   *http.Response
+	StringWrapper *StringWrapper
+}
