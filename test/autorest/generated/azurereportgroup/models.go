@@ -38,13 +38,13 @@ func (e Error) Error() string {
 	return msg
 }
 
-// MapOfInt32Response is the response envelope for operations that return a map[string]*int32 type.
+// MapOfInt32Response is the response envelope for operations that return a map[string]int32 type.
 type MapOfInt32Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
 	// Dictionary of <integer>
-	Value *map[string]*int32
+	Value *map[string]int32
 }
 
 // OperationsGetReportOptions contains the optional parameters for the Operations.GetReport method.

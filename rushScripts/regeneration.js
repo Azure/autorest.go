@@ -16,7 +16,7 @@ const goMappings = {
     //'dategroup': 'body-date.json',
     'datetimegroup': 'body-datetime.json',
     'datetimerfc1123group': 'body-datetime-rfc1123.json',
-    //'dictionarygroup': 'body-dictionary.json',
+    'dictionarygroup': 'body-dictionary.json',
     //'durationgroup': 'body-duration.json',
     'filegroup': 'body-file.json',
     //'formdatagroup': 'body-formdata.json',
