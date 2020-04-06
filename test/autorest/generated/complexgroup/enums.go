@@ -5,59 +5,40 @@
 
 package complexgroup
 
-import azinternal "generatortests/autorest/generated/complexgroup/internal/complexgroup"
-
-type CMYKColors = azinternal.CMYKColors
+type CMYKColors string
 
 const (
-	CMYKColorsBlack   = azinternal.CMYKColorsBlack
-	CMYKColorsCyan    = azinternal.CMYKColorsCyan
-	CMYKColorsMagenta = azinternal.CMYKColorsMagenta
-	CMYKColorsYellow  = azinternal.CMYKColorsYellow
+	CMYKColorsBlacK   CMYKColors = "blacK"
+	CMYKColorsCyan    CMYKColors = "cyan"
+	CMYKColorsMagenta CMYKColors = "Magenta"
+	CMYKColorsYellow  CMYKColors = "YELLOW"
 )
 
 func PossibleCMYKColorsValues() []CMYKColors {
-	return azinternal.PossibleCMYKColorsValues()
+	return []CMYKColors{CMYKColorsBlacK, CMYKColorsCyan, CMYKColorsMagenta, CMYKColorsYellow}
 }
 
-type FishType = azinternal.FishType
-
-const (
-	FishTypeSalmon      = azinternal.FishTypeSalmon
-	FishTypeSmartSalmon = azinternal.FishTypeSmartSalmon
-	FishTypeShark       = azinternal.FishTypeShark
-	FishTypeSawshark    = azinternal.FishTypeSawshark
-	FishTypeGoblinShark = azinternal.FishTypeGoblinShark
-)
-
-func PossibleFishTypeValues() []FishType {
-	return azinternal.PossibleFishTypeValues()
+func (c CMYKColors) ToPtr() *CMYKColors {
+	return &c
 }
 
 // GoblinSharkColor - Colors possible
-type GoblinSharkColor = azinternal.GoblinSharkColor
+type GoblinSharkColor string
 
 const (
-	GoblinSharkColorBrown = azinternal.GoblinSharkColorBrown
-	GoblinSharkColorGray  = azinternal.GoblinSharkColorGray
-	// GoblinSharkColorLowerred - Lowercase RED
-	GoblinSharkColorLowerred = azinternal.GoblinSharkColorLowerred
-	GoblinSharkColorPink     = azinternal.GoblinSharkColorPink
-	// GoblinSharkColorUpperred - Uppercase RED
-	GoblinSharkColorUpperred = azinternal.GoblinSharkColorUpperred
+	GoblinSharkColorBrown GoblinSharkColor = "brown"
+	GoblinSharkColorGray  GoblinSharkColor = "gray"
+	// GoblinSharkColorLowerRed - Lowercase RED
+	GoblinSharkColorLowerRed GoblinSharkColor = "red"
+	GoblinSharkColorPink     GoblinSharkColor = "pink"
+	// GoblinSharkColorUpperRed - Uppercase RED
+	GoblinSharkColorUpperRed GoblinSharkColor = "RED"
 )
 
 func PossibleGoblinSharkColorValues() []GoblinSharkColor {
-	return azinternal.PossibleGoblinSharkColorValues()
+	return []GoblinSharkColor{GoblinSharkColorBrown, GoblinSharkColorGray, GoblinSharkColorLowerRed, GoblinSharkColorPink, GoblinSharkColorUpperRed}
 }
 
-type SalmonType = azinternal.SalmonType
-
-const (
-	SalmonTypeSalmon      = azinternal.SalmonTypeSalmon
-	SalmonTypeSmartSalmon = azinternal.SalmonTypeSmartSalmon
-)
-
-func PossibleSalmonTypeValues() []SalmonType {
-	return azinternal.PossibleSalmonTypeValues()
+func (c GoblinSharkColor) ToPtr() *GoblinSharkColor {
+	return &c
 }

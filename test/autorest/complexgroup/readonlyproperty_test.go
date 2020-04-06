@@ -6,8 +6,11 @@ package complexgrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/complexgroup"
+	"generatortests/helpers"
 	"net/http"
 	"testing"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
 func getReadonlypropertyOperations(t *testing.T) complexgroup.ReadonlypropertyOperations {
@@ -24,23 +27,16 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	id, size := "1234", int32(2)
-	expected := &complexgroup.ReadonlypropertyGetValidResponse{
-		StatusCode:  http.StatusOK,
-		ReadonlyObj: &complexgroup.ReadonlyObj{ID: &id, Size: &size},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.ReadonlyObj, &complexgroup.ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)})
 }
 
-// func TestReadonlypropertyPutValid(t *testing.T) {
-// 	client := getReadonlypropertyOperations(t)
-// 	id, size := "1234", int32(2)
-// 	result, err := client.PutValid(context.Background(), complexgroup.ReadonlyObj{ID: &id, Size: &size})
-// 	if err != nil {
-// 		t.Fatalf("PutValid: %v", err)
-// 	}
-// 	expected := &complexgroup.ReadonlypropertyPutValidResponse{
-// 		StatusCode: http.StatusOK,
-// 	}
-// 	deepEqualOrFatal(t, result, expected)
-// }
+func TestReadonlypropertyPutValid(t *testing.T) {
+	t.Skip("R/O NYI, test fails")
+	client := getReadonlypropertyOperations(t)
+	id, size := "1234", int32(2)
+	result, err := client.PutValid(context.Background(), complexgroup.ReadonlyObj{ID: &id, Size: &size})
+	if err != nil {
+		t.Fatalf("PutValid: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}

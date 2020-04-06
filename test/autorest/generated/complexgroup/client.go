@@ -6,6 +6,7 @@
 package complexgroup
 
 import (
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/url"
 )
@@ -25,7 +26,7 @@ type ClientOptions struct {
 func DefaultClientOptions() ClientOptions {
 	return ClientOptions{
 		HTTPClient: azcore.DefaultHTTPClientTransport(),
-		Retry: azcore.DefaultRetryOptions(),
+		Retry:      azcore.DefaultRetryOptions(),
 	}
 }
 
@@ -33,15 +34,6 @@ func DefaultClientOptions() ClientOptions {
 type Client struct {
 	u *url.URL
 	p azcore.Pipeline
-	basicOperations BasicOperations
-	primitiveOperations PrimitiveOperations
-	arrayOperations ArrayOperations
-	dictionaryOperations DictionaryOperations
-	inheritanceOperations InheritanceOperations
-	polymorphismOperations PolymorphismOperations
-	polymorphicrecursiveOperations PolymorphicrecursiveOperations
-	readonlypropertyOperations ReadonlypropertyOperations
-	flattencomplexOperations FlattencomplexOperations
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -72,61 +64,53 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := &Client{u: u, p: p}
-	c.basicOperations = &basicOperations{Client: c}
-	c.primitiveOperations = &primitiveOperations{Client: c}
-	c.arrayOperations = &arrayOperations{Client: c}
-	c.dictionaryOperations = &dictionaryOperations{Client: c}
-	c.inheritanceOperations = &inheritanceOperations{Client: c}
-	c.polymorphismOperations = &polymorphismOperations{Client: c}
-	c.polymorphicrecursiveOperations = &polymorphicrecursiveOperations{Client: c}
-	c.readonlypropertyOperations = &readonlypropertyOperations{Client: c}
-	c.flattencomplexOperations = &flattencomplexOperations{Client: c}
-	return c, nil
+	if u.Scheme == "" {
+		return nil, fmt.Errorf("no scheme detected in endpoint %s", endpoint)
+	}
+	return &Client{u: u, p: p}, nil
 }
 
 // BasicOperations returns the BasicOperations associated with this client.
 func (client *Client) BasicOperations() BasicOperations {
-	return client.basicOperations
+	return &basicOperations{Client: client}
 }
 
 // PrimitiveOperations returns the PrimitiveOperations associated with this client.
 func (client *Client) PrimitiveOperations() PrimitiveOperations {
-	return client.primitiveOperations
+	return &primitiveOperations{Client: client}
 }
 
 // ArrayOperations returns the ArrayOperations associated with this client.
 func (client *Client) ArrayOperations() ArrayOperations {
-	return client.arrayOperations
+	return &arrayOperations{Client: client}
 }
 
 // DictionaryOperations returns the DictionaryOperations associated with this client.
 func (client *Client) DictionaryOperations() DictionaryOperations {
-	return client.dictionaryOperations
+	return &dictionaryOperations{Client: client}
 }
 
 // InheritanceOperations returns the InheritanceOperations associated with this client.
 func (client *Client) InheritanceOperations() InheritanceOperations {
-	return client.inheritanceOperations
+	return &inheritanceOperations{Client: client}
 }
 
 // PolymorphismOperations returns the PolymorphismOperations associated with this client.
 func (client *Client) PolymorphismOperations() PolymorphismOperations {
-	return client.polymorphismOperations
+	return &polymorphismOperations{Client: client}
 }
 
 // PolymorphicrecursiveOperations returns the PolymorphicrecursiveOperations associated with this client.
 func (client *Client) PolymorphicrecursiveOperations() PolymorphicrecursiveOperations {
-	return client.polymorphicrecursiveOperations
+	return &polymorphicrecursiveOperations{Client: client}
 }
 
 // ReadonlypropertyOperations returns the ReadonlypropertyOperations associated with this client.
 func (client *Client) ReadonlypropertyOperations() ReadonlypropertyOperations {
-	return client.readonlypropertyOperations
+	return &readonlypropertyOperations{Client: client}
 }
 
 // FlattencomplexOperations returns the FlattencomplexOperations associated with this client.
 func (client *Client) FlattencomplexOperations() FlattencomplexOperations {
-	return client.flattencomplexOperations
+	return &flattencomplexOperations{Client: client}
 }
-

@@ -4,9 +4,7 @@
 package complexgrouptest
 
 import (
-	"context"
 	"generatortests/autorest/generated/complexgroup"
-	"net/http"
 	"testing"
 )
 
@@ -18,7 +16,7 @@ func getPolymorphismOperations(t *testing.T) complexgroup.PolymorphismOperations
 	return client.PolymorphismOperations()
 }
 
-func TestPolymorphismGetValid(t *testing.T) {
+/*func TestPolymorphismGetValid(t *testing.T) {
 	client := getPolymorphismOperations(t)
 
 	fishtype, length, iswild, location, species := "smart_salmon", float32(1), true, "alaska", "king"
@@ -78,4 +76,4 @@ func TestPolymorphismGetValid(t *testing.T) {
 		Salmon:     ss,
 	}
 	deepEqualOrFatal(t, result, expected)
-}
+}*/
