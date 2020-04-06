@@ -131,7 +131,7 @@ type ArrayOperations interface {
 	// PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 	PutDateValid(ctx context.Context, arrayBody []time.Time) (*http.Response, error)
 	// PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-	PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string) (*http.Response, error)
+	PutDictionaryValid(ctx context.Context, arrayBody []map[string]string) (*http.Response, error)
 	// PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 	PutDoubleValid(ctx context.Context, arrayBody []float64) (*http.Response, error)
 	// PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
@@ -2331,7 +2331,7 @@ func (client *arrayOperations) putDateValidHandleResponse(resp *azcore.Response)
 }
 
 // PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-func (client *arrayOperations) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string) (*http.Response, error) {
+func (client *arrayOperations) PutDictionaryValid(ctx context.Context, arrayBody []map[string]string) (*http.Response, error) {
 	req, err := client.putDictionaryValidCreateRequest(arrayBody)
 	if err != nil {
 		return nil, err
@@ -2348,7 +2348,7 @@ func (client *arrayOperations) PutDictionaryValid(ctx context.Context, arrayBody
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *arrayOperations) putDictionaryValidCreateRequest(arrayBody []map[string]*string) (*azcore.Request, error) {
+func (client *arrayOperations) putDictionaryValidCreateRequest(arrayBody []map[string]string) (*azcore.Request, error) {
 	urlPath := "/array/dictionary/valid"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {

@@ -743,21 +743,21 @@ func TestPutDateValid(t *testing.T) {
 // PutDictionaryValid - Get an array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 func TestPutDictionaryValid(t *testing.T) {
 	client := getArrayClient(t)
-	resp, err := client.PutDictionaryValid(context.Background(), []map[string]*string{
-		map[string]*string{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+	resp, err := client.PutDictionaryValid(context.Background(), []map[string]string{
+		map[string]string{
+			"1": "one",
+			"2": "two",
+			"3": "three",
 		},
-		map[string]*string{
-			"4": to.StringPtr("four"),
-			"5": to.StringPtr("five"),
-			"6": to.StringPtr("six"),
+		map[string]string{
+			"4": "four",
+			"5": "five",
+			"6": "six",
 		},
-		map[string]*string{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+		map[string]string{
+			"7": "seven",
+			"8": "eight",
+			"9": "nine",
 		},
 	})
 	if err != nil {

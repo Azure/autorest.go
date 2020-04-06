@@ -94,7 +94,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
       dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
-      return `map[string]*${dictElem.language.go!.name}`;
+      return `map[string]${dictElem.language.go!.name}`;
     case SchemaType.Duration:
       return 'time.Duration';
     case SchemaType.Integer:

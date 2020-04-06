@@ -179,7 +179,7 @@ type Datetimerfc1123WrapperResponse struct {
 
 type DictionaryWrapper struct {
 	// Dictionary of <string>
-	DefaultProgram *map[string]*string `json:"defaultProgram,omitempty"`
+	DefaultProgram *map[string]string `json:"defaultProgram,omitempty"`
 }
 
 // DictionaryWrapperResponse is the response envelope for operations that return a DictionaryWrapper type.

@@ -120,10 +120,10 @@ type Int64ArrayResponse struct {
 	RawResponse *http.Response
 }
 
-// MapOfStringArrayResponse is the response envelope for operations that return a []map[string]*string type.
+// MapOfStringArrayResponse is the response envelope for operations that return a []map[string]string type.
 type MapOfStringArrayResponse struct {
 	// An array of Dictionaries with value null
-	MapOfStringArray *[]map[string]*string
+	MapOfStringArray *[]map[string]string
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
