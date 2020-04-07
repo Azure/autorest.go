@@ -652,6 +652,9 @@ function formatStatusCodes(statusCodes: Array<string>): string {
       case '204':
         asHTTPStatus.push('http.StatusNoContent');
         break;
+      case '300':
+        asHTTPStatus.push('http.StatusMultipleChoices');
+        break;
       case '301':
         asHTTPStatus.push('http.StatusMovedPermanently');
         break;
