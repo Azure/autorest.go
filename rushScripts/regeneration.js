@@ -21,7 +21,7 @@ const goMappings = {
     'filegroup': 'body-file.json',
     //'formdatagroup': 'body-formdata.json',
     'headergroup': 'header.json',
-    // 'httpinfrastructuregroup': 'httpInfrastructure.json',
+    'httpinfrastructuregroup': 'httpInfrastructure.json',
     'integergroup': 'body-integer.json',
     //'lrogroup': 'lro.json',
     //'modelflatteninggroup': 'model-flattening.json',

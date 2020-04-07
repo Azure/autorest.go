@@ -412,9 +412,13 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     let setOptionsPrefix = !bodyParam!.required;
     // default to the body param name
     let body = bodyParam!.language.go!.name;
+    let skipBody = false;
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
+      if ((<ConstantSchema>bodyParam!.schema).valueType.type === SchemaType.Boolean) {
+        skipBody = true;
+      }
     } else if (mediaType === 'XML' && bodyParam!.schema.type === SchemaType.Array) {
       // for XML payloads, create a wrapper type if the payload is an array
       imports.add('encoding/xml');
@@ -462,7 +466,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       // aux precludes the need for 'options.' prefix
       setOptionsPrefix = false;
     }
-    if (setOptionsPrefix === true) {
+    if (setOptionsPrefix === true && !skipBody) {
       body = `options.${pascalCase(body)}`;
       text += `\tif options != nil {\n`;
       text += `\t\treturn req, req.MarshalAs${mediaType}(${body})\n`;
@@ -496,6 +500,13 @@ function isArrayOfRFC1123(schema: Schema): boolean {
 function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
+  if (!op.responses) {
+    let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
+    text += `func (client *${client}) ${name}(resp *azcore.Response) (${genereateReturnsInfo(op, true).join(', ')}) {\n`;
+    text += '\treturn nil, newError(resp)';
+    text += '}\n\n';
+    return text;
+  }
   const firstResp = op.responses![0];
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${client}) ${name}(resp *azcore.Response) (${genereateReturnsInfo(op, true).join(', ')}) {\n`;
@@ -641,6 +652,12 @@ function formatStatusCodes(statusCodes: Array<string>): string {
       case '204':
         asHTTPStatus.push('http.StatusNoContent');
         break;
+      case '301':
+        asHTTPStatus.push('http.StatusMovedPermanently');
+        break;
+      case '302':
+        asHTTPStatus.push('http.StatusFound');
+        break;
       case '400':
         asHTTPStatus.push('http.StatusBadRequest');
         break;
@@ -716,6 +733,9 @@ function getMethodParameters(op: Operation): Parameter[] {
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
 function genereateReturnsInfo(op: Operation, forHandler: boolean): string[] {
+  if (!op.responses) {
+    return ['*http.Response', 'error'];
+  }
   // TODO check this implementation, if any additional return information needs to be included for multiple responses
   const firstResp = op.responses![0];
   let returnType = '*http.Response';
