@@ -850,8 +850,15 @@ func (client *dictionaryOperations) getDateTimeInvalidCharsHandleResponse(resp *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := MapOfTimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	aux := map[string]timeRFC3339{}
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := map[string]time.Time{}
+	for k, v := range aux {
+		cp[k] = time.Time(v)
+	}
+	return &MapOfTimeResponse{RawResponse: resp.Response, Value: &cp}, nil
 }
 
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
@@ -887,8 +894,15 @@ func (client *dictionaryOperations) getDateTimeInvalidNullHandleResponse(resp *a
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := MapOfTimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	aux := map[string]timeRFC3339{}
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := map[string]time.Time{}
+	for k, v := range aux {
+		cp[k] = time.Time(v)
+	}
+	return &MapOfTimeResponse{RawResponse: resp.Response, Value: &cp}, nil
 }
 
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
@@ -924,8 +938,15 @@ func (client *dictionaryOperations) getDateTimeRfc1123ValidHandleResponse(resp *
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := MapOfTimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	aux := map[string]timeRFC1123{}
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := map[string]time.Time{}
+	for k, v := range aux {
+		cp[k] = time.Time(v)
+	}
+	return &MapOfTimeResponse{RawResponse: resp.Response, Value: &cp}, nil
 }
 
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
@@ -961,8 +982,15 @@ func (client *dictionaryOperations) getDateTimeValidHandleResponse(resp *azcore.
 	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, newError(resp)
 	}
-	result := MapOfTimeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.Value)
+	aux := map[string]timeRFC3339{}
+	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+		return nil, err
+	}
+	cp := map[string]time.Time{}
+	for k, v := range aux {
+		cp[k] = time.Time(v)
+	}
+	return &MapOfTimeResponse{RawResponse: resp.Response, Value: &cp}, nil
 }
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
@@ -2170,7 +2198,11 @@ func (client *dictionaryOperations) putDateTimeRfc1123ValidCreateRequest(arrayBo
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	return req, req.MarshalAsJSON(arrayBody)
+	aux := map[string]timeRFC1123{}
+	for k, v := range arrayBody {
+		aux[k] = timeRFC1123(v)
+	}
+	return req, req.MarshalAsJSON(aux)
 }
 
 // putDateTimeRfc1123ValidHandleResponse handles the PutDateTimeRFC1123Valid response.
@@ -2206,7 +2238,11 @@ func (client *dictionaryOperations) putDateTimeValidCreateRequest(arrayBody map[
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	return req, req.MarshalAsJSON(arrayBody)
+	aux := map[string]timeRFC3339{}
+	for k, v := range arrayBody {
+		aux[k] = timeRFC3339(v)
+	}
+	return req, req.MarshalAsJSON(aux)
 }
 
 // putDateTimeValidHandleResponse handles the PutDateTimeValid response.
