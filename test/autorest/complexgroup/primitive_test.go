@@ -9,6 +9,7 @@ import (
 	"generatortests/helpers"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
@@ -211,4 +212,60 @@ func TestPrimitivePutString(t *testing.T) {
 // 	deepEqualOrFatal(t, result, expected)
 // }
 
-// TODO: GetDateTime, GetDateTimeRFC1123, GetDuration, PutDateTime, PutDateTimeRFC1123, PutDuration
+// TODO: GetDuration, PutDuration
+
+func TestPrimitiveGetDateTime(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.GetDateTime(context.Background())
+	if err != nil {
+		t.Fatalf("GetDateTime: %v", err)
+	}
+	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
+	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
+	helpers.DeepEqualOrFatal(t, result.DatetimeWrapper, &complexgroup.DatetimeWrapper{
+		Field: &f,
+		Now:   &n,
+	})
+}
+
+func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.GetDateTimeRFC1123(context.Background())
+	if err != nil {
+		t.Fatalf("GetDateTimeRFC1123: %v", err)
+	}
+	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
+	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
+	helpers.DeepEqualOrFatal(t, result.Datetimerfc1123Wrapper, &complexgroup.Datetimerfc1123Wrapper{
+		Field: &f,
+		Now:   &n,
+	})
+}
+
+func TestPrimitivePutDateTime(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
+	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
+	result, err := client.PutDateTime(context.Background(), complexgroup.DatetimeWrapper{
+		Field: &f,
+		Now:   &n,
+	})
+	if err != nil {
+		t.Fatalf("PutDateTime: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
+
+func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
+	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
+	result, err := client.PutDateTimeRFC1123(context.Background(), complexgroup.Datetimerfc1123Wrapper{
+		Field: &f,
+		Now:   &n,
+	})
+	if err != nil {
+		t.Fatalf("PutDateTimeRFC1123: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
