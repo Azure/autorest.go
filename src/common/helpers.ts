@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, Operation, Parameter, Response, Schema, SchemaResponse } from '@azure-tools/codemodel';
+import { ArraySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse } from '@azure-tools/codemodel';
 
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {
@@ -41,3 +41,9 @@ export interface PagerInfo {
 export function isPageableOperation(op: Operation): boolean {
   return op.language.go!.paging && op.language.go!.paging.nextLinkName !== null;
 }
+
+// returns ObjectSchema type predicate if the schema is an ObjectSchema
+export function isObjectSchema(obj: Schema): obj is ObjectSchema {
+  return (obj as ObjectSchema).properties !== undefined;
+}
+

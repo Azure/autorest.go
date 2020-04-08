@@ -71,9 +71,17 @@ type ByteWrapperResponse struct {
 type Cat struct {
 	Color *string `json:"color,omitempty"`
 	Hates *[]Dog  `json:"hates,omitempty"`
+	ID    *int32  `json:"id,omitempty"`
+	Name  *string `json:"name,omitempty"`
 }
 
 type Cookiecuttershark struct {
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *time.Time `json:"birthday,omitempty"`
+	Fishtype *string    `json:"fishtype,omitempty"`
+	Length   *float32   `json:"length,omitempty"`
+	Siblings *[]Fish    `json:"siblings,omitempty"`
+	Species  *string    `json:"species,omitempty"`
 }
 
 type DateWrapper struct {
@@ -192,6 +200,8 @@ type DictionaryWrapperResponse struct {
 
 type Dog struct {
 	Food *string `json:"food,omitempty"`
+	ID   *int32  `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 type DotFish struct {
@@ -223,8 +233,10 @@ type DotFishResponse struct {
 }
 
 type DotSalmon struct {
+	FishType *string `json:"fish.type,omitempty"`
 	Iswild   *bool   `json:"iswild,omitempty"`
 	Location *string `json:"location,omitempty"`
+	Species  *string `json:"species,omitempty"`
 }
 
 type DoubleWrapper struct {
@@ -308,9 +320,16 @@ type FloatWrapperResponse struct {
 }
 
 type Goblinshark struct {
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *time.Time `json:"birthday,omitempty"`
+
 	// Colors possible
-	Color   *GoblinSharkColor `json:"color,omitempty"`
-	Jawsize *int32            `json:"jawsize,omitempty"`
+	Color    *GoblinSharkColor `json:"color,omitempty"`
+	Fishtype *string           `json:"fishtype,omitempty"`
+	Jawsize  *int32            `json:"jawsize,omitempty"`
+	Length   *float32          `json:"length,omitempty"`
+	Siblings *[]Fish           `json:"siblings,omitempty"`
+	Species  *string           `json:"species,omitempty"`
 }
 
 type IntWrapper struct {
@@ -358,7 +377,10 @@ type MyBaseTypeResponse struct {
 }
 
 type MyDerivedType struct {
-	PropD1 *string `json:"propD1,omitempty"`
+	Helper *MyBaseHelperType `json:"helper,omitempty"`
+	Kind   *string           `json:"kind,omitempty"`
+	PropB1 *string           `json:"propB1,omitempty"`
+	PropD1 *string           `json:"propD1,omitempty"`
 }
 
 type Pet struct {
@@ -379,8 +401,12 @@ type ReadonlyObjResponse struct {
 }
 
 type Salmon struct {
-	Iswild   *bool   `json:"iswild,omitempty"`
-	Location *string `json:"location,omitempty"`
+	Fishtype *string  `json:"fishtype,omitempty"`
+	Iswild   *bool    `json:"iswild,omitempty"`
+	Length   *float32 `json:"length,omitempty"`
+	Location *string  `json:"location,omitempty"`
+	Siblings *[]Fish  `json:"siblings,omitempty"`
+	Species  *string  `json:"species,omitempty"`
 }
 
 // SalmonResponse is the response envelope for operations that return a Salmon type.
@@ -391,12 +417,22 @@ type SalmonResponse struct {
 }
 
 type Sawshark struct {
-	Picture *[]byte `json:"picture,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
+	Birthday *time.Time `json:"birthday,omitempty"`
+	Fishtype *string    `json:"fishtype,omitempty"`
+	Length   *float32   `json:"length,omitempty"`
+	Picture  *[]byte    `json:"picture,omitempty"`
+	Siblings *[]Fish    `json:"siblings,omitempty"`
+	Species  *string    `json:"species,omitempty"`
 }
 
 type Shark struct {
 	Age      *int32     `json:"age,omitempty"`
 	Birthday *time.Time `json:"birthday,omitempty"`
+	Fishtype *string    `json:"fishtype,omitempty"`
+	Length   *float32   `json:"length,omitempty"`
+	Siblings *[]Fish    `json:"siblings,omitempty"`
+	Species  *string    `json:"species,omitempty"`
 }
 
 func (s Shark) MarshalJSON() ([]byte, error) {
@@ -428,6 +464,10 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 
 type Siamese struct {
 	Breed *string `json:"breed,omitempty"`
+	Color *string `json:"color,omitempty"`
+	Hates *[]Dog  `json:"hates,omitempty"`
+	ID    *int32  `json:"id,omitempty"`
+	Name  *string `json:"name,omitempty"`
 }
 
 // SiameseResponse is the response envelope for operations that return a Siamese type.
@@ -438,7 +478,13 @@ type SiameseResponse struct {
 }
 
 type SmartSalmon struct {
-	CollegeDegree *string `json:"college_degree,omitempty"`
+	CollegeDegree *string  `json:"college_degree,omitempty"`
+	Fishtype      *string  `json:"fishtype,omitempty"`
+	Iswild        *bool    `json:"iswild,omitempty"`
+	Length        *float32 `json:"length,omitempty"`
+	Location      *string  `json:"location,omitempty"`
+	Siblings      *[]Fish  `json:"siblings,omitempty"`
+	Species       *string  `json:"species,omitempty"`
 }
 
 type StringWrapper struct {
