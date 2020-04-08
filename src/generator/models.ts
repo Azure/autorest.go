@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, pascalCase } from '@azure-tools/codegen';
 import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema } from '../common/helpers';
+import { isArraySchema, isObjectSchema } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
@@ -285,7 +285,20 @@ class StructDef {
 function generateStructs(objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    structTypes.push(generateStruct(obj.language.go!, obj.properties));
+    const props = new Array<Property>();
+    // add immediate properties
+    for (const prop of values(obj.properties)) {
+      props.push(prop);
+    }
+    // now add all parent properties
+    for (const parent of values(obj.parents?.all)) {
+      if (isObjectSchema(parent)) {
+        for (const prop of values(parent.properties)) {
+          props.push(prop);
+        }
+      }
+    }
+    structTypes.push(generateStruct(obj.language.go!, props));
   }
   return structTypes;
 }

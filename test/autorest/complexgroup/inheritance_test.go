@@ -6,8 +6,11 @@ package complexgrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/complexgroup"
+	"generatortests/helpers"
 	"net/http"
 	"testing"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
 func getInheritanceOperations(t *testing.T) complexgroup.InheritanceOperations {
@@ -24,38 +27,48 @@ func TestInheritanceGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	d1ID, d1Name, d1Food, d2ID, d2Name, d2Food := int32(1), "Potato", "tomato", int32(-1), "Tomato", "french fries"
-	id, name, color, breed, hates := int32(2), "Siameeee", "green", "persian", []complexgroup.Dog{complexgroup.Dog{ID: &d1ID, Name: &d1Name, Food: &d1Food}, complexgroup.Dog{ID: &d2ID, Name: &d2Name, Food: &d2Food}}
-	expected := &complexgroup.InheritanceGetValidResponse{
-		StatusCode: http.StatusOK,
-		Siamese: &complexgroup.Siamese{
-			Breed: &breed,
-			Color: &color,
-			Hates: hates,
-			ID:    &id,
-			Name:  &name,
+	helpers.DeepEqualOrFatal(t, result.Siamese, &complexgroup.Siamese{
+		Breed: to.StringPtr("persian"),
+		Color: to.StringPtr("green"),
+		Hates: &[]complexgroup.Dog{
+			complexgroup.Dog{
+				Food: to.StringPtr("tomato"),
+				ID:   to.Int32Ptr(1),
+				Name: to.StringPtr("Potato"),
+			},
+			complexgroup.Dog{
+				Food: to.StringPtr("french fries"),
+				ID:   to.Int32Ptr(-1),
+				Name: to.StringPtr("Tomato"),
+			},
 		},
-	}
-	deepEqualOrFatal(t, result, expected)
+		ID:   to.Int32Ptr(2),
+		Name: to.StringPtr("Siameeee"),
+	})
 }
 
 func TestInheritancePutValid(t *testing.T) {
 	client := getInheritanceOperations(t)
-	d1ID, d1Name, d1Food, d2ID, d2Name, d2Food := int32(1), "Potato", "tomato", int32(-1), "Tomato", "french fries"
-	id, name, color, breed, hates := int32(2), "Siameeee", "green", "persian", []complexgroup.Dog{complexgroup.Dog{ID: &d1ID, Name: &d1Name, Food: &d1Food}, complexgroup.Dog{ID: &d2ID, Name: &d2Name, Food: &d2Food}}
-	cat := complexgroup.Siamese{
-		Breed: &breed,
-		Color: &color,
-		Hates: hates,
-		ID:    &id,
-		Name:  &name,
-	}
-	result, err := client.PutValid(context.Background(), cat)
+	result, err := client.PutValid(context.Background(), complexgroup.Siamese{
+		Breed: to.StringPtr("persian"),
+		Color: to.StringPtr("green"),
+		Hates: &[]complexgroup.Dog{
+			complexgroup.Dog{
+				Food: to.StringPtr("tomato"),
+				ID:   to.Int32Ptr(1),
+				Name: to.StringPtr("Potato"),
+			},
+			complexgroup.Dog{
+				Food: to.StringPtr("french fries"),
+				ID:   to.Int32Ptr(-1),
+				Name: to.StringPtr("Tomato"),
+			},
+		},
+		ID:   to.Int32Ptr(2),
+		Name: to.StringPtr("Siameeee"),
+	})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	expected := &complexgroup.InheritancePutValidResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }

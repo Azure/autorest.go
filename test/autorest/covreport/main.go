@@ -31,13 +31,13 @@ func main() {
 	}
 	notRun := []string{}
 	for key, val := range *vanillaReport.Value {
-		if *val <= 0 {
-			notRun = append(notRun, key)
+		if val <= 0 {
+			notRun = append(notRun, fmt.Sprintf("GENERAL: %s", key))
 		}
 	}
 	for key, val := range *azureReport.Value {
-		if *val <= 0 {
-			notRun = append(notRun, key)
+		if val <= 0 {
+			notRun = append(notRun, fmt.Sprintf("AZURE: %s", key))
 		}
 	}
 	sort.Strings(notRun)

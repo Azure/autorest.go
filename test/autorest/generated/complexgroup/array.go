@@ -7,31 +7,32 @@ package complexgroup
 
 import (
 	"context"
-	azinternal "generatortests/autorest/generated/complexgroup/internal/complexgroup"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 )
 
 // ArrayOperations contains the methods for the Array group.
 type ArrayOperations interface {
-	// GetEmpty - Get complex types with array property which is empty 
-	GetEmpty(ctx context.Context) (*ArrayGetEmptyResponse, error)
-	// GetNotProvided - Get complex types with array property while server doesn't provide a response payload 
-	GetNotProvided(ctx context.Context) (*ArrayGetNotProvidedResponse, error)
-	// GetValid - Get complex types with array property 
-	GetValid(ctx context.Context) (*ArrayGetValidResponse, error)
-	// PutEmpty - Put complex types with array property which is empty 
-	PutEmpty(ctx context.Context, complexBody ArrayWrapper) (*ArrayPutEmptyResponse, error)
-	// PutValid - Put complex types with array property 
-	PutValid(ctx context.Context, complexBody ArrayWrapper) (*ArrayPutValidResponse, error)
+	// GetEmpty - Get complex types with array property which is empty
+	GetEmpty(ctx context.Context) (*ArrayWrapperResponse, error)
+	// GetNotProvided - Get complex types with array property while server doesn't provide a response payload
+	GetNotProvided(ctx context.Context) (*ArrayWrapperResponse, error)
+	// GetValid - Get complex types with array property
+	GetValid(ctx context.Context) (*ArrayWrapperResponse, error)
+	// PutEmpty - Put complex types with array property which is empty
+	PutEmpty(ctx context.Context, complexBody ArrayWrapper) (*http.Response, error)
+	// PutValid - Put complex types with array property
+	PutValid(ctx context.Context, complexBody ArrayWrapper) (*http.Response, error)
 }
 
+// arrayOperations implements the ArrayOperations interface.
 type arrayOperations struct {
 	*Client
-	azinternal.ArrayOperations
 }
 
-// GetEmpty - Get complex types with array property which is empty 
-func (client *arrayOperations) GetEmpty(ctx context.Context) (*ArrayGetEmptyResponse, error) {
-	req, err := client.GetEmptyCreateRequest(*client.u)
+// GetEmpty - Get complex types with array property which is empty
+func (client *arrayOperations) GetEmpty(ctx context.Context) (*ArrayWrapperResponse, error) {
+	req, err := client.getEmptyCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -39,16 +40,36 @@ func (client *arrayOperations) GetEmpty(ctx context.Context) (*ArrayGetEmptyResp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetEmptyHandleResponse(resp)
+	result, err := client.getEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetNotProvided - Get complex types with array property while server doesn't provide a response payload 
-func (client *arrayOperations) GetNotProvided(ctx context.Context) (*ArrayGetNotProvidedResponse, error) {
-	req, err := client.GetNotProvidedCreateRequest(*client.u)
+// getEmptyCreateRequest creates the GetEmpty request.
+func (client *arrayOperations) getEmptyCreateRequest() (*azcore.Request, error) {
+	urlPath := "/complex/array/empty"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// getEmptyHandleResponse handles the GetEmpty response.
+func (client *arrayOperations) getEmptyHandleResponse(resp *azcore.Response) (*ArrayWrapperResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := ArrayWrapperResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ArrayWrapper)
+}
+
+// GetNotProvided - Get complex types with array property while server doesn't provide a response payload
+func (client *arrayOperations) GetNotProvided(ctx context.Context) (*ArrayWrapperResponse, error) {
+	req, err := client.getNotProvidedCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -56,16 +77,36 @@ func (client *arrayOperations) GetNotProvided(ctx context.Context) (*ArrayGetNot
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetNotProvidedHandleResponse(resp)
+	result, err := client.getNotProvidedHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// GetValid - Get complex types with array property 
-func (client *arrayOperations) GetValid(ctx context.Context) (*ArrayGetValidResponse, error) {
-	req, err := client.GetValidCreateRequest(*client.u)
+// getNotProvidedCreateRequest creates the GetNotProvided request.
+func (client *arrayOperations) getNotProvidedCreateRequest() (*azcore.Request, error) {
+	urlPath := "/complex/array/notprovided"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// getNotProvidedHandleResponse handles the GetNotProvided response.
+func (client *arrayOperations) getNotProvidedHandleResponse(resp *azcore.Response) (*ArrayWrapperResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := ArrayWrapperResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ArrayWrapper)
+}
+
+// GetValid - Get complex types with array property
+func (client *arrayOperations) GetValid(ctx context.Context) (*ArrayWrapperResponse, error) {
+	req, err := client.getValidCreateRequest()
 	if err != nil {
 		return nil, err
 	}
@@ -73,16 +114,36 @@ func (client *arrayOperations) GetValid(ctx context.Context) (*ArrayGetValidResp
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.GetValidHandleResponse(resp)
+	result, err := client.getValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutEmpty - Put complex types with array property which is empty 
-func (client *arrayOperations) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (*ArrayPutEmptyResponse, error) {
-	req, err := client.PutEmptyCreateRequest(*client.u, complexBody)
+// getValidCreateRequest creates the GetValid request.
+func (client *arrayOperations) getValidCreateRequest() (*azcore.Request, error) {
+	urlPath := "/complex/array/valid"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodGet, *u)
+	return req, nil
+}
+
+// getValidHandleResponse handles the GetValid response.
+func (client *arrayOperations) getValidHandleResponse(resp *azcore.Response) (*ArrayWrapperResponse, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	result := ArrayWrapperResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ArrayWrapper)
+}
+
+// PutEmpty - Put complex types with array property which is empty
+func (client *arrayOperations) PutEmpty(ctx context.Context, complexBody ArrayWrapper) (*http.Response, error) {
+	req, err := client.putEmptyCreateRequest(complexBody)
 	if err != nil {
 		return nil, err
 	}
@@ -90,16 +151,35 @@ func (client *arrayOperations) PutEmpty(ctx context.Context, complexBody ArrayWr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutEmptyHandleResponse(resp)
+	result, err := client.putEmptyHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// PutValid - Put complex types with array property 
-func (client *arrayOperations) PutValid(ctx context.Context, complexBody ArrayWrapper) (*ArrayPutValidResponse, error) {
-	req, err := client.PutValidCreateRequest(*client.u, complexBody)
+// putEmptyCreateRequest creates the PutEmpty request.
+func (client *arrayOperations) putEmptyCreateRequest(complexBody ArrayWrapper) (*azcore.Request, error) {
+	urlPath := "/complex/array/empty"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	return req, req.MarshalAsJSON(complexBody)
+}
+
+// putEmptyHandleResponse handles the PutEmpty response.
+func (client *arrayOperations) putEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return resp.Response, nil
+}
+
+// PutValid - Put complex types with array property
+func (client *arrayOperations) PutValid(ctx context.Context, complexBody ArrayWrapper) (*http.Response, error) {
+	req, err := client.putValidCreateRequest(complexBody)
 	if err != nil {
 		return nil, err
 	}
@@ -107,11 +187,28 @@ func (client *arrayOperations) PutValid(ctx context.Context, complexBody ArrayWr
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.PutValidHandleResponse(resp)
+	result, err := client.putValidHandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-var _ ArrayOperations = (*arrayOperations)(nil)
+// putValidCreateRequest creates the PutValid request.
+func (client *arrayOperations) putValidCreateRequest(complexBody ArrayWrapper) (*azcore.Request, error) {
+	urlPath := "/complex/array/valid"
+	u, err := client.u.Parse(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	req := azcore.NewRequest(http.MethodPut, *u)
+	return req, req.MarshalAsJSON(complexBody)
+}
+
+// putValidHandleResponse handles the PutValid response.
+func (client *arrayOperations) putValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, newError(resp)
+	}
+	return resp.Response, nil
+}

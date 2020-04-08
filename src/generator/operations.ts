@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
@@ -465,6 +465,15 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       body = 'aux';
       // aux precludes the need for 'options.' prefix
       setOptionsPrefix = false;
+    } else if (isMapOfDateTime(bodyParam!.schema)) {
+      const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
+      text += `\taux := map[string]${timeType}{}\n`;
+      text += `\tfor k, v := range ${bodyParam!.language.go!.name} {\n`;
+      text += `\t\taux[k] = ${timeType}(v)\n`;
+      text += '\t}\n';
+      body = 'aux';
+      // aux precludes the need for 'options.' prefix
+      setOptionsPrefix = false;
     }
     if (setOptionsPrefix === true && !skipBody) {
       body = `options.${pascalCase(body)}`;
@@ -549,6 +558,19 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     text += `\treturn &${resp}, nil\n`;
     text += '}\n\n';
     return text;
+  } else if (isMapOfDateTime(firstResp.schema)) {
+    text += `\taux := map[string]${(<DictionarySchema>firstResp.schema).elementType.language.go!.internalTimeType}{}\n`;
+    text += `\tif err := resp.UnmarshalAs${getMediaType(firstResp.protocol)}(&aux); err != nil {\n`;
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += `\tcp := map[string]time.Time{}\n`;
+    text += `\tfor k, v := range aux {\n`;
+    text += `\t\tcp[k] = time.Time(v)\n`;
+    text += `\t}\n`;
+    const resp = `${firstResp.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${firstResp.schema.language.go!.responseType.value}: &cp}`;
+    text += `\treturn &${resp}, nil\n`;
+    text += '}\n\n';
+    return text;
   }
 
   const schemaResponse = <SchemaResponse>firstResp;
@@ -584,6 +606,15 @@ function isArrayOfDateTime(schema: Schema): boolean {
   const arraySchema = <ArraySchema>schema;
   const arrayElem = <Schema>arraySchema.elementType;
   return arrayElem.type === SchemaType.DateTime;
+}
+
+function isMapOfDateTime(schema: Schema): boolean {
+  if (schema.type !== SchemaType.Dictionary) {
+    return false;
+  }
+  const dictSchema = <DictionarySchema>schema;
+  const dictElem = <Schema>dictSchema.elementType;
+  return dictElem.type === SchemaType.DateTime;
 }
 
 function createInterfaceDefinition(group: OperationGroup, imports: ImportManager): string {

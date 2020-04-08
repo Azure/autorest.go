@@ -6,8 +6,12 @@ package complexgrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/complexgroup"
+	"generatortests/helpers"
 	"net/http"
 	"testing"
+	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
 func getPrimitiveOperations(t *testing.T) complexgroup.PrimitiveOperations {
@@ -24,12 +28,7 @@ func TestPrimitiveGetInt(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetInt: %v", err)
 	}
-	a, b := int32(-1), int32(2)
-	expected := &complexgroup.PrimitiveGetIntResponse{
-		StatusCode: http.StatusOK,
-		IntWrapper: &complexgroup.IntWrapper{Field1: &a, Field2: &b},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.IntWrapper, &complexgroup.IntWrapper{Field1: to.Int32Ptr(-1), Field2: to.Int32Ptr(2)})
 }
 
 func TestPrimitivePutInt(t *testing.T) {
@@ -39,10 +38,7 @@ func TestPrimitivePutInt(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutInt: %v", err)
 	}
-	expected := &complexgroup.PrimitivePutIntResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPrimitiveGetLong(t *testing.T) {
@@ -51,12 +47,10 @@ func TestPrimitiveGetLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetLong: %v", err)
 	}
-	a, b := int64(1099511627775), int64(-999511627788)
-	expected := &complexgroup.PrimitiveGetLongResponse{
-		StatusCode:  http.StatusOK,
-		LongWrapper: &complexgroup.LongWrapper{Field1: &a, Field2: &b},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.LongWrapper, &complexgroup.LongWrapper{
+		Field1: to.Int64Ptr(1099511627775),
+		Field2: to.Int64Ptr(-999511627788),
+	})
 }
 
 func TestPrimitivePutLong(t *testing.T) {
@@ -66,10 +60,7 @@ func TestPrimitivePutLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutLong: %v", err)
 	}
-	expected := &complexgroup.PrimitivePutLongResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPrimitiveGetFloat(t *testing.T) {
@@ -78,12 +69,10 @@ func TestPrimitiveGetFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetFloat: %v", err)
 	}
-	a, b := float32(1.05), float32(-0.003)
-	expected := &complexgroup.PrimitiveGetFloatResponse{
-		StatusCode:   http.StatusOK,
-		FloatWrapper: &complexgroup.FloatWrapper{Field1: &a, Field2: &b},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.FloatWrapper, &complexgroup.FloatWrapper{
+		Field1: to.Float32Ptr(1.05),
+		Field2: to.Float32Ptr(-0.003),
+	})
 }
 
 func TestPrimitivePutFloat(t *testing.T) {
@@ -93,10 +82,7 @@ func TestPrimitivePutFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFloat: %v", err)
 	}
-	expected := &complexgroup.PrimitivePutFloatResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPrimitiveGetDouble(t *testing.T) {
@@ -105,12 +91,10 @@ func TestPrimitiveGetDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetDouble: %v", err)
 	}
-	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
-	expected := &complexgroup.PrimitiveGetDoubleResponse{
-		StatusCode:    http.StatusOK,
-		DoubleWrapper: &complexgroup.DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.DoubleWrapper, &complexgroup.DoubleWrapper{
+		Field1: to.Float64Ptr(3e-100),
+		Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: to.Float64Ptr(-0.000000000000000000000000000000000000000000000000000000005),
+	})
 }
 
 func TestPrimitivePutDouble(t *testing.T) {
@@ -120,10 +104,7 @@ func TestPrimitivePutDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDouble: %v", err)
 	}
-	expected := &complexgroup.PrimitivePutDoubleResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPrimitiveGetBool(t *testing.T) {
@@ -132,12 +113,10 @@ func TestPrimitiveGetBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetBool: %v", err)
 	}
-	a, b := true, false
-	expected := &complexgroup.PrimitiveGetBoolResponse{
-		StatusCode:     http.StatusOK,
-		BooleanWrapper: &complexgroup.BooleanWrapper{FieldTrue: &a, FieldFalse: &b},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.BooleanWrapper, &complexgroup.BooleanWrapper{
+		FieldFalse: to.BoolPtr(false),
+		FieldTrue:  to.BoolPtr(true),
+	})
 }
 
 func TestPrimitiveGetByte(t *testing.T) {
@@ -146,12 +125,7 @@ func TestPrimitiveGetByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetByte: %v", err)
 	}
-	val := []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}
-	expected := &complexgroup.PrimitiveGetByteResponse{
-		StatusCode:  http.StatusOK,
-		ByteWrapper: &complexgroup.ByteWrapper{Field: &val},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.ByteWrapper, &complexgroup.ByteWrapper{Field: &[]byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}})
 }
 
 func TestPrimitivePutBool(t *testing.T) {
@@ -161,10 +135,7 @@ func TestPrimitivePutBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBool: %v", err)
 	}
-	expected := &complexgroup.PrimitivePutBoolResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPrimitivePutByte(t *testing.T) {
@@ -174,10 +145,7 @@ func TestPrimitivePutByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutByte: %v", err)
 	}
-	expected := &complexgroup.PrimitivePutByteResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 func TestPrimitiveGetString(t *testing.T) {
@@ -186,13 +154,10 @@ func TestPrimitiveGetString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetString: %v", err)
 	}
-	var c *string
-	a, b, c := "goodrequest", "", nil
-	expected := &complexgroup.PrimitiveGetStringResponse{
-		StatusCode:    http.StatusOK,
-		StringWrapper: &complexgroup.StringWrapper{Field: &a, Empty: &b, Null: c},
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.DeepEqualOrFatal(t, result.StringWrapper, &complexgroup.StringWrapper{
+		Empty: to.StringPtr(""),
+		Field: to.StringPtr("goodrequest"),
+	})
 }
 
 func TestPrimitivePutString(t *testing.T) {
@@ -203,10 +168,7 @@ func TestPrimitivePutString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutString: %v", err)
 	}
-	expected := &complexgroup.PrimitivePutStringResponse{
-		StatusCode: http.StatusOK,
-	}
-	deepEqualOrFatal(t, result, expected)
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
 }
 
 // func TestPrimitiveGetDate(t *testing.T) {
@@ -250,4 +212,60 @@ func TestPrimitivePutString(t *testing.T) {
 // 	deepEqualOrFatal(t, result, expected)
 // }
 
-// TODO: GetDateTime, GetDateTimeRFC1123, GetDuration, PutDateTime, PutDateTimeRFC1123, PutDuration
+// TODO: GetDuration, PutDuration
+
+func TestPrimitiveGetDateTime(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.GetDateTime(context.Background())
+	if err != nil {
+		t.Fatalf("GetDateTime: %v", err)
+	}
+	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
+	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
+	helpers.DeepEqualOrFatal(t, result.DatetimeWrapper, &complexgroup.DatetimeWrapper{
+		Field: &f,
+		Now:   &n,
+	})
+}
+
+func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	result, err := client.GetDateTimeRFC1123(context.Background())
+	if err != nil {
+		t.Fatalf("GetDateTimeRFC1123: %v", err)
+	}
+	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
+	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
+	helpers.DeepEqualOrFatal(t, result.Datetimerfc1123Wrapper, &complexgroup.Datetimerfc1123Wrapper{
+		Field: &f,
+		Now:   &n,
+	})
+}
+
+func TestPrimitivePutDateTime(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
+	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
+	result, err := client.PutDateTime(context.Background(), complexgroup.DatetimeWrapper{
+		Field: &f,
+		Now:   &n,
+	})
+	if err != nil {
+		t.Fatalf("PutDateTime: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
+
+func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
+	client := getPrimitiveOperations(t)
+	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
+	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
+	result, err := client.PutDateTimeRFC1123(context.Background(), complexgroup.Datetimerfc1123Wrapper{
+		Field: &f,
+		Now:   &n,
+	})
+	if err != nil {
+		t.Fatalf("PutDateTimeRFC1123: %v", err)
+	}
+	helpers.VerifyStatusCode(t, result, http.StatusOK)
+}
