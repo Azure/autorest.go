@@ -12,6 +12,7 @@ import (
 )
 
 type B struct {
+	StatusCode     *string `json:"statusCode,omitempty"`
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
 }
 
