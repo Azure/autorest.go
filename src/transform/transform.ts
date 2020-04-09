@@ -5,7 +5,7 @@
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
@@ -73,6 +73,10 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'bool';
     case SchemaType.ByteArray:
       return '[]byte';
+    case SchemaType.Constant:
+      let constSchema = <ConstantSchema>schema;
+      constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, inBody);
+      return constSchema.valueType.language.go!.name;
     case SchemaType.DateTime:
       // header/query param values are parsed separately so they don't need custom types
       if (inBody) {
@@ -262,8 +266,10 @@ interface HttpHeaderWithDescription extends HttpHeader {
 function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
   // type with a `RawResponse *http.Response` field
+  if (!op.responses) {
+    return;
+  }
   const firstResp = op.responses![0];
-
   // when receiving multiple possible responses, they might expect the same headers in many cases
   // we use a map to only add unique headers to the response model based on the header name
   const headers = new Map<string, HttpHeaderWithDescription>();
