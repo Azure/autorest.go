@@ -412,12 +412,16 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     let setOptionsPrefix = !bodyParam!.required;
     // default to the body param name
     let body = bodyParam!.language.go!.name;
-    let skipBody = false;
+    let skipOptions = false;
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
+      // directly assigned boolean values cannot be marshalled and are not set as enumerated types on
+      // options structs, therefore would cause an issue when trying to access options.true or options.false
+      // skipOptions skips appending an options prefix to these type of variables
+      // NOTE: constants are commonly defined as enumerated types which is why an exception if being made for directly returned booleans
       if ((<ConstantSchema>bodyParam!.schema).valueType.type === SchemaType.Boolean) {
-        skipBody = true;
+        skipOptions = true;
       }
     } else if (mediaType === 'XML' && bodyParam!.schema.type === SchemaType.Array) {
       // for XML payloads, create a wrapper type if the payload is an array
@@ -475,7 +479,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       // aux precludes the need for 'options.' prefix
       setOptionsPrefix = false;
     }
-    if (setOptionsPrefix === true && !skipBody) {
+    if (setOptionsPrefix === true && !skipOptions) {
       body = `options.${pascalCase(body)}`;
       text += `\tif options != nil {\n`;
       text += `\t\treturn req, req.MarshalAs${mediaType}(${body})\n`;
