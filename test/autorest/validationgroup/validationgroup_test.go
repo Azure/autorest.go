@@ -47,7 +47,7 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 }
 
 func TestValidationValidationOfBody(t *testing.T) {
-	t.Skip("need to confirm if this test will remain in the testserver")
+	t.Skip("need to confirm if this test will remain in the testserver and what values it's expecting")
 	client := getValidationOperations(t)
 	result, err := client.ValidationOfBody(context.Background(), "123", 150, &validationgroup.OperationsValidationOfBodyOptions{
 		Body: &validationgroup.Product{
