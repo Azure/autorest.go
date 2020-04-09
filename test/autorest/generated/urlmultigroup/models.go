@@ -7,7 +7,6 @@ package urlmultigroup
 
 import (
 	"fmt"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
