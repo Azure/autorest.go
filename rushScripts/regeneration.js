@@ -32,8 +32,8 @@ const goMappings = {
     'reportgroup': 'report.json',
     'stringgroup': 'body-string.json',
     'urlgroup': 'url.json',
-    //'urlmultigroup': 'url-multi-collectionFormat.json',
-    //'validationgroup': 'validation.json',
+    'urlmultigroup': 'url-multi-collectionFormat.json',
+    'validationgroup': 'validation.json',
     'xmlgroup': 'xml-service.json',
   };
 
