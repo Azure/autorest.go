@@ -509,16 +509,14 @@ function isArrayOfRFC1123(schema: Schema): boolean {
 function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
+  const firstResp = op.responses![0];
+  let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
+  text += `func (client *${client}) ${name}(resp *azcore.Response) (${genereateReturnsInfo(op, true).join(', ')}) {\n`;
   if (!op.responses) {
-    let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-    text += `func (client *${client}) ${name}(resp *azcore.Response) (${genereateReturnsInfo(op, true).join(', ')}) {\n`;
     text += '\treturn nil, newError(resp)';
     text += '}\n\n';
     return text;
   }
-  const firstResp = op.responses![0];
-  let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${client}) ${name}(resp *azcore.Response) (${genereateReturnsInfo(op, true).join(', ')}) {\n`;
   text += `\tif !resp.HasStatusCode(${formatStatusCodes(firstResp.protocol.http?.statusCodes)}) {\n`;
   // if the response doesn't define a 'default' section return a generic error
   // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
