@@ -42,6 +42,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += struct.text();
     text += struct.marshaller();
     text += struct.unmarshaller();
+    for (const method of values(struct.Methods)) {
+      text += method;
+    }
   }
   return text;
 }
@@ -54,6 +57,7 @@ class StructDef {
   readonly Language: Language;
   readonly Properties?: Property[];
   readonly Parameters?: Parameter[];
+  readonly Methods: string[];
 
   constructor(language: Language, props?: Property[], params?: Parameter[]) {
     this.Language = language;
@@ -65,6 +69,7 @@ class StructDef {
     if (this.Parameters) {
       this.Parameters.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     }
+    this.Methods = new Array<string>();
   }
 
   text(): string {
@@ -164,27 +169,6 @@ class StructDef {
       text += `\t${pascalCase(param.language.go!.name)} *${param.schema.language.go!.name}\n`;
     }
     text += '}\n\n';
-    if (this.Language.errorType) {
-      text += `func ${this.Language.constructorName}(resp *azcore.Response) error {\n`;
-      text += `\terr := ${this.Language.name}{}\n`;
-      text += `\tif err := resp.UnmarshalAs${(<string>this.Language.marshallingFormat).toUpperCase()}(&err); err != nil {\n`;
-      text += `\t\treturn err\n`;
-      text += `\t}\n`;
-      text += '\treturn err\n';
-      text += '}\n\n';
-      text += `func (e ${this.Language.name}) Error() string {\n`;
-      text += `\tmsg := ""\n`;
-      for (const prop of values(this.Properties)) {
-        text += `\tif e.${prop.language.go!.name} != nil {\n`;
-        text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
-        text += `\t}\n`;
-      }
-      text += '\tif msg == "" {\n';
-      text += '\t\tmsg = "missing error info"\n';
-      text += '\t}\n';
-      text += '\treturn msg\n';
-      text += '}\n\n';
-    }
     return text;
   }
 
@@ -298,7 +282,33 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
         }
       }
     }
-    structTypes.push(generateStruct(obj.language.go!, props));
+    const structDef = generateStruct(obj.language.go!, props);
+    if (obj.language.go!.errorType) {
+      // add error constructor function
+      let text = `func ${obj.language.go!.constructorName}(resp *azcore.Response) error {\n`;
+      text += `\terr := ${obj.language.go!.name}{}\n`;
+      text += `\tif err := resp.UnmarshalAs${(<string>obj.language.go!.marshallingFormat).toUpperCase()}(&err); err != nil {\n`;
+      text += `\t\treturn err\n`;
+      text += `\t}\n`;
+      text += '\treturn err\n';
+      text += '}\n\n';
+      structDef.Methods.push(text);
+      // add Error() method
+      text = `func (e ${obj.language.go!.name}) Error() string {\n`;
+      text += `\tmsg := ""\n`;
+      for (const prop of values(structDef.Properties)) {
+        text += `\tif e.${prop.language.go!.name} != nil {\n`;
+        text += `\t\tmsg += fmt.Sprintf("${prop.language.go!.name}: %v\\n", *e.${prop.language.go!.name})\n`;
+        text += `\t}\n`;
+      }
+      text += '\tif msg == "" {\n';
+      text += '\t\tmsg = "missing error info"\n';
+      text += '\t}\n';
+      text += '\treturn msg\n';
+      text += '}\n\n';
+      structDef.Methods.push(text);
+    }
+    structTypes.push(structDef);
   }
   return structTypes;
 }
