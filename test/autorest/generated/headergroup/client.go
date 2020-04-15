@@ -11,6 +11,7 @@ import (
 	"net/url"
 )
 
+// ClientOptions contains configuration settings for the default client's pipeline.
 type ClientOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
 	HTTPClient azcore.Transport
