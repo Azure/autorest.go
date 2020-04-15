@@ -45,12 +45,12 @@ for (namespace in goMappings) {
 } 
 
 const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
-generate(blobStorage, 'azblob', 'test/storage/2019-07-07/azblob');
+generate(blobStorage, 'azblob', 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default"');
 
 // helper to log the package being generated before invocation
-function generate(inputFile, namespace, outputDir) {
+function generate(inputFile, namespace, outputDir, additionalArgs) {
     console.log('generating ' + inputFile);
-    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --namespace=' + namespace + ' --output-folder=' + outputDir, autorestCallback(outputDir, inputFile));
+    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --namespace=' + namespace + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
 }
 
 // use a function factory to create the closure so that the values of namespace and inputFile are captured on each iteration

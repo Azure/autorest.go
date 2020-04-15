@@ -20,7 +20,12 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   let text = await contentPreamble(session);
   text += imports.text();
 
-  // ClientOptions
+  if (session.model.security.authenticationRequired) {
+    const scope = await session.getValue('credential-scope');
+    text += `const scope = "${scope}"\n`;
+  }
+
+  text += `// ClientOptions contains configuration settings for the default client's pipeline.\n`;
   text += 'type ClientOptions struct {\n';
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
   text += '\tHTTPClient azcore.Transport\n';
@@ -49,17 +54,25 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '}\n\n';
 
   const endpoint = getDefaultEndpoint(session.model.globalParameters);
+  let credParam = 'cred azcore.Credential, ';
+  if (!session.model.security.authenticationRequired) {
+    credParam = '';
+  }
   if (endpoint) {
     text += '// DefaultEndpoint is the default service endpoint.\n';
     text += `const DefaultEndpoint = "${endpoint}"\n\n`;
     text += '// NewDefaultClient creates an instance of the Client type using the DefaultEndpoint.\n';
-    text += 'func NewDefaultClient(options *ClientOptions) (*Client, error) {\n';
-    text += '\treturn NewClient(DefaultEndpoint, options)\n';
+    text += `func NewDefaultClient(${credParam}options *ClientOptions) (*Client, error) {\n`;
+    let cred = 'cred, ';
+    if (!session.model.security.authenticationRequired) {
+      cred = '';
+    }
+    text += `\treturn NewClient(DefaultEndpoint, ${cred}options)\n`;
     text += '}\n\n';
   }
 
   text += '// NewClient creates an instance of the Client type with the specified endpoint.\n';
-  text += 'func NewClient(endpoint string, options *ClientOptions) (*Client, error) {\n';
+  text += `func NewClient(endpoint string, ${credParam}options *ClientOptions) (*Client, error) {\n`;
   text += '\tif options == nil {\n';
   text += '\t\to := DefaultClientOptions()\n';
   text += '\t\toptions = &o\n';
@@ -68,6 +81,9 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
   text += '\t\tazcore.NewTelemetryPolicy(options.Telemetry),\n';
   text += '\t\tazcore.NewUniqueRequestIDPolicy(),\n';
   text += '\t\tazcore.NewRetryPolicy(&options.Retry),\n';
+  if (session.model.security.authenticationRequired) {
+    text += '\t\tcred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}),\n';
+  }
   text += '\t\tazcore.NewRequestLogPolicy(options.LogOptions))\n';
   text += '\treturn NewClientWithPipeline(endpoint, p)\n';
   text += '}\n\n';
