@@ -80,7 +80,7 @@ namespace AutoRest.Go.Model
         {
             get
             {
-                var verStr = $"\" + Version() + \"";
+                var verStr = "\" + Version() + \"";
                 var suffix = "";
 
                 // the API version will not be populated for composite packages that span
