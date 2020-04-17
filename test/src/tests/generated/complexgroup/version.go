@@ -8,7 +8,7 @@ package complexgroup
 
 // UserAgent returns the UserAgent string to use when sending http.Requests.
 func UserAgent() string {
-	return "Azure-SDK-For-Go/0.0.0 complexgroup/2016-02-29"
+	return "Azure-SDK-For-Go/" + Version() + " complexgroup/2016-02-29"
 }
 
 // Version returns the semantic version (see http://semver.org) of the client.
