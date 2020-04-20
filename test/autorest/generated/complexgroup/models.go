@@ -76,13 +76,72 @@ type Cat struct {
 }
 
 type Cookiecuttershark struct {
-	Age      *int32     `json:"age,omitempty"`
-	Birthday *time.Time `json:"birthday,omitempty"`
-	Fishtype *string    `json:"fishtype,omitempty"`
-	Length   *float32   `json:"length,omitempty"`
-	Siblings *[]Fish    `json:"siblings,omitempty"`
-	Species  *string    `json:"species,omitempty"`
+	Age      *int32      `json:"age,omitempty"`
+	Birthday *time.Time  `json:"birthday,omitempty"`
+	Fishtype *string     `json:"fishtype,omitempty"`
+	Length   *float32    `json:"length,omitempty"`
+	Siblings *[]FishType `json:"siblings,omitempty"`
+	Species  *string     `json:"species,omitempty"`
 }
+
+func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
+	c.Fishtype = strptr(fishTypeCookiecuttershark)
+	type alias Cookiecuttershark
+	aux := &struct {
+		*alias
+		Birthday *timeRFC3339 `json:"birthday"`
+	}{
+		alias:    (*alias)(&c),
+		Birthday: (*timeRFC3339)(c.Birthday),
+	}
+	return json.Marshal(aux)
+}
+
+func (c *Cookiecuttershark) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "age":
+			if v != nil {
+				err = json.Unmarshal(*v, &c.Age)
+			}
+		case "birthday":
+			if v != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*v, &aux)
+				c.Birthday = (*time.Time)(&aux)
+			}
+		case "fishtype":
+			if v != nil {
+				err = json.Unmarshal(*v, &c.Fishtype)
+			}
+		case "length":
+			if v != nil {
+				err = json.Unmarshal(*v, &c.Length)
+			}
+		case "siblings":
+			if v != nil {
+				c.Siblings, err = unmarshalFishTypeArray(*v)
+			}
+		case "species":
+			if v != nil {
+				err = json.Unmarshal(*v, &c.Species)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (*Cookiecuttershark) fishType() {}
+
+func (*Cookiecuttershark) sharkType() {}
 
 type DateWrapper struct {
 	Field *time.Time `json:"field,omitempty"`
@@ -204,16 +263,55 @@ type Dog struct {
 	Name *string `json:"name,omitempty"`
 }
 
+// DotFishType provides polymorphic access to related types.
+type DotFishType interface {
+	dotFishType()
+}
+
 type DotFish struct {
 	FishType *string `json:"fish.type,omitempty"`
 	Species  *string `json:"species,omitempty"`
 }
 
+func (*DotFish) dotFishType() {}
+
 type DotFishMarket struct {
-	Fishes       *[]DotFish   `json:"fishes,omitempty"`
-	Salmons      *[]DotSalmon `json:"salmons,omitempty"`
-	SampleFish   *DotFish     `json:"sampleFish,omitempty"`
-	SampleSalmon *DotSalmon   `json:"sampleSalmon,omitempty"`
+	Fishes       *[]DotFishType `json:"fishes,omitempty"`
+	Salmons      *[]DotSalmon   `json:"salmons,omitempty"`
+	SampleFish   DotFishType    `json:"sampleFish,omitempty"`
+	SampleSalmon *DotSalmon     `json:"sampleSalmon,omitempty"`
+}
+
+func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "fishes":
+			if v != nil {
+				d.Fishes, err = unmarshalDotFishTypeArray(*v)
+			}
+		case "salmons":
+			if v != nil {
+				err = json.Unmarshal(*v, &d.Salmons)
+			}
+		case "sampleFish":
+			if v != nil {
+				d.SampleFish, err = unmarshalDotFishType(*v)
+			}
+		case "sampleSalmon":
+			if v != nil {
+				err = json.Unmarshal(*v, &d.SampleSalmon)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // DotFishMarketResponse is the response envelope for operations that return a DotFishMarket type.
@@ -226,10 +324,19 @@ type DotFishMarketResponse struct {
 
 // DotFishResponse is the response envelope for operations that return a DotFish type.
 type DotFishResponse struct {
-	DotFish *DotFish
+	DotFish DotFishType
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+func (d *DotFishResponse) UnmarshalJSON(data []byte) error {
+	t, err := unmarshalDotFishType(data)
+	if err != nil {
+		return err
+	}
+	d.DotFish = t
+	return nil
 }
 
 type DotSalmon struct {
@@ -238,6 +345,51 @@ type DotSalmon struct {
 	Location *string `json:"location,omitempty"`
 	Species  *string `json:"species,omitempty"`
 }
+
+func (d DotSalmon) MarshalJSON() ([]byte, error) {
+	d.FishType = strptr(dotFishTypeDotSalmon)
+	type alias DotSalmon
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&d),
+	}
+	return json.Marshal(aux)
+}
+
+func (d *DotSalmon) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "fish.type":
+			if v != nil {
+				err = json.Unmarshal(*v, &d.FishType)
+			}
+		case "iswild":
+			if v != nil {
+				err = json.Unmarshal(*v, &d.Iswild)
+			}
+		case "location":
+			if v != nil {
+				err = json.Unmarshal(*v, &d.Location)
+			}
+		case "species":
+			if v != nil {
+				err = json.Unmarshal(*v, &d.Species)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (*DotSalmon) dotFishType() {}
 
 type DoubleWrapper struct {
 	Field1                                                                          *float64 `json:"field1,omitempty"`
@@ -291,19 +443,35 @@ func (e Error) Error() string {
 	return msg
 }
 
-type Fish struct {
-	Fishtype *string  `json:"fishtype,omitempty"`
-	Length   *float32 `json:"length,omitempty"`
-	Siblings *[]Fish  `json:"siblings,omitempty"`
-	Species  *string  `json:"species,omitempty"`
+// FishType provides polymorphic access to related types.
+type FishType interface {
+	fishType()
 }
+
+type Fish struct {
+	Fishtype *string     `json:"fishtype,omitempty"`
+	Length   *float32    `json:"length,omitempty"`
+	Siblings *[]FishType `json:"siblings,omitempty"`
+	Species  *string     `json:"species,omitempty"`
+}
+
+func (*Fish) fishType() {}
 
 // FishResponse is the response envelope for operations that return a Fish type.
 type FishResponse struct {
-	Fish *Fish
+	Fish FishType
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+func (f *FishResponse) UnmarshalJSON(data []byte) error {
+	t, err := unmarshalFishType(data)
+	if err != nil {
+		return err
+	}
+	f.Fish = t
+	return nil
 }
 
 type FloatWrapper struct {
@@ -328,9 +496,76 @@ type Goblinshark struct {
 	Fishtype *string           `json:"fishtype,omitempty"`
 	Jawsize  *int32            `json:"jawsize,omitempty"`
 	Length   *float32          `json:"length,omitempty"`
-	Siblings *[]Fish           `json:"siblings,omitempty"`
+	Siblings *[]FishType       `json:"siblings,omitempty"`
 	Species  *string           `json:"species,omitempty"`
 }
+
+func (g Goblinshark) MarshalJSON() ([]byte, error) {
+	g.Fishtype = strptr(fishTypeGoblin)
+	type alias Goblinshark
+	aux := &struct {
+		*alias
+		Birthday *timeRFC3339 `json:"birthday"`
+	}{
+		alias:    (*alias)(&g),
+		Birthday: (*timeRFC3339)(g.Birthday),
+	}
+	return json.Marshal(aux)
+}
+
+func (g *Goblinshark) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "age":
+			if v != nil {
+				err = json.Unmarshal(*v, &g.Age)
+			}
+		case "birthday":
+			if v != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*v, &aux)
+				g.Birthday = (*time.Time)(&aux)
+			}
+		case "color":
+			if v != nil {
+				err = json.Unmarshal(*v, &g.Color)
+			}
+		case "fishtype":
+			if v != nil {
+				err = json.Unmarshal(*v, &g.Fishtype)
+			}
+		case "jawsize":
+			if v != nil {
+				err = json.Unmarshal(*v, &g.Jawsize)
+			}
+		case "length":
+			if v != nil {
+				err = json.Unmarshal(*v, &g.Length)
+			}
+		case "siblings":
+			if v != nil {
+				g.Siblings, err = unmarshalFishTypeArray(*v)
+			}
+		case "species":
+			if v != nil {
+				err = json.Unmarshal(*v, &g.Species)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (*Goblinshark) fishType() {}
+
+func (*Goblinshark) sharkType() {}
 
 type IntWrapper struct {
 	Field1 *int32 `json:"field1,omitempty"`
@@ -362,18 +597,34 @@ type MyBaseHelperType struct {
 	PropBh1 *string `json:"propBH1,omitempty"`
 }
 
+// MyBaseTypeType provides polymorphic access to related types.
+type MyBaseTypeType interface {
+	myBaseType()
+}
+
 type MyBaseType struct {
 	Helper *MyBaseHelperType `json:"helper,omitempty"`
 	Kind   *string           `json:"kind,omitempty"`
 	PropB1 *string           `json:"propB1,omitempty"`
 }
 
+func (*MyBaseType) myBaseType() {}
+
 // MyBaseTypeResponse is the response envelope for operations that return a MyBaseType type.
 type MyBaseTypeResponse struct {
-	MyBaseType *MyBaseType
+	MyBaseType MyBaseTypeType
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+func (m *MyBaseTypeResponse) UnmarshalJSON(data []byte) error {
+	t, err := unmarshalMyBaseTypeType(data)
+	if err != nil {
+		return err
+	}
+	m.MyBaseType = t
+	return nil
 }
 
 type MyDerivedType struct {
@@ -382,6 +633,51 @@ type MyDerivedType struct {
 	PropB1 *string           `json:"propB1,omitempty"`
 	PropD1 *string           `json:"propD1,omitempty"`
 }
+
+func (m MyDerivedType) MarshalJSON() ([]byte, error) {
+	m.Kind = strptr(myBaseTypeKind1)
+	type alias MyDerivedType
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&m),
+	}
+	return json.Marshal(aux)
+}
+
+func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "helper":
+			if v != nil {
+				err = json.Unmarshal(*v, &m.Helper)
+			}
+		case "kind":
+			if v != nil {
+				err = json.Unmarshal(*v, &m.Kind)
+			}
+		case "propB1":
+			if v != nil {
+				err = json.Unmarshal(*v, &m.PropB1)
+			}
+		case "propD1":
+			if v != nil {
+				err = json.Unmarshal(*v, &m.PropD1)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (*MyDerivedType) myBaseType() {}
 
 type Pet struct {
 	ID   *int32  `json:"id,omitempty"`
@@ -400,42 +696,182 @@ type ReadonlyObjResponse struct {
 	ReadonlyObj *ReadonlyObj
 }
 
-type Salmon struct {
-	Fishtype *string  `json:"fishtype,omitempty"`
-	Iswild   *bool    `json:"iswild,omitempty"`
-	Length   *float32 `json:"length,omitempty"`
-	Location *string  `json:"location,omitempty"`
-	Siblings *[]Fish  `json:"siblings,omitempty"`
-	Species  *string  `json:"species,omitempty"`
+// SalmonType provides polymorphic access to related types.
+type SalmonType interface {
+	FishType
+	salmonType()
 }
+
+type Salmon struct {
+	Fishtype *string     `json:"fishtype,omitempty"`
+	Iswild   *bool       `json:"iswild,omitempty"`
+	Length   *float32    `json:"length,omitempty"`
+	Location *string     `json:"location,omitempty"`
+	Siblings *[]FishType `json:"siblings,omitempty"`
+	Species  *string     `json:"species,omitempty"`
+}
+
+func (s Salmon) MarshalJSON() ([]byte, error) {
+	s.Fishtype = strptr(fishTypeSalmon)
+	type alias Salmon
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&s),
+	}
+	return json.Marshal(aux)
+}
+
+func (s *Salmon) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "fishtype":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Fishtype)
+			}
+		case "iswild":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Iswild)
+			}
+		case "length":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Length)
+			}
+		case "location":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Location)
+			}
+		case "siblings":
+			if v != nil {
+				s.Siblings, err = unmarshalFishTypeArray(*v)
+			}
+		case "species":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Species)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (*Salmon) fishType() {}
+
+func (*Salmon) salmonType() {}
 
 // SalmonResponse is the response envelope for operations that return a Salmon type.
 type SalmonResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Salmon      *Salmon
+	Salmon      SalmonType
+}
+
+func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
+	t, err := unmarshalSalmonType(data)
+	if err != nil {
+		return err
+	}
+	s.Salmon = t
+	return nil
 }
 
 type Sawshark struct {
-	Age      *int32     `json:"age,omitempty"`
-	Birthday *time.Time `json:"birthday,omitempty"`
-	Fishtype *string    `json:"fishtype,omitempty"`
-	Length   *float32   `json:"length,omitempty"`
-	Picture  *[]byte    `json:"picture,omitempty"`
-	Siblings *[]Fish    `json:"siblings,omitempty"`
-	Species  *string    `json:"species,omitempty"`
+	Age      *int32      `json:"age,omitempty"`
+	Birthday *time.Time  `json:"birthday,omitempty"`
+	Fishtype *string     `json:"fishtype,omitempty"`
+	Length   *float32    `json:"length,omitempty"`
+	Picture  *[]byte     `json:"picture,omitempty"`
+	Siblings *[]FishType `json:"siblings,omitempty"`
+	Species  *string     `json:"species,omitempty"`
+}
+
+func (s Sawshark) MarshalJSON() ([]byte, error) {
+	s.Fishtype = strptr(fishTypeSawshark)
+	type alias Sawshark
+	aux := &struct {
+		*alias
+		Birthday *timeRFC3339 `json:"birthday"`
+	}{
+		alias:    (*alias)(&s),
+		Birthday: (*timeRFC3339)(s.Birthday),
+	}
+	return json.Marshal(aux)
+}
+
+func (s *Sawshark) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "age":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Age)
+			}
+		case "birthday":
+			if v != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*v, &aux)
+				s.Birthday = (*time.Time)(&aux)
+			}
+		case "fishtype":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Fishtype)
+			}
+		case "length":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Length)
+			}
+		case "picture":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Picture)
+			}
+		case "siblings":
+			if v != nil {
+				s.Siblings, err = unmarshalFishTypeArray(*v)
+			}
+		case "species":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Species)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (*Sawshark) fishType() {}
+
+func (*Sawshark) sharkType() {}
+
+// SharkType provides polymorphic access to related types.
+type SharkType interface {
+	FishType
+	sharkType()
 }
 
 type Shark struct {
-	Age      *int32     `json:"age,omitempty"`
-	Birthday *time.Time `json:"birthday,omitempty"`
-	Fishtype *string    `json:"fishtype,omitempty"`
-	Length   *float32   `json:"length,omitempty"`
-	Siblings *[]Fish    `json:"siblings,omitempty"`
-	Species  *string    `json:"species,omitempty"`
+	Age      *int32      `json:"age,omitempty"`
+	Birthday *time.Time  `json:"birthday,omitempty"`
+	Fishtype *string     `json:"fishtype,omitempty"`
+	Length   *float32    `json:"length,omitempty"`
+	Siblings *[]FishType `json:"siblings,omitempty"`
+	Species  *string     `json:"species,omitempty"`
 }
 
 func (s Shark) MarshalJSON() ([]byte, error) {
+	s.Fishtype = strptr(fishTypeShark)
 	type alias Shark
 	aux := &struct {
 		*alias
@@ -448,19 +884,50 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Shark) UnmarshalJSON(data []byte) error {
-	type alias Shark
-	aux := &struct {
-		*alias
-		Birthday *timeRFC3339 `json:"birthday"`
-	}{
-		alias: (*alias)(s),
-	}
-	if err := json.Unmarshal(data, aux); err != nil {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	s.Birthday = (*time.Time)(aux.Birthday)
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "age":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Age)
+			}
+		case "birthday":
+			if v != nil {
+				var aux timeRFC3339
+				err = json.Unmarshal(*v, &aux)
+				s.Birthday = (*time.Time)(&aux)
+			}
+		case "fishtype":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Fishtype)
+			}
+		case "length":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Length)
+			}
+		case "siblings":
+			if v != nil {
+				s.Siblings, err = unmarshalFishTypeArray(*v)
+			}
+		case "species":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Species)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
+
+func (*Shark) fishType() {}
+
+func (*Shark) sharkType() {}
 
 type Siamese struct {
 	Breed *string `json:"breed,omitempty"`
@@ -478,14 +945,73 @@ type SiameseResponse struct {
 }
 
 type SmartSalmon struct {
-	CollegeDegree *string  `json:"college_degree,omitempty"`
-	Fishtype      *string  `json:"fishtype,omitempty"`
-	Iswild        *bool    `json:"iswild,omitempty"`
-	Length        *float32 `json:"length,omitempty"`
-	Location      *string  `json:"location,omitempty"`
-	Siblings      *[]Fish  `json:"siblings,omitempty"`
-	Species       *string  `json:"species,omitempty"`
+	CollegeDegree *string     `json:"college_degree,omitempty"`
+	Fishtype      *string     `json:"fishtype,omitempty"`
+	Iswild        *bool       `json:"iswild,omitempty"`
+	Length        *float32    `json:"length,omitempty"`
+	Location      *string     `json:"location,omitempty"`
+	Siblings      *[]FishType `json:"siblings,omitempty"`
+	Species       *string     `json:"species,omitempty"`
 }
+
+func (s SmartSalmon) MarshalJSON() ([]byte, error) {
+	s.Fishtype = strptr(fishTypeSmartSalmon)
+	type alias SmartSalmon
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&s),
+	}
+	return json.Marshal(aux)
+}
+
+func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]*json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for k, v := range rawMsg {
+		var err error
+		switch k {
+		case "college_degree":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.CollegeDegree)
+			}
+		case "fishtype":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Fishtype)
+			}
+		case "iswild":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Iswild)
+			}
+		case "length":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Length)
+			}
+		case "location":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Location)
+			}
+		case "siblings":
+			if v != nil {
+				s.Siblings, err = unmarshalFishTypeArray(*v)
+			}
+		case "species":
+			if v != nil {
+				err = json.Unmarshal(*v, &s.Species)
+			}
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (*SmartSalmon) fishType() {}
+
+func (*SmartSalmon) salmonType() {}
 
 type StringWrapper struct {
 	Empty *string `json:"empty,omitempty"`

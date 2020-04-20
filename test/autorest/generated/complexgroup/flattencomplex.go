@@ -55,5 +55,5 @@ func (client *flattencomplexOperations) getValidHandleResponse(resp *azcore.Resp
 		return nil, errors.New(resp.Status)
 	}
 	result := MyBaseTypeResponse{RawResponse: resp.Response}
-	return &result, resp.UnmarshalAsJSON(&result.MyBaseType)
+	return &result, resp.UnmarshalAsJSON(&result)
 }

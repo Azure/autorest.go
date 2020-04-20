@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, pascalCase } from '@azure-tools/codegen';
-import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
+import { camelCase, comment, pascalCase } from '@azure-tools/codegen';
+import { ArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema } from '../common/helpers';
-import { contentPreamble, hasDescription, sortAscending } from './helpers';
+import { contentPreamble, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in models.go
@@ -39,6 +39,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   // structs
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
+    text += struct.discriminator();
     text += struct.text();
     text += struct.marshaller();
     text += struct.unmarshaller();
@@ -95,7 +96,7 @@ class StructDef {
         }
         text += `\t${comment(prop.language.go!.description, '// ')}\n`;
       }
-      let typeName = prop.schema.language.go!.name;
+      let typeName = substituteDiscriminator(prop.schema);
       if (prop.schema.type === SchemaType.Constant) {
         // for constants we use the underlying type name
         typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
@@ -153,7 +154,12 @@ class StructDef {
       if (this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) {
         tag = '';
       }
-      text += `\t${prop.language.go!.name} *${typeName}${tag}\n`;
+      let pointer = '*';
+      if (prop.schema.language.go!.discriminator) {
+        // pointer-to-interface introduces very clunky code
+        pointer = '';
+      }
+      text += `\t${prop.language.go!.name} ${pointer}${typeName}${tag}\n`;
       first = false;
     }
     for (const param of values(this.Parameters)) {
@@ -166,7 +172,12 @@ class StructDef {
       if (hasDescription(param.language.go!)) {
         text += `\t${comment(param.language.go!.description, '// ')}\n`;
       }
-      text += `\t${pascalCase(param.language.go!.name)} *${param.schema.language.go!.name}\n`;
+      let pointer = '*';
+      if (param.schema.language.go!.discriminator) {
+        // pointer-to-interface introduces very clunky code
+        pointer = '';
+      }
+      text += `\t${pascalCase(param.language.go!.name)} ${pointer}${param.schema.language.go!.name}\n`;
     }
     text += '}\n\n';
     return text;
@@ -174,8 +185,9 @@ class StructDef {
 
   // creates a custom marshaller for this type
   marshaller(): string {
-    // only needed for types with time.Time or where the XML name doesn't match the type name
-    if (this.Language.needsDateTimeMarshalling === undefined && this.Language.xmlWrapperName === undefined) {
+    // only needed for discriminated types, types with time.Time or where the XML name doesn't match the type name
+    if (this.Language.needsDateTimeMarshalling === undefined && this.Language.xmlWrapperName === undefined &&
+      this.Language.discriminatorEnum === undefined) {
       return '';
     }
     const receiver = this.Language.name[0].toLowerCase();
@@ -186,6 +198,14 @@ class StructDef {
     let text = `func (${receiver} ${this.Language.name}) Marshal${formatSig} {\n`;
     if (this.Language.xmlWrapperName) {
       text += `\tstart.Name.Local = "${this.Language.xmlWrapperName}"\n`;
+    } else if (this.Language.discriminatorEnum) {
+      // find the discriminator property
+      for (const prop of values(this.Properties)) {
+        if (prop.isDiscriminator) {
+          text += `\t${receiver}.${prop.language.go!.name} = strptr(${this.Language.discriminatorEnum})\n`;
+          break;
+        }
+      }
     }
     text += this.generateAliasType(receiver, true);
     if (this.Language.marshallingFormat === 'json') {
@@ -199,8 +219,14 @@ class StructDef {
 
   // creates a custom unmarshaller for this type
   unmarshaller(): string {
-    // only needed for types with time.Time
-    if (this.Language.needsDateTimeMarshalling === undefined) {
+    // only needed for discriminated types, types containing discriminated types, or types with time.Time
+    const hasPolymorphicField = values(this.Properties).first((each: Property) => {
+      if (isObjectSchema(each.schema)) {
+        return each.schema.discriminator !== undefined;
+      }
+      return false;
+    });
+    if (this.Language.discriminatorEnum === undefined && !hasPolymorphicField && this.Language.needsDateTimeMarshalling === undefined) {
       return '';
     }
     const receiver = this.Language.name[0].toLowerCase();
@@ -209,23 +235,90 @@ class StructDef {
       formatSig = 'XML(d *xml.Decoder, start xml.StartElement)';
     }
     let text = `func (${receiver} *${this.Language.name}) Unmarshal${formatSig} error {\n`;
-    text += this.generateAliasType(receiver, false);
-    if (this.Language.marshallingFormat === 'json') {
-      text += '\tif err := json.Unmarshal(data, aux); err != nil {\n';
-      text += '\t\treturn err\n';
-      text += '\t}\n';
-    } else {
-      text += '\tif err := d.DecodeElement(aux, &start); err != nil {\n';
-      text += '\t\treturn err\n';
-      text += '\t}\n';
-    }
-    for (const prop of values(this.Properties)) {
-      if (prop.schema.type !== SchemaType.DateTime) {
-        continue;
+    if (this.Language.discriminatorEnum || hasPolymorphicField) {
+      if (this.Language.responseType === true) {
+        // add a custom unmarshaller to the response envelope
+        // find the discriminated type field
+        let field = 'FIND';
+        let type = 'FIND';
+        for (const prop of values(this.Properties)) {
+          if (prop.isDiscriminator) {
+            field = prop.language.go!.name;
+            type = prop.schema.language.go!.discriminator;
+            break;
+          }
+        }
+        text += `\tt, err := unmarshal${type}(data)\n`;
+        text += '\tif err != nil {\n';
+        text += '\t\treturn err\n';
+        text += '\t}\n';
+        text += `\t${receiver}.${field} = t\n`;
+      } else {
+        // polymorphic type, or type containing a polymorphic type
+        text += '\tvar rawMsg map[string]*json.RawMessage\n';
+        text += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
+        text += '\t\treturn err\n';
+        text += '\t}\n';
+        text += '\tfor k, v := range rawMsg {\n';
+        text += '\t\tvar err error\n';
+        text += '\t\tswitch k {\n';
+        // unmarshal each field one by one
+        for (const prop of values(this.Properties)) {
+          text += `\t\tcase "${prop.serializedName}":\n`;
+          text += '\t\t\tif v != nil {\n';
+          if (prop.schema.language.go!.discriminator) {
+            text += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminator}(*v)\n`;
+          } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminator) {
+            text += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminator}Array(*v)\n`;
+          } else if (prop.schema.language.go!.internalTimeType) {
+            text += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
+            text += '\t\t\t\terr = json.Unmarshal(*v, &aux)\n';
+            text += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
+          } else {
+            text += `\t\t\t\terr = json.Unmarshal(*v, &${receiver}.${prop.language.go!.name})\n`;
+          }
+          text += '\t\t\t}\n';
+        }
+        text += '\t\t}\n';
+        text += '\t\tif err != nil {\n';
+        text += '\t\t\treturn err\n';
+        text += '\t\t}\n';
+        text += '\t}\n';
       }
-      text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
+    } else {
+      // non-polymorphic case, must be something with time.Time
+      text += this.generateAliasType(receiver, false);
+      if (this.Language.marshallingFormat === 'json') {
+        text += '\tif err := json.Unmarshal(data, aux); err != nil {\n';
+        text += '\t\treturn err\n';
+        text += '\t}\n';
+      } else {
+        text += '\tif err := d.DecodeElement(aux, &start); err != nil {\n';
+        text += '\t\treturn err\n';
+        text += '\t}\n';
+      }
+      for (const prop of values(this.Properties)) {
+        if (prop.schema.type !== SchemaType.DateTime) {
+          continue;
+        }
+        text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
+      }
     }
     text += '\treturn nil\n';
+    text += '}\n\n';
+    return text;
+  }
+
+  discriminator(): string {
+    if (!this.Language.discriminator) {
+      return '';
+    }
+    let text = `// ${this.Language.discriminator} provides polymorphic access to related types.\n`;
+    text += `type ${this.Language.discriminator} interface {\n`;
+    if (this.Language.discriminatorParent) {
+      text += `\t${this.Language.discriminatorParent}\n`;
+    }
+    text += `\t${camelCase(this.Language.discriminator)}()\n`;
     text += '}\n\n';
     return text;
   }
@@ -307,6 +400,14 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       text += '\treturn msg\n';
       text += '}\n\n';
       structDef.Methods.push(text);
+    } else if (obj.language.go!.polymorphicInterfaces) {
+      // generate interface method(s)
+      const interfaces = <Array<string>>obj.language.go!.polymorphicInterfaces;
+      interfaces.sort(sortAscending);
+      for (const iface of values(interfaces)) {
+        const marker = `func (*${obj.language.go!.name}) ${camelCase(iface)}() {}\n\n`;
+        structDef.Methods.push(marker);
+      }
     }
     structTypes.push(structDef);
   }

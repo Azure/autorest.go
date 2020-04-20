@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, Language, Parameter } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType } from '@azure-tools/codemodel';
 
 
 // returns the common source-file preamble (license comment, package name etc)
@@ -29,10 +29,11 @@ export function sortAscending(a: string, b: string): number {
 
 // returns the type name with possible * prefix
 export function formatParameterTypeName(param: Parameter): string {
+  const typeName = substituteDiscriminator(param.schema);
   if (param.required) {
-    return param.schema.language.go!.name;
+    return typeName;
   }
-  return `*${param.schema.language.go!.name}`;
+  return `*${typeName}`;
 }
 
 // returns true if the parameter should not be URL encoded
@@ -52,4 +53,25 @@ export function sortParametersByRequired(a: Parameter, b: Parameter): number {
     return -1;
   }
   return 1;
+}
+
+// if a field is a discriminator use the interface type instead
+export function substituteDiscriminator(schema: Schema): string {
+  switch (schema.type) {
+    case SchemaType.Array:
+      const arraySchema = <ArraySchema>schema;
+      const arrayElem = <Schema>arraySchema.elementType;
+      return `[]${substituteDiscriminator(arrayElem)}`;
+    case SchemaType.Dictionary:
+      const dictSchema = <DictionarySchema>schema;
+      const dictElem = <Schema>dictSchema.elementType;
+      return `map[string]${substituteDiscriminator(dictElem)}`;
+    case SchemaType.Object:
+      if (schema.language.go!.discriminator) {
+        return schema.language.go!.discriminator;
+      }
+      return schema.language.go!.name;
+    default:
+      return schema.language.go!.name;
+  }
 }

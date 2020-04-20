@@ -51,6 +51,10 @@ export async function namer(session: Session<CodeModel>) {
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
     details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Model');
+    if (obj.discriminator) {
+      // if this is a discriminator add the interface name
+      details.discriminator = `${details.name}Type`;
+    }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
       details.name = getEscapedReservedName(removePrefix(capitalizeAcronyms(pascalCase(details.name)), 'XMS'), 'Field');
