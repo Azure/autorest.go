@@ -46,4 +46,3 @@ export function isPageableOperation(op: Operation): boolean {
 export function isObjectSchema(obj: Schema): obj is ObjectSchema {
   return (obj as ObjectSchema).properties !== undefined;
 }
-
