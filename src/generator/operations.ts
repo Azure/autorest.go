@@ -264,7 +264,8 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   for (let i = 0; i < reqParams.length; ++i) {
     reqParams[i] = reqParams[i].trim().split(' ')[0];
   }
-  if (isLROOperation(op)) {
+  // TODO Exception for Pageable LRO operations NYI
+  if (isLROOperation(op) && !op.extensions!['x-ms-pageable']) {
     text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
     // TODO uncomment the following code to actually implement polling 
     // text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
