@@ -18,50 +18,50 @@ import (
 
 // PagingOperations contains the methods for the Paging group.
 type PagingOperations interface {
-	// GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
+	// GetMultiplePages - A paging operation that includes a nextLink that has 10 pages 
 	GetMultiplePages(options *PagingGetMultiplePagesOptions) (ProductResultPager, error)
-	// GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
+	// GetMultiplePagesFailure - A paging operation that receives a 400 on the second call 
 	GetMultiplePagesFailure() (ProductResultPager, error)
-	// GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
+	// GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink 
 	GetMultiplePagesFailureURI() (ProductResultPager, error)
-	// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
+	// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment 
 	GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error)
-	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
+	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped 
 	GetMultiplePagesFragmentWithGroupingNextLink(apiVersion string, tenant string) (OdataProductResultPager, error)
-	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
+	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages 
 	BeginGetMultiplePagesLro(options *PagingGetMultiplePagesLroOptions) (ProductResultPager, error)
-	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
+	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages 
 	GetMultiplePagesRetryFirst() (ProductResultPager, error)
-	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
+	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually. 
 	GetMultiplePagesRetrySecond() (ProductResultPager, error)
-	// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
+	// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages 
 	GetMultiplePagesWithOffset(offset int32, options *PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error)
-	// GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
+	// GetNoItemNamePages - A paging operation that must return result of the default 'value' node. 
 	GetNoItemNamePages() (ProductResultValuePager, error)
-	// GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
+	// GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1. 
 	GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error)
-	// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
+	// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages 
 	GetOdataMultiplePages(options *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error)
-	// GetSinglePages - A paging operation that finishes on the first call without a nextlink
+	// GetSinglePages - A paging operation that finishes on the first call without a nextlink 
 	GetSinglePages() (ProductResultPager, error)
-	// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
+	// GetSinglePagesFailure - A paging operation that receives a 400 on the first call 
 	GetSinglePagesFailure() (ProductResultPager, error)
 }
 
 // pagingOperations implements the PagingOperations interface.
-type pagingOperations struct {
+type pagingOperations struct{
 	*Client
 }
 
-// GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
+// GetMultiplePages - A paging operation that includes a nextLink that has 10 pages 
 func (client *pagingOperations) GetMultiplePages(options *PagingGetMultiplePagesOptions) (ProductResultPager, error) {
 	req, err := client.getMultiplePagesCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -105,15 +105,15 @@ func (client *pagingOperations) getMultiplePagesHandleResponse(resp *azcore.Resp
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
+// GetMultiplePagesFailure - A paging operation that receives a 400 on the second call 
 func (client *pagingOperations) GetMultiplePagesFailure() (ProductResultPager, error) {
 	req, err := client.getMultiplePagesFailureCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesFailureHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -148,15 +148,15 @@ func (client *pagingOperations) getMultiplePagesFailureHandleResponse(resp *azco
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
+// GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink 
 func (client *pagingOperations) GetMultiplePagesFailureURI() (ProductResultPager, error) {
 	req, err := client.getMultiplePagesFailureUriCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesFailureUriHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -191,15 +191,15 @@ func (client *pagingOperations) getMultiplePagesFailureUriHandleResponse(resp *a
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
+// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment 
 func (client *pagingOperations) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error) {
 	req, err := client.getMultiplePagesFragmentNextLinkCreateRequest(apiVersion, tenant)
 	if err != nil {
 		return nil, err
 	}
 	return &odataProductResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesFragmentNextLinkHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
 			return client.nextFragmentCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
@@ -231,15 +231,15 @@ func (client *pagingOperations) getMultiplePagesFragmentNextLinkHandleResponse(r
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
+// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped 
 func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(apiVersion string, tenant string) (OdataProductResultPager, error) {
 	req, err := client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(apiVersion, tenant)
 	if err != nil {
 		return nil, err
 	}
 	return &odataProductResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
 			return client.nextFragmentWithGroupingCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
@@ -271,30 +271,9 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) GetMultiplePagesLro(options *PagingGetMultiplePagesLroOptions) (ProductResultPager, error) {
-	req, err := client.getMultiplePagesLroCreateRequest(options)
-	if err != nil {
-		return nil, err
-	}
-	return &productResultPager{
-		client:    client,
-		request:   req,
-		responder: client.getMultiplePagesLroHandleResponse,
-		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
-			u, err := url.Parse(*resp.ProductResult.NextLink)
-			if err != nil {
-				return nil, fmt.Errorf("invalid NextLink: %w", err)
-			}
-			if u.Scheme == "" {
-				return nil, fmt.Errorf("no scheme detected in NextLink %s", *resp.ProductResult.NextLink)
-			}
-			return azcore.NewRequest(http.MethodGet, *u), nil
-		},
-	}, nil
-}
-
-// getMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
+// GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages 
+func (client *pagingOperations) BeginGetMultiplePagesLro(options *PagingGetMultiplePagesLroOptions) (ProductResultPager, error) {
+return nil, nil// getMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
 func (client *pagingOperations) getMultiplePagesLroCreateRequest(options *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/lro"
 	u, err := client.u.Parse(urlPath)
@@ -323,15 +302,15 @@ func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.R
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
+// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages 
 func (client *pagingOperations) GetMultiplePagesRetryFirst() (ProductResultPager, error) {
 	req, err := client.getMultiplePagesRetryFirstCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesRetryFirstHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -366,15 +345,15 @@ func (client *pagingOperations) getMultiplePagesRetryFirstHandleResponse(resp *a
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
+// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually. 
 func (client *pagingOperations) GetMultiplePagesRetrySecond() (ProductResultPager, error) {
 	req, err := client.getMultiplePagesRetrySecondCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesRetrySecondHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -409,15 +388,15 @@ func (client *pagingOperations) getMultiplePagesRetrySecondHandleResponse(resp *
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
+// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages 
 func (client *pagingOperations) GetMultiplePagesWithOffset(offset int32, options *PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error) {
 	req, err := client.getMultiplePagesWithOffsetCreateRequest(offset, options)
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getMultiplePagesWithOffsetHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -462,15 +441,15 @@ func (client *pagingOperations) getMultiplePagesWithOffsetHandleResponse(resp *a
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
+// GetNoItemNamePages - A paging operation that must return result of the default 'value' node. 
 func (client *pagingOperations) GetNoItemNamePages() (ProductResultValuePager, error) {
 	req, err := client.getNoItemNamePagesCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultValuePager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getNoItemNamePagesHandleResponse,
 		advancer: func(resp *ProductResultValueResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResultValue.NextLink)
@@ -505,7 +484,7 @@ func (client *pagingOperations) getNoItemNamePagesHandleResponse(resp *azcore.Re
 	return &result, resp.UnmarshalAsJSON(&result.ProductResultValue)
 }
 
-// GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
+// GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1. 
 func (client *pagingOperations) GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error) {
 	req, err := client.getNullNextLinkNamePagesCreateRequest()
 	if err != nil {
@@ -542,15 +521,15 @@ func (client *pagingOperations) getNullNextLinkNamePagesHandleResponse(resp *azc
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
+// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages 
 func (client *pagingOperations) GetOdataMultiplePages(options *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error) {
 	req, err := client.getOdataMultiplePagesCreateRequest(options)
 	if err != nil {
 		return nil, err
 	}
 	return &odataProductResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getOdataMultiplePagesHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.OdataProductResult.OdataNextLink)
@@ -594,15 +573,15 @@ func (client *pagingOperations) getOdataMultiplePagesHandleResponse(resp *azcore
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
 
-// GetSinglePages - A paging operation that finishes on the first call without a nextlink
+// GetSinglePages - A paging operation that finishes on the first call without a nextlink 
 func (client *pagingOperations) GetSinglePages() (ProductResultPager, error) {
 	req, err := client.getSinglePagesCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getSinglePagesHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -637,15 +616,15 @@ func (client *pagingOperations) getSinglePagesHandleResponse(resp *azcore.Respon
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
-// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
+// GetSinglePagesFailure - A paging operation that receives a 400 on the first call 
 func (client *pagingOperations) GetSinglePagesFailure() (ProductResultPager, error) {
 	req, err := client.getSinglePagesFailureCreateRequest()
 	if err != nil {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
-		request:   req,
+		client: client,
+		request: req,
 		responder: client.getSinglePagesFailureHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
 			u, err := url.Parse(*resp.ProductResult.NextLink)
@@ -729,3 +708,4 @@ func (client *pagingOperations) nextFragmentWithGroupingHandleResponse(resp *azc
 	result := OdataProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.OdataProductResult)
 }
+
