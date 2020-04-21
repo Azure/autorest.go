@@ -28,8 +28,8 @@ type PagingOperations interface {
 	GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error)
 	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 	GetMultiplePagesFragmentWithGroupingNextLink(apiVersion string, tenant string) (OdataProductResultPager, error)
-	// GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-	GetMultiplePagesLro(options *PagingGetMultiplePagesLroOptions) (ProductResultPager, error)
+	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
+	BeginGetMultiplePagesLro(options *PagingGetMultiplePagesLroOptions) (ProductResultPager, error)
 	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
 	GetMultiplePagesRetryFirst() (ProductResultPager, error)
 	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
