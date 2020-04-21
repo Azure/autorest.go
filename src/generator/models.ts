@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase, comment, pascalCase } from '@azure-tools/codegen';
-import { ArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
+import { CodeModel, ConstantSchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema } from '../common/helpers';
 import { contentPreamble, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
@@ -21,14 +21,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   for (const schema of values(responseSchemas)) {
     structs.push(generateStruct(schema.language.go!.responseType, schema.language.go!.properties));
   }
-  // add types from requests and responses
-  for (const group of values(session.model.operationGroups)) {
-    for (const op of values(group.operations)) {
-      // add structs from optional operation params
-      if (op.requests![0].language.go!.optionalParam) {
-        structs.push(generateOptionalParamsStruct(op.requests![0].language.go!.optionalParam));
-      }
-    }
+  const paramGroups = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
+  for (const paramGroup of values(paramGroups)) {
+    structs.push(generateParamGroupStruct(paramGroup.language.go!, paramGroup.originalParameter));
   }
 
   // imports
@@ -163,7 +158,7 @@ class StructDef {
       first = false;
     }
     for (const param of values(this.Parameters)) {
-      // if Parameters is set this is an optional args struct
+      // if Parameters is set this is a param group struct
       // none of its fields need to participate in marshalling
       if (param.implementation === ImplementationLocation.Client) {
         // don't add globals to the per-method options struct
@@ -173,7 +168,7 @@ class StructDef {
         text += `\t${comment(param.language.go!.description, '// ')}\n`;
       }
       let pointer = '*';
-      if (param.schema.language.go!.discriminator) {
+      if (param.required || param.schema.language.go!.discriminator) {
         // pointer-to-interface introduces very clunky code
         pointer = '';
       }
@@ -432,10 +427,8 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
   return st;
 }
 
-function generateOptionalParamsStruct(optionalParam: Parameter): StructDef {
-  // for the optional params struct, the params are smuggled via GroupProperty
-  const params = (<GroupProperty>(<ObjectSchema>optionalParam.schema).properties![0]).originalParameter;
-  const st = new StructDef(optionalParam.schema.language.go!, undefined, params);
+function generateParamGroupStruct(lang: Language, params: Parameter[]): StructDef {
+  const st = new StructDef(lang, undefined, params);
   for (const param of values(params)) {
     imports.addImportForSchemaType(param.schema);
   }

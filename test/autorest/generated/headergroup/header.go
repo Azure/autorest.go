@@ -27,13 +27,13 @@ type HeaderOperations interface {
 	// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
 	ParamDatetime(ctx context.Context, scenario string, value time.Time) (*http.Response, error)
 	// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
-	ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error)
+	ParamDatetimeRFC1123(ctx context.Context, scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*http.Response, error)
 	// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
 	ParamDouble(ctx context.Context, scenario string, value float64) (*http.Response, error)
 	// ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
 	ParamDuration(ctx context.Context, scenario string, value time.Duration) (*http.Response, error)
 	// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
-	ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*http.Response, error)
+	ParamEnum(ctx context.Context, scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*http.Response, error)
 	// ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
 	ParamExistingKey(ctx context.Context, userAgent string) (*http.Response, error)
 	// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
@@ -45,7 +45,7 @@ type HeaderOperations interface {
 	// ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
 	ParamProtectedKey(ctx context.Context, contentType string) (*http.Response, error)
 	// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
-	ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*http.Response, error)
+	ParamString(ctx context.Context, scenario string, headerParamStringOptions *HeaderParamStringOptions) (*http.Response, error)
 	// ResponseBool - Get a response with header value "value": true or false
 	ResponseBool(ctx context.Context, scenario string) (*HeaderResponseBoolResponse, error)
 	// ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
@@ -270,8 +270,8 @@ func (client *headerOperations) paramDatetimeHandleResponse(resp *azcore.Respons
 }
 
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
-func (client *headerOperations) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
-	req, err := client.paramDatetimeRfc1123CreateRequest(scenario, options)
+func (client *headerOperations) ParamDatetimeRFC1123(ctx context.Context, scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
+	req, err := client.paramDatetimeRfc1123CreateRequest(scenario, headerParamDatetimeRfc1123Options)
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +287,7 @@ func (client *headerOperations) ParamDatetimeRFC1123(ctx context.Context, scenar
 }
 
 // paramDatetimeRfc1123CreateRequest creates the ParamDatetimeRFC1123 request.
-func (client *headerOperations) paramDatetimeRfc1123CreateRequest(scenario string, options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
+func (client *headerOperations) paramDatetimeRfc1123CreateRequest(scenario string, headerParamDatetimeRfc1123Options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/datetimerfc1123"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -295,8 +295,8 @@ func (client *headerOperations) paramDatetimeRfc1123CreateRequest(scenario strin
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
 	req.Header.Set("scenario", scenario)
-	if options != nil && options.Value != nil {
-		req.Header.Set("value", options.Value.Format(time.RFC1123))
+	if headerParamDatetimeRfc1123Options != nil && headerParamDatetimeRfc1123Options.Value != nil {
+		req.Header.Set("value", headerParamDatetimeRfc1123Options.Value.Format(time.RFC1123))
 	}
 	return req, nil
 }
@@ -386,8 +386,8 @@ func (client *headerOperations) paramDurationHandleResponse(resp *azcore.Respons
 }
 
 // ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
-func (client *headerOperations) ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*http.Response, error) {
-	req, err := client.paramEnumCreateRequest(scenario, options)
+func (client *headerOperations) ParamEnum(ctx context.Context, scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*http.Response, error) {
+	req, err := client.paramEnumCreateRequest(scenario, headerParamEnumOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -403,7 +403,7 @@ func (client *headerOperations) ParamEnum(ctx context.Context, scenario string, 
 }
 
 // paramEnumCreateRequest creates the ParamEnum request.
-func (client *headerOperations) paramEnumCreateRequest(scenario string, options *HeaderParamEnumOptions) (*azcore.Request, error) {
+func (client *headerOperations) paramEnumCreateRequest(scenario string, headerParamEnumOptions *HeaderParamEnumOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/enum"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -411,8 +411,8 @@ func (client *headerOperations) paramEnumCreateRequest(scenario string, options 
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
 	req.Header.Set("scenario", scenario)
-	if options != nil && options.Value != nil {
-		req.Header.Set("value", string(*options.Value))
+	if headerParamEnumOptions != nil && headerParamEnumOptions.Value != nil {
+		req.Header.Set("value", string(*headerParamEnumOptions.Value))
 	}
 	return req, nil
 }
@@ -614,8 +614,8 @@ func (client *headerOperations) paramProtectedKeyHandleResponse(resp *azcore.Res
 }
 
 // ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
-func (client *headerOperations) ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*http.Response, error) {
-	req, err := client.paramStringCreateRequest(scenario, options)
+func (client *headerOperations) ParamString(ctx context.Context, scenario string, headerParamStringOptions *HeaderParamStringOptions) (*http.Response, error) {
+	req, err := client.paramStringCreateRequest(scenario, headerParamStringOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -631,7 +631,7 @@ func (client *headerOperations) ParamString(ctx context.Context, scenario string
 }
 
 // paramStringCreateRequest creates the ParamString request.
-func (client *headerOperations) paramStringCreateRequest(scenario string, options *HeaderParamStringOptions) (*azcore.Request, error) {
+func (client *headerOperations) paramStringCreateRequest(scenario string, headerParamStringOptions *HeaderParamStringOptions) (*azcore.Request, error) {
 	urlPath := "/header/param/prim/string"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
@@ -639,8 +639,8 @@ func (client *headerOperations) paramStringCreateRequest(scenario string, option
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
 	req.Header.Set("scenario", scenario)
-	if options != nil && options.Value != nil {
-		req.Header.Set("value", *options.Value)
+	if headerParamStringOptions != nil && headerParamStringOptions.Value != nil {
+		req.Header.Set("value", *headerParamStringOptions.Value)
 	}
 	return req, nil
 }

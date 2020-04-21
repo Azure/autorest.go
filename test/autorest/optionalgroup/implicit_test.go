@@ -21,7 +21,7 @@ func getImplicitClient(t *testing.T) optionalgroup.ImplicitOperations {
 
 func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
 	client := getImplicitClient(t)
-	result, err := client.GetOptionalGlobalQuery(context.Background(), nil)
+	result, err := client.GetOptionalGlobalQuery(context.Background())
 	if err != nil {
 		t.Fatalf("GetOptionalGlobalQuery: %v", err)
 	}

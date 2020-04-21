@@ -144,7 +144,10 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	client := getPagingOperations(t)
-	page, err := client.GetMultiplePagesFragmentWithGroupingNextLink("1.6", "test_user")
+	page, err := client.GetMultiplePagesFragmentWithGroupingNextLink(paginggroup.CustomParameterGroup{
+		ApiVersion: "1.6",
+		Tenant:     "test_user",
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -227,7 +230,7 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesWithOffset(t *testing.T) {
 	client := getPagingOperations(t)
-	page, err := client.GetMultiplePagesWithOffset(0, nil)
+	page, err := client.GetMultiplePagesWithOffset(paginggroup.PagingGetMultiplePagesWithOffsetOptions{})
 	if err != nil {
 		t.Fatal(err)
 	}

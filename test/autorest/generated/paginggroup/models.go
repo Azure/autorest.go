@@ -7,6 +7,14 @@ package paginggroup
 
 import "net/http"
 
+// CustomParameterGroup contains a group of parameters for the Paging.GetMultiplePagesFragmentWithGroupingNextLink method.
+type CustomParameterGroup struct {
+	// Sets the api version to use.
+	ApiVersion string
+	// Sets the tenant to use.
+	Tenant string
+}
+
 type OdataProductResult struct {
 	OdataNextLink *string    `json:"odata.nextLink,omitempty"`
 	Values        *[]Product `json:"values,omitempty"`
@@ -48,6 +56,8 @@ type PagingGetMultiplePagesWithOffsetOptions struct {
 	ClientRequestId *string
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
+	// Offset of return value
+	Offset int32
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }

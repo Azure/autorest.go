@@ -18,9 +18,9 @@ import (
 // Operations contains the methods for the Operations group.
 type Operations interface {
 	GetWithConstantInPath(ctx context.Context) (*http.Response, error)
-	PostWithConstantInBody(ctx context.Context, options *OperationsPostWithConstantInBodyOptions) (*ProductResponse, error)
+	PostWithConstantInBody(ctx context.Context, operationsPostWithConstantInBodyOptions *OperationsPostWithConstantInBodyOptions) (*ProductResponse, error)
 	// ValidationOfBody - Validates body parameters on the method. See swagger for details.
-	ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *OperationsValidationOfBodyOptions) (*ProductResponse, error)
+	ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, operationsValidationOfBodyOptions *OperationsValidationOfBodyOptions) (*ProductResponse, error)
 	// ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
 	ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32) (*ProductResponse, error)
 }
@@ -67,8 +67,8 @@ func (client *operations) getWithConstantInPathHandleResponse(resp *azcore.Respo
 	return resp.Response, nil
 }
 
-func (client *operations) PostWithConstantInBody(ctx context.Context, options *OperationsPostWithConstantInBodyOptions) (*ProductResponse, error) {
-	req, err := client.postWithConstantInBodyCreateRequest(options)
+func (client *operations) PostWithConstantInBody(ctx context.Context, operationsPostWithConstantInBodyOptions *OperationsPostWithConstantInBodyOptions) (*ProductResponse, error) {
+	req, err := client.postWithConstantInBodyCreateRequest(operationsPostWithConstantInBodyOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (client *operations) PostWithConstantInBody(ctx context.Context, options *O
 }
 
 // postWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
-func (client *operations) postWithConstantInBodyCreateRequest(options *OperationsPostWithConstantInBodyOptions) (*azcore.Request, error) {
+func (client *operations) postWithConstantInBodyCreateRequest(operationsPostWithConstantInBodyOptions *OperationsPostWithConstantInBodyOptions) (*azcore.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
 	u, err := client.u.Parse(urlPath)
@@ -92,8 +92,8 @@ func (client *operations) postWithConstantInBodyCreateRequest(options *Operation
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
-	if options != nil {
-		return req, req.MarshalAsJSON(options.Body)
+	if operationsPostWithConstantInBodyOptions != nil {
+		return req, req.MarshalAsJSON(operationsPostWithConstantInBodyOptions.Body)
 	}
 	return req, nil
 }
@@ -108,8 +108,8 @@ func (client *operations) postWithConstantInBodyHandleResponse(resp *azcore.Resp
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
-func (client *operations) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *OperationsValidationOfBodyOptions) (*ProductResponse, error) {
-	req, err := client.validationOfBodyCreateRequest(resourceGroupName, id, options)
+func (client *operations) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, operationsValidationOfBodyOptions *OperationsValidationOfBodyOptions) (*ProductResponse, error) {
+	req, err := client.validationOfBodyCreateRequest(resourceGroupName, id, operationsValidationOfBodyOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (client *operations) ValidationOfBody(ctx context.Context, resourceGroupNam
 }
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
-func (client *operations) validationOfBodyCreateRequest(resourceGroupName string, id int32, options *OperationsValidationOfBodyOptions) (*azcore.Request, error) {
+func (client *operations) validationOfBodyCreateRequest(resourceGroupName string, id int32, operationsValidationOfBodyOptions *OperationsValidationOfBodyOptions) (*azcore.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
@@ -138,8 +138,8 @@ func (client *operations) validationOfBodyCreateRequest(resourceGroupName string
 	query.Set("apiVersion", "1.0.0")
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if options != nil {
-		return req, req.MarshalAsJSON(options.Body)
+	if operationsValidationOfBodyOptions != nil {
+		return req, req.MarshalAsJSON(operationsValidationOfBodyOptions.Body)
 	}
 	return req, nil
 }

@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
-import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
+import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
@@ -54,7 +54,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += imports.text();
     text += interfaceText;
     text += `// ${clientName} implements the ${group.language.go!.clientName} interface.\n`;
-    text += `type ${clientName} struct{\n`;
+    text += `type ${clientName} struct {\n`;
     text += '\t*Client\n';
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
@@ -86,14 +86,11 @@ function formatParamValue(param: Parameter, imports: ImportManager): string {
   let paramName = param.language.go!.name;
   if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
+  } else if (param.language.go!.paramGroup) {
+    paramName = `${camelCase(param.language.go!.paramGroup.language.go!.name)}.${pascalCase(paramName)}`;
   }
   if (param.required !== true) {
-    if (param.implementation === ImplementationLocation.Method) {
-      // optional params at the method level will be in an options struct
-      paramName = `*options.${pascalCase(paramName)}`;
-    } else {
-      paramName = `*${paramName}`;
-    }
+    paramName = `*${paramName}`;
   }
   switch (param.schema.type) {
     case SchemaType.Array:
@@ -265,7 +262,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // split param list into individual params
   const reqParams = getCreateRequestParametersSig(op).split(',');
-  // slice off the parameter names from the type/type tuples
+  // keep the parameter names from the name/type tuples
   for (let i = 0; i < reqParams.length; ++i) {
     reqParams[i] = reqParams[i].trim().split(' ')[0];
   }
@@ -314,7 +311,20 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
     if (op.language.go!.paging.member) {
-      reqParams.push(`*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
+      // find the location of the nextLink param
+      const nextLinkOpParams = getMethodParameters(op.language.go!.paging.nextLinkOperation);
+      let found = false;
+      for (let i = 0; i < nextLinkOpParams.length; ++i) {
+        if (nextLinkOpParams[i].schema.type === SchemaType.String && nextLinkOpParams[i].language.go!.name.startsWith('next')) {
+          // found it
+          reqParams.splice(i, 0, `*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
+      }
       text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
       text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${reqParams.join(', ')})\n`;
       text += '\t\t},\n';
@@ -403,6 +413,15 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   } else {
     text += `\tu := client.u\n`;
   }
+  // helper to build nil checks for param groups
+  const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
+    const paramGroupName = camelCase(gp.language.go!.name);
+    let optionalParamGroupCheck = `${paramGroupName} != nil && `;
+    if (gp.required) {
+      optionalParamGroupCheck = '';
+    }
+    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${pascalCase(param.language.go!.name)} != nil {\n`;
+  }
   const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
   if (inQueryParams.any()) {
     // add query parameters
@@ -418,7 +437,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         text += `\t\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
         text += `\t}\n`;
       } else {
-        text += `\tif options != nil && options.${pascalCase(qp.language.go!.name)} != nil {\n`;
+        text += emitParamGroupCheck(<GroupProperty>qp.language.go!.paramGroup, qp);
         text += `\t\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
         text += `\t}\n`;
       }
@@ -438,7 +457,7 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
     } else if (header.schema.type === SchemaType.Constant) {
       // omit this header. TODO once non-required constants are fixed
     } else {
-      text += `\tif options != nil && options.${pascalCase(header.language.go!.name)} != nil {\n`;
+      text += emitParamGroupCheck(<GroupProperty>header.language.go!.paramGroup, header);
       text += `\t\treq.Header.Set("${header.language.go!.serializedName}", ${formatParamValue(header, imports)})\n`;
       text += `\t}\n`;
     }
@@ -446,21 +465,15 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
-    // adding this variable to control whether a 'options.' needs to be added before optional body parameters
-    let setOptionsPrefix = !bodyParam!.required;
     // default to the body param name
     let body = bodyParam!.language.go!.name;
-    let skipOptions = false;
+    if (bodyParam!.language.go!.paramGroup) {
+      const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
+      body = `${camelCase(paramGroup.language.go!.name)}.${pascalCase(bodyParam!.language.go!.name)}`;
+    }
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
-      // directly assigned boolean values cannot be marshalled and are not set as enumerated types on
-      // options structs, therefore would cause an issue when trying to access options.true or options.false
-      // skipOptions skips appending an options prefix to these type of variables
-      // NOTE: constants are commonly defined as enumerated types which is why an exception if being made for directly returned booleans
-      if ((<ConstantSchema>bodyParam!.schema).valueType.type === SchemaType.Boolean) {
-        skipOptions = true;
-      }
     } else if (mediaType === 'XML' && bodyParam!.schema.type === SchemaType.Array) {
       // for XML payloads, create a wrapper type if the payload is an array
       imports.add('encoding/xml');
@@ -480,51 +493,39 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
         text += `\t\t${fieldName} *${bodyParam!.schema.language.go!.name} \`xml:"${tag}"\`\n`;
       }
       text += '\t}\n';
-      if (!bodyParam!.required) {
-        body = `wrapper{${fieldName}: options.${pascalCase(bodyParam!.language.go!.name)}}`;
-      } else {
-        body = `wrapper{${fieldName}: &${bodyParam!.language.go!.name}}`;
+      let addr = '&';
+      if (!bodyParam?.required) {
+        addr = '';
       }
-      // wrapper precludes the need for 'options.' prefix
-      setOptionsPrefix = false;
+      body = `wrapper{${fieldName}: ${addr}${body}}`;
     } else if (bodyParam!.schema.type === SchemaType.DateTime && (<DateTimeSchema>bodyParam!.schema).format === 'date-time-rfc1123') {
       // wrap the body in the custom RFC1123 type
-      text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}`;
-      if (!bodyParam!.required) {
-        text += `(options.${pascalCase(body)})\n`;
-      } else {
-        text += `(${body})\n`;
-      }
+      text += `\taux := ${bodyParam!.schema.language.go!.internalTimeType}(${body})\n`;
       body = 'aux';
-      // aux precludes the need for 'options.' prefix
-      setOptionsPrefix = false;
     } else if (isArrayOfRFC1123(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
-      text += `\taux := make([]${timeType}, len(${bodyParam!.language.go!.name}), len(${bodyParam!.language.go!.name}))\n`;
-      text += `\tfor i := 0; i < len(${bodyParam!.language.go!.name}); i++ {\n`;
-      text += `\t\taux[i] = ${timeType}(${bodyParam!.language.go!.name}[i])\n`;
+      text += `\taux := make([]${timeType}, len(${body}), len(${body}))\n`;
+      text += `\tfor i := 0; i < len(${body}); i++ {\n`;
+      text += `\t\taux[i] = ${timeType}(${body}[i])\n`;
       text += '\t}\n';
       body = 'aux';
-      // aux precludes the need for 'options.' prefix
-      setOptionsPrefix = false;
     } else if (isMapOfDateTime(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
       text += `\taux := map[string]${timeType}{}\n`;
-      text += `\tfor k, v := range ${bodyParam!.language.go!.name} {\n`;
+      text += `\tfor k, v := range ${body} {\n`;
       text += `\t\taux[k] = ${timeType}(v)\n`;
       text += '\t}\n';
       body = 'aux';
-      // aux precludes the need for 'options.' prefix
-      setOptionsPrefix = false;
     }
-    if (setOptionsPrefix === true && !skipOptions) {
-      body = `options.${pascalCase(body)}`;
-      text += `\tif options != nil {\n`;
+    // TODO once non-required constants are fixed
+    if (bodyParam!.required || bodyParam?.schema.type === SchemaType.Constant) {
+      text += `\treturn req, req.MarshalAs${mediaType}(${body})\n`;
+    } else {
+      const paramGroup = <GroupProperty>bodyParam!.language.go!.paramGroup;
+      text += `\tif ${camelCase(paramGroup.language.go!.name)} != nil {\n`;
       text += `\t\treturn req, req.MarshalAs${mediaType}(${body})\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
-    } else {
-      text += `\treturn req, req.MarshalAs${mediaType}(${body})\n`;
     }
   } else if (mediaType === 'binary') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
@@ -766,7 +767,7 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    params.push(`${methodParam.language.go!.name} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
@@ -777,7 +778,7 @@ function getCreateRequestParametersSig(op: Operation): string {
   const methodParams = getMethodParameters(op);
   const params = new Array<string>();
   for (const methodParam of values(methodParams)) {
-    params.push(`${methodParam.language.go!.name} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
@@ -785,6 +786,7 @@ function getCreateRequestParametersSig(op: Operation): string {
 // returns the complete collection of method parameters
 function getMethodParameters(op: Operation): Parameter[] {
   const params = new Array<Parameter>();
+  const paramGroups = new Array<GroupProperty>();
   for (const param of values(aggregateParameters(op))) {
     if (param.implementation === ImplementationLocation.Client) {
       // client params are passed via the receiver
@@ -792,19 +794,34 @@ function getMethodParameters(op: Operation): Parameter[] {
     } else if (param.schema.type === SchemaType.Constant) {
       // don't generate a parameter for a constant
       continue;
-    } else if (param.implementation === ImplementationLocation.Method && param.required !== true) {
-      // omit method-optional params as they're grouped in the optional params type
+    } else if (param.language.go!.paramGroup) {
+      // param groups will be added after individual params
+      if (!paramGroups.includes(param.language.go!.paramGroup)) {
+        paramGroups.push(param.language.go!.paramGroup);
+      }
       continue;
     }
     params.push(param);
   }
   // move global optional params to the end of the slice
   params.sort(sortParametersByRequired);
-  // if there's a method-optional params struct add it last
-  if (op.requests![0].language.go!.optionalParam) {
-    params.push(op.requests![0].language.go!.optionalParam);
+  // add any parameter groups.  optional group goes last
+  paramGroups.sort((a: GroupProperty, b: GroupProperty) => {
+    if (a.required === b.required) {
+      return 0;
+    }
+    if (a.required && !b.required) {
+      return -1;
+    }
+    return 1;
+  })
+  for (const paramGroup of values(paramGroups)) {
+    let name = camelCase(paramGroup.language.go!.name);
+    if (!paramGroup.required) {
+      name = 'options';
+    }
+    params.push(paramGroup);
   }
-
   return params;
 }
 

@@ -5,7 +5,7 @@
 
 import { pascalCase, camelCase } from '@azure-tools/codegen';
 import { Session } from '@azure-tools/autorest-extension-base';
-import { CodeModel, GroupProperty, Language, ObjectSchema, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
+import { CodeModel, Language } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters, isLROOperation } from '../common/helpers';
@@ -77,33 +77,9 @@ export async function namer(session: Session<CodeModel>) {
       if (isLROOperation(op)) {
         op.language.go!.methodPrefix = 'Begin';
       }
-      // track any optional parameters
-      // TODO: move this to the transformer and track at the code model level
-      const optionalParams = new Array<Parameter>();
       for (const param of values(aggregateParameters(op))) {
         const paramDetails = <Language>param.language.go;
         paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
-        // this is a bit of a weird case and might be due to invalid swagger in the test
-        // server.  how can you have an optional parameter that's also a constant?
-        // TODO once non-required constants are fixed
-        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
-          optionalParams.push(param);
-        }
-      }
-      if (optionalParams.length > 0) {
-        // create a type named <OperationGroup><Operation>Options
-        const name = `${group.language.go!.name}${op.language.go!.name}Options`;
-        const desc = `${name} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
-        const schema = new ObjectSchema(name, desc);
-        schema.language.go = schema.language.default;
-        const gp = new GroupProperty(name, desc, schema);
-        for (const op of values(optionalParams)) {
-          gp.originalParameter.push(op);
-        }
-        schema.addProperty(gp);
-        const optionalParam = new Parameter('options', desc, schema);
-        optionalParam.language.go = optionalParam.language.default;
-        op.requests![0].language.go!.optionalParam = optionalParam;
       }
       details.protocolNaming = new protocolMethods(camelCase(details.name));
       if (op.language.go!.paging && op.language.go!.paging.nextLinkName !== null) {

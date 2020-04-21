@@ -5,7 +5,7 @@
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
@@ -175,6 +175,8 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 
 // we will transform operation request parameter schema types to Go types
 function processOperationRequests(session: Session<CodeModel>) {
+  // track any parameter groups and/or optional parameters
+  const paramGroups = new Map<string, GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.requests!.length > 1) {
@@ -191,6 +193,19 @@ function processOperationRequests(session: Session<CodeModel>) {
         if (isHostParameter(param)) {
           continue;
         }
+        // this is to work around M4 bug #202
+        // replace the duplicate operation entry in nextLinkOperation with
+        // the one from our operation group so that things like parameter
+        // groups/types etc are consistent.
+        if (op.language.go!.paging && op.language.go!.paging.nextLinkOperation) {
+          const dupeOp = <Operation>op.language.go!.paging.nextLinkOperation;
+          for (const internalOp of values(group.operations)) {
+            if (internalOp.language.default.name === dupeOp.language.default.name) {
+              op.language.go!.paging.nextLinkOperation = internalOp;
+              break;
+            }
+          }
+        }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant) {
@@ -204,6 +219,53 @@ function processOperationRequests(session: Session<CodeModel>) {
             continue;
           }
           clientParams.push(param);
+        }
+        // check for grouping
+        if (param.extensions?.['x-ms-parameter-grouping']) {
+          // this param belongs to a param group, init name with default
+          let paramGroupName = `${group.language.go!.name}${op.language.go!.name}Parameters`;
+          if (param.extensions['x-ms-parameter-grouping'].name) {
+            // use the specified name
+            paramGroupName = pascalCase(param.extensions['x-ms-parameter-grouping'].name);
+          } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
+            // use the suffix
+            paramGroupName = `${group.language.go!.name}${op.language.go!.name}${pascalCase(param.extensions['x-ms-parameter-grouping'].postfix)}`;
+          }
+          // create group entry and add the param to it
+          if (!paramGroups.has(paramGroupName)) {
+            const desc = `${paramGroupName} contains a group of parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
+            paramGroups.set(paramGroupName, createGroupProperty(paramGroupName, desc));
+          }
+          // associate the group with the param
+          const paramGroup = paramGroups.get(paramGroupName);
+          param.language.go!.paramGroup = paramGroup;
+          // check for a duplicate, if it has the same schema then skip it
+          const dupe = values(paramGroup!.originalParameter).first((each: Parameter) => { return each.language.go!.name === param.language.go!.name; });
+          if (!dupe) {
+            paramGroup!.originalParameter.push(param);
+            if (param.required) {
+              // mark the group as required if at least one param in the group is required
+              paramGroup!.required = true;
+            }
+          } else if (dupe.schema !== param.schema) {
+            throw console.error(`parameter group ${paramGroupName} contains overlapping parameters with different schemas`);
+          }
+          continue;
+        }
+        // this is a bit of a weird case and might be due to invalid swagger in the test
+        // server.  how can you have an optional parameter that's also a constant?
+        // TODO once non-required constants are fixed
+        if (param.required !== true && param.schema.type !== SchemaType.Constant && !(param.schema.type === SchemaType.SealedChoice && (<SealedChoiceSchema>param.schema).choices.length === 1)) {
+          // create a type named <OperationGroup><Operation>Options
+          const paramGroupName = `${group.language.go!.name}${op.language.go!.name}Options`;
+          // create group entry and add the param to it
+          if (!paramGroups.has(paramGroupName)) {
+            const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.name}.${op.language.go!.name} method.`;
+            paramGroups.set(paramGroupName, createGroupProperty(paramGroupName, desc));
+          }
+          // associate the group with the param
+          param.language.go!.paramGroup = paramGroups.get(paramGroupName);
+          paramGroups.get(paramGroupName)!.originalParameter.push(param);
         }
       }
       // recursively add the marshalling format to the body param if applicable
@@ -220,6 +282,16 @@ function processOperationRequests(session: Session<CodeModel>) {
       }
     }
   }
+  // emit any param groups
+  if (paramGroups.size > 0) {
+    if (!session.model.language.go!.parameterGroups) {
+      session.model.language.go!.parameterGroups = new Array<GroupProperty>();
+    }
+    const pg = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
+    for (const items of paramGroups.entries()) {
+      pg.push(items[1]);
+    }
+  }
 }
 
 function isHostParameter(param: Parameter): boolean {
@@ -227,6 +299,14 @@ function isHostParameter(param: Parameter): boolean {
     return true;
   }
   return param.extensions?.['x-ms-priority'] === 0 && param.extensions?.['x-in'] === 'path';
+}
+
+function createGroupProperty(name: string, description: string): GroupProperty {
+  const schema = new ObjectSchema(name, description);
+  schema.language.go = schema.language.default;
+  const gp = new GroupProperty(name, description, schema);
+  gp.language.go = gp.language.default;
+  return gp;
 }
 
 function processOperationResponses(session: Session<CodeModel>) {
