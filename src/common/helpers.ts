@@ -46,7 +46,7 @@ export interface PollerInfo {
   name: string;
   schema: Schema;
   client: string;
-  pollingMethod: string;
+  pollingMethod: string; // adding method to determine polling tracker type
 }
 
 // returns true if the operation is a long-running operation
@@ -58,4 +58,3 @@ export function isLROOperation(op: Operation): boolean {
 export function isObjectSchema(obj: Schema): obj is ObjectSchema {
   return (obj as ObjectSchema).properties !== undefined;
 }
-

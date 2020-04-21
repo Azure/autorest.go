@@ -31,12 +31,12 @@ func TestInheritanceGetValid(t *testing.T) {
 		Breed: to.StringPtr("persian"),
 		Color: to.StringPtr("green"),
 		Hates: &[]complexgroup.Dog{
-			complexgroup.Dog{
+			{
 				Food: to.StringPtr("tomato"),
 				ID:   to.Int32Ptr(1),
 				Name: to.StringPtr("Potato"),
 			},
-			complexgroup.Dog{
+			{
 				Food: to.StringPtr("french fries"),
 				ID:   to.Int32Ptr(-1),
 				Name: to.StringPtr("Tomato"),
@@ -53,12 +53,12 @@ func TestInheritancePutValid(t *testing.T) {
 		Breed: to.StringPtr("persian"),
 		Color: to.StringPtr("green"),
 		Hates: &[]complexgroup.Dog{
-			complexgroup.Dog{
+			{
 				Food: to.StringPtr("tomato"),
 				ID:   to.Int32Ptr(1),
 				Name: to.StringPtr("Potato"),
 			},
-			complexgroup.Dog{
+			{
 				Food: to.StringPtr("french fries"),
 				ID:   to.Int32Ptr(-1),
 				Name: to.StringPtr("Tomato"),

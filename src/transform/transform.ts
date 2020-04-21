@@ -7,7 +7,7 @@ import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/c
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
@@ -37,6 +37,17 @@ async function process(session: Session<CodeModel>) {
   processOperationResponses(session);
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
+    if (obj.discriminator) {
+      const discriminator = annotateDiscriminatedTypes(obj);
+      if (discriminator) {
+        // discriminators will contain the root type of each discriminated type hierarchy
+        if (!session.model.language.go!.discriminators) {
+          session.model.language.go!.discriminators = new Array<ObjectSchema>();
+        }
+        const defs = <Array<ObjectSchema>>session.model.language.go!.discriminators;
+        defs.push(discriminator);
+      }
+    }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
@@ -415,6 +426,9 @@ function newObject(name: string, desc: string): ObjectSchema {
 
 function newProperty(name: string, desc: string, schema: Schema): Property {
   let prop = new Property(name, desc, schema);
+  if (isObjectSchema(schema) && schema.discriminator) {
+    prop.isDiscriminator = true;
+  }
   prop.language.go = prop.language.default;
   return prop;
 }
@@ -505,5 +519,68 @@ function generateResponseTypeName(schema: Schema): Language {
     name: name,
     description: `${name} is the response envelope for operations that return a ${schema.language.go!.name} type.`,
     responseType: true,
+  }
+}
+
+function annotateDiscriminatedTypes(obj: ObjectSchema): ObjectSchema | undefined {
+  if (obj.language.go!.polymorphicInterfaces !== undefined) {
+    // this hierarchy of discriminated types has already been processed
+    return;
+  }
+  // we have a type in the hierarchy of polymorphic types, it can be one of three things
+  // 1. root - no parent types, only child types
+  // 2. intermediate root - has a parent and also has children (salmon in the test server)
+  // 3. child - has parent and no children
+  //
+  // for cases #1 and #2 we need to generate an interface type, and for
+  // case #2 the generated interface must also contain the parent interface
+  // for case #3 all that's required is to generate the marker method on
+  // the child type(s) for the applicable interface.
+
+  // walk to the root
+  let root = obj;
+  while (true) {
+    if (!root.parents) {
+      break;
+    }
+    for (const parent of values(root.parents?.immediate)) {
+      // there can be parents that aren't part of the hierarchy.
+      // e.g. if type Foo is in a DictionaryOfFoo, then one of
+      // Foo's parents will be DictionaryOfFoo which we ignore.
+      if (isObjectSchema(parent)) {
+        root = parent;
+      }
+    }
+    // fail-safe to prevent infinite loop due to a bug somewhere...
+    if (root === obj) {
+      throw console.error(`failed to find parent of discriminated type ${obj.language.go!.name}`);
+    }
+  }
+  // create the interface type name based on the current root
+  const rootType = root.language.go!.discriminator;
+  recursiveAnnotateDiscriminatedTypes(root, rootType, rootType);
+  return root;
+}
+
+function recursiveAnnotateDiscriminatedTypes(obj: ObjectSchema, rootInterface: string, currentInterface: string) {
+  if (!obj.language.go!.polymorphicInterfaces) {
+    obj.language.go!.polymorphicInterfaces = new Array<string>();
+  }
+  const interfaces = <Array<string>>obj.language.go!.polymorphicInterfaces;
+  interfaces.push(currentInterface);
+  // now walk all the children, annotating them with the interface
+  for (const child of values(obj.discriminator?.immediate)) {
+    const childSchema = <ObjectSchema>child;
+    if (!childSchema.language.go!.polymorphicInterfaces) {
+      // copy parent's interfaces
+      childSchema.language.go!.polymorphicInterfaces = [...<Array<string>>obj.language.go!.polymorphicInterfaces];
+    }
+    if (childSchema.discriminator && childSchema.discriminator.all) {
+      // case #2 - intermediate root
+      childSchema.language.go!.discriminatorParent = currentInterface;
+      recursiveAnnotateDiscriminatedTypes(childSchema, rootInterface, `${childSchema.language.go!.name}Type`);
+    }
+    // add the internal enum name for this sub-type
+    childSchema.language.go!.discriminatorEnum = `${camelCase(rootInterface)}${pascalCase(childSchema.discriminatorValue!)}`;
   }
 }
