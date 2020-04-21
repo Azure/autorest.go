@@ -13,6 +13,7 @@ import { generateEnums } from './enums';
 import { generateClient } from './client';
 import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
+import { generatePollers } from './pollers';
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
@@ -51,6 +52,10 @@ export async function protocolGen(host: Host) {
     const pagers = await generatePagers(session);
     if (pagers.length > 0) {
       host.WriteFile('pagers.go', pagers, undefined, 'source-file-go');
+    }
+    const pollers = await generatePollers(session);
+    if (pollers.length > 0) {
+      host.WriteFile('pollers.go', pollers, undefined, 'source-file-go');
     }
   } catch (E) {
     if (debug) {

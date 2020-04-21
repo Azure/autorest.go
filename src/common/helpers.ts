@@ -42,6 +42,18 @@ export function isPageableOperation(op: Operation): boolean {
   return op.language.go!.paging && op.language.go!.paging.nextLinkName !== null;
 }
 
+export interface PollerInfo {
+  name: string;
+  schema: Schema;
+  client: string;
+  pollingMethod: string;
+}
+
+// returns true if the operation is a long-running operation
+export function isLROOperation(op: Operation): boolean {
+  return op.extensions?.['x-ms-long-running-operation'];
+}
+
 // returns ObjectSchema type predicate if the schema is an ObjectSchema
 export function isObjectSchema(obj: Schema): obj is ObjectSchema {
   return (obj as ObjectSchema).properties !== undefined;
