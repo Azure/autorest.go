@@ -396,7 +396,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
     }
     // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-    const name = `${camelCase(group.language.go!.name)}${camelCase(op.language.go!.name)}Poller`;
+    const name = `${camelCase(group.language.go!.name)}${op.language.go!.name}Poller`;
     // check to see if the poller has already been created
     const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
     for (const poller of values(pollers)) {

@@ -12,2358 +12,2358 @@ import (
 	"time"
 )
 
-// LrOSCustomHeaderpost202Retry200Poller provides polling facilities until the operation completes
-type LrOSCustomHeaderpost202Retry200Poller interface {
+// LrOSCustomHeaderPost202Retry200Poller provides polling facilities until the operation completes
+type LrOSCustomHeaderPost202Retry200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSCustomHeaderPost202Retry200Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error)
 }
 
-type lrOSCustomHeaderpost202Retry200Poller struct {
+type lrOSCustomHeaderPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSCustomHeaderpost202Retry200Poller) Done() bool {
+func (p *lrOSCustomHeaderPost202Retry200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSCustomHeaderpost202Retry200Poller) ID() string {
+func (p *lrOSCustomHeaderPost202Retry200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSCustomHeaderpost202Retry200Poller) Poll(ctx context.Context) (*LrOSCustomHeaderPost202Retry200Response, error) {
+func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) (*LrOSCustomHeaderPost202Retry200Response, error) {
 	return nil, nil
 }
 
-func (p *lrOSCustomHeaderpost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error) {
+func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error) {
 	return nil, nil
 }
 
-// LrOSCustomHeaderpostAsyncRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSCustomHeaderpostAsyncRetrySucceededPoller interface {
+// LrOSCustomHeaderPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSCustomHeaderPostAsyncRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error)
 }
 
-type lrOSCustomHeaderpostAsyncRetrySucceededPoller struct {
+type lrOSCustomHeaderPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSCustomHeaderpostAsyncRetrySucceededPoller) Done() bool {
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSCustomHeaderpostAsyncRetrySucceededPoller) ID() string {
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSCustomHeaderpostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSCustomHeaderpostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-// LrOSCustomHeaderput201CreatingSucceeded200Poller provides polling facilities until the operation completes
-type LrOSCustomHeaderput201CreatingSucceeded200Poller interface {
+// LrOSCustomHeaderPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
+type LrOSCustomHeaderPut201CreatingSucceeded200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSCustomHeaderput201CreatingSucceeded200Poller struct {
+type lrOSCustomHeaderPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSCustomHeaderput201CreatingSucceeded200Poller) Done() bool {
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSCustomHeaderput201CreatingSucceeded200Poller) ID() string {
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSCustomHeaderput201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSCustomHeaderput201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSCustomHeaderputAsyncRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSCustomHeaderputAsyncRetrySucceededPoller interface {
+// LrOSCustomHeaderPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSCustomHeaderPutAsyncRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSCustomHeaderputAsyncRetrySucceededPoller struct {
+type lrOSCustomHeaderPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSCustomHeaderputAsyncRetrySucceededPoller) Done() bool {
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSCustomHeaderputAsyncRetrySucceededPoller) ID() string {
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSCustomHeaderputAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSCustomHeaderputAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSdelete202NoRetry204Poller provides polling facilities until the operation completes
-type LrOSdelete202NoRetry204Poller interface {
+// LrOSDelete202NoRetry204Poller provides polling facilities until the operation completes
+type LrOSDelete202NoRetry204Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSdelete202NoRetry204Poller struct {
+type lrOSDelete202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdelete202NoRetry204Poller) Done() bool {
+func (p *lrOSDelete202NoRetry204Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSdelete202NoRetry204Poller) ID() string {
+func (p *lrOSDelete202NoRetry204Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdelete202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSdelete202Retry200Poller provides polling facilities until the operation completes
-type LrOSdelete202Retry200Poller interface {
+// LrOSDelete202Retry200Poller provides polling facilities until the operation completes
+type LrOSDelete202Retry200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSdelete202Retry200Poller struct {
+type lrOSDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdelete202Retry200Poller) Done() bool {
+func (p *lrOSDelete202Retry200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSdelete202Retry200Poller) ID() string {
+func (p *lrOSDelete202Retry200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdelete202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSdelete204SucceededPoller provides polling facilities until the operation completes
-type LrOSdelete204SucceededPoller interface {
+// LrOSDelete204SucceededPoller provides polling facilities until the operation completes
+type LrOSDelete204SucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*http.Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error)
 }
 
-type lrOSdelete204SucceededPoller struct {
+type lrOSDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdelete204SucceededPoller) Done() bool {
+func (p *lrOSDelete204SucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdelete204SucceededPoller) ID() string {
+func (p *lrOSDelete204SucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return nil, nil
 }
 
-func (p *lrOSdelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
+func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
 	return nil, nil
 }
 
-// LrOSdeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
-type LrOSdeleteAsyncNoHeaderInRetryPoller interface {
+// LrOSDeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
+type LrOSDeleteAsyncNoHeaderInRetryPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error)
 }
 
-type lrOSdeleteAsyncNoHeaderInRetryPoller struct {
+type lrOSDeleteAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteAsyncNoHeaderInRetryPoller) Done() bool {
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteAsyncNoHeaderInRetryPoller) ID() string {
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSdeleteAsyncNoRetrySucceededPoller interface {
+// LrOSDeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSDeleteAsyncNoRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSDeleteAsyncNoRetrySucceededResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error)
 }
 
-type lrOSdeleteAsyncNoRetrySucceededPoller struct {
+type lrOSDeleteAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteAsyncNoRetrySucceededPoller) Done() bool {
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteAsyncNoRetrySucceededPoller) ID() string {
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteAsyncRetryFailedPoller provides polling facilities until the operation completes
-type LrOSdeleteAsyncRetryFailedPoller interface {
+// LrOSDeleteAsyncRetryFailedPoller provides polling facilities until the operation completes
+type LrOSDeleteAsyncRetryFailedPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSDeleteAsyncRetryFailedResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error)
 }
 
-type lrOSdeleteAsyncRetryFailedPoller struct {
+type lrOSDeleteAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteAsyncRetryFailedPoller) Done() bool {
+func (p *lrOSDeleteAsyncRetryFailedPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteAsyncRetryFailedPoller) ID() string {
+func (p *lrOSDeleteAsyncRetryFailedPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetryFailedResponse, error) {
+func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetryFailedResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error) {
+func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteAsyncRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSdeleteAsyncRetrySucceededPoller interface {
+// LrOSDeleteAsyncRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSDeleteAsyncRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSDeleteAsyncRetrySucceededResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error)
 }
 
-type lrOSdeleteAsyncRetrySucceededPoller struct {
+type lrOSDeleteAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteAsyncRetrySucceededPoller) Done() bool {
+func (p *lrOSDeleteAsyncRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteAsyncRetrySucceededPoller) ID() string {
+func (p *lrOSDeleteAsyncRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
+func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
+func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteAsyncRetrycanceledPoller provides polling facilities until the operation completes
-type LrOSdeleteAsyncRetrycanceledPoller interface {
+// LrOSDeleteAsyncRetrycanceledPoller provides polling facilities until the operation completes
+type LrOSDeleteAsyncRetrycanceledPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSDeleteAsyncRetrycanceledResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error)
 }
 
-type lrOSdeleteAsyncRetrycanceledPoller struct {
+type lrOSDeleteAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteAsyncRetrycanceledPoller) Done() bool {
+func (p *lrOSDeleteAsyncRetrycanceledPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteAsyncRetrycanceledPoller) ID() string {
+func (p *lrOSDeleteAsyncRetrycanceledPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
+func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
+func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteNoHeaderInRetryPoller provides polling facilities until the operation completes
-type LrOSdeleteNoHeaderInRetryPoller interface {
+// LrOSDeleteNoHeaderInRetryPoller provides polling facilities until the operation completes
+type LrOSDeleteNoHeaderInRetryPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSDeleteNoHeaderInRetryResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error)
 }
 
-type lrOSdeleteNoHeaderInRetryPoller struct {
+type lrOSDeleteNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteNoHeaderInRetryPoller) Done() bool {
+func (p *lrOSDeleteNoHeaderInRetryPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteNoHeaderInRetryPoller) ID() string {
+func (p *lrOSDeleteNoHeaderInRetryPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteNoHeaderInRetryResponse, error) {
+func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteNoHeaderInRetryResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error) {
+func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
-type LrOSdeleteProvisioning202Accepted200SucceededPoller interface {
+// LrOSDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
+type LrOSDeleteProvisioning202Accepted200SucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSdeleteProvisioning202Accepted200SucceededPoller struct {
+type lrOSDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteProvisioning202Accepted200SucceededPoller) Done() bool {
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteProvisioning202Accepted200SucceededPoller) ID() string {
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation completes
-type LrOSdeleteProvisioning202DeletingFailed200Poller interface {
+// LrOSDeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation completes
+type LrOSDeleteProvisioning202DeletingFailed200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSdeleteProvisioning202DeletingFailed200Poller struct {
+type lrOSDeleteProvisioning202DeletingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteProvisioning202DeletingFailed200Poller) Done() bool {
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteProvisioning202DeletingFailed200Poller) ID() string {
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSdeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation completes
-type LrOSdeleteProvisioning202Deletingcanceled200Poller interface {
+// LrOSDeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation completes
+type LrOSDeleteProvisioning202Deletingcanceled200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSdeleteProvisioning202Deletingcanceled200Poller struct {
+type lrOSDeleteProvisioning202Deletingcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrOSdeleteProvisioning202Deletingcanceled200Poller) Done() bool {
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSdeleteProvisioning202Deletingcanceled200Poller) ID() string {
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSdeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSdeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSpost200WithPayloadPoller provides polling facilities until the operation completes
-type LrOSpost200WithPayloadPoller interface {
+// LrOSPost200WithPayloadPoller provides polling facilities until the operation completes
+type LrOSPost200WithPayloadPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*SkuResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error)
 }
 
-type lrOSpost200WithPayloadPoller struct {
+type lrOSPost200WithPayloadPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpost200WithPayloadPoller) Done() bool {
+func (p *lrOSPost200WithPayloadPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpost200WithPayloadPoller) ID() string {
+func (p *lrOSPost200WithPayloadPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpost200WithPayloadPoller) Poll(ctx context.Context) (*SkuResponse, error) {
+func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) (*SkuResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
+func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	return nil, nil
 }
 
-// LrOSpost202NoRetry204Poller provides polling facilities until the operation completes
-type LrOSpost202NoRetry204Poller interface {
+// LrOSPost202NoRetry204Poller provides polling facilities until the operation completes
+type LrOSPost202NoRetry204Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSpost202NoRetry204Poller struct {
+type lrOSPost202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpost202NoRetry204Poller) Done() bool {
+func (p *lrOSPost202NoRetry204Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSpost202NoRetry204Poller) ID() string {
+func (p *lrOSPost202NoRetry204Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpost202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSpost202Retry200Poller provides polling facilities until the operation completes
-type LrOSpost202Retry200Poller interface {
+// LrOSPost202Retry200Poller provides polling facilities until the operation completes
+type LrOSPost202Retry200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSPost202Retry200Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error)
 }
 
-type lrOSpost202Retry200Poller struct {
+type lrOSPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpost202Retry200Poller) Done() bool {
+func (p *lrOSPost202Retry200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSpost202Retry200Poller) ID() string {
+func (p *lrOSPost202Retry200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpost202Retry200Poller) Poll(ctx context.Context) (*LrOSPost202Retry200Response, error) {
+func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) (*LrOSPost202Retry200Response, error) {
 	return nil, nil
 }
 
-func (p *lrOSpost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error) {
+func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error) {
 	return nil, nil
 }
 
-// LrOSpostAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSpostAsyncNoRetrySucceededPoller interface {
+// LrOSPostAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSPostAsyncNoRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSpostAsyncNoRetrySucceededPoller struct {
+type lrOSPostAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpostAsyncNoRetrySucceededPoller) Done() bool {
+func (p *lrOSPostAsyncNoRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpostAsyncNoRetrySucceededPoller) ID() string {
+func (p *lrOSPostAsyncNoRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSpostAsyncRetryFailedPoller provides polling facilities until the operation completes
-type LrOSpostAsyncRetryFailedPoller interface {
+// LrOSPostAsyncRetryFailedPoller provides polling facilities until the operation completes
+type LrOSPostAsyncRetryFailedPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSPostAsyncRetryFailedResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error)
 }
 
-type lrOSpostAsyncRetryFailedPoller struct {
+type lrOSPostAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpostAsyncRetryFailedPoller) Done() bool {
+func (p *lrOSPostAsyncRetryFailedPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpostAsyncRetryFailedPoller) ID() string {
+func (p *lrOSPostAsyncRetryFailedPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpostAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetryFailedResponse, error) {
+func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetryFailedResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error) {
+func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error) {
 	return nil, nil
 }
 
-// LrOSpostAsyncRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSpostAsyncRetrySucceededPoller interface {
+// LrOSPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSPostAsyncRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSpostAsyncRetrySucceededPoller struct {
+type lrOSPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpostAsyncRetrySucceededPoller) Done() bool {
+func (p *lrOSPostAsyncRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpostAsyncRetrySucceededPoller) ID() string {
+func (p *lrOSPostAsyncRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSpostAsyncRetrycanceledPoller provides polling facilities until the operation completes
-type LrOSpostAsyncRetrycanceledPoller interface {
+// LrOSPostAsyncRetrycanceledPoller provides polling facilities until the operation completes
+type LrOSPostAsyncRetrycanceledPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrOSPostAsyncRetrycanceledResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error)
 }
 
-type lrOSpostAsyncRetrycanceledPoller struct {
+type lrOSPostAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpostAsyncRetrycanceledPoller) Done() bool {
+func (p *lrOSPostAsyncRetrycanceledPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpostAsyncRetrycanceledPoller) ID() string {
+func (p *lrOSPostAsyncRetrycanceledPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetrycanceledResponse, error) {
+func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetrycanceledResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error) {
+func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error) {
 	return nil, nil
 }
 
-// LrOSpostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation completes
-type LrOSpostDoubleHeadersFinalAzureHeaderGetDefaultPoller interface {
+// LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation completes
+type LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSpostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
+type lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Done() bool {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ID() string {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSpostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation completes
-type LrOSpostDoubleHeadersFinalAzureHeaderGetPoller interface {
+// LrOSPostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation completes
+type LrOSPostDoubleHeadersFinalAzureHeaderGetPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSpostDoubleHeadersFinalAzureHeaderGetPoller struct {
+type lrOSPostDoubleHeadersFinalAzureHeaderGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetPoller) Done() bool {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetPoller) ID() string {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSpostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation completes
-type LrOSpostDoubleHeadersFinalLocationGetPoller interface {
+// LrOSPostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation completes
+type LrOSPostDoubleHeadersFinalLocationGetPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSpostDoubleHeadersFinalLocationGetPoller struct {
+type lrOSPostDoubleHeadersFinalLocationGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrOSpostDoubleHeadersFinalLocationGetPoller) Done() bool {
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSpostDoubleHeadersFinalLocationGetPoller) ID() string {
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSpostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSpostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSput200Acceptedcanceled200Poller provides polling facilities until the operation completes
-type LrOSput200Acceptedcanceled200Poller interface {
+// LrOSPut200Acceptedcanceled200Poller provides polling facilities until the operation completes
+type LrOSPut200Acceptedcanceled200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSput200Acceptedcanceled200Poller struct {
+type lrOSPut200Acceptedcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSput200Acceptedcanceled200Poller) Done() bool {
+func (p *lrOSPut200Acceptedcanceled200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSput200Acceptedcanceled200Poller) ID() string {
+func (p *lrOSPut200Acceptedcanceled200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSput200Acceptedcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSput200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSput200SucceededNoStatePoller provides polling facilities until the operation completes
-type LrOSput200SucceededNoStatePoller interface {
+// LrOSPut200SucceededNoStatePoller provides polling facilities until the operation completes
+type LrOSPut200SucceededNoStatePoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSput200SucceededNoStatePoller struct {
+type lrOSPut200SucceededNoStatePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSput200SucceededNoStatePoller) Done() bool {
+func (p *lrOSPut200SucceededNoStatePoller) Done() bool {
 	return false
 }
 
-func (p *lrOSput200SucceededNoStatePoller) ID() string {
+func (p *lrOSPut200SucceededNoStatePoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSput200SucceededNoStatePoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSput200SucceededNoStatePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSput200SucceededPoller provides polling facilities until the operation completes
-type LrOSput200SucceededPoller interface {
+// LrOSPut200SucceededPoller provides polling facilities until the operation completes
+type LrOSPut200SucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSput200SucceededPoller struct {
+type lrOSPut200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSput200SucceededPoller) Done() bool {
+func (p *lrOSPut200SucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSput200SucceededPoller) ID() string {
+func (p *lrOSPut200SucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSput200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSput200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSput200UpdatingSucceeded204Poller provides polling facilities until the operation completes
-type LrOSput200UpdatingSucceeded204Poller interface {
+// LrOSPut200UpdatingSucceeded204Poller provides polling facilities until the operation completes
+type LrOSPut200UpdatingSucceeded204Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSput200UpdatingSucceeded204Poller struct {
+type lrOSPut200UpdatingSucceeded204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSput200UpdatingSucceeded204Poller) Done() bool {
+func (p *lrOSPut200UpdatingSucceeded204Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSput200UpdatingSucceeded204Poller) ID() string {
+func (p *lrOSPut200UpdatingSucceeded204Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSput200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSput200UpdatingSucceeded204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSput201CreatingFailed200Poller provides polling facilities until the operation completes
-type LrOSput201CreatingFailed200Poller interface {
+// LrOSPut201CreatingFailed200Poller provides polling facilities until the operation completes
+type LrOSPut201CreatingFailed200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSput201CreatingFailed200Poller struct {
+type lrOSPut201CreatingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSput201CreatingFailed200Poller) Done() bool {
+func (p *lrOSPut201CreatingFailed200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSput201CreatingFailed200Poller) ID() string {
+func (p *lrOSPut201CreatingFailed200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSput201CreatingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSput201CreatingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSput201CreatingSucceeded200Poller provides polling facilities until the operation completes
-type LrOSput201CreatingSucceeded200Poller interface {
+// LrOSPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
+type LrOSPut201CreatingSucceeded200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSput201CreatingSucceeded200Poller struct {
+type lrOSPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSput201CreatingSucceeded200Poller) Done() bool {
+func (p *lrOSPut201CreatingSucceeded200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSput201CreatingSucceeded200Poller) ID() string {
+func (p *lrOSPut201CreatingSucceeded200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSput201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSput201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSput202Retry200Poller provides polling facilities until the operation completes
-type LrOSput202Retry200Poller interface {
+// LrOSPut202Retry200Poller provides polling facilities until the operation completes
+type LrOSPut202Retry200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSput202Retry200Poller struct {
+type lrOSPut202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSput202Retry200Poller) Done() bool {
+func (p *lrOSPut202Retry200Poller) Done() bool {
 	return false
 }
 
-func (p *lrOSput202Retry200Poller) ID() string {
+func (p *lrOSPut202Retry200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSput202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSput202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
-type LrOSputAsyncNoHeaderInRetryPoller interface {
+// LrOSPutAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
+type LrOSPutAsyncNoHeaderInRetryPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSputAsyncNoHeaderInRetryPoller struct {
+type lrOSPutAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputAsyncNoHeaderInRetryPoller) Done() bool {
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputAsyncNoHeaderInRetryPoller) ID() string {
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSputAsyncNoRetrySucceededPoller interface {
+// LrOSPutAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSPutAsyncNoRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSputAsyncNoRetrySucceededPoller struct {
+type lrOSPutAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputAsyncNoRetrySucceededPoller) Done() bool {
+func (p *lrOSPutAsyncNoRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputAsyncNoRetrySucceededPoller) ID() string {
+func (p *lrOSPutAsyncNoRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputAsyncNoRetrycanceledPoller provides polling facilities until the operation completes
-type LrOSputAsyncNoRetrycanceledPoller interface {
+// LrOSPutAsyncNoRetrycanceledPoller provides polling facilities until the operation completes
+type LrOSPutAsyncNoRetrycanceledPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSputAsyncNoRetrycanceledPoller struct {
+type lrOSPutAsyncNoRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputAsyncNoRetrycanceledPoller) Done() bool {
+func (p *lrOSPutAsyncNoRetrycanceledPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputAsyncNoRetrycanceledPoller) ID() string {
+func (p *lrOSPutAsyncNoRetrycanceledPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputAsyncNonResourcePoller provides polling facilities until the operation completes
-type LrOSputAsyncNonResourcePoller interface {
+// LrOSPutAsyncNonResourcePoller provides polling facilities until the operation completes
+type LrOSPutAsyncNonResourcePoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*SkuResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error)
 }
 
-type lrOSputAsyncNonResourcePoller struct {
+type lrOSPutAsyncNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputAsyncNonResourcePoller) Done() bool {
+func (p *lrOSPutAsyncNonResourcePoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputAsyncNonResourcePoller) ID() string {
+func (p *lrOSPutAsyncNonResourcePoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputAsyncNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
+func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
+func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	return nil, nil
 }
 
-// LrOSputAsyncRetryFailedPoller provides polling facilities until the operation completes
-type LrOSputAsyncRetryFailedPoller interface {
+// LrOSPutAsyncRetryFailedPoller provides polling facilities until the operation completes
+type LrOSPutAsyncRetryFailedPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSputAsyncRetryFailedPoller struct {
+type lrOSPutAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputAsyncRetryFailedPoller) Done() bool {
+func (p *lrOSPutAsyncRetryFailedPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputAsyncRetryFailedPoller) ID() string {
+func (p *lrOSPutAsyncRetryFailedPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputAsyncRetryFailedPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputAsyncRetrySucceededPoller provides polling facilities until the operation completes
-type LrOSputAsyncRetrySucceededPoller interface {
+// LrOSPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
+type LrOSPutAsyncRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSputAsyncRetrySucceededPoller struct {
+type lrOSPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputAsyncRetrySucceededPoller) Done() bool {
+func (p *lrOSPutAsyncRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputAsyncRetrySucceededPoller) ID() string {
+func (p *lrOSPutAsyncRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputAsyncSubResourcePoller provides polling facilities until the operation completes
-type LrOSputAsyncSubResourcePoller interface {
+// LrOSPutAsyncSubResourcePoller provides polling facilities until the operation completes
+type LrOSPutAsyncSubResourcePoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*SubProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error)
 }
 
-type lrOSputAsyncSubResourcePoller struct {
+type lrOSPutAsyncSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputAsyncSubResourcePoller) Done() bool {
+func (p *lrOSPutAsyncSubResourcePoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputAsyncSubResourcePoller) ID() string {
+func (p *lrOSPutAsyncSubResourcePoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputAsyncSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
+func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
+func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputNoHeaderInRetryPoller provides polling facilities until the operation completes
-type LrOSputNoHeaderInRetryPoller interface {
+// LrOSPutNoHeaderInRetryPoller provides polling facilities until the operation completes
+type LrOSPutNoHeaderInRetryPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrOSputNoHeaderInRetryPoller struct {
+type lrOSPutNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputNoHeaderInRetryPoller) Done() bool {
+func (p *lrOSPutNoHeaderInRetryPoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputNoHeaderInRetryPoller) ID() string {
+func (p *lrOSPutNoHeaderInRetryPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrOSputNonResourcePoller provides polling facilities until the operation completes
-type LrOSputNonResourcePoller interface {
+// LrOSPutNonResourcePoller provides polling facilities until the operation completes
+type LrOSPutNonResourcePoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*SkuResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error)
 }
 
-type lrOSputNonResourcePoller struct {
+type lrOSPutNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputNonResourcePoller) Done() bool {
+func (p *lrOSPutNonResourcePoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputNonResourcePoller) ID() string {
+func (p *lrOSPutNonResourcePoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
+func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
+func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	return nil, nil
 }
 
-// LrOSputSubResourcePoller provides polling facilities until the operation completes
-type LrOSputSubResourcePoller interface {
+// LrOSPutSubResourcePoller provides polling facilities until the operation completes
+type LrOSPutSubResourcePoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*SubProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error)
 }
 
-type lrOSputSubResourcePoller struct {
+type lrOSPutSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrOSputSubResourcePoller) Done() bool {
+func (p *lrOSPutSubResourcePoller) Done() bool {
 	return false
 }
 
-func (p *lrOSputSubResourcePoller) ID() string {
+func (p *lrOSPutSubResourcePoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrOSputSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
+func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrOSputSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
+func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
 	return nil, nil
 }
 
-// LroRetrysdelete202Retry200Poller provides polling facilities until the operation completes
-type LroRetrysdelete202Retry200Poller interface {
+// LroRetrysDelete202Retry200Poller provides polling facilities until the operation completes
+type LroRetrysDelete202Retry200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LroRetrysDelete202Retry200Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error)
 }
 
-type lroRetrysdelete202Retry200Poller struct {
+type lroRetrysDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lroRetrysdelete202Retry200Poller) Done() bool {
+func (p *lroRetrysDelete202Retry200Poller) Done() bool {
 	return false
 }
 
-func (p *lroRetrysdelete202Retry200Poller) ID() string {
+func (p *lroRetrysDelete202Retry200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lroRetrysdelete202Retry200Poller) Poll(ctx context.Context) (*LroRetrysDelete202Retry200Response, error) {
+func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) (*LroRetrysDelete202Retry200Response, error) {
 	return nil, nil
 }
 
-func (p *lroRetrysdelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error) {
+func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error) {
 	return nil, nil
 }
 
-// LroRetrysdeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
-type LroRetrysdeleteAsyncRelativeRetrySucceededPoller interface {
+// LroRetrysDeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
+type LroRetrysDeleteAsyncRelativeRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error)
 }
 
-type lroRetrysdeleteAsyncRelativeRetrySucceededPoller struct {
+type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lroRetrysdeleteAsyncRelativeRetrySucceededPoller) Done() bool {
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lroRetrysdeleteAsyncRelativeRetrySucceededPoller) ID() string {
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lroRetrysdeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-func (p *lroRetrysdeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-// LroRetrysdeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
-type LroRetrysdeleteProvisioning202Accepted200SucceededPoller interface {
+// LroRetrysDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
+type LroRetrysDeleteProvisioning202Accepted200SucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lroRetrysdeleteProvisioning202Accepted200SucceededPoller struct {
+type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lroRetrysdeleteProvisioning202Accepted200SucceededPoller) Done() bool {
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lroRetrysdeleteProvisioning202Accepted200SucceededPoller) ID() string {
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lroRetrysdeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lroRetrysdeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LroRetryspost202Retry200Poller provides polling facilities until the operation completes
-type LroRetryspost202Retry200Poller interface {
+// LroRetrysPost202Retry200Poller provides polling facilities until the operation completes
+type LroRetrysPost202Retry200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LroRetrysPost202Retry200Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error)
 }
 
-type lroRetryspost202Retry200Poller struct {
+type lroRetrysPost202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lroRetryspost202Retry200Poller) Done() bool {
+func (p *lroRetrysPost202Retry200Poller) Done() bool {
 	return false
 }
 
-func (p *lroRetryspost202Retry200Poller) ID() string {
+func (p *lroRetrysPost202Retry200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lroRetryspost202Retry200Poller) Poll(ctx context.Context) (*LroRetrysPost202Retry200Response, error) {
+func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) (*LroRetrysPost202Retry200Response, error) {
 	return nil, nil
 }
 
-func (p *lroRetryspost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error) {
+func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error) {
 	return nil, nil
 }
 
-// LroRetryspostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
-type LroRetryspostAsyncRelativeRetrySucceededPoller interface {
+// LroRetrysPostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
+type LroRetrysPostAsyncRelativeRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error)
 }
 
-type lroRetryspostAsyncRelativeRetrySucceededPoller struct {
+type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lroRetryspostAsyncRelativeRetrySucceededPoller) Done() bool {
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lroRetryspostAsyncRelativeRetrySucceededPoller) ID() string {
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lroRetryspostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-func (p *lroRetryspostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
 	return nil, nil
 }
 
-// LroRetrysput201CreatingSucceeded200Poller provides polling facilities until the operation completes
-type LroRetrysput201CreatingSucceeded200Poller interface {
+// LroRetrysPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
+type LroRetrysPut201CreatingSucceeded200Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lroRetrysput201CreatingSucceeded200Poller struct {
+type lroRetrysPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lroRetrysput201CreatingSucceeded200Poller) Done() bool {
+func (p *lroRetrysPut201CreatingSucceeded200Poller) Done() bool {
 	return false
 }
 
-func (p *lroRetrysput201CreatingSucceeded200Poller) ID() string {
+func (p *lroRetrysPut201CreatingSucceeded200Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lroRetrysput201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lroRetrysput201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LroRetrysputAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
-type LroRetrysputAsyncRelativeRetrySucceededPoller interface {
+// LroRetrysPutAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
+type LroRetrysPutAsyncRelativeRetrySucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lroRetrysputAsyncRelativeRetrySucceededPoller struct {
+type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lroRetrysputAsyncRelativeRetrySucceededPoller) Done() bool {
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lroRetrysputAsyncRelativeRetrySucceededPoller) ID() string {
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lroRetrysputAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lroRetrysputAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsdelete202NonRetry400Poller provides polling facilities until the operation completes
-type LrosaDsdelete202NonRetry400Poller interface {
+// LrosaDsDelete202NonRetry400Poller provides polling facilities until the operation completes
+type LrosaDsDelete202NonRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsDelete202NonRetry400Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error)
 }
 
-type lrosaDsdelete202NonRetry400Poller struct {
+type lrosaDsDelete202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdelete202NonRetry400Poller) Done() bool {
+func (p *lrosaDsDelete202NonRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdelete202NonRetry400Poller) ID() string {
+func (p *lrosaDsDelete202NonRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdelete202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDelete202NonRetry400Response, error) {
+func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDelete202NonRetry400Response, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdelete202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error) {
+func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error) {
 	return nil, nil
 }
 
-// LrosaDsdelete202RetryInvalidHeaderPoller provides polling facilities until the operation completes
-type LrosaDsdelete202RetryInvalidHeaderPoller interface {
+// LrosaDsDelete202RetryInvalidHeaderPoller provides polling facilities until the operation completes
+type LrosaDsDelete202RetryInvalidHeaderPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsDelete202RetryInvalidHeaderResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error)
 }
 
-type lrosaDsdelete202RetryInvalidHeaderPoller struct {
+type lrosaDsDelete202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdelete202RetryInvalidHeaderPoller) Done() bool {
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdelete202RetryInvalidHeaderPoller) ID() string {
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsdelete204SucceededPoller provides polling facilities until the operation completes
-type LrosaDsdelete204SucceededPoller interface {
+// LrosaDsDelete204SucceededPoller provides polling facilities until the operation completes
+type LrosaDsDelete204SucceededPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*http.Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error)
 }
 
-type lrosaDsdelete204SucceededPoller struct {
+type lrosaDsDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdelete204SucceededPoller) Done() bool {
+func (p *lrosaDsDelete204SucceededPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdelete204SucceededPoller) ID() string {
+func (p *lrosaDsDelete204SucceededPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
+func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
 	return nil, nil
 }
 
-// LrosaDsdeleteAsyncRelativeRetry400Poller provides polling facilities until the operation completes
-type LrosaDsdeleteAsyncRelativeRetry400Poller interface {
+// LrosaDsDeleteAsyncRelativeRetry400Poller provides polling facilities until the operation completes
+type LrosaDsDeleteAsyncRelativeRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetry400Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error)
 }
 
-type lrosaDsdeleteAsyncRelativeRetry400Poller struct {
+type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetry400Poller) Done() bool {
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetry400Poller) ID() string {
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
 	return nil, nil
 }
 
-// LrosaDsdeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
-type LrosaDsdeleteAsyncRelativeRetryInvalidHeaderPoller interface {
+// LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
+type LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error)
 }
 
-type lrosaDsdeleteAsyncRelativeRetryInvalidHeaderPoller struct {
+type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidHeaderPoller) ID() string {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsdeleteAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
-type LrosaDsdeleteAsyncRelativeRetryInvalidJsonPollingPoller interface {
+// LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
+type LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error)
 }
 
-type lrosaDsdeleteAsyncRelativeRetryInvalidJsonPollingPoller struct {
+type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidJsonPollingPoller) Done() bool {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidJsonPollingPoller) ID() string {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidJsonPollingPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryInvalidJsonPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsdeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
-type LrosaDsdeleteAsyncRelativeRetryNoStatusPoller interface {
+// LrosaDsDeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
+type LrosaDsDeleteAsyncRelativeRetryNoStatusPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error)
 }
 
-type lrosaDsdeleteAsyncRelativeRetryNoStatusPoller struct {
+type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryNoStatusPoller) Done() bool {
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryNoStatusPoller) ID() string {
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsdeleteNonRetry400Poller provides polling facilities until the operation completes
-type LrosaDsdeleteNonRetry400Poller interface {
+// LrosaDsDeleteNonRetry400Poller provides polling facilities until the operation completes
+type LrosaDsDeleteNonRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsDeleteNonRetry400Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error)
 }
 
-type lrosaDsdeleteNonRetry400Poller struct {
+type lrosaDsDeleteNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerDelete
 }
 
-func (p *lrosaDsdeleteNonRetry400Poller) Done() bool {
+func (p *lrosaDsDeleteNonRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsdeleteNonRetry400Poller) ID() string {
+func (p *lrosaDsDeleteNonRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsdeleteNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteNonRetry400Response, error) {
+func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteNonRetry400Response, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsdeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error) {
+func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error) {
 	return nil, nil
 }
 
-// LrosaDspost202NoLocationPoller provides polling facilities until the operation completes
-type LrosaDspost202NoLocationPoller interface {
+// LrosaDsPost202NoLocationPoller provides polling facilities until the operation completes
+type LrosaDsPost202NoLocationPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPost202NoLocationResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error)
 }
 
-type lrosaDspost202NoLocationPoller struct {
+type lrosaDsPost202NoLocationPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspost202NoLocationPoller) Done() bool {
+func (p *lrosaDsPost202NoLocationPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspost202NoLocationPoller) ID() string {
+func (p *lrosaDsPost202NoLocationPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspost202NoLocationPoller) Poll(ctx context.Context) (*LrosaDsPost202NoLocationResponse, error) {
+func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) (*LrosaDsPost202NoLocationResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspost202NoLocationPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error) {
+func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error) {
 	return nil, nil
 }
 
-// LrosaDspost202NonRetry400Poller provides polling facilities until the operation completes
-type LrosaDspost202NonRetry400Poller interface {
+// LrosaDsPost202NonRetry400Poller provides polling facilities until the operation completes
+type LrosaDsPost202NonRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPost202NonRetry400Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error)
 }
 
-type lrosaDspost202NonRetry400Poller struct {
+type lrosaDsPost202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspost202NonRetry400Poller) Done() bool {
+func (p *lrosaDsPost202NonRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspost202NonRetry400Poller) ID() string {
+func (p *lrosaDsPost202NonRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspost202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPost202NonRetry400Response, error) {
+func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPost202NonRetry400Response, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspost202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error) {
+func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error) {
 	return nil, nil
 }
 
-// LrosaDspost202RetryInvalidHeaderPoller provides polling facilities until the operation completes
-type LrosaDspost202RetryInvalidHeaderPoller interface {
+// LrosaDsPost202RetryInvalidHeaderPoller provides polling facilities until the operation completes
+type LrosaDsPost202RetryInvalidHeaderPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPost202RetryInvalidHeaderResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error)
 }
 
-type lrosaDspost202RetryInvalidHeaderPoller struct {
+type lrosaDsPost202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspost202RetryInvalidHeaderPoller) Done() bool {
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspost202RetryInvalidHeaderPoller) ID() string {
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspost202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-// LrosaDspostAsyncRelativeRetry400Poller provides polling facilities until the operation completes
-type LrosaDspostAsyncRelativeRetry400Poller interface {
+// LrosaDsPostAsyncRelativeRetry400Poller provides polling facilities until the operation completes
+type LrosaDsPostAsyncRelativeRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetry400Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error)
 }
 
-type lrosaDspostAsyncRelativeRetry400Poller struct {
+type lrosaDsPostAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspostAsyncRelativeRetry400Poller) Done() bool {
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspostAsyncRelativeRetry400Poller) ID() string {
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspostAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
 	return nil, nil
 }
 
-// LrosaDspostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
-type LrosaDspostAsyncRelativeRetryInvalidHeaderPoller interface {
+// LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
+type LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error)
 }
 
-type lrosaDspostAsyncRelativeRetryInvalidHeaderPoller struct {
+type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidHeaderPoller) ID() string {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	return nil, nil
 }
 
-// LrosaDspostAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
-type LrosaDspostAsyncRelativeRetryInvalidJsonPollingPoller interface {
+// LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
+type LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error)
 }
 
-type lrosaDspostAsyncRelativeRetryInvalidJsonPollingPoller struct {
+type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidJsonPollingPoller) Done() bool {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidJsonPollingPoller) ID() string {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidJsonPollingPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspostAsyncRelativeRetryInvalidJsonPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	return nil, nil
 }
 
-// LrosaDspostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation completes
-type LrosaDspostAsyncRelativeRetryNoPayloadPoller interface {
+// LrosaDsPostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation completes
+type LrosaDsPostAsyncRelativeRetryNoPayloadPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error)
 }
 
-type lrosaDspostAsyncRelativeRetryNoPayloadPoller struct {
+type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspostAsyncRelativeRetryNoPayloadPoller) Done() bool {
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspostAsyncRelativeRetryNoPayloadPoller) ID() string {
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
 	return nil, nil
 }
 
-// LrosaDspostNonRetry400Poller provides polling facilities until the operation completes
-type LrosaDspostNonRetry400Poller interface {
+// LrosaDsPostNonRetry400Poller provides polling facilities until the operation completes
+type LrosaDsPostNonRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*LrosaDsPostNonRetry400Response, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error)
 }
 
-type lrosaDspostNonRetry400Poller struct {
+type lrosaDsPostNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPost
 }
 
-func (p *lrosaDspostNonRetry400Poller) Done() bool {
+func (p *lrosaDsPostNonRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDspostNonRetry400Poller) ID() string {
+func (p *lrosaDsPostNonRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDspostNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostNonRetry400Response, error) {
+func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostNonRetry400Response, error) {
 	return nil, nil
 }
 
-func (p *lrosaDspostNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error) {
+func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error) {
 	return nil, nil
 }
 
-// LrosaDsput200InvalidJsonPoller provides polling facilities until the operation completes
-type LrosaDsput200InvalidJsonPoller interface {
+// LrosaDsPut200InvalidJsonPoller provides polling facilities until the operation completes
+type LrosaDsPut200InvalidJsonPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsput200InvalidJsonPoller struct {
+type lrosaDsPut200InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsput200InvalidJsonPoller) Done() bool {
+func (p *lrosaDsPut200InvalidJSONPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsput200InvalidJsonPoller) ID() string {
+func (p *lrosaDsPut200InvalidJSONPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsput200InvalidJsonPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsput200InvalidJsonPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputAsyncRelativeRetry400Poller provides polling facilities until the operation completes
-type LrosaDsputAsyncRelativeRetry400Poller interface {
+// LrosaDsPutAsyncRelativeRetry400Poller provides polling facilities until the operation completes
+type LrosaDsPutAsyncRelativeRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputAsyncRelativeRetry400Poller struct {
+type lrosaDsPutAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputAsyncRelativeRetry400Poller) Done() bool {
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputAsyncRelativeRetry400Poller) ID() string {
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
-type LrosaDsputAsyncRelativeRetryInvalidHeaderPoller interface {
+// LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
+type LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputAsyncRelativeRetryInvalidHeaderPoller struct {
+type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidHeaderPoller) ID() string {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
-type LrosaDsputAsyncRelativeRetryInvalidJsonPollingPoller interface {
+// LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
+type LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputAsyncRelativeRetryInvalidJsonPollingPoller struct {
+type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidJsonPollingPoller) Done() bool {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidJsonPollingPoller) ID() string {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidJsonPollingPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputAsyncRelativeRetryInvalidJsonPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation completes
-type LrosaDsputAsyncRelativeRetryNoStatusPayloadPoller interface {
+// LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation completes
+type LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputAsyncRelativeRetryNoStatusPayloadPoller struct {
+type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPayloadPoller) Done() bool {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPayloadPoller) ID() string {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
-type LrosaDsputAsyncRelativeRetryNoStatusPoller interface {
+// LrosaDsPutAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
+type LrosaDsPutAsyncRelativeRetryNoStatusPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputAsyncRelativeRetryNoStatusPoller struct {
+type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPoller) Done() bool {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPoller) ID() string {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputError201NoProvisioningStatePayloadPoller provides polling facilities until the operation completes
-type LrosaDsputError201NoProvisioningStatePayloadPoller interface {
+// LrosaDsPutError201NoProvisioningStatePayloadPoller provides polling facilities until the operation completes
+type LrosaDsPutError201NoProvisioningStatePayloadPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputError201NoProvisioningStatePayloadPoller struct {
+type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputError201NoProvisioningStatePayloadPoller) Done() bool {
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputError201NoProvisioningStatePayloadPoller) ID() string {
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputError201NoProvisioningStatePayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputNonRetry201Creating400InvalidJsonPoller provides polling facilities until the operation completes
-type LrosaDsputNonRetry201Creating400InvalidJsonPoller interface {
+// LrosaDsPutNonRetry201Creating400InvalidJsonPoller provides polling facilities until the operation completes
+type LrosaDsPutNonRetry201Creating400InvalidJsonPoller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputNonRetry201Creating400InvalidJsonPoller struct {
+type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputNonRetry201Creating400InvalidJsonPoller) Done() bool {
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputNonRetry201Creating400InvalidJsonPoller) ID() string {
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputNonRetry201Creating400InvalidJsonPoller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputNonRetry201Creating400InvalidJsonPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputNonRetry201Creating400Poller provides polling facilities until the operation completes
-type LrosaDsputNonRetry201Creating400Poller interface {
+// LrosaDsPutNonRetry201Creating400Poller provides polling facilities until the operation completes
+type LrosaDsPutNonRetry201Creating400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputNonRetry201Creating400Poller struct {
+type lrosaDsPutNonRetry201Creating400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputNonRetry201Creating400Poller) Done() bool {
+func (p *lrosaDsPutNonRetry201Creating400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputNonRetry201Creating400Poller) ID() string {
+func (p *lrosaDsPutNonRetry201Creating400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputNonRetry201Creating400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputNonRetry201Creating400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }
 
-// LrosaDsputNonRetry400Poller provides polling facilities until the operation completes
-type LrosaDsputNonRetry400Poller interface {
+// LrosaDsPutNonRetry400Poller provides polling facilities until the operation completes
+type LrosaDsPutNonRetry400Poller interface {
 	Done() bool
 	ID() string
 	Poll(context.Context) (*ProductResponse, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
-type lrosaDsputNonRetry400Poller struct {
+type lrosaDsPutNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
 	// pt *pollingTrackerPut
 }
 
-func (p *lrosaDsputNonRetry400Poller) Done() bool {
+func (p *lrosaDsPutNonRetry400Poller) Done() bool {
 	return false
 }
 
-func (p *lrosaDsputNonRetry400Poller) ID() string {
+func (p *lrosaDsPutNonRetry400Poller) ID() string {
 	return "NYI"
 }
 
-func (p *lrosaDsputNonRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
+func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
 	return nil, nil
 }
 
-func (p *lrosaDsputNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
+func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
 }

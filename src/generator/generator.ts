@@ -57,7 +57,7 @@ export async function protocolGen(host: Host) {
     const pollers = await generatePollers(session);
     if (pollers.length > 0) {
       host.WriteFile('pollers.go', pollers, undefined, 'source-file-go');
-
+    }
     const polymorphics = await generatePolymorphicHelpers(session);
     if (polymorphics.length > 0) {
       host.WriteFile('polymorphic_helpers.go', polymorphics, undefined, 'source-file-go');
