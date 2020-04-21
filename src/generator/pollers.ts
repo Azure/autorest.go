@@ -21,7 +21,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   // add standard imports
   const imports = new ImportManager();
   imports.add('context');
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  // imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
   imports.add('time');
   text += imports.text();
