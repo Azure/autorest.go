@@ -287,7 +287,8 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     // text += `\t}\n`;
     // TODO remove LRO for pageable responses NYI
     if (op.extensions!['x-ms-pageable']) {
-      text += `return nil, nil`;
+      text += `\treturn nil, nil`;
+      text += '}\n\n';
       return text;
     }
     // closing braces
