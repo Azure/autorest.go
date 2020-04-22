@@ -258,6 +258,10 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   if (hasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
   }
+  text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  if (op.language.go!.methodPrefix) {
+    text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  }
   // split param list into individual params
   const reqParams = getCreateRequestParametersSig(op).split(',');
   // slice off the parameter names from the type/type tuples
@@ -266,7 +270,6 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
-    text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
     // TODO uncomment the following code to actually implement polling 
     // text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     // text += `\tif err != nil {\n`;
@@ -662,7 +665,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       // don't generate a public API for the methods used to advance pages
       continue;
     }
-    if (isLROOperation(op)) {
+    if (op.language.go!.methodPrefix) {
       op.language.go!.name = `${op.language.go!.methodPrefix}${op.language.go!.name}`;
     }
     for (const param of values(aggregateParameters(op))) {
