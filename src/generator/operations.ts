@@ -258,9 +258,10 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   if (hasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
   }
-  text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   if (op.language.go!.methodPrefix) {
     text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  } else {
+    text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   }
   // split param list into individual params
   const reqParams = getCreateRequestParametersSig(op).split(',');
@@ -302,7 +303,6 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += '}\n\n';
     return text;
   }
-  text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
