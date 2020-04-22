@@ -266,7 +266,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
-    text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+    text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
     // TODO uncomment the following code to actually implement polling 
     // text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     // text += `\tif err != nil {\n`;
@@ -663,7 +663,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       continue;
     }
     if (isLROOperation(op)) {
-      op.language.go!.name = `Begin${op.language.go!.name}`;
+      op.language.go!.name = `${op.language.go!.methodPrefix}${op.language.go!.name}`;
     }
     for (const param of values(aggregateParameters(op))) {
       if (param.implementation !== ImplementationLocation.Method || param.required !== true) {

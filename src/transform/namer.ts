@@ -8,7 +8,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { CodeModel, GroupProperty, Language, ObjectSchema, Parameter, SchemaType, SealedChoiceSchema } from '@azure-tools/codemodel';
 import { length, visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters } from '../common/helpers';
+import { aggregateParameters, isLROOperation } from '../common/helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
@@ -74,6 +74,9 @@ export async function namer(session: Session<CodeModel>) {
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
+      if (isLROOperation(op)) {
+        op.language.go!.methodPrefix = 'Begin';
+      }
       // track any optional parameters
       // TODO: move this to the transformer and track at the code model level
       const optionalParams = new Array<Parameter>();
