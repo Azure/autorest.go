@@ -7,7 +7,7 @@ import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/c
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
 import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
-import { aggregateParameters, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo } from '../common/helpers';
+import { aggregateParameters, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
@@ -389,6 +389,32 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     };
     pagers.push(pager);
     op.language.go!.pageableType = pager;
+  }
+  // create poller type info
+  if (isLROOperation(op)) {
+    if (codeModel.language.go!.pollerTypes === undefined) {
+      codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
+    }
+    // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
+    const name = `${camelCase(group.language.go!.name)}${op.language.go!.name}Poller`;
+    // check to see if the poller has already been created
+    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
+    for (const poller of values(pollers)) {
+      if (poller.name === name) {
+        // found a match, hook it up to the method
+        op.language.go!.pollerType = poller;
+        return;
+      }
+    }
+    // create a new one, add to global list and assign to method
+    const poller = {
+      name: name,
+      schema: (<SchemaResponse>firstResp).schema,
+      client: camelCase(group.language.go!.clientName),
+      pollingMethod: op.requests![0].protocol.http!.method,
+    };
+    pollers.push(poller);
+    op.language.go!.pollerType = poller;
   }
 }
 

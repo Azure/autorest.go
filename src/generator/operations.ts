@@ -7,7 +7,7 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -253,17 +253,55 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
-  const returns = genereateReturnsInfo(op, false);
+  const returns = generateReturnsInfo(op, false);
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `// ${op.language.go!.name} - ${op.language.go!.description} \n`;
   }
-  text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  if (op.language.go!.methodPrefix) {
+    text += `func (client *${clientName}) ${op.language.go!.methodPrefix}${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  } else {
+    text += `func (client *${clientName}) ${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  }
   // split param list into individual params
   const reqParams = getCreateRequestParametersSig(op).split(',');
   // slice off the parameter names from the type/type tuples
   for (let i = 0; i < reqParams.length; ++i) {
     reqParams[i] = reqParams[i].trim().split(' ')[0];
+  }
+  // TODO Exception for Pageable LRO operations NYI
+  if (isLROOperation(op)) {
+    // TODO uncomment the following code to actually implement polling 
+    // text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
+    // text += `\tif err != nil {\n`;
+    // text += `\t\treturn nil, err\n`;
+    // text += `\t}\n`;
+    // text += `\t// send the first request to initialize the poller\n`;
+    // text += `\tresp, err := client.p.Do(ctx, req)\n`;
+    // text += `\tif err != nil {\n`;
+    // text += `\t\treturn nil, err\n`;
+    // text += `\t}\n`;
+    // text += `\tpt := pollingTracker${pascalCase(op.requests![0].protocol.http!.method)}{\n`;
+    // text += `\t\tpollingTrackerBase: pollingTrackerBase{\n`;
+    // text += `\t\t\tresp: resp,\n`;
+    // text += `\t\t}}\n`;
+    // text += `\terr = pt.initializeState()\n`;
+    // text += `\tif err != nil {\n`;
+    // text += `\t\treturn nil, err\n`;
+    // text += `\t}\n`;
+    // TODO remove LRO for pageable responses NYI
+    if (op.extensions!['x-ms-pageable']) {
+      text += `\treturn nil, nil`;
+      text += '}\n\n';
+      return text;
+    }
+    // closing braces
+    text += `\treturn &${op.language.go!.pollerType.name}{\n`;
+    // text += `\t\tpt: &pt,\n`;
+    text += `\t\tclient: client,\n`;
+    text += `\t}, nil\n`;
+    text += '}\n\n';
+    return text;
   }
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
   text += `\tif err != nil {\n`;
@@ -514,7 +552,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${client}) ${name}(resp *azcore.Response) (${genereateReturnsInfo(op, true).join(', ')}) {\n`;
+  text += `func (client *${client}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, true).join(', ')}) {\n`;
   if (!op.responses) {
     text += '\treturn nil, newError(resp)';
     text += '}\n\n';
@@ -623,9 +661,13 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
   let interfaceText = `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
   interfaceText += `type ${group.language.go!.clientName} interface {\n`;
   for (const op of values(group.operations)) {
+    let opName = op.language.go!.name;
     if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
       // don't generate a public API for the methods used to advance pages
       continue;
+    }
+    if (op.language.go!.methodPrefix) {
+      opName = `${op.language.go!.methodPrefix}${opName}`;
     }
     for (const param of values(aggregateParameters(op))) {
       if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
@@ -634,10 +676,10 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       imports.addImportForSchemaType(param.schema);
     }
     if (hasDescription(op.language.go!)) {
-      interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+      interfaceText += `\t// ${opName} - ${op.language.go!.description} \n`;
     }
-    const returns = genereateReturnsInfo(op, false);
-    interfaceText += `\t${op.language.go!.name}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
+    const returns = generateReturnsInfo(op, false);
+    interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
   }
   interfaceText += '}\n\n';
   return interfaceText;
@@ -768,7 +810,7 @@ function getMethodParameters(op: Operation): Parameter[] {
 
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
-function genereateReturnsInfo(op: Operation, forHandler: boolean): string[] {
+function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   if (!op.responses) {
     return ['*http.Response', 'error'];
   }
@@ -778,6 +820,8 @@ function genereateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   // must check pageable first as all pageable operations are also schema responses
   if (!forHandler && isPageableOperation(op)) {
     returnType = op.language.go!.pageableType.name;
+  } else if (!forHandler && isLROOperation(op)) {
+    returnType = pascalCase(op.language.go!.pollerType.name);
   } else if (isSchemaResponse(firstResp)) {
     returnType = '*' + firstResp.schema.language.go!.responseType.name;
   }
