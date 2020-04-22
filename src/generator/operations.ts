@@ -661,12 +661,13 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
   let interfaceText = `// ${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.\n`;
   interfaceText += `type ${group.language.go!.clientName} interface {\n`;
   for (const op of values(group.operations)) {
+    let opName = op.language.go!.name;
     if (isPageableOperation(op) && op.language.go!.paging.member === op.language.go!.name) {
       // don't generate a public API for the methods used to advance pages
       continue;
     }
     if (op.language.go!.methodPrefix) {
-      op.language.go!.name = `${op.language.go!.methodPrefix}${op.language.go!.name}`;
+      opName = `${op.language.go!.methodPrefix}${opName}`;
     }
     for (const param of values(aggregateParameters(op))) {
       if (param.implementation !== ImplementationLocation.Method || param.required !== true) {
@@ -675,10 +676,10 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
       imports.addImportForSchemaType(param.schema);
     }
     if (hasDescription(op.language.go!)) {
-      interfaceText += `\t// ${op.language.go!.name} - ${op.language.go!.description} \n`;
+      interfaceText += `\t// ${opName} - ${op.language.go!.description} \n`;
     }
     const returns = generateReturnsInfo(op, false);
-    interfaceText += `\t${op.language.go!.name}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
+    interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
   }
   interfaceText += '}\n\n';
   return interfaceText;
