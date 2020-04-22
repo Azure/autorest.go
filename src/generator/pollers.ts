@@ -11,7 +11,7 @@ import { PollerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
-// Creates the content in pagers.go
+// Creates the content in pollers.go
 export async function generatePollers(session: Session<CodeModel>): Promise<string> {
   if (session.model.language.go!.pollerTypes === undefined) {
     return '';
@@ -21,6 +21,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   // add standard imports
   const imports = new ImportManager();
   imports.add('context');
+  // TODO uncomment when actually implementing polling functionality
   // imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
   imports.add('time');
