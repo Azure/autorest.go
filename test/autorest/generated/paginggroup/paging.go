@@ -19,7 +19,7 @@ import (
 // PagingOperations contains the methods for the Paging group.
 type PagingOperations interface {
 	// GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
-	GetMultiplePages(options *PagingGetMultiplePagesOptions) (ProductResultPager, error)
+	GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (ProductResultPager, error)
 	// GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
 	GetMultiplePagesFailure() (ProductResultPager, error)
 	// GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
@@ -27,21 +27,21 @@ type PagingOperations interface {
 	// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
 	GetMultiplePagesFragmentNextLink(apiVersion string, tenant string) (OdataProductResultPager, error)
 	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
-	GetMultiplePagesFragmentWithGroupingNextLink(apiVersion string, tenant string) (OdataProductResultPager, error)
+	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error)
 	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-	BeginGetMultiplePagesLro(options *PagingGetMultiplePagesLroOptions) (ProductResultPager, error)
+	BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (ProductResultPager, error)
 	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
 	GetMultiplePagesRetryFirst() (ProductResultPager, error)
 	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
 	GetMultiplePagesRetrySecond() (ProductResultPager, error)
 	// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
-	GetMultiplePagesWithOffset(offset int32, options *PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error)
+	GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error)
 	// GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
 	GetNoItemNamePages() (ProductResultValuePager, error)
 	// GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 	GetNullNextLinkNamePages(ctx context.Context) (*ProductResultResponse, error)
 	// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
-	GetOdataMultiplePages(options *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error)
+	GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error)
 	// GetSinglePages - A paging operation that finishes on the first call without a nextlink
 	GetSinglePages() (ProductResultPager, error)
 	// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
@@ -54,8 +54,8 @@ type pagingOperations struct {
 }
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) GetMultiplePages(options *PagingGetMultiplePagesOptions) (ProductResultPager, error) {
-	req, err := client.getMultiplePagesCreateRequest(options)
+func (client *pagingOperations) GetMultiplePages(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (ProductResultPager, error) {
+	req, err := client.getMultiplePagesCreateRequest(pagingGetMultiplePagesOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -77,21 +77,21 @@ func (client *pagingOperations) GetMultiplePages(options *PagingGetMultiplePages
 }
 
 // getMultiplePagesCreateRequest creates the GetMultiplePages request.
-func (client *pagingOperations) getMultiplePagesCreateRequest(options *PagingGetMultiplePagesOptions) (*azcore.Request, error) {
+func (client *pagingOperations) getMultiplePagesCreateRequest(pagingGetMultiplePagesOptions *PagingGetMultiplePagesOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodGet, *u)
-	if options != nil && options.ClientRequestId != nil {
-		req.Header.Set("client-request-id", *options.ClientRequestId)
+	if pagingGetMultiplePagesOptions != nil && pagingGetMultiplePagesOptions.ClientRequestId != nil {
+		req.Header.Set("client-request-id", *pagingGetMultiplePagesOptions.ClientRequestId)
 	}
-	if options != nil && options.Maxresults != nil {
-		req.Header.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+	if pagingGetMultiplePagesOptions != nil && pagingGetMultiplePagesOptions.Maxresults != nil {
+		req.Header.Set("maxresults", strconv.FormatInt(int64(*pagingGetMultiplePagesOptions.Maxresults), 10))
 	}
-	if options != nil && options.Timeout != nil {
-		req.Header.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	if pagingGetMultiplePagesOptions != nil && pagingGetMultiplePagesOptions.Timeout != nil {
+		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesOptions.Timeout), 10))
 	}
 	return req, nil
 }
@@ -232,8 +232,8 @@ func (client *pagingOperations) getMultiplePagesFragmentNextLinkHandleResponse(r
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
-func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(apiVersion string, tenant string) (OdataProductResultPager, error) {
-	req, err := client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(apiVersion, tenant)
+func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error) {
+	req, err := client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup)
 	if err != nil {
 		return nil, err
 	}
@@ -242,21 +242,21 @@ func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(api
 		request:   req,
 		responder: client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
-			return client.nextFragmentWithGroupingCreateRequest(apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
+			return client.nextFragmentWithGroupingCreateRequest(*resp.OdataProductResult.OdataNextLink, customParameterGroup)
 		},
 	}, nil
 }
 
 // getMultiplePagesFragmentWithGroupingNextLinkCreateRequest creates the GetMultiplePagesFragmentWithGroupingNextLink request.
-func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(apiVersion string, tenant string) (*azcore.Request, error) {
+func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}"
-	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
+	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	query := u.Query()
-	query.Set("api_version", apiVersion)
+	query.Set("api_version", customParameterGroup.ApiVersion)
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil
@@ -272,26 +272,26 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 }
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) BeginGetMultiplePagesLro(options *PagingGetMultiplePagesLroOptions) (ProductResultPager, error) {
+func (client *pagingOperations) BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (ProductResultPager, error) {
 	return nil, nil
 }
 
 // getMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.
-func (client *pagingOperations) getMultiplePagesLroCreateRequest(options *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
+func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/lro"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
-	if options != nil && options.ClientRequestId != nil {
-		req.Header.Set("client-request-id", *options.ClientRequestId)
+	if pagingGetMultiplePagesLroOptions != nil && pagingGetMultiplePagesLroOptions.ClientRequestId != nil {
+		req.Header.Set("client-request-id", *pagingGetMultiplePagesLroOptions.ClientRequestId)
 	}
-	if options != nil && options.Maxresults != nil {
-		req.Header.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+	if pagingGetMultiplePagesLroOptions != nil && pagingGetMultiplePagesLroOptions.Maxresults != nil {
+		req.Header.Set("maxresults", strconv.FormatInt(int64(*pagingGetMultiplePagesLroOptions.Maxresults), 10))
 	}
-	if options != nil && options.Timeout != nil {
-		req.Header.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	if pagingGetMultiplePagesLroOptions != nil && pagingGetMultiplePagesLroOptions.Timeout != nil {
+		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesLroOptions.Timeout), 10))
 	}
 	return req, nil
 }
@@ -392,8 +392,8 @@ func (client *pagingOperations) getMultiplePagesRetrySecondHandleResponse(resp *
 }
 
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) GetMultiplePagesWithOffset(offset int32, options *PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error) {
-	req, err := client.getMultiplePagesWithOffsetCreateRequest(offset, options)
+func (client *pagingOperations) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (ProductResultPager, error) {
+	req, err := client.getMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -415,22 +415,22 @@ func (client *pagingOperations) GetMultiplePagesWithOffset(offset int32, options
 }
 
 // getMultiplePagesWithOffsetCreateRequest creates the GetMultiplePagesWithOffset request.
-func (client *pagingOperations) getMultiplePagesWithOffsetCreateRequest(offset int32, options *PagingGetMultiplePagesWithOffsetOptions) (*azcore.Request, error) {
+func (client *pagingOperations) getMultiplePagesWithOffsetCreateRequest(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/withpath/{offset}"
-	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(offset), 10)))
+	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(pagingGetMultiplePagesWithOffsetOptions.Offset), 10)))
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodGet, *u)
-	if options != nil && options.ClientRequestId != nil {
-		req.Header.Set("client-request-id", *options.ClientRequestId)
+	if pagingGetMultiplePagesWithOffsetOptions.ClientRequestId != nil {
+		req.Header.Set("client-request-id", *pagingGetMultiplePagesWithOffsetOptions.ClientRequestId)
 	}
-	if options != nil && options.Maxresults != nil {
-		req.Header.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+	if pagingGetMultiplePagesWithOffsetOptions.Maxresults != nil {
+		req.Header.Set("maxresults", strconv.FormatInt(int64(*pagingGetMultiplePagesWithOffsetOptions.Maxresults), 10))
 	}
-	if options != nil && options.Timeout != nil {
-		req.Header.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	if pagingGetMultiplePagesWithOffsetOptions.Timeout != nil {
+		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesWithOffsetOptions.Timeout), 10))
 	}
 	return req, nil
 }
@@ -525,8 +525,8 @@ func (client *pagingOperations) getNullNextLinkNamePagesHandleResponse(resp *azc
 }
 
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
-func (client *pagingOperations) GetOdataMultiplePages(options *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error) {
-	req, err := client.getOdataMultiplePagesCreateRequest(options)
+func (client *pagingOperations) GetOdataMultiplePages(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (OdataProductResultPager, error) {
+	req, err := client.getOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -548,21 +548,21 @@ func (client *pagingOperations) GetOdataMultiplePages(options *PagingGetOdataMul
 }
 
 // getOdataMultiplePagesCreateRequest creates the GetOdataMultiplePages request.
-func (client *pagingOperations) getOdataMultiplePagesCreateRequest(options *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
+func (client *pagingOperations) getOdataMultiplePagesCreateRequest(pagingGetOdataMultiplePagesOptions *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/odata"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodGet, *u)
-	if options != nil && options.ClientRequestId != nil {
-		req.Header.Set("client-request-id", *options.ClientRequestId)
+	if pagingGetOdataMultiplePagesOptions != nil && pagingGetOdataMultiplePagesOptions.ClientRequestId != nil {
+		req.Header.Set("client-request-id", *pagingGetOdataMultiplePagesOptions.ClientRequestId)
 	}
-	if options != nil && options.Maxresults != nil {
-		req.Header.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
+	if pagingGetOdataMultiplePagesOptions != nil && pagingGetOdataMultiplePagesOptions.Maxresults != nil {
+		req.Header.Set("maxresults", strconv.FormatInt(int64(*pagingGetOdataMultiplePagesOptions.Maxresults), 10))
 	}
-	if options != nil && options.Timeout != nil {
-		req.Header.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	if pagingGetOdataMultiplePagesOptions != nil && pagingGetOdataMultiplePagesOptions.Timeout != nil {
+		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetOdataMultiplePagesOptions.Timeout), 10))
 	}
 	return req, nil
 }
@@ -688,16 +688,16 @@ func (client *pagingOperations) nextFragmentHandleResponse(resp *azcore.Response
 }
 
 // nextFragmentWithGroupingCreateRequest creates the NextFragmentWithGrouping request.
-func (client *pagingOperations) nextFragmentWithGroupingCreateRequest(apiVersion string, tenant string, nextLink string) (*azcore.Request, error) {
+func (client *pagingOperations) nextFragmentWithGroupingCreateRequest(nextLink string, customParameterGroup CustomParameterGroup) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
-	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
+	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	query := u.Query()
-	query.Set("api_version", apiVersion)
+	query.Set("api_version", customParameterGroup.ApiVersion)
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)
 	return req, nil

@@ -29,6 +29,7 @@ const goMappings = {
     'numbergroup': 'body-number.json',
     'optionalgroup': 'required-optional.json',
     'paginggroup': 'paging.json',
+    'paramgroupinggroup': 'azure-parameter-grouping.json',
     'reportgroup': 'report.json',
     'stringgroup': 'body-string.json',
     'urlgroup': 'url.json',

@@ -16,7 +16,7 @@ import (
 // PathsOperations contains the methods for the Paths group.
 type PathsOperations interface {
 	// GetEmpty - Get a 200 to test a valid base uri
-	GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error)
+	GetEmpty(ctx context.Context, vault string, secret string, keyName string, pathsGetEmptyOptions *PathsGetEmptyOptions) (*http.Response, error)
 }
 
 // pathsOperations implements the PathsOperations interface.
@@ -27,8 +27,8 @@ type pathsOperations struct {
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
-func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*http.Response, error) {
-	req, err := client.getEmptyCreateRequest(vault, secret, keyName, options)
+func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secret string, keyName string, pathsGetEmptyOptions *PathsGetEmptyOptions) (*http.Response, error) {
+	req, err := client.getEmptyCreateRequest(vault, secret, keyName, pathsGetEmptyOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func (client *pathsOperations) GetEmpty(ctx context.Context, vault string, secre
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string, keyName string, pathsGetEmptyOptions *PathsGetEmptyOptions) (*azcore.Request, error) {
 	urlPath := "/customuri/{subscriptionId}/{keyName}"
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
@@ -53,8 +53,8 @@ func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string
 		return nil, err
 	}
 	query := u.Query()
-	if options != nil && options.KeyVersion != nil {
-		query.Set("keyVersion", *options.KeyVersion)
+	if pathsGetEmptyOptions != nil && pathsGetEmptyOptions.KeyVersion != nil {
+		query.Set("keyVersion", *pathsGetEmptyOptions.KeyVersion)
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)

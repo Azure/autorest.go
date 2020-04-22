@@ -14,9 +14,9 @@ import (
 // Operations contains the methods for the Operations group.
 type Operations interface {
 	// GetOptionalReport - Get optional test coverage report
-	GetOptionalReport(ctx context.Context, options *OperationsGetOptionalReportOptions) (*MapOfInt32Response, error)
+	GetOptionalReport(ctx context.Context, operationsGetOptionalReportOptions *OperationsGetOptionalReportOptions) (*MapOfInt32Response, error)
 	// GetReport - Get test coverage report
-	GetReport(ctx context.Context, options *OperationsGetReportOptions) (*MapOfInt32Response, error)
+	GetReport(ctx context.Context, operationsGetReportOptions *OperationsGetReportOptions) (*MapOfInt32Response, error)
 }
 
 // operations implements the Operations interface.
@@ -25,8 +25,8 @@ type operations struct {
 }
 
 // GetOptionalReport - Get optional test coverage report
-func (client *operations) GetOptionalReport(ctx context.Context, options *OperationsGetOptionalReportOptions) (*MapOfInt32Response, error) {
-	req, err := client.getOptionalReportCreateRequest(options)
+func (client *operations) GetOptionalReport(ctx context.Context, operationsGetOptionalReportOptions *OperationsGetOptionalReportOptions) (*MapOfInt32Response, error) {
+	req, err := client.getOptionalReportCreateRequest(operationsGetOptionalReportOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -42,15 +42,15 @@ func (client *operations) GetOptionalReport(ctx context.Context, options *Operat
 }
 
 // getOptionalReportCreateRequest creates the GetOptionalReport request.
-func (client *operations) getOptionalReportCreateRequest(options *OperationsGetOptionalReportOptions) (*azcore.Request, error) {
+func (client *operations) getOptionalReportCreateRequest(operationsGetOptionalReportOptions *OperationsGetOptionalReportOptions) (*azcore.Request, error) {
 	urlPath := "/report/optional"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	query := u.Query()
-	if options != nil && options.Qualifier != nil {
-		query.Set("qualifier", *options.Qualifier)
+	if operationsGetOptionalReportOptions != nil && operationsGetOptionalReportOptions.Qualifier != nil {
+		query.Set("qualifier", *operationsGetOptionalReportOptions.Qualifier)
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)
@@ -67,8 +67,8 @@ func (client *operations) getOptionalReportHandleResponse(resp *azcore.Response)
 }
 
 // GetReport - Get test coverage report
-func (client *operations) GetReport(ctx context.Context, options *OperationsGetReportOptions) (*MapOfInt32Response, error) {
-	req, err := client.getReportCreateRequest(options)
+func (client *operations) GetReport(ctx context.Context, operationsGetReportOptions *OperationsGetReportOptions) (*MapOfInt32Response, error) {
+	req, err := client.getReportCreateRequest(operationsGetReportOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -84,15 +84,15 @@ func (client *operations) GetReport(ctx context.Context, options *OperationsGetR
 }
 
 // getReportCreateRequest creates the GetReport request.
-func (client *operations) getReportCreateRequest(options *OperationsGetReportOptions) (*azcore.Request, error) {
+func (client *operations) getReportCreateRequest(operationsGetReportOptions *OperationsGetReportOptions) (*azcore.Request, error) {
 	urlPath := "/report"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	query := u.Query()
-	if options != nil && options.Qualifier != nil {
-		query.Set("qualifier", *options.Qualifier)
+	if operationsGetReportOptions != nil && operationsGetReportOptions.Qualifier != nil {
+		query.Set("qualifier", *operationsGetReportOptions.Qualifier)
 	}
 	u.RawQuery = query.Encode()
 	req := azcore.NewRequest(http.MethodGet, *u)

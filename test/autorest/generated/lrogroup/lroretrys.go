@@ -21,13 +21,13 @@ type LroRetrysOperations interface {
 	// BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a  202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (LroRetrysDeleteProvisioning202Accepted200SucceededPoller, error)
 	// BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-	BeginPost202Retry200(ctx context.Context, options *LroRetrysPost202Retry200Options) (LroRetrysPost202Retry200Poller, error)
+	BeginPost202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (LroRetrysPost202Retry200Poller, error)
 	// BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPostAsyncRelativeRetrySucceededOptions) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error)
+	BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error)
 	// BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-	BeginPut201CreatingSucceeded200(ctx context.Context, options *LroRetrysPut201CreatingSucceeded200Options) (LroRetrysPut201CreatingSucceeded200Poller, error)
+	BeginPut201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (LroRetrysPut201CreatingSucceeded200Poller, error)
 	// BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPutAsyncRelativeRetrySucceededOptions) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error)
+	BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error)
 }
 
 // lroRetrysOperations implements the LroRetrysOperations interface.
@@ -142,22 +142,22 @@ func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHand
 }
 
 // Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, options *LroRetrysPost202Retry200Options) (LroRetrysPost202Retry200Poller, error) {
+func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (LroRetrysPost202Retry200Poller, error) {
 	return &lroRetrysPost202Retry200Poller{
 		client: client,
 	}, nil
 }
 
 // post202Retry200CreateRequest creates the Post202Retry200 request.
-func (client *lroRetrysOperations) post202Retry200CreateRequest(options *LroRetrysPost202Retry200Options) (*azcore.Request, error) {
+func (client *lroRetrysOperations) post202Retry200CreateRequest(lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/post/202/retry/200"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
-	if options != nil {
-		return req, req.MarshalAsJSON(options.Product)
+	if lroRetrysPost202Retry200Options != nil {
+		return req, req.MarshalAsJSON(lroRetrysPost202Retry200Options.Product)
 	}
 	return req, nil
 }
@@ -183,22 +183,22 @@ func (client *lroRetrysOperations) post202Retry200HandleResponse(resp *azcore.Re
 }
 
 // PostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPostAsyncRelativeRetrySucceededOptions) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error) {
+func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error) {
 	return &lroRetrysPostAsyncRelativeRetrySucceededPoller{
 		client: client,
 	}, nil
 }
 
 // postAsyncRelativeRetrySucceededCreateRequest creates the PostAsyncRelativeRetrySucceeded request.
-func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededCreateRequest(options *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
+func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededCreateRequest(lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/postasync/retry/succeeded"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPost, *u)
-	if options != nil {
-		return req, req.MarshalAsJSON(options.Product)
+	if lroRetrysPostAsyncRelativeRetrySucceededOptions != nil {
+		return req, req.MarshalAsJSON(lroRetrysPostAsyncRelativeRetrySucceededOptions.Product)
 	}
 	return req, nil
 }
@@ -227,22 +227,22 @@ func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededHandleResponse
 }
 
 // Put201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.Context, options *LroRetrysPut201CreatingSucceeded200Options) (LroRetrysPut201CreatingSucceeded200Poller, error) {
+func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (LroRetrysPut201CreatingSucceeded200Poller, error) {
 	return &lroRetrysPut201CreatingSucceeded200Poller{
 		client: client,
 	}, nil
 }
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *lroRetrysOperations) put201CreatingSucceeded200CreateRequest(options *LroRetrysPut201CreatingSucceeded200Options) (*azcore.Request, error) {
+func (client *lroRetrysOperations) put201CreatingSucceeded200CreateRequest(lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/put/201/creating/succeeded/200"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if options != nil {
-		return req, req.MarshalAsJSON(options.Product)
+	if lroRetrysPut201CreatingSucceeded200Options != nil {
+		return req, req.MarshalAsJSON(lroRetrysPut201CreatingSucceeded200Options.Product)
 	}
 	return req, nil
 }
@@ -257,22 +257,22 @@ func (client *lroRetrysOperations) put201CreatingSucceeded200HandleResponse(resp
 }
 
 // PutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LroRetrysPutAsyncRelativeRetrySucceededOptions) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error) {
+func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error) {
 	return &lroRetrysPutAsyncRelativeRetrySucceededPoller{
 		client: client,
 	}, nil
 }
 
 // putAsyncRelativeRetrySucceededCreateRequest creates the PutAsyncRelativeRetrySucceeded request.
-func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededCreateRequest(options *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
+func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededCreateRequest(lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*azcore.Request, error) {
 	urlPath := "/lro/retryerror/putasync/retry/succeeded"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if options != nil {
-		return req, req.MarshalAsJSON(options.Product)
+	if lroRetrysPutAsyncRelativeRetrySucceededOptions != nil {
+		return req, req.MarshalAsJSON(lroRetrysPutAsyncRelativeRetrySucceededOptions.Product)
 	}
 	return req, nil
 }

@@ -36,7 +36,7 @@ type StringOperations interface {
 	// PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 	PutMBCS(ctx context.Context) (*http.Response, error)
 	// PutNull - Set string value null
-	PutNull(ctx context.Context, options *StringPutNullOptions) (*http.Response, error)
+	PutNull(ctx context.Context, stringPutNullOptions *StringPutNullOptions) (*http.Response, error)
 	// PutWhitespace - Set String value with leading and trailing whitespace '<tab><space><space>Now is the time for all good men to come to the aid of their country<tab><space><space>'
 	PutWhitespace(ctx context.Context) (*http.Response, error)
 }
@@ -451,8 +451,8 @@ func (client *stringOperations) putMbcsHandleResponse(resp *azcore.Response) (*h
 }
 
 // PutNull - Set string value null
-func (client *stringOperations) PutNull(ctx context.Context, options *StringPutNullOptions) (*http.Response, error) {
-	req, err := client.putNullCreateRequest(options)
+func (client *stringOperations) PutNull(ctx context.Context, stringPutNullOptions *StringPutNullOptions) (*http.Response, error) {
+	req, err := client.putNullCreateRequest(stringPutNullOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -468,15 +468,15 @@ func (client *stringOperations) PutNull(ctx context.Context, options *StringPutN
 }
 
 // putNullCreateRequest creates the PutNull request.
-func (client *stringOperations) putNullCreateRequest(options *StringPutNullOptions) (*azcore.Request, error) {
+func (client *stringOperations) putNullCreateRequest(stringPutNullOptions *StringPutNullOptions) (*azcore.Request, error) {
 	urlPath := "/string/null"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {
 		return nil, err
 	}
 	req := azcore.NewRequest(http.MethodPut, *u)
-	if options != nil {
-		return req, req.MarshalAsJSON(options.StringBody)
+	if stringPutNullOptions != nil {
+		return req, req.MarshalAsJSON(stringPutNullOptions.StringBody)
 	}
 	return req, nil
 }
