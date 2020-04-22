@@ -822,7 +822,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError202NoneC
 
 // get202None204NoneDefaultError202NoneHandleResponse handles the Get202None204NoneDefaultError202None response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultError202NoneHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, newError(resp)
 	}
 	return resp.Response, nil
@@ -858,7 +858,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError204NoneC
 
 // get202None204NoneDefaultError204NoneHandleResponse handles the Get202None204NoneDefaultError204None response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultError204NoneHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, newError(resp)
 	}
 	return resp.Response, nil
@@ -894,7 +894,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultError400Valid
 
 // get202None204NoneDefaultError400ValidHandleResponse handles the Get202None204NoneDefaultError400Valid response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultError400ValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, newError(resp)
 	}
 	return resp.Response, nil
@@ -930,7 +930,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone202Invali
 
 // get202None204NoneDefaultNone202InvalidHandleResponse handles the Get202None204NoneDefaultNone202Invalid response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone202InvalidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, errors.New(resp.Status)
 	}
 	return resp.Response, nil
@@ -966,7 +966,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone204NoneCr
 
 // get202None204NoneDefaultNone204NoneHandleResponse handles the Get202None204NoneDefaultNone204None response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone204NoneHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, errors.New(resp.Status)
 	}
 	return resp.Response, nil
@@ -1002,7 +1002,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400Invali
 
 // get202None204NoneDefaultNone400InvalidHandleResponse handles the Get202None204NoneDefaultNone400Invalid response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone400InvalidHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, errors.New(resp.Status)
 	}
 	return resp.Response, nil
@@ -1038,7 +1038,7 @@ func (client *multipleResponsesOperations) get202None204NoneDefaultNone400NoneCr
 
 // get202None204NoneDefaultNone400NoneHandleResponse handles the Get202None204NoneDefaultNone400None response.
 func (client *multipleResponsesOperations) get202None204NoneDefaultNone400NoneHandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
 		return nil, errors.New(resp.Status)
 	}
 	return resp.Response, nil

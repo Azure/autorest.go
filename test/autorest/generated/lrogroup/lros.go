@@ -423,7 +423,7 @@ func (client *lrOSOperations) deleteProvisioning202Accepted200SucceededCreateReq
 
 // deleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
 func (client *lrOSOperations) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -450,7 +450,7 @@ func (client *lrOSOperations) deleteProvisioning202DeletingFailed200CreateReques
 
 // deleteProvisioning202DeletingFailed200HandleResponse handles the DeleteProvisioning202DeletingFailed200 response.
 func (client *lrOSOperations) deleteProvisioning202DeletingFailed200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -477,7 +477,7 @@ func (client *lrOSOperations) deleteProvisioning202Deletingcanceled200CreateRequ
 
 // deleteProvisioning202Deletingcanceled200HandleResponse handles the DeleteProvisioning202Deletingcanceled200 response.
 func (client *lrOSOperations) deleteProvisioning202Deletingcanceled200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -504,7 +504,7 @@ func (client *lrOSOperations) post200WithPayloadCreateRequest() (*azcore.Request
 
 // post200WithPayloadHandleResponse handles the Post200WithPayload response.
 func (client *lrOSOperations) post200WithPayloadHandleResponse(resp *azcore.Response) (*SkuResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, newCloudError(resp)
 	}
 	result := SkuResponse{RawResponse: resp.Response}
@@ -954,7 +954,7 @@ func (client *lrOSOperations) put201CreatingFailed200CreateRequest(lrOSPut201Cre
 
 // put201CreatingFailed200HandleResponse handles the Put201CreatingFailed200 response.
 func (client *lrOSOperations) put201CreatingFailed200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -984,7 +984,7 @@ func (client *lrOSOperations) put201CreatingSucceeded200CreateRequest(lrOSPut201
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *lrOSOperations) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}

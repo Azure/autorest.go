@@ -560,7 +560,25 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     return text;
   }
   const firstResp = op.responses![0];
-  text += `\tif !resp.HasStatusCode(${formatStatusCodes(firstResp.protocol.http?.statusCodes)}) {\n`;
+  // concat all status codes that return the same schema into one array.
+  // this is to support operations that specify multiple response codes
+  // that return the same schema (or no schema).
+  // TODO: handle response codes with different schemas
+  let statusCodes = new Array<string>();
+  statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
+  for (let i = 1; i < op.responses.length; ++i) {
+    if (!isSchemaResponse(firstResp) && !isSchemaResponse(op.responses[i])) {
+      // both responses return no schema, append status codes
+      statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
+    } else if (isSchemaResponse(firstResp) && isSchemaResponse(op.responses[i])) {
+      // both responses return a schema, ensure they're the same
+      if ((<SchemaResponse>firstResp).schema === (<SchemaResponse>op.responses[i]).schema) {
+        // same schemas, append status codes
+        statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
+      }
+    }
+  }
+  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
   // if the response doesn't define a 'default' section return a generic error
   // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
   if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
@@ -739,6 +757,9 @@ function formatStatusCodes(statusCodes: Array<string>): string {
         break;
       case '400':
         asHTTPStatus.push('http.StatusBadRequest');
+        break;
+      case '404':
+        asHTTPStatus.push('http.StatusNotFound');
         break;
       default:
         throw console.error(`unhandled status code ${rawCode}`);

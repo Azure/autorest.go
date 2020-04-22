@@ -134,7 +134,7 @@ func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededCrea
 
 // deleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
 func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -249,7 +249,7 @@ func (client *lroRetrysOperations) put201CreatingSucceeded200CreateRequest(lroRe
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *lroRetrysOperations) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}

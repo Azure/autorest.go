@@ -137,7 +137,7 @@ func (client *lrOSCustomHeaderOperations) put201CreatingSucceeded200CreateReques
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *lrOSCustomHeaderOperations) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
