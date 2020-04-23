@@ -920,7 +920,7 @@ func (client *lrosaDsOperations) putError201NoProvisioningStatePayloadCreateRequ
 
 // putError201NoProvisioningStatePayloadHandleResponse handles the PutError201NoProvisioningStatePayload response.
 func (client *lrosaDsOperations) putError201NoProvisioningStatePayloadHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -950,7 +950,7 @@ func (client *lrosaDsOperations) putNonRetry201Creating400CreateRequest(lrosaDsP
 
 // putNonRetry201Creating400HandleResponse handles the PutNonRetry201Creating400 response.
 func (client *lrosaDsOperations) putNonRetry201Creating400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -980,7 +980,7 @@ func (client *lrosaDsOperations) putNonRetry201Creating400InvalidJsonCreateReque
 
 // putNonRetry201Creating400InvalidJsonHandleResponse handles the PutNonRetry201Creating400InvalidJSON response.
 func (client *lrosaDsOperations) putNonRetry201Creating400InvalidJsonHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1010,7 +1010,7 @@ func (client *lrosaDsOperations) putNonRetry400CreateRequest(lrosaDsPutNonRetry4
 
 // putNonRetry400HandleResponse handles the PutNonRetry400 response.
 func (client *lrosaDsOperations) putNonRetry400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, newCloudError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}

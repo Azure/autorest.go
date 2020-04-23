@@ -76,12 +76,10 @@ func TestHTTPSuccessHead204(t *testing.T) {
 func TestHTTPSuccessHead404(t *testing.T) {
 	client := getHTTPSuccessOperations(t)
 	result, err := client.Head404(context.Background())
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil result")
-	}
+	helpers.VerifyStatusCode(t, result, http.StatusNotFound)
 }
 
 func TestHTTPSuccessOptions200(t *testing.T) {

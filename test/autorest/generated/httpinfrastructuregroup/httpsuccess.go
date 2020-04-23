@@ -305,7 +305,7 @@ func (client *httpSuccessOperations) head404CreateRequest() (*azcore.Request, er
 
 // head404HandleResponse handles the Head404 response.
 func (client *httpSuccessOperations) head404HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !resp.HasStatusCode(http.StatusNoContent, http.StatusNotFound) {
 		return nil, newError(resp)
 	}
 	return resp.Response, nil
