@@ -393,13 +393,14 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   } else if (inPathParams.any()) {
     // swagger defines path params, emit path and replace tokens
     imports.add('strings');
-    imports.add('net/url');
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
     // replace path parameters
     for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; })) {
       let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       if (skipURLEncoding(pp)) {
         paramValue = formatParamValue(pp, imports);
+      } else {
+        imports.add('net/url');
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
@@ -425,24 +426,53 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const inQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; });
   if (inQueryParams.any()) {
     // add query parameters
-    text += '\tquery := u.Query()\n';
+    const encodedParams = new Array<Parameter>();
+    const unencodedParams = new Array<Parameter>();
     for (const qp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; })) {
+      if (skipURLEncoding(qp)) {
+        unencodedParams.push(qp);
+      } else {
+        encodedParams.push(qp);
+      }
+    }
+    const emitQueryParam = function (qp: Parameter, setter: string): string {
+      let qpText = '';
       if (qp.required === true) {
-        text += `\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
+        qpText = `\t${setter}\n`;
       } else if (qp.schema.type === SchemaType.Constant) {
         // omit this query param. TODO once non-required constants are fixed
       } else if (qp.implementation === ImplementationLocation.Client) {
         // global optional param
-        text += `\tif client.${qp.language.go!.name} != nil {\n`;
-        text += `\t\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
-        text += `\t}\n`;
+        qpText = `\tif client.${qp.language.go!.name} != nil {\n`;
+        qpText += `\t\t${setter}\n`;
+        qpText += `\t}\n`;
       } else {
-        text += emitParamGroupCheck(<GroupProperty>qp.language.go!.paramGroup, qp);
-        text += `\t\tquery.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})\n`;
-        text += `\t}\n`;
+        qpText = emitParamGroupCheck(<GroupProperty>qp.language.go!.paramGroup, qp);
+        qpText += `\t\t${setter}\n`;
+        qpText += `\t}\n`;
       }
+      return qpText;
     }
-    text += '\tu.RawQuery = query.Encode()\n';
+    // emit encoded params first
+    if (encodedParams.length > 0) {
+      text += '\tquery := u.Query()\n';
+      for (const qp of values(encodedParams)) {
+        text += emitQueryParam(qp, `query.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`);
+      }
+      text += '\tu.RawQuery = query.Encode()\n';
+    }
+    // tack on any unencoded params to the end
+    if (unencodedParams.length > 0) {
+      if (encodedParams.length > 0) {
+        text += '\tunencodedParams := []string{u.RawQuery}\n';
+      } else {
+        text += '\tunencodedParams := []string{}\n';
+      }
+      for (const qp of values(unencodedParams)) {
+        text += emitQueryParam(qp, `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`);
+      }
+      text += '\tu.RawQuery = strings.Join(unencodedParams, "&")\n';
+    }
   }
   text += `\treq := azcore.NewRequest(http.Method${pascalCase(op.requests![0].protocol.http!.method)}, *u)\n`;
   if (hasBinaryResponse(op.responses!)) {
