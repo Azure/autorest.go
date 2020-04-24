@@ -7,6 +7,8 @@ package lrogroup
 
 import (
 	"context"
+	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
 )
@@ -23,23 +25,69 @@ type lrOSCustomHeaderPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSCustomHeaderPost202Retry200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSCustomHeaderPost202Retry200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) (*LrOSCustomHeaderPost202Retry200Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post202Retry200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSCustomHeaderPost202Retry200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPost202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSCustomHeaderPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -54,23 +102,69 @@ type lrOSCustomHeaderPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSCustomHeaderPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
@@ -85,23 +179,69 @@ type lrOSCustomHeaderPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSCustomHeaderPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -116,23 +256,69 @@ type lrOSCustomHeaderPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDelete202NoRetry204Poller provides polling facilities until the operation completes
@@ -147,23 +333,69 @@ type lrOSDelete202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDelete202NoRetry204Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDelete202NoRetry204Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.delete202NoRetry204HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDelete202NoRetry204Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDelete202NoRetry204Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDelete202Retry200Poller provides polling facilities until the operation completes
@@ -178,23 +410,69 @@ type lrOSDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDelete202Retry200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDelete202Retry200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.delete202Retry200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDelete202Retry200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDelete202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDelete204SucceededPoller provides polling facilities until the operation completes
@@ -209,23 +487,69 @@ type lrOSDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDelete204SucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDelete204SucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.delete204SucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDelete204SucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDelete204SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -240,23 +564,69 @@ type lrOSDeleteAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncNoHeaderInRetryHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
@@ -271,23 +641,69 @@ type lrOSDeleteAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncNoRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncRetryFailedPoller provides polling facilities until the operation completes
@@ -302,23 +718,69 @@ type lrOSDeleteAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteAsyncRetryFailedPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteAsyncRetryFailedPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetryFailedResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRetryFailedHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteAsyncRetryFailedPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncRetryFailedPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -333,23 +795,69 @@ type lrOSDeleteAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteAsyncRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteAsyncRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncRetrycanceledPoller provides polling facilities until the operation completes
@@ -364,23 +872,69 @@ type lrOSDeleteAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteAsyncRetrycanceledPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRetrycanceledHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteAsyncRetrycanceledPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncRetrycanceledPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -395,23 +949,69 @@ type lrOSDeleteNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteNoHeaderInRetryPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteNoHeaderInRetryPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteNoHeaderInRetryResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteNoHeaderInRetryHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteNoHeaderInRetryPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
@@ -426,23 +1026,69 @@ type lrOSDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation completes
@@ -457,23 +1103,69 @@ type lrOSDeleteProvisioning202DeletingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteProvisioning202DeletingFailed200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation completes
@@ -488,23 +1180,69 @@ type lrOSDeleteProvisioning202Deletingcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteProvisioning202Deletingcanceled200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPost200WithPayloadPoller provides polling facilities until the operation completes
@@ -519,23 +1257,69 @@ type lrOSPost200WithPayloadPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPost200WithPayloadPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPost200WithPayloadPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post200WithPayloadHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPost200WithPayloadPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPost200WithPayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPost202NoRetry204Poller provides polling facilities until the operation completes
@@ -550,23 +1334,69 @@ type lrOSPost202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPost202NoRetry204Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPost202NoRetry204Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post202NoRetry204HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPost202NoRetry204Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPost202NoRetry204Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPost202Retry200Poller provides polling facilities until the operation completes
@@ -581,23 +1411,69 @@ type lrOSPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPost202Retry200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPost202Retry200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) (*LrOSPost202Retry200Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post202Retry200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPost202Retry200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPost202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
@@ -612,23 +1488,69 @@ type lrOSPostAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPostAsyncNoRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncNoRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPostAsyncNoRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncNoRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncRetryFailedPoller provides polling facilities until the operation completes
@@ -643,23 +1565,69 @@ type lrOSPostAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPostAsyncRetryFailedPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPostAsyncRetryFailedPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetryFailedResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRetryFailedHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPostAsyncRetryFailedPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncRetryFailedPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -674,23 +1642,69 @@ type lrOSPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPostAsyncRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPostAsyncRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPostAsyncRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncRetrycanceledPoller provides polling facilities until the operation completes
@@ -705,23 +1719,69 @@ type lrOSPostAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPostAsyncRetrycanceledPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPostAsyncRetrycanceledPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetrycanceledResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRetrycanceledHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPostAsyncRetrycanceledPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncRetrycanceledPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation completes
@@ -736,23 +1796,69 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation completes
@@ -767,23 +1873,69 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postDoubleHeadersFinalAzureHeaderGetHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation completes
@@ -798,23 +1950,69 @@ type lrOSPostDoubleHeadersFinalLocationGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postDoubleHeadersFinalLocationGetHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200Acceptedcanceled200Poller provides polling facilities until the operation completes
@@ -829,23 +2027,69 @@ type lrOSPut200Acceptedcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPut200Acceptedcanceled200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPut200Acceptedcanceled200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put200Acceptedcanceled200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPut200Acceptedcanceled200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPut200Acceptedcanceled200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200SucceededNoStatePoller provides polling facilities until the operation completes
@@ -860,23 +2104,69 @@ type lrOSPut200SucceededNoStatePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPut200SucceededNoStatePoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPut200SucceededNoStatePoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put200SucceededNoStateHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPut200SucceededNoStatePoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPut200SucceededNoStatePoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200SucceededPoller provides polling facilities until the operation completes
@@ -891,23 +2181,69 @@ type lrOSPut200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPut200SucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPut200SucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put200SucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPut200SucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPut200SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200UpdatingSucceeded204Poller provides polling facilities until the operation completes
@@ -922,23 +2258,69 @@ type lrOSPut200UpdatingSucceeded204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPut200UpdatingSucceeded204Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPut200UpdatingSucceeded204Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put200UpdatingSucceeded204HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPut200UpdatingSucceeded204Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPut200UpdatingSucceeded204Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut201CreatingFailed200Poller provides polling facilities until the operation completes
@@ -953,23 +2335,69 @@ type lrOSPut201CreatingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPut201CreatingFailed200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPut201CreatingFailed200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put201CreatingFailed200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPut201CreatingFailed200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPut201CreatingFailed200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
@@ -984,23 +2412,69 @@ type lrOSPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPut201CreatingSucceeded200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPut201CreatingSucceeded200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPut201CreatingSucceeded200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPut201CreatingSucceeded200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut202Retry200Poller provides polling facilities until the operation completes
@@ -1015,23 +2489,69 @@ type lrOSPut202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPut202Retry200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPut202Retry200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put202Retry200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPut202Retry200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPut202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -1046,23 +2566,69 @@ type lrOSPutAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncNoHeaderInRetryHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
@@ -1077,23 +2643,69 @@ type lrOSPutAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutAsyncNoRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncNoRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutAsyncNoRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNoRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNoRetrycanceledPoller provides polling facilities until the operation completes
@@ -1108,23 +2720,69 @@ type lrOSPutAsyncNoRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutAsyncNoRetrycanceledPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncNoRetrycanceledHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutAsyncNoRetrycanceledPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNoRetrycanceledPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNonResourcePoller provides polling facilities until the operation completes
@@ -1139,23 +2797,69 @@ type lrOSPutAsyncNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutAsyncNonResourcePoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutAsyncNonResourcePoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncNonResourceHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutAsyncNonResourcePoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNonResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncRetryFailedPoller provides polling facilities until the operation completes
@@ -1170,23 +2874,69 @@ type lrOSPutAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutAsyncRetryFailedPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutAsyncRetryFailedPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRetryFailedHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutAsyncRetryFailedPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncRetryFailedPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -1201,23 +2951,69 @@ type lrOSPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutAsyncRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutAsyncRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutAsyncRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncSubResourcePoller provides polling facilities until the operation completes
@@ -1232,23 +3028,69 @@ type lrOSPutAsyncSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutAsyncSubResourcePoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutAsyncSubResourcePoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncSubResourceHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutAsyncSubResourcePoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncSubResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -1263,23 +3105,69 @@ type lrOSPutNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutNoHeaderInRetryPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutNoHeaderInRetryPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putNoHeaderInRetryHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutNoHeaderInRetryPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutNonResourcePoller provides polling facilities until the operation completes
@@ -1294,23 +3182,69 @@ type lrOSPutNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutNonResourcePoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutNonResourcePoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putNonResourceHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutNonResourcePoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutNonResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutSubResourcePoller provides polling facilities until the operation completes
@@ -1325,23 +3259,69 @@ type lrOSPutSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrOSPutSubResourcePoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrOSPutSubResourcePoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putSubResourceHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrOSPutSubResourcePoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrOSPutSubResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysDelete202Retry200Poller provides polling facilities until the operation completes
@@ -1356,23 +3336,69 @@ type lroRetrysDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lroRetrysDelete202Retry200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lroRetrysDelete202Retry200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) (*LroRetrysDelete202Retry200Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.delete202Retry200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lroRetrysDelete202Retry200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lroRetrysDelete202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysDeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
@@ -1387,23 +3413,69 @@ type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRelativeRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
@@ -1418,23 +3490,69 @@ type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPost202Retry200Poller provides polling facilities until the operation completes
@@ -1449,23 +3567,69 @@ type lroRetrysPost202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lroRetrysPost202Retry200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lroRetrysPost202Retry200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) (*LroRetrysPost202Retry200Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post202Retry200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lroRetrysPost202Retry200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lroRetrysPost202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
@@ -1480,23 +3644,69 @@ type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRelativeRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
@@ -1511,23 +3721,69 @@ type lroRetrysPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lroRetrysPut201CreatingSucceeded200Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lroRetrysPut201CreatingSucceeded200Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lroRetrysPut201CreatingSucceeded200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPutAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
@@ -1542,23 +3798,69 @@ type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRelativeRetrySucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDelete202NonRetry400Poller provides polling facilities until the operation completes
@@ -1573,23 +3875,69 @@ type lrosaDsDelete202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDelete202NonRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDelete202NonRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDelete202NonRetry400Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.delete202NonRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDelete202NonRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDelete202NonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDelete202RetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -1604,23 +3952,69 @@ type lrosaDsDelete202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.delete202RetryInvalidHeaderHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDelete204SucceededPoller provides polling facilities until the operation completes
@@ -1635,23 +4029,69 @@ type lrosaDsDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDelete204SucceededPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDelete204SucceededPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.delete204SucceededHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDelete204SucceededPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDelete204SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetry400Poller provides polling facilities until the operation completes
@@ -1666,23 +4106,69 @@ type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRelativeRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -1697,23 +4183,69 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
@@ -1728,23 +4260,69 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
@@ -1759,23 +4337,69 @@ type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteAsyncRelativeRetryNoStatusHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteNonRetry400Poller provides polling facilities until the operation completes
@@ -1790,23 +4414,69 @@ type lrosaDsDeleteNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerDelete
+	pt *pollingTrackerDelete
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsDeleteNonRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsDeleteNonRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteNonRetry400Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.deleteNonRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsDeleteNonRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteNonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPost202NoLocationPoller provides polling facilities until the operation completes
@@ -1821,23 +4491,69 @@ type lrosaDsPost202NoLocationPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPost202NoLocationPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPost202NoLocationPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) (*LrosaDsPost202NoLocationResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post202NoLocationHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPost202NoLocationPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPost202NoLocationPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPost202NonRetry400Poller provides polling facilities until the operation completes
@@ -1852,23 +4568,69 @@ type lrosaDsPost202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPost202NonRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPost202NonRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPost202NonRetry400Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post202NonRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPost202NonRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPost202NonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPost202RetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -1883,23 +4645,69 @@ type lrosaDsPost202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.post202RetryInvalidHeaderHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetry400Poller provides polling facilities until the operation completes
@@ -1914,23 +4722,69 @@ type lrosaDsPostAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRelativeRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -1945,23 +4799,69 @@ type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
@@ -1976,23 +4876,69 @@ type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation completes
@@ -2007,23 +4953,69 @@ type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postAsyncRelativeRetryNoPayloadHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostNonRetry400Poller provides polling facilities until the operation completes
@@ -2038,23 +5030,69 @@ type lrosaDsPostNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPost
+	pt *pollingTrackerPost
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPostNonRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPostNonRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostNonRetry400Response, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.postNonRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPostNonRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPostNonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPut200InvalidJsonPoller provides polling facilities until the operation completes
@@ -2069,23 +5107,69 @@ type lrosaDsPut200InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPut200InvalidJSONPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPut200InvalidJSONPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.put200InvalidJsonHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPut200InvalidJSONPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPut200InvalidJSONPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetry400Poller provides polling facilities until the operation completes
@@ -2100,23 +5184,69 @@ type lrosaDsPutAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRelativeRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -2131,23 +5261,69 @@ type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
@@ -2162,23 +5338,69 @@ type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation completes
@@ -2193,23 +5415,69 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRelativeRetryNoStatusPayloadHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
@@ -2224,23 +5492,69 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putAsyncRelativeRetryNoStatusHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutError201NoProvisioningStatePayloadPoller provides polling facilities until the operation completes
@@ -2255,23 +5569,69 @@ type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putError201NoProvisioningStatePayloadHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutNonRetry201Creating400InvalidJsonPoller provides polling facilities until the operation completes
@@ -2286,23 +5646,69 @@ type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putNonRetry201Creating400InvalidJsonHandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutNonRetry201Creating400Poller provides polling facilities until the operation completes
@@ -2317,23 +5723,69 @@ type lrosaDsPutNonRetry201Creating400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutNonRetry201Creating400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutNonRetry201Creating400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putNonRetry201Creating400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutNonRetry201Creating400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutNonRetry201Creating400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutNonRetry400Poller provides polling facilities until the operation completes
@@ -2348,21 +5800,67 @@ type lrosaDsPutNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	// pt *pollingTrackerPut
+	pt *pollingTrackerPut
 }
 
+// Done returns true if the polling operation has terminated either in a success case or failure case,
+// otherwise it will return false
 func (p *lrosaDsPutNonRetry400Poller) Done() bool {
-	return false
+	return p.pt.hasTerminated()
 }
 
+// ID ...
 func (p *lrosaDsPutNonRetry400Poller) ID() string {
-	return "NYI"
+	return ""
 }
 
 func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	return nil, nil
+	done, err := p.doneWithContext(ctx)
+	if done {
+		resp := p.response()
+		result, err := p.client.putNonRetry400HandleResponse(resp)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	return nil, nil
+}
+
+// Response returns the last HTTP response.
+func (p *lrosaDsPutNonRetry400Poller) response() *azcore.Response {
+	if p.pt == nil {
+		return nil
+	}
+	return p.pt.latestResponse()
+}
+
+// doneWithContext queries the service to see if the operation has completed.
+func (p *lrosaDsPutNonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
+	if p.pt == nil {
+		return false, errors.New("poller is not initialized")
+	}
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
+	}
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+		return false, err
+	}
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
+	}
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := p.pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := p.pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }

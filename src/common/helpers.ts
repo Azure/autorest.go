@@ -44,9 +44,11 @@ export function isPageableOperation(op: Operation): boolean {
 
 export interface PollerInfo {
   name: string;
+  operationName: string;
   schema: Schema;
   client: string;
   pollingMethod: string; // adding method to determine polling tracker type
+  pollingError: Schema;
 }
 
 // returns true if the operation is a long-running operation
