@@ -8,6 +8,7 @@ const goMappings = {
     //'additionalpropertiesgroup': 'additionalProperties.json',
     'arraygroup': 'body-array.json',
     'azurereportgroup': 'azure-report.json',
+    'azurespecialsgroup': 'azure-special-properties.json',
     'booleangroup': 'body-boolean.json',
     'bytegroup': 'body-byte.json',
     'complexgroup': 'body-complex.json',
