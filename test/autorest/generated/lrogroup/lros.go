@@ -110,16 +110,12 @@ func (client *lrOSOperations) BeginDelete202NoRetry204(ctx context.Context) (LrO
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDelete202NoRetry204Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -152,16 +148,12 @@ func (client *lrOSOperations) BeginDelete202Retry200(ctx context.Context) (LrOSD
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDelete202Retry200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -194,16 +186,12 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (LrOS
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDelete204SucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -235,16 +223,12 @@ func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteAsyncNoHeaderInRetryPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -280,16 +264,12 @@ func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteAsyncNoRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -336,16 +316,12 @@ func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteAsyncRetryFailedPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -392,16 +368,12 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteAsyncRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -448,16 +420,12 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteAsyncRetrycanceledPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -504,16 +472,12 @@ func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (L
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteNoHeaderInRetryPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -549,16 +513,12 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteProvisioning202Accepted200SucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -591,16 +551,12 @@ func (client *lrOSOperations) BeginDeleteProvisioning202DeletingFailed200(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteProvisioning202DeletingFailed200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -633,16 +589,12 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Deletingcanceled200(ctx 
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerDelete{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSDeleteProvisioning202Deletingcanceled200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -675,16 +627,12 @@ func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (LrOS
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPost200WithPayloadPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -717,16 +665,12 @@ func (client *lrOSOperations) BeginPost202NoRetry204(ctx context.Context, lrOSPo
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPost202NoRetry204Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -762,16 +706,12 @@ func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPost202Retry200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -818,16 +758,12 @@ func (client *lrOSOperations) BeginPostAsyncNoRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPostAsyncNoRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -863,16 +799,12 @@ func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrO
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPostAsyncRetryFailedPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -922,16 +854,12 @@ func (client *lrOSOperations) BeginPostAsyncRetrySucceeded(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPostAsyncRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -967,16 +895,12 @@ func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPostAsyncRetrycanceledPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1026,16 +950,12 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPostDoubleHeadersFinalAzureHeaderGetPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1068,16 +988,12 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(c
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1110,16 +1026,12 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalLocationGet(ctx context
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPostDoubleHeadersFinalLocationGetPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1152,16 +1064,12 @@ func (client *lrOSOperations) BeginPut200Acceptedcanceled200(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPut200Acceptedcanceled200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1197,16 +1105,12 @@ func (client *lrOSOperations) BeginPut200Succeeded(ctx context.Context, lrOSPut2
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPut200SucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1242,16 +1146,12 @@ func (client *lrOSOperations) BeginPut200SucceededNoState(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPut200SucceededNoStatePoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1287,16 +1187,12 @@ func (client *lrOSOperations) BeginPut200UpdatingSucceeded204(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPut200UpdatingSucceeded204Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1332,16 +1228,12 @@ func (client *lrOSOperations) BeginPut201CreatingFailed200(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPut201CreatingFailed200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1377,16 +1269,12 @@ func (client *lrOSOperations) BeginPut201CreatingSucceeded200(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPut201CreatingSucceeded200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1422,16 +1310,12 @@ func (client *lrOSOperations) BeginPut202Retry200(ctx context.Context, lrOSPut20
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPut202Retry200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1467,16 +1351,12 @@ func (client *lrOSOperations) BeginPutAsyncNoHeaderInRetry(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutAsyncNoHeaderInRetryPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1512,16 +1392,12 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrySucceeded(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutAsyncNoRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1557,16 +1433,12 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrycanceled(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutAsyncNoRetrycanceledPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1602,16 +1474,12 @@ func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutAsyncNonResourcePoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1647,16 +1515,12 @@ func (client *lrOSOperations) BeginPutAsyncRetryFailed(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutAsyncRetryFailedPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1692,16 +1556,12 @@ func (client *lrOSOperations) BeginPutAsyncRetrySucceeded(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutAsyncRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1737,16 +1597,12 @@ func (client *lrOSOperations) BeginPutAsyncSubResource(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutAsyncSubResourcePoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1782,16 +1638,12 @@ func (client *lrOSOperations) BeginPutNoHeaderInRetry(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutNoHeaderInRetryPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1827,16 +1679,12 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutNonResourcePoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -1872,16 +1720,12 @@ func (client *lrOSOperations) BeginPutSubResource(ctx context.Context, lrOSPutSu
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSPutSubResourcePoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }

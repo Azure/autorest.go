@@ -25,7 +25,7 @@ type lrOSCustomHeaderPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -102,7 +102,7 @@ type lrOSCustomHeaderPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -179,7 +179,7 @@ type lrOSCustomHeaderPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -256,7 +256,7 @@ type lrOSCustomHeaderPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -333,7 +333,7 @@ type lrOSDelete202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -410,7 +410,7 @@ type lrOSDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -487,7 +487,7 @@ type lrOSDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -564,7 +564,7 @@ type lrOSDeleteAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -641,7 +641,7 @@ type lrOSDeleteAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -718,7 +718,7 @@ type lrOSDeleteAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -795,7 +795,7 @@ type lrOSDeleteAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -872,7 +872,7 @@ type lrOSDeleteAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -949,7 +949,7 @@ type lrOSDeleteNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1026,7 +1026,7 @@ type lrOSDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1103,7 +1103,7 @@ type lrOSDeleteProvisioning202DeletingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1180,7 +1180,7 @@ type lrOSDeleteProvisioning202Deletingcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1257,7 +1257,7 @@ type lrOSPost200WithPayloadPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1334,7 +1334,7 @@ type lrOSPost202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1411,7 +1411,7 @@ type lrOSPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1488,7 +1488,7 @@ type lrOSPostAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1565,7 +1565,7 @@ type lrOSPostAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1642,7 +1642,7 @@ type lrOSPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1719,7 +1719,7 @@ type lrOSPostAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1796,7 +1796,7 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1873,7 +1873,7 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -1950,7 +1950,7 @@ type lrOSPostDoubleHeadersFinalLocationGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2027,7 +2027,7 @@ type lrOSPut200Acceptedcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2104,7 +2104,7 @@ type lrOSPut200SucceededNoStatePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2181,7 +2181,7 @@ type lrOSPut200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2258,7 +2258,7 @@ type lrOSPut200UpdatingSucceeded204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2335,7 +2335,7 @@ type lrOSPut201CreatingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2412,7 +2412,7 @@ type lrOSPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2489,7 +2489,7 @@ type lrOSPut202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2566,7 +2566,7 @@ type lrOSPutAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2643,7 +2643,7 @@ type lrOSPutAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2720,7 +2720,7 @@ type lrOSPutAsyncNoRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2797,7 +2797,7 @@ type lrOSPutAsyncNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2874,7 +2874,7 @@ type lrOSPutAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -2951,7 +2951,7 @@ type lrOSPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3028,7 +3028,7 @@ type lrOSPutAsyncSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3105,7 +3105,7 @@ type lrOSPutNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3182,7 +3182,7 @@ type lrOSPutNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3259,7 +3259,7 @@ type lrOSPutSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3336,7 +3336,7 @@ type lroRetrysDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3413,7 +3413,7 @@ type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3490,7 +3490,7 @@ type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3567,7 +3567,7 @@ type lroRetrysPost202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3644,7 +3644,7 @@ type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3721,7 +3721,7 @@ type lroRetrysPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3798,7 +3798,7 @@ type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3875,7 +3875,7 @@ type lrosaDsDelete202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -3952,7 +3952,7 @@ type lrosaDsDelete202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4029,7 +4029,7 @@ type lrosaDsDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4106,7 +4106,7 @@ type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4183,7 +4183,7 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4260,7 +4260,7 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4337,7 +4337,7 @@ type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4414,7 +4414,7 @@ type lrosaDsDeleteNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerDelete
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4491,7 +4491,7 @@ type lrosaDsPost202NoLocationPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4568,7 +4568,7 @@ type lrosaDsPost202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4645,7 +4645,7 @@ type lrosaDsPost202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4722,7 +4722,7 @@ type lrosaDsPostAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4799,7 +4799,7 @@ type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4876,7 +4876,7 @@ type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -4953,7 +4953,7 @@ type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5030,7 +5030,7 @@ type lrosaDsPostNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPost
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5107,7 +5107,7 @@ type lrosaDsPut200InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5184,7 +5184,7 @@ type lrosaDsPutAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5261,7 +5261,7 @@ type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5338,7 +5338,7 @@ type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5415,7 +5415,7 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5492,7 +5492,7 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5569,7 +5569,7 @@ type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5646,7 +5646,7 @@ type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5723,7 +5723,7 @@ type lrosaDsPutNonRetry201Creating400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
@@ -5800,7 +5800,7 @@ type lrosaDsPutNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt *pollingTrackerPut
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,

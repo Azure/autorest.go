@@ -40,16 +40,12 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSCustomHeaderPost202Retry200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -96,16 +92,12 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSCustomHeaderPostAsyncRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -155,16 +147,12 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSCustomHeaderPut201CreatingSucceeded200Poller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -200,16 +188,12 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt := pollingTrackerPut{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
+	pt, err := createPollingTracker(resp)
 	if err != nil {
 		return nil, err
 	}
 	return &lrOSCustomHeaderPutAsyncRetrySucceededPoller{
-		pt:     &pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }

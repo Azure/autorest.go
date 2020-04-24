@@ -54,7 +54,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 			helpers.VerifyStatusCode(t, w.RawResponse, 204)
 			break
 		}
-		time.Sleep(1 * time.Second)
+		time.Sleep(200 * time.Millisecond)
 	}
 
 }
@@ -74,7 +74,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 			helpers.VerifyStatusCode(t, w.RawResponse, 200)
 			break
 		}
-		time.Sleep(1 * time.Second)
+		time.Sleep(200 * time.Millisecond)
 	}
 
 }

@@ -283,17 +283,13 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    text += `\tpt := pollingTracker${pascalCase(op.requests![0].protocol.http!.method)}{\n`;
-    text += `\t\tpollingTrackerBase: pollingTrackerBase{\n`;
-    text += `\t\t\tresp: resp,\n`;
-    text += `\t\t}}\n`;
-    text += `\terr = pt.initializeState()\n`;
+    text += `\tpt, err := createPollingTracker(resp)\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
     // closing braces
     text += `\treturn &${op.language.go!.pollerType.name}{\n`;
-    text += `\t\tpt: &pt,\n`;
+    text += `\t\tpt: pt,\n`;
     text += `\t\tclient: client,\n`;
     text += `\t}, nil\n`;
     text += '}\n\n';

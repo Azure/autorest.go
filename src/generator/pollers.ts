@@ -49,7 +49,7 @@ type ${poller.name} struct {
 	// the client for making the request
 	client *${poller.client}
 	// polling tracker
-	pt *pollingTracker${pascalCase(poller.pollingMethod)}
+	pt pollingTracker
 }
 
 // Done returns true if the polling operation has terminated either in a success case or failure case,
