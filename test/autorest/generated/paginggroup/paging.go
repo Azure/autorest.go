@@ -273,23 +273,6 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 func (client *pagingOperations) BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (ProductResultPager, error) {
-	req, err := client.getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions)
-	if err != nil {
-		return nil, err
-	}
-	// send the first request to initialize the poller
-	resp, err := client.p.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	pt := pollingTrackerPost{
-		pollingTrackerBase: pollingTrackerBase{
-			resp: resp,
-		}}
-	err = pt.initializeState()
-	if err != nil {
-		return nil, err
-	}
 	return nil, nil
 }
 

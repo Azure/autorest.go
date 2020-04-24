@@ -143,7 +143,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	imports.add('errors');
 	text += imports.text();
 	let errorCtor = pollers[0].pollingError.language.go!.constructorName;
-	// schemaError.language.go!.constructorName
+	// TODO separate this into manageable chunks of text by section of functionality
 	  text += `
 	  const (
 		headerAsyncOperation = "Azure-AsyncOperation"

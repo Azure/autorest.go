@@ -268,6 +268,12 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
+    // TODO remove LRO for pageable responses NYI
+    if (op.extensions!['x-ms-pageable']) {
+      text += `\treturn nil, nil`;
+      text += '}\n\n';
+      return text;
+    }
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
@@ -285,12 +291,6 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    // TODO remove LRO for pageable responses NYI
-    if (op.extensions!['x-ms-pageable']) {
-      text += `\treturn nil, nil`;
-      text += '}\n\n';
-      return text;
-    }
     // closing braces
     text += `\treturn &${op.language.go!.pollerType.name}{\n`;
     text += `\t\tpt: &pt,\n`;
