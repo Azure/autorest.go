@@ -6,7 +6,6 @@
 package lrogroup
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -63,7 +62,7 @@ type pollingTracker interface {
 	pollingError() error
 
 	// returns the polling method being used
-	pollingMethod() PollingMethodType
+	pollingMethod() pollingMethodType
 
 	// returns the state of the LRO as returned from the service
 	pollingStatus() string
@@ -98,7 +97,7 @@ type pollingTrackerBase struct {
 	rawBody map[string]interface{}
 
 	// denotes if polling is using async-operation or location header
-	Pm PollingMethodType `json:"pollingMethod"`
+	Pm pollingMethodType `json:"pollingMethod"`
 
 	// the URL to poll for status
 	URI string `json:"pollingURI"`
@@ -172,8 +171,6 @@ func (pt *pollingTrackerBase) updateRawBody() error {
 		if len(b) == 0 {
 			return nil
 		}
-		// put the body back so it's available to other callers
-		pt.resp.Body = ioutil.NopCloser(bytes.NewReader(b))
 		if err = json.Unmarshal(b, &pt.rawBody); err != nil {
 			return errors.New("failed to unmarshal response body")
 		}
@@ -212,7 +209,7 @@ func (pt *pollingTrackerBase) updateErrorFromResponse() {
 }
 
 func (pt *pollingTrackerBase) updatePollingState(provStateApl bool) error {
-	if pt.Pm == PollingAsyncOperation && pt.rawBody["status"] != nil {
+	if pt.Pm == pollingAsyncOperation && pt.rawBody["status"] != nil {
 		pt.State = pt.rawBody["status"].(string)
 	} else {
 		if pt.resp.StatusCode == http.StatusAccepted {
@@ -241,7 +238,7 @@ func (pt pollingTrackerBase) pollingError() error {
 	return pt.Err
 }
 
-func (pt pollingTrackerBase) pollingMethod() PollingMethodType {
+func (pt pollingTrackerBase) pollingMethod() pollingMethodType {
 	return pt.Pm
 }
 
@@ -276,7 +273,7 @@ func (pt pollingTrackerBase) latestResponse() *azcore.Response {
 // error checking common to all trackers
 func (pt pollingTrackerBase) baseCheckForErrors() error {
 	// for Azure-AsyncOperations the response body cannot be nil or empty
-	if pt.Pm == PollingAsyncOperation {
+	if pt.Pm == pollingAsyncOperation {
 		if pt.resp.Body == nil || pt.resp.ContentLength == 0 {
 			return errors.New("for Azure-AsyncOperation response body cannot be nil")
 		}
@@ -293,14 +290,14 @@ func (pt *pollingTrackerBase) initPollingMethod() error {
 		return err
 	} else if ao != "" {
 		pt.URI = ao
-		pt.Pm = PollingAsyncOperation
+		pt.Pm = pollingAsyncOperation
 		return nil
 	}
 	if lh, err := getURLFromLocationHeader(pt.resp); err != nil {
 		return err
 	} else if lh != "" {
 		pt.URI = lh
-		pt.Pm = PollingLocation
+		pt.Pm = pollingLocation
 		return nil
 	}
 	// it's ok if we didn't find a polling header, this will be handled elsewhere
@@ -323,7 +320,7 @@ func (pt *pollingTrackerDelete) updatePollingMethod() error {
 		} else {
 			pt.URI = lh
 		}
-		pt.Pm = PollingLocation
+		pt.Pm = pollingLocation
 		pt.FinalGetURI = pt.URI
 	}
 	// for 202 prefer the Azure-AsyncOperation header but fall back to Location if necessary
@@ -333,7 +330,7 @@ func (pt *pollingTrackerDelete) updatePollingMethod() error {
 			return err
 		} else if ao != "" {
 			pt.URI = ao
-			pt.Pm = PollingAsyncOperation
+			pt.Pm = pollingAsyncOperation
 		}
 		// if the Location header is invalid and we already have a polling URL
 		// then we don't care if the Location header URL is malformed.
@@ -342,7 +339,7 @@ func (pt *pollingTrackerDelete) updatePollingMethod() error {
 		} else if lh != "" {
 			if ao == "" {
 				pt.URI = lh
-				pt.Pm = PollingLocation
+				pt.Pm = pollingLocation
 			}
 			// when both headers are returned we use the value in the Location header for the final GET
 			pt.FinalGetURI = lh
@@ -377,8 +374,8 @@ func (pt *pollingTrackerPatch) updatePollingMethod() error {
 	if pt.FinalGetURI == "" {
 		pt.FinalGetURI = pt.resp.Request.URL.String()
 	}
-	if pt.Pm == PollingUnknown {
-		pt.Pm = PollingRequestURI
+	if pt.Pm == pollingUnknown {
+		pt.Pm = pollingRequestURI
 	}
 	// for 201 it's permissible for no headers to be returned
 	if pt.resp.StatusCode == http.StatusCreated {
@@ -386,7 +383,7 @@ func (pt *pollingTrackerPatch) updatePollingMethod() error {
 			return err
 		} else if ao != "" {
 			pt.URI = ao
-			pt.Pm = PollingAsyncOperation
+			pt.Pm = pollingAsyncOperation
 		}
 	}
 	// for 202 prefer the Azure-AsyncOperation header but fall back to Location if necessary
@@ -397,7 +394,7 @@ func (pt *pollingTrackerPatch) updatePollingMethod() error {
 			return err
 		} else if ao != "" {
 			pt.URI = ao
-			pt.Pm = PollingAsyncOperation
+			pt.Pm = pollingAsyncOperation
 		}
 		if ao == "" {
 			if lh, err := getURLFromLocationHeader(pt.resp); err != nil {
@@ -406,7 +403,7 @@ func (pt *pollingTrackerPatch) updatePollingMethod() error {
 				return errors.New("didn't get any suitable polling URLs in 202 response")
 			} else {
 				pt.URI = lh
-				pt.Pm = PollingLocation
+				pt.Pm = pollingLocation
 			}
 		}
 	}
@@ -437,7 +434,7 @@ func (pt *pollingTrackerPost) updatePollingMethod() error {
 		} else {
 			pt.URI = lh
 			pt.FinalGetURI = lh
-			pt.Pm = PollingLocation
+			pt.Pm = pollingLocation
 		}
 	}
 	// for 202 prefer the Azure-AsyncOperation header but fall back to Location if necessary
@@ -447,7 +444,7 @@ func (pt *pollingTrackerPost) updatePollingMethod() error {
 			return err
 		} else if ao != "" {
 			pt.URI = ao
-			pt.Pm = PollingAsyncOperation
+			pt.Pm = pollingAsyncOperation
 		}
 		// if the Location header is invalid and we already have a polling URL
 		// then we don't care if the Location header URL is malformed.
@@ -456,7 +453,7 @@ func (pt *pollingTrackerPost) updatePollingMethod() error {
 		} else if lh != "" {
 			if ao == "" {
 				pt.URI = lh
-				pt.Pm = PollingLocation
+				pt.Pm = pollingLocation
 			}
 			// when both headers are returned we use the value in the Location header for the final GET
 			pt.FinalGetURI = lh
@@ -491,8 +488,8 @@ func (pt *pollingTrackerPut) updatePollingMethod() error {
 	if pt.FinalGetURI == "" {
 		pt.FinalGetURI = pt.resp.Request.URL.String()
 	}
-	if pt.Pm == PollingUnknown {
-		pt.Pm = PollingRequestURI
+	if pt.Pm == pollingUnknown {
+		pt.Pm = pollingRequestURI
 	}
 	// for 201 it's permissible for no headers to be returned
 	if pt.resp.StatusCode == http.StatusCreated {
@@ -500,7 +497,7 @@ func (pt *pollingTrackerPut) updatePollingMethod() error {
 			return err
 		} else if ao != "" {
 			pt.URI = ao
-			pt.Pm = PollingAsyncOperation
+			pt.Pm = pollingAsyncOperation
 		}
 	}
 	// for 202 prefer the Azure-AsyncOperation header but fall back to Location if necessary
@@ -510,7 +507,7 @@ func (pt *pollingTrackerPut) updatePollingMethod() error {
 			return err
 		} else if ao != "" {
 			pt.URI = ao
-			pt.Pm = PollingAsyncOperation
+			pt.Pm = pollingAsyncOperation
 		}
 		// if the Location header is invalid and we already have a polling URL
 		// then we don't care if the Location header URL is malformed.
@@ -519,7 +516,7 @@ func (pt *pollingTrackerPut) updatePollingMethod() error {
 		} else if lh != "" {
 			if ao == "" {
 				pt.URI = lh
-				pt.Pm = PollingLocation
+				pt.Pm = pollingLocation
 			}
 		}
 		// make sure a polling URL was found
@@ -610,19 +607,19 @@ func isValidURL(s string) bool {
 	return err == nil && u.IsAbs()
 }
 
-// PollingMethodType defines a type used for enumerating polling mechanisms.
-type PollingMethodType string
+// pollingMethodType defines a type used for enumerating polling mechanisms.
+type pollingMethodType string
 
 const (
-	// PollingAsyncOperation indicates the polling method uses the Azure-AsyncOperation header.
-	PollingAsyncOperation PollingMethodType = "AsyncOperation"
+	// pollingAsyncOperation indicates the polling method uses the Azure-AsyncOperation header.
+	pollingAsyncOperation pollingMethodType = "AsyncOperation"
 
-	// PollingLocation indicates the polling method uses the Location header.
-	PollingLocation PollingMethodType = "Location"
+	// pollingLocation indicates the polling method uses the Location header.
+	pollingLocation pollingMethodType = "Location"
 
-	// PollingRequestURI indicates the polling method uses the original request URI.
-	PollingRequestURI PollingMethodType = "RequestURI"
+	// pollingRequestURI indicates the polling method uses the original request URI.
+	pollingRequestURI pollingMethodType = "RequestURI"
 
-	// PollingUnknown indicates an unknown polling method and is the default value.
-	PollingUnknown PollingMethodType = ""
+	// pollingUnknown indicates an unknown polling method and is the default value.
+	pollingUnknown pollingMethodType = ""
 )
