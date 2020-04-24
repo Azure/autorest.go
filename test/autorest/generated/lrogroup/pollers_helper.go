@@ -232,9 +232,6 @@ func (pt *pollingTrackerBase) updatePollingState(provStateApl bool) error {
 }
 
 func (pt pollingTrackerBase) pollingError() error {
-	if pt.Err == nil {
-		return nil
-	}
 	return pt.Err
 }
 

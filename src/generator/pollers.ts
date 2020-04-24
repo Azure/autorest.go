@@ -24,7 +24,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
   imports.add('time');
-  imports.add('errors');
   text += imports.text();
 
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
@@ -64,16 +63,15 @@ func (p *${poller.name}) ID() string {
 }
 
 func (p *${poller.name}) Poll(ctx context.Context) (*${responseType}, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.${poller.operationName}HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.${poller.operationName}HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error) {
@@ -88,11 +86,8 @@ func (p *${poller.name}) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *${poller.name}) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *${poller.name}) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -359,9 +354,6 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	}
 	
 	func (pt pollingTrackerBase) pollingError() error {
-		if pt.Err == nil {
-			return nil
-		}
 		return pt.Err
 	}
 	

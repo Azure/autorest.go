@@ -7,7 +7,6 @@ package lrogroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
@@ -40,16 +39,15 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) ID() string {
 }
 
 func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) (*LrOSCustomHeaderPost202Retry200Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post202Retry200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post202Retry200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error) {
@@ -64,11 +62,8 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPost202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -117,16 +112,15 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
@@ -141,11 +135,8 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) response() *azcore.Respo
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -194,16 +185,15 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ID() string {
 }
 
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -218,11 +208,8 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -271,16 +258,15 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -295,11 +281,8 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) response() *azcore.Respon
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -348,16 +331,15 @@ func (p *lrOSDelete202NoRetry204Poller) ID() string {
 }
 
 func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.delete202NoRetry204HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.delete202NoRetry204HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -372,11 +354,8 @@ func (p *lrOSDelete202NoRetry204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDelete202NoRetry204Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDelete202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -425,16 +404,15 @@ func (p *lrOSDelete202Retry200Poller) ID() string {
 }
 
 func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.delete202Retry200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.delete202Retry200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -449,11 +427,8 @@ func (p *lrOSDelete202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDelete202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -502,16 +477,15 @@ func (p *lrOSDelete204SucceededPoller) ID() string {
 }
 
 func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.delete204SucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.delete204SucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
@@ -526,11 +500,8 @@ func (p *lrOSDelete204SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDelete204SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -579,16 +550,15 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ID() string {
 }
 
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncNoHeaderInRetryHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncNoHeaderInRetryHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
@@ -603,11 +573,8 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -656,16 +623,15 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncNoRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncNoRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
@@ -680,11 +646,8 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncNoRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -733,16 +696,15 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) ID() string {
 }
 
 func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetryFailedResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRetryFailedHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRetryFailedHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error) {
@@ -757,11 +719,8 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncRetryFailedPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -810,16 +769,15 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
@@ -834,11 +792,8 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -887,16 +842,15 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) ID() string {
 }
 
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRetrycanceledHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRetrycanceledHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
@@ -911,11 +865,8 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncRetrycanceledPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -964,16 +915,15 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) ID() string {
 }
 
 func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteNoHeaderInRetryResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteNoHeaderInRetryHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteNoHeaderInRetryHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error) {
@@ -988,11 +938,8 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1041,16 +988,15 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ID() string {
 }
 
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1065,11 +1011,8 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) response() *azcore
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1118,16 +1061,15 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ID() string {
 }
 
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteProvisioning202DeletingFailed200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteProvisioning202DeletingFailed200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1142,11 +1084,8 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1195,16 +1134,15 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ID() string {
 }
 
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteProvisioning202Deletingcanceled200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteProvisioning202Deletingcanceled200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1219,11 +1157,8 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) response() *azcore.
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1272,16 +1207,15 @@ func (p *lrOSPost200WithPayloadPoller) ID() string {
 }
 
 func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post200WithPayloadHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post200WithPayloadHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
@@ -1296,11 +1230,8 @@ func (p *lrOSPost200WithPayloadPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPost200WithPayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPost200WithPayloadPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1349,16 +1280,15 @@ func (p *lrOSPost202NoRetry204Poller) ID() string {
 }
 
 func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post202NoRetry204HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post202NoRetry204HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1373,11 +1303,8 @@ func (p *lrOSPost202NoRetry204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPost202NoRetry204Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPost202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1426,16 +1353,15 @@ func (p *lrOSPost202Retry200Poller) ID() string {
 }
 
 func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) (*LrOSPost202Retry200Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post202Retry200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post202Retry200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error) {
@@ -1450,11 +1376,8 @@ func (p *lrOSPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPost202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1503,16 +1426,15 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncNoRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncNoRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1527,11 +1449,8 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncNoRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1580,16 +1499,15 @@ func (p *lrOSPostAsyncRetryFailedPoller) ID() string {
 }
 
 func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetryFailedResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRetryFailedHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRetryFailedHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error) {
@@ -1604,11 +1522,8 @@ func (p *lrOSPostAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncRetryFailedPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1657,16 +1572,15 @@ func (p *lrOSPostAsyncRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1681,11 +1595,8 @@ func (p *lrOSPostAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1734,16 +1645,15 @@ func (p *lrOSPostAsyncRetrycanceledPoller) ID() string {
 }
 
 func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetrycanceledResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRetrycanceledHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRetrycanceledHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error) {
@@ -1758,11 +1668,8 @@ func (p *lrOSPostAsyncRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncRetrycanceledPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPostAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1811,16 +1718,15 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ID() string {
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1835,11 +1741,8 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) response() *azco
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1888,16 +1791,15 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ID() string {
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postDoubleHeadersFinalAzureHeaderGetHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postDoubleHeadersFinalAzureHeaderGetHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1912,11 +1814,8 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) response() *azcore.Resp
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -1965,16 +1864,15 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ID() string {
 }
 
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postDoubleHeadersFinalLocationGetHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postDoubleHeadersFinalLocationGetHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -1989,11 +1887,8 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) response() *azcore.Respons
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2042,16 +1937,15 @@ func (p *lrOSPut200Acceptedcanceled200Poller) ID() string {
 }
 
 func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put200Acceptedcanceled200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put200Acceptedcanceled200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2066,11 +1960,8 @@ func (p *lrOSPut200Acceptedcanceled200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPut200Acceptedcanceled200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPut200Acceptedcanceled200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2119,16 +2010,15 @@ func (p *lrOSPut200SucceededNoStatePoller) ID() string {
 }
 
 func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put200SucceededNoStateHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put200SucceededNoStateHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2143,11 +2033,8 @@ func (p *lrOSPut200SucceededNoStatePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPut200SucceededNoStatePoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPut200SucceededNoStatePoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2196,16 +2083,15 @@ func (p *lrOSPut200SucceededPoller) ID() string {
 }
 
 func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put200SucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put200SucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2220,11 +2106,8 @@ func (p *lrOSPut200SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPut200SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPut200SucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2273,16 +2156,15 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) ID() string {
 }
 
 func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put200UpdatingSucceeded204HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put200UpdatingSucceeded204HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2297,11 +2179,8 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPut200UpdatingSucceeded204Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPut200UpdatingSucceeded204Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2350,16 +2229,15 @@ func (p *lrOSPut201CreatingFailed200Poller) ID() string {
 }
 
 func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put201CreatingFailed200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put201CreatingFailed200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2374,11 +2252,8 @@ func (p *lrOSPut201CreatingFailed200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPut201CreatingFailed200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPut201CreatingFailed200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2427,16 +2302,15 @@ func (p *lrOSPut201CreatingSucceeded200Poller) ID() string {
 }
 
 func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2451,11 +2325,8 @@ func (p *lrOSPut201CreatingSucceeded200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPut201CreatingSucceeded200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2504,16 +2375,15 @@ func (p *lrOSPut202Retry200Poller) ID() string {
 }
 
 func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put202Retry200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put202Retry200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2528,11 +2398,8 @@ func (p *lrOSPut202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPut202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPut202Retry200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2581,16 +2448,15 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) ID() string {
 }
 
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncNoHeaderInRetryHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncNoHeaderInRetryHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2605,11 +2471,8 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2658,16 +2521,15 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncNoRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncNoRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2682,11 +2544,8 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNoRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2735,16 +2594,15 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) ID() string {
 }
 
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncNoRetrycanceledHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncNoRetrycanceledHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2759,11 +2617,8 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNoRetrycanceledPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNoRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2812,16 +2667,15 @@ func (p *lrOSPutAsyncNonResourcePoller) ID() string {
 }
 
 func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncNonResourceHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncNonResourceHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
@@ -2836,11 +2690,8 @@ func (p *lrOSPutAsyncNonResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNonResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncNonResourcePoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2889,16 +2740,15 @@ func (p *lrOSPutAsyncRetryFailedPoller) ID() string {
 }
 
 func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRetryFailedHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRetryFailedHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2913,11 +2763,8 @@ func (p *lrOSPutAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncRetryFailedPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -2966,16 +2813,15 @@ func (p *lrOSPutAsyncRetrySucceededPoller) ID() string {
 }
 
 func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -2990,11 +2836,8 @@ func (p *lrOSPutAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3043,16 +2886,15 @@ func (p *lrOSPutAsyncSubResourcePoller) ID() string {
 }
 
 func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncSubResourceHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncSubResourceHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
@@ -3067,11 +2909,8 @@ func (p *lrOSPutAsyncSubResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncSubResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutAsyncSubResourcePoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3120,16 +2959,15 @@ func (p *lrOSPutNoHeaderInRetryPoller) ID() string {
 }
 
 func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putNoHeaderInRetryHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putNoHeaderInRetryHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -3144,11 +2982,8 @@ func (p *lrOSPutNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutNoHeaderInRetryPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3197,16 +3032,15 @@ func (p *lrOSPutNonResourcePoller) ID() string {
 }
 
 func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putNonResourceHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putNonResourceHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
@@ -3221,11 +3055,8 @@ func (p *lrOSPutNonResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutNonResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutNonResourcePoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3274,16 +3105,15 @@ func (p *lrOSPutSubResourcePoller) ID() string {
 }
 
 func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putSubResourceHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putSubResourceHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
@@ -3298,11 +3128,8 @@ func (p *lrOSPutSubResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrOSPutSubResourcePoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrOSPutSubResourcePoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3351,16 +3178,15 @@ func (p *lroRetrysDelete202Retry200Poller) ID() string {
 }
 
 func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) (*LroRetrysDelete202Retry200Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.delete202Retry200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.delete202Retry200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error) {
@@ -3375,11 +3201,8 @@ func (p *lroRetrysDelete202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lroRetrysDelete202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lroRetrysDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3428,16 +3251,15 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ID() string {
 }
 
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRelativeRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRelativeRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
@@ -3452,11 +3274,8 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3505,16 +3324,15 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ID() string {
 }
 
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -3529,11 +3347,8 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) response() *a
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3582,16 +3397,15 @@ func (p *lroRetrysPost202Retry200Poller) ID() string {
 }
 
 func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) (*LroRetrysPost202Retry200Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post202Retry200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post202Retry200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error) {
@@ -3606,11 +3420,8 @@ func (p *lroRetrysPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lroRetrysPost202Retry200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lroRetrysPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3659,16 +3470,15 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ID() string {
 }
 
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRelativeRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRelativeRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
@@ -3683,11 +3493,8 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) response() *azcore.Resp
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3736,16 +3543,15 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) ID() string {
 }
 
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -3760,11 +3566,8 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) response() *azcore.Response 
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lroRetrysPut201CreatingSucceeded200Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lroRetrysPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3813,16 +3616,15 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ID() string {
 }
 
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRelativeRetrySucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRelativeRetrySucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -3837,11 +3639,8 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) response() *azcore.Respo
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3890,16 +3689,15 @@ func (p *lrosaDsDelete202NonRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDelete202NonRetry400Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.delete202NonRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.delete202NonRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error) {
@@ -3914,11 +3712,8 @@ func (p *lrosaDsDelete202NonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDelete202NonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDelete202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -3967,16 +3762,15 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ID() string {
 }
 
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.delete202RetryInvalidHeaderHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.delete202RetryInvalidHeaderHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
@@ -3991,11 +3785,8 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDelete202RetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4044,16 +3835,15 @@ func (p *lrosaDsDelete204SucceededPoller) ID() string {
 }
 
 func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.delete204SucceededHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.delete204SucceededHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
@@ -4068,11 +3858,8 @@ func (p *lrosaDsDelete204SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDelete204SucceededPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4121,16 +3908,15 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRelativeRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRelativeRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
@@ -4145,11 +3931,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4198,16 +3981,15 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ID() string {
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
@@ -4222,11 +4004,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4275,16 +4054,15 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
@@ -4299,11 +4077,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) response() *az
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4352,16 +4127,15 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ID() string {
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteAsyncRelativeRetryNoStatusHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteAsyncRelativeRetryNoStatusHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
@@ -4376,11 +4150,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) response() *azcore.Respo
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4429,16 +4200,15 @@ func (p *lrosaDsDeleteNonRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteNonRetry400Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.deleteNonRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.deleteNonRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error) {
@@ -4453,11 +4223,8 @@ func (p *lrosaDsDeleteNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteNonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsDeleteNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4506,16 +4273,15 @@ func (p *lrosaDsPost202NoLocationPoller) ID() string {
 }
 
 func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) (*LrosaDsPost202NoLocationResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post202NoLocationHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post202NoLocationHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error) {
@@ -4530,11 +4296,8 @@ func (p *lrosaDsPost202NoLocationPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPost202NoLocationPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPost202NoLocationPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4583,16 +4346,15 @@ func (p *lrosaDsPost202NonRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPost202NonRetry400Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post202NonRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post202NonRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error) {
@@ -4607,11 +4369,8 @@ func (p *lrosaDsPost202NonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPost202NonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPost202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4660,16 +4419,15 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) ID() string {
 }
 
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.post202RetryInvalidHeaderHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.post202RetryInvalidHeaderHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
@@ -4684,11 +4442,8 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPost202RetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4737,16 +4492,15 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRelativeRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRelativeRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
@@ -4761,11 +4515,8 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4814,16 +4565,15 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ID() string {
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
@@ -4838,11 +4588,8 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4891,16 +4638,15 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
@@ -4915,11 +4661,8 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) response() *azco
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -4968,16 +4711,15 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ID() string {
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postAsyncRelativeRetryNoPayloadHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postAsyncRelativeRetryNoPayloadHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
@@ -4992,11 +4734,8 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) response() *azcore.Respon
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5045,16 +4784,15 @@ func (p *lrosaDsPostNonRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostNonRetry400Response, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.postNonRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.postNonRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error) {
@@ -5069,11 +4807,8 @@ func (p *lrosaDsPostNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPostNonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPostNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5122,16 +4857,15 @@ func (p *lrosaDsPut200InvalidJSONPoller) ID() string {
 }
 
 func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.put200InvalidJsonHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.put200InvalidJsonHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5146,11 +4880,8 @@ func (p *lrosaDsPut200InvalidJSONPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPut200InvalidJSONPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPut200InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5199,16 +4930,15 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRelativeRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRelativeRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5223,11 +4953,8 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5276,16 +5003,15 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ID() string {
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5300,11 +5026,8 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Res
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5353,16 +5076,15 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5377,11 +5099,8 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcor
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5430,16 +5149,15 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ID() string {
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRelativeRetryNoStatusPayloadHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRelativeRetryNoStatusPayloadHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5454,11 +5172,8 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) response() *azcore.R
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5507,16 +5222,15 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ID() string {
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putAsyncRelativeRetryNoStatusHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putAsyncRelativeRetryNoStatusHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5531,11 +5245,8 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) response() *azcore.Response
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5584,16 +5295,15 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ID() string {
 }
 
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putError201NoProvisioningStatePayloadHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putError201NoProvisioningStatePayloadHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5608,11 +5318,8 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) response() *azcore.
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5661,16 +5368,15 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ID() string {
 }
 
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putNonRetry201Creating400InvalidJsonHandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putNonRetry201Creating400InvalidJsonHandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5685,11 +5391,8 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) response() *azcore.R
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5738,16 +5441,15 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) ID() string {
 }
 
 func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putNonRetry201Creating400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putNonRetry201Creating400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5762,11 +5464,8 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutNonRetry201Creating400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutNonRetry201Creating400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
@@ -5815,16 +5514,15 @@ func (p *lrosaDsPutNonRetry400Poller) ID() string {
 }
 
 func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	done, err := p.doneWithContext(ctx)
-	if done {
-		resp := p.response()
-		result, err := p.client.putNonRetry400HandleResponse(resp)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if done, err := p.done(ctx); !done || err != nil {
+		return nil, err
 	}
-	return nil, err
+	resp := p.response()
+	result, err := p.client.putNonRetry400HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
@@ -5839,11 +5537,8 @@ func (p *lrosaDsPutNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// doneWithContext queries the service to see if the operation has completed.
-func (p *lrosaDsPutNonRetry400Poller) doneWithContext(ctx context.Context) (done bool, err error) {
-	if p.pt == nil {
-		return false, errors.New("poller is not initialized")
-	}
+// done queries the service to see if the operation has completed.
+func (p *lrosaDsPutNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
 	if p.pt.hasTerminated() {
 		return true, p.pt.pollingError()
 	}
