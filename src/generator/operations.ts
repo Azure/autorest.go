@@ -268,33 +268,28 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
-    // TODO uncomment the following code to actually implement polling 
-    // text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
-    // text += `\tif err != nil {\n`;
-    // text += `\t\treturn nil, err\n`;
-    // text += `\t}\n`;
-    // text += `\t// send the first request to initialize the poller\n`;
-    // text += `\tresp, err := client.p.Do(ctx, req)\n`;
-    // text += `\tif err != nil {\n`;
-    // text += `\t\treturn nil, err\n`;
-    // text += `\t}\n`;
-    // text += `\tpt := pollingTracker${pascalCase(op.requests![0].protocol.http!.method)}{\n`;
-    // text += `\t\tpollingTrackerBase: pollingTrackerBase{\n`;
-    // text += `\t\t\tresp: resp,\n`;
-    // text += `\t\t}}\n`;
-    // text += `\terr = pt.initializeState()\n`;
-    // text += `\tif err != nil {\n`;
-    // text += `\t\treturn nil, err\n`;
-    // text += `\t}\n`;
     // TODO remove LRO for pageable responses NYI
     if (op.extensions!['x-ms-pageable']) {
       text += `\treturn nil, nil`;
       text += '}\n\n';
       return text;
     }
+    text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
+    text += `\tif err != nil {\n`;
+    text += `\t\treturn nil, err\n`;
+    text += `\t}\n`;
+    text += `\t// send the first request to initialize the poller\n`;
+    text += `\tresp, err := client.p.Do(ctx, req)\n`;
+    text += `\tif err != nil {\n`;
+    text += `\t\treturn nil, err\n`;
+    text += `\t}\n`;
+    text += `\tpt, err := createPollingTracker(resp)\n`;
+    text += `\tif err != nil {\n`;
+    text += `\t\treturn nil, err\n`;
+    text += `\t}\n`;
     // closing braces
     text += `\treturn &${op.language.go!.pollerType.name}{\n`;
-    // text += `\t\tpt: &pt,\n`;
+    text += `\t\tpt: pt,\n`;
     text += `\t\tclient: client,\n`;
     text += `\t}, nil\n`;
     text += '}\n\n';
@@ -608,18 +603,20 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       }
     }
   }
-  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-  // if the response doesn't define a 'default' section return a generic error
-  // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
-  if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
-    imports.add('errors');
-    text += `\t\treturn nil, errors.New(resp.Status)\n`;
-  } else {
-    const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
-    text += `\t\treturn nil, ${schemaError.language.go!.constructorName}(resp)\n`;
+  // LROs will skip this check since the status code is checked by the poller
+  if (!isLROOperation(op)) {
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+    // if the response doesn't define a 'default' section return a generic error
+    // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
+    if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
+      imports.add('errors');
+      text += `\t\treturn nil, errors.New(resp.Status)\n`;
+    } else {
+      const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
+      text += `\t\treturn nil, ${schemaError.language.go!.constructorName}(resp)\n`;
+    }
+    text += '\t}\n';
   }
-  text += '\t}\n';
-
   if (!isSchemaResponse(firstResp)) {
     // no response body, return the *http.Response
     text += `\treturn resp.Response, nil\n`;
