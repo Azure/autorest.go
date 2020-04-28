@@ -31,8 +31,8 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   for (const poller of values(pollers)) {
     const pollerInterface = pascalCase(poller.name);
-	let responseType = '';
-	let rawResponse = ''; // used to access the raw response field on response envelopes
+    let responseType = '';
+    let rawResponse = ''; // used to access the raw response field on response envelopes
     if (poller.schema === undefined) {
 	  responseType = 'http.Response';
     } else {
