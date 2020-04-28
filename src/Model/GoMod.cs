@@ -5,11 +5,14 @@ namespace AutoRest.Go.Model
 {
     public class GoMod
     {
-        public GoMod(string goMod)
+        public GoMod(string goMod, string goVersion)
         {
             Module = goMod;
+            GoVersion = goVersion;
         }
 
         public string Module { get; }
+
+        public string GoVersion { get; }
     }
 }

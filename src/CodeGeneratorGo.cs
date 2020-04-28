@@ -124,11 +124,18 @@ namespace AutoRest.Go
                 {
                     throw new Exception($"didn't find module root '{modRoot}' in output path '{normalized}'");
                 }
+                var goVersion = Settings.Instance.Host.GetValue<string>("go-version").Result;
+                if (string.IsNullOrWhiteSpace(goVersion)) 
+                {
+                    goVersion = defaultGoVersion;
+                }
                 // module name is everything to the right of the start of the module root
-                var gomodTemplate = new GoModTemplate { Model = new GoMod(normalized.Substring(i)) };
+                var gomodTemplate = new GoModTemplate { Model = new GoMod(normalized.Substring(i), goVersion) };
                 await Write(gomodTemplate, $"{StagingDir()}go.mod");
             }
         }
+
+        private const string defaultGoVersion = "1.13";
 
         private string FormatFileName(string fileName)
         {
