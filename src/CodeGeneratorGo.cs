@@ -117,7 +117,7 @@ namespace AutoRest.Go
             var modRoot = Settings.Instance.Host.GetValue<string>("gomod-root").Result;
             if (!string.IsNullOrWhiteSpace(modRoot))
             {
-                var normalized = Settings.Instance.Host.GetValue<string>("output-folder").Result.Replace('\\', '/');
+                var normalized = Path.GetFullPath(Settings.Instance.Host.GetValue<string>("output-folder").Result).Replace('\\', '/');
                 var i = normalized.IndexOf(modRoot);
                 if (i == -1)
                 {
