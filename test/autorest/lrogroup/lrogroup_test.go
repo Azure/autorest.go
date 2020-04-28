@@ -57,7 +57,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 		time.Sleep(200 * time.Millisecond)
 	}
 
-	resp, err := poller.Wait(context.Background(), time.Duration(10)*time.Second)
+	resp, err := poller.Wait(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 		time.Sleep(200 * time.Millisecond)
 	}
 
-	resp, err := poller.Wait(context.Background(), time.Duration(10)*time.Second)
+	resp, err := poller.Wait(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
