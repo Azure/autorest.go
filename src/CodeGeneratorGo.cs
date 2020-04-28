@@ -6,6 +6,7 @@ using AutoRest.Core.Model;
 using AutoRest.Go.Model;
 using AutoRest.Go.Templates;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -117,17 +118,24 @@ namespace AutoRest.Go
             var modRoot = Settings.Instance.Host.GetValue<string>("gomod-root").Result;
             if (!string.IsNullOrWhiteSpace(modRoot))
             {
-                var normalized = Settings.Instance.Host.GetValue<string>("output-folder").Result.Replace('\\', '/');
+                var normalized = Path.GetFullPath(Settings.Instance.Host.GetValue<string>("output-folder").Result).Replace('\\', '/');
                 var i = normalized.IndexOf(modRoot);
                 if (i == -1)
                 {
                     throw new Exception($"didn't find module root '{modRoot}' in output path '{normalized}'");
                 }
+                var goVersion = Settings.Instance.Host.GetValue<string>("go-version").Result;
+                if (string.IsNullOrWhiteSpace(goVersion)) 
+                {
+                    goVersion = defaultGoVersion;
+                }
                 // module name is everything to the right of the start of the module root
-                var gomodTemplate = new GoModTemplate { Model = new GoMod(normalized.Substring(i)) };
+                var gomodTemplate = new GoModTemplate { Model = new GoMod(normalized.Substring(i), goVersion) };
                 await Write(gomodTemplate, $"{StagingDir()}go.mod");
             }
         }
+
+        private const string defaultGoVersion = "1.13";
 
         private string FormatFileName(string fileName)
         {
