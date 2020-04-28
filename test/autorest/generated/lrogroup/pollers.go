@@ -9,7 +9,6 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -63,14 +62,8 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollin
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -155,14 +148,8 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -247,14 +234,8 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Cont
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -339,14 +320,8 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context,
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -431,14 +406,8 @@ func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterva
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -523,14 +492,8 @@ func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval 
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -615,14 +578,8 @@ func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -707,14 +664,8 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, polling
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -799,14 +750,8 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollin
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -891,14 +836,8 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInte
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -983,14 +922,8 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingI
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1075,14 +1008,8 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingIn
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1167,14 +1094,8 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInter
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1259,14 +1180,8 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.C
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1351,14 +1266,8 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Cont
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1443,14 +1352,8 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Co
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1535,14 +1438,8 @@ func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1627,14 +1524,8 @@ func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval 
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1719,14 +1610,8 @@ func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval ti
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1811,14 +1696,8 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingI
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1903,14 +1782,8 @@ func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterv
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -1995,14 +1868,8 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInt
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2087,14 +1954,8 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInte
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2179,14 +2040,8 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2271,14 +2126,8 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Contex
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2363,14 +2212,8 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, 
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2455,14 +2298,8 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingI
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2547,14 +2384,8 @@ func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInte
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2639,14 +2470,8 @@ func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval ti
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2731,14 +2556,8 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, polling
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2823,14 +2642,8 @@ func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInt
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -2915,14 +2728,8 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, polling
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3007,14 +2814,8 @@ func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval tim
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3099,14 +2900,8 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInt
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3191,14 +2986,8 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingIn
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3283,14 +3072,8 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInt
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3375,14 +3158,8 @@ func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterva
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3467,14 +3244,8 @@ func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterva
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3559,14 +3330,8 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInte
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3651,14 +3416,8 @@ func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterva
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3743,14 +3502,8 @@ func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3835,14 +3588,8 @@ func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval tim
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -3927,14 +3674,8 @@ func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval tim
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4019,14 +3760,8 @@ func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInte
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4111,14 +3846,8 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Cont
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4203,14 +3932,8 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx cont
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4295,14 +4018,8 @@ func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterv
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4387,14 +4104,8 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Contex
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4479,14 +4190,8 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, po
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4571,14 +4276,8 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4663,14 +4362,8 @@ func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInt
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4755,14 +4448,8 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pol
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4847,14 +4534,8 @@ func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInter
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -4939,14 +4620,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pol
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5031,14 +4706,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Co
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5123,14 +4792,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx conte
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5215,14 +4878,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5307,14 +4964,8 @@ func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterv
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5399,14 +5050,8 @@ func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterv
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5491,14 +5136,8 @@ func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInter
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5583,14 +5222,8 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, polli
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5675,14 +5308,8 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, polli
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5767,14 +5394,8 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Cont
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5859,14 +5480,8 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -5951,14 +5566,8 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context,
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6043,14 +5652,8 @@ func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6135,14 +5738,8 @@ func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterv
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6227,14 +5824,8 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollin
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6319,14 +5910,8 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Conte
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6411,14 +5996,8 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6503,14 +6082,8 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Con
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6595,14 +6168,8 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, p
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6687,14 +6254,8 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Co
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6779,14 +6340,8 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Con
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6871,14 +6426,8 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, polli
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
@@ -6963,14 +6512,8 @@ func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval 
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp.RawResponse.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}

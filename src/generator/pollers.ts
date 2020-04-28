@@ -24,7 +24,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
   imports.add('time');
-  imports.add('strconv');
   text += imports.text();
 
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
@@ -89,14 +88,8 @@ func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration
 		if p.Done() {
 			return resp, err
 		}
-		if ra := resp${rawResponse}.Header.Get(azcore.HeaderRetryAfter); len(ra) > 0 {
-			// retry-after values are expressed in either number of
-			// seconds or an HTTP-date indicating when to try again
-			if retryAfter, _ := strconv.Atoi(ra); retryAfter > 0 {
-				time.Sleep(time.Duration(retryAfter) * time.Second)
-			} else if t, err := time.Parse(time.RFC1123, ra); err == nil {
-				time.Sleep(t.Sub(time.Now()))
-			}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
