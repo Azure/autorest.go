@@ -43,16 +43,16 @@ const goMappings = {
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     let inputFile = swaggerDir + goMappings[namespace];
-    generate(inputFile, namespace, 'test/autorest/generated/' + namespace);
+    generate(inputFile, 'test/autorest/generated/' + namespace);
 } 
 
 const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-07-07/blob.json';
-generate(blobStorage, 'azblob', 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default"');
+generate(blobStorage, 'test/storage/2019-07-07/azblob', '--credential-scope="https://storage.azure.com/.default"');
 
 // helper to log the package being generated before invocation
-function generate(inputFile, namespace, outputDir, additionalArgs) {
+function generate(inputFile, outputDir, additionalArgs) {
     console.log('generating ' + inputFile);
-    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --namespace=' + namespace + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
+    exec('autorest --use=. --clear-output-folder --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
 }
 
 // use a function factory to create the closure so that the values of namespace and inputFile are captured on each iteration

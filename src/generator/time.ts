@@ -6,6 +6,7 @@
 import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen'
 import { CodeModel } from '@azure-tools/codemodel';
+import { contentPreamble } from './helpers'
 
 // represents the generated content for an operation group
 export class Content {
@@ -21,22 +22,19 @@ export class Content {
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
 export async function generateTimeHelpers(session: Session<CodeModel>): Promise<Content[]> {
-  const headerText = comment(await session.getValue("header-text", "MISSING LICENSE HEADER"), "// ");
-  const namespace = await session.getValue('namespace');
+  const preamble = await contentPreamble(session);
   const content = new Array<Content>();
   if (session.model.language.go!.hasTimeRFC1123) {
-    content.push(new Content('time_rfc1123', generateRFC1123Helper(headerText, <string>namespace)));
+    content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble)));
   }
   if (session.model.language.go!.hasTimeRFC3339) {
-    content.push(new Content('time_rfc3339', generateRFC3339Helper(headerText, <string>namespace)));
+    content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble)));
   }
   return content;
 }
 
-function generateRFC1123Helper(header: string, packageName: string): string {
-  return `${header}
-
-package ${packageName}
+function generateRFC1123Helper(preamble: string): string {
+  return `${preamble}
 
 import (
 	"strings"
@@ -73,10 +71,8 @@ func (t *timeRFC1123) UnmarshalText(data []byte) error {
 `;
 }
 
-function generateRFC3339Helper(header: string, packageName: string): string {
-  return `${header}
-
-package ${packageName}
+function generateRFC3339Helper(preamble: string): string {
+  return `${preamble}
 
 import (
 	"regexp"
