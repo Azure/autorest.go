@@ -50,15 +50,28 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) (*LrOS
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPost202Retry200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -123,15 +136,28 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -196,15 +222,28 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -269,15 +308,28 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context)
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -342,15 +394,28 @@ func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) (*ProductRespo
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete202NoRetry204Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -415,15 +480,28 @@ func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) (*ProductRespons
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete202Retry200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -488,15 +566,28 @@ func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete204SucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -561,15 +652,28 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSD
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -634,15 +738,28 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*LrOS
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -707,15 +824,28 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSDelet
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetryFailedPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -780,15 +910,28 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDe
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -853,15 +996,28 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSDel
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -926,15 +1082,28 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDelete
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteNoHeaderInRetryPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -999,15 +1168,28 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.C
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1072,15 +1254,28 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1145,15 +1340,28 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Co
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1218,15 +1426,28 @@ func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) (*SkuResponse, 
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPost200WithPayloadPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1291,15 +1512,28 @@ func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) (*ProductRespons
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPost202NoRetry204Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1364,15 +1598,28 @@ func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) (*LrOSPost202Retry
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPost202Retry200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1437,15 +1684,28 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*Produc
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1510,15 +1770,28 @@ func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSPostAsy
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetryFailedPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1583,15 +1856,28 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1656,15 +1942,28 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSPostA
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrycanceledPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1729,15 +2028,28 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1802,15 +2114,28 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Contex
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1875,15 +2200,28 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) 
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -1948,15 +2286,28 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*Produc
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200Acceptedcanceled200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2021,15 +2372,28 @@ func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) (*ProductRe
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200SucceededNoStatePoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2094,15 +2458,28 @@ func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) (*ProductResponse,
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200SucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2167,15 +2544,28 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*Produ
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200UpdatingSucceeded204Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2240,15 +2630,28 @@ func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut201CreatingFailed200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2313,15 +2716,28 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*Produ
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2386,15 +2802,28 @@ func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, 
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut202Retry200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2459,15 +2888,28 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2532,15 +2974,28 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*Product
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2605,15 +3060,28 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2678,15 +3146,28 @@ func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) (*SkuResponse,
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNonResourcePoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2751,15 +3232,28 @@ func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*ProductRespo
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncRetryFailedPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2824,15 +3318,28 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductRe
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2897,15 +3404,28 @@ func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) (*SubProductRe
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncSubResourcePoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -2970,15 +3490,28 @@ func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductRespon
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutNoHeaderInRetryPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3043,15 +3576,28 @@ func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, erro
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutNonResourcePoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3116,15 +3662,28 @@ func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) (*SubProductRespons
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutSubResourcePoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3189,15 +3748,28 @@ func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) (*LroRetrys
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDelete202Retry200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3262,15 +3834,28 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3335,15 +3920,28 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx cont
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3408,15 +4006,28 @@ func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) (*LroRetrysPo
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPost202Retry200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3481,15 +4092,28 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Contex
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3554,15 +4178,28 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3627,15 +4264,28 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3700,15 +4350,28 @@ func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsD
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete202NonRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3773,15 +4436,28 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*L
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3846,15 +4522,28 @@ func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Respo
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete204SucceededPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3919,15 +4608,28 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*L
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -3992,15 +4694,28 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Co
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4065,15 +4780,28 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx conte
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4138,15 +4866,28 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4211,15 +4952,28 @@ func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDele
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteNonRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4284,15 +5038,28 @@ func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) (*LrosaDsPost
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202NoLocationPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4357,15 +5124,28 @@ func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPos
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202NonRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4430,15 +5210,28 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*Lro
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4503,15 +5296,28 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*Lro
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4576,15 +5382,28 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4649,15 +5468,28 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4722,15 +5554,28 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context)
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4795,15 +5640,28 @@ func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostNo
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostNonRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4868,15 +5726,28 @@ func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) (*ProductResp
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPut200InvalidJSONPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -4941,15 +5812,28 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*Prod
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5014,15 +5898,28 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Conte
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5087,15 +5984,28 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5160,15 +6070,28 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Con
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5233,15 +6156,28 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5306,15 +6242,28 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Co
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5379,15 +6328,28 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Con
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5452,15 +6414,28 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) (*Pro
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
@@ -5525,15 +6500,28 @@ func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) (*ProductRespons
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry400Poller) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 

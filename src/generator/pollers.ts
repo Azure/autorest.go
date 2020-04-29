@@ -31,10 +31,12 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   for (const poller of values(pollers)) {
     const pollerInterface = pascalCase(poller.name);
     let responseType = '';
+    let rawResponse = ''; // used to access the raw response field on response envelopes
     if (poller.schema === undefined) {
-      responseType = 'http.Response';
+	  responseType = 'http.Response';
     } else {
-      responseType = poller.schema.language.go!.responseType.name;
+	  responseType = poller.schema.language.go!.responseType.name;
+	  rawResponse = '.RawResponse';
     }
     text += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
@@ -74,15 +76,28 @@ func (p *${poller.name}) Poll(ctx context.Context) (*${responseType}, error) {
 	return result, nil
 }
 
+// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the 
+// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
+// is specified will be used to wait between polling requests. 
 func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error) {
-	return nil, nil
+	for {
+		resp, err := p.Poll(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		if p.Done() {
+			return resp, err
+		}
+		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(pollingInterval)
+		}
+	}
 }
 
 // Response returns the last HTTP response.
 func (p *${poller.name}) response() *azcore.Response {
-	if p.pt == nil {
-		return nil
-	}
 	return p.pt.latestResponse()
 }
 
