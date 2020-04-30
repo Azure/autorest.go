@@ -37,32 +37,29 @@ func httpClientWithCookieJar() azcore.Transport {
 	})
 }
 
-// ORIGINAL method according to current guidelines
-// TODO fix poll func to check for error in poller.go
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	op := getLROSOperations(t)
 	poller, err := op.BeginDelete202NoRetry204(context.Background())
 	if err != nil {
 		t.Fatal(err)
 	}
-	for {
-		w, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		if poller.Done() {
-			helpers.VerifyStatusCode(t, w.RawResponse, 204)
-			break
-		}
+	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-
-	resp, err := poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	resp, err := poller.Response()
 	if err != nil {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-
+	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("did not receive an error but was expecting one")
+	}
 }
 
 func TestLROBeginDelete202Retry200(t *testing.T) {
@@ -71,21 +68,121 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for {
-		w, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		if poller.Done() {
-			helpers.VerifyStatusCode(t, w.RawResponse, 200)
-			break
-		}
+	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-
-	resp, err := poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	resp, err := poller.Response()
 	if err != nil {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("did not receive an error but was expecting one")
+	}
 }
+
+func TestLROBeginDelete204Succeeded(t *testing.T) {
+	op := getLROSOperations(t)
+	poller, err := op.BeginDelete204Succeeded(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for poller.Poll(context.Background()) {
+		time.Sleep(200 * time.Millisecond)
+	}
+	resp, err := poller.Response()
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, 204)
+	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp, 204)
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("did not receive an error but was expecting one")
+	}
+}
+
+func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
+	op := getLROSOperations(t)
+	poller, err := op.BeginDeleteAsyncNoHeaderInRetry(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for poller.Poll(context.Background()) {
+		time.Sleep(200 * time.Millisecond)
+	}
+	resp, err := poller.Response()
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("did not receive an error but was expecting one")
+	}
+}
+
+func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
+	op := getLROSOperations(t)
+	poller, err := op.BeginDeleteAsyncNoRetrySucceeded(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for poller.Poll(context.Background()) {
+		time.Sleep(200 * time.Millisecond)
+	}
+	resp, err := poller.Response()
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("did not receive an error but was expecting one")
+	}
+}
+
+// func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
+// 	op := getLROSOperations(t)
+// 	poller, err := op.BeginDeleteAsyncRetryFailed(context.Background())
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+// 	for poller.Poll(context.Background()) {
+// 		time.Sleep(200 * time.Millisecond)
+// 	}
+// 	resp, err := poller.Response()
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+// 	_, err = poller.ResumeToken()
+// 	if err == nil {
+// 		t.Fatal("did not receive an error but was expecting one")
+// 	}
+// }

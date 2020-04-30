@@ -89,7 +89,7 @@ func (client *lrosaDsOperations) BeginDelete202NonRetry400(ctx context.Context) 
 		return nil, err
 	}
 	return &lrosaDsDelete202NonRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -138,7 +138,7 @@ func (client *lrosaDsOperations) BeginDelete202RetryInvalidHeader(ctx context.Co
 		return nil, err
 	}
 	return &lrosaDsDelete202RetryInvalidHeaderPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -187,7 +187,7 @@ func (client *lrosaDsOperations) BeginDelete204Succeeded(ctx context.Context) (L
 		return nil, err
 	}
 	return &lrosaDsDelete204SucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -224,7 +224,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetry400(ctx context.Co
 		return nil, err
 	}
 	return &lrosaDsDeleteAsyncRelativeRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -276,7 +276,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx 
 		return nil, err
 	}
 	return &lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -328,7 +328,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidJSONPolling
 		return nil, err
 	}
 	return &lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -380,7 +380,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryNoStatus(ctx conte
 		return nil, err
 	}
 	return &lrosaDsDeleteAsyncRelativeRetryNoStatusPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -432,7 +432,7 @@ func (client *lrosaDsOperations) BeginDeleteNonRetry400(ctx context.Context) (Lr
 		return nil, err
 	}
 	return &lrosaDsDeleteNonRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -481,7 +481,7 @@ func (client *lrosaDsOperations) BeginPost202NoLocation(ctx context.Context, lro
 		return nil, err
 	}
 	return &lrosaDsPost202NoLocationPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -533,7 +533,7 @@ func (client *lrosaDsOperations) BeginPost202NonRetry400(ctx context.Context, lr
 		return nil, err
 	}
 	return &lrosaDsPost202NonRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -585,7 +585,7 @@ func (client *lrosaDsOperations) BeginPost202RetryInvalidHeader(ctx context.Cont
 		return nil, err
 	}
 	return &lrosaDsPost202RetryInvalidHeaderPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -637,7 +637,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetry400(ctx context.Cont
 		return nil, err
 	}
 	return &lrosaDsPostAsyncRelativeRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -692,7 +692,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidHeader(ctx co
 		return nil, err
 	}
 	return &lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -747,7 +747,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidJSONPolling(c
 		return nil, err
 	}
 	return &lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -802,7 +802,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryNoPayload(ctx contex
 		return nil, err
 	}
 	return &lrosaDsPostAsyncRelativeRetryNoPayloadPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -857,7 +857,7 @@ func (client *lrosaDsOperations) BeginPostNonRetry400(ctx context.Context, lrosa
 		return nil, err
 	}
 	return &lrosaDsPostNonRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -909,7 +909,7 @@ func (client *lrosaDsOperations) BeginPut200InvalidJSON(ctx context.Context, lro
 		return nil, err
 	}
 	return &lrosaDsPut200InvalidJSONPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -950,7 +950,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetry400(ctx context.Conte
 		return nil, err
 	}
 	return &lrosaDsPutAsyncRelativeRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -991,7 +991,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidHeader(ctx con
 		return nil, err
 	}
 	return &lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1032,7 +1032,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidJSONPolling(ct
 		return nil, err
 	}
 	return &lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1073,7 +1073,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatus(ctx context.
 		return nil, err
 	}
 	return &lrosaDsPutAsyncRelativeRetryNoStatusPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1114,7 +1114,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatusPayload(ctx c
 		return nil, err
 	}
 	return &lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1155,7 +1155,7 @@ func (client *lrosaDsOperations) BeginPutError201NoProvisioningStatePayload(ctx 
 		return nil, err
 	}
 	return &lrosaDsPutError201NoProvisioningStatePayloadPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1196,7 +1196,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400(ctx context.Cont
 		return nil, err
 	}
 	return &lrosaDsPutNonRetry201Creating400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1237,7 +1237,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400InvalidJSON(ctx c
 		return nil, err
 	}
 	return &lrosaDsPutNonRetry201Creating400InvalidJSONPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1278,7 +1278,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry400(ctx context.Context, lrosaD
 		return nil, err
 	}
 	return &lrosaDsPutNonRetry400Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }

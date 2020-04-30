@@ -115,7 +115,7 @@ func (client *lrOSOperations) BeginDelete202NoRetry204(ctx context.Context) (LrO
 		return nil, err
 	}
 	return &lrOSDelete202NoRetry204Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -153,7 +153,7 @@ func (client *lrOSOperations) BeginDelete202Retry200(ctx context.Context) (LrOSD
 		return nil, err
 	}
 	return &lrOSDelete202Retry200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -191,7 +191,7 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (LrOS
 		return nil, err
 	}
 	return &lrOSDelete204SucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -228,7 +228,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Contex
 		return nil, err
 	}
 	return &lrOSDeleteAsyncNoHeaderInRetryPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -269,7 +269,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Conte
 		return nil, err
 	}
 	return &lrOSDeleteAsyncNoRetrySucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -321,7 +321,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (
 		return nil, err
 	}
 	return &lrOSDeleteAsyncRetryFailedPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -373,7 +373,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context
 		return nil, err
 	}
 	return &lrOSDeleteAsyncRetrySucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -425,7 +425,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context)
 		return nil, err
 	}
 	return &lrOSDeleteAsyncRetrycanceledPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -477,7 +477,7 @@ func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (L
 		return nil, err
 	}
 	return &lrOSDeleteNoHeaderInRetryPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -518,7 +518,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx
 		return nil, err
 	}
 	return &lrOSDeleteProvisioning202Accepted200SucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -556,7 +556,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202DeletingFailed200(ctx co
 		return nil, err
 	}
 	return &lrOSDeleteProvisioning202DeletingFailed200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -594,7 +594,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Deletingcanceled200(ctx 
 		return nil, err
 	}
 	return &lrOSDeleteProvisioning202Deletingcanceled200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -632,7 +632,7 @@ func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (LrOS
 		return nil, err
 	}
 	return &lrOSPost200WithPayloadPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -670,7 +670,7 @@ func (client *lrOSOperations) BeginPost202NoRetry204(ctx context.Context, lrOSPo
 		return nil, err
 	}
 	return &lrOSPost202NoRetry204Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -711,7 +711,7 @@ func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost
 		return nil, err
 	}
 	return &lrOSPost202Retry200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -763,7 +763,7 @@ func (client *lrOSOperations) BeginPostAsyncNoRetrySucceeded(ctx context.Context
 		return nil, err
 	}
 	return &lrOSPostAsyncNoRetrySucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -804,7 +804,7 @@ func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrO
 		return nil, err
 	}
 	return &lrOSPostAsyncRetryFailedPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -859,7 +859,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrySucceeded(ctx context.Context, 
 		return nil, err
 	}
 	return &lrOSPostAsyncRetrySucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -900,7 +900,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, l
 		return nil, err
 	}
 	return &lrOSPostAsyncRetrycanceledPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -955,7 +955,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx cont
 		return nil, err
 	}
 	return &lrOSPostDoubleHeadersFinalAzureHeaderGetPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -993,7 +993,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(c
 		return nil, err
 	}
 	return &lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1031,7 +1031,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalLocationGet(ctx context
 		return nil, err
 	}
 	return &lrOSPostDoubleHeadersFinalLocationGetPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1069,7 +1069,7 @@ func (client *lrOSOperations) BeginPut200Acceptedcanceled200(ctx context.Context
 		return nil, err
 	}
 	return &lrOSPut200Acceptedcanceled200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1110,7 +1110,7 @@ func (client *lrOSOperations) BeginPut200Succeeded(ctx context.Context, lrOSPut2
 		return nil, err
 	}
 	return &lrOSPut200SucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1151,7 +1151,7 @@ func (client *lrOSOperations) BeginPut200SucceededNoState(ctx context.Context, l
 		return nil, err
 	}
 	return &lrOSPut200SucceededNoStatePoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1192,7 +1192,7 @@ func (client *lrOSOperations) BeginPut200UpdatingSucceeded204(ctx context.Contex
 		return nil, err
 	}
 	return &lrOSPut200UpdatingSucceeded204Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1233,7 +1233,7 @@ func (client *lrOSOperations) BeginPut201CreatingFailed200(ctx context.Context, 
 		return nil, err
 	}
 	return &lrOSPut201CreatingFailed200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1274,7 +1274,7 @@ func (client *lrOSOperations) BeginPut201CreatingSucceeded200(ctx context.Contex
 		return nil, err
 	}
 	return &lrOSPut201CreatingSucceeded200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1315,7 +1315,7 @@ func (client *lrOSOperations) BeginPut202Retry200(ctx context.Context, lrOSPut20
 		return nil, err
 	}
 	return &lrOSPut202Retry200Poller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1356,7 +1356,7 @@ func (client *lrOSOperations) BeginPutAsyncNoHeaderInRetry(ctx context.Context, 
 		return nil, err
 	}
 	return &lrOSPutAsyncNoHeaderInRetryPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1397,7 +1397,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrySucceeded(ctx context.Context,
 		return nil, err
 	}
 	return &lrOSPutAsyncNoRetrySucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1438,7 +1438,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrycanceled(ctx context.Context, 
 		return nil, err
 	}
 	return &lrOSPutAsyncNoRetrycanceledPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1479,7 +1479,7 @@ func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOS
 		return nil, err
 	}
 	return &lrOSPutAsyncNonResourcePoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1520,7 +1520,7 @@ func (client *lrOSOperations) BeginPutAsyncRetryFailed(ctx context.Context, lrOS
 		return nil, err
 	}
 	return &lrOSPutAsyncRetryFailedPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1561,7 +1561,7 @@ func (client *lrOSOperations) BeginPutAsyncRetrySucceeded(ctx context.Context, l
 		return nil, err
 	}
 	return &lrOSPutAsyncRetrySucceededPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1602,7 +1602,7 @@ func (client *lrOSOperations) BeginPutAsyncSubResource(ctx context.Context, lrOS
 		return nil, err
 	}
 	return &lrOSPutAsyncSubResourcePoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1643,7 +1643,7 @@ func (client *lrOSOperations) BeginPutNoHeaderInRetry(ctx context.Context, lrOSP
 		return nil, err
 	}
 	return &lrOSPutNoHeaderInRetryPoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1684,7 +1684,7 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 		return nil, err
 	}
 	return &lrOSPutNonResourcePoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }
@@ -1725,7 +1725,7 @@ func (client *lrOSOperations) BeginPutSubResource(ctx context.Context, lrOSPutSu
 		return nil, err
 	}
 	return &lrOSPutSubResourcePoller{
-		pt:     pt,
+		PT:     pt,
 		client: client,
 	}, nil
 }

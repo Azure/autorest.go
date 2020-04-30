@@ -7,6 +7,9 @@ package lrogroup
 
 import (
 	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
@@ -14,9 +17,9 @@ import (
 
 // LrOSCustomHeaderPost202Retry200Poller provides polling facilities until the operation completes
 type LrOSCustomHeaderPost202Retry200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSCustomHeaderPost202Retry200Response, error)
+	Poll(context.Context) bool
+	Response() (*LrOSCustomHeaderPost202Retry200Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error)
 }
 
@@ -24,25 +27,24 @@ type lrOSCustomHeaderPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSCustomHeaderPost202Retry200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSCustomHeaderPost202Retry200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) (*LrOSCustomHeaderPost202Retry200Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSCustomHeaderPost202Retry200Poller) Response() (*LrOSCustomHeaderPost202Retry200Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post202Retry200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -50,59 +52,69 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) (*LrOS
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSCustomHeaderPost202Retry200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPost202Retry200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSCustomHeaderPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSCustomHeaderPostAsyncRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error)
 }
 
@@ -110,25 +122,24 @@ type lrOSCustomHeaderPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Response() (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -136,59 +147,69 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSCustomHeaderPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
 type LrOSCustomHeaderPut201CreatingSucceeded200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -196,25 +217,24 @@ type lrOSCustomHeaderPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -222,59 +242,69 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSCustomHeaderPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSCustomHeaderPutAsyncRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -282,25 +312,24 @@ type lrOSCustomHeaderPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -308,59 +337,69 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context)
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDelete202NoRetry204Poller provides polling facilities until the operation completes
 type LrOSDelete202NoRetry204Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -368,25 +407,24 @@ type lrOSDelete202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDelete202NoRetry204Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDelete202NoRetry204Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDelete202NoRetry204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.delete202NoRetry204HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -394,59 +432,69 @@ func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) (*ProductRespo
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDelete202NoRetry204Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete202NoRetry204Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDelete202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDelete202Retry200Poller provides polling facilities until the operation completes
 type LrOSDelete202Retry200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -454,25 +502,24 @@ type lrOSDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDelete202Retry200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDelete202Retry200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDelete202Retry200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.delete202Retry200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -480,59 +527,69 @@ func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) (*ProductRespons
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDelete202Retry200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete202Retry200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDelete204SucceededPoller provides polling facilities until the operation completes
 type LrOSDelete204SucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*http.Response, error)
+	Poll(context.Context) bool
+	Response() (*http.Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error)
 }
 
@@ -540,25 +597,24 @@ type lrOSDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDelete204SucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDelete204SucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDelete204SucceededPoller) Response() (*http.Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.delete204SucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -566,59 +622,69 @@ func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDelete204SucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete204SucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncNoHeaderInRetryPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSDeleteAsyncNoHeaderInRetryResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error)
 }
 
@@ -626,25 +692,24 @@ type lrOSDeleteAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Response() (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -652,59 +717,69 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSD
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncNoRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSDeleteAsyncNoRetrySucceededResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSDeleteAsyncNoRetrySucceededResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error)
 }
 
@@ -712,25 +787,24 @@ type lrOSDeleteAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Response() (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -738,59 +812,69 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*LrOS
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteAsyncRetryFailedPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncRetryFailedPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSDeleteAsyncRetryFailedResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSDeleteAsyncRetryFailedResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error)
 }
 
@@ -798,25 +882,24 @@ type lrOSDeleteAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteAsyncRetryFailedPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteAsyncRetryFailedPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetryFailedResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteAsyncRetryFailedPoller) Response() (*LrOSDeleteAsyncRetryFailedResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -824,59 +907,69 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSDelet
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteAsyncRetryFailedPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetryFailedPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSDeleteAsyncRetrySucceededResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSDeleteAsyncRetrySucceededResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error)
 }
 
@@ -884,25 +977,24 @@ type lrOSDeleteAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteAsyncRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteAsyncRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteAsyncRetrySucceededPoller) Response() (*LrOSDeleteAsyncRetrySucceededResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -910,59 +1002,69 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*LrOSDe
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteAsyncRetrycanceledPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncRetrycanceledPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSDeleteAsyncRetrycanceledResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSDeleteAsyncRetrycanceledResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error)
 }
 
@@ -970,25 +1072,24 @@ type lrOSDeleteAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteAsyncRetrycanceledPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteAsyncRetrycanceledPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteAsyncRetrycanceledPoller) Response() (*LrOSDeleteAsyncRetrycanceledResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRetrycanceledHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -996,59 +1097,69 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSDel
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteAsyncRetrycanceledPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSDeleteNoHeaderInRetryPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSDeleteNoHeaderInRetryResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSDeleteNoHeaderInRetryResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error)
 }
 
@@ -1056,25 +1167,24 @@ type lrOSDeleteNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteNoHeaderInRetryPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteNoHeaderInRetryPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDeleteNoHeaderInRetryResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteNoHeaderInRetryPoller) Response() (*LrOSDeleteNoHeaderInRetryResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1082,59 +1192,69 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*LrOSDelete
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
 type LrOSDeleteProvisioning202Accepted200SucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -1142,25 +1262,24 @@ type lrOSDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1168,59 +1287,69 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.C
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation completes
 type LrOSDeleteProvisioning202DeletingFailed200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -1228,25 +1357,24 @@ type lrOSDeleteProvisioning202DeletingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteProvisioning202DeletingFailed200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1254,59 +1382,69 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSDeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation completes
 type LrOSDeleteProvisioning202Deletingcanceled200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -1314,25 +1452,24 @@ type lrOSDeleteProvisioning202Deletingcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteProvisioning202Deletingcanceled200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1340,59 +1477,69 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Co
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPost200WithPayloadPoller provides polling facilities until the operation completes
 type LrOSPost200WithPayloadPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*SkuResponse, error)
+	Poll(context.Context) bool
+	Response() (*SkuResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error)
 }
 
@@ -1400,25 +1547,24 @@ type lrOSPost200WithPayloadPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPost200WithPayloadPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPost200WithPayloadPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPost200WithPayloadPoller) Response() (*SkuResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post200WithPayloadHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1426,59 +1572,69 @@ func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) (*SkuResponse, 
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPost200WithPayloadPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPost200WithPayloadPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPost200WithPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPost202NoRetry204Poller provides polling facilities until the operation completes
 type LrOSPost202NoRetry204Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -1486,25 +1642,24 @@ type lrOSPost202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPost202NoRetry204Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPost202NoRetry204Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPost202NoRetry204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post202NoRetry204HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1512,59 +1667,69 @@ func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) (*ProductRespons
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPost202NoRetry204Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPost202NoRetry204Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPost202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPost202Retry200Poller provides polling facilities until the operation completes
 type LrOSPost202Retry200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSPost202Retry200Response, error)
+	Poll(context.Context) bool
+	Response() (*LrOSPost202Retry200Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error)
 }
 
@@ -1572,25 +1737,24 @@ type lrOSPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPost202Retry200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPost202Retry200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) (*LrOSPost202Retry200Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPost202Retry200Poller) Response() (*LrOSPost202Retry200Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post202Retry200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1598,59 +1762,69 @@ func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) (*LrOSPost202Retry
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPost202Retry200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPost202Retry200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPostAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPostAsyncNoRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -1658,25 +1832,24 @@ type lrOSPostAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPostAsyncNoRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPostAsyncNoRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPostAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1684,59 +1857,69 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*Produc
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPostAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPostAsyncRetryFailedPoller provides polling facilities until the operation completes
 type LrOSPostAsyncRetryFailedPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSPostAsyncRetryFailedResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSPostAsyncRetryFailedResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error)
 }
 
@@ -1744,25 +1927,24 @@ type lrOSPostAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPostAsyncRetryFailedPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPostAsyncRetryFailedPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetryFailedResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPostAsyncRetryFailedPoller) Response() (*LrOSPostAsyncRetryFailedResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1770,59 +1952,69 @@ func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*LrOSPostAsy
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPostAsyncRetryFailedPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetryFailedPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPostAsyncRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -1830,25 +2022,24 @@ type lrOSPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPostAsyncRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPostAsyncRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPostAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1856,59 +2047,69 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPostAsyncRetrycanceledPoller provides polling facilities until the operation completes
 type LrOSPostAsyncRetrycanceledPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrOSPostAsyncRetrycanceledResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrOSPostAsyncRetrycanceledResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error)
 }
 
@@ -1916,25 +2117,24 @@ type lrOSPostAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPostAsyncRetrycanceledPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPostAsyncRetrycanceledPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSPostAsyncRetrycanceledResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPostAsyncRetrycanceledPoller) Response() (*LrOSPostAsyncRetrycanceledResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRetrycanceledHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -1942,59 +2142,69 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*LrOSPostA
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPostAsyncRetrycanceledPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrycanceledPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation completes
 type LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2002,25 +2212,24 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2028,59 +2237,69 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation completes
 type LrOSPostDoubleHeadersFinalAzureHeaderGetPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2088,25 +2307,24 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postDoubleHeadersFinalAzureHeaderGetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2114,59 +2332,69 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Contex
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation completes
 type LrOSPostDoubleHeadersFinalLocationGetPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2174,25 +2402,24 @@ type lrOSPostDoubleHeadersFinalLocationGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postDoubleHeadersFinalLocationGetHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2200,59 +2427,69 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) 
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPut200Acceptedcanceled200Poller provides polling facilities until the operation completes
 type LrOSPut200Acceptedcanceled200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2260,25 +2497,24 @@ type lrOSPut200Acceptedcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPut200Acceptedcanceled200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPut200Acceptedcanceled200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPut200Acceptedcanceled200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put200Acceptedcanceled200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2286,59 +2522,69 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*Produc
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPut200Acceptedcanceled200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200Acceptedcanceled200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200Acceptedcanceled200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPut200SucceededNoStatePoller provides polling facilities until the operation completes
 type LrOSPut200SucceededNoStatePoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2346,25 +2592,24 @@ type lrOSPut200SucceededNoStatePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPut200SucceededNoStatePoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPut200SucceededNoStatePoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPut200SucceededNoStatePoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put200SucceededNoStateHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2372,59 +2617,69 @@ func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) (*ProductRe
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPut200SucceededNoStatePoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200SucceededNoStatePoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200SucceededNoStatePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPut200SucceededPoller provides polling facilities until the operation completes
 type LrOSPut200SucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2432,25 +2687,24 @@ type lrOSPut200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPut200SucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPut200SucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPut200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put200SucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2458,59 +2712,69 @@ func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) (*ProductResponse,
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPut200SucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200SucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPut200UpdatingSucceeded204Poller provides polling facilities until the operation completes
 type LrOSPut200UpdatingSucceeded204Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2518,25 +2782,24 @@ type lrOSPut200UpdatingSucceeded204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPut200UpdatingSucceeded204Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPut200UpdatingSucceeded204Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPut200UpdatingSucceeded204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put200UpdatingSucceeded204HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2544,59 +2807,69 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*Produ
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPut200UpdatingSucceeded204Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200UpdatingSucceeded204Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200UpdatingSucceeded204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPut201CreatingFailed200Poller provides polling facilities until the operation completes
 type LrOSPut201CreatingFailed200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2604,25 +2877,24 @@ type lrOSPut201CreatingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPut201CreatingFailed200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPut201CreatingFailed200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPut201CreatingFailed200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put201CreatingFailed200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2630,59 +2902,69 @@ func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPut201CreatingFailed200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut201CreatingFailed200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut201CreatingFailed200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
 type LrOSPut201CreatingSucceeded200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2690,25 +2972,24 @@ type lrOSPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPut201CreatingSucceeded200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPut201CreatingSucceeded200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2716,59 +2997,69 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*Produ
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPut202Retry200Poller provides polling facilities until the operation completes
 type LrOSPut202Retry200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2776,25 +3067,24 @@ type lrOSPut202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPut202Retry200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPut202Retry200Poller) ID() string {
-	return ""
-}
-
-func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPut202Retry200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put202Retry200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2802,59 +3092,69 @@ func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) (*ProductResponse, 
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPut202Retry200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPut202Retry200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSPutAsyncNoHeaderInRetryPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2862,25 +3162,24 @@ type lrOSPutAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutAsyncNoHeaderInRetryPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutAsyncNoHeaderInRetryPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2888,59 +3187,69 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPutAsyncNoRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -2948,25 +3257,24 @@ type lrOSPutAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutAsyncNoRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutAsyncNoRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncNoRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -2974,59 +3282,69 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*Product
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutAsyncNoRetrycanceledPoller provides polling facilities until the operation completes
 type LrOSPutAsyncNoRetrycanceledPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -3034,25 +3352,24 @@ type lrOSPutAsyncNoRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutAsyncNoRetrycanceledPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutAsyncNoRetrycanceledPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutAsyncNoRetrycanceledPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncNoRetrycanceledHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3060,59 +3377,69 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ProductR
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutAsyncNoRetrycanceledPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutAsyncNonResourcePoller provides polling facilities until the operation completes
 type LrOSPutAsyncNonResourcePoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*SkuResponse, error)
+	Poll(context.Context) bool
+	Response() (*SkuResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error)
 }
 
@@ -3120,25 +3447,24 @@ type lrOSPutAsyncNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutAsyncNonResourcePoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutAsyncNonResourcePoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutAsyncNonResourcePoller) Response() (*SkuResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncNonResourceHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3146,59 +3472,69 @@ func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) (*SkuResponse,
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutAsyncNonResourcePoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNonResourcePoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNonResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutAsyncRetryFailedPoller provides polling facilities until the operation completes
 type LrOSPutAsyncRetryFailedPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -3206,25 +3542,24 @@ type lrOSPutAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutAsyncRetryFailedPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutAsyncRetryFailedPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutAsyncRetryFailedPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRetryFailedHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3232,59 +3567,69 @@ func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*ProductRespo
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutAsyncRetryFailedPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncRetryFailedPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPutAsyncRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -3292,25 +3637,24 @@ type lrOSPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutAsyncRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutAsyncRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3318,59 +3662,69 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ProductRe
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutAsyncSubResourcePoller provides polling facilities until the operation completes
 type LrOSPutAsyncSubResourcePoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*SubProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*SubProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error)
 }
 
@@ -3378,25 +3732,24 @@ type lrOSPutAsyncSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutAsyncSubResourcePoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutAsyncSubResourcePoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutAsyncSubResourcePoller) Response() (*SubProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncSubResourceHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3404,59 +3757,69 @@ func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) (*SubProductRe
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutAsyncSubResourcePoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncSubResourcePoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncSubResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSPutNoHeaderInRetryPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -3464,25 +3827,24 @@ type lrOSPutNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutNoHeaderInRetryPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutNoHeaderInRetryPoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putNoHeaderInRetryHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3490,59 +3852,69 @@ func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*ProductRespon
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutNonResourcePoller provides polling facilities until the operation completes
 type LrOSPutNonResourcePoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*SkuResponse, error)
+	Poll(context.Context) bool
+	Response() (*SkuResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error)
 }
 
@@ -3550,25 +3922,24 @@ type lrOSPutNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutNonResourcePoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutNonResourcePoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutNonResourcePoller) Response() (*SkuResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putNonResourceHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3576,59 +3947,69 @@ func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) (*SkuResponse, erro
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutNonResourcePoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutNonResourcePoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutNonResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrOSPutSubResourcePoller provides polling facilities until the operation completes
 type LrOSPutSubResourcePoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*SubProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*SubProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error)
 }
 
@@ -3636,25 +4017,24 @@ type lrOSPutSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrOSPutSubResourcePoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrOSPutSubResourcePoller) ID() string {
-	return ""
-}
-
-func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) (*SubProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrOSPutSubResourcePoller) Response() (*SubProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putSubResourceHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3662,59 +4042,69 @@ func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) (*SubProductRespons
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrOSPutSubResourcePoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrOSPutSubResourcePoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutSubResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LroRetrysDelete202Retry200Poller provides polling facilities until the operation completes
 type LroRetrysDelete202Retry200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LroRetrysDelete202Retry200Response, error)
+	Poll(context.Context) bool
+	Response() (*LroRetrysDelete202Retry200Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error)
 }
 
@@ -3722,25 +4112,24 @@ type lroRetrysDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lroRetrysDelete202Retry200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lroRetrysDelete202Retry200Poller) ID() string {
-	return ""
-}
-
-func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) (*LroRetrysDelete202Retry200Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lroRetrysDelete202Retry200Poller) Response() (*LroRetrysDelete202Retry200Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.delete202Retry200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3748,59 +4137,69 @@ func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) (*LroRetrys
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lroRetrysDelete202Retry200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDelete202Retry200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LroRetrysDeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
 type LroRetrysDeleteAsyncRelativeRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error)
+	Poll(context.Context) bool
+	Response() (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error)
 }
 
@@ -3808,25 +4207,24 @@ type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRelativeRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3834,59 +4232,69 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LroRetrysDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
 type LroRetrysDeleteProvisioning202Accepted200SucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -3894,25 +4302,24 @@ type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteProvisioning202Accepted200SucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -3920,59 +4327,69 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx cont
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LroRetrysPost202Retry200Poller provides polling facilities until the operation completes
 type LroRetrysPost202Retry200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LroRetrysPost202Retry200Response, error)
+	Poll(context.Context) bool
+	Response() (*LroRetrysPost202Retry200Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error)
 }
 
@@ -3980,25 +4397,24 @@ type lroRetrysPost202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lroRetrysPost202Retry200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lroRetrysPost202Retry200Poller) ID() string {
-	return ""
-}
-
-func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) (*LroRetrysPost202Retry200Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lroRetrysPost202Retry200Poller) Response() (*LroRetrysPost202Retry200Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post202Retry200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4006,59 +4422,69 @@ func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) (*LroRetrysPo
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lroRetrysPost202Retry200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPost202Retry200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LroRetrysPostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
 type LroRetrysPostAsyncRelativeRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error)
+	Poll(context.Context) bool
+	Response() (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error)
 }
 
@@ -4066,25 +4492,24 @@ type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRelativeRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4092,59 +4517,69 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Contex
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LroRetrysPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
 type LroRetrysPut201CreatingSucceeded200Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -4152,25 +4587,24 @@ type lroRetrysPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lroRetrysPut201CreatingSucceeded200Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lroRetrysPut201CreatingSucceeded200Poller) ID() string {
-	return ""
-}
-
-func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lroRetrysPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put201CreatingSucceeded200HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4178,59 +4612,69 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lroRetrysPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LroRetrysPutAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
 type LroRetrysPutAsyncRelativeRetrySucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -4238,25 +4682,24 @@ type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRelativeRetrySucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4264,59 +4707,69 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDelete202NonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsDelete202NonRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsDelete202NonRetry400Response, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsDelete202NonRetry400Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error)
 }
 
@@ -4324,25 +4777,24 @@ type lrosaDsDelete202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDelete202NonRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDelete202NonRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDelete202NonRetry400Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDelete202NonRetry400Poller) Response() (*LrosaDsDelete202NonRetry400Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.delete202NonRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4350,59 +4802,69 @@ func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsD
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDelete202NonRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete202NonRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDelete202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDelete202RetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsDelete202RetryInvalidHeaderPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsDelete202RetryInvalidHeaderResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsDelete202RetryInvalidHeaderResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error)
 }
 
@@ -4410,25 +4872,24 @@ type lrosaDsDelete202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Response() (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.delete202RetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4436,59 +4897,69 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*L
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDelete204SucceededPoller provides polling facilities until the operation completes
 type LrosaDsDelete204SucceededPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*http.Response, error)
+	Poll(context.Context) bool
+	Response() (*http.Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error)
 }
 
@@ -4496,25 +4967,24 @@ type lrosaDsDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDelete204SucceededPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDelete204SucceededPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDelete204SucceededPoller) Response() (*http.Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.delete204SucceededHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4522,59 +4992,69 @@ func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Respo
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDelete204SucceededPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete204SucceededPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetry400Poller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetry400Response, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsDeleteAsyncRelativeRetry400Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error)
 }
 
@@ -4582,25 +5062,24 @@ type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Response() (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4608,59 +5087,69 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*L
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error)
 }
 
@@ -4668,25 +5157,24 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4694,59 +5182,69 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Co
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error)
 }
 
@@ -4754,25 +5252,24 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4780,59 +5277,69 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx conte
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetryNoStatusPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error)
 }
 
@@ -4840,25 +5347,24 @@ type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteAsyncRelativeRetryNoStatusHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4866,59 +5372,69 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsDeleteNonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsDeleteNonRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsDeleteNonRetry400Response, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsDeleteNonRetry400Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error)
 }
 
@@ -4926,25 +5442,24 @@ type lrosaDsDeleteNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsDeleteNonRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsDeleteNonRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDeleteNonRetry400Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsDeleteNonRetry400Poller) Response() (*LrosaDsDeleteNonRetry400Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.deleteNonRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -4952,59 +5467,69 @@ func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsDele
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsDeleteNonRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteNonRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPost202NoLocationPoller provides polling facilities until the operation completes
 type LrosaDsPost202NoLocationPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPost202NoLocationResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPost202NoLocationResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error)
 }
 
@@ -5012,25 +5537,24 @@ type lrosaDsPost202NoLocationPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPost202NoLocationPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPost202NoLocationPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) (*LrosaDsPost202NoLocationResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPost202NoLocationPoller) Response() (*LrosaDsPost202NoLocationResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post202NoLocationHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5038,59 +5562,69 @@ func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) (*LrosaDsPost
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPost202NoLocationPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202NoLocationPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPost202NoLocationPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPost202NonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPost202NonRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPost202NonRetry400Response, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPost202NonRetry400Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error)
 }
 
@@ -5098,25 +5632,24 @@ type lrosaDsPost202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPost202NonRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPost202NonRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPost202NonRetry400Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPost202NonRetry400Poller) Response() (*LrosaDsPost202NonRetry400Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post202NonRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5124,59 +5657,69 @@ func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPos
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPost202NonRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202NonRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPost202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPost202RetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsPost202RetryInvalidHeaderPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPost202RetryInvalidHeaderResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPost202RetryInvalidHeaderResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error)
 }
 
@@ -5184,25 +5727,24 @@ type lrosaDsPost202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPost202RetryInvalidHeaderPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPost202RetryInvalidHeaderPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) Response() (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.post202RetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5210,59 +5752,69 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*Lro
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetry400Response, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPostAsyncRelativeRetry400Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error)
 }
 
@@ -5270,25 +5822,24 @@ type lrosaDsPostAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPostAsyncRelativeRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPostAsyncRelativeRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) Response() (*LrosaDsPostAsyncRelativeRetry400Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5296,59 +5847,69 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*Lro
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error)
 }
 
@@ -5356,25 +5917,24 @@ type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5382,59 +5942,69 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Cont
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error)
 }
 
@@ -5442,25 +6012,24 @@ type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5468,59 +6037,69 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetryNoPayloadPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error)
 }
 
@@ -5528,25 +6107,24 @@ type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Response() (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postAsyncRelativeRetryNoPayloadHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5554,59 +6132,69 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context)
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPostNonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPostNonRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*LrosaDsPostNonRetry400Response, error)
+	Poll(context.Context) bool
+	Response() (*LrosaDsPostNonRetry400Response, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error)
 }
 
@@ -5614,25 +6202,24 @@ type lrosaDsPostNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPostNonRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPostNonRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostNonRetry400Response, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPostNonRetry400Poller) Response() (*LrosaDsPostNonRetry400Response, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.postNonRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5640,59 +6227,69 @@ func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) (*LrosaDsPostNo
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPostNonRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostNonRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPut200InvalidJsonPoller provides polling facilities until the operation completes
 type LrosaDsPut200InvalidJsonPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -5700,25 +6297,24 @@ type lrosaDsPut200InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPut200InvalidJSONPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPut200InvalidJSONPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPut200InvalidJSONPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.put200InvalidJsonHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5726,59 +6322,69 @@ func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) (*ProductResp
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPut200InvalidJSONPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPut200InvalidJSONPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPut200InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -5786,25 +6392,24 @@ type lrosaDsPutAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutAsyncRelativeRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutAsyncRelativeRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRelativeRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5812,59 +6417,69 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*Prod
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -5872,25 +6487,24 @@ type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRelativeRetryInvalidHeaderHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5898,59 +6512,69 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Conte
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -5958,25 +6582,24 @@ type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -5984,59 +6607,69 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -6044,25 +6677,24 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRelativeRetryNoStatusPayloadHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -6070,59 +6702,69 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Con
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryNoStatusPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -6130,25 +6772,24 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putAsyncRelativeRetryNoStatusHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -6156,59 +6797,69 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutError201NoProvisioningStatePayloadPoller provides polling facilities until the operation completes
 type LrosaDsPutError201NoProvisioningStatePayloadPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -6216,25 +6867,24 @@ type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putError201NoProvisioningStatePayloadHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -6242,59 +6892,69 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Co
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutNonRetry201Creating400InvalidJsonPoller provides polling facilities until the operation completes
 type LrosaDsPutNonRetry201Creating400InvalidJsonPoller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -6302,25 +6962,24 @@ type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putNonRetry201Creating400InvalidJsonHandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -6328,59 +6987,69 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Con
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutNonRetry201Creating400Poller provides polling facilities until the operation completes
 type LrosaDsPutNonRetry201Creating400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -6388,25 +7057,24 @@ type lrosaDsPutNonRetry201Creating400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutNonRetry201Creating400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutNonRetry201Creating400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutNonRetry201Creating400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putNonRetry201Creating400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -6414,59 +7082,69 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) (*Pro
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutNonRetry201Creating400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutNonRetry201Creating400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
 
 // LrosaDsPutNonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPutNonRetry400Poller interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*ProductResponse, error)
+	Poll(context.Context) bool
+	Response() (*ProductResponse, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error)
 }
 
@@ -6474,25 +7152,24 @@ type lrosaDsPutNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	pt pollingTracker
+	PT pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *lrosaDsPutNonRetry400Poller) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ...
-func (p *lrosaDsPutNonRetry400Poller) ID() string {
-	return ""
-}
-
-func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) (*ProductResponse, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response ...
+func (p *lrosaDsPutNonRetry400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.putNonRetry400HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -6500,50 +7177,60 @@ func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) (*ProductRespons
 	return result, nil
 }
 
+// ResumeToken ...
+func (p *lrosaDsPutNonRetry400Poller) ResumeToken() (string, error) {
+	if p.PT.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.PT)
+	if err != nil {
+		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
+	for p.Poll(context.Background()) {
 		if delay, found := p.response().RetryAfter(); found && delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	resp, err := p.Response()
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry400Poller) response() *azcore.Response {
-	return p.pt.latestResponse()
+	return p.PT.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
+	if p.PT.hasTerminated() {
+		return true, p.PT.pollingError()
 	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
+	if err := p.PT.checkForErrors(); err != nil {
+		return p.PT.hasTerminated(), err
 	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
+	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.pt.initPollingMethod(); err != nil {
+	if err := p.PT.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.pt.updatePollingMethod(); err != nil {
+	if err := p.PT.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
+	return p.PT.hasTerminated(), p.PT.pollingError()
 }
