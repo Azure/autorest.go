@@ -39,7 +39,7 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSCustomHeaderPost202Retry200Poller) Response() (*LrOSCustomHeaderPost202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -52,7 +52,8 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Response() (*LrOSCustomHeaderPos
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSCustomHeaderPost202Retry200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSCustomHeaderPost202Retry200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -82,7 +83,7 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollin
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSCustomHeaderPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -134,7 +135,7 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Response() (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -147,7 +148,8 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Response() (*LrOSCustomH
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -177,7 +179,7 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -229,7 +231,7 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Cont
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -242,7 +244,8 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Response() (*ProductR
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -272,7 +275,7 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Cont
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -324,7 +327,7 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context)
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -337,7 +340,8 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Response() (*ProductRespo
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -367,7 +371,7 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context,
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -419,7 +423,7 @@ func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDelete202NoRetry204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -432,7 +436,8 @@ func (p *lrOSDelete202NoRetry204Poller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDelete202NoRetry204Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDelete202NoRetry204Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -462,7 +467,7 @@ func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterva
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDelete202NoRetry204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -514,7 +519,7 @@ func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDelete202Retry200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -527,7 +532,8 @@ func (p *lrOSDelete202Retry200Poller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDelete202Retry200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDelete202Retry200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -557,7 +563,7 @@ func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval 
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDelete202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -609,7 +615,7 @@ func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDelete204SucceededPoller) Response() (*http.Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -622,7 +628,8 @@ func (p *lrOSDelete204SucceededPoller) Response() (*http.Response, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDelete204SucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDelete204SucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -652,7 +659,7 @@ func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDelete204SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -704,7 +711,7 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Response() (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -717,7 +724,8 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Response() (*LrOSDeleteAsyncNoHea
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteAsyncNoHeaderInRetryPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -747,7 +755,7 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, polling
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -799,7 +807,7 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Response() (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -812,7 +820,8 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Response() (*LrOSDeleteAsyncNoRe
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteAsyncNoRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -842,7 +851,7 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollin
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -894,7 +903,7 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteAsyncRetryFailedPoller) Response() (*LrOSDeleteAsyncRetryFailedResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -907,7 +916,8 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Response() (*LrOSDeleteAsyncRetryFail
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteAsyncRetryFailedPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteAsyncRetryFailedPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -937,7 +947,7 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInte
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -989,7 +999,7 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Response() (*LrOSDeleteAsyncRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1002,7 +1012,8 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Response() (*LrOSDeleteAsyncRetryS
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteAsyncRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1032,7 +1043,7 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingI
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1084,7 +1095,7 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Response() (*LrOSDeleteAsyncRetrycanceledResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1097,7 +1108,8 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Response() (*LrOSDeleteAsyncRetryca
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteAsyncRetrycanceledPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1127,7 +1139,7 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingIn
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1179,7 +1191,7 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteNoHeaderInRetryPoller) Response() (*LrOSDeleteNoHeaderInRetryResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1192,7 +1204,8 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Response() (*LrOSDeleteNoHeaderInRetry
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteNoHeaderInRetryPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1222,7 +1235,7 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInter
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1274,7 +1287,7 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.C
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1287,7 +1300,8 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Response() (*Produ
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteProvisioning202Accepted200SucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1317,7 +1331,7 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.C
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1369,7 +1383,7 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Cont
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1382,7 +1396,8 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Response() (*ProductR
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteProvisioning202DeletingFailed200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1412,7 +1427,7 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Cont
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1464,7 +1479,7 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Co
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1477,7 +1492,8 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Response() (*Produc
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSDeleteProvisioning202Deletingcanceled200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1507,7 +1523,7 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Co
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1559,7 +1575,7 @@ func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPost200WithPayloadPoller) Response() (*SkuResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1572,7 +1588,8 @@ func (p *lrOSPost200WithPayloadPoller) Response() (*SkuResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPost200WithPayloadPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPost200WithPayloadPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1602,7 +1619,7 @@ func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPost200WithPayloadPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1654,7 +1671,7 @@ func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPost202NoRetry204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1667,7 +1684,8 @@ func (p *lrOSPost202NoRetry204Poller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPost202NoRetry204Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPost202NoRetry204Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1697,7 +1715,7 @@ func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval 
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPost202NoRetry204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1749,7 +1767,7 @@ func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPost202Retry200Poller) Response() (*LrOSPost202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1762,7 +1780,8 @@ func (p *lrOSPost202Retry200Poller) Response() (*LrOSPost202Retry200Response, er
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPost202Retry200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPost202Retry200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1792,7 +1811,7 @@ func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval ti
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1844,7 +1863,7 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1857,7 +1876,8 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Response() (*ProductResponse, erro
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPostAsyncNoRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPostAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1887,7 +1907,7 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingI
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -1939,7 +1959,7 @@ func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPostAsyncRetryFailedPoller) Response() (*LrOSPostAsyncRetryFailedResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1952,7 +1972,8 @@ func (p *lrOSPostAsyncRetryFailedPoller) Response() (*LrOSPostAsyncRetryFailedRe
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPostAsyncRetryFailedPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPostAsyncRetryFailedPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -1982,7 +2003,7 @@ func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterv
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPostAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2034,7 +2055,7 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPostAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2047,7 +2068,8 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Response() (*ProductResponse, error)
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPostAsyncRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2077,7 +2099,7 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInt
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2129,7 +2151,7 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPostAsyncRetrycanceledPoller) Response() (*LrOSPostAsyncRetrycanceledResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2142,7 +2164,8 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Response() (*LrOSPostAsyncRetrycancel
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPostAsyncRetrycanceledPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPostAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2172,7 +2195,7 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInte
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2224,7 +2247,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2237,7 +2260,8 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Response() (*Pro
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2267,7 +2291,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2319,7 +2343,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Contex
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2332,7 +2356,8 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Response() (*ProductRes
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPostDoubleHeadersFinalAzureHeaderGetPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2362,7 +2387,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Contex
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2414,7 +2439,7 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) 
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2427,7 +2452,8 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Response() (*ProductRespon
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPostDoubleHeadersFinalLocationGetPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2457,7 +2483,7 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, 
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2509,7 +2535,7 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPut200Acceptedcanceled200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2522,7 +2548,8 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Response() (*ProductResponse, erro
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPut200Acceptedcanceled200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPut200Acceptedcanceled200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2552,7 +2579,7 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingI
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPut200Acceptedcanceled200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2604,7 +2631,7 @@ func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPut200SucceededNoStatePoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2617,7 +2644,8 @@ func (p *lrOSPut200SucceededNoStatePoller) Response() (*ProductResponse, error) 
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPut200SucceededNoStatePoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPut200SucceededNoStatePoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2647,7 +2675,7 @@ func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInte
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPut200SucceededNoStatePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2699,7 +2727,7 @@ func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPut200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2712,7 +2740,8 @@ func (p *lrOSPut200SucceededPoller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPut200SucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPut200SucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2742,7 +2771,7 @@ func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval ti
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPut200SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2794,7 +2823,7 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPut200UpdatingSucceeded204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2807,7 +2836,8 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Response() (*ProductResponse, err
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPut200UpdatingSucceeded204Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPut200UpdatingSucceeded204Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2837,7 +2867,7 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, polling
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPut200UpdatingSucceeded204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2889,7 +2919,7 @@ func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPut201CreatingFailed200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2902,7 +2932,8 @@ func (p *lrOSPut201CreatingFailed200Poller) Response() (*ProductResponse, error)
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPut201CreatingFailed200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPut201CreatingFailed200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -2932,7 +2963,7 @@ func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInt
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPut201CreatingFailed200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -2984,7 +3015,7 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2997,7 +3028,8 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Response() (*ProductResponse, err
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPut201CreatingSucceeded200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3027,7 +3059,7 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, polling
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPut201CreatingSucceeded200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3079,7 +3111,7 @@ func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPut202Retry200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3092,7 +3124,8 @@ func (p *lrOSPut202Retry200Poller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPut202Retry200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPut202Retry200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3122,7 +3155,7 @@ func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval tim
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPut202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3174,7 +3207,7 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3187,7 +3220,8 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Response() (*ProductResponse, error)
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutAsyncNoHeaderInRetryPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3217,7 +3251,7 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInt
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3269,7 +3303,7 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3282,7 +3316,8 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutAsyncNoRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3312,7 +3347,7 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingIn
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3364,7 +3399,7 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3377,7 +3412,8 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Response() (*ProductResponse, error)
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutAsyncNoRetrycanceledPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutAsyncNoRetrycanceledPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3407,7 +3443,7 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInt
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3459,7 +3495,7 @@ func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutAsyncNonResourcePoller) Response() (*SkuResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3472,7 +3508,8 @@ func (p *lrOSPutAsyncNonResourcePoller) Response() (*SkuResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutAsyncNonResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutAsyncNonResourcePoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3502,7 +3539,7 @@ func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterva
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutAsyncNonResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3554,7 +3591,7 @@ func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutAsyncRetryFailedPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3567,7 +3604,8 @@ func (p *lrOSPutAsyncRetryFailedPoller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutAsyncRetryFailedPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutAsyncRetryFailedPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3597,7 +3635,7 @@ func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterva
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3649,7 +3687,7 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3662,7 +3700,8 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) 
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutAsyncRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3692,7 +3731,7 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInte
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3744,7 +3783,7 @@ func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutAsyncSubResourcePoller) Response() (*SubProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3757,7 +3796,8 @@ func (p *lrOSPutAsyncSubResourcePoller) Response() (*SubProductResponse, error) 
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutAsyncSubResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutAsyncSubResourcePoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3787,7 +3827,7 @@ func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterva
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutAsyncSubResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3839,7 +3879,7 @@ func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3852,7 +3892,8 @@ func (p *lrOSPutNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutNoHeaderInRetryPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3882,7 +3923,7 @@ func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -3934,7 +3975,7 @@ func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutNonResourcePoller) Response() (*SkuResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3947,7 +3988,8 @@ func (p *lrOSPutNonResourcePoller) Response() (*SkuResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutNonResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutNonResourcePoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -3977,7 +4019,7 @@ func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval tim
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutNonResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4029,7 +4071,7 @@ func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrOSPutSubResourcePoller) Response() (*SubProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4042,7 +4084,8 @@ func (p *lrOSPutSubResourcePoller) Response() (*SubProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrOSPutSubResourcePoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrOSPutSubResourcePoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4072,7 +4115,7 @@ func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval tim
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrOSPutSubResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4124,7 +4167,7 @@ func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lroRetrysDelete202Retry200Poller) Response() (*LroRetrysDelete202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4137,7 +4180,8 @@ func (p *lroRetrysDelete202Retry200Poller) Response() (*LroRetrysDelete202Retry2
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLroRetrysDelete202Retry200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lroRetrysDelete202Retry200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4167,7 +4211,7 @@ func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInte
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lroRetrysDelete202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4219,7 +4263,7 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Cont
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4232,7 +4276,8 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Response() (*LroRetry
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4262,7 +4307,7 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Cont
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4314,7 +4359,7 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx cont
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4327,7 +4372,8 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Response() (*
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4357,7 +4403,7 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx cont
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4409,7 +4455,7 @@ func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lroRetrysPost202Retry200Poller) Response() (*LroRetrysPost202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4422,7 +4468,8 @@ func (p *lroRetrysPost202Retry200Poller) Response() (*LroRetrysPost202Retry200Re
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLroRetrysPost202Retry200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lroRetrysPost202Retry200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4452,7 +4499,7 @@ func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterv
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lroRetrysPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4504,7 +4551,7 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Contex
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4517,7 +4564,8 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysP
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4547,7 +4595,7 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Contex
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4599,7 +4647,7 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bo
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4612,7 +4660,8 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Response() (*ProductResponse
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLroRetrysPut201CreatingSucceeded200Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lroRetrysPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4642,7 +4691,7 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, po
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4694,7 +4743,7 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4707,7 +4756,8 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Response() (*ProductResp
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4737,7 +4787,7 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4789,7 +4839,7 @@ func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDelete202NonRetry400Poller) Response() (*LrosaDsDelete202NonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4802,7 +4852,8 @@ func (p *lrosaDsDelete202NonRetry400Poller) Response() (*LrosaDsDelete202NonRetr
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDelete202NonRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDelete202NonRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4832,7 +4883,7 @@ func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInt
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDelete202NonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4884,7 +4935,7 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) boo
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Response() (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4897,7 +4948,8 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Response() (*LrosaDsDelete202
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDelete202RetryInvalidHeaderPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -4927,7 +4979,7 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pol
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -4979,7 +5031,7 @@ func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDelete204SucceededPoller) Response() (*http.Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4992,7 +5044,8 @@ func (p *lrosaDsDelete204SucceededPoller) Response() (*http.Response, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDelete204SucceededPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDelete204SucceededPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5022,7 +5075,7 @@ func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInter
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDelete204SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5074,7 +5127,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) boo
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Response() (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5087,7 +5140,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Response() (*LrosaDsDeleteAsy
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDeleteAsyncRelativeRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5117,7 +5171,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pol
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5169,7 +5223,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Co
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5182,7 +5236,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaD
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5212,7 +5267,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Co
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5264,7 +5319,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx conte
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5277,7 +5332,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*L
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5307,7 +5363,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx conte
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5359,7 +5415,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5372,7 +5428,8 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Response() (*LrosaDsDele
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5402,7 +5459,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5454,7 +5511,7 @@ func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsDeleteNonRetry400Poller) Response() (*LrosaDsDeleteNonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5467,7 +5524,8 @@ func (p *lrosaDsDeleteNonRetry400Poller) Response() (*LrosaDsDeleteNonRetry400Re
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsDeleteNonRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsDeleteNonRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5497,7 +5555,7 @@ func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterv
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsDeleteNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5549,7 +5607,7 @@ func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPost202NoLocationPoller) Response() (*LrosaDsPost202NoLocationResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5562,7 +5620,8 @@ func (p *lrosaDsPost202NoLocationPoller) Response() (*LrosaDsPost202NoLocationRe
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPost202NoLocationPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPost202NoLocationPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5592,7 +5651,7 @@ func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterv
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPost202NoLocationPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5644,7 +5703,7 @@ func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPost202NonRetry400Poller) Response() (*LrosaDsPost202NonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5657,7 +5716,8 @@ func (p *lrosaDsPost202NonRetry400Poller) Response() (*LrosaDsPost202NonRetry400
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPost202NonRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPost202NonRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5687,7 +5747,7 @@ func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInter
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPost202NonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5739,7 +5799,7 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool 
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Response() (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5752,7 +5812,8 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Response() (*LrosaDsPost202Retr
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPost202RetryInvalidHeaderPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5782,7 +5843,7 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, polli
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5834,7 +5895,7 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool 
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Response() (*LrosaDsPostAsyncRelativeRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5847,7 +5908,8 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Response() (*LrosaDsPostAsyncRe
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPostAsyncRelativeRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5877,7 +5939,7 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, polli
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -5929,7 +5991,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Cont
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5942,7 +6004,8 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsP
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPostAsyncRelativeRetryInvalidHeaderPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -5972,7 +6035,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Cont
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6024,7 +6087,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6037,7 +6100,8 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*Lro
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6067,7 +6131,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6119,7 +6183,7 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context)
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Response() (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6132,7 +6196,8 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Response() (*LrosaDsPostA
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6162,7 +6227,7 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context,
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6214,7 +6279,7 @@ func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPostNonRetry400Poller) Response() (*LrosaDsPostNonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6227,7 +6292,8 @@ func (p *lrosaDsPostNonRetry400Poller) Response() (*LrosaDsPostNonRetry400Respon
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPostNonRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPostNonRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6257,7 +6323,7 @@ func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPostNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6309,7 +6375,7 @@ func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPut200InvalidJSONPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6322,7 +6388,8 @@ func (p *lrosaDsPut200InvalidJSONPoller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPut200InvalidJsonPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPut200InvalidJSONPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6352,7 +6419,7 @@ func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterv
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPut200InvalidJSONPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6404,7 +6471,7 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6417,7 +6484,8 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Response() (*ProductResponse, er
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutAsyncRelativeRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6447,7 +6515,7 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollin
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6499,7 +6567,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Conte
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6512,7 +6580,8 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Response() (*ProductRe
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutAsyncRelativeRetryInvalidHeaderPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6542,7 +6611,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Conte
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6594,7 +6663,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6607,7 +6676,8 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*Prod
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6637,7 +6707,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6689,7 +6759,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Con
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6702,7 +6772,8 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Response() (*Product
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6732,7 +6803,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Con
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6784,7 +6855,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) b
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6797,7 +6868,8 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Response() (*ProductRespons
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutAsyncRelativeRetryNoStatusPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6827,7 +6899,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, p
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6879,7 +6951,7 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Co
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6892,7 +6964,8 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Response() (*Produc
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutError201NoProvisioningStatePayloadPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -6922,7 +6995,7 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Co
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -6974,7 +7047,7 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Con
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6987,7 +7060,8 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Response() (*Product
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutNonRetry201Creating400InvalidJsonPoller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -7017,7 +7091,7 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Con
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -7069,7 +7143,7 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) bool 
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutNonRetry201Creating400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -7082,7 +7156,8 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Response() (*ProductResponse, e
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutNonRetry201Creating400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutNonRetry201Creating400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -7112,7 +7187,7 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, polli
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
@@ -7164,7 +7239,7 @@ func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *lrosaDsPutNonRetry400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -7177,7 +7252,8 @@ func (p *lrosaDsPutNonRetry400Poller) Response() (*ProductResponse, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the ResumeLrosaDsPutNonRetry400Poller method
+// on the client to create a new poller from the data held in the current poller type
 func (p *lrosaDsPutNonRetry400Poller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -7207,7 +7283,7 @@ func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval 
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }

@@ -65,7 +65,7 @@ func (p *${poller.name}) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response ...
+// Response returns the final response from the polling operation
 func (p *${poller.name}) Response() (*${responseType}, error) {
 	resp := p.response()
 	if resp == nil {
@@ -78,7 +78,8 @@ func (p *${poller.name}) Response() (*${responseType}, error) {
 	return result, nil
 }
 
-// ResumeToken ...
+// ResumeToken generates the string token that can be used with the Resume${pascalCase(poller.name)} method
+// on the client to create a new poller from the data held in the current poller type
 func (p *${poller.name}) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
@@ -108,7 +109,7 @@ func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration
 	return resp, nil
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *${poller.name}) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
