@@ -423,19 +423,52 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
   const returns = ['*azcore.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${client}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
+  let includeParse = false;
+  let parseVar = '';
+  // TODO check what to do when a host is specified without a scheme and {url} case in host
+  // this might remove the use of the endpoint param used in the client constructor
+  const hostURLStr = <string>op.requests![0].protocol.http!.uri;
+  // we exclude the plain host and url replacements for the host since our client constructors
+  // already include a request endpoint
+  if ((hostURLStr != '{$host}' && hostURLStr != '{url}') && hostURLStr.length > 0) {
+    text += `\thost := "${hostURLStr}"\n`;
+    // replace url parameters
+    for (const pp of values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'uri'; })) {
+      imports.add('strings');
+      // host references may be found among other variables and therefore call to use the host 
+      // specified by the endpoint the client was created with
+      if (pp.language.go!.name == 'host') {
+        text += `\thost = strings.ReplaceAll(host, "{host}", client.u.Host)\n`;
+      } else {
+        let paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
+        if (skipURLEncoding(pp)) {
+          paramValue = formatParamValue(pp, imports);
+        } else {
+          imports.add('net/url');
+        }
+        text += `\thost = strings.ReplaceAll(host, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
+      }
+    }
+    includeParse = true;
+    parseVar = 'host';
+  }
   const inPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; });
   // storage needs the client.u to be the source-of-truth for the full path.
   // however, swagger requires that all operations specify a path, which is at odds with storage.
   // to work around this, storage specifies x-ms-path paths with path params but doesn't
   // actually reference the path params (i.e. no params with which to replace the tokens).
   // so, if a path contains tokens but there are no path params, skip emitting the path.
-  let includeParse = false;
   const pathStr = <string>op.requests![0].protocol.http!.path;
   const pathContainsParms = pathStr.includes('{');
   if (!pathContainsParms && pathStr.length > 1) {
     // path does NOT include path params and is not "/", emit it
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
     includeParse = true;
+    if (parseVar.length > 0) {
+      parseVar += '+urlPath';
+    } else {
+      parseVar = 'urlPath';
+    }
   } else if (inPathParams.any()) {
     // swagger defines path params, emit path and replace tokens
     imports.add('strings');
@@ -451,9 +484,14 @@ function createProtocolRequest(client: string, op: Operation, imports: ImportMan
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
     includeParse = true;
+    if (parseVar.length > 0) {
+      parseVar += '+urlPath';
+    } else {
+      parseVar = 'urlPath';
+    }
   }
   if (includeParse) {
-    text += `\tu, err := client.u.Parse(urlPath)\n`;
+    text += `\tu, err := client.u.Parse(${parseVar})\n`;
     text += '\tif err != nil {\n';
     text += '\t\treturn nil, err\n';
     text += '\t}\n';
