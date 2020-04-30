@@ -289,7 +289,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t}\n`;
     // closing braces
     text += `\treturn &${op.language.go!.pollerType.name}{\n`;
-    text += `\t\tPT: pt,\n`;
+    text += `\t\tpt: pt,\n`;
     text += `\t\tclient: client,\n`;
     text += `\t}, nil\n`;
     text += '}\n\n';

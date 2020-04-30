@@ -27,7 +27,7 @@ type lrOSCustomHeaderPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -54,10 +54,10 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Response() (*LrOSCustomHeaderPos
 
 // ResumeToken ...
 func (p *lrOSCustomHeaderPost202Retry200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -84,30 +84,30 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollin
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPost202Retry200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSCustomHeaderPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -122,7 +122,7 @@ type lrOSCustomHeaderPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -149,10 +149,10 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Response() (*LrOSCustomH
 
 // ResumeToken ...
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -179,30 +179,30 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSCustomHeaderPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
@@ -217,7 +217,7 @@ type lrOSCustomHeaderPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -244,10 +244,10 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Response() (*ProductR
 
 // ResumeToken ...
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -274,30 +274,30 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Cont
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSCustomHeaderPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -312,7 +312,7 @@ type lrOSCustomHeaderPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSCustomHeaderOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -339,10 +339,10 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Response() (*ProductRespo
 
 // ResumeToken ...
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -369,30 +369,30 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context,
 
 // Response returns the last HTTP response.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDelete202NoRetry204Poller provides polling facilities until the operation completes
@@ -407,7 +407,7 @@ type lrOSDelete202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -434,10 +434,10 @@ func (p *lrOSDelete202NoRetry204Poller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSDelete202NoRetry204Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -464,30 +464,30 @@ func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterva
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete202NoRetry204Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDelete202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDelete202Retry200Poller provides polling facilities until the operation completes
@@ -502,7 +502,7 @@ type lrOSDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -529,10 +529,10 @@ func (p *lrOSDelete202Retry200Poller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSDelete202Retry200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -559,30 +559,30 @@ func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval 
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete202Retry200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDelete204SucceededPoller provides polling facilities until the operation completes
@@ -597,7 +597,7 @@ type lrOSDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -624,10 +624,10 @@ func (p *lrOSDelete204SucceededPoller) Response() (*http.Response, error) {
 
 // ResumeToken ...
 func (p *lrOSDelete204SucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -654,30 +654,30 @@ func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval
 
 // Response returns the last HTTP response.
 func (p *lrOSDelete204SucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -692,7 +692,7 @@ type lrOSDeleteAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -719,10 +719,10 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Response() (*LrOSDeleteAsyncNoHea
 
 // ResumeToken ...
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -749,30 +749,30 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, polling
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
@@ -787,7 +787,7 @@ type lrOSDeleteAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -814,10 +814,10 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Response() (*LrOSDeleteAsyncNoRe
 
 // ResumeToken ...
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -844,30 +844,30 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollin
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncRetryFailedPoller provides polling facilities until the operation completes
@@ -882,7 +882,7 @@ type lrOSDeleteAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -909,10 +909,10 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Response() (*LrOSDeleteAsyncRetryFail
 
 // ResumeToken ...
 func (p *lrOSDeleteAsyncRetryFailedPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -939,30 +939,30 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInte
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetryFailedPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -977,7 +977,7 @@ type lrOSDeleteAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1004,10 +1004,10 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Response() (*LrOSDeleteAsyncRetryS
 
 // ResumeToken ...
 func (p *lrOSDeleteAsyncRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1034,30 +1034,30 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingI
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteAsyncRetrycanceledPoller provides polling facilities until the operation completes
@@ -1072,7 +1072,7 @@ type lrOSDeleteAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1099,10 +1099,10 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Response() (*LrOSDeleteAsyncRetryca
 
 // ResumeToken ...
 func (p *lrOSDeleteAsyncRetrycanceledPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1129,30 +1129,30 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingIn
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -1167,7 +1167,7 @@ type lrOSDeleteNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1194,10 +1194,10 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Response() (*LrOSDeleteNoHeaderInRetry
 
 // ResumeToken ...
 func (p *lrOSDeleteNoHeaderInRetryPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1224,30 +1224,30 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInter
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
@@ -1262,7 +1262,7 @@ type lrOSDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1289,10 +1289,10 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Response() (*Produ
 
 // ResumeToken ...
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1319,30 +1319,30 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.C
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation completes
@@ -1357,7 +1357,7 @@ type lrOSDeleteProvisioning202DeletingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1384,10 +1384,10 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Response() (*ProductR
 
 // ResumeToken ...
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1414,30 +1414,30 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Cont
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSDeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation completes
@@ -1452,7 +1452,7 @@ type lrOSDeleteProvisioning202Deletingcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1479,10 +1479,10 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Response() (*Produc
 
 // ResumeToken ...
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1509,30 +1509,30 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Co
 
 // Response returns the last HTTP response.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPost200WithPayloadPoller provides polling facilities until the operation completes
@@ -1547,7 +1547,7 @@ type lrOSPost200WithPayloadPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1574,10 +1574,10 @@ func (p *lrOSPost200WithPayloadPoller) Response() (*SkuResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPost200WithPayloadPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1604,30 +1604,30 @@ func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval
 
 // Response returns the last HTTP response.
 func (p *lrOSPost200WithPayloadPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPost200WithPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPost202NoRetry204Poller provides polling facilities until the operation completes
@@ -1642,7 +1642,7 @@ type lrOSPost202NoRetry204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1669,10 +1669,10 @@ func (p *lrOSPost202NoRetry204Poller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPost202NoRetry204Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1699,30 +1699,30 @@ func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval 
 
 // Response returns the last HTTP response.
 func (p *lrOSPost202NoRetry204Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPost202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPost202Retry200Poller provides polling facilities until the operation completes
@@ -1737,7 +1737,7 @@ type lrOSPost202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1764,10 +1764,10 @@ func (p *lrOSPost202Retry200Poller) Response() (*LrOSPost202Retry200Response, er
 
 // ResumeToken ...
 func (p *lrOSPost202Retry200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1794,30 +1794,30 @@ func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval ti
 
 // Response returns the last HTTP response.
 func (p *lrOSPost202Retry200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
@@ -1832,7 +1832,7 @@ type lrOSPostAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1859,10 +1859,10 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Response() (*ProductResponse, erro
 
 // ResumeToken ...
 func (p *lrOSPostAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1889,30 +1889,30 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingI
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncRetryFailedPoller provides polling facilities until the operation completes
@@ -1927,7 +1927,7 @@ type lrOSPostAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -1954,10 +1954,10 @@ func (p *lrOSPostAsyncRetryFailedPoller) Response() (*LrOSPostAsyncRetryFailedRe
 
 // ResumeToken ...
 func (p *lrOSPostAsyncRetryFailedPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -1984,30 +1984,30 @@ func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterv
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetryFailedPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -2022,7 +2022,7 @@ type lrOSPostAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2049,10 +2049,10 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Response() (*ProductResponse, error)
 
 // ResumeToken ...
 func (p *lrOSPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2079,30 +2079,30 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInt
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostAsyncRetrycanceledPoller provides polling facilities until the operation completes
@@ -2117,7 +2117,7 @@ type lrOSPostAsyncRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2144,10 +2144,10 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Response() (*LrOSPostAsyncRetrycancel
 
 // ResumeToken ...
 func (p *lrOSPostAsyncRetrycanceledPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2174,30 +2174,30 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInte
 
 // Response returns the last HTTP response.
 func (p *lrOSPostAsyncRetrycanceledPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation completes
@@ -2212,7 +2212,7 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2239,10 +2239,10 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Response() (*Pro
 
 // ResumeToken ...
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2269,30 +2269,30 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation completes
@@ -2307,7 +2307,7 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2334,10 +2334,10 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Response() (*ProductRes
 
 // ResumeToken ...
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2364,30 +2364,30 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Contex
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation completes
@@ -2402,7 +2402,7 @@ type lrOSPostDoubleHeadersFinalLocationGetPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2429,10 +2429,10 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Response() (*ProductRespon
 
 // ResumeToken ...
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2459,30 +2459,30 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, 
 
 // Response returns the last HTTP response.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200Acceptedcanceled200Poller provides polling facilities until the operation completes
@@ -2497,7 +2497,7 @@ type lrOSPut200Acceptedcanceled200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2524,10 +2524,10 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Response() (*ProductResponse, erro
 
 // ResumeToken ...
 func (p *lrOSPut200Acceptedcanceled200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2554,30 +2554,30 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingI
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200Acceptedcanceled200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200Acceptedcanceled200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200SucceededNoStatePoller provides polling facilities until the operation completes
@@ -2592,7 +2592,7 @@ type lrOSPut200SucceededNoStatePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2619,10 +2619,10 @@ func (p *lrOSPut200SucceededNoStatePoller) Response() (*ProductResponse, error) 
 
 // ResumeToken ...
 func (p *lrOSPut200SucceededNoStatePoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2649,30 +2649,30 @@ func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInte
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200SucceededNoStatePoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200SucceededNoStatePoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200SucceededPoller provides polling facilities until the operation completes
@@ -2687,7 +2687,7 @@ type lrOSPut200SucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2714,10 +2714,10 @@ func (p *lrOSPut200SucceededPoller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPut200SucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2744,30 +2744,30 @@ func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval ti
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200SucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut200UpdatingSucceeded204Poller provides polling facilities until the operation completes
@@ -2782,7 +2782,7 @@ type lrOSPut200UpdatingSucceeded204Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2809,10 +2809,10 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Response() (*ProductResponse, err
 
 // ResumeToken ...
 func (p *lrOSPut200UpdatingSucceeded204Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2839,30 +2839,30 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, polling
 
 // Response returns the last HTTP response.
 func (p *lrOSPut200UpdatingSucceeded204Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut200UpdatingSucceeded204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut201CreatingFailed200Poller provides polling facilities until the operation completes
@@ -2877,7 +2877,7 @@ type lrOSPut201CreatingFailed200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2904,10 +2904,10 @@ func (p *lrOSPut201CreatingFailed200Poller) Response() (*ProductResponse, error)
 
 // ResumeToken ...
 func (p *lrOSPut201CreatingFailed200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -2934,30 +2934,30 @@ func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInt
 
 // Response returns the last HTTP response.
 func (p *lrOSPut201CreatingFailed200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut201CreatingFailed200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
@@ -2972,7 +2972,7 @@ type lrOSPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -2999,10 +2999,10 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Response() (*ProductResponse, err
 
 // ResumeToken ...
 func (p *lrOSPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3029,30 +3029,30 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, polling
 
 // Response returns the last HTTP response.
 func (p *lrOSPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPut202Retry200Poller provides polling facilities until the operation completes
@@ -3067,7 +3067,7 @@ type lrOSPut202Retry200Poller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3094,10 +3094,10 @@ func (p *lrOSPut202Retry200Poller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPut202Retry200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3124,30 +3124,30 @@ func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval tim
 
 // Response returns the last HTTP response.
 func (p *lrOSPut202Retry200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPut202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -3162,7 +3162,7 @@ type lrOSPutAsyncNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3189,10 +3189,10 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Response() (*ProductResponse, error)
 
 // ResumeToken ...
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3219,30 +3219,30 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInt
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
@@ -3257,7 +3257,7 @@ type lrOSPutAsyncNoRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3284,10 +3284,10 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error
 
 // ResumeToken ...
 func (p *lrOSPutAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3314,30 +3314,30 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingIn
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNoRetrycanceledPoller provides polling facilities until the operation completes
@@ -3352,7 +3352,7 @@ type lrOSPutAsyncNoRetrycanceledPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3379,10 +3379,10 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Response() (*ProductResponse, error)
 
 // ResumeToken ...
 func (p *lrOSPutAsyncNoRetrycanceledPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3409,30 +3409,30 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInt
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncNonResourcePoller provides polling facilities until the operation completes
@@ -3447,7 +3447,7 @@ type lrOSPutAsyncNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3474,10 +3474,10 @@ func (p *lrOSPutAsyncNonResourcePoller) Response() (*SkuResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPutAsyncNonResourcePoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3504,30 +3504,30 @@ func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterva
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncNonResourcePoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncNonResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncRetryFailedPoller provides polling facilities until the operation completes
@@ -3542,7 +3542,7 @@ type lrOSPutAsyncRetryFailedPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3569,10 +3569,10 @@ func (p *lrOSPutAsyncRetryFailedPoller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPutAsyncRetryFailedPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3599,30 +3599,30 @@ func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterva
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncRetryFailedPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
@@ -3637,7 +3637,7 @@ type lrOSPutAsyncRetrySucceededPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3664,10 +3664,10 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) 
 
 // ResumeToken ...
 func (p *lrOSPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3694,30 +3694,30 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInte
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutAsyncSubResourcePoller provides polling facilities until the operation completes
@@ -3732,7 +3732,7 @@ type lrOSPutAsyncSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3759,10 +3759,10 @@ func (p *lrOSPutAsyncSubResourcePoller) Response() (*SubProductResponse, error) 
 
 // ResumeToken ...
 func (p *lrOSPutAsyncSubResourcePoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3789,30 +3789,30 @@ func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterva
 
 // Response returns the last HTTP response.
 func (p *lrOSPutAsyncSubResourcePoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutAsyncSubResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutNoHeaderInRetryPoller provides polling facilities until the operation completes
@@ -3827,7 +3827,7 @@ type lrOSPutNoHeaderInRetryPoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3854,10 +3854,10 @@ func (p *lrOSPutNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPutNoHeaderInRetryPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3884,30 +3884,30 @@ func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval
 
 // Response returns the last HTTP response.
 func (p *lrOSPutNoHeaderInRetryPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutNonResourcePoller provides polling facilities until the operation completes
@@ -3922,7 +3922,7 @@ type lrOSPutNonResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -3949,10 +3949,10 @@ func (p *lrOSPutNonResourcePoller) Response() (*SkuResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPutNonResourcePoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -3979,30 +3979,30 @@ func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval tim
 
 // Response returns the last HTTP response.
 func (p *lrOSPutNonResourcePoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutNonResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrOSPutSubResourcePoller provides polling facilities until the operation completes
@@ -4017,7 +4017,7 @@ type lrOSPutSubResourcePoller struct {
 	// the client for making the request
 	client *lrOSOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4044,10 +4044,10 @@ func (p *lrOSPutSubResourcePoller) Response() (*SubProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrOSPutSubResourcePoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4074,30 +4074,30 @@ func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval tim
 
 // Response returns the last HTTP response.
 func (p *lrOSPutSubResourcePoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrOSPutSubResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysDelete202Retry200Poller provides polling facilities until the operation completes
@@ -4112,7 +4112,7 @@ type lroRetrysDelete202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4139,10 +4139,10 @@ func (p *lroRetrysDelete202Retry200Poller) Response() (*LroRetrysDelete202Retry2
 
 // ResumeToken ...
 func (p *lroRetrysDelete202Retry200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4169,30 +4169,30 @@ func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInte
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDelete202Retry200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysDeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
@@ -4207,7 +4207,7 @@ type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4234,10 +4234,10 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Response() (*LroRetry
 
 // ResumeToken ...
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4264,30 +4264,30 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Cont
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
@@ -4302,7 +4302,7 @@ type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4329,10 +4329,10 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Response() (*
 
 // ResumeToken ...
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4359,30 +4359,30 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx cont
 
 // Response returns the last HTTP response.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPost202Retry200Poller provides polling facilities until the operation completes
@@ -4397,7 +4397,7 @@ type lroRetrysPost202Retry200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4424,10 +4424,10 @@ func (p *lroRetrysPost202Retry200Poller) Response() (*LroRetrysPost202Retry200Re
 
 // ResumeToken ...
 func (p *lroRetrysPost202Retry200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4454,30 +4454,30 @@ func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterv
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPost202Retry200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
@@ -4492,7 +4492,7 @@ type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4519,10 +4519,10 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysP
 
 // ResumeToken ...
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4549,30 +4549,30 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Contex
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
@@ -4587,7 +4587,7 @@ type lroRetrysPut201CreatingSucceeded200Poller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4614,10 +4614,10 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Response() (*ProductResponse
 
 // ResumeToken ...
 func (p *lroRetrysPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4644,30 +4644,30 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, po
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LroRetrysPutAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
@@ -4682,7 +4682,7 @@ type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
 	// the client for making the request
 	client *lroRetrysOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4709,10 +4709,10 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Response() (*ProductResp
 
 // ResumeToken ...
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4739,30 +4739,30 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context
 
 // Response returns the last HTTP response.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDelete202NonRetry400Poller provides polling facilities until the operation completes
@@ -4777,7 +4777,7 @@ type lrosaDsDelete202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4804,10 +4804,10 @@ func (p *lrosaDsDelete202NonRetry400Poller) Response() (*LrosaDsDelete202NonRetr
 
 // ResumeToken ...
 func (p *lrosaDsDelete202NonRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4834,30 +4834,30 @@ func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInt
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete202NonRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDelete202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDelete202RetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -4872,7 +4872,7 @@ type lrosaDsDelete202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4899,10 +4899,10 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Response() (*LrosaDsDelete202
 
 // ResumeToken ...
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -4929,30 +4929,30 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pol
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDelete204SucceededPoller provides polling facilities until the operation completes
@@ -4967,7 +4967,7 @@ type lrosaDsDelete204SucceededPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -4994,10 +4994,10 @@ func (p *lrosaDsDelete204SucceededPoller) Response() (*http.Response, error) {
 
 // ResumeToken ...
 func (p *lrosaDsDelete204SucceededPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5024,30 +5024,30 @@ func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInter
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDelete204SucceededPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetry400Poller provides polling facilities until the operation completes
@@ -5062,7 +5062,7 @@ type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5089,10 +5089,10 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Response() (*LrosaDsDeleteAsy
 
 // ResumeToken ...
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5119,30 +5119,30 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pol
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -5157,7 +5157,7 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5184,10 +5184,10 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaD
 
 // ResumeToken ...
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5214,30 +5214,30 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Co
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
@@ -5252,7 +5252,7 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5279,10 +5279,10 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*L
 
 // ResumeToken ...
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5309,30 +5309,30 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx conte
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
@@ -5347,7 +5347,7 @@ type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5374,10 +5374,10 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Response() (*LrosaDsDele
 
 // ResumeToken ...
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5404,30 +5404,30 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsDeleteNonRetry400Poller provides polling facilities until the operation completes
@@ -5442,7 +5442,7 @@ type lrosaDsDeleteNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5469,10 +5469,10 @@ func (p *lrosaDsDeleteNonRetry400Poller) Response() (*LrosaDsDeleteNonRetry400Re
 
 // ResumeToken ...
 func (p *lrosaDsDeleteNonRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5499,30 +5499,30 @@ func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterv
 
 // Response returns the last HTTP response.
 func (p *lrosaDsDeleteNonRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsDeleteNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPost202NoLocationPoller provides polling facilities until the operation completes
@@ -5537,7 +5537,7 @@ type lrosaDsPost202NoLocationPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5564,10 +5564,10 @@ func (p *lrosaDsPost202NoLocationPoller) Response() (*LrosaDsPost202NoLocationRe
 
 // ResumeToken ...
 func (p *lrosaDsPost202NoLocationPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5594,30 +5594,30 @@ func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterv
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202NoLocationPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPost202NoLocationPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPost202NonRetry400Poller provides polling facilities until the operation completes
@@ -5632,7 +5632,7 @@ type lrosaDsPost202NonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5659,10 +5659,10 @@ func (p *lrosaDsPost202NonRetry400Poller) Response() (*LrosaDsPost202NonRetry400
 
 // ResumeToken ...
 func (p *lrosaDsPost202NonRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5689,30 +5689,30 @@ func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInter
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202NonRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPost202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPost202RetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -5727,7 +5727,7 @@ type lrosaDsPost202RetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5754,10 +5754,10 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Response() (*LrosaDsPost202Retr
 
 // ResumeToken ...
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5784,30 +5784,30 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, polli
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetry400Poller provides polling facilities until the operation completes
@@ -5822,7 +5822,7 @@ type lrosaDsPostAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5849,10 +5849,10 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Response() (*LrosaDsPostAsyncRe
 
 // ResumeToken ...
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5879,30 +5879,30 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, polli
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -5917,7 +5917,7 @@ type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -5944,10 +5944,10 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsP
 
 // ResumeToken ...
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -5974,30 +5974,30 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Cont
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
@@ -6012,7 +6012,7 @@ type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6039,10 +6039,10 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*Lro
 
 // ResumeToken ...
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6069,30 +6069,30 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation completes
@@ -6107,7 +6107,7 @@ type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6134,10 +6134,10 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Response() (*LrosaDsPostA
 
 // ResumeToken ...
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6164,30 +6164,30 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context,
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPostNonRetry400Poller provides polling facilities until the operation completes
@@ -6202,7 +6202,7 @@ type lrosaDsPostNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6229,10 +6229,10 @@ func (p *lrosaDsPostNonRetry400Poller) Response() (*LrosaDsPostNonRetry400Respon
 
 // ResumeToken ...
 func (p *lrosaDsPostNonRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6259,30 +6259,30 @@ func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPostNonRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPostNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPut200InvalidJsonPoller provides polling facilities until the operation completes
@@ -6297,7 +6297,7 @@ type lrosaDsPut200InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6324,10 +6324,10 @@ func (p *lrosaDsPut200InvalidJSONPoller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrosaDsPut200InvalidJSONPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6354,30 +6354,30 @@ func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterv
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPut200InvalidJSONPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPut200InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetry400Poller provides polling facilities until the operation completes
@@ -6392,7 +6392,7 @@ type lrosaDsPutAsyncRelativeRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6419,10 +6419,10 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Response() (*ProductResponse, er
 
 // ResumeToken ...
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6449,30 +6449,30 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollin
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
@@ -6487,7 +6487,7 @@ type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6514,10 +6514,10 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Response() (*ProductRe
 
 // ResumeToken ...
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6544,30 +6544,30 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Conte
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
@@ -6582,7 +6582,7 @@ type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6609,10 +6609,10 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*Prod
 
 // ResumeToken ...
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6639,30 +6639,30 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation completes
@@ -6677,7 +6677,7 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6704,10 +6704,10 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Response() (*Product
 
 // ResumeToken ...
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6734,30 +6734,30 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Con
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
@@ -6772,7 +6772,7 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6799,10 +6799,10 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Response() (*ProductRespons
 
 // ResumeToken ...
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6829,30 +6829,30 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, p
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutError201NoProvisioningStatePayloadPoller provides polling facilities until the operation completes
@@ -6867,7 +6867,7 @@ type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6894,10 +6894,10 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Response() (*Produc
 
 // ResumeToken ...
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -6924,30 +6924,30 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Co
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutNonRetry201Creating400InvalidJsonPoller provides polling facilities until the operation completes
@@ -6962,7 +6962,7 @@ type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -6989,10 +6989,10 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Response() (*Product
 
 // ResumeToken ...
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -7019,30 +7019,30 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Con
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutNonRetry201Creating400Poller provides polling facilities until the operation completes
@@ -7057,7 +7057,7 @@ type lrosaDsPutNonRetry201Creating400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -7084,10 +7084,10 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Response() (*ProductResponse, e
 
 // ResumeToken ...
 func (p *lrosaDsPutNonRetry201Creating400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -7114,30 +7114,30 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, polli
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry201Creating400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutNonRetry201Creating400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 // LrosaDsPutNonRetry400Poller provides polling facilities until the operation completes
@@ -7152,7 +7152,7 @@ type lrosaDsPutNonRetry400Poller struct {
 	// the client for making the request
 	client *lrosaDsOperations
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -7179,10 +7179,10 @@ func (p *lrosaDsPutNonRetry400Poller) Response() (*ProductResponse, error) {
 
 // ResumeToken ...
 func (p *lrosaDsPutNonRetry400Poller) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -7209,28 +7209,28 @@ func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval 
 
 // Response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry400Poller) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *lrosaDsPutNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }

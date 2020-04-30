@@ -45,7 +45,7 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 		return nil, err
 	}
 	return &lrOSCustomHeaderPost202Retry200Poller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -97,7 +97,7 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 		return nil, err
 	}
 	return &lrOSCustomHeaderPostAsyncRetrySucceededPoller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -152,7 +152,7 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 		return nil, err
 	}
 	return &lrOSCustomHeaderPut201CreatingSucceeded200Poller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -193,7 +193,7 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 		return nil, err
 	}
 	return &lrOSCustomHeaderPutAsyncRetrySucceededPoller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }

@@ -53,7 +53,7 @@ type ${poller.name} struct {
 	// the client for making the request
 	client *${poller.client}
 	// polling tracker
-	PT pollingTracker
+	pt pollingTracker
 }
 
 // Poll returns false if there was an error or polling has reached a terminal state
@@ -80,10 +80,10 @@ func (p *${poller.name}) Response() (*${responseType}, error) {
 
 // ResumeToken ...
 func (p *${poller.name}) ResumeToken() (string, error) {
-	if p.PT.hasTerminated() {
+	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
-	js, err := json.Marshal(p.PT)
+	js, err := json.Marshal(p.pt)
 	if err != nil {
 		return "", fmt.Errorf("json.Marshal: %s", err.Error())
 	}
@@ -110,30 +110,30 @@ func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration
 
 // Response returns the last HTTP response.
 func (p *${poller.name}) response() *azcore.Response {
-	return p.PT.latestResponse()
+	return p.pt.latestResponse()
 }
 
 // done queries the service to see if the operation has completed.
 func (p *${poller.name}) done(ctx context.Context) (done bool, err error) {
-	if p.PT.hasTerminated() {
-		return true, p.PT.pollingError()
+	if p.pt.hasTerminated() {
+		return true, p.pt.pollingError()
 	}
-	if err := p.PT.pollForStatus(ctx, p.client.p); err != nil {
+	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
 		return false, err
 	}
-	if err := p.PT.checkForErrors(); err != nil {
-		return p.PT.hasTerminated(), err
+	if err := p.pt.checkForErrors(); err != nil {
+		return p.pt.hasTerminated(), err
 	}
-	if err := p.PT.updatePollingState(p.PT.provisioningStateApplicable()); err != nil {
+	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
 		return false, err
 	}
-	if err := p.PT.initPollingMethod(); err != nil {
+	if err := p.pt.initPollingMethod(); err != nil {
 		return false, err
 	}
-	if err := p.PT.updatePollingMethod(); err != nil {
+	if err := p.pt.updatePollingMethod(); err != nil {
 		return false, err
 	}
-	return p.PT.hasTerminated(), p.PT.pollingError()
+	return p.pt.hasTerminated(), p.pt.pollingError()
 }
 
 `;

@@ -51,7 +51,7 @@ func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (
 		return nil, err
 	}
 	return &lroRetrysDelete202Retry200Poller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -100,7 +100,7 @@ func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx co
 		return nil, err
 	}
 	return &lroRetrysDeleteAsyncRelativeRetrySucceededPoller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -152,7 +152,7 @@ func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeede
 		return nil, err
 	}
 	return &lroRetrysDeleteProvisioning202Accepted200SucceededPoller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -190,7 +190,7 @@ func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lro
 		return nil, err
 	}
 	return &lroRetrysPost202Retry200Poller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -242,7 +242,7 @@ func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx cont
 		return nil, err
 	}
 	return &lroRetrysPostAsyncRelativeRetrySucceededPoller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -297,7 +297,7 @@ func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.C
 		return nil, err
 	}
 	return &lroRetrysPut201CreatingSucceeded200Poller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
@@ -338,7 +338,7 @@ func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx conte
 		return nil, err
 	}
 	return &lroRetrysPutAsyncRelativeRetrySucceededPoller{
-		PT:     pt,
+		pt:     pt,
 		client: client,
 	}, nil
 }
