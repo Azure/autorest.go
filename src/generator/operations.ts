@@ -904,8 +904,9 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
 }
 
 function addResumePollerMethod(op: Operation, clientName: string): string {
+  let pollerName = pascalCase(op.language.go!.pollerType.name);
   let text = '';
-  text += `func (client *${clientName}) Resume${pascalCase(op.language.go!.pollerType.name)}(id string) (${pascalCase(op.language.go!.pollerType.name)}, error) {\n`;
+  text += `func (client *${clientName}) Resume${pollerName}(id string) (${pollerName}, error) {\n`;
   text += `\t// unmarshal into JSON object to determine the tracker type\n`;
   text += `\tobj := map[string]interface{}{}\n`;
   text += `\terr := json.Unmarshal([]byte(id), &obj)\n`;
@@ -913,7 +914,7 @@ function addResumePollerMethod(op: Operation, clientName: string): string {
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
   text += `\tif obj["method"] == nil {\n`;
-  text += `\t\treturn nil, fmt.Errorf("Resume${pascalCase(op.language.go!.pollerType.name)}: missing 'method' property")\n`;
+  text += `\t\treturn nil, fmt.Errorf("Resume${pollerName}: missing 'method' property")\n`;
   text += `\t}\n`;
   text += `\tmethod := obj["method"].(string)\n`;
   text += `\tpoller := &${op.language.go!.pollerType.name}{\n`;
@@ -929,7 +930,7 @@ function addResumePollerMethod(op: Operation, clientName: string): string {
   text += `\t\tcase http.MethodPut:\n`;
   text += `\t\t\tpoller.pt = &pollingTrackerPut{}\n`;
   text += `\t\tdefault:\n`;
-  text += `\t\t\treturn nil, fmt.Errorf("Resume${pascalCase(op.language.go!.pollerType.name)}: unsupoorted method '%s'", method)\n`;
+  text += `\t\t\treturn nil, fmt.Errorf("Resume${pollerName}: unsupoorted method '%s'", method)\n`;
   text += `\t}\n`;
   text += `\t// now unmarshal into the tracker\n`;
   text += `\terr = json.Unmarshal([]byte(id), &poller.pt)\n`;
