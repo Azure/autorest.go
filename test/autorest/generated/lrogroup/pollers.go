@@ -9,7 +9,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
@@ -76,11 +75,7 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollin
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -172,11 +167,7 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -268,11 +259,7 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Cont
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -364,11 +351,7 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context,
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -460,11 +443,7 @@ func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterva
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -556,11 +535,7 @@ func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval 
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -652,11 +627,7 @@ func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -748,11 +719,7 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, polling
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -844,11 +811,7 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollin
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -940,11 +903,7 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInte
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1036,11 +995,7 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingI
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1132,11 +1087,7 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingIn
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1228,11 +1179,7 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInter
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1324,11 +1271,7 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.C
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1420,11 +1363,7 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Cont
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1516,11 +1455,7 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Co
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1612,11 +1547,7 @@ func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1708,11 +1639,7 @@ func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval 
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1804,11 +1731,7 @@ func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval ti
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1900,11 +1823,7 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingI
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -1996,11 +1915,7 @@ func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterv
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2092,11 +2007,7 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInt
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2188,11 +2099,7 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInte
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2284,11 +2191,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2380,11 +2283,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Contex
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2476,11 +2375,7 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, 
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2572,11 +2467,7 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingI
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2668,11 +2559,7 @@ func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInte
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2764,11 +2651,7 @@ func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval ti
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2860,11 +2743,7 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, polling
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -2956,11 +2835,7 @@ func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInt
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3052,11 +2927,7 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, polling
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3148,11 +3019,7 @@ func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval tim
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3244,11 +3111,7 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInt
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3340,11 +3203,7 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingIn
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3436,11 +3295,7 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInt
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3532,11 +3387,7 @@ func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterva
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3628,11 +3479,7 @@ func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterva
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3724,11 +3571,7 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInte
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3820,11 +3663,7 @@ func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterva
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -3916,11 +3755,7 @@ func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4012,11 +3847,7 @@ func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval tim
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4108,11 +3939,7 @@ func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval tim
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4204,11 +4031,7 @@ func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInte
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4300,11 +4123,7 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Cont
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4396,11 +4215,7 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx cont
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4492,11 +4307,7 @@ func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterv
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4588,11 +4399,7 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Contex
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4684,11 +4491,7 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, po
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4780,11 +4583,7 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4876,11 +4675,7 @@ func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInt
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -4972,11 +4767,7 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pol
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5068,11 +4859,7 @@ func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInter
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5164,11 +4951,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pol
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5260,11 +5043,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Co
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5356,11 +5135,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx conte
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5452,11 +5227,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5548,11 +5319,7 @@ func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterv
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5644,11 +5411,7 @@ func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterv
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5740,11 +5503,7 @@ func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInter
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5836,11 +5595,7 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, polli
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -5932,11 +5687,7 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, polli
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6028,11 +5779,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Cont
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6124,11 +5871,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6220,11 +5963,7 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context,
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6316,11 +6055,7 @@ func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6412,11 +6147,7 @@ func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterv
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6508,11 +6239,7 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollin
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6604,11 +6331,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Conte
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6700,11 +6423,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6796,11 +6515,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Con
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6892,11 +6607,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, p
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -6988,11 +6699,7 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Co
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -7084,11 +6791,7 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Con
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -7180,11 +6883,7 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, polli
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
@@ -7276,11 +6975,7 @@ func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval 
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.

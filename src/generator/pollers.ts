@@ -26,7 +26,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('time');
   imports.add('errors');
   imports.add('encoding/json');
-  imports.add('fmt');
   text += imports.text();
 
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
@@ -102,11 +101,7 @@ func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration
 			time.Sleep(pollingInterval)
 		}
 	}
-	resp, err := p.Response()
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return p.Response()
 }
 
 // response returns the last HTTP response.
