@@ -7,21 +7,32 @@ package lrogroup
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // LrOSCustomHeaderOperations contains the methods for the LrOSCustomHeader group.
 type LrOSCustomHeaderOperations interface {
 	// BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
 	BeginPost202Retry200(ctx context.Context, lrOSCustomHeaderPost202Retry200Options *LrOSCustomHeaderPost202Retry200Options) (LrOSCustomHeaderPost202Retry200Poller, error)
+	// ResumeLrOSCustomHeaderPost202Retry200Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeLrOSCustomHeaderPost202Retry200Poller(id string) (LrOSCustomHeaderPost202Retry200Poller, error)
 	// BeginPostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPostAsyncRetrySucceededOptions *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (LrOSCustomHeaderPostAsyncRetrySucceededPoller, error)
+	// ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller(id string) (LrOSCustomHeaderPostAsyncRetrySucceededPoller, error)
 	// BeginPut201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginPut201CreatingSucceeded200(ctx context.Context, lrOSCustomHeaderPut201CreatingSucceeded200Options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (LrOSCustomHeaderPut201CreatingSucceeded200Poller, error)
+	// ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller(id string) (LrOSCustomHeaderPut201CreatingSucceeded200Poller, error)
 	// BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPutAsyncRetrySucceededOptions *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (LrOSCustomHeaderPutAsyncRetrySucceededPoller, error)
+	// ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller(id string) (LrOSCustomHeaderPutAsyncRetrySucceededPoller, error)
 }
 
 // lrOSCustomHeaderOperations implements the LrOSCustomHeaderOperations interface.
@@ -48,6 +59,40 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 		pt:     pt,
 		client: client,
 	}, nil
+}
+
+func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPost202Retry200Poller(id string) (LrOSCustomHeaderPost202Retry200Poller, error) {
+	// unmarshal into JSON object to determine the tracker type
+	obj := map[string]interface{}{}
+	err := json.Unmarshal([]byte(id), &obj)
+	if err != nil {
+		return nil, err
+	}
+	if obj["method"] == nil {
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPost202Retry200Poller: missing 'method' property")
+	}
+	method := obj["method"].(string)
+	poller := &lrOSCustomHeaderPost202Retry200Poller{
+		client: client,
+	}
+	switch strings.ToUpper(method) {
+	case http.MethodDelete:
+		poller.pt = &pollingTrackerDelete{}
+	case http.MethodPatch:
+		poller.pt = &pollingTrackerPatch{}
+	case http.MethodPost:
+		poller.pt = &pollingTrackerPost{}
+	case http.MethodPut:
+		poller.pt = &pollingTrackerPut{}
+	default:
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPost202Retry200Poller: unsupported method '%s'", method)
+	}
+	// now unmarshal into the tracker
+	err = json.Unmarshal([]byte(id), &poller.pt)
+	if err != nil {
+		return nil, err
+	}
+	return poller, nil
 }
 
 // post202Retry200CreateRequest creates the Post202Retry200 request.
@@ -100,6 +145,40 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 		pt:     pt,
 		client: client,
 	}, nil
+}
+
+func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller(id string) (LrOSCustomHeaderPostAsyncRetrySucceededPoller, error) {
+	// unmarshal into JSON object to determine the tracker type
+	obj := map[string]interface{}{}
+	err := json.Unmarshal([]byte(id), &obj)
+	if err != nil {
+		return nil, err
+	}
+	if obj["method"] == nil {
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller: missing 'method' property")
+	}
+	method := obj["method"].(string)
+	poller := &lrOSCustomHeaderPostAsyncRetrySucceededPoller{
+		client: client,
+	}
+	switch strings.ToUpper(method) {
+	case http.MethodDelete:
+		poller.pt = &pollingTrackerDelete{}
+	case http.MethodPatch:
+		poller.pt = &pollingTrackerPatch{}
+	case http.MethodPost:
+		poller.pt = &pollingTrackerPost{}
+	case http.MethodPut:
+		poller.pt = &pollingTrackerPut{}
+	default:
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller: unsupported method '%s'", method)
+	}
+	// now unmarshal into the tracker
+	err = json.Unmarshal([]byte(id), &poller.pt)
+	if err != nil {
+		return nil, err
+	}
+	return poller, nil
 }
 
 // postAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
@@ -157,6 +236,40 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 	}, nil
 }
 
+func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller(id string) (LrOSCustomHeaderPut201CreatingSucceeded200Poller, error) {
+	// unmarshal into JSON object to determine the tracker type
+	obj := map[string]interface{}{}
+	err := json.Unmarshal([]byte(id), &obj)
+	if err != nil {
+		return nil, err
+	}
+	if obj["method"] == nil {
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller: missing 'method' property")
+	}
+	method := obj["method"].(string)
+	poller := &lrOSCustomHeaderPut201CreatingSucceeded200Poller{
+		client: client,
+	}
+	switch strings.ToUpper(method) {
+	case http.MethodDelete:
+		poller.pt = &pollingTrackerDelete{}
+	case http.MethodPatch:
+		poller.pt = &pollingTrackerPatch{}
+	case http.MethodPost:
+		poller.pt = &pollingTrackerPost{}
+	case http.MethodPut:
+		poller.pt = &pollingTrackerPut{}
+	default:
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller: unsupported method '%s'", method)
+	}
+	// now unmarshal into the tracker
+	err = json.Unmarshal([]byte(id), &poller.pt)
+	if err != nil {
+		return nil, err
+	}
+	return poller, nil
+}
+
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *lrOSCustomHeaderOperations) put201CreatingSucceeded200CreateRequest(lrOSCustomHeaderPut201CreatingSucceeded200Options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (*azcore.Request, error) {
 	urlPath := "/lro/customheader/put/201/creating/succeeded/200"
@@ -196,6 +309,40 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 		pt:     pt,
 		client: client,
 	}, nil
+}
+
+func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller(id string) (LrOSCustomHeaderPutAsyncRetrySucceededPoller, error) {
+	// unmarshal into JSON object to determine the tracker type
+	obj := map[string]interface{}{}
+	err := json.Unmarshal([]byte(id), &obj)
+	if err != nil {
+		return nil, err
+	}
+	if obj["method"] == nil {
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller: missing 'method' property")
+	}
+	method := obj["method"].(string)
+	poller := &lrOSCustomHeaderPutAsyncRetrySucceededPoller{
+		client: client,
+	}
+	switch strings.ToUpper(method) {
+	case http.MethodDelete:
+		poller.pt = &pollingTrackerDelete{}
+	case http.MethodPatch:
+		poller.pt = &pollingTrackerPatch{}
+	case http.MethodPost:
+		poller.pt = &pollingTrackerPost{}
+	case http.MethodPut:
+		poller.pt = &pollingTrackerPut{}
+	default:
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller: unsupported method '%s'", method)
+	}
+	// now unmarshal into the tracker
+	err = json.Unmarshal([]byte(id), &poller.pt)
+	if err != nil {
+		return nil, err
+	}
+	return poller, nil
 }
 
 // putAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
