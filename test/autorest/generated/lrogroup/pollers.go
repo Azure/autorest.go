@@ -39,7 +39,7 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPost202Retry200Poller) Response() (*LrOSCustomHeaderPost202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -60,7 +60,7 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -135,7 +135,7 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Response() (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -156,7 +156,7 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ResumeToken() (string, e
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -231,7 +231,7 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Cont
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -252,7 +252,7 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ResumeToken() (string
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -327,7 +327,7 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context)
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -348,7 +348,7 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ResumeToken() (string, er
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -423,7 +423,7 @@ func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDelete202NoRetry204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -444,7 +444,7 @@ func (p *lrOSDelete202NoRetry204Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -519,7 +519,7 @@ func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDelete202Retry200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -540,7 +540,7 @@ func (p *lrOSDelete202Retry200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -615,7 +615,7 @@ func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDelete204SucceededPoller) Response() (*http.Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -636,7 +636,7 @@ func (p *lrOSDelete204SucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -711,7 +711,7 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Response() (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -732,7 +732,7 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -807,7 +807,7 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Response() (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -828,7 +828,7 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -903,7 +903,7 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncRetryFailedPoller) Response() (*LrOSDeleteAsyncRetryFailedResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -924,7 +924,7 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -999,7 +999,7 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Response() (*LrOSDeleteAsyncRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1020,7 +1020,7 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1095,7 +1095,7 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Response() (*LrOSDeleteAsyncRetrycanceledResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1116,7 +1116,7 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1191,7 +1191,7 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteNoHeaderInRetryPoller) Response() (*LrOSDeleteNoHeaderInRetryResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1212,7 +1212,7 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1287,7 +1287,7 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.C
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1308,7 +1308,7 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (str
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1383,7 +1383,7 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Cont
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1404,7 +1404,7 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ResumeToken() (string
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1479,7 +1479,7 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Co
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1500,7 +1500,7 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ResumeToken() (stri
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1575,7 +1575,7 @@ func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPost200WithPayloadPoller) Response() (*SkuResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1596,7 +1596,7 @@ func (p *lrOSPost200WithPayloadPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1671,7 +1671,7 @@ func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPost202NoRetry204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1692,7 +1692,7 @@ func (p *lrOSPost202NoRetry204Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1767,7 +1767,7 @@ func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPost202Retry200Poller) Response() (*LrOSPost202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1788,7 +1788,7 @@ func (p *lrOSPost202Retry200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1863,7 +1863,7 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1884,7 +1884,7 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -1959,7 +1959,7 @@ func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncRetryFailedPoller) Response() (*LrOSPostAsyncRetryFailedResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -1980,7 +1980,7 @@ func (p *lrOSPostAsyncRetryFailedPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2055,7 +2055,7 @@ func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2076,7 +2076,7 @@ func (p *lrOSPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2151,7 +2151,7 @@ func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncRetrycanceledPoller) Response() (*LrOSPostAsyncRetrycanceledResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2172,7 +2172,7 @@ func (p *lrOSPostAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2247,7 +2247,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2268,7 +2268,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ResumeToken() (s
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2343,7 +2343,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Contex
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2364,7 +2364,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ResumeToken() (string, 
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2439,7 +2439,7 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) 
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2460,7 +2460,7 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ResumeToken() (string, err
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2535,7 +2535,7 @@ func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200Acceptedcanceled200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2556,7 +2556,7 @@ func (p *lrOSPut200Acceptedcanceled200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2631,7 +2631,7 @@ func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200SucceededNoStatePoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2652,7 +2652,7 @@ func (p *lrOSPut200SucceededNoStatePoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2727,7 +2727,7 @@ func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2748,7 +2748,7 @@ func (p *lrOSPut200SucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2823,7 +2823,7 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200UpdatingSucceeded204Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2844,7 +2844,7 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -2919,7 +2919,7 @@ func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut201CreatingFailed200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -2940,7 +2940,7 @@ func (p *lrOSPut201CreatingFailed200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3015,7 +3015,7 @@ func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3036,7 +3036,7 @@ func (p *lrOSPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3111,7 +3111,7 @@ func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut202Retry200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3132,7 +3132,7 @@ func (p *lrOSPut202Retry200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3207,7 +3207,7 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3228,7 +3228,7 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3303,7 +3303,7 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3324,7 +3324,7 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3399,7 +3399,7 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3420,7 +3420,7 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3495,7 +3495,7 @@ func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNonResourcePoller) Response() (*SkuResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3516,7 +3516,7 @@ func (p *lrOSPutAsyncNonResourcePoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3591,7 +3591,7 @@ func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncRetryFailedPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3612,7 +3612,7 @@ func (p *lrOSPutAsyncRetryFailedPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3687,7 +3687,7 @@ func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3708,7 +3708,7 @@ func (p *lrOSPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3783,7 +3783,7 @@ func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncSubResourcePoller) Response() (*SubProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3804,7 +3804,7 @@ func (p *lrOSPutAsyncSubResourcePoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3879,7 +3879,7 @@ func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3900,7 +3900,7 @@ func (p *lrOSPutNoHeaderInRetryPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -3975,7 +3975,7 @@ func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutNonResourcePoller) Response() (*SkuResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -3996,7 +3996,7 @@ func (p *lrOSPutNonResourcePoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4071,7 +4071,7 @@ func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutSubResourcePoller) Response() (*SubProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4092,7 +4092,7 @@ func (p *lrOSPutSubResourcePoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4167,7 +4167,7 @@ func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysDelete202Retry200Poller) Response() (*LroRetrysDelete202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4188,7 +4188,7 @@ func (p *lroRetrysDelete202Retry200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4263,7 +4263,7 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Cont
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4284,7 +4284,7 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ResumeToken() (string
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4359,7 +4359,7 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx cont
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4380,7 +4380,7 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ResumeToken()
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4455,7 +4455,7 @@ func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPost202Retry200Poller) Response() (*LroRetrysPost202Retry200Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4476,7 +4476,7 @@ func (p *lroRetrysPost202Retry200Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4551,7 +4551,7 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Contex
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4572,7 +4572,7 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ResumeToken() (string, 
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4647,7 +4647,7 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bo
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4668,7 +4668,7 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) ResumeToken() (string, error
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4743,7 +4743,7 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4764,7 +4764,7 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ResumeToken() (string, e
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4839,7 +4839,7 @@ func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDelete202NonRetry400Poller) Response() (*LrosaDsDelete202NonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4860,7 +4860,7 @@ func (p *lrosaDsDelete202NonRetry400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -4935,7 +4935,7 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) boo
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Response() (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -4956,7 +4956,7 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ResumeToken() (string, error)
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5031,7 +5031,7 @@ func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDelete204SucceededPoller) Response() (*http.Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5052,7 +5052,7 @@ func (p *lrosaDsDelete204SucceededPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5127,7 +5127,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) boo
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Response() (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5148,7 +5148,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ResumeToken() (string, error)
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5223,7 +5223,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Co
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5244,7 +5244,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (stri
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5319,7 +5319,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx conte
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5340,7 +5340,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() 
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5415,7 +5415,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5436,7 +5436,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, e
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5511,7 +5511,7 @@ func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteNonRetry400Poller) Response() (*LrosaDsDeleteNonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5532,7 +5532,7 @@ func (p *lrosaDsDeleteNonRetry400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5607,7 +5607,7 @@ func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPost202NoLocationPoller) Response() (*LrosaDsPost202NoLocationResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5628,7 +5628,7 @@ func (p *lrosaDsPost202NoLocationPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5703,7 +5703,7 @@ func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPost202NonRetry400Poller) Response() (*LrosaDsPost202NonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5724,7 +5724,7 @@ func (p *lrosaDsPost202NonRetry400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5799,7 +5799,7 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool 
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Response() (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5820,7 +5820,7 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5895,7 +5895,7 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool 
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Response() (*LrosaDsPostAsyncRelativeRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -5916,7 +5916,7 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -5991,7 +5991,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Cont
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6012,7 +6012,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6087,7 +6087,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6108,7 +6108,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (s
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6183,7 +6183,7 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context)
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Response() (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6204,7 +6204,7 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ResumeToken() (string, er
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6279,7 +6279,7 @@ func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostNonRetry400Poller) Response() (*LrosaDsPostNonRetry400Response, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6300,7 +6300,7 @@ func (p *lrosaDsPostNonRetry400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6375,7 +6375,7 @@ func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPut200InvalidJSONPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6396,7 +6396,7 @@ func (p *lrosaDsPut200InvalidJSONPoller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6471,7 +6471,7 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6492,7 +6492,7 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6567,7 +6567,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Conte
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6588,7 +6588,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string,
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6663,7 +6663,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6684,7 +6684,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (st
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6759,7 +6759,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Con
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6780,7 +6780,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ResumeToken() (strin
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6855,7 +6855,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) b
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6876,7 +6876,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, erro
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -6951,7 +6951,7 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Co
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -6972,7 +6972,7 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ResumeToken() (stri
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -7047,7 +7047,7 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Con
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -7068,7 +7068,7 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ResumeToken() (strin
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -7143,7 +7143,7 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) bool 
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutNonRetry201Creating400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -7164,7 +7164,7 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
@@ -7239,7 +7239,7 @@ func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutNonRetry400Poller) Response() (*ProductResponse, error) {
 	resp := p.response()
 	if resp == nil {
@@ -7260,7 +7260,7 @@ func (p *lrosaDsPutNonRetry400Poller) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }

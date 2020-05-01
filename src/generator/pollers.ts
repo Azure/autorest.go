@@ -65,7 +65,7 @@ func (p *${poller.name}) Poll(ctx context.Context) bool {
 	}
 }
 
-// Response returns the final response from the polling operation
+// Response returns the latest response that is stored from the latest polling operation
 func (p *${poller.name}) Response() (*${responseType}, error) {
 	resp := p.response()
 	if resp == nil {
@@ -86,7 +86,7 @@ func (p *${poller.name}) ResumeToken() (string, error) {
 	}
 	js, err := json.Marshal(p.pt)
 	if err != nil {
-		return "", fmt.Errorf("json.Marshal: %s", err.Error())
+		return "", err
 	}
 	return string(js), nil
 }
