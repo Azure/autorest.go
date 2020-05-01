@@ -293,6 +293,11 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\tclient: client,\n`;
     text += `\t}, nil\n`;
     text += '}\n\n';
+    // add imports used in the resume poller method
+    imports.add('fmt');
+    imports.add('encoding/json');
+    imports.add('strings');
+    text += addResumePollerMethod(op, clientName);
     return text;
   }
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
@@ -726,6 +731,11 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     }
     const returns = generateReturnsInfo(op, false);
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
+    // Add resume LRO poller method for each Begin poller method
+    if (isLROOperation(op) && !op.extensions!['x-ms-pageable']) {
+      interfaceText += `\t// Resume${pascalCase(op.language.go!.pollerType.name)} - Used to create a new poller from a resume token of a previously implemented poller\n`;
+      interfaceText += `\tResume${pascalCase(op.language.go!.pollerType.name)}(id string) (${pascalCase(op.language.go!.pollerType.name)}, error)\n`;
+    }
   }
   interfaceText += '}\n\n';
   return interfaceText;
@@ -891,4 +901,42 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
     returnType = '*' + firstResp.schema.language.go!.responseType.name;
   }
   return [returnType, 'error'];
+}
+
+function addResumePollerMethod(op: Operation, clientName: string): string {
+  let text = '';
+  text += `func (client *${clientName}) Resume${pascalCase(op.language.go!.pollerType.name)}(id string) (${pascalCase(op.language.go!.pollerType.name)}, error) {\n`;
+  text += `\t// unmarshal into JSON object to determine the tracker type\n`;
+  text += `\tobj := map[string]interface{}{}\n`;
+  text += `\terr := json.Unmarshal([]byte(id), &obj)\n`;
+  text += `\tif err != nil {\n`;
+  text += `\t\treturn nil, err\n`;
+  text += `\t}\n`;
+  text += `\tif obj["method"] == nil {\n`;
+  text += `\t\treturn nil, fmt.Errorf("Resume${pascalCase(op.language.go!.pollerType.name)}: missing 'method' property")\n`;
+  text += `\t}\n`;
+  text += `\tmethod := obj["method"].(string)\n`;
+  text += `\tpoller := &${op.language.go!.pollerType.name}{\n`;
+  text += `\t\tclient: client,\n`;
+  text += `\t}\n`;
+  text += `\tswitch strings.ToUpper(method) {\n`;
+  text += `\t\tcase http.MethodDelete:\n`;
+  text += `\t\t\tpoller.pt = &pollingTrackerDelete{}\n`;
+  text += `\t\tcase http.MethodPatch:\n`;
+  text += `\t\t\tpoller.pt = &pollingTrackerPatch{}\n`;
+  text += `\t\tcase http.MethodPost:\n`;
+  text += `\t\t\tpoller.pt = &pollingTrackerPost{}\n`;
+  text += `\t\tcase http.MethodPut:\n`;
+  text += `\t\t\tpoller.pt = &pollingTrackerPut{}\n`;
+  text += `\t\tdefault:\n`;
+  text += `\t\t\treturn nil, fmt.Errorf("Resume${pascalCase(op.language.go!.pollerType.name)}: unsupoorted method '%s'", method)\n`;
+  text += `\t}\n`;
+  text += `\t// now unmarshal into the tracker\n`;
+  text += `\terr = json.Unmarshal([]byte(id), &poller.pt)\n`;
+  text += `\tif err != nil {\n`;
+  text += `\t\treturn nil, err\n`;
+  text += `\t}\n`;
+  text += `\treturn poller, nil\n`;
+  text += `}\n`;
+  return text;
 }
