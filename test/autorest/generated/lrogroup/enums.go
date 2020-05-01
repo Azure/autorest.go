@@ -23,7 +23,19 @@ const (
 )
 
 func PossibleOperationResultStatusValues() []OperationResultStatus {
-	return []OperationResultStatus{OperationResultStatusAccepted, OperationResultStatusCanceled, OperationResultStatusCreated, OperationResultStatusCreating, OperationResultStatusDeleted, OperationResultStatusDeleting, OperationResultStatusFailed, OperationResultStatusOk, OperationResultStatusSucceeded, OperationResultStatusUpdated, OperationResultStatusUpdating}
+	return []OperationResultStatus{
+		OperationResultStatusAccepted,
+		OperationResultStatusCanceled,
+		OperationResultStatusCreated,
+		OperationResultStatusCreating,
+		OperationResultStatusDeleted,
+		OperationResultStatusDeleting,
+		OperationResultStatusFailed,
+		OperationResultStatusOk,
+		OperationResultStatusSucceeded,
+		OperationResultStatusUpdated,
+		OperationResultStatusUpdating,
+	}
 }
 
 func (c OperationResultStatus) ToPtr() *OperationResultStatus {
@@ -47,7 +59,19 @@ const (
 )
 
 func PossibleProductPropertiesProvisioningStateValuesValues() []ProductPropertiesProvisioningStateValues {
-	return []ProductPropertiesProvisioningStateValues{ProductPropertiesProvisioningStateValuesAccepted, ProductPropertiesProvisioningStateValuesCanceled, ProductPropertiesProvisioningStateValuesCreated, ProductPropertiesProvisioningStateValuesCreating, ProductPropertiesProvisioningStateValuesDeleted, ProductPropertiesProvisioningStateValuesDeleting, ProductPropertiesProvisioningStateValuesFailed, ProductPropertiesProvisioningStateValuesOk, ProductPropertiesProvisioningStateValuesSucceeded, ProductPropertiesProvisioningStateValuesUpdated, ProductPropertiesProvisioningStateValuesUpdating}
+	return []ProductPropertiesProvisioningStateValues{
+		ProductPropertiesProvisioningStateValuesAccepted,
+		ProductPropertiesProvisioningStateValuesCanceled,
+		ProductPropertiesProvisioningStateValuesCreated,
+		ProductPropertiesProvisioningStateValuesCreating,
+		ProductPropertiesProvisioningStateValuesDeleted,
+		ProductPropertiesProvisioningStateValuesDeleting,
+		ProductPropertiesProvisioningStateValuesFailed,
+		ProductPropertiesProvisioningStateValuesOk,
+		ProductPropertiesProvisioningStateValuesSucceeded,
+		ProductPropertiesProvisioningStateValuesUpdated,
+		ProductPropertiesProvisioningStateValuesUpdating,
+	}
 }
 
 func (c ProductPropertiesProvisioningStateValues) ToPtr() *ProductPropertiesProvisioningStateValues {
@@ -71,7 +95,19 @@ const (
 )
 
 func PossibleSubProductPropertiesProvisioningStateValuesValues() []SubProductPropertiesProvisioningStateValues {
-	return []SubProductPropertiesProvisioningStateValues{SubProductPropertiesProvisioningStateValuesAccepted, SubProductPropertiesProvisioningStateValuesCanceled, SubProductPropertiesProvisioningStateValuesCreated, SubProductPropertiesProvisioningStateValuesCreating, SubProductPropertiesProvisioningStateValuesDeleted, SubProductPropertiesProvisioningStateValuesDeleting, SubProductPropertiesProvisioningStateValuesFailed, SubProductPropertiesProvisioningStateValuesOk, SubProductPropertiesProvisioningStateValuesSucceeded, SubProductPropertiesProvisioningStateValuesUpdated, SubProductPropertiesProvisioningStateValuesUpdating}
+	return []SubProductPropertiesProvisioningStateValues{
+		SubProductPropertiesProvisioningStateValuesAccepted,
+		SubProductPropertiesProvisioningStateValuesCanceled,
+		SubProductPropertiesProvisioningStateValuesCreated,
+		SubProductPropertiesProvisioningStateValuesCreating,
+		SubProductPropertiesProvisioningStateValuesDeleted,
+		SubProductPropertiesProvisioningStateValuesDeleting,
+		SubProductPropertiesProvisioningStateValuesFailed,
+		SubProductPropertiesProvisioningStateValuesOk,
+		SubProductPropertiesProvisioningStateValuesSucceeded,
+		SubProductPropertiesProvisioningStateValuesUpdated,
+		SubProductPropertiesProvisioningStateValuesUpdating,
+	}
 }
 
 func (c SubProductPropertiesProvisioningStateValues) ToPtr() *SubProductPropertiesProvisioningStateValues {

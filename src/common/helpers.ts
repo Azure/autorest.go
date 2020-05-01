@@ -47,7 +47,6 @@ export interface PollerInfo {
   operationName: string;
   schema: Schema;
   client: string;
-  pollingMethod: string; // adding method to determine polling tracker type
   pollingError: Schema;
 }
 

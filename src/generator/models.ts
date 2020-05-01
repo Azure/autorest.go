@@ -77,12 +77,6 @@ class StructDef {
     // used to track when to add an extra \n between fields that have comments
     let first = true;
     for (const prop of values(this.Properties)) {
-      // adding the Inner prefix on error types, since errors in Go have an Error() method
-      // in order to implement the error interface. This causes errors to not be able to have
-      // an Error field as well, since it would cause confusion
-      if (this.Language.errorType && prop.language.go!.name === 'Error') {
-        prop.language.go!.name = 'Inner' + prop.language.go!.name;
-      }
       if (hasDescription(prop.language.go!)) {
         if (!first) {
           // add an extra new-line between fields IFF the field

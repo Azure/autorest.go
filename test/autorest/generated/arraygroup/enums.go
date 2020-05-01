@@ -14,7 +14,11 @@ const (
 )
 
 func PossibleEnum0Values() []Enum0 {
-	return []Enum0{Enum0Foo1, Enum0Foo2, Enum0Foo3}
+	return []Enum0{
+		Enum0Foo1,
+		Enum0Foo2,
+		Enum0Foo3,
+	}
 }
 
 func (c Enum0) ToPtr() *Enum0 {
@@ -30,7 +34,11 @@ const (
 )
 
 func PossibleEnum1Values() []Enum1 {
-	return []Enum1{Enum1Foo1, Enum1Foo2, Enum1Foo3}
+	return []Enum1{
+		Enum1Foo1,
+		Enum1Foo2,
+		Enum1Foo3,
+	}
 }
 
 func (c Enum1) ToPtr() *Enum1 {
@@ -46,7 +54,11 @@ const (
 )
 
 func PossibleFooEnumValues() []FooEnum {
-	return []FooEnum{FooEnumFoo1, FooEnumFoo2, FooEnumFoo3}
+	return []FooEnum{
+		FooEnumFoo1,
+		FooEnumFoo2,
+		FooEnumFoo3,
+	}
 }
 
 func (c FooEnum) ToPtr() *FooEnum {
