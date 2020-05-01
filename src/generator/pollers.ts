@@ -96,7 +96,7 @@ func (p *${poller.name}) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests. 
 func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)

@@ -70,7 +70,7 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPost202Retry200Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -166,7 +166,7 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) ResumeToken() (string, e
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -262,7 +262,7 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) ResumeToken() (string
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -358,7 +358,7 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) ResumeToken() (string, er
 // is specified will be used to wait between polling requests.
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -454,7 +454,7 @@ func (p *lrOSDelete202NoRetry204Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDelete202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -550,7 +550,7 @@ func (p *lrOSDelete202Retry200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -646,7 +646,7 @@ func (p *lrOSDelete204SucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -742,7 +742,7 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -838,7 +838,7 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -934,7 +934,7 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetryFailedResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1030,7 +1030,7 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrySucceededResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1126,7 +1126,7 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteAsyncRetrycanceledResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1222,7 +1222,7 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSDeleteNoHeaderInRetryResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1318,7 +1318,7 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (str
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1414,7 +1414,7 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) ResumeToken() (string
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1510,7 +1510,7 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) ResumeToken() (stri
 // is specified will be used to wait between polling requests.
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1606,7 +1606,7 @@ func (p *lrOSPost200WithPayloadPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPost200WithPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1702,7 +1702,7 @@ func (p *lrOSPost202NoRetry204Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPost202NoRetry204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1798,7 +1798,7 @@ func (p *lrOSPost202Retry200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPost202Retry200Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1894,7 +1894,7 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -1990,7 +1990,7 @@ func (p *lrOSPostAsyncRetryFailedPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetryFailedResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2086,7 +2086,7 @@ func (p *lrOSPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2182,7 +2182,7 @@ func (p *lrOSPostAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostAsyncRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrOSPostAsyncRetrycanceledResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2278,7 +2278,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ResumeToken() (s
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2374,7 +2374,7 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) ResumeToken() (string, 
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2470,7 +2470,7 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) ResumeToken() (string, err
 // is specified will be used to wait between polling requests.
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2566,7 +2566,7 @@ func (p *lrOSPut200Acceptedcanceled200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200Acceptedcanceled200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2662,7 +2662,7 @@ func (p *lrOSPut200SucceededNoStatePoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200SucceededNoStatePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2758,7 +2758,7 @@ func (p *lrOSPut200SucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2854,7 +2854,7 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut200UpdatingSucceeded204Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -2950,7 +2950,7 @@ func (p *lrOSPut201CreatingFailed200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut201CreatingFailed200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3046,7 +3046,7 @@ func (p *lrOSPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3142,7 +3142,7 @@ func (p *lrOSPut202Retry200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPut202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3238,7 +3238,7 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3334,7 +3334,7 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3430,7 +3430,7 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3526,7 +3526,7 @@ func (p *lrOSPutAsyncNonResourcePoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3622,7 +3622,7 @@ func (p *lrOSPutAsyncRetryFailedPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncRetryFailedPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3718,7 +3718,7 @@ func (p *lrOSPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3814,7 +3814,7 @@ func (p *lrOSPutAsyncSubResourcePoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutAsyncSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -3910,7 +3910,7 @@ func (p *lrOSPutNoHeaderInRetryPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutNoHeaderInRetryPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4006,7 +4006,7 @@ func (p *lrOSPutNonResourcePoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutNonResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SkuResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4102,7 +4102,7 @@ func (p *lrOSPutSubResourcePoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrOSPutSubResourcePoller) Wait(ctx context.Context, pollingInterval time.Duration) (*SubProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4198,7 +4198,7 @@ func (p *lroRetrysDelete202Retry200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysDelete202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDelete202Retry200Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4294,7 +4294,7 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ResumeToken() (string
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4390,7 +4390,7 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ResumeToken()
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4486,7 +4486,7 @@ func (p *lroRetrysPost202Retry200Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPost202Retry200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPost202Retry200Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4582,7 +4582,7 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ResumeToken() (string, 
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4678,7 +4678,7 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) ResumeToken() (string, error
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4774,7 +4774,7 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ResumeToken() (string, e
 // is specified will be used to wait between polling requests.
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4870,7 +4870,7 @@ func (p *lrosaDsDelete202NonRetry400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202NonRetry400Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -4966,7 +4966,7 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ResumeToken() (string, error)
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5062,7 +5062,7 @@ func (p *lrosaDsDelete204SucceededPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDelete204SucceededPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*http.Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5158,7 +5158,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ResumeToken() (string, error)
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5254,7 +5254,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (stri
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5350,7 +5350,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() 
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5446,7 +5446,7 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, e
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5542,7 +5542,7 @@ func (p *lrosaDsDeleteNonRetry400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsDeleteNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsDeleteNonRetry400Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5638,7 +5638,7 @@ func (p *lrosaDsPost202NoLocationPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202NoLocationPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NoLocationResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5734,7 +5734,7 @@ func (p *lrosaDsPost202NonRetry400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202NonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202NonRetry400Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5830,7 +5830,7 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -5926,7 +5926,7 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetry400Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6022,7 +6022,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6118,7 +6118,7 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (s
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6214,7 +6214,7 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ResumeToken() (string, er
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6310,7 +6310,7 @@ func (p *lrosaDsPostNonRetry400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPostNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*LrosaDsPostNonRetry400Response, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6406,7 +6406,7 @@ func (p *lrosaDsPut200InvalidJSONPoller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPut200InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6502,7 +6502,7 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6598,7 +6598,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string,
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6694,7 +6694,7 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (st
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6790,7 +6790,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ResumeToken() (strin
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6886,7 +6886,7 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, erro
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -6982,7 +6982,7 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ResumeToken() (stri
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -7078,7 +7078,7 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ResumeToken() (strin
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -7174,7 +7174,7 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry201Creating400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
@@ -7270,7 +7270,7 @@ func (p *lrosaDsPutNonRetry400Poller) ResumeToken() (string, error) {
 // is specified will be used to wait between polling requests.
 func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval time.Duration) (*ProductResponse, error) {
 	for p.Poll(context.Background()) {
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
