@@ -19,107 +19,107 @@ import (
 type LrosaDsOperations interface {
 	// BeginDelete202NonRetry400 - Long running delete request, service returns a 202 with a location header
 	BeginDelete202NonRetry400(ctx context.Context) (LrosaDsDelete202NonRetry400Poller, error)
-	// ResumeLrosaDsDelete202NonRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDelete202NonRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDelete202NonRetry400Poller(id string) (LrosaDsDelete202NonRetry400Poller, error)
 	// BeginDelete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location' and 'Retry-After' headers
 	BeginDelete202RetryInvalidHeader(ctx context.Context) (LrosaDsDelete202RetryInvalidHeaderPoller, error)
-	// ResumeLrosaDsDelete202RetryInvalidHeaderPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDelete202RetryInvalidHeaderPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDelete202RetryInvalidHeaderPoller(id string) (LrosaDsDelete202RetryInvalidHeaderPoller, error)
 	// BeginDelete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
 	BeginDelete204Succeeded(ctx context.Context) (LrosaDsDelete204SucceededPoller, error)
-	// ResumeLrosaDsDelete204SucceededPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDelete204SucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDelete204SucceededPoller(id string) (LrosaDsDelete204SucceededPoller, error)
 	// BeginDeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginDeleteAsyncRelativeRetry400(ctx context.Context) (LrosaDsDeleteAsyncRelativeRetry400Poller, error)
-	// ResumeLrosaDsDeleteAsyncRelativeRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDeleteAsyncRelativeRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDeleteAsyncRelativeRetry400Poller(id string) (LrosaDsDeleteAsyncRelativeRetry400Poller, error)
 	// BeginDeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the Azure-AsyncOperation header is invalid
 	BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context) (LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller, error)
-	// ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller(id string) (LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller, error)
 	// BeginDeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context) (LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller, error)
-	// ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller(id string) (LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller, error)
 	// BeginDeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context) (LrosaDsDeleteAsyncRelativeRetryNoStatusPoller, error)
-	// ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPoller(id string) (LrosaDsDeleteAsyncRelativeRetryNoStatusPoller, error)
 	// BeginDeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
 	BeginDeleteNonRetry400(ctx context.Context) (LrosaDsDeleteNonRetry400Poller, error)
-	// ResumeLrosaDsDeleteNonRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsDeleteNonRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsDeleteNonRetry400Poller(id string) (LrosaDsDeleteNonRetry400Poller, error)
 	// BeginPost202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
 	BeginPost202NoLocation(ctx context.Context, lrosaDsPost202NoLocationOptions *LrosaDsPost202NoLocationOptions) (LrosaDsPost202NoLocationPoller, error)
-	// ResumeLrosaDsPost202NoLocationPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPost202NoLocationPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPost202NoLocationPoller(id string) (LrosaDsPost202NoLocationPoller, error)
 	// BeginPost202NonRetry400 - Long running post request, service returns a 202 with a location header
 	BeginPost202NonRetry400(ctx context.Context, lrosaDsPost202NonRetry400Options *LrosaDsPost202NonRetry400Options) (LrosaDsPost202NonRetry400Poller, error)
-	// ResumeLrosaDsPost202NonRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPost202NonRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPost202NonRetry400Poller(id string) (LrosaDsPost202NonRetry400Poller, error)
 	// BeginPost202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid 'Location' and 'Retry-After' headers.
 	BeginPost202RetryInvalidHeader(ctx context.Context, lrosaDsPost202RetryInvalidHeaderOptions *LrosaDsPost202RetryInvalidHeaderOptions) (LrosaDsPost202RetryInvalidHeaderPoller, error)
-	// ResumeLrosaDsPost202RetryInvalidHeaderPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPost202RetryInvalidHeaderPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPost202RetryInvalidHeaderPoller(id string) (LrosaDsPost202RetryInvalidHeaderPoller, error)
 	// BeginPostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncRelativeRetry400(ctx context.Context, lrosaDsPostAsyncRelativeRetry400Options *LrosaDsPostAsyncRelativeRetry400Options) (LrosaDsPostAsyncRelativeRetry400Poller, error)
-	// ResumeLrosaDsPostAsyncRelativeRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPostAsyncRelativeRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPostAsyncRelativeRetry400Poller(id string) (LrosaDsPostAsyncRelativeRetry400Poller, error)
 	// BeginPostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
 	BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, lrosaDsPostAsyncRelativeRetryInvalidHeaderOptions *LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions) (LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller, error)
-	// ResumeLrosaDsPostAsyncRelativeRetryInvalidHeaderPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPostAsyncRelativeRetryInvalidHeaderPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPostAsyncRelativeRetryInvalidHeaderPoller(id string) (LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller, error)
 	// BeginPostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, lrosaDsPostAsyncRelativeRetryInvalidJsonPollingOptions *LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions) (LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller, error)
-	// ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller(id string) (LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller, error)
 	// BeginPostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, lrosaDsPostAsyncRelativeRetryNoPayloadOptions *LrosaDsPostAsyncRelativeRetryNoPayloadOptions) (LrosaDsPostAsyncRelativeRetryNoPayloadPoller, error)
-	// ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPoller(id string) (LrosaDsPostAsyncRelativeRetryNoPayloadPoller, error)
 	// BeginPostNonRetry400 - Long running post request, service returns a 400 with no error body
 	BeginPostNonRetry400(ctx context.Context, lrosaDsPostNonRetry400Options *LrosaDsPostNonRetry400Options) (LrosaDsPostNonRetry400Poller, error)
-	// ResumeLrosaDsPostNonRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPostNonRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPostNonRetry400Poller(id string) (LrosaDsPostNonRetry400Poller, error)
 	// BeginPut200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is not a valid json
 	BeginPut200InvalidJSON(ctx context.Context, lrosaDsPut200InvalidJsonOptions *LrosaDsPut200InvalidJSONOptions) (LrosaDsPut200InvalidJsonPoller, error)
-	// ResumeLrosaDsPut200InvalidJsonPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPut200InvalidJsonPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPut200InvalidJsonPoller(id string) (LrosaDsPut200InvalidJsonPoller, error)
 	// BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRelativeRetry400(ctx context.Context, lrosaDsPutAsyncRelativeRetry400Options *LrosaDsPutAsyncRelativeRetry400Options) (LrosaDsPutAsyncRelativeRetry400Poller, error)
-	// ResumeLrosaDsPutAsyncRelativeRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutAsyncRelativeRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutAsyncRelativeRetry400Poller(id string) (LrosaDsPutAsyncRelativeRetry400Poller, error)
 	// BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
 	BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, lrosaDsPutAsyncRelativeRetryInvalidHeaderOptions *LrosaDsPutAsyncRelativeRetryInvalidHeaderOptions) (LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller, error)
-	// ResumeLrosaDsPutAsyncRelativeRetryInvalidHeaderPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutAsyncRelativeRetryInvalidHeaderPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutAsyncRelativeRetryInvalidHeaderPoller(id string) (LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller, error)
 	// BeginPutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, lrosaDsPutAsyncRelativeRetryInvalidJsonPollingOptions *LrosaDsPutAsyncRelativeRetryInvalidJSONPollingOptions) (LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller, error)
-	// ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller(id string) (LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller, error)
 	// BeginPutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, lrosaDsPutAsyncRelativeRetryNoStatusOptions *LrosaDsPutAsyncRelativeRetryNoStatusOptions) (LrosaDsPutAsyncRelativeRetryNoStatusPoller, error)
-	// ResumeLrosaDsPutAsyncRelativeRetryNoStatusPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutAsyncRelativeRetryNoStatusPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutAsyncRelativeRetryNoStatusPoller(id string) (LrosaDsPutAsyncRelativeRetryNoStatusPoller, error)
 	// BeginPutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, lrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions *LrosaDsPutAsyncRelativeRetryNoStatusPayloadOptions) (LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller, error)
-	// ResumeLrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller(id string) (LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller, error)
 	// BeginPutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with no payload
 	BeginPutError201NoProvisioningStatePayload(ctx context.Context, lrosaDsPutError201NoProvisioningStatePayloadOptions *LrosaDsPutError201NoProvisioningStatePayloadOptions) (LrosaDsPutError201NoProvisioningStatePayloadPoller, error)
-	// ResumeLrosaDsPutError201NoProvisioningStatePayloadPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutError201NoProvisioningStatePayloadPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutError201NoProvisioningStatePayloadPoller(id string) (LrosaDsPutError201NoProvisioningStatePayloadPoller, error)
 	// BeginPutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
 	BeginPutNonRetry201Creating400(ctx context.Context, lrosaDsPutNonRetry201Creating400Options *LrosaDsPutNonRetry201Creating400Options) (LrosaDsPutNonRetry201Creating400Poller, error)
-	// ResumeLrosaDsPutNonRetry201Creating400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutNonRetry201Creating400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutNonRetry201Creating400Poller(id string) (LrosaDsPutNonRetry201Creating400Poller, error)
 	// BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
 	BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, lrosaDsPutNonRetry201Creating400InvalidJsonOptions *LrosaDsPutNonRetry201Creating400InvalidJSONOptions) (LrosaDsPutNonRetry201Creating400InvalidJsonPoller, error)
-	// ResumeLrosaDsPutNonRetry201Creating400InvalidJsonPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutNonRetry201Creating400InvalidJsonPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutNonRetry201Creating400InvalidJsonPoller(id string) (LrosaDsPutNonRetry201Creating400InvalidJsonPoller, error)
 	// BeginPutNonRetry400 - Long running put request, service returns a 400 to the initial request
 	BeginPutNonRetry400(ctx context.Context, lrosaDsPutNonRetry400Options *LrosaDsPutNonRetry400Options) (LrosaDsPutNonRetry400Poller, error)
-	// ResumeLrosaDsPutNonRetry400Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrosaDsPutNonRetry400Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrosaDsPutNonRetry400Poller(id string) (LrosaDsPutNonRetry400Poller, error)
 }
 
@@ -173,7 +173,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDelete202NonRetry400Poller(id stri
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDelete202NonRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDelete202NonRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -256,7 +256,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDelete202RetryInvalidHeaderPoller(
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDelete202RetryInvalidHeaderPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDelete202RetryInvalidHeaderPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -339,7 +339,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDelete204SucceededPoller(id string
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDelete204SucceededPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDelete204SucceededPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -410,7 +410,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetry400Poller(
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -496,7 +496,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHea
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -582,7 +582,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJso
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -668,7 +668,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPo
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -754,7 +754,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsDeleteNonRetry400Poller(id string)
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsDeleteNonRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsDeleteNonRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -837,7 +837,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPost202NoLocationPoller(id string)
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPost202NoLocationPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPost202NoLocationPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -923,7 +923,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPost202NonRetry400Poller(id string
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPost202NonRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPost202NonRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1009,7 +1009,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPost202RetryInvalidHeaderPoller(id
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPost202RetryInvalidHeaderPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPost202RetryInvalidHeaderPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1095,7 +1095,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetry400Poller(id
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1184,7 +1184,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetryInvalidHeade
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetryInvalidHeaderPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetryInvalidHeaderPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1273,7 +1273,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonP
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1362,7 +1362,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPol
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1451,7 +1451,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPostNonRetry400Poller(id string) (
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPostNonRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPostNonRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1537,7 +1537,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPut200InvalidJsonPoller(id string)
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPut200InvalidJsonPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPut200InvalidJsonPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1612,7 +1612,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetry400Poller(id 
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1687,7 +1687,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryInvalidHeader
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryInvalidHeaderPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryInvalidHeaderPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1762,7 +1762,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPo
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1837,7 +1837,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryNoStatusPolle
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryNoStatusPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryNoStatusPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1912,7 +1912,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryNoStatusPaylo
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -1987,7 +1987,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutError201NoProvisioningStatePayl
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutError201NoProvisioningStatePayloadPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutError201NoProvisioningStatePayloadPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -2062,7 +2062,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutNonRetry201Creating400Poller(id
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutNonRetry201Creating400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutNonRetry201Creating400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -2137,7 +2137,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutNonRetry201Creating400InvalidJs
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutNonRetry201Creating400InvalidJsonPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutNonRetry201Creating400InvalidJsonPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -2212,7 +2212,7 @@ func (client *lrosaDsOperations) ResumeLrosaDsPutNonRetry400Poller(id string) (L
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrosaDsPutNonRetry400Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrosaDsPutNonRetry400Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)

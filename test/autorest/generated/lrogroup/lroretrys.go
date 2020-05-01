@@ -19,31 +19,31 @@ import (
 type LroRetrysOperations interface {
 	// BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginDelete202Retry200(ctx context.Context) (LroRetrysDelete202Retry200Poller, error)
-	// ResumeLroRetrysDelete202Retry200Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLroRetrysDelete202Retry200Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLroRetrysDelete202Retry200Poller(id string) (LroRetrysDelete202Retry200Poller, error)
 	// BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context) (LroRetrysDeleteAsyncRelativeRetrySucceededPoller, error)
-	// ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller(id string) (LroRetrysDeleteAsyncRelativeRetrySucceededPoller, error)
 	// BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a  202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (LroRetrysDeleteProvisioning202Accepted200SucceededPoller, error)
-	// ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller(id string) (LroRetrysDeleteProvisioning202Accepted200SucceededPoller, error)
 	// BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
 	BeginPost202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (LroRetrysPost202Retry200Poller, error)
-	// ResumeLroRetrysPost202Retry200Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLroRetrysPost202Retry200Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLroRetrysPost202Retry200Poller(id string) (LroRetrysPost202Retry200Poller, error)
 	// BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error)
-	// ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller(id string) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error)
 	// BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginPut201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (LroRetrysPut201CreatingSucceeded200Poller, error)
-	// ResumeLroRetrysPut201CreatingSucceeded200Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLroRetrysPut201CreatingSucceeded200Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLroRetrysPut201CreatingSucceeded200Poller(id string) (LroRetrysPut201CreatingSucceeded200Poller, error)
 	// BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error)
-	// ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller(id string) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error)
 }
 
@@ -97,7 +97,7 @@ func (client *lroRetrysOperations) ResumeLroRetrysDelete202Retry200Poller(id str
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLroRetrysDelete202Retry200Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLroRetrysDelete202Retry200Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -180,7 +180,7 @@ func (client *lroRetrysOperations) ResumeLroRetrysDeleteAsyncRelativeRetrySuccee
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -266,7 +266,7 @@ func (client *lroRetrysOperations) ResumeLroRetrysDeleteProvisioning202Accepted2
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -338,7 +338,7 @@ func (client *lroRetrysOperations) ResumeLroRetrysPost202Retry200Poller(id strin
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPost202Retry200Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLroRetrysPost202Retry200Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -424,7 +424,7 @@ func (client *lroRetrysOperations) ResumeLroRetrysPostAsyncRelativeRetrySucceede
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -513,7 +513,7 @@ func (client *lroRetrysOperations) ResumeLroRetrysPut201CreatingSucceeded200Poll
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPut201CreatingSucceeded200Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLroRetrysPut201CreatingSucceeded200Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -588,7 +588,7 @@ func (client *lroRetrysOperations) ResumeLroRetrysPutAsyncRelativeRetrySucceeded
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)

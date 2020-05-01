@@ -19,19 +19,19 @@ import (
 type LrOSCustomHeaderOperations interface {
 	// BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
 	BeginPost202Retry200(ctx context.Context, lrOSCustomHeaderPost202Retry200Options *LrOSCustomHeaderPost202Retry200Options) (LrOSCustomHeaderPost202Retry200Poller, error)
-	// ResumeLrOSCustomHeaderPost202Retry200Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrOSCustomHeaderPost202Retry200Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrOSCustomHeaderPost202Retry200Poller(id string) (LrOSCustomHeaderPost202Retry200Poller, error)
 	// BeginPostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPostAsyncRetrySucceededOptions *LrOSCustomHeaderPostAsyncRetrySucceededOptions) (LrOSCustomHeaderPostAsyncRetrySucceededPoller, error)
-	// ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller(id string) (LrOSCustomHeaderPostAsyncRetrySucceededPoller, error)
 	// BeginPut201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginPut201CreatingSucceeded200(ctx context.Context, lrOSCustomHeaderPut201CreatingSucceeded200Options *LrOSCustomHeaderPut201CreatingSucceeded200Options) (LrOSCustomHeaderPut201CreatingSucceeded200Poller, error)
-	// ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller(id string) (LrOSCustomHeaderPut201CreatingSucceeded200Poller, error)
 	// BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPutAsyncRetrySucceeded(ctx context.Context, lrOSCustomHeaderPutAsyncRetrySucceededOptions *LrOSCustomHeaderPutAsyncRetrySucceededOptions) (LrOSCustomHeaderPutAsyncRetrySucceededPoller, error)
-	// ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller - Used to create a new poller from a resume token of a previously implemented poller
+	// ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller(id string) (LrOSCustomHeaderPutAsyncRetrySucceededPoller, error)
 }
 
@@ -85,7 +85,7 @@ func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPost202Retry200P
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPost202Retry200Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPost202Retry200Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -171,7 +171,7 @@ func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPostAsyncRetrySu
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -260,7 +260,7 @@ func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPut201CreatingSu
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)
@@ -335,7 +335,7 @@ func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPutAsyncRetrySuc
 	case http.MethodPut:
 		poller.pt = &pollingTrackerPut{}
 	default:
-		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller: unsupoorted method '%s'", method)
+		return nil, fmt.Errorf("ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller: unsupported method '%s'", method)
 	}
 	// now unmarshal into the tracker
 	err = json.Unmarshal([]byte(id), &poller.pt)

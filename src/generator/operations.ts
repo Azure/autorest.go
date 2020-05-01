@@ -733,7 +733,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
     if (isLROOperation(op) && !op.extensions!['x-ms-pageable']) {
-      interfaceText += `\t// Resume${pascalCase(op.language.go!.pollerType.name)} - Used to create a new poller from a resume token of a previously implemented poller\n`;
+      interfaceText += `\t// Resume${pascalCase(op.language.go!.pollerType.name)} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
       interfaceText += `\tResume${pascalCase(op.language.go!.pollerType.name)}(id string) (${pascalCase(op.language.go!.pollerType.name)}, error)\n`;
     }
   }
@@ -930,7 +930,7 @@ function addResumePollerMethod(op: Operation, clientName: string): string {
   text += `\t\tcase http.MethodPut:\n`;
   text += `\t\t\tpoller.pt = &pollingTrackerPut{}\n`;
   text += `\t\tdefault:\n`;
-  text += `\t\t\treturn nil, fmt.Errorf("Resume${pollerName}: unsupoorted method '%s'", method)\n`;
+  text += `\t\t\treturn nil, fmt.Errorf("Resume${pollerName}: unsupported method '%s'", method)\n`;
   text += `\t}\n`;
   text += `\t// now unmarshal into the tracker\n`;
   text += `\terr = json.Unmarshal([]byte(id), &poller.pt)\n`;
