@@ -23,7 +23,19 @@ const (
 )
 
 func PossibleOperationResultStatusValues() []OperationResultStatus {
-	return []OperationResultStatus{OperationResultStatusAccepted, OperationResultStatusCanceled, OperationResultStatusCreated, OperationResultStatusCreating, OperationResultStatusDeleted, OperationResultStatusDeleting, OperationResultStatusFailed, OperationResultStatusOk, OperationResultStatusSucceeded, OperationResultStatusUpdated, OperationResultStatusUpdating}
+	return []OperationResultStatus{
+		OperationResultStatusAccepted,
+		OperationResultStatusCanceled,
+		OperationResultStatusCreated,
+		OperationResultStatusCreating,
+		OperationResultStatusDeleted,
+		OperationResultStatusDeleting,
+		OperationResultStatusFailed,
+		OperationResultStatusOk,
+		OperationResultStatusSucceeded,
+		OperationResultStatusUpdated,
+		OperationResultStatusUpdating,
+	}
 }
 
 func (c OperationResultStatus) ToPtr() *OperationResultStatus {

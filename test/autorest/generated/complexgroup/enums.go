@@ -15,7 +15,12 @@ const (
 )
 
 func PossibleCMYKColorsValues() []CMYKColors {
-	return []CMYKColors{CMYKColorsBlacK, CMYKColorsCyan, CMYKColorsMagenta, CMYKColorsYellow}
+	return []CMYKColors{
+		CMYKColorsBlacK,
+		CMYKColorsCyan,
+		CMYKColorsMagenta,
+		CMYKColorsYellow,
+	}
 }
 
 func (c CMYKColors) ToPtr() *CMYKColors {
@@ -36,7 +41,13 @@ const (
 )
 
 func PossibleGoblinSharkColorValues() []GoblinSharkColor {
-	return []GoblinSharkColor{GoblinSharkColorBrown, GoblinSharkColorGray, GoblinSharkColorLowerRed, GoblinSharkColorPink, GoblinSharkColorUpperRed}
+	return []GoblinSharkColor{
+		GoblinSharkColorBrown,
+		GoblinSharkColorGray,
+		GoblinSharkColorLowerRed,
+		GoblinSharkColorPink,
+		GoblinSharkColorUpperRed,
+	}
 }
 
 func (c GoblinSharkColor) ToPtr() *GoblinSharkColor {

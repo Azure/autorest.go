@@ -14,7 +14,11 @@ const (
 )
 
 func PossibleColorsValues() []Colors {
-	return []Colors{ColorsRedColor, ColorsGreenColor, ColorsBlueColor}
+	return []Colors{
+		ColorsRedColor,
+		ColorsGreenColor,
+		ColorsBlueColor,
+	}
 }
 
 func (c Colors) ToPtr() *Colors {

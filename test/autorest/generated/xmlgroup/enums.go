@@ -21,7 +21,18 @@ const (
 )
 
 func PossibleAccessTierValues() []AccessTier {
-	return []AccessTier{AccessTierArchive, AccessTierCool, AccessTierHot, AccessTierP10, AccessTierP20, AccessTierP30, AccessTierP4, AccessTierP40, AccessTierP50, AccessTierP6}
+	return []AccessTier{
+		AccessTierArchive,
+		AccessTierCool,
+		AccessTierHot,
+		AccessTierP10,
+		AccessTierP20,
+		AccessTierP30,
+		AccessTierP4,
+		AccessTierP40,
+		AccessTierP50,
+		AccessTierP6,
+	}
 }
 
 func (c AccessTier) ToPtr() *AccessTier {
@@ -36,7 +47,10 @@ const (
 )
 
 func PossibleArchiveStatusValues() []ArchiveStatus {
-	return []ArchiveStatus{ArchiveStatusRehydratePendingToCool, ArchiveStatusRehydratePendingToHot}
+	return []ArchiveStatus{
+		ArchiveStatusRehydratePendingToCool,
+		ArchiveStatusRehydratePendingToHot,
+	}
 }
 
 func (c ArchiveStatus) ToPtr() *ArchiveStatus {
@@ -52,7 +66,11 @@ const (
 )
 
 func PossibleBlobTypeValues() []BlobType {
-	return []BlobType{BlobTypeBlockBlob, BlobTypePageBlob, BlobTypeAppendBlob}
+	return []BlobType{
+		BlobTypeBlockBlob,
+		BlobTypePageBlob,
+		BlobTypeAppendBlob,
+	}
 }
 
 func (c BlobType) ToPtr() *BlobType {
@@ -69,7 +87,12 @@ const (
 )
 
 func PossibleCopyStatusTypeValues() []CopyStatusType {
-	return []CopyStatusType{CopyStatusTypePending, CopyStatusTypeSuccess, CopyStatusTypeAborted, CopyStatusTypeFailed}
+	return []CopyStatusType{
+		CopyStatusTypePending,
+		CopyStatusTypeSuccess,
+		CopyStatusTypeAborted,
+		CopyStatusTypeFailed,
+	}
 }
 
 func (c CopyStatusType) ToPtr() *CopyStatusType {
@@ -84,7 +107,10 @@ const (
 )
 
 func PossibleLeaseDurationTypeValues() []LeaseDurationType {
-	return []LeaseDurationType{LeaseDurationTypeInfinite, LeaseDurationTypeFixed}
+	return []LeaseDurationType{
+		LeaseDurationTypeInfinite,
+		LeaseDurationTypeFixed,
+	}
 }
 
 func (c LeaseDurationType) ToPtr() *LeaseDurationType {
@@ -102,7 +128,13 @@ const (
 )
 
 func PossibleLeaseStateTypeValues() []LeaseStateType {
-	return []LeaseStateType{LeaseStateTypeAvailable, LeaseStateTypeLeased, LeaseStateTypeExpired, LeaseStateTypeBreaking, LeaseStateTypeBroken}
+	return []LeaseStateType{
+		LeaseStateTypeAvailable,
+		LeaseStateTypeLeased,
+		LeaseStateTypeExpired,
+		LeaseStateTypeBreaking,
+		LeaseStateTypeBroken,
+	}
 }
 
 func (c LeaseStateType) ToPtr() *LeaseStateType {
@@ -117,7 +149,10 @@ const (
 )
 
 func PossibleLeaseStatusTypeValues() []LeaseStatusType {
-	return []LeaseStatusType{LeaseStatusTypeLocked, LeaseStatusTypeUnlocked}
+	return []LeaseStatusType{
+		LeaseStatusTypeLocked,
+		LeaseStatusTypeUnlocked,
+	}
 }
 
 func (c LeaseStatusType) ToPtr() *LeaseStatusType {
@@ -132,7 +167,10 @@ const (
 )
 
 func PossiblePublicAccessTypeValues() []PublicAccessType {
-	return []PublicAccessType{PublicAccessTypeBlob, PublicAccessTypeContainer}
+	return []PublicAccessType{
+		PublicAccessTypeBlob,
+		PublicAccessTypeContainer,
+	}
 }
 
 func (c PublicAccessType) ToPtr() *PublicAccessType {

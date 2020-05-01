@@ -14,7 +14,11 @@ const (
 )
 
 func PossibleGreyscaleColorsValues() []GreyscaleColors {
-	return []GreyscaleColors{GreyscaleColorsWhite, GreyscaleColorsBlack, GreyscaleColorsGrey}
+	return []GreyscaleColors{
+		GreyscaleColorsWhite,
+		GreyscaleColorsBlack,
+		GreyscaleColorsGrey,
+	}
 }
 
 func (c GreyscaleColors) ToPtr() *GreyscaleColors {

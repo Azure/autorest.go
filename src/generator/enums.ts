@@ -23,7 +23,7 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
     }
     text += `type ${enm.name} ${enm.type}\n\n`;
     const vals = new Array<string>();
-    text += 'const (\n'
+    text += 'const (\n';
     for (const val of values(enm.choices)) {
       if (hasDescription(val.language.go!)) {
         text += `\t${comment(val.language.go!.name, '// ')} - ${val.language.go!.description}\n`;
@@ -31,9 +31,13 @@ export async function generateEnums(session: Session<CodeModel>): Promise<string
       text += `\t${val.language.go!.name} ${enm.name} = "${val.value}"\n`;
       vals.push(val.language.go!.name);
     }
-    text += ")\n\n"
+    text += ')\n\n';
     text += `func ${enm.funcName}() []${enm.name} {\n`;
-    text += `\treturn []${enm.name}{${joinComma(vals, (item: string) => item)}}\n`;
+    text += `\treturn []${enm.name}{\t\n`;
+    for (const val of values(vals)) {
+      text += `\t\t${val},\n`;
+    }
+    text += '\t}\n';
     text += '}\n\n';
     text += `func (c ${enm.name}) ToPtr() *${enm.name} {\n`;
     text += '\treturn &c\n';

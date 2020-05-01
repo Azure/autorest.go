@@ -14,7 +14,11 @@ const (
 )
 
 func PossibleUriColorValues() []UriColor {
-	return []UriColor{UriColorRedColor, UriColorGreenColor, UriColorBlueColor}
+	return []UriColor{
+		UriColorRedColor,
+		UriColorGreenColor,
+		UriColorBlueColor,
+	}
 }
 
 func (c UriColor) ToPtr() *UriColor {

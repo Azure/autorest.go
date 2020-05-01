@@ -325,6 +325,16 @@ function processOperationResponses(session: Session<CodeModel>) {
           continue;
         }
         const schemaError = (<SchemaResponse>ex).schema;
+        if (isObjectSchema(schemaError)) {
+          for (const prop of values(schemaError.properties)) {
+            // adding the Inner prefix on error types, since errors in Go have an Error() method
+            // in order to implement the error interface. This causes errors to not be able to have
+            // an Error field as well, since it would cause confusion
+            if (prop.language.go!.name === 'Error') {
+              prop.language.go!.name = 'Inner' + prop.language.go!.name;
+            }
+          }
+        }
         schemaError.language.go!.errorType = true;
         schemaError.language.go!.constructorName = `new${schemaError.language.go!.name}`;
         recursiveAddMarshallingFormat(schemaError, marshallingFormat);
@@ -477,24 +487,15 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     }
     // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
     const name = `${camelCase(group.language.go!.name)}${op.language.go!.name}Poller`;
-    // check to see if the poller has already been created
-    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
-    for (const poller of values(pollers)) {
-      if (poller.name === name) {
-        // found a match, hook it up to the method
-        op.language.go!.pollerType = poller;
-        return;
-      }
-    }
     // create a new one, add to global list and assign to method
     const poller = {
       name: name,
       operationName: camelCase(op.language.go!.name),
       schema: (<SchemaResponse>firstResp).schema,
       client: camelCase(group.language.go!.clientName),
-      pollingMethod: op.requests![0].protocol.http!.method,
       pollingError: (<SchemaResponse>op.exceptions![0]).schema, // TODO this is the wrong implementation, needs to be fixed
     };
+    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
     pollers.push(poller);
     op.language.go!.pollerType = poller;
   }
