@@ -24,6 +24,8 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
   imports.add('time');
+  imports.add('errors');
+  imports.add('encoding/json');
   text += imports.text();
 
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
@@ -40,9 +42,9 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     }
     text += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
-	Done() bool
-	ID() string
-	Poll(context.Context) (*${responseType}, error)
+	Poll(context.Context) bool
+	Response() (*${responseType}, error)
+	ResumeToken() (string, error)
 	Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error)
 }
 
@@ -53,22 +55,21 @@ type ${poller.name} struct {
 	pt pollingTracker
 }
 
-// Done returns true if the polling operation has terminated either in a success case or failure case,
-// otherwise it will return false
-func (p *${poller.name}) Done() bool {
-	return p.pt.hasTerminated()
-}
-
-// ID ... 
-func (p *${poller.name}) ID() string {
-	return ""
-}
-
-func (p *${poller.name}) Poll(ctx context.Context) (*${responseType}, error) {
-	if done, err := p.done(ctx); !done || err != nil {
-		return nil, err
+// Poll returns false if there was an error or polling has reached a terminal state
+func (p *${poller.name}) Poll(ctx context.Context) bool {
+	if done, err := p.done(ctx); err != nil {
+		return false
+	} else {
+		return !done
 	}
+}
+
+// Response returns the latest response that is stored from the latest polling operation
+func (p *${poller.name}) Response() (*${responseType}, error) {
 	resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+	}
 	result, err := p.client.${poller.operationName}HandleResponse(resp)
 	if err != nil {
 		return nil, err
@@ -76,27 +77,34 @@ func (p *${poller.name}) Poll(ctx context.Context) (*${responseType}, error) {
 	return result, nil
 }
 
+// ResumeToken generates the string token that can be used with the Resume${pascalCase(poller.name)} method
+// on the client to create a new poller from the data held in the current poller type
+func (p *${poller.name}) ResumeToken() (string, error) {
+	if p.pt.hasTerminated() {
+		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
+	}
+	js, err := json.Marshal(p.pt)
+	if err != nil {
+		return "", err
+	}
+	return string(js), nil
+}
+
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the 
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests. 
 func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error) {
-	for {
-		resp, err := p.Poll(context.Background())
-		if err != nil {
-			return nil, err
-		}
-		if p.Done() {
-			return resp, err
-		}
-		if delay, found := p.response().RetryAfter(); found && delay > 0 {
+	for p.Poll(context.Background()) {
+		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {
 			time.Sleep(pollingInterval)
 		}
 	}
+	return p.Response()
 }
 
-// Response returns the last HTTP response.
+// response returns the last HTTP response.
 func (p *${poller.name}) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
