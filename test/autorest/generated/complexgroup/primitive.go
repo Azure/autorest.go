@@ -95,10 +95,19 @@ func (client *primitiveOperations) getBoolCreateRequest() (*azcore.Request, erro
 // getBoolHandleResponse handles the GetBool response.
 func (client *primitiveOperations) getBoolHandleResponse(resp *azcore.Response) (*BooleanWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getBoolHandleError(resp)
 	}
 	result := BooleanWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.BooleanWrapper)
+}
+
+// getBoolHandleError handles the GetBool error response.
+func (client *primitiveOperations) getBoolHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetByte - Get complex types with byte properties
@@ -132,10 +141,19 @@ func (client *primitiveOperations) getByteCreateRequest() (*azcore.Request, erro
 // getByteHandleResponse handles the GetByte response.
 func (client *primitiveOperations) getByteHandleResponse(resp *azcore.Response) (*ByteWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getByteHandleError(resp)
 	}
 	result := ByteWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ByteWrapper)
+}
+
+// getByteHandleError handles the GetByte error response.
+func (client *primitiveOperations) getByteHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetDate - Get complex types with date properties
@@ -169,10 +187,19 @@ func (client *primitiveOperations) getDateCreateRequest() (*azcore.Request, erro
 // getDateHandleResponse handles the GetDate response.
 func (client *primitiveOperations) getDateHandleResponse(resp *azcore.Response) (*DateWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getDateHandleError(resp)
 	}
 	result := DateWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DateWrapper)
+}
+
+// getDateHandleError handles the GetDate error response.
+func (client *primitiveOperations) getDateHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetDateTime - Get complex types with datetime properties
@@ -206,10 +233,19 @@ func (client *primitiveOperations) getDateTimeCreateRequest() (*azcore.Request, 
 // getDateTimeHandleResponse handles the GetDateTime response.
 func (client *primitiveOperations) getDateTimeHandleResponse(resp *azcore.Response) (*DatetimeWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getDateTimeHandleError(resp)
 	}
 	result := DatetimeWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DatetimeWrapper)
+}
+
+// getDateTimeHandleError handles the GetDateTime error response.
+func (client *primitiveOperations) getDateTimeHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
@@ -243,10 +279,19 @@ func (client *primitiveOperations) getDateTimeRfc1123CreateRequest() (*azcore.Re
 // getDateTimeRfc1123HandleResponse handles the GetDateTimeRFC1123 response.
 func (client *primitiveOperations) getDateTimeRfc1123HandleResponse(resp *azcore.Response) (*Datetimerfc1123WrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getDateTimeRfc1123HandleError(resp)
 	}
 	result := Datetimerfc1123WrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Datetimerfc1123Wrapper)
+}
+
+// getDateTimeRfc1123HandleError handles the GetDateTimeRFC1123 error response.
+func (client *primitiveOperations) getDateTimeRfc1123HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetDouble - Get complex types with double properties
@@ -280,10 +325,19 @@ func (client *primitiveOperations) getDoubleCreateRequest() (*azcore.Request, er
 // getDoubleHandleResponse handles the GetDouble response.
 func (client *primitiveOperations) getDoubleHandleResponse(resp *azcore.Response) (*DoubleWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getDoubleHandleError(resp)
 	}
 	result := DoubleWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DoubleWrapper)
+}
+
+// getDoubleHandleError handles the GetDouble error response.
+func (client *primitiveOperations) getDoubleHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetDuration - Get complex types with duration properties
@@ -317,10 +371,19 @@ func (client *primitiveOperations) getDurationCreateRequest() (*azcore.Request, 
 // getDurationHandleResponse handles the GetDuration response.
 func (client *primitiveOperations) getDurationHandleResponse(resp *azcore.Response) (*DurationWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getDurationHandleError(resp)
 	}
 	result := DurationWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DurationWrapper)
+}
+
+// getDurationHandleError handles the GetDuration error response.
+func (client *primitiveOperations) getDurationHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetFloat - Get complex types with float properties
@@ -354,10 +417,19 @@ func (client *primitiveOperations) getFloatCreateRequest() (*azcore.Request, err
 // getFloatHandleResponse handles the GetFloat response.
 func (client *primitiveOperations) getFloatHandleResponse(resp *azcore.Response) (*FloatWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getFloatHandleError(resp)
 	}
 	result := FloatWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.FloatWrapper)
+}
+
+// getFloatHandleError handles the GetFloat error response.
+func (client *primitiveOperations) getFloatHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetInt - Get complex types with integer properties
@@ -391,10 +463,19 @@ func (client *primitiveOperations) getIntCreateRequest() (*azcore.Request, error
 // getIntHandleResponse handles the GetInt response.
 func (client *primitiveOperations) getIntHandleResponse(resp *azcore.Response) (*IntWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getIntHandleError(resp)
 	}
 	result := IntWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.IntWrapper)
+}
+
+// getIntHandleError handles the GetInt error response.
+func (client *primitiveOperations) getIntHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetLong - Get complex types with long properties
@@ -428,10 +509,19 @@ func (client *primitiveOperations) getLongCreateRequest() (*azcore.Request, erro
 // getLongHandleResponse handles the GetLong response.
 func (client *primitiveOperations) getLongHandleResponse(resp *azcore.Response) (*LongWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getLongHandleError(resp)
 	}
 	result := LongWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.LongWrapper)
+}
+
+// getLongHandleError handles the GetLong error response.
+func (client *primitiveOperations) getLongHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetString - Get complex types with string properties
@@ -465,10 +555,19 @@ func (client *primitiveOperations) getStringCreateRequest() (*azcore.Request, er
 // getStringHandleResponse handles the GetString response.
 func (client *primitiveOperations) getStringHandleResponse(resp *azcore.Response) (*StringWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getStringHandleError(resp)
 	}
 	result := StringWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.StringWrapper)
+}
+
+// getStringHandleError handles the GetString error response.
+func (client *primitiveOperations) getStringHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutBool - Put complex types with bool properties
@@ -502,9 +601,18 @@ func (client *primitiveOperations) putBoolCreateRequest(complexBody BooleanWrapp
 // putBoolHandleResponse handles the PutBool response.
 func (client *primitiveOperations) putBoolHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putBoolHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putBoolHandleError handles the PutBool error response.
+func (client *primitiveOperations) putBoolHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutByte - Put complex types with byte properties
@@ -538,9 +646,18 @@ func (client *primitiveOperations) putByteCreateRequest(complexBody ByteWrapper)
 // putByteHandleResponse handles the PutByte response.
 func (client *primitiveOperations) putByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putByteHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putByteHandleError handles the PutByte error response.
+func (client *primitiveOperations) putByteHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutDate - Put complex types with date properties
@@ -574,9 +691,18 @@ func (client *primitiveOperations) putDateCreateRequest(complexBody DateWrapper)
 // putDateHandleResponse handles the PutDate response.
 func (client *primitiveOperations) putDateHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putDateHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putDateHandleError handles the PutDate error response.
+func (client *primitiveOperations) putDateHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutDateTime - Put complex types with datetime properties
@@ -610,9 +736,18 @@ func (client *primitiveOperations) putDateTimeCreateRequest(complexBody Datetime
 // putDateTimeHandleResponse handles the PutDateTime response.
 func (client *primitiveOperations) putDateTimeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putDateTimeHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putDateTimeHandleError handles the PutDateTime error response.
+func (client *primitiveOperations) putDateTimeHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
@@ -646,9 +781,18 @@ func (client *primitiveOperations) putDateTimeRfc1123CreateRequest(complexBody D
 // putDateTimeRfc1123HandleResponse handles the PutDateTimeRFC1123 response.
 func (client *primitiveOperations) putDateTimeRfc1123HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putDateTimeRfc1123HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putDateTimeRfc1123HandleError handles the PutDateTimeRFC1123 error response.
+func (client *primitiveOperations) putDateTimeRfc1123HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutDouble - Put complex types with double properties
@@ -682,9 +826,18 @@ func (client *primitiveOperations) putDoubleCreateRequest(complexBody DoubleWrap
 // putDoubleHandleResponse handles the PutDouble response.
 func (client *primitiveOperations) putDoubleHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putDoubleHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putDoubleHandleError handles the PutDouble error response.
+func (client *primitiveOperations) putDoubleHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutDuration - Put complex types with duration properties
@@ -718,9 +871,18 @@ func (client *primitiveOperations) putDurationCreateRequest(complexBody Duration
 // putDurationHandleResponse handles the PutDuration response.
 func (client *primitiveOperations) putDurationHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putDurationHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putDurationHandleError handles the PutDuration error response.
+func (client *primitiveOperations) putDurationHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutFloat - Put complex types with float properties
@@ -754,9 +916,18 @@ func (client *primitiveOperations) putFloatCreateRequest(complexBody FloatWrappe
 // putFloatHandleResponse handles the PutFloat response.
 func (client *primitiveOperations) putFloatHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putFloatHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putFloatHandleError handles the PutFloat error response.
+func (client *primitiveOperations) putFloatHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutInt - Put complex types with integer properties
@@ -790,9 +961,18 @@ func (client *primitiveOperations) putIntCreateRequest(complexBody IntWrapper) (
 // putIntHandleResponse handles the PutInt response.
 func (client *primitiveOperations) putIntHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putIntHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putIntHandleError handles the PutInt error response.
+func (client *primitiveOperations) putIntHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutLong - Put complex types with long properties
@@ -826,9 +1006,18 @@ func (client *primitiveOperations) putLongCreateRequest(complexBody LongWrapper)
 // putLongHandleResponse handles the PutLong response.
 func (client *primitiveOperations) putLongHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putLongHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putLongHandleError handles the PutLong error response.
+func (client *primitiveOperations) putLongHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutString - Put complex types with string properties
@@ -862,7 +1051,16 @@ func (client *primitiveOperations) putStringCreateRequest(complexBody StringWrap
 // putStringHandleResponse handles the PutString response.
 func (client *primitiveOperations) putStringHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putStringHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putStringHandleError handles the PutString error response.
+func (client *primitiveOperations) putStringHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

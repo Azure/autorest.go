@@ -104,7 +104,7 @@ func (client *appendBlobOperations) appendBlockCreateRequest(contentLength int64
 // appendBlockHandleResponse handles the AppendBlock response.
 func (client *appendBlobOperations) appendBlockHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newStorageError(resp)
+		return nil, client.appendBlockHandleError(resp)
 	}
 	result := AppendBlobAppendBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -172,6 +172,15 @@ func (client *appendBlobOperations) appendBlockHandleResponse(resp *azcore.Respo
 		result.EncryptionScope = &val
 	}
 	return &result, nil
+}
+
+// appendBlockHandleError handles the AppendBlock error response.
+func (client *appendBlobOperations) appendBlockHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a source url. The Append Block operation is permitted only if the blob was created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
@@ -267,7 +276,7 @@ func (client *appendBlobOperations) appendBlockFromUrlCreateRequest(sourceUrl ur
 // appendBlockFromUrlHandleResponse handles the AppendBlockFromURL response.
 func (client *appendBlobOperations) appendBlockFromUrlHandleResponse(resp *azcore.Response) (*AppendBlobAppendBlockFromURLResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newStorageError(resp)
+		return nil, client.appendBlockFromUrlHandleError(resp)
 	}
 	result := AppendBlobAppendBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -332,6 +341,15 @@ func (client *appendBlobOperations) appendBlockFromUrlHandleResponse(resp *azcor
 		result.RequestServerEncrypted = &requestServerEncrypted
 	}
 	return &result, nil
+}
+
+// appendBlockFromUrlHandleError handles the AppendBlockFromURL error response.
+func (client *appendBlobOperations) appendBlockFromUrlHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Create - The Create Append Blob operation creates a new append blob.
@@ -417,7 +435,7 @@ func (client *appendBlobOperations) createCreateRequest(contentLength int64, app
 // createHandleResponse handles the Create response.
 func (client *appendBlobOperations) createHandleResponse(resp *azcore.Response) (*AppendBlobCreateResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newStorageError(resp)
+		return nil, client.createHandleError(resp)
 	}
 	result := AppendBlobCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -467,4 +485,13 @@ func (client *appendBlobOperations) createHandleResponse(resp *azcore.Response) 
 		result.EncryptionScope = &val
 	}
 	return &result, nil
+}
+
+// createHandleError handles the Create error response.
+func (client *appendBlobOperations) createHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }

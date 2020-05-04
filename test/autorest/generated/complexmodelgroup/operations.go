@@ -64,10 +64,19 @@ func (client *operations) createCreateRequest(subscriptionId string, resourceGro
 // createHandleResponse handles the Create response.
 func (client *operations) createHandleResponse(resp *azcore.Response) (*CatalogDictionaryResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.createHandleError(resp)
 	}
 	result := CatalogDictionaryResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogDictionary)
+}
+
+// createHandleError handles the Create error response.
+func (client *operations) createHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other details about each product, and lists the products in the proper display order.
@@ -106,10 +115,19 @@ func (client *operations) listCreateRequest(resourceGroupName string) (*azcore.R
 // listHandleResponse handles the List response.
 func (client *operations) listHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.listHandleError(resp)
 	}
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
+}
+
+// listHandleError handles the List error response.
+func (client *operations) listHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Update - Resets products.
@@ -148,8 +166,17 @@ func (client *operations) updateCreateRequest(subscriptionId string, resourceGro
 // updateHandleResponse handles the Update response.
 func (client *operations) updateHandleResponse(resp *azcore.Response) (*CatalogArrayResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.updateHandleError(resp)
 	}
 	result := CatalogArrayResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.CatalogArray)
+}
+
+// updateHandleError handles the Update error response.
+func (client *operations) updateHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

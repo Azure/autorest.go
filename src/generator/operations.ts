@@ -47,6 +47,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       opText += generateOperation(clientName, op, imports);
       opText += createProtocolRequest(clientName, op, imports);
       opText += createProtocolResponse(clientName, op, imports);
+      opText += createProtocolErrHandler(clientName, op, imports);
     }
     const interfaceText = createInterfaceDefinition(group, imports);
     // stitch it all together
@@ -283,7 +284,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    text += `\tpt, err := createPollingTracker(resp)\n`;
+    text += `\tpt, err := createPollingTracker(resp, client.${info.protocolNaming.errorMethod})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
@@ -293,10 +294,6 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\tclient: client,\n`;
     text += `\t}, nil\n`;
     text += '}\n\n';
-    // add imports used in the resume poller method
-    imports.add('fmt');
-    imports.add('encoding/json');
-    imports.add('strings');
     text += addResumePollerMethod(op, clientName);
     return text;
   }
@@ -585,7 +582,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${client}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, true).join(', ')}) {\n`;
   if (!op.responses) {
-    text += '\treturn nil, newError(resp)';
+    text += `\treturn nil, client.${info.protocolNaming.errorMethod}(resp)`;
     text += '}\n\n';
     return text;
   }
@@ -611,15 +608,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   // LROs will skip this check since the status code is checked by the poller
   if (!isLROOperation(op)) {
     text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    // if the response doesn't define a 'default' section return a generic error
-    // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
-    if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
-      imports.add('errors');
-      text += `\t\treturn nil, errors.New(resp.Status)\n`;
-    } else {
-      const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
-      text += `\t\treturn nil, ${schemaError.language.go!.constructorName}(resp)\n`;
-    }
+    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
     text += '\t}\n';
   }
   if (!isSchemaResponse(firstResp)) {
@@ -686,6 +675,29 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
     target = 'result';
   }
   text += `\treturn &result, resp.UnmarshalAs${mediaType}(&${target})\n`;
+  text += '}\n\n';
+  return text;
+}
+
+function createProtocolErrHandler(client: string, op: Operation, imports: ImportManager): string {
+  const info = <OperationNaming>op.language.go!;
+  const name = info.protocolNaming.errorMethod;
+  let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
+  text += `func (client *${client}) ${name}(resp *azcore.Response) error {\n`;
+  // if the response doesn't define a 'default' section return a generic error
+  // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
+  if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
+    imports.add('errors');
+    text += `\treturn errors.New(resp.Status)\n`;
+  } else {
+    const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
+    const errFormat = <string>schemaError.language.go!.marshallingFormat;
+    text += `\terr := ${schemaError.language.go!.name}{}\n`;
+    text += `\tif err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err); err != nil {\n`;
+    text += `\t\treturn err\n`;
+    text += `\t}\n`;
+    text += '\treturn err\n';
+  }
   text += '}\n\n';
   return text;
 }
@@ -904,40 +916,17 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
 }
 
 function addResumePollerMethod(op: Operation, clientName: string): string {
-  let pollerName = pascalCase(op.language.go!.pollerType.name);
-  let text = '';
-  text += `func (client *${clientName}) Resume${pollerName}(id string) (${pollerName}, error) {\n`;
-  text += `\t// unmarshal into JSON object to determine the tracker type\n`;
-  text += `\tobj := map[string]interface{}{}\n`;
-  text += `\terr := json.Unmarshal([]byte(id), &obj)\n`;
+  const pollerName = pascalCase(op.language.go!.pollerType.name);
+  const info = <OperationNaming>op.language.go!;
+  let text = `func (client *${clientName}) Resume${pollerName}(token string) (${pollerName}, error) {\n`;
+  text += `\tpt, err := resumePollingTracker(token, client.${info.protocolNaming.errorMethod})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  text += `\tif obj["method"] == nil {\n`;
-  text += `\t\treturn nil, fmt.Errorf("Resume${pollerName}: missing 'method' property")\n`;
-  text += `\t}\n`;
-  text += `\tmethod := obj["method"].(string)\n`;
-  text += `\tpoller := &${op.language.go!.pollerType.name}{\n`;
+  text += `\treturn &${op.language.go!.pollerType.name}{\n`;
   text += `\t\tclient: client,\n`;
-  text += `\t}\n`;
-  text += `\tswitch strings.ToUpper(method) {\n`;
-  text += `\t\tcase http.MethodDelete:\n`;
-  text += `\t\t\tpoller.pt = &pollingTrackerDelete{}\n`;
-  text += `\t\tcase http.MethodPatch:\n`;
-  text += `\t\t\tpoller.pt = &pollingTrackerPatch{}\n`;
-  text += `\t\tcase http.MethodPost:\n`;
-  text += `\t\t\tpoller.pt = &pollingTrackerPost{}\n`;
-  text += `\t\tcase http.MethodPut:\n`;
-  text += `\t\t\tpoller.pt = &pollingTrackerPut{}\n`;
-  text += `\t\tdefault:\n`;
-  text += `\t\t\treturn nil, fmt.Errorf("Resume${pollerName}: unsupported method '%s'", method)\n`;
-  text += `\t}\n`;
-  text += `\t// now unmarshal into the tracker\n`;
-  text += `\terr = json.Unmarshal([]byte(id), &poller.pt)\n`;
-  text += `\tif err != nil {\n`;
-  text += `\t\treturn nil, err\n`;
-  text += `\t}\n`;
-  text += `\treturn poller, nil\n`;
+  text += '\t\tpt: pt,\n'
+  text += `\t}, nil\n`;
   text += `}\n`;
   return text;
 }

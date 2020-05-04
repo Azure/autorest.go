@@ -8,7 +8,6 @@ package xmlgroup
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
 )
@@ -301,14 +300,6 @@ type CorsRule struct {
 type Error struct {
 	Message *string `xml:"message"`
 	Status  *int32  `xml:"status"`
-}
-
-func newError(resp *azcore.Response) error {
-	err := Error{}
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
-	}
-	return err
 }
 
 func (e Error) Error() string {

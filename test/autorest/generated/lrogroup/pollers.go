@@ -31,11 +31,11 @@ type lrOSCustomHeaderPost202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -123,11 +123,11 @@ type lrOSCustomHeaderPostAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -215,11 +215,11 @@ type lrOSCustomHeaderPut201CreatingSucceeded200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -307,11 +307,11 @@ type lrOSCustomHeaderPutAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -399,11 +399,11 @@ type lrOSDelete202NoRetry204Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -491,11 +491,11 @@ type lrOSDelete202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -583,11 +583,11 @@ type lrOSDelete204SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -675,11 +675,11 @@ type lrOSDeleteAsyncNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -767,11 +767,11 @@ type lrOSDeleteAsyncNoRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -859,11 +859,11 @@ type lrOSDeleteAsyncRetryFailedPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -951,11 +951,11 @@ type lrOSDeleteAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1043,11 +1043,11 @@ type lrOSDeleteAsyncRetrycanceledPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1135,11 +1135,11 @@ type lrOSDeleteNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1227,11 +1227,11 @@ type lrOSDeleteProvisioning202Accepted200SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1319,11 +1319,11 @@ type lrOSDeleteProvisioning202DeletingFailed200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1411,11 +1411,11 @@ type lrOSDeleteProvisioning202Deletingcanceled200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1503,11 +1503,11 @@ type lrOSPost200WithPayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1595,11 +1595,11 @@ type lrOSPost202NoRetry204Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1687,11 +1687,11 @@ type lrOSPost202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1779,11 +1779,11 @@ type lrOSPostAsyncNoRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1871,11 +1871,11 @@ type lrOSPostAsyncRetryFailedPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -1963,11 +1963,11 @@ type lrOSPostAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2055,11 +2055,11 @@ type lrOSPostAsyncRetrycanceledPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2147,11 +2147,11 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2239,11 +2239,11 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2331,11 +2331,11 @@ type lrOSPostDoubleHeadersFinalLocationGetPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2423,11 +2423,11 @@ type lrOSPut200Acceptedcanceled200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2515,11 +2515,11 @@ type lrOSPut200SucceededNoStatePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2607,11 +2607,11 @@ type lrOSPut200SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2699,11 +2699,11 @@ type lrOSPut200UpdatingSucceeded204Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2791,11 +2791,11 @@ type lrOSPut201CreatingFailed200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2883,11 +2883,11 @@ type lrOSPut201CreatingSucceeded200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -2975,11 +2975,11 @@ type lrOSPut202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3067,11 +3067,11 @@ type lrOSPutAsyncNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3159,11 +3159,11 @@ type lrOSPutAsyncNoRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3251,11 +3251,11 @@ type lrOSPutAsyncNoRetrycanceledPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3343,11 +3343,11 @@ type lrOSPutAsyncNonResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3435,11 +3435,11 @@ type lrOSPutAsyncRetryFailedPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3527,11 +3527,11 @@ type lrOSPutAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3619,11 +3619,11 @@ type lrOSPutAsyncSubResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3711,11 +3711,11 @@ type lrOSPutNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3803,11 +3803,11 @@ type lrOSPutNonResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3895,11 +3895,11 @@ type lrOSPutSubResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -3987,11 +3987,11 @@ type lroRetrysDelete202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4079,11 +4079,11 @@ type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4171,11 +4171,11 @@ type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4263,11 +4263,11 @@ type lroRetrysPost202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4355,11 +4355,11 @@ type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4447,11 +4447,11 @@ type lroRetrysPut201CreatingSucceeded200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4539,11 +4539,11 @@ type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4631,11 +4631,11 @@ type lrosaDsDelete202NonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4723,11 +4723,11 @@ type lrosaDsDelete202RetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4815,11 +4815,11 @@ type lrosaDsDelete204SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4907,11 +4907,11 @@ type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -4999,11 +4999,11 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5091,11 +5091,11 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5183,11 +5183,11 @@ type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5275,11 +5275,11 @@ type lrosaDsDeleteNonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5367,11 +5367,11 @@ type lrosaDsPost202NoLocationPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5459,11 +5459,11 @@ type lrosaDsPost202NonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5551,11 +5551,11 @@ type lrosaDsPost202RetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5643,11 +5643,11 @@ type lrosaDsPostAsyncRelativeRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5735,11 +5735,11 @@ type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5827,11 +5827,11 @@ type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -5919,11 +5919,11 @@ type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6011,11 +6011,11 @@ type lrosaDsPostNonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6103,11 +6103,11 @@ type lrosaDsPut200InvalidJSONPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6195,11 +6195,11 @@ type lrosaDsPutAsyncRelativeRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6287,11 +6287,11 @@ type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6379,11 +6379,11 @@ type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6471,11 +6471,11 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6563,11 +6563,11 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6655,11 +6655,11 @@ type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6747,11 +6747,11 @@ type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6839,11 +6839,11 @@ type lrosaDsPutNonRetry201Creating400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -6931,11 +6931,11 @@ type lrosaDsPutNonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation

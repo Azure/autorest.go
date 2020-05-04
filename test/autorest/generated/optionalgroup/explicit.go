@@ -100,9 +100,18 @@ func (client *explicitOperations) postOptionalArrayHeaderCreateRequest(explicitP
 // postOptionalArrayHeaderHandleResponse handles the PostOptionalArrayHeader response.
 func (client *explicitOperations) postOptionalArrayHeaderHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalArrayHeaderHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalArrayHeaderHandleError handles the PostOptionalArrayHeader error response.
+func (client *explicitOperations) postOptionalArrayHeaderHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalArrayParameter - Test explicitly optional array. Please put null.
@@ -139,9 +148,18 @@ func (client *explicitOperations) postOptionalArrayParameterCreateRequest(explic
 // postOptionalArrayParameterHandleResponse handles the PostOptionalArrayParameter response.
 func (client *explicitOperations) postOptionalArrayParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalArrayParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalArrayParameterHandleError handles the PostOptionalArrayParameter error response.
+func (client *explicitOperations) postOptionalArrayParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalArrayProperty - Test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
@@ -178,9 +196,18 @@ func (client *explicitOperations) postOptionalArrayPropertyCreateRequest(explici
 // postOptionalArrayPropertyHandleResponse handles the PostOptionalArrayProperty response.
 func (client *explicitOperations) postOptionalArrayPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalArrayPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalArrayPropertyHandleError handles the PostOptionalArrayProperty error response.
+func (client *explicitOperations) postOptionalArrayPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalClassParameter - Test explicitly optional complex object. Please put null.
@@ -217,9 +244,18 @@ func (client *explicitOperations) postOptionalClassParameterCreateRequest(explic
 // postOptionalClassParameterHandleResponse handles the PostOptionalClassParameter response.
 func (client *explicitOperations) postOptionalClassParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalClassParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalClassParameterHandleError handles the PostOptionalClassParameter error response.
+func (client *explicitOperations) postOptionalClassParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalClassProperty - Test explicitly optional complex object. Please put a valid class-wrapper with 'value' = null.
@@ -256,9 +292,18 @@ func (client *explicitOperations) postOptionalClassPropertyCreateRequest(explici
 // postOptionalClassPropertyHandleResponse handles the PostOptionalClassProperty response.
 func (client *explicitOperations) postOptionalClassPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalClassPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalClassPropertyHandleError handles the PostOptionalClassProperty error response.
+func (client *explicitOperations) postOptionalClassPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalIntegerHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
@@ -295,9 +340,18 @@ func (client *explicitOperations) postOptionalIntegerHeaderCreateRequest(explici
 // postOptionalIntegerHeaderHandleResponse handles the PostOptionalIntegerHeader response.
 func (client *explicitOperations) postOptionalIntegerHeaderHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalIntegerHeaderHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalIntegerHeaderHandleError handles the PostOptionalIntegerHeader error response.
+func (client *explicitOperations) postOptionalIntegerHeaderHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalIntegerParameter - Test explicitly optional integer. Please put null.
@@ -334,9 +388,18 @@ func (client *explicitOperations) postOptionalIntegerParameterCreateRequest(expl
 // postOptionalIntegerParameterHandleResponse handles the PostOptionalIntegerParameter response.
 func (client *explicitOperations) postOptionalIntegerParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalIntegerParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalIntegerParameterHandleError handles the PostOptionalIntegerParameter error response.
+func (client *explicitOperations) postOptionalIntegerParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalIntegerProperty - Test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
@@ -373,9 +436,18 @@ func (client *explicitOperations) postOptionalIntegerPropertyCreateRequest(expli
 // postOptionalIntegerPropertyHandleResponse handles the PostOptionalIntegerProperty response.
 func (client *explicitOperations) postOptionalIntegerPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalIntegerPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalIntegerPropertyHandleError handles the PostOptionalIntegerProperty error response.
+func (client *explicitOperations) postOptionalIntegerPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalStringHeader - Test explicitly optional string. Please put a header 'headerParameter' => null.
@@ -412,9 +484,18 @@ func (client *explicitOperations) postOptionalStringHeaderCreateRequest(explicit
 // postOptionalStringHeaderHandleResponse handles the PostOptionalStringHeader response.
 func (client *explicitOperations) postOptionalStringHeaderHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalStringHeaderHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalStringHeaderHandleError handles the PostOptionalStringHeader error response.
+func (client *explicitOperations) postOptionalStringHeaderHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalStringParameter - Test explicitly optional string. Please put null.
@@ -451,9 +532,18 @@ func (client *explicitOperations) postOptionalStringParameterCreateRequest(expli
 // postOptionalStringParameterHandleResponse handles the PostOptionalStringParameter response.
 func (client *explicitOperations) postOptionalStringParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalStringParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalStringParameterHandleError handles the PostOptionalStringParameter error response.
+func (client *explicitOperations) postOptionalStringParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostOptionalStringProperty - Test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
@@ -490,9 +580,18 @@ func (client *explicitOperations) postOptionalStringPropertyCreateRequest(explic
 // postOptionalStringPropertyHandleResponse handles the PostOptionalStringProperty response.
 func (client *explicitOperations) postOptionalStringPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postOptionalStringPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postOptionalStringPropertyHandleError handles the PostOptionalStringProperty error response.
+func (client *explicitOperations) postOptionalStringPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredArrayHeader - Test explicitly required array. Please put a header 'headerParameter' => null and the client library should throw before the request is sent.
@@ -527,9 +626,18 @@ func (client *explicitOperations) postRequiredArrayHeaderCreateRequest(headerPar
 // postRequiredArrayHeaderHandleResponse handles the PostRequiredArrayHeader response.
 func (client *explicitOperations) postRequiredArrayHeaderHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredArrayHeaderHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredArrayHeaderHandleError handles the PostRequiredArrayHeader error response.
+func (client *explicitOperations) postRequiredArrayHeaderHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before the request is sent.
@@ -563,9 +671,18 @@ func (client *explicitOperations) postRequiredArrayParameterCreateRequest(bodyPa
 // postRequiredArrayParameterHandleResponse handles the PostRequiredArrayParameter response.
 func (client *explicitOperations) postRequiredArrayParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredArrayParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredArrayParameterHandleError handles the PostRequiredArrayParameter error response.
+func (client *explicitOperations) postRequiredArrayParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredArrayProperty - Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the client library should throw before the request is sent.
@@ -599,9 +716,18 @@ func (client *explicitOperations) postRequiredArrayPropertyCreateRequest(bodyPar
 // postRequiredArrayPropertyHandleResponse handles the PostRequiredArrayProperty response.
 func (client *explicitOperations) postRequiredArrayPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredArrayPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredArrayPropertyHandleError handles the PostRequiredArrayProperty error response.
+func (client *explicitOperations) postRequiredArrayPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredClassParameter - Test explicitly required complex object. Please put null and the client library should throw before the request is sent.
@@ -635,9 +761,18 @@ func (client *explicitOperations) postRequiredClassParameterCreateRequest(bodyPa
 // postRequiredClassParameterHandleResponse handles the PostRequiredClassParameter response.
 func (client *explicitOperations) postRequiredClassParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredClassParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredClassParameterHandleError handles the PostRequiredClassParameter error response.
+func (client *explicitOperations) postRequiredClassParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredClassProperty - Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null and the client library should throw before the request is sent.
@@ -671,9 +806,18 @@ func (client *explicitOperations) postRequiredClassPropertyCreateRequest(bodyPar
 // postRequiredClassPropertyHandleResponse handles the PostRequiredClassProperty response.
 func (client *explicitOperations) postRequiredClassPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredClassPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredClassPropertyHandleError handles the PostRequiredClassProperty error response.
+func (client *explicitOperations) postRequiredClassPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredIntegerHeader - Test explicitly required integer. Please put a header 'headerParameter' => null and the client library should throw before the request is sent.
@@ -708,9 +852,18 @@ func (client *explicitOperations) postRequiredIntegerHeaderCreateRequest(headerP
 // postRequiredIntegerHeaderHandleResponse handles the PostRequiredIntegerHeader response.
 func (client *explicitOperations) postRequiredIntegerHeaderHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredIntegerHeaderHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredIntegerHeaderHandleError handles the PostRequiredIntegerHeader error response.
+func (client *explicitOperations) postRequiredIntegerHeaderHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredIntegerParameter - Test explicitly required integer. Please put null and the client library should throw before the request is sent.
@@ -744,9 +897,18 @@ func (client *explicitOperations) postRequiredIntegerParameterCreateRequest(body
 // postRequiredIntegerParameterHandleResponse handles the PostRequiredIntegerParameter response.
 func (client *explicitOperations) postRequiredIntegerParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredIntegerParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredIntegerParameterHandleError handles the PostRequiredIntegerParameter error response.
+func (client *explicitOperations) postRequiredIntegerParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredIntegerProperty - Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and the client library should throw before the request is sent.
@@ -780,9 +942,18 @@ func (client *explicitOperations) postRequiredIntegerPropertyCreateRequest(bodyP
 // postRequiredIntegerPropertyHandleResponse handles the PostRequiredIntegerProperty response.
 func (client *explicitOperations) postRequiredIntegerPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredIntegerPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredIntegerPropertyHandleError handles the PostRequiredIntegerProperty error response.
+func (client *explicitOperations) postRequiredIntegerPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredStringHeader - Test explicitly required string. Please put a header 'headerParameter' => null and the client library should throw before the request is sent.
@@ -817,9 +988,18 @@ func (client *explicitOperations) postRequiredStringHeaderCreateRequest(headerPa
 // postRequiredStringHeaderHandleResponse handles the PostRequiredStringHeader response.
 func (client *explicitOperations) postRequiredStringHeaderHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredStringHeaderHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredStringHeaderHandleError handles the PostRequiredStringHeader error response.
+func (client *explicitOperations) postRequiredStringHeaderHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before the request is sent.
@@ -853,9 +1033,18 @@ func (client *explicitOperations) postRequiredStringParameterCreateRequest(bodyP
 // postRequiredStringParameterHandleResponse handles the PostRequiredStringParameter response.
 func (client *explicitOperations) postRequiredStringParameterHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredStringParameterHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredStringParameterHandleError handles the PostRequiredStringParameter error response.
+func (client *explicitOperations) postRequiredStringParameterHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and the client library should throw before the request is sent.
@@ -889,7 +1078,16 @@ func (client *explicitOperations) postRequiredStringPropertyCreateRequest(bodyPa
 // postRequiredStringPropertyHandleResponse handles the PostRequiredStringProperty response.
 func (client *explicitOperations) postRequiredStringPropertyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postRequiredStringPropertyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postRequiredStringPropertyHandleError handles the PostRequiredStringProperty error response.
+func (client *explicitOperations) postRequiredStringPropertyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

@@ -86,9 +86,14 @@ type pollingTracker interface {
 	latestResponse() *azcore.Response
 }
 
+type methodErrorHandler func(resp *azcore.Response) error
+
 type pollingTrackerBase struct {
 	// resp is the last response, either from the submission of the LRO or from polling
 	resp *azcore.Response
+
+	// errorHandler is the method to invoke to unmarshall an error response
+	errorHandler methodErrorHandler
 
 	// method is the HTTP verb, this is needed for deserialization
 	Method string `json:"method"`
@@ -205,7 +210,7 @@ func (pt *pollingTrackerBase) pollForStatus(ctx context.Context, client azcore.P
 // if that fails then make a best attempt at creating something meaningful.
 // NOTE: this assumes that the async operation has failed.
 func (pt *pollingTrackerBase) updateErrorFromResponse() {
-	pt.Err = newCloudError(pt.resp)
+	pt.Err = pt.errorHandler(pt.resp)
 }
 
 func (pt *pollingTrackerBase) updatePollingState(provStateApl bool) error {
@@ -549,17 +554,17 @@ func (pt pollingTrackerPut) provisioningStateApplicable() bool {
 }
 
 // creates a polling tracker based on the verb of the original request
-func createPollingTracker(resp *azcore.Response) (pollingTracker, error) {
+func createPollingTracker(resp *azcore.Response, errorHandler methodErrorHandler) (pollingTracker, error) {
 	var pt pollingTracker
 	switch strings.ToUpper(resp.Request.Method) {
 	case http.MethodDelete:
-		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 	case http.MethodPatch:
-		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 	case http.MethodPost:
-		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 	case http.MethodPut:
-		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 	default:
 		return nil, fmt.Errorf("unsupported HTTP method %s", resp.Request.Method)
 	}
@@ -570,6 +575,39 @@ func createPollingTracker(resp *azcore.Response) (pollingTracker, error) {
 	// initial response send us invalid values; this way the API call will return a non-nil
 	// error (not doing this means the error shows up in Future.Done)
 	return pt, pt.updatePollingMethod()
+}
+
+// creates a polling tracker from a resume token
+func resumePollingTracker(token string, errorHandler methodErrorHandler) (pollingTracker, error) {
+	// unmarshal into JSON object to determine the tracker type
+	obj := map[string]interface{}{}
+	err := json.Unmarshal([]byte(token), &obj)
+	if err != nil {
+		return nil, err
+	}
+	if obj["method"] == nil {
+		return nil, fmt.Errorf("token is missing 'method' property")
+	}
+	var pt pollingTracker
+	method := obj["method"].(string)
+	switch strings.ToUpper(method) {
+	case http.MethodDelete:
+		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	case http.MethodPatch:
+		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	case http.MethodPost:
+		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	case http.MethodPut:
+		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	default:
+		return nil, fmt.Errorf("unsupported method '%s'", method)
+	}
+	// now unmarshal into the tracker
+	err = json.Unmarshal([]byte(token), &pt)
+	if err != nil {
+		return nil, err
+	}
+	return pt, nil
 }
 
 // gets the polling URL from the Azure-AsyncOperation header.

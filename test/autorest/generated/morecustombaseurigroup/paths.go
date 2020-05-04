@@ -64,7 +64,16 @@ func (client *pathsOperations) getEmptyCreateRequest(vault string, secret string
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *pathsOperations) getEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getEmptyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getEmptyHandleError handles the GetEmpty error response.
+func (client *pathsOperations) getEmptyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

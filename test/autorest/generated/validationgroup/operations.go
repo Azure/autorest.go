@@ -62,9 +62,14 @@ func (client *operations) getWithConstantInPathCreateRequest() (*azcore.Request,
 // getWithConstantInPathHandleResponse handles the GetWithConstantInPath response.
 func (client *operations) getWithConstantInPathHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, errors.New(resp.Status)
+		return nil, client.getWithConstantInPathHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getWithConstantInPathHandleError handles the GetWithConstantInPath error response.
+func (client *operations) getWithConstantInPathHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
 }
 
 func (client *operations) PostWithConstantInBody(ctx context.Context, operationsPostWithConstantInBodyOptions *OperationsPostWithConstantInBodyOptions) (*ProductResponse, error) {
@@ -101,10 +106,15 @@ func (client *operations) postWithConstantInBodyCreateRequest(operationsPostWith
 // postWithConstantInBodyHandleResponse handles the PostWithConstantInBody response.
 func (client *operations) postWithConstantInBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, errors.New(resp.Status)
+		return nil, client.postWithConstantInBodyHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
+}
+
+// postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
+func (client *operations) postWithConstantInBodyHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
@@ -147,10 +157,19 @@ func (client *operations) validationOfBodyCreateRequest(resourceGroupName string
 // validationOfBodyHandleResponse handles the ValidationOfBody response.
 func (client *operations) validationOfBodyHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.validationOfBodyHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
+}
+
+// validationOfBodyHandleError handles the ValidationOfBody error response.
+func (client *operations) validationOfBodyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
@@ -190,8 +209,17 @@ func (client *operations) validationOfMethodParametersCreateRequest(resourceGrou
 // validationOfMethodParametersHandleResponse handles the ValidationOfMethodParameters response.
 func (client *operations) validationOfMethodParametersHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.validationOfMethodParametersHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
+}
+
+// validationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.
+func (client *operations) validationOfMethodParametersHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

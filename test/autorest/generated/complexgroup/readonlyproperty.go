@@ -55,10 +55,19 @@ func (client *readonlypropertyOperations) getValidCreateRequest() (*azcore.Reque
 // getValidHandleResponse handles the GetValid response.
 func (client *readonlypropertyOperations) getValidHandleResponse(resp *azcore.Response) (*ReadonlyObjResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getValidHandleError(resp)
 	}
 	result := ReadonlyObjResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ReadonlyObj)
+}
+
+// getValidHandleError handles the GetValid error response.
+func (client *readonlypropertyOperations) getValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutValid - Put complex types that have readonly properties
@@ -92,7 +101,16 @@ func (client *readonlypropertyOperations) putValidCreateRequest(complexBody Read
 // putValidHandleResponse handles the PutValid response.
 func (client *readonlypropertyOperations) putValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putValidHandleError handles the PutValid error response.
+func (client *readonlypropertyOperations) putValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

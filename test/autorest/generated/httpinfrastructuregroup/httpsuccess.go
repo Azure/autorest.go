@@ -89,9 +89,18 @@ func (client *httpSuccessOperations) delete200CreateRequest() (*azcore.Request, 
 // delete200HandleResponse handles the Delete200 response.
 func (client *httpSuccessOperations) delete200HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.delete200HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// delete200HandleError handles the Delete200 error response.
+func (client *httpSuccessOperations) delete200HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
@@ -125,9 +134,18 @@ func (client *httpSuccessOperations) delete202CreateRequest() (*azcore.Request, 
 // delete202HandleResponse handles the Delete202 response.
 func (client *httpSuccessOperations) delete202HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, newError(resp)
+		return nil, client.delete202HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// delete202HandleError handles the Delete202 error response.
+func (client *httpSuccessOperations) delete202HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
@@ -161,9 +179,18 @@ func (client *httpSuccessOperations) delete204CreateRequest() (*azcore.Request, 
 // delete204HandleResponse handles the Delete204 response.
 func (client *httpSuccessOperations) delete204HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, newError(resp)
+		return nil, client.delete204HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// delete204HandleError handles the Delete204 error response.
+func (client *httpSuccessOperations) delete204HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Get200 - Get 200 success
@@ -197,10 +224,19 @@ func (client *httpSuccessOperations) get200CreateRequest() (*azcore.Request, err
 // get200HandleResponse handles the Get200 response.
 func (client *httpSuccessOperations) get200HandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.get200HandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
+}
+
+// get200HandleError handles the Get200 error response.
+func (client *httpSuccessOperations) get200HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Head200 - Return 200 status code if successful
@@ -234,9 +270,18 @@ func (client *httpSuccessOperations) head200CreateRequest() (*azcore.Request, er
 // head200HandleResponse handles the Head200 response.
 func (client *httpSuccessOperations) head200HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.head200HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// head200HandleError handles the Head200 error response.
+func (client *httpSuccessOperations) head200HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Head204 - Return 204 status code if successful
@@ -270,9 +315,18 @@ func (client *httpSuccessOperations) head204CreateRequest() (*azcore.Request, er
 // head204HandleResponse handles the Head204 response.
 func (client *httpSuccessOperations) head204HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, newError(resp)
+		return nil, client.head204HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// head204HandleError handles the Head204 error response.
+func (client *httpSuccessOperations) head204HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Head404 - Return 404 status code
@@ -306,9 +360,18 @@ func (client *httpSuccessOperations) head404CreateRequest() (*azcore.Request, er
 // head404HandleResponse handles the Head404 response.
 func (client *httpSuccessOperations) head404HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusNoContent, http.StatusNotFound) {
-		return nil, newError(resp)
+		return nil, client.head404HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// head404HandleError handles the Head404 error response.
+func (client *httpSuccessOperations) head404HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Options200 - Options 200 success
@@ -342,10 +405,19 @@ func (client *httpSuccessOperations) options200CreateRequest() (*azcore.Request,
 // options200HandleResponse handles the Options200 response.
 func (client *httpSuccessOperations) options200HandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.options200HandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
+}
+
+// options200HandleError handles the Options200 error response.
+func (client *httpSuccessOperations) options200HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Patch200 - Patch true Boolean value in request returning 200
@@ -379,9 +451,18 @@ func (client *httpSuccessOperations) patch200CreateRequest() (*azcore.Request, e
 // patch200HandleResponse handles the Patch200 response.
 func (client *httpSuccessOperations) patch200HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.patch200HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// patch200HandleError handles the Patch200 error response.
+func (client *httpSuccessOperations) patch200HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Patch202 - Patch true Boolean value in request returns 202
@@ -415,9 +496,18 @@ func (client *httpSuccessOperations) patch202CreateRequest() (*azcore.Request, e
 // patch202HandleResponse handles the Patch202 response.
 func (client *httpSuccessOperations) patch202HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, newError(resp)
+		return nil, client.patch202HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// patch202HandleError handles the Patch202 error response.
+func (client *httpSuccessOperations) patch202HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
@@ -451,9 +541,18 @@ func (client *httpSuccessOperations) patch204CreateRequest() (*azcore.Request, e
 // patch204HandleResponse handles the Patch204 response.
 func (client *httpSuccessOperations) patch204HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, newError(resp)
+		return nil, client.patch204HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// patch204HandleError handles the Patch204 error response.
+func (client *httpSuccessOperations) patch204HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Post200 - Post bollean value true in request that returns a 200
@@ -487,9 +586,18 @@ func (client *httpSuccessOperations) post200CreateRequest() (*azcore.Request, er
 // post200HandleResponse handles the Post200 response.
 func (client *httpSuccessOperations) post200HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.post200HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// post200HandleError handles the Post200 error response.
+func (client *httpSuccessOperations) post200HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
@@ -523,9 +631,18 @@ func (client *httpSuccessOperations) post201CreateRequest() (*azcore.Request, er
 // post201HandleResponse handles the Post201 response.
 func (client *httpSuccessOperations) post201HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newError(resp)
+		return nil, client.post201HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// post201HandleError handles the Post201 error response.
+func (client *httpSuccessOperations) post201HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
@@ -559,9 +676,18 @@ func (client *httpSuccessOperations) post202CreateRequest() (*azcore.Request, er
 // post202HandleResponse handles the Post202 response.
 func (client *httpSuccessOperations) post202HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, newError(resp)
+		return nil, client.post202HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// post202HandleError handles the Post202 error response.
+func (client *httpSuccessOperations) post202HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
@@ -595,9 +721,18 @@ func (client *httpSuccessOperations) post204CreateRequest() (*azcore.Request, er
 // post204HandleResponse handles the Post204 response.
 func (client *httpSuccessOperations) post204HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, newError(resp)
+		return nil, client.post204HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// post204HandleError handles the Post204 error response.
+func (client *httpSuccessOperations) post204HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Put200 - Put boolean value true returning 200 success
@@ -631,9 +766,18 @@ func (client *httpSuccessOperations) put200CreateRequest() (*azcore.Request, err
 // put200HandleResponse handles the Put200 response.
 func (client *httpSuccessOperations) put200HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.put200HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// put200HandleError handles the Put200 error response.
+func (client *httpSuccessOperations) put200HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Put201 - Put true Boolean value in request returns 201
@@ -667,9 +811,18 @@ func (client *httpSuccessOperations) put201CreateRequest() (*azcore.Request, err
 // put201HandleResponse handles the Put201 response.
 func (client *httpSuccessOperations) put201HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newError(resp)
+		return nil, client.put201HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// put201HandleError handles the Put201 error response.
+func (client *httpSuccessOperations) put201HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
@@ -703,9 +856,18 @@ func (client *httpSuccessOperations) put202CreateRequest() (*azcore.Request, err
 // put202HandleResponse handles the Put202 response.
 func (client *httpSuccessOperations) put202HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, newError(resp)
+		return nil, client.put202HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// put202HandleError handles the Put202 error response.
+func (client *httpSuccessOperations) put202HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
@@ -739,7 +901,16 @@ func (client *httpSuccessOperations) put204CreateRequest() (*azcore.Request, err
 // put204HandleResponse handles the Put204 response.
 func (client *httpSuccessOperations) put204HandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, newError(resp)
+		return nil, client.put204HandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// put204HandleError handles the Put204 error response.
+func (client *httpSuccessOperations) put204HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

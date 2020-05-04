@@ -7,12 +7,9 @@ package lrogroup
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 // LroRetrysOperations contains the methods for the LroRetrys group.
@@ -63,7 +60,7 @@ func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp)
+	pt, err := createPollingTracker(resp, client.delete202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -73,38 +70,15 @@ func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (
 	}, nil
 }
 
-func (client *lroRetrysOperations) ResumeLroRetrysDelete202Retry200Poller(id string) (LroRetrysDelete202Retry200Poller, error) {
-	// unmarshal into JSON object to determine the tracker type
-	obj := map[string]interface{}{}
-	err := json.Unmarshal([]byte(id), &obj)
+func (client *lroRetrysOperations) ResumeLroRetrysDelete202Retry200Poller(token string) (LroRetrysDelete202Retry200Poller, error) {
+	pt, err := resumePollingTracker(token, client.delete202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
-	if obj["method"] == nil {
-		return nil, fmt.Errorf("ResumeLroRetrysDelete202Retry200Poller: missing 'method' property")
-	}
-	method := obj["method"].(string)
-	poller := &lroRetrysDelete202Retry200Poller{
+	return &lroRetrysDelete202Retry200Poller{
 		client: client,
-	}
-	switch strings.ToUpper(method) {
-	case http.MethodDelete:
-		poller.pt = &pollingTrackerDelete{}
-	case http.MethodPatch:
-		poller.pt = &pollingTrackerPatch{}
-	case http.MethodPost:
-		poller.pt = &pollingTrackerPost{}
-	case http.MethodPut:
-		poller.pt = &pollingTrackerPut{}
-	default:
-		return nil, fmt.Errorf("ResumeLroRetrysDelete202Retry200Poller: unsupported method '%s'", method)
-	}
-	// now unmarshal into the tracker
-	err = json.Unmarshal([]byte(id), &poller.pt)
-	if err != nil {
-		return nil, err
-	}
-	return poller, nil
+		pt:     pt,
+	}, nil
 }
 
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
@@ -135,6 +109,15 @@ func (client *lroRetrysOperations) delete202Retry200HandleResponse(resp *azcore.
 	return &result, nil
 }
 
+// delete202Retry200HandleError handles the Delete202Retry200 error response.
+func (client *lroRetrysOperations) delete202Retry200HandleError(resp *azcore.Response) error {
+	err := CloudError{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
 // DeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context) (LroRetrysDeleteAsyncRelativeRetrySucceededPoller, error) {
 	req, err := client.deleteAsyncRelativeRetrySucceededCreateRequest()
@@ -146,7 +129,7 @@ func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp)
+	pt, err := createPollingTracker(resp, client.deleteAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -156,38 +139,15 @@ func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx co
 	}, nil
 }
 
-func (client *lroRetrysOperations) ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller(id string) (LroRetrysDeleteAsyncRelativeRetrySucceededPoller, error) {
-	// unmarshal into JSON object to determine the tracker type
-	obj := map[string]interface{}{}
-	err := json.Unmarshal([]byte(id), &obj)
+func (client *lroRetrysOperations) ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller(token string) (LroRetrysDeleteAsyncRelativeRetrySucceededPoller, error) {
+	pt, err := resumePollingTracker(token, client.deleteAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
-	if obj["method"] == nil {
-		return nil, fmt.Errorf("ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller: missing 'method' property")
-	}
-	method := obj["method"].(string)
-	poller := &lroRetrysDeleteAsyncRelativeRetrySucceededPoller{
+	return &lroRetrysDeleteAsyncRelativeRetrySucceededPoller{
 		client: client,
-	}
-	switch strings.ToUpper(method) {
-	case http.MethodDelete:
-		poller.pt = &pollingTrackerDelete{}
-	case http.MethodPatch:
-		poller.pt = &pollingTrackerPatch{}
-	case http.MethodPost:
-		poller.pt = &pollingTrackerPost{}
-	case http.MethodPut:
-		poller.pt = &pollingTrackerPut{}
-	default:
-		return nil, fmt.Errorf("ResumeLroRetrysDeleteAsyncRelativeRetrySucceededPoller: unsupported method '%s'", method)
-	}
-	// now unmarshal into the tracker
-	err = json.Unmarshal([]byte(id), &poller.pt)
-	if err != nil {
-		return nil, err
-	}
-	return poller, nil
+		pt:     pt,
+	}, nil
 }
 
 // deleteAsyncRelativeRetrySucceededCreateRequest creates the DeleteAsyncRelativeRetrySucceeded request.
@@ -221,6 +181,15 @@ func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededHandleRespon
 	return &result, nil
 }
 
+// deleteAsyncRelativeRetrySucceededHandleError handles the DeleteAsyncRelativeRetrySucceeded error response.
+func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
+	err := CloudError{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
 // DeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a  202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (LroRetrysDeleteProvisioning202Accepted200SucceededPoller, error) {
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest()
@@ -232,7 +201,7 @@ func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeede
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp)
+	pt, err := createPollingTracker(resp, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -242,38 +211,15 @@ func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeede
 	}, nil
 }
 
-func (client *lroRetrysOperations) ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller(id string) (LroRetrysDeleteProvisioning202Accepted200SucceededPoller, error) {
-	// unmarshal into JSON object to determine the tracker type
-	obj := map[string]interface{}{}
-	err := json.Unmarshal([]byte(id), &obj)
+func (client *lroRetrysOperations) ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller(token string) (LroRetrysDeleteProvisioning202Accepted200SucceededPoller, error) {
+	pt, err := resumePollingTracker(token, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
-	if obj["method"] == nil {
-		return nil, fmt.Errorf("ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller: missing 'method' property")
-	}
-	method := obj["method"].(string)
-	poller := &lroRetrysDeleteProvisioning202Accepted200SucceededPoller{
+	return &lroRetrysDeleteProvisioning202Accepted200SucceededPoller{
 		client: client,
-	}
-	switch strings.ToUpper(method) {
-	case http.MethodDelete:
-		poller.pt = &pollingTrackerDelete{}
-	case http.MethodPatch:
-		poller.pt = &pollingTrackerPatch{}
-	case http.MethodPost:
-		poller.pt = &pollingTrackerPost{}
-	case http.MethodPut:
-		poller.pt = &pollingTrackerPut{}
-	default:
-		return nil, fmt.Errorf("ResumeLroRetrysDeleteProvisioning202Accepted200SucceededPoller: unsupported method '%s'", method)
-	}
-	// now unmarshal into the tracker
-	err = json.Unmarshal([]byte(id), &poller.pt)
-	if err != nil {
-		return nil, err
-	}
-	return poller, nil
+		pt:     pt,
+	}, nil
 }
 
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
@@ -293,6 +239,15 @@ func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHand
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
+// deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
+func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
+	err := CloudError{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
 // Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
 func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (LroRetrysPost202Retry200Poller, error) {
 	req, err := client.post202Retry200CreateRequest(lroRetrysPost202Retry200Options)
@@ -304,7 +259,7 @@ func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lro
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp)
+	pt, err := createPollingTracker(resp, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -314,38 +269,15 @@ func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lro
 	}, nil
 }
 
-func (client *lroRetrysOperations) ResumeLroRetrysPost202Retry200Poller(id string) (LroRetrysPost202Retry200Poller, error) {
-	// unmarshal into JSON object to determine the tracker type
-	obj := map[string]interface{}{}
-	err := json.Unmarshal([]byte(id), &obj)
+func (client *lroRetrysOperations) ResumeLroRetrysPost202Retry200Poller(token string) (LroRetrysPost202Retry200Poller, error) {
+	pt, err := resumePollingTracker(token, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
-	if obj["method"] == nil {
-		return nil, fmt.Errorf("ResumeLroRetrysPost202Retry200Poller: missing 'method' property")
-	}
-	method := obj["method"].(string)
-	poller := &lroRetrysPost202Retry200Poller{
+	return &lroRetrysPost202Retry200Poller{
 		client: client,
-	}
-	switch strings.ToUpper(method) {
-	case http.MethodDelete:
-		poller.pt = &pollingTrackerDelete{}
-	case http.MethodPatch:
-		poller.pt = &pollingTrackerPatch{}
-	case http.MethodPost:
-		poller.pt = &pollingTrackerPost{}
-	case http.MethodPut:
-		poller.pt = &pollingTrackerPut{}
-	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPost202Retry200Poller: unsupported method '%s'", method)
-	}
-	// now unmarshal into the tracker
-	err = json.Unmarshal([]byte(id), &poller.pt)
-	if err != nil {
-		return nil, err
-	}
-	return poller, nil
+		pt:     pt,
+	}, nil
 }
 
 // post202Retry200CreateRequest creates the Post202Retry200 request.
@@ -379,6 +311,15 @@ func (client *lroRetrysOperations) post202Retry200HandleResponse(resp *azcore.Re
 	return &result, nil
 }
 
+// post202Retry200HandleError handles the Post202Retry200 error response.
+func (client *lroRetrysOperations) post202Retry200HandleError(resp *azcore.Response) error {
+	err := CloudError{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
 // PostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error) {
 	req, err := client.postAsyncRelativeRetrySucceededCreateRequest(lroRetrysPostAsyncRelativeRetrySucceededOptions)
@@ -390,7 +331,7 @@ func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp)
+	pt, err := createPollingTracker(resp, client.postAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -400,38 +341,15 @@ func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx cont
 	}, nil
 }
 
-func (client *lroRetrysOperations) ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller(id string) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error) {
-	// unmarshal into JSON object to determine the tracker type
-	obj := map[string]interface{}{}
-	err := json.Unmarshal([]byte(id), &obj)
+func (client *lroRetrysOperations) ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller(token string) (LroRetrysPostAsyncRelativeRetrySucceededPoller, error) {
+	pt, err := resumePollingTracker(token, client.postAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
-	if obj["method"] == nil {
-		return nil, fmt.Errorf("ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller: missing 'method' property")
-	}
-	method := obj["method"].(string)
-	poller := &lroRetrysPostAsyncRelativeRetrySucceededPoller{
+	return &lroRetrysPostAsyncRelativeRetrySucceededPoller{
 		client: client,
-	}
-	switch strings.ToUpper(method) {
-	case http.MethodDelete:
-		poller.pt = &pollingTrackerDelete{}
-	case http.MethodPatch:
-		poller.pt = &pollingTrackerPatch{}
-	case http.MethodPost:
-		poller.pt = &pollingTrackerPost{}
-	case http.MethodPut:
-		poller.pt = &pollingTrackerPut{}
-	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPostAsyncRelativeRetrySucceededPoller: unsupported method '%s'", method)
-	}
-	// now unmarshal into the tracker
-	err = json.Unmarshal([]byte(id), &poller.pt)
-	if err != nil {
-		return nil, err
-	}
-	return poller, nil
+		pt:     pt,
+	}, nil
 }
 
 // postAsyncRelativeRetrySucceededCreateRequest creates the PostAsyncRelativeRetrySucceeded request.
@@ -468,6 +386,15 @@ func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededHandleResponse
 	return &result, nil
 }
 
+// postAsyncRelativeRetrySucceededHandleError handles the PostAsyncRelativeRetrySucceeded error response.
+func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
+	err := CloudError{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
 // Put201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (LroRetrysPut201CreatingSucceeded200Poller, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(lroRetrysPut201CreatingSucceeded200Options)
@@ -479,7 +406,7 @@ func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp)
+	pt, err := createPollingTracker(resp, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -489,38 +416,15 @@ func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.C
 	}, nil
 }
 
-func (client *lroRetrysOperations) ResumeLroRetrysPut201CreatingSucceeded200Poller(id string) (LroRetrysPut201CreatingSucceeded200Poller, error) {
-	// unmarshal into JSON object to determine the tracker type
-	obj := map[string]interface{}{}
-	err := json.Unmarshal([]byte(id), &obj)
+func (client *lroRetrysOperations) ResumeLroRetrysPut201CreatingSucceeded200Poller(token string) (LroRetrysPut201CreatingSucceeded200Poller, error) {
+	pt, err := resumePollingTracker(token, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
-	if obj["method"] == nil {
-		return nil, fmt.Errorf("ResumeLroRetrysPut201CreatingSucceeded200Poller: missing 'method' property")
-	}
-	method := obj["method"].(string)
-	poller := &lroRetrysPut201CreatingSucceeded200Poller{
+	return &lroRetrysPut201CreatingSucceeded200Poller{
 		client: client,
-	}
-	switch strings.ToUpper(method) {
-	case http.MethodDelete:
-		poller.pt = &pollingTrackerDelete{}
-	case http.MethodPatch:
-		poller.pt = &pollingTrackerPatch{}
-	case http.MethodPost:
-		poller.pt = &pollingTrackerPost{}
-	case http.MethodPut:
-		poller.pt = &pollingTrackerPut{}
-	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPut201CreatingSucceeded200Poller: unsupported method '%s'", method)
-	}
-	// now unmarshal into the tracker
-	err = json.Unmarshal([]byte(id), &poller.pt)
-	if err != nil {
-		return nil, err
-	}
-	return poller, nil
+		pt:     pt,
+	}, nil
 }
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
@@ -543,6 +447,15 @@ func (client *lroRetrysOperations) put201CreatingSucceeded200HandleResponse(resp
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
 
+// put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
+func (client *lroRetrysOperations) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
+	err := CloudError{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
+}
+
 // PutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error) {
 	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(lroRetrysPutAsyncRelativeRetrySucceededOptions)
@@ -554,7 +467,7 @@ func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp)
+	pt, err := createPollingTracker(resp, client.putAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -564,38 +477,15 @@ func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx conte
 	}, nil
 }
 
-func (client *lroRetrysOperations) ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller(id string) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error) {
-	// unmarshal into JSON object to determine the tracker type
-	obj := map[string]interface{}{}
-	err := json.Unmarshal([]byte(id), &obj)
+func (client *lroRetrysOperations) ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller(token string) (LroRetrysPutAsyncRelativeRetrySucceededPoller, error) {
+	pt, err := resumePollingTracker(token, client.putAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
-	if obj["method"] == nil {
-		return nil, fmt.Errorf("ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller: missing 'method' property")
-	}
-	method := obj["method"].(string)
-	poller := &lroRetrysPutAsyncRelativeRetrySucceededPoller{
+	return &lroRetrysPutAsyncRelativeRetrySucceededPoller{
 		client: client,
-	}
-	switch strings.ToUpper(method) {
-	case http.MethodDelete:
-		poller.pt = &pollingTrackerDelete{}
-	case http.MethodPatch:
-		poller.pt = &pollingTrackerPatch{}
-	case http.MethodPost:
-		poller.pt = &pollingTrackerPost{}
-	case http.MethodPut:
-		poller.pt = &pollingTrackerPut{}
-	default:
-		return nil, fmt.Errorf("ResumeLroRetrysPutAsyncRelativeRetrySucceededPoller: unsupported method '%s'", method)
-	}
-	// now unmarshal into the tracker
-	err = json.Unmarshal([]byte(id), &poller.pt)
-	if err != nil {
-		return nil, err
-	}
-	return poller, nil
+		pt:     pt,
+	}, nil
 }
 
 // putAsyncRelativeRetrySucceededCreateRequest creates the PutAsyncRelativeRetrySucceeded request.
@@ -616,4 +506,13 @@ func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededCreateRequest(l
 func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
+}
+
+// putAsyncRelativeRetrySucceededHandleError handles the PutAsyncRelativeRetrySucceeded error response.
+func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
+	err := CloudError{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

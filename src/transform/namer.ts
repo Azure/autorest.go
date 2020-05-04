@@ -12,6 +12,7 @@ import { aggregateParameters, isLROOperation } from '../common/helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
+const errorMethodSuffix = 'HandleError';
 
 // contains extended naming information for operations
 export interface OperationNaming extends Language {
@@ -21,15 +22,18 @@ export interface OperationNaming extends Language {
 interface protocolNaming {
   requestMethod: string;
   responseMethod: string;
+  errorMethod: string;
 }
 
 class protocolMethods implements protocolNaming {
   readonly requestMethod: string;
   readonly responseMethod: string;
+  readonly errorMethod: string;
 
   constructor(name: string) {
     this.requestMethod = `${name}${requestMethodSuffix}`;
     this.responseMethod = `${name}${responseMethodSuffix}`;
+    this.errorMethod = `${name}${errorMethodSuffix}`;
   }
 }
 

@@ -110,9 +110,18 @@ func (client *pathsOperations) arrayCsvInPathCreateRequest(arrayPath []string) (
 // arrayCsvInPathHandleResponse handles the ArrayCSVInPath response.
 func (client *pathsOperations) arrayCsvInPathHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.arrayCsvInPathHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// arrayCsvInPathHandleError handles the ArrayCSVInPath error response.
+func (client *pathsOperations) arrayCsvInPathHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
@@ -147,9 +156,18 @@ func (client *pathsOperations) base64UrlCreateRequest(base64UrlPath []byte) (*az
 // base64UrlHandleResponse handles the Base64URL response.
 func (client *pathsOperations) base64UrlHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.base64UrlHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// base64UrlHandleError handles the Base64URL error response.
+func (client *pathsOperations) base64UrlHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // ByteEmpty - Get '' as byte array
@@ -184,9 +202,18 @@ func (client *pathsOperations) byteEmptyCreateRequest() (*azcore.Request, error)
 // byteEmptyHandleResponse handles the ByteEmpty response.
 func (client *pathsOperations) byteEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.byteEmptyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// byteEmptyHandleError handles the ByteEmpty error response.
+func (client *pathsOperations) byteEmptyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
@@ -221,9 +248,18 @@ func (client *pathsOperations) byteMultiByteCreateRequest(bytePath []byte) (*azc
 // byteMultiByteHandleResponse handles the ByteMultiByte response.
 func (client *pathsOperations) byteMultiByteHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.byteMultiByteHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// byteMultiByteHandleError handles the ByteMultiByte error response.
+func (client *pathsOperations) byteMultiByteHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // ByteNull - Get null as byte array (should throw)
@@ -258,9 +294,18 @@ func (client *pathsOperations) byteNullCreateRequest(bytePath []byte) (*azcore.R
 // byteNullHandleResponse handles the ByteNull response.
 func (client *pathsOperations) byteNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, newError(resp)
+		return nil, client.byteNullHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// byteNullHandleError handles the ByteNull error response.
+func (client *pathsOperations) byteNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
@@ -295,9 +340,18 @@ func (client *pathsOperations) dateNullCreateRequest(datePath time.Time) (*azcor
 // dateNullHandleResponse handles the DateNull response.
 func (client *pathsOperations) dateNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, newError(resp)
+		return nil, client.dateNullHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// dateNullHandleError handles the DateNull error response.
+func (client *pathsOperations) dateNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
@@ -332,9 +386,18 @@ func (client *pathsOperations) dateTimeNullCreateRequest(dateTimePath time.Time)
 // dateTimeNullHandleResponse handles the DateTimeNull response.
 func (client *pathsOperations) dateTimeNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, newError(resp)
+		return nil, client.dateTimeNullHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// dateTimeNullHandleError handles the DateTimeNull error response.
+func (client *pathsOperations) dateTimeNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
@@ -369,9 +432,18 @@ func (client *pathsOperations) dateTimeValidCreateRequest() (*azcore.Request, er
 // dateTimeValidHandleResponse handles the DateTimeValid response.
 func (client *pathsOperations) dateTimeValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.dateTimeValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// dateTimeValidHandleError handles the DateTimeValid error response.
+func (client *pathsOperations) dateTimeValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // DateValid - Get '2012-01-01' as date
@@ -406,9 +478,18 @@ func (client *pathsOperations) dateValidCreateRequest() (*azcore.Request, error)
 // dateValidHandleResponse handles the DateValid response.
 func (client *pathsOperations) dateValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.dateValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// dateValidHandleError handles the DateValid error response.
+func (client *pathsOperations) dateValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
@@ -443,9 +524,18 @@ func (client *pathsOperations) doubleDecimalNegativeCreateRequest() (*azcore.Req
 // doubleDecimalNegativeHandleResponse handles the DoubleDecimalNegative response.
 func (client *pathsOperations) doubleDecimalNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.doubleDecimalNegativeHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// doubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
+func (client *pathsOperations) doubleDecimalNegativeHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
@@ -480,9 +570,18 @@ func (client *pathsOperations) doubleDecimalPositiveCreateRequest() (*azcore.Req
 // doubleDecimalPositiveHandleResponse handles the DoubleDecimalPositive response.
 func (client *pathsOperations) doubleDecimalPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.doubleDecimalPositiveHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// doubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
+func (client *pathsOperations) doubleDecimalPositiveHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
@@ -517,9 +616,18 @@ func (client *pathsOperations) enumNullCreateRequest(enumPath UriColor) (*azcore
 // enumNullHandleResponse handles the EnumNull response.
 func (client *pathsOperations) enumNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, newError(resp)
+		return nil, client.enumNullHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// enumNullHandleError handles the EnumNull error response.
+func (client *pathsOperations) enumNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // EnumValid - Get using uri with 'green color' in path parameter
@@ -554,9 +662,18 @@ func (client *pathsOperations) enumValidCreateRequest(enumPath UriColor) (*azcor
 // enumValidHandleResponse handles the EnumValid response.
 func (client *pathsOperations) enumValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.enumValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// enumValidHandleError handles the EnumValid error response.
+func (client *pathsOperations) enumValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
@@ -591,9 +708,18 @@ func (client *pathsOperations) floatScientificNegativeCreateRequest() (*azcore.R
 // floatScientificNegativeHandleResponse handles the FloatScientificNegative response.
 func (client *pathsOperations) floatScientificNegativeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.floatScientificNegativeHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// floatScientificNegativeHandleError handles the FloatScientificNegative error response.
+func (client *pathsOperations) floatScientificNegativeHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
@@ -628,9 +754,18 @@ func (client *pathsOperations) floatScientificPositiveCreateRequest() (*azcore.R
 // floatScientificPositiveHandleResponse handles the FloatScientificPositive response.
 func (client *pathsOperations) floatScientificPositiveHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.floatScientificPositiveHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// floatScientificPositiveHandleError handles the FloatScientificPositive error response.
+func (client *pathsOperations) floatScientificPositiveHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetBooleanFalse - Get false Boolean value on path
@@ -665,9 +800,18 @@ func (client *pathsOperations) getBooleanFalseCreateRequest() (*azcore.Request, 
 // getBooleanFalseHandleResponse handles the GetBooleanFalse response.
 func (client *pathsOperations) getBooleanFalseHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getBooleanFalseHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getBooleanFalseHandleError handles the GetBooleanFalse error response.
+func (client *pathsOperations) getBooleanFalseHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetBooleanTrue - Get true Boolean value on path
@@ -702,9 +846,18 @@ func (client *pathsOperations) getBooleanTrueCreateRequest() (*azcore.Request, e
 // getBooleanTrueHandleResponse handles the GetBooleanTrue response.
 func (client *pathsOperations) getBooleanTrueHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getBooleanTrueHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getBooleanTrueHandleError handles the GetBooleanTrue error response.
+func (client *pathsOperations) getBooleanTrueHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
@@ -739,9 +892,18 @@ func (client *pathsOperations) getIntNegativeOneMillionCreateRequest() (*azcore.
 // getIntNegativeOneMillionHandleResponse handles the GetIntNegativeOneMillion response.
 func (client *pathsOperations) getIntNegativeOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getIntNegativeOneMillionHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
+func (client *pathsOperations) getIntNegativeOneMillionHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetIntOneMillion - Get '1000000' integer value
@@ -776,9 +938,18 @@ func (client *pathsOperations) getIntOneMillionCreateRequest() (*azcore.Request,
 // getIntOneMillionHandleResponse handles the GetIntOneMillion response.
 func (client *pathsOperations) getIntOneMillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getIntOneMillionHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getIntOneMillionHandleError handles the GetIntOneMillion error response.
+func (client *pathsOperations) getIntOneMillionHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
@@ -813,9 +984,18 @@ func (client *pathsOperations) getNegativeTenBillionCreateRequest() (*azcore.Req
 // getNegativeTenBillionHandleResponse handles the GetNegativeTenBillion response.
 func (client *pathsOperations) getNegativeTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getNegativeTenBillionHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
+func (client *pathsOperations) getNegativeTenBillionHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
@@ -850,9 +1030,18 @@ func (client *pathsOperations) getTenBillionCreateRequest() (*azcore.Request, er
 // getTenBillionHandleResponse handles the GetTenBillion response.
 func (client *pathsOperations) getTenBillionHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getTenBillionHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getTenBillionHandleError handles the GetTenBillion error response.
+func (client *pathsOperations) getTenBillionHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // StringEmpty - Get ''
@@ -887,9 +1076,18 @@ func (client *pathsOperations) stringEmptyCreateRequest() (*azcore.Request, erro
 // stringEmptyHandleResponse handles the StringEmpty response.
 func (client *pathsOperations) stringEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.stringEmptyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// stringEmptyHandleError handles the StringEmpty error response.
+func (client *pathsOperations) stringEmptyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // StringNull - Get null (should throw)
@@ -924,9 +1122,18 @@ func (client *pathsOperations) stringNullCreateRequest(stringPath string) (*azco
 // stringNullHandleResponse handles the StringNull response.
 func (client *pathsOperations) stringNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusBadRequest) {
-		return nil, newError(resp)
+		return nil, client.stringNullHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// stringNullHandleError handles the StringNull error response.
+func (client *pathsOperations) stringNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
@@ -961,9 +1168,18 @@ func (client *pathsOperations) stringUrlEncodedCreateRequest() (*azcore.Request,
 // stringUrlEncodedHandleResponse handles the StringURLEncoded response.
 func (client *pathsOperations) stringUrlEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.stringUrlEncodedHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// stringUrlEncodedHandleError handles the StringURLEncoded error response.
+func (client *pathsOperations) stringUrlEncodedHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
@@ -998,9 +1214,18 @@ func (client *pathsOperations) stringUrlNonEncodedCreateRequest() (*azcore.Reque
 // stringUrlNonEncodedHandleResponse handles the StringURLNonEncoded response.
 func (client *pathsOperations) stringUrlNonEncodedHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.stringUrlNonEncodedHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// stringUrlNonEncodedHandleError handles the StringURLNonEncoded error response.
+func (client *pathsOperations) stringUrlNonEncodedHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
@@ -1035,9 +1260,18 @@ func (client *pathsOperations) stringUnicodeCreateRequest() (*azcore.Request, er
 // stringUnicodeHandleResponse handles the StringUnicode response.
 func (client *pathsOperations) stringUnicodeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.stringUnicodeHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// stringUnicodeHandleError handles the StringUnicode error response.
+func (client *pathsOperations) stringUnicodeHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
@@ -1072,7 +1306,16 @@ func (client *pathsOperations) unixTimeUrlCreateRequest(unixTimeUrlPath time.Tim
 // unixTimeUrlHandleResponse handles the UnixTimeURL response.
 func (client *pathsOperations) unixTimeUrlHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.unixTimeUrlHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// unixTimeUrlHandleError handles the UnixTimeURL error response.
+func (client *pathsOperations) unixTimeUrlHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

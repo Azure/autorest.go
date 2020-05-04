@@ -56,9 +56,14 @@ func (client *xmsClientRequestIdoperations) getCreateRequest() (*azcore.Request,
 // getHandleResponse handles the Get response.
 func (client *xmsClientRequestIdoperations) getHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, errors.New(resp.Status)
+		return nil, client.getHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getHandleError handles the Get error response.
+func (client *xmsClientRequestIdoperations) getHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
 }
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
@@ -93,7 +98,16 @@ func (client *xmsClientRequestIdoperations) paramGetCreateRequest(xMSClientReque
 // paramGetHandleResponse handles the ParamGet response.
 func (client *xmsClientRequestIdoperations) paramGetHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.paramGetHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// paramGetHandleError handles the ParamGet error response.
+func (client *xmsClientRequestIdoperations) paramGetHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
