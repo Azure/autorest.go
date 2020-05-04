@@ -58,7 +58,16 @@ func (client *httpServerFailureOperations) delete505CreateRequest() (*azcore.Req
 
 // delete505HandleResponse handles the Delete505 response.
 func (client *httpServerFailureOperations) delete505HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, newError(resp)
+	return nil, client.delete505HandleError(resp)
+}
+
+// delete505HandleError handles the Delete505 error response.
+func (client *httpServerFailureOperations) delete505HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Get501 - Return 501 status code - should be represented in the client as an error
@@ -91,7 +100,16 @@ func (client *httpServerFailureOperations) get501CreateRequest() (*azcore.Reques
 
 // get501HandleResponse handles the Get501 response.
 func (client *httpServerFailureOperations) get501HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, newError(resp)
+	return nil, client.get501HandleError(resp)
+}
+
+// get501HandleError handles the Get501 error response.
+func (client *httpServerFailureOperations) get501HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Head501 - Return 501 status code - should be represented in the client as an error
@@ -124,7 +142,16 @@ func (client *httpServerFailureOperations) head501CreateRequest() (*azcore.Reque
 
 // head501HandleResponse handles the Head501 response.
 func (client *httpServerFailureOperations) head501HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, newError(resp)
+	return nil, client.head501HandleError(resp)
+}
+
+// head501HandleError handles the Head501 error response.
+func (client *httpServerFailureOperations) head501HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Post505 - Return 505 status code - should be represented in the client as an error
@@ -157,5 +184,14 @@ func (client *httpServerFailureOperations) post505CreateRequest() (*azcore.Reque
 
 // post505HandleResponse handles the Post505 response.
 func (client *httpServerFailureOperations) post505HandleResponse(resp *azcore.Response) (*http.Response, error) {
-	return nil, newError(resp)
+	return nil, client.post505HandleError(resp)
+}
+
+// post505HandleError handles the Post505 error response.
+func (client *httpServerFailureOperations) post505HandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

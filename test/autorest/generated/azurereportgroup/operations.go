@@ -59,8 +59,17 @@ func (client *operations) getReportCreateRequest(operationsGetReportOptions *Ope
 // getReportHandleResponse handles the GetReport response.
 func (client *operations) getReportHandleResponse(resp *azcore.Response) (*MapOfInt32Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getReportHandleError(resp)
 	}
 	result := MapOfInt32Response{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
+}
+
+// getReportHandleError handles the GetReport error response.
+func (client *operations) getReportHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

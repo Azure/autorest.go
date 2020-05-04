@@ -109,7 +109,7 @@ func (client *directoryOperations) createCreateRequest(directoryCreateOptions *D
 // createHandleResponse handles the Create response.
 func (client *directoryOperations) createHandleResponse(resp *azcore.Response) (*DirectoryCreateResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newDataLakeStorageError(resp)
+		return nil, client.createHandleError(resp)
 	}
 	result := DirectoryCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -146,6 +146,15 @@ func (client *directoryOperations) createHandleResponse(resp *azcore.Response) (
 		result.Date = &date
 	}
 	return &result, nil
+}
+
+// createHandleError handles the Create error response.
+func (client *directoryOperations) createHandleError(resp *azcore.Response) error {
+	err := DataLakeStorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Delete - Deletes the directory
@@ -203,7 +212,7 @@ func (client *directoryOperations) deleteCreateRequest(recursiveDirectoryDelete 
 // deleteHandleResponse handles the Delete response.
 func (client *directoryOperations) deleteHandleResponse(resp *azcore.Response) (*DirectoryDeleteResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newDataLakeStorageError(resp)
+		return nil, client.deleteHandleError(resp)
 	}
 	result := DirectoryDeleteResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
@@ -226,6 +235,15 @@ func (client *directoryOperations) deleteHandleResponse(resp *azcore.Response) (
 		result.Date = &date
 	}
 	return &result, nil
+}
+
+// deleteHandleError handles the Delete error response.
+func (client *directoryOperations) deleteHandleError(resp *azcore.Response) error {
+	err := DataLakeStorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
@@ -283,7 +301,7 @@ func (client *directoryOperations) getAccessControlCreateRequest(directoryGetAcc
 // getAccessControlHandleResponse handles the GetAccessControl response.
 func (client *directoryOperations) getAccessControlHandleResponse(resp *azcore.Response) (*DirectoryGetAccessControlResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newDataLakeStorageError(resp)
+		return nil, client.getAccessControlHandleError(resp)
 	}
 	result := DirectoryGetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
@@ -322,6 +340,15 @@ func (client *directoryOperations) getAccessControlHandleResponse(resp *azcore.R
 		result.Version = &val
 	}
 	return &result, nil
+}
+
+// getAccessControlHandleError handles the GetAccessControl error response.
+func (client *directoryOperations) getAccessControlHandleError(resp *azcore.Response) error {
+	err := DataLakeStorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Rename - Rename a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). To fail if the destination already exists, use a conditional request with If-None-Match: "*".
@@ -421,7 +448,7 @@ func (client *directoryOperations) renameCreateRequest(renameSource string, dire
 // renameHandleResponse handles the Rename response.
 func (client *directoryOperations) renameHandleResponse(resp *azcore.Response) (*DirectoryRenameResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newDataLakeStorageError(resp)
+		return nil, client.renameHandleError(resp)
 	}
 	result := DirectoryRenameResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
@@ -461,6 +488,15 @@ func (client *directoryOperations) renameHandleResponse(resp *azcore.Response) (
 		result.Date = &date
 	}
 	return &result, nil
+}
+
+// renameHandleError handles the Rename error response.
+func (client *directoryOperations) renameHandleError(resp *azcore.Response) error {
+	err := DataLakeStorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
@@ -527,7 +563,7 @@ func (client *directoryOperations) setAccessControlCreateRequest(directorySetAcc
 // setAccessControlHandleResponse handles the SetAccessControl response.
 func (client *directoryOperations) setAccessControlHandleResponse(resp *azcore.Response) (*DirectorySetAccessControlResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newDataLakeStorageError(resp)
+		return nil, client.setAccessControlHandleError(resp)
 	}
 	result := DirectorySetAccessControlResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Date"); val != "" {
@@ -554,4 +590,13 @@ func (client *directoryOperations) setAccessControlHandleResponse(resp *azcore.R
 		result.Version = &val
 	}
 	return &result, nil
+}
+
+// setAccessControlHandleError handles the SetAccessControl error response.
+func (client *directoryOperations) setAccessControlHandleError(resp *azcore.Response) error {
+	err := DataLakeStorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }

@@ -125,7 +125,7 @@ func (client *blockBlobOperations) commitBlockListCreateRequest(blocks BlockLook
 // commitBlockListHandleResponse handles the CommitBlockList response.
 func (client *blockBlobOperations) commitBlockListHandleResponse(resp *azcore.Response) (*BlockBlobCommitBlockListResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newStorageError(resp)
+		return nil, client.commitBlockListHandleError(resp)
 	}
 	result := BlockBlobCommitBlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -184,6 +184,15 @@ func (client *blockBlobOperations) commitBlockListHandleResponse(resp *azcore.Re
 	return &result, nil
 }
 
+// commitBlockListHandleError handles the CommitBlockList error response.
+func (client *blockBlobOperations) commitBlockListHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
+}
+
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 func (client *blockBlobOperations) GetBlockList(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions) (*BlockListResponse, error) {
 	req, err := client.getBlockListCreateRequest(listType, blockBlobGetBlockListOptions, leaseAccessConditions)
@@ -228,7 +237,7 @@ func (client *blockBlobOperations) getBlockListCreateRequest(listType BlockListT
 // getBlockListHandleResponse handles the GetBlockList response.
 func (client *blockBlobOperations) getBlockListHandleResponse(resp *azcore.Response) (*BlockListResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newStorageError(resp)
+		return nil, client.getBlockListHandleError(resp)
 	}
 	result := BlockListResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
@@ -268,6 +277,15 @@ func (client *blockBlobOperations) getBlockListHandleResponse(resp *azcore.Respo
 		result.Date = &date
 	}
 	return &result, resp.UnmarshalAsXML(&result.BlockList)
+}
+
+// getBlockListHandleError handles the GetBlockList error response.
+func (client *blockBlobOperations) getBlockListHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
@@ -327,7 +345,7 @@ func (client *blockBlobOperations) stageBlockCreateRequest(blockId string, conte
 // stageBlockHandleResponse handles the StageBlock response.
 func (client *blockBlobOperations) stageBlockHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newStorageError(resp)
+		return nil, client.stageBlockHandleError(resp)
 	}
 	result := BlockBlobStageBlockResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
@@ -374,6 +392,15 @@ func (client *blockBlobOperations) stageBlockHandleResponse(resp *azcore.Respons
 		result.EncryptionScope = &val
 	}
 	return &result, nil
+}
+
+// stageBlockHandleError handles the StageBlock error response.
+func (client *blockBlobOperations) stageBlockHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
@@ -449,7 +476,7 @@ func (client *blockBlobOperations) stageBlockFromUrlCreateRequest(blockId string
 // stageBlockFromUrlHandleResponse handles the StageBlockFromURL response.
 func (client *blockBlobOperations) stageBlockFromUrlHandleResponse(resp *azcore.Response) (*BlockBlobStageBlockFromURLResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newStorageError(resp)
+		return nil, client.stageBlockFromUrlHandleError(resp)
 	}
 	result := BlockBlobStageBlockFromURLResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
@@ -496,6 +523,15 @@ func (client *blockBlobOperations) stageBlockFromUrlHandleResponse(resp *azcore.
 		result.EncryptionScope = &val
 	}
 	return &result, nil
+}
+
+// stageBlockFromUrlHandleError handles the StageBlockFromURL error response.
+func (client *blockBlobOperations) stageBlockFromUrlHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use the Put Block List operation.
@@ -587,7 +623,7 @@ func (client *blockBlobOperations) uploadCreateRequest(contentLength int64, body
 // uploadHandleResponse handles the Upload response.
 func (client *blockBlobOperations) uploadHandleResponse(resp *azcore.Response) (*BlockBlobUploadResponse, error) {
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, newStorageError(resp)
+		return nil, client.uploadHandleError(resp)
 	}
 	result := BlockBlobUploadResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("ETag"); val != "" {
@@ -637,4 +673,13 @@ func (client *blockBlobOperations) uploadHandleResponse(resp *azcore.Response) (
 		result.EncryptionScope = &val
 	}
 	return &result, nil
+}
+
+// uploadHandleError handles the Upload error response.
+func (client *blockBlobOperations) uploadHandleError(resp *azcore.Response) error {
+	err := StorageError{}
+	if err := resp.UnmarshalAsXML(&err); err != nil {
+		return err
+	}
+	return err
 }

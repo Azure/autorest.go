@@ -63,10 +63,19 @@ func (client *dictionaryOperations) getEmptyCreateRequest() (*azcore.Request, er
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *dictionaryOperations) getEmptyHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getEmptyHandleError(resp)
 	}
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+}
+
+// getEmptyHandleError handles the GetEmpty error response.
+func (client *dictionaryOperations) getEmptyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetNotProvided - Get complex types with dictionary property while server doesn't provide a response payload
@@ -100,10 +109,19 @@ func (client *dictionaryOperations) getNotProvidedCreateRequest() (*azcore.Reque
 // getNotProvidedHandleResponse handles the GetNotProvided response.
 func (client *dictionaryOperations) getNotProvidedHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getNotProvidedHandleError(resp)
 	}
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+}
+
+// getNotProvidedHandleError handles the GetNotProvided error response.
+func (client *dictionaryOperations) getNotProvidedHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetNull - Get complex types with dictionary property which is null
@@ -137,10 +155,19 @@ func (client *dictionaryOperations) getNullCreateRequest() (*azcore.Request, err
 // getNullHandleResponse handles the GetNull response.
 func (client *dictionaryOperations) getNullHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getNullHandleError(resp)
 	}
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+}
+
+// getNullHandleError handles the GetNull error response.
+func (client *dictionaryOperations) getNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetValid - Get complex types with dictionary property
@@ -174,10 +201,19 @@ func (client *dictionaryOperations) getValidCreateRequest() (*azcore.Request, er
 // getValidHandleResponse handles the GetValid response.
 func (client *dictionaryOperations) getValidHandleResponse(resp *azcore.Response) (*DictionaryWrapperResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getValidHandleError(resp)
 	}
 	result := DictionaryWrapperResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.DictionaryWrapper)
+}
+
+// getValidHandleError handles the GetValid error response.
+func (client *dictionaryOperations) getValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutEmpty - Put complex types with dictionary property which is empty
@@ -211,9 +247,18 @@ func (client *dictionaryOperations) putEmptyCreateRequest(complexBody Dictionary
 // putEmptyHandleResponse handles the PutEmpty response.
 func (client *dictionaryOperations) putEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putEmptyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putEmptyHandleError handles the PutEmpty error response.
+func (client *dictionaryOperations) putEmptyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutValid - Put complex types with dictionary property
@@ -247,7 +292,16 @@ func (client *dictionaryOperations) putValidCreateRequest(complexBody Dictionary
 // putValidHandleResponse handles the PutValid response.
 func (client *dictionaryOperations) putValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putValidHandleError handles the PutValid error response.
+func (client *dictionaryOperations) putValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

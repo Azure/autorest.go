@@ -63,9 +63,18 @@ func (client *queriesOperations) arrayStringMultiEmptyCreateRequest(queriesArray
 // arrayStringMultiEmptyHandleResponse handles the ArrayStringMultiEmpty response.
 func (client *queriesOperations) arrayStringMultiEmptyHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.arrayStringMultiEmptyHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// arrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
+func (client *queriesOperations) arrayStringMultiEmptyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
@@ -104,9 +113,18 @@ func (client *queriesOperations) arrayStringMultiNullCreateRequest(queriesArrayS
 // arrayStringMultiNullHandleResponse handles the ArrayStringMultiNull response.
 func (client *queriesOperations) arrayStringMultiNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.arrayStringMultiNullHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// arrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
+func (client *queriesOperations) arrayStringMultiNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
@@ -145,7 +163,16 @@ func (client *queriesOperations) arrayStringMultiValidCreateRequest(queriesArray
 // arrayStringMultiValidHandleResponse handles the ArrayStringMultiValid response.
 func (client *queriesOperations) arrayStringMultiValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.arrayStringMultiValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// arrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
+func (client *queriesOperations) arrayStringMultiValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

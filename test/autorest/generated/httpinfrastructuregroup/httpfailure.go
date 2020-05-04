@@ -58,10 +58,19 @@ func (client *httpFailureOperations) getEmptyErrorCreateRequest() (*azcore.Reque
 // getEmptyErrorHandleResponse handles the GetEmptyError response.
 func (client *httpFailureOperations) getEmptyErrorHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getEmptyErrorHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
+}
+
+// getEmptyErrorHandleError handles the GetEmptyError error response.
+func (client *httpFailureOperations) getEmptyErrorHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetNoModelEmpty - Get empty response from server
@@ -95,10 +104,15 @@ func (client *httpFailureOperations) getNoModelEmptyCreateRequest() (*azcore.Req
 // getNoModelEmptyHandleResponse handles the GetNoModelEmpty response.
 func (client *httpFailureOperations) getNoModelEmptyHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, errors.New(resp.Status)
+		return nil, client.getNoModelEmptyHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
+}
+
+// getNoModelEmptyHandleError handles the GetNoModelEmpty error response.
+func (client *httpFailureOperations) getNoModelEmptyHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
 }
 
 // GetNoModelError - Get empty error form server
@@ -132,8 +146,13 @@ func (client *httpFailureOperations) getNoModelErrorCreateRequest() (*azcore.Req
 // getNoModelErrorHandleResponse handles the GetNoModelError response.
 func (client *httpFailureOperations) getNoModelErrorHandleResponse(resp *azcore.Response) (*BoolResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, errors.New(resp.Status)
+		return nil, client.getNoModelErrorHandleError(resp)
 	}
 	result := BoolResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Value)
+}
+
+// getNoModelErrorHandleError handles the GetNoModelError error response.
+func (client *httpFailureOperations) getNoModelErrorHandleError(resp *azcore.Response) error {
+	return errors.New(resp.Status)
 }

@@ -493,7 +493,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       operationName: camelCase(op.language.go!.name),
       schema: (<SchemaResponse>firstResp).schema,
       client: camelCase(group.language.go!.clientName),
-      pollingError: (<SchemaResponse>op.exceptions![0]).schema, // TODO this is the wrong implementation, needs to be fixed
     };
     const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
     pollers.push(poller);

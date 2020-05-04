@@ -68,9 +68,18 @@ func (client *subscriptionInCredentialsOperations) postMethodGlobalNotProvidedVa
 // postMethodGlobalNotProvidedValidHandleResponse handles the PostMethodGlobalNotProvidedValid response.
 func (client *subscriptionInCredentialsOperations) postMethodGlobalNotProvidedValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postMethodGlobalNotProvidedValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postMethodGlobalNotProvidedValidHandleError handles the PostMethodGlobalNotProvidedValid error response.
+func (client *subscriptionInCredentialsOperations) postMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to null, and client-side validation should prevent you from making this call
@@ -105,9 +114,18 @@ func (client *subscriptionInCredentialsOperations) postMethodGlobalNullCreateReq
 // postMethodGlobalNullHandleResponse handles the PostMethodGlobalNull response.
 func (client *subscriptionInCredentialsOperations) postMethodGlobalNullHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postMethodGlobalNullHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postMethodGlobalNullHandleError handles the PostMethodGlobalNull error response.
+func (client *subscriptionInCredentialsOperations) postMethodGlobalNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -142,9 +160,18 @@ func (client *subscriptionInCredentialsOperations) postMethodGlobalValidCreateRe
 // postMethodGlobalValidHandleResponse handles the PostMethodGlobalValid response.
 func (client *subscriptionInCredentialsOperations) postMethodGlobalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postMethodGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postMethodGlobalValidHandleError handles the PostMethodGlobalValid error response.
+func (client *subscriptionInCredentialsOperations) postMethodGlobalValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -179,9 +206,18 @@ func (client *subscriptionInCredentialsOperations) postPathGlobalValidCreateRequ
 // postPathGlobalValidHandleResponse handles the PostPathGlobalValid response.
 func (client *subscriptionInCredentialsOperations) postPathGlobalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postPathGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postPathGlobalValidHandleError handles the PostPathGlobalValid error response.
+func (client *subscriptionInCredentialsOperations) postPathGlobalValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -216,7 +252,16 @@ func (client *subscriptionInCredentialsOperations) postSwaggerGlobalValidCreateR
 // postSwaggerGlobalValidHandleResponse handles the PostSwaggerGlobalValid response.
 func (client *subscriptionInCredentialsOperations) postSwaggerGlobalValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.postSwaggerGlobalValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// postSwaggerGlobalValidHandleError handles the PostSwaggerGlobalValid error response.
+func (client *subscriptionInCredentialsOperations) postSwaggerGlobalValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

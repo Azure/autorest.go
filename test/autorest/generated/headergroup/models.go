@@ -7,7 +7,6 @@ package headergroup
 
 import (
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
 )
@@ -15,14 +14,6 @@ import (
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
-}
-
-func newError(resp *azcore.Response) error {
-	err := Error{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return err
 }
 
 func (e Error) Error() string {

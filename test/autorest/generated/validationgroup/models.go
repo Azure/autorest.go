@@ -7,7 +7,6 @@ package validationgroup
 
 import (
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
 
@@ -33,14 +32,6 @@ type Error struct {
 	Code    *int32  `json:"code,omitempty"`
 	Fields  *string `json:"fields,omitempty"`
 	Message *string `json:"message,omitempty"`
-}
-
-func newError(resp *azcore.Response) error {
-	err := Error{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return err
 }
 
 func (e Error) Error() string {

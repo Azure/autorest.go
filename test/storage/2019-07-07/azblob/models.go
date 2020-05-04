@@ -8,7 +8,6 @@ package azblob
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
 	"time"
@@ -2232,14 +2231,6 @@ type DataLakeStorageError struct {
 	DataLakeStorageErrorDetails *DataLakeStorageErrorDetails `xml:"error"`
 }
 
-func newDataLakeStorageError(resp *azcore.Response) error {
-	err := DataLakeStorageError{}
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
-	}
-	return err
-}
-
 func (e DataLakeStorageError) Error() string {
 	msg := ""
 	if e.DataLakeStorageErrorDetails != nil {
@@ -3330,14 +3321,6 @@ type StaticWebsite struct {
 
 type StorageError struct {
 	Message *string `xml:"Message"`
-}
-
-func newStorageError(resp *azcore.Response) error {
-	err := StorageError{}
-	if err := resp.UnmarshalAsXML(&err); err != nil {
-		return err
-	}
-	return err
 }
 
 func (e StorageError) Error() string {

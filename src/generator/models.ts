@@ -366,17 +366,8 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
     }
     const structDef = generateStruct(obj.language.go!, props);
     if (obj.language.go!.errorType) {
-      // add error constructor function
-      let text = `func ${obj.language.go!.constructorName}(resp *azcore.Response) error {\n`;
-      text += `\terr := ${obj.language.go!.name}{}\n`;
-      text += `\tif err := resp.UnmarshalAs${(<string>obj.language.go!.marshallingFormat).toUpperCase()}(&err); err != nil {\n`;
-      text += `\t\treturn err\n`;
-      text += `\t}\n`;
-      text += '\treturn err\n';
-      text += '}\n\n';
-      structDef.Methods.push(text);
       // add Error() method
-      text = `func (e ${obj.language.go!.name}) Error() string {\n`;
+      let text = `func (e ${obj.language.go!.name}) Error() string {\n`;
       text += `\tmsg := ""\n`;
       for (const prop of values(structDef.Properties)) {
         text += `\tif e.${prop.language.go!.name} != nil {\n`;
@@ -405,7 +396,6 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
 
 function generateStruct(lang: Language, props?: Property[]): StructDef {
   if (lang.errorType) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     imports.add('fmt');
   }
   if (lang.responseType) {

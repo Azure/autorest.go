@@ -63,10 +63,19 @@ func (client *basicOperations) getEmptyCreateRequest() (*azcore.Request, error) 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *basicOperations) getEmptyHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getEmptyHandleError(resp)
 	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
+}
+
+// getEmptyHandleError handles the GetEmpty error response.
+func (client *basicOperations) getEmptyHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
@@ -100,10 +109,19 @@ func (client *basicOperations) getInvalidCreateRequest() (*azcore.Request, error
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *basicOperations) getInvalidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getInvalidHandleError(resp)
 	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
+}
+
+// getInvalidHandleError handles the GetInvalid error response.
+func (client *basicOperations) getInvalidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
@@ -137,10 +155,19 @@ func (client *basicOperations) getNotProvidedCreateRequest() (*azcore.Request, e
 // getNotProvidedHandleResponse handles the GetNotProvided response.
 func (client *basicOperations) getNotProvidedHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getNotProvidedHandleError(resp)
 	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
+}
+
+// getNotProvidedHandleError handles the GetNotProvided error response.
+func (client *basicOperations) getNotProvidedHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetNull - Get a basic complex type whose properties are null
@@ -174,10 +201,19 @@ func (client *basicOperations) getNullCreateRequest() (*azcore.Request, error) {
 // getNullHandleResponse handles the GetNull response.
 func (client *basicOperations) getNullHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getNullHandleError(resp)
 	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
+}
+
+// getNullHandleError handles the GetNull error response.
+func (client *basicOperations) getNullHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
@@ -211,10 +247,19 @@ func (client *basicOperations) getValidCreateRequest() (*azcore.Request, error) 
 // getValidHandleResponse handles the GetValid response.
 func (client *basicOperations) getValidHandleResponse(resp *azcore.Response) (*BasicResponse, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getValidHandleError(resp)
 	}
 	result := BasicResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.Basic)
+}
+
+// getValidHandleError handles the GetValid error response.
+func (client *basicOperations) getValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
@@ -251,7 +296,16 @@ func (client *basicOperations) putValidCreateRequest(complexBody Basic) (*azcore
 // putValidHandleResponse handles the PutValid response.
 func (client *basicOperations) putValidHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.putValidHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// putValidHandleError handles the PutValid error response.
+func (client *basicOperations) putValidHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

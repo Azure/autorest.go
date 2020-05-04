@@ -58,9 +58,18 @@ func (client *filesOperations) getEmptyFileCreateRequest() (*azcore.Request, err
 // getEmptyFileHandleResponse handles the GetEmptyFile response.
 func (client *filesOperations) getEmptyFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getEmptyFileHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getEmptyFileHandleError handles the GetEmptyFile error response.
+func (client *filesOperations) getEmptyFileHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetFile - Get file
@@ -95,9 +104,18 @@ func (client *filesOperations) getFileCreateRequest() (*azcore.Request, error) {
 // getFileHandleResponse handles the GetFile response.
 func (client *filesOperations) getFileHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getFileHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getFileHandleError handles the GetFile error response.
+func (client *filesOperations) getFileHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }
 
 // GetFileLarge - Get a large file
@@ -132,7 +150,16 @@ func (client *filesOperations) getFileLargeCreateRequest() (*azcore.Request, err
 // getFileLargeHandleResponse handles the GetFileLarge response.
 func (client *filesOperations) getFileLargeHandleResponse(resp *azcore.Response) (*http.Response, error) {
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, newError(resp)
+		return nil, client.getFileLargeHandleError(resp)
 	}
 	return resp.Response, nil
+}
+
+// getFileLargeHandleError handles the GetFileLarge error response.
+func (client *filesOperations) getFileLargeHandleError(resp *azcore.Response) error {
+	err := Error{}
+	if err := resp.UnmarshalAsJSON(&err); err != nil {
+		return err
+	}
+	return err
 }

@@ -35,10 +35,10 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     let responseType = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     if (poller.schema === undefined) {
-	  responseType = 'http.Response';
+      responseType = 'http.Response';
     } else {
-	  responseType = poller.schema.language.go!.responseType.name;
-	  rawResponse = '.RawResponse';
+      responseType = poller.schema.language.go!.responseType.name;
+      rawResponse = '.RawResponse';
     }
     text += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
@@ -57,11 +57,11 @@ type ${poller.name} struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *${poller.name}) Poll(ctx context.Context) bool {
-	if done, err := p.done(ctx); err != nil {
+	done, err := p.done(ctx)
+	if err != nil {
 		return false
-	} else {
-		return !done
 	}
+	return !done
 }
 
 // Response returns the latest response that is stored from the latest polling operation
@@ -139,29 +139,28 @@ func (p *${poller.name}) done(ctx context.Context) (done bool, err error) {
 
 // Creates the content in pollers_helper.go
 export async function generatePollersHelper(session: Session<CodeModel>): Promise<string> {
-	if (session.model.language.go!.pollerTypes === undefined) {
-	  return '';
-	}
-	let text = await contentPreamble(session);
-	const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
-  	pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
-  
-	// add standard imports
-	const imports = new ImportManager();
-	imports.add('context');
-	imports.add('encoding/json');
-	imports.add('errors');
-	imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-	imports.add('io/ioutil');
-	imports.add('net/http');
-	imports.add('net/url');
-	imports.add('strings');
-	imports.add('fmt');
-	imports.add('errors');
-	text += imports.text();
-	let errorCtor = pollers[0].pollingError.language.go!.constructorName;
-	// TODO separate this into manageable chunks of text by section of functionality
-	  text += `
+  if (session.model.language.go!.pollerTypes === undefined) {
+    return '';
+  }
+  let text = await contentPreamble(session);
+  const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
+  pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
+
+  // add standard imports
+  const imports = new ImportManager();
+  imports.add('context');
+  imports.add('encoding/json');
+  imports.add('errors');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  imports.add('io/ioutil');
+  imports.add('net/http');
+  imports.add('net/url');
+  imports.add('strings');
+  imports.add('fmt');
+  imports.add('errors');
+  text += imports.text();
+  // TODO separate this into manageable chunks of text by section of functionality
+  text += `
 	  const (
 		headerAsyncOperation = "Azure-AsyncOperation"
 		headerLocation       = "Location"
@@ -230,11 +229,16 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// returns the cached HTTP response after a call to pollForStatus(), can be nil
 		latestResponse() *azcore.Response
 	}
-	
+  
+  type methodErrorHandler func(resp *azcore.Response) error
+
 	type pollingTrackerBase struct {
 		// resp is the last response, either from the submission of the LRO or from polling
 		resp *azcore.Response
-	
+
+	// errorHandler is the method to invoke to unmarshall an error response
+	errorHandler methodErrorHandler
+
 		// method is the HTTP verb, this is needed for deserialization
 		Method string \`json:"method"\`
 	
@@ -350,7 +354,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	// if that fails then make a best attempt at creating something meaningful.
 	// NOTE: this assumes that the async operation has failed.
 	func (pt *pollingTrackerBase) updateErrorFromResponse() {
-		pt.Err = ${errorCtor}(pt.resp)
+		pt.Err = pt.errorHandler(pt.resp)
 	}
 	
 	func (pt *pollingTrackerBase) updatePollingState(provStateApl bool) error {
@@ -694,17 +698,17 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	}
 	
 	// creates a polling tracker based on the verb of the original request
-	func createPollingTracker(resp *azcore.Response) (pollingTracker, error) {
+	func createPollingTracker(resp *azcore.Response, errorHandler methodErrorHandler) (pollingTracker, error) {
 		var pt pollingTracker
 		switch strings.ToUpper(resp.Request.Method) {
 		case http.MethodDelete:
-			pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+			pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 		case http.MethodPatch:
-			pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+			pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 		case http.MethodPost:
-			pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+			pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 		case http.MethodPut:
-			pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{resp: resp}}
+			pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
 		default:
 			return nil, fmt.Errorf("unsupported HTTP method %s", resp.Request.Method)
 		}
@@ -716,7 +720,40 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// error (not doing this means the error shows up in Future.Done)
 		return pt, pt.updatePollingMethod()
 	}
-	
+
+// creates a polling tracker from a resume token
+func resumePollingTracker(token string, errorHandler methodErrorHandler) (pollingTracker, error) {
+	// unmarshal into JSON object to determine the tracker type
+	obj := map[string]interface{}{}
+	err := json.Unmarshal([]byte(token), &obj)
+	if err != nil {
+		return nil, err
+	}
+	if obj["method"] == nil {
+		return nil, fmt.Errorf("token is missing 'method' property")
+	}
+	var pt pollingTracker
+	method := obj["method"].(string)
+	switch strings.ToUpper(method) {
+	case http.MethodDelete:
+		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	case http.MethodPatch:
+		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	case http.MethodPost:
+		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	case http.MethodPut:
+		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{errorHandler: errorHandler}}
+	default:
+		return nil, fmt.Errorf("unsupported method '%s'", method)
+	}
+	// now unmarshal into the tracker
+	err = json.Unmarshal([]byte(token), &pt)
+	if err != nil {
+		return nil, err
+	}
+	return pt, nil
+}
+
 	// gets the polling URL from the Azure-AsyncOperation header.
 	// ensures the URL is well-formed and absolute.
 	func getURLFromAsyncOpHeader(resp *azcore.Response) (string, error) {
@@ -766,6 +803,6 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		pollingUnknown pollingMethodType = ""
 	)
   `;
-	return text;
-  }
-  
+  return text;
+}
+
