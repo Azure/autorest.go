@@ -5,10 +5,10 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { pascalCase } from '@azure-tools/codegen';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PollerInfo } from '../common/helpers';
-import { contentPreamble, sortAscending } from './helpers';
+import { contentPreamble, sortAscending, generatePagerReturnInstance } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pollers.go
@@ -35,17 +35,40 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     let responseType = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     if (poller.schema === undefined) {
-      responseType = 'http.Response';
+      responseType = '*http.Response';
     } else {
-      responseType = poller.schema.language.go!.responseType.name;
+      if (poller.op.language.go!.pageableType) {
+        responseType = `${(<SchemaResponse>poller.op.responses![0]).schema.language.go!.name}Pager`;
+      } else {
+        responseType = `*${poller.schema.language.go!.responseType.name}`;
+      }
       rawResponse = '.RawResponse';
+    }
+
+    let responseText = `resp := p.response()
+	if resp == nil {
+		return nil, errors.New("did not find a response on the poller")
+  }
+	result, err := p.client.${poller.operationName}HandleResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+  return result, nil`;
+    if (poller.op.language.go!.pageableType) {
+      responseText = '\tclient := p.client\n';
+      responseText += '\tu, err := url.Parse(p.pt.pollingURL())\n';
+      responseText += '\tif err != nil {\n';
+      responseText += '\t\treturn nil, err\n';
+      responseText += '\t}\n';
+      responseText += '\treq := azcore.NewRequest(http.MethodGet, *u)\n';
+      responseText += generatePagerReturnInstance(poller.op, imports);
     }
     text += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
 	Poll(context.Context) bool
-	Response() (*${responseType}, error)
+	Response() (${responseType}, error)
 	ResumeToken() (string, error)
-	Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error)
+	Wait(ctx context.Context, pollingInterval time.Duration) (${responseType}, error)
 }
 
 type ${poller.name} struct {
@@ -65,16 +88,8 @@ func (p *${poller.name}) Poll(ctx context.Context) bool {
 }
 
 // Response returns the latest response that is stored from the latest polling operation
-func (p *${poller.name}) Response() (*${responseType}, error) {
-	resp := p.response()
-	if resp == nil {
-		return nil, errors.New("did not find a response on the poller")
-	}
-	result, err := p.client.${poller.operationName}HandleResponse(resp)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
+func (p *${poller.name}) Response() (${responseType}, error) {
+	${responseText}
 }
 
 // ResumeToken generates the string token that can be used with the Resume${pascalCase(poller.name)} method
@@ -93,7 +108,7 @@ func (p *${poller.name}) ResumeToken() (string, error) {
 // Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the 
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests. 
-func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error) {
+func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (${responseType}, error) {
 	for p.Poll(context.Background()) {
 		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)

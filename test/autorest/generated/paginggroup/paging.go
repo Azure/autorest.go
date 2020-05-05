@@ -29,7 +29,7 @@ type PagingOperations interface {
 	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error)
 	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-	BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (ProductResultPager, error)
+	BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (PagingGetMultiplePagesLroPoller, error)
 	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
 	GetMultiplePagesRetryFirst() (ProductResultPager, error)
 	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
@@ -297,8 +297,35 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 }
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (ProductResultPager, error) {
-	return nil, nil
+func (client *pagingOperations) BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (PagingGetMultiplePagesLroPoller, error) {
+	req, err := client.getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions)
+	if err != nil {
+		return nil, err
+	}
+	// send the first request to initialize the poller
+	resp, err := client.p.Do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	pt, err := createPollingTracker(resp, client.getMultiplePagesLroHandleError)
+	if err != nil {
+		return nil, err
+	}
+	return &pagingGetMultiplePagesLroPoller{
+		pt:     pt,
+		client: client,
+	}, nil
+}
+
+func (client *pagingOperations) ResumePagingGetMultiplePagesLroPoller(token string) (PagingGetMultiplePagesLroPoller, error) {
+	pt, err := resumePollingTracker(token, client.getMultiplePagesLroHandleError)
+	if err != nil {
+		return nil, err
+	}
+	return &pagingGetMultiplePagesLroPoller{
+		client: client,
+		pt:     pt,
+	}, nil
 }
 
 // getMultiplePagesLroCreateRequest creates the GetMultiplePagesLro request.

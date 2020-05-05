@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen'
+import { comment, KnownMediaType, pascalCase, camelCase } from '@azure-tools/codegen';
 import { ArraySchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SerializationStyle } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, isLROOperation } from '../common/helpers';
+import { aggregateParameters, isArraySchema, isPageableOperation, isSchemaResponse, isLROOperation } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, hasDescription, skipURLEncoding, sortAscending, generatePagerReturnInstance, getMethodParameters, getCreateRequestParametersSig } from './helpers';
 import { ImportManager } from './imports';
 
 const dateFormat = '2006-01-02';
@@ -269,12 +269,6 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
-    // TODO remove LRO for pageable responses NYI
-    if (op.extensions!['x-ms-pageable']) {
-      text += `\treturn nil, nil`;
-      text += '}\n\n';
-      return text;
-    }
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
@@ -302,49 +296,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
   if (isPageableOperation(op)) {
-    text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
-    text += `\t\tclient: client,\n`;
-    text += `\t\trequest: req,\n`;
-    text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
-    const pager = <PagerInfo>op.language.go!.pageableType;
-    if (op.language.go!.paging.member) {
-      // find the location of the nextLink param
-      const nextLinkOpParams = getMethodParameters(op.language.go!.paging.nextLinkOperation);
-      let found = false;
-      for (let i = 0; i < nextLinkOpParams.length; ++i) {
-        if (nextLinkOpParams[i].schema.type === SchemaType.String && nextLinkOpParams[i].language.go!.name.startsWith('next')) {
-          // found it
-          reqParams.splice(i, 0, `*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
-      }
-      text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${reqParams.join(', ')})\n`;
-      text += '\t\t},\n';
-    } else {
-      imports.add('fmt');
-      imports.add('net/url');
-      let resultTypeName = pager.schema.language.go!.name;
-      if (pager.schema.serialization?.xml?.name) {
-        // xml can specifiy its own name, prefer that if available
-        resultTypeName = pager.schema.serialization.xml.name;
-      }
-      text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\tu, err := url.Parse(*resp.${resultTypeName}.${pager.nextLink})\n`;
-      text += `\t\t\tif err != nil {\n`;
-      text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${pager.nextLink}: %w", err)\n`;
-      text += `\t\t\t}\n`;
-      text += `\t\t\tif u.Scheme == "" {\n`;
-      text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${pager.nextLink} %s", *resp.${resultTypeName}.${pager.nextLink})\n`;
-      text += `\t\t\t}\n`;
-      text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
-      text += `\t\t},\n`;
-    }
-    text += `\t}, nil\n`;
+    text += generatePagerReturnInstance(op, imports);
     text += '}\n\n';
     return text;
   }
@@ -842,59 +794,6 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
   return params.join(', ');
 }
 
-// returns the parameters for the internal request creator method.
-// e.g. "i int, s string"
-function getCreateRequestParametersSig(op: Operation): string {
-  const methodParams = getMethodParameters(op);
-  const params = new Array<string>();
-  for (const methodParam of values(methodParams)) {
-    params.push(`${camelCase(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
-  }
-  return params.join(', ');
-}
-
-// returns the complete collection of method parameters
-function getMethodParameters(op: Operation): Parameter[] {
-  const params = new Array<Parameter>();
-  const paramGroups = new Array<GroupProperty>();
-  for (const param of values(aggregateParameters(op))) {
-    if (param.implementation === ImplementationLocation.Client) {
-      // client params are passed via the receiver
-      continue;
-    } else if (param.schema.type === SchemaType.Constant) {
-      // don't generate a parameter for a constant
-      continue;
-    } else if (param.language.go!.paramGroup) {
-      // param groups will be added after individual params
-      if (!paramGroups.includes(param.language.go!.paramGroup)) {
-        paramGroups.push(param.language.go!.paramGroup);
-      }
-      continue;
-    }
-    params.push(param);
-  }
-  // move global optional params to the end of the slice
-  params.sort(sortParametersByRequired);
-  // add any parameter groups.  optional group goes last
-  paramGroups.sort((a: GroupProperty, b: GroupProperty) => {
-    if (a.required === b.required) {
-      return 0;
-    }
-    if (a.required && !b.required) {
-      return -1;
-    }
-    return 1;
-  })
-  for (const paramGroup of values(paramGroups)) {
-    let name = camelCase(paramGroup.language.go!.name);
-    if (!paramGroup.required) {
-      name = 'options';
-    }
-    params.push(paramGroup);
-  }
-  return params;
-}
-
 // returns the return signature where each entry is the type name
 // e.g. [ '*string', 'error' ]
 function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
@@ -905,10 +804,10 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   const firstResp = op.responses![0];
   let returnType = '*http.Response';
   // must check pageable first as all pageable operations are also schema responses
-  if (!forHandler && isPageableOperation(op)) {
-    returnType = op.language.go!.pageableType.name;
-  } else if (!forHandler && isLROOperation(op)) {
+  if (!forHandler && isLROOperation(op)) {
     returnType = pascalCase(op.language.go!.pollerType.name);
+  } else if (!forHandler && isPageableOperation(op)) {
+    returnType = op.language.go!.pageableType.name;
   } else if (isSchemaResponse(firstResp)) {
     returnType = '*' + firstResp.schema.language.go!.responseType.name;
   }

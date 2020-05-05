@@ -47,6 +47,7 @@ export interface PollerInfo {
   operationName: string;
   schema: Schema;
   client: string;
+  op: Operation;
 }
 
 // returns true if the operation is a long-running operation

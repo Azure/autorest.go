@@ -455,6 +455,25 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
     responseSchemas.push(firstResp.schema);
   }
+  // create poller type info
+  if (isLROOperation(op)) {
+    if (codeModel.language.go!.pollerTypes === undefined) {
+      codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
+    }
+    // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
+    const name = `${camelCase(group.language.go!.name)}${op.language.go!.name}Poller`;
+    // create a new one, add to global list and assign to method
+    const poller = {
+      name: name,
+      operationName: camelCase(op.language.go!.name),
+      schema: (<SchemaResponse>firstResp).schema,
+      client: camelCase(group.language.go!.clientName),
+      op: op,
+    };
+    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
+    pollers.push(poller);
+    op.language.go!.pollerType = poller;
+  }
   // create pageable type info
   if (isPageableOperation(op)) {
     if (codeModel.language.go!.pageableTypes === undefined) {
@@ -479,24 +498,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     };
     pagers.push(pager);
     op.language.go!.pageableType = pager;
-  }
-  // create poller type info
-  if (isLROOperation(op)) {
-    if (codeModel.language.go!.pollerTypes === undefined) {
-      codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
-    }
-    // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-    const name = `${camelCase(group.language.go!.name)}${op.language.go!.name}Poller`;
-    // create a new one, add to global list and assign to method
-    const poller = {
-      name: name,
-      operationName: camelCase(op.language.go!.name),
-      schema: (<SchemaResponse>firstResp).schema,
-      client: camelCase(group.language.go!.clientName),
-    };
-    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
-    pollers.push(poller);
-    op.language.go!.pollerType = poller;
   }
 }
 
