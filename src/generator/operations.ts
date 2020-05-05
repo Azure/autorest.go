@@ -696,7 +696,7 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     const returns = generateReturnsInfo(op, false);
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
-    if (isLROOperation(op) && !op.extensions!['x-ms-pageable']) {
+    if (isLROOperation(op)) {
       interfaceText += `\t// Resume${pascalCase(op.language.go!.pollerType.name)} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
       interfaceText += `\tResume${pascalCase(op.language.go!.pollerType.name)}(id string) (${pascalCase(op.language.go!.pollerType.name)}, error)\n`;
     }

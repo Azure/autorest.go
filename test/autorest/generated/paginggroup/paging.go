@@ -30,6 +30,8 @@ type PagingOperations interface {
 	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error)
 	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 	BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (PagingGetMultiplePagesLroPoller, error)
+	// ResumePagingGetMultiplePagesLroPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumePagingGetMultiplePagesLroPoller(id string) (PagingGetMultiplePagesLroPoller, error)
 	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
 	GetMultiplePagesRetryFirst() (ProductResultPager, error)
 	// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
