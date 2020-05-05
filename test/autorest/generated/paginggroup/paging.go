@@ -29,7 +29,7 @@ type PagingOperations interface {
 	// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 	GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) (OdataProductResultPager, error)
 	// BeginGetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-	BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (PagingGetMultiplePagesLroPoller, error)
+	BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (PagingGetMultiplePagesLroPoller, error)
 	// ResumePagingGetMultiplePagesLroPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
 	ResumePagingGetMultiplePagesLroPoller(id string) (PagingGetMultiplePagesLroPoller, error)
 	// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
@@ -299,7 +299,7 @@ func (client *pagingOperations) getMultiplePagesFragmentWithGroupingNextLinkHand
 }
 
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
-func (client *pagingOperations) BeginGetMultiplePagesLro(pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (PagingGetMultiplePagesLroPoller, error) {
+func (client *pagingOperations) BeginGetMultiplePagesLro(ctx context.Context, pagingGetMultiplePagesLroOptions *PagingGetMultiplePagesLroOptions) (PagingGetMultiplePagesLroPoller, error) {
 	req, err := client.getMultiplePagesLroCreateRequest(pagingGetMultiplePagesLroOptions)
 	if err != nil {
 		return nil, err

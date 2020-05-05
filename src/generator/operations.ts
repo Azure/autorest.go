@@ -784,7 +784,7 @@ function hasBinaryResponse(responses: Response[]): boolean {
 function getAPIParametersSig(op: Operation, imports: ImportManager): string {
   const methodParams = getMethodParameters(op);
   const params = new Array<string>();
-  if (!isPageableOperation(op)) {
+  if (!isPageableOperation(op) || isLROOperation(op)) {
     imports.add('context');
     params.push('ctx context.Context');
   }
