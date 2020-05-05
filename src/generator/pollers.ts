@@ -236,7 +236,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// resp is the last response, either from the submission of the LRO or from polling
     resp *azcore.Response
     
-    // PollerType is the name of the poller that is create
+    // PollerType is the name of the type of poller that is created
 		PollerType string \`json:"pollerType"\`
 
 	// errorHandler is the method to invoke to unmarshall an error response
