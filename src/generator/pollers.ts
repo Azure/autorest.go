@@ -23,9 +23,11 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
+  imports.add('net/url');
   imports.add('time');
   imports.add('errors');
   imports.add('encoding/json');
+  imports.add('fmt');
   text += imports.text();
 
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
