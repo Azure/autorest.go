@@ -44,8 +44,6 @@ export function isPageableOperation(op: Operation): boolean {
 
 export interface PollerInfo {
   name: string;
-  operationName: string;
-  schema: Schema;
   client: string;
   op: Operation;
 }

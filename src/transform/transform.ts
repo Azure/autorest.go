@@ -465,8 +465,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     // create a new one, add to global list and assign to method
     const poller = {
       name: name,
-      operationName: camelCase(op.language.go!.name),
-      schema: (<SchemaResponse>firstResp).schema,
       client: camelCase(group.language.go!.clientName),
       op: op,
     };

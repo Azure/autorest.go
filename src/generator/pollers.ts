@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { pascalCase } from '@azure-tools/codegen';
+import { camelCase, pascalCase } from '@azure-tools/codegen';
 import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PollerInfo } from '../common/helpers';
@@ -34,14 +34,13 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const pollerInterface = pascalCase(poller.name);
     let responseType = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
-    if (poller.schema === undefined) {
+    if ((<SchemaResponse>poller.op.responses![0]).schema === undefined) {
       responseType = '*http.Response';
+    } else if (poller.op.language.go!.pageableType) {
+      responseType = `${(<SchemaResponse>poller.op.responses![0]).schema.language.go!.name}Pager`;
+      rawResponse = '.RawResponse';
     } else {
-      if (poller.op.language.go!.pageableType) {
-        responseType = `${(<SchemaResponse>poller.op.responses![0]).schema.language.go!.name}Pager`;
-      } else {
-        responseType = `*${poller.schema.language.go!.responseType.name}`;
-      }
+      responseType = `*${(<SchemaResponse>poller.op.responses![0]).schema.language.go!.responseType.name}`;
       rawResponse = '.RawResponse';
     }
 
@@ -49,7 +48,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
   }
-	result, err := p.client.${poller.operationName}HandleResponse(resp)
+	result, err := p.client.${camelCase(poller.op.language.go!.name)}HandleResponse(resp)
 	if err != nil {
 		return nil, err
 	}
