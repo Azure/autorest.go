@@ -136,7 +136,7 @@ func (client *lrosaDsOperations) BeginDelete202NonRetry400(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.delete202NonRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsDelete202NonRetry400Poller", resp, client.delete202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func (client *lrosaDsOperations) BeginDelete202NonRetry400(ctx context.Context) 
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDelete202NonRetry400Poller(token string) (LrosaDsDelete202NonRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.delete202NonRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsDelete202NonRetry400Poller", token, client.delete202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func (client *lrosaDsOperations) BeginDelete202RetryInvalidHeader(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.delete202RetryInvalidHeaderHandleError)
+	pt, err := createPollingTracker("lrosaDsDelete202RetryInvalidHeaderPoller", resp, client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (client *lrosaDsOperations) BeginDelete202RetryInvalidHeader(ctx context.Co
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDelete202RetryInvalidHeaderPoller(token string) (LrosaDsDelete202RetryInvalidHeaderPoller, error) {
-	pt, err := resumePollingTracker(token, client.delete202RetryInvalidHeaderHandleError)
+	pt, err := resumePollingTracker("lrosaDsDelete202RetryInvalidHeaderPoller", token, client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -274,7 +274,7 @@ func (client *lrosaDsOperations) BeginDelete204Succeeded(ctx context.Context) (L
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.delete204SucceededHandleError)
+	pt, err := createPollingTracker("lrosaDsDelete204SucceededPoller", resp, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -285,7 +285,7 @@ func (client *lrosaDsOperations) BeginDelete204Succeeded(ctx context.Context) (L
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDelete204SucceededPoller(token string) (LrosaDsDelete204SucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.delete204SucceededHandleError)
+	pt, err := resumePollingTracker("lrosaDsDelete204SucceededPoller", token, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -331,7 +331,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetry400(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncRelativeRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsDeleteAsyncRelativeRetry400Poller", resp, client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -342,7 +342,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetry400(ctx context.Co
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetry400Poller(token string) (LrosaDsDeleteAsyncRelativeRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncRelativeRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsDeleteAsyncRelativeRetry400Poller", token, client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -403,7 +403,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := createPollingTracker("lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller", resp, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -414,7 +414,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx 
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller(token string) (LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := resumePollingTracker("lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller", token, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +475,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidJSONPolling
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError)
+	pt, err := createPollingTracker("lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller", resp, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -486,7 +486,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidJSONPolling
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller(token string) (LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError)
+	pt, err := resumePollingTracker("lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller", token, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -547,7 +547,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryNoStatus(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncRelativeRetryNoStatusHandleError)
+	pt, err := createPollingTracker("lrosaDsDeleteAsyncRelativeRetryNoStatusPoller", resp, client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -558,7 +558,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryNoStatus(ctx conte
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDeleteAsyncRelativeRetryNoStatusPoller(token string) (LrosaDsDeleteAsyncRelativeRetryNoStatusPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncRelativeRetryNoStatusHandleError)
+	pt, err := resumePollingTracker("lrosaDsDeleteAsyncRelativeRetryNoStatusPoller", token, client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -619,7 +619,7 @@ func (client *lrosaDsOperations) BeginDeleteNonRetry400(ctx context.Context) (Lr
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteNonRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsDeleteNonRetry400Poller", resp, client.deleteNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -630,7 +630,7 @@ func (client *lrosaDsOperations) BeginDeleteNonRetry400(ctx context.Context) (Lr
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsDeleteNonRetry400Poller(token string) (LrosaDsDeleteNonRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.deleteNonRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsDeleteNonRetry400Poller", token, client.deleteNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -688,7 +688,7 @@ func (client *lrosaDsOperations) BeginPost202NoLocation(ctx context.Context, lro
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.post202NoLocationHandleError)
+	pt, err := createPollingTracker("lrosaDsPost202NoLocationPoller", resp, client.post202NoLocationHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -699,7 +699,7 @@ func (client *lrosaDsOperations) BeginPost202NoLocation(ctx context.Context, lro
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPost202NoLocationPoller(token string) (LrosaDsPost202NoLocationPoller, error) {
-	pt, err := resumePollingTracker(token, client.post202NoLocationHandleError)
+	pt, err := resumePollingTracker("lrosaDsPost202NoLocationPoller", token, client.post202NoLocationHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -760,7 +760,7 @@ func (client *lrosaDsOperations) BeginPost202NonRetry400(ctx context.Context, lr
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.post202NonRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsPost202NonRetry400Poller", resp, client.post202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -771,7 +771,7 @@ func (client *lrosaDsOperations) BeginPost202NonRetry400(ctx context.Context, lr
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPost202NonRetry400Poller(token string) (LrosaDsPost202NonRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.post202NonRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsPost202NonRetry400Poller", token, client.post202NonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -832,7 +832,7 @@ func (client *lrosaDsOperations) BeginPost202RetryInvalidHeader(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.post202RetryInvalidHeaderHandleError)
+	pt, err := createPollingTracker("lrosaDsPost202RetryInvalidHeaderPoller", resp, client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -843,7 +843,7 @@ func (client *lrosaDsOperations) BeginPost202RetryInvalidHeader(ctx context.Cont
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPost202RetryInvalidHeaderPoller(token string) (LrosaDsPost202RetryInvalidHeaderPoller, error) {
-	pt, err := resumePollingTracker(token, client.post202RetryInvalidHeaderHandleError)
+	pt, err := resumePollingTracker("lrosaDsPost202RetryInvalidHeaderPoller", token, client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -904,7 +904,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetry400(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRelativeRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsPostAsyncRelativeRetry400Poller", resp, client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -915,7 +915,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetry400(ctx context.Cont
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetry400Poller(token string) (LrosaDsPostAsyncRelativeRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRelativeRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsPostAsyncRelativeRetry400Poller", token, client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -979,7 +979,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidHeader(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := createPollingTracker("lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller", resp, client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -990,7 +990,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidHeader(ctx co
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetryInvalidHeaderPoller(token string) (LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := resumePollingTracker("lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller", token, client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1054,7 +1054,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidJSONPolling(c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRelativeRetryInvalidJsonPollingHandleError)
+	pt, err := createPollingTracker("lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller", resp, client.postAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1065,7 +1065,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidJSONPolling(c
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller(token string) (LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRelativeRetryInvalidJsonPollingHandleError)
+	pt, err := resumePollingTracker("lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller", token, client.postAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1129,7 +1129,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryNoPayload(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRelativeRetryNoPayloadHandleError)
+	pt, err := createPollingTracker("lrosaDsPostAsyncRelativeRetryNoPayloadPoller", resp, client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1140,7 +1140,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryNoPayload(ctx contex
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPostAsyncRelativeRetryNoPayloadPoller(token string) (LrosaDsPostAsyncRelativeRetryNoPayloadPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRelativeRetryNoPayloadHandleError)
+	pt, err := resumePollingTracker("lrosaDsPostAsyncRelativeRetryNoPayloadPoller", token, client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1204,7 +1204,7 @@ func (client *lrosaDsOperations) BeginPostNonRetry400(ctx context.Context, lrosa
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postNonRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsPostNonRetry400Poller", resp, client.postNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1215,7 +1215,7 @@ func (client *lrosaDsOperations) BeginPostNonRetry400(ctx context.Context, lrosa
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPostNonRetry400Poller(token string) (LrosaDsPostNonRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.postNonRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsPostNonRetry400Poller", token, client.postNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1276,7 +1276,7 @@ func (client *lrosaDsOperations) BeginPut200InvalidJSON(ctx context.Context, lro
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put200InvalidJsonHandleError)
+	pt, err := createPollingTracker("lrosaDsPut200InvalidJSONPoller", resp, client.put200InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1287,7 +1287,7 @@ func (client *lrosaDsOperations) BeginPut200InvalidJSON(ctx context.Context, lro
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPut200InvalidJsonPoller(token string) (LrosaDsPut200InvalidJsonPoller, error) {
-	pt, err := resumePollingTracker(token, client.put200InvalidJsonHandleError)
+	pt, err := resumePollingTracker("lrosaDsPut200InvalidJSONPoller", token, client.put200InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1337,7 +1337,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetry400(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRelativeRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsPutAsyncRelativeRetry400Poller", resp, client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1348,7 +1348,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetry400(ctx context.Conte
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetry400Poller(token string) (LrosaDsPutAsyncRelativeRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRelativeRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsPutAsyncRelativeRetry400Poller", token, client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1398,7 +1398,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidHeader(ctx con
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := createPollingTracker("lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller", resp, client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1409,7 +1409,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidHeader(ctx con
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryInvalidHeaderPoller(token string) (LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := resumePollingTracker("lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller", token, client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1459,7 +1459,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidJSONPolling(ct
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRelativeRetryInvalidJsonPollingHandleError)
+	pt, err := createPollingTracker("lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller", resp, client.putAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1470,7 +1470,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidJSONPolling(ct
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller(token string) (LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRelativeRetryInvalidJsonPollingHandleError)
+	pt, err := resumePollingTracker("lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller", token, client.putAsyncRelativeRetryInvalidJsonPollingHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1520,7 +1520,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatus(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRelativeRetryNoStatusHandleError)
+	pt, err := createPollingTracker("lrosaDsPutAsyncRelativeRetryNoStatusPoller", resp, client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1531,7 +1531,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatus(ctx context.
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryNoStatusPoller(token string) (LrosaDsPutAsyncRelativeRetryNoStatusPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRelativeRetryNoStatusHandleError)
+	pt, err := resumePollingTracker("lrosaDsPutAsyncRelativeRetryNoStatusPoller", token, client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1581,7 +1581,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatusPayload(ctx c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
+	pt, err := createPollingTracker("lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller", resp, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1592,7 +1592,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatusPayload(ctx c
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller(token string) (LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
+	pt, err := resumePollingTracker("lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller", token, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1642,7 +1642,7 @@ func (client *lrosaDsOperations) BeginPutError201NoProvisioningStatePayload(ctx 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putError201NoProvisioningStatePayloadHandleError)
+	pt, err := createPollingTracker("lrosaDsPutError201NoProvisioningStatePayloadPoller", resp, client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1653,7 +1653,7 @@ func (client *lrosaDsOperations) BeginPutError201NoProvisioningStatePayload(ctx 
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutError201NoProvisioningStatePayloadPoller(token string) (LrosaDsPutError201NoProvisioningStatePayloadPoller, error) {
-	pt, err := resumePollingTracker(token, client.putError201NoProvisioningStatePayloadHandleError)
+	pt, err := resumePollingTracker("lrosaDsPutError201NoProvisioningStatePayloadPoller", token, client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1703,7 +1703,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putNonRetry201Creating400HandleError)
+	pt, err := createPollingTracker("lrosaDsPutNonRetry201Creating400Poller", resp, client.putNonRetry201Creating400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1714,7 +1714,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400(ctx context.Cont
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutNonRetry201Creating400Poller(token string) (LrosaDsPutNonRetry201Creating400Poller, error) {
-	pt, err := resumePollingTracker(token, client.putNonRetry201Creating400HandleError)
+	pt, err := resumePollingTracker("lrosaDsPutNonRetry201Creating400Poller", token, client.putNonRetry201Creating400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1764,7 +1764,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400InvalidJSON(ctx c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putNonRetry201Creating400InvalidJsonHandleError)
+	pt, err := createPollingTracker("lrosaDsPutNonRetry201Creating400InvalidJSONPoller", resp, client.putNonRetry201Creating400InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1775,7 +1775,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400InvalidJSON(ctx c
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutNonRetry201Creating400InvalidJsonPoller(token string) (LrosaDsPutNonRetry201Creating400InvalidJsonPoller, error) {
-	pt, err := resumePollingTracker(token, client.putNonRetry201Creating400InvalidJsonHandleError)
+	pt, err := resumePollingTracker("lrosaDsPutNonRetry201Creating400InvalidJSONPoller", token, client.putNonRetry201Creating400InvalidJsonHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1825,7 +1825,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry400(ctx context.Context, lrosaD
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putNonRetry400HandleError)
+	pt, err := createPollingTracker("lrosaDsPutNonRetry400Poller", resp, client.putNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1836,7 +1836,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry400(ctx context.Context, lrosaD
 }
 
 func (client *lrosaDsOperations) ResumeLrosaDsPutNonRetry400Poller(token string) (LrosaDsPutNonRetry400Poller, error) {
-	pt, err := resumePollingTracker(token, client.putNonRetry400HandleError)
+	pt, err := resumePollingTracker("lrosaDsPutNonRetry400Poller", token, client.putNonRetry400HandleError)
 	if err != nil {
 		return nil, err
 	}

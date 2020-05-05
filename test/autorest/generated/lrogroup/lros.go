@@ -188,7 +188,7 @@ func (client *lrOSOperations) BeginDelete202NoRetry204(ctx context.Context) (LrO
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.delete202NoRetry204HandleError)
+	pt, err := createPollingTracker("lrOSDelete202NoRetry204Poller", resp, client.delete202NoRetry204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func (client *lrOSOperations) BeginDelete202NoRetry204(ctx context.Context) (LrO
 }
 
 func (client *lrOSOperations) ResumeLrOSDelete202NoRetry204Poller(token string) (LrOSDelete202NoRetry204Poller, error) {
-	pt, err := resumePollingTracker(token, client.delete202NoRetry204HandleError)
+	pt, err := resumePollingTracker("lrOSDelete202NoRetry204Poller", token, client.delete202NoRetry204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +246,7 @@ func (client *lrOSOperations) BeginDelete202Retry200(ctx context.Context) (LrOSD
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.delete202Retry200HandleError)
+	pt, err := createPollingTracker("lrOSDelete202Retry200Poller", resp, client.delete202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +257,7 @@ func (client *lrOSOperations) BeginDelete202Retry200(ctx context.Context) (LrOSD
 }
 
 func (client *lrOSOperations) ResumeLrOSDelete202Retry200Poller(token string) (LrOSDelete202Retry200Poller, error) {
-	pt, err := resumePollingTracker(token, client.delete202Retry200HandleError)
+	pt, err := resumePollingTracker("lrOSDelete202Retry200Poller", token, client.delete202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -304,7 +304,7 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (LrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.delete204SucceededHandleError)
+	pt, err := createPollingTracker("lrOSDelete204SucceededPoller", resp, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -315,7 +315,7 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (LrOS
 }
 
 func (client *lrOSOperations) ResumeLrOSDelete204SucceededPoller(token string) (LrOSDelete204SucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.delete204SucceededHandleError)
+	pt, err := resumePollingTracker("lrOSDelete204SucceededPoller", token, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("lrOSDeleteAsyncNoHeaderInRetryPoller", resp, client.deleteAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +372,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Contex
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteAsyncNoHeaderInRetryPoller(token string) (LrOSDeleteAsyncNoHeaderInRetryPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncNoHeaderInRetryHandleError)
+	pt, err := resumePollingTracker("lrOSDeleteAsyncNoHeaderInRetryPoller", token, client.deleteAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -422,7 +422,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncNoRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSDeleteAsyncNoRetrySucceededPoller", resp, client.deleteAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -433,7 +433,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Conte
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteAsyncNoRetrySucceededPoller(token string) (LrOSDeleteAsyncNoRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncNoRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSDeleteAsyncNoRetrySucceededPoller", token, client.deleteAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +494,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncRetryFailedHandleError)
+	pt, err := createPollingTracker("lrOSDeleteAsyncRetryFailedPoller", resp, client.deleteAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -505,7 +505,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteAsyncRetryFailedPoller(token string) (LrOSDeleteAsyncRetryFailedPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncRetryFailedHandleError)
+	pt, err := resumePollingTracker("lrOSDeleteAsyncRetryFailedPoller", token, client.deleteAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -566,7 +566,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSDeleteAsyncRetrySucceededPoller", resp, client.deleteAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -577,7 +577,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteAsyncRetrySucceededPoller(token string) (LrOSDeleteAsyncRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSDeleteAsyncRetrySucceededPoller", token, client.deleteAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +638,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteAsyncRetrycanceledHandleError)
+	pt, err := createPollingTracker("lrOSDeleteAsyncRetrycanceledPoller", resp, client.deleteAsyncRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -649,7 +649,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context)
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteAsyncRetrycanceledPoller(token string) (LrOSDeleteAsyncRetrycanceledPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteAsyncRetrycanceledHandleError)
+	pt, err := resumePollingTracker("lrOSDeleteAsyncRetrycanceledPoller", token, client.deleteAsyncRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -710,7 +710,7 @@ func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (L
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("lrOSDeleteNoHeaderInRetryPoller", resp, client.deleteNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -721,7 +721,7 @@ func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (L
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteNoHeaderInRetryPoller(token string) (LrOSDeleteNoHeaderInRetryPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteNoHeaderInRetryHandleError)
+	pt, err := resumePollingTracker("lrOSDeleteNoHeaderInRetryPoller", token, client.deleteNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -771,7 +771,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := createPollingTracker("lrOSDeleteProvisioning202Accepted200SucceededPoller", resp, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -782,7 +782,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteProvisioning202Accepted200SucceededPoller(token string) (LrOSDeleteProvisioning202Accepted200SucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := resumePollingTracker("lrOSDeleteProvisioning202Accepted200SucceededPoller", token, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -829,7 +829,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202DeletingFailed200(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteProvisioning202DeletingFailed200HandleError)
+	pt, err := createPollingTracker("lrOSDeleteProvisioning202DeletingFailed200Poller", resp, client.deleteProvisioning202DeletingFailed200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -840,7 +840,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202DeletingFailed200(ctx co
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteProvisioning202DeletingFailed200Poller(token string) (LrOSDeleteProvisioning202DeletingFailed200Poller, error) {
-	pt, err := resumePollingTracker(token, client.deleteProvisioning202DeletingFailed200HandleError)
+	pt, err := resumePollingTracker("lrOSDeleteProvisioning202DeletingFailed200Poller", token, client.deleteProvisioning202DeletingFailed200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -887,7 +887,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Deletingcanceled200(ctx 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.deleteProvisioning202Deletingcanceled200HandleError)
+	pt, err := createPollingTracker("lrOSDeleteProvisioning202Deletingcanceled200Poller", resp, client.deleteProvisioning202Deletingcanceled200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -898,7 +898,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Deletingcanceled200(ctx 
 }
 
 func (client *lrOSOperations) ResumeLrOSDeleteProvisioning202Deletingcanceled200Poller(token string) (LrOSDeleteProvisioning202Deletingcanceled200Poller, error) {
-	pt, err := resumePollingTracker(token, client.deleteProvisioning202Deletingcanceled200HandleError)
+	pt, err := resumePollingTracker("lrOSDeleteProvisioning202Deletingcanceled200Poller", token, client.deleteProvisioning202Deletingcanceled200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -945,7 +945,7 @@ func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (LrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.post200WithPayloadHandleError)
+	pt, err := createPollingTracker("lrOSPost200WithPayloadPoller", resp, client.post200WithPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -956,7 +956,7 @@ func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (LrOS
 }
 
 func (client *lrOSOperations) ResumeLrOSPost200WithPayloadPoller(token string) (LrOSPost200WithPayloadPoller, error) {
-	pt, err := resumePollingTracker(token, client.post200WithPayloadHandleError)
+	pt, err := resumePollingTracker("lrOSPost200WithPayloadPoller", token, client.post200WithPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1003,7 +1003,7 @@ func (client *lrOSOperations) BeginPost202NoRetry204(ctx context.Context, lrOSPo
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.post202NoRetry204HandleError)
+	pt, err := createPollingTracker("lrOSPost202NoRetry204Poller", resp, client.post202NoRetry204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1014,7 +1014,7 @@ func (client *lrOSOperations) BeginPost202NoRetry204(ctx context.Context, lrOSPo
 }
 
 func (client *lrOSOperations) ResumeLrOSPost202NoRetry204Poller(token string) (LrOSPost202NoRetry204Poller, error) {
-	pt, err := resumePollingTracker(token, client.post202NoRetry204HandleError)
+	pt, err := resumePollingTracker("lrOSPost202NoRetry204Poller", token, client.post202NoRetry204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1064,7 +1064,7 @@ func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.post202Retry200HandleError)
+	pt, err := createPollingTracker("lrOSPost202Retry200Poller", resp, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1075,7 +1075,7 @@ func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost
 }
 
 func (client *lrOSOperations) ResumeLrOSPost202Retry200Poller(token string) (LrOSPost202Retry200Poller, error) {
-	pt, err := resumePollingTracker(token, client.post202Retry200HandleError)
+	pt, err := resumePollingTracker("lrOSPost202Retry200Poller", token, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1136,7 +1136,7 @@ func (client *lrOSOperations) BeginPostAsyncNoRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncNoRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSPostAsyncNoRetrySucceededPoller", resp, client.postAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1147,7 +1147,7 @@ func (client *lrOSOperations) BeginPostAsyncNoRetrySucceeded(ctx context.Context
 }
 
 func (client *lrOSOperations) ResumeLrOSPostAsyncNoRetrySucceededPoller(token string) (LrOSPostAsyncNoRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncNoRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSPostAsyncNoRetrySucceededPoller", token, client.postAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1197,7 +1197,7 @@ func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrO
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRetryFailedHandleError)
+	pt, err := createPollingTracker("lrOSPostAsyncRetryFailedPoller", resp, client.postAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1208,7 +1208,7 @@ func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrO
 }
 
 func (client *lrOSOperations) ResumeLrOSPostAsyncRetryFailedPoller(token string) (LrOSPostAsyncRetryFailedPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRetryFailedHandleError)
+	pt, err := resumePollingTracker("lrOSPostAsyncRetryFailedPoller", token, client.postAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1272,7 +1272,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrySucceeded(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSPostAsyncRetrySucceededPoller", resp, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1283,7 +1283,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrySucceeded(ctx context.Context, 
 }
 
 func (client *lrOSOperations) ResumeLrOSPostAsyncRetrySucceededPoller(token string) (LrOSPostAsyncRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSPostAsyncRetrySucceededPoller", token, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1333,7 +1333,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRetrycanceledHandleError)
+	pt, err := createPollingTracker("lrOSPostAsyncRetrycanceledPoller", resp, client.postAsyncRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1344,7 +1344,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, l
 }
 
 func (client *lrOSOperations) ResumeLrOSPostAsyncRetrycanceledPoller(token string) (LrOSPostAsyncRetrycanceledPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRetrycanceledHandleError)
+	pt, err := resumePollingTracker("lrOSPostAsyncRetrycanceledPoller", token, client.postAsyncRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1408,7 +1408,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
+	pt, err := createPollingTracker("lrOSPostDoubleHeadersFinalAzureHeaderGetPoller", resp, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1419,7 +1419,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx cont
 }
 
 func (client *lrOSOperations) ResumeLrOSPostDoubleHeadersFinalAzureHeaderGetPoller(token string) (LrOSPostDoubleHeadersFinalAzureHeaderGetPoller, error) {
-	pt, err := resumePollingTracker(token, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
+	pt, err := resumePollingTracker("lrOSPostDoubleHeadersFinalAzureHeaderGetPoller", token, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1466,7 +1466,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
+	pt, err := createPollingTracker("lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller", resp, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1477,7 +1477,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(c
 }
 
 func (client *lrOSOperations) ResumeLrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller(token string) (LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller, error) {
-	pt, err := resumePollingTracker(token, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
+	pt, err := resumePollingTracker("lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller", token, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1524,7 +1524,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalLocationGet(ctx context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postDoubleHeadersFinalLocationGetHandleError)
+	pt, err := createPollingTracker("lrOSPostDoubleHeadersFinalLocationGetPoller", resp, client.postDoubleHeadersFinalLocationGetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1535,7 +1535,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalLocationGet(ctx context
 }
 
 func (client *lrOSOperations) ResumeLrOSPostDoubleHeadersFinalLocationGetPoller(token string) (LrOSPostDoubleHeadersFinalLocationGetPoller, error) {
-	pt, err := resumePollingTracker(token, client.postDoubleHeadersFinalLocationGetHandleError)
+	pt, err := resumePollingTracker("lrOSPostDoubleHeadersFinalLocationGetPoller", token, client.postDoubleHeadersFinalLocationGetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1582,7 +1582,7 @@ func (client *lrOSOperations) BeginPut200Acceptedcanceled200(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put200Acceptedcanceled200HandleError)
+	pt, err := createPollingTracker("lrOSPut200Acceptedcanceled200Poller", resp, client.put200Acceptedcanceled200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1593,7 +1593,7 @@ func (client *lrOSOperations) BeginPut200Acceptedcanceled200(ctx context.Context
 }
 
 func (client *lrOSOperations) ResumeLrOSPut200Acceptedcanceled200Poller(token string) (LrOSPut200Acceptedcanceled200Poller, error) {
-	pt, err := resumePollingTracker(token, client.put200Acceptedcanceled200HandleError)
+	pt, err := resumePollingTracker("lrOSPut200Acceptedcanceled200Poller", token, client.put200Acceptedcanceled200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1643,7 +1643,7 @@ func (client *lrOSOperations) BeginPut200Succeeded(ctx context.Context, lrOSPut2
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put200SucceededHandleError)
+	pt, err := createPollingTracker("lrOSPut200SucceededPoller", resp, client.put200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1654,7 +1654,7 @@ func (client *lrOSOperations) BeginPut200Succeeded(ctx context.Context, lrOSPut2
 }
 
 func (client *lrOSOperations) ResumeLrOSPut200SucceededPoller(token string) (LrOSPut200SucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.put200SucceededHandleError)
+	pt, err := resumePollingTracker("lrOSPut200SucceededPoller", token, client.put200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1704,7 +1704,7 @@ func (client *lrOSOperations) BeginPut200SucceededNoState(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put200SucceededNoStateHandleError)
+	pt, err := createPollingTracker("lrOSPut200SucceededNoStatePoller", resp, client.put200SucceededNoStateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1715,7 +1715,7 @@ func (client *lrOSOperations) BeginPut200SucceededNoState(ctx context.Context, l
 }
 
 func (client *lrOSOperations) ResumeLrOSPut200SucceededNoStatePoller(token string) (LrOSPut200SucceededNoStatePoller, error) {
-	pt, err := resumePollingTracker(token, client.put200SucceededNoStateHandleError)
+	pt, err := resumePollingTracker("lrOSPut200SucceededNoStatePoller", token, client.put200SucceededNoStateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1765,7 +1765,7 @@ func (client *lrOSOperations) BeginPut200UpdatingSucceeded204(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put200UpdatingSucceeded204HandleError)
+	pt, err := createPollingTracker("lrOSPut200UpdatingSucceeded204Poller", resp, client.put200UpdatingSucceeded204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1776,7 +1776,7 @@ func (client *lrOSOperations) BeginPut200UpdatingSucceeded204(ctx context.Contex
 }
 
 func (client *lrOSOperations) ResumeLrOSPut200UpdatingSucceeded204Poller(token string) (LrOSPut200UpdatingSucceeded204Poller, error) {
-	pt, err := resumePollingTracker(token, client.put200UpdatingSucceeded204HandleError)
+	pt, err := resumePollingTracker("lrOSPut200UpdatingSucceeded204Poller", token, client.put200UpdatingSucceeded204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1826,7 +1826,7 @@ func (client *lrOSOperations) BeginPut201CreatingFailed200(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put201CreatingFailed200HandleError)
+	pt, err := createPollingTracker("lrOSPut201CreatingFailed200Poller", resp, client.put201CreatingFailed200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1837,7 +1837,7 @@ func (client *lrOSOperations) BeginPut201CreatingFailed200(ctx context.Context, 
 }
 
 func (client *lrOSOperations) ResumeLrOSPut201CreatingFailed200Poller(token string) (LrOSPut201CreatingFailed200Poller, error) {
-	pt, err := resumePollingTracker(token, client.put201CreatingFailed200HandleError)
+	pt, err := resumePollingTracker("lrOSPut201CreatingFailed200Poller", token, client.put201CreatingFailed200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1887,7 +1887,7 @@ func (client *lrOSOperations) BeginPut201CreatingSucceeded200(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put201CreatingSucceeded200HandleError)
+	pt, err := createPollingTracker("lrOSPut201CreatingSucceeded200Poller", resp, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1898,7 +1898,7 @@ func (client *lrOSOperations) BeginPut201CreatingSucceeded200(ctx context.Contex
 }
 
 func (client *lrOSOperations) ResumeLrOSPut201CreatingSucceeded200Poller(token string) (LrOSPut201CreatingSucceeded200Poller, error) {
-	pt, err := resumePollingTracker(token, client.put201CreatingSucceeded200HandleError)
+	pt, err := resumePollingTracker("lrOSPut201CreatingSucceeded200Poller", token, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1948,7 +1948,7 @@ func (client *lrOSOperations) BeginPut202Retry200(ctx context.Context, lrOSPut20
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put202Retry200HandleError)
+	pt, err := createPollingTracker("lrOSPut202Retry200Poller", resp, client.put202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1959,7 +1959,7 @@ func (client *lrOSOperations) BeginPut202Retry200(ctx context.Context, lrOSPut20
 }
 
 func (client *lrOSOperations) ResumeLrOSPut202Retry200Poller(token string) (LrOSPut202Retry200Poller, error) {
-	pt, err := resumePollingTracker(token, client.put202Retry200HandleError)
+	pt, err := resumePollingTracker("lrOSPut202Retry200Poller", token, client.put202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2009,7 +2009,7 @@ func (client *lrOSOperations) BeginPutAsyncNoHeaderInRetry(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("lrOSPutAsyncNoHeaderInRetryPoller", resp, client.putAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2020,7 +2020,7 @@ func (client *lrOSOperations) BeginPutAsyncNoHeaderInRetry(ctx context.Context, 
 }
 
 func (client *lrOSOperations) ResumeLrOSPutAsyncNoHeaderInRetryPoller(token string) (LrOSPutAsyncNoHeaderInRetryPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncNoHeaderInRetryHandleError)
+	pt, err := resumePollingTracker("lrOSPutAsyncNoHeaderInRetryPoller", token, client.putAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2070,7 +2070,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrySucceeded(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncNoRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSPutAsyncNoRetrySucceededPoller", resp, client.putAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2081,7 +2081,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrySucceeded(ctx context.Context,
 }
 
 func (client *lrOSOperations) ResumeLrOSPutAsyncNoRetrySucceededPoller(token string) (LrOSPutAsyncNoRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncNoRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSPutAsyncNoRetrySucceededPoller", token, client.putAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2131,7 +2131,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrycanceled(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncNoRetrycanceledHandleError)
+	pt, err := createPollingTracker("lrOSPutAsyncNoRetrycanceledPoller", resp, client.putAsyncNoRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2142,7 +2142,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrycanceled(ctx context.Context, 
 }
 
 func (client *lrOSOperations) ResumeLrOSPutAsyncNoRetrycanceledPoller(token string) (LrOSPutAsyncNoRetrycanceledPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncNoRetrycanceledHandleError)
+	pt, err := resumePollingTracker("lrOSPutAsyncNoRetrycanceledPoller", token, client.putAsyncNoRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2192,7 +2192,7 @@ func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncNonResourceHandleError)
+	pt, err := createPollingTracker("lrOSPutAsyncNonResourcePoller", resp, client.putAsyncNonResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2203,7 +2203,7 @@ func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOS
 }
 
 func (client *lrOSOperations) ResumeLrOSPutAsyncNonResourcePoller(token string) (LrOSPutAsyncNonResourcePoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncNonResourceHandleError)
+	pt, err := resumePollingTracker("lrOSPutAsyncNonResourcePoller", token, client.putAsyncNonResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2253,7 +2253,7 @@ func (client *lrOSOperations) BeginPutAsyncRetryFailed(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRetryFailedHandleError)
+	pt, err := createPollingTracker("lrOSPutAsyncRetryFailedPoller", resp, client.putAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2264,7 +2264,7 @@ func (client *lrOSOperations) BeginPutAsyncRetryFailed(ctx context.Context, lrOS
 }
 
 func (client *lrOSOperations) ResumeLrOSPutAsyncRetryFailedPoller(token string) (LrOSPutAsyncRetryFailedPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRetryFailedHandleError)
+	pt, err := resumePollingTracker("lrOSPutAsyncRetryFailedPoller", token, client.putAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2314,7 +2314,7 @@ func (client *lrOSOperations) BeginPutAsyncRetrySucceeded(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSPutAsyncRetrySucceededPoller", resp, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2325,7 +2325,7 @@ func (client *lrOSOperations) BeginPutAsyncRetrySucceeded(ctx context.Context, l
 }
 
 func (client *lrOSOperations) ResumeLrOSPutAsyncRetrySucceededPoller(token string) (LrOSPutAsyncRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSPutAsyncRetrySucceededPoller", token, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2375,7 +2375,7 @@ func (client *lrOSOperations) BeginPutAsyncSubResource(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncSubResourceHandleError)
+	pt, err := createPollingTracker("lrOSPutAsyncSubResourcePoller", resp, client.putAsyncSubResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2386,7 +2386,7 @@ func (client *lrOSOperations) BeginPutAsyncSubResource(ctx context.Context, lrOS
 }
 
 func (client *lrOSOperations) ResumeLrOSPutAsyncSubResourcePoller(token string) (LrOSPutAsyncSubResourcePoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncSubResourceHandleError)
+	pt, err := resumePollingTracker("lrOSPutAsyncSubResourcePoller", token, client.putAsyncSubResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2436,7 +2436,7 @@ func (client *lrOSOperations) BeginPutNoHeaderInRetry(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("lrOSPutNoHeaderInRetryPoller", resp, client.putNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2447,7 +2447,7 @@ func (client *lrOSOperations) BeginPutNoHeaderInRetry(ctx context.Context, lrOSP
 }
 
 func (client *lrOSOperations) ResumeLrOSPutNoHeaderInRetryPoller(token string) (LrOSPutNoHeaderInRetryPoller, error) {
-	pt, err := resumePollingTracker(token, client.putNoHeaderInRetryHandleError)
+	pt, err := resumePollingTracker("lrOSPutNoHeaderInRetryPoller", token, client.putNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2497,7 +2497,7 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putNonResourceHandleError)
+	pt, err := createPollingTracker("lrOSPutNonResourcePoller", resp, client.putNonResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2508,7 +2508,7 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 }
 
 func (client *lrOSOperations) ResumeLrOSPutNonResourcePoller(token string) (LrOSPutNonResourcePoller, error) {
-	pt, err := resumePollingTracker(token, client.putNonResourceHandleError)
+	pt, err := resumePollingTracker("lrOSPutNonResourcePoller", token, client.putNonResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2558,7 +2558,7 @@ func (client *lrOSOperations) BeginPutSubResource(ctx context.Context, lrOSPutSu
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putSubResourceHandleError)
+	pt, err := createPollingTracker("lrOSPutSubResourcePoller", resp, client.putSubResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2569,7 +2569,7 @@ func (client *lrOSOperations) BeginPutSubResource(ctx context.Context, lrOSPutSu
 }
 
 func (client *lrOSOperations) ResumeLrOSPutSubResourcePoller(token string) (LrOSPutSubResourcePoller, error) {
-	pt, err := resumePollingTracker(token, client.putSubResourceHandleError)
+	pt, err := resumePollingTracker("lrOSPutSubResourcePoller", token, client.putSubResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
