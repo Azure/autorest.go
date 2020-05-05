@@ -16,20 +16,18 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   if (session.model.language.go!.pollerTypes === undefined) {
     return '';
   }
-  let text = await contentPreamble(session);
+  let finalText = await contentPreamble(session);
 
   // add standard imports
   const imports = new ImportManager();
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
-  imports.add('net/url');
   imports.add('time');
   imports.add('errors');
   imports.add('encoding/json');
-  imports.add('fmt');
-  text += imports.text();
-
+  let text = '';
+  let pageableLRO = false;
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   for (const poller of values(pollers)) {
@@ -57,6 +55,9 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
 	}
   return result, nil`;
     if (poller.op.language.go!.pageableType) {
+      imports.add('fmt');
+      imports.add('net/url');
+      pageableLRO = true;
       responseText = '\tclient := p.client\n';
       responseText += '\tu, err := url.Parse(p.pt.pollingURL())\n';
       responseText += '\tif err != nil {\n';
@@ -151,7 +152,9 @@ func (p *${poller.name}) done(ctx context.Context) (done bool, err error) {
 
 `;
   }
-  return text;
+  finalText += imports.text();
+  finalText += text;
+  return finalText;
 }
 
 // Creates the content in pollers_helper.go
