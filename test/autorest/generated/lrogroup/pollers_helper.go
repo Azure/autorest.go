@@ -118,7 +118,7 @@ type pollingTrackerBase struct {
 }
 
 // done queries the service to see if the operation has completed.
-func done(ctx context.Context, p azcore.Pipeline, pt pollingTracker) bool {
+func lroPollDone(ctx context.Context, p azcore.Pipeline, pt pollingTracker) bool {
 	if pt.hasTerminated() {
 		return true
 	}
@@ -194,7 +194,7 @@ func (pt *pollingTrackerBase) updateRawBody() error {
 		defer pt.resp.Body.Close()
 		b, err := ioutil.ReadAll(pt.resp.Body)
 		if err != nil {
-			pt.Err = errors.New("failed to read response body")
+			pt.Err = err
 			return pt.Err
 		}
 		// observed in 204 responses over HTTP/2.0; the content length is -1 but body is empty
@@ -202,7 +202,7 @@ func (pt *pollingTrackerBase) updateRawBody() error {
 			return nil
 		}
 		if err = json.Unmarshal(b, &pt.rawBody); err != nil {
-			pt.Err = errors.New("failed to unmarshal response body")
+			pt.Err = err
 			return pt.Err
 		}
 	}
@@ -219,7 +219,7 @@ func (pt *pollingTrackerBase) pollForStatus(ctx context.Context, client azcore.P
 	resp, err := client.Do(ctx, req)
 	pt.resp = resp
 	if err != nil {
-		pt.Err = errors.New("failed to send HTTP request")
+		pt.Err = err
 		return pt.Err
 	}
 	if pt.resp.HasStatusCode(pollingCodes[:]...) {
@@ -254,7 +254,7 @@ func (pt *pollingTrackerBase) updatePollingState(provStateApl bool) error {
 				pt.State = operationSucceeded
 			}
 		} else {
-			pt.Err = errors.New("the response from the async operation has an invalid status code")
+			pt.Err = fmt.Errorf("the response from the async operation has an invalid status code: %d", pt.resp.StatusCode)
 			return pt.Err
 		}
 	}
