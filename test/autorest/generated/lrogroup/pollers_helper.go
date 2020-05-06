@@ -10,12 +10,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 const (
@@ -87,7 +86,7 @@ type pollingTracker interface {
 	latestResponse() *azcore.Response
 
 	// done returns the final result of the polling request
-	done(ctx context.Context, p azcore.Pipeline) (bool, error)
+	done(ctx context.Context, p azcore.Pipeline) bool
 }
 
 type methodErrorHandler func(resp *azcore.Response) error
@@ -317,31 +316,31 @@ type pollingTrackerDelete struct {
 }
 
 // done queries the service to see if the operation has completed.
-func (pt *pollingTrackerDelete) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+func (pt *pollingTrackerDelete) done(ctx context.Context, p azcore.Pipeline) bool {
 	if pt.hasTerminated() {
-		return true, pt.pollingError()
+		return true
 	}
 	if err := pt.pollForStatus(ctx, p); err != nil {
 		pt.Err = err
-		return false, err
+		return true
 	}
 	if err := pt.checkForErrors(); err != nil {
 		pt.Err = err
-		return pt.hasTerminated(), err
+		return true
 	}
 	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
 		pt.Err = err
-		return false, err
+		return true
 	}
 	if err := pt.initPollingMethod(); err != nil {
 		pt.Err = err
-		return false, err
+		return true
 	}
 	if err := pt.updatePollingMethod(); err != nil {
 		pt.Err = err
-		return false, err
+		return true
 	}
-	return pt.hasTerminated(), pt.pollingError()
+	return pt.hasTerminated()
 }
 
 func (pt *pollingTrackerDelete) updatePollingMethod() error {
@@ -401,26 +400,31 @@ type pollingTrackerPatch struct {
 }
 
 // done queries the service to see if the operation has completed.
-func (pt *pollingTrackerPatch) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+func (pt *pollingTrackerPatch) done(ctx context.Context, p azcore.Pipeline) bool {
 	if pt.hasTerminated() {
-		return true, pt.pollingError()
+		return true
 	}
 	if err := pt.pollForStatus(ctx, p); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.checkForErrors(); err != nil {
-		return pt.hasTerminated(), err
+		pt.Err = err
+		return true
 	}
 	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.initPollingMethod(); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.updatePollingMethod(); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
-	return pt.hasTerminated(), pt.pollingError()
+	return pt.hasTerminated()
 }
 
 func (pt *pollingTrackerPatch) updatePollingMethod() error {
@@ -482,26 +486,31 @@ type pollingTrackerPost struct {
 }
 
 // done queries the service to see if the operation has completed.
-func (pt *pollingTrackerPost) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+func (pt *pollingTrackerPost) done(ctx context.Context, p azcore.Pipeline) bool {
 	if pt.hasTerminated() {
-		return true, pt.pollingError()
+		return true
 	}
 	if err := pt.pollForStatus(ctx, p); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.checkForErrors(); err != nil {
-		return pt.hasTerminated(), err
+		pt.Err = err
+		return true
 	}
 	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.initPollingMethod(); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.updatePollingMethod(); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
-	return pt.hasTerminated(), pt.pollingError()
+	return pt.hasTerminated()
 }
 
 func (pt *pollingTrackerPost) updatePollingMethod() error {
@@ -561,26 +570,31 @@ type pollingTrackerPut struct {
 }
 
 // done queries the service to see if the operation has completed.
-func (pt *pollingTrackerPut) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+func (pt *pollingTrackerPut) done(ctx context.Context, p azcore.Pipeline) bool {
 	if pt.hasTerminated() {
-		return true, pt.pollingError()
+		return true
 	}
 	if err := pt.pollForStatus(ctx, p); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.checkForErrors(); err != nil {
-		return pt.hasTerminated(), err
+		pt.Err = err
+		return true
 	}
 	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.initPollingMethod(); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
 	if err := pt.updatePollingMethod(); err != nil {
-		return false, err
+		pt.Err = err
+		return true
 	}
-	return pt.hasTerminated(), pt.pollingError()
+	return pt.hasTerminated()
 }
 
 func (pt *pollingTrackerPut) updatePollingMethod() error {
