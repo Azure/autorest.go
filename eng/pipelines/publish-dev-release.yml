@@ -5,86 +5,72 @@ variables:
   NodeVersion: '12.x'
   goTestPath: '$(system.defaultWorkingDirectory)/test'
   GOBIN: '$(system.defaultWorkingDirectory)/bin/go'
+  GOROOT: '/usr/local/go1.14'
 
-jobs:
-  - job: 'AutoRest_Go_Dev_Release'
+pool:
+  vmImage: 'ubuntu-18.04'
+
+steps:
+  - task: NodeTool@0
+    displayName: 'Install Node $(NodeVersion)'
+    inputs:
+      versionSpec: '$(NodeVersion)'
+
+  - script: |
+      cd $(Build.SourcesDirectory)
+      npm install -g "@microsoft/rush"
+      rush update --debug
+      npm install -g autorest
+    displayName: 'Prepare Generator Environment'
+
+  - script: |
+      rush rebuild -v
+    displayName: 'Build Generator Sources'
+
+  - script: |
+      rush regenerate
+      git add -A ./test/.
+      git diff --staged -w 1>&2
+    displayName: 'Regenerate Autorest Tests'
+    failOnStderr: true
+  - script: |
+      set -e
+      echo '##vso[task.prependpath]$(GOROOT)/bin'
+    displayName: 'Create Go Workspace'
+
+  - script: |
+      set -e
+      go version
+      go get github.com/jstemmer/go-junit-report
+    displayName: 'Install Dependencies'
+    workingDirectory: '$(goTestPath)'
+
+  - script: go vet $(go list ./...)
+    displayName: 'Vet'
+    workingDirectory: '$(goTestPath)'
+
+  - script: |
+      pushd ../src/node_modules/@microsoft.azure/autorest.testserver
+      npm start&
+      popd
+      go test -v ./... 2>&1 | $(GOBIN)/go-junit-report > report.xml
+      go run ./autorest/covreport/main.go
+      pushd ../src/node_modules/@microsoft.azure/autorest.testserver
+      npm stop
+    displayName: 'Run Acceptance Tests'
+    workingDirectory: '$(goTestPath)'
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: $(goTestPath)/report.xml
+      failTaskOnFailedTests: true
+
+  - pwsh: |
+      $currentVersion = node -p -e "require('./src/package.json').version";
+      $currentVersion="$currentVersion-$(Build.BuildNumber)";
+      cd src
+      npm version --no-git-tag-version $currentVersion
+      npm pack;
+      npx publish-release --token $(package-write-token) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Preview version of Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
     displayName: 'Publish Dev Release'
-
-    strategy:
-      matrix:
-        Linux_Go113:
-          vm.image: 'ubuntu-18.04'
-          go.version: '1.13'
-          GOROOT: '/usr/local/go$(go.version)'
-        Linux_Go114:
-          vm.image: 'ubuntu-18.04'
-          go.version: '1.14'
-          GOROOT: '/usr/local/go$(go.version)'
-
-    pool:
-      vmImage: '$(vm.image)'
-
-    steps:
-      - task: NodeTool@0
-        displayName: 'Install Node $(NodeVersion)'
-        inputs:
-          versionSpec: '$(NodeVersion)'
-
-      - script: |
-          cd $(Build.SourcesDirectory)
-          npm install -g "@microsoft/rush"
-          rush update --debug
-          npm install -g autorest
-        displayName: 'Prepare Generator Environment'
-
-      - script: |
-          rush rebuild -v
-        displayName: 'Build Generator Sources'
-
-      - script: |
-          rush regenerate
-          git add -A ./test/.
-          git diff --staged -w 1>&2
-        displayName: 'Regenerate Autorest Tests'
-        failOnStderr: true
-      - script: |
-          set -e
-          echo '##vso[task.prependpath]$(GOROOT)/bin'
-        displayName: 'Create Go Workspace'
-
-      - script: |
-          set -e
-          go version
-          go get github.com/jstemmer/go-junit-report
-        displayName: 'Install Dependencies'
-        workingDirectory: '$(goTestPath)'
-
-      - script: go vet $(go list ./...)
-        displayName: 'Vet'
-        workingDirectory: '$(goTestPath)'
-
-      - script: |
-          pushd ../src/node_modules/@microsoft.azure/autorest.testserver
-          npm start&
-          popd
-          go test -v ./... 2>&1 | $(GOBIN)/go-junit-report > report.xml
-          go run ./autorest/covreport/main.go
-          pushd ../src/node_modules/@microsoft.azure/autorest.testserver
-          npm stop
-        displayName: 'Run Acceptance Tests'
-        workingDirectory: '$(goTestPath)'
-
-      - task: PublishTestResults@2
-        inputs:
-          testRunner: JUnit
-          testResultsFiles: $(goTestPath)/report.xml
-          failTaskOnFailedTests: true
-
-      - pwsh: |
-          $currentVersion = node -p -e "require('./src/package.json').version";
-          $currentVersion="$currentVersion-$(Build.BuildNumber)";
-          cd src
-          npm version --no-git-tag-version $currentVersion
-          npm pack;
-          npx publish-release --token $(package-write-token) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Preview version of Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
-        displayName: 'Publish Dev Release'
