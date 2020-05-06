@@ -37,6 +37,22 @@ func httpClientWithCookieJar() azcore.Transport {
 	})
 }
 
+func TestLROResumeWrongPoller(t *testing.T) {
+	op := getLROSOperations(t)
+	poller, err := op.BeginDelete202NoRetry204(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = op.ResumeLrOSDelete202Retry200Poller(rt)
+	if err == nil {
+		t.Fatal("expected an error but did not find receive one")
+	}
+}
+
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	op := getLROSOperations(t)
 	poller, err := op.BeginDelete202NoRetry204(context.Background())
