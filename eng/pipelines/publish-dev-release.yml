@@ -1,12 +1,5 @@
-trigger:
-  branches:
-    include:
-    - track2
-
-pr:
-  branches:
-    include:
-    - track2
+trigger: none
+pr: none
 
 variables:
   NodeVersion: '12.x'
@@ -14,8 +7,8 @@ variables:
   GOBIN: '$(system.defaultWorkingDirectory)/bin/go'
 
 jobs:
-  - job: 'AutoRest_Go_CI'
-    displayName: 'Run AutoRest CI Checks'
+  - job: 'AutoRest_Go_Dev_Release'
+    displayName: 'Publish Dev Release'
 
     strategy:
       matrix:
@@ -87,10 +80,11 @@ jobs:
           testResultsFiles: $(goTestPath)/report.xml
           failTaskOnFailedTests: true
 
-      - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
-        - pwsh: |
-            $currentVersion = node -p -e "require('./src/package.json').version";
-            $currentVersion="$currentVersion-$(Build.BuildNumber)";
-            cd src/node_modules/@microsoft.azure/autorest.testserver;
-            npm run coverage-push -- $(Build.Repository.Name) $(Build.SourceBranch) $(github-token) $(storage-coverage-user) $(storage-coverage-pass) $currentVersion;
-          displayName: 'Publish AutoRest Test Server Coverage Report'
+      - pwsh: |
+          $currentVersion = node -p -e "require('./src/package.json').version";
+          $currentVersion="$currentVersion-$(Build.BuildNumber)";
+          cd src
+          npm version --no-git-tag-version $currentVersion
+          npm pack;
+          npx publish-release --token $(package-write-token) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Preview version of Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
+        displayName: 'Publish Dev Release'
