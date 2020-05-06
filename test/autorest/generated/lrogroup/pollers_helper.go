@@ -10,11 +10,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 const (
@@ -84,6 +85,9 @@ type pollingTracker interface {
 
 	// returns the cached HTTP response after a call to pollForStatus(), can be nil
 	latestResponse() *azcore.Response
+
+	// done returns the final result of the polling request
+	done(ctx context.Context, p azcore.Pipeline) (bool, error)
 }
 
 type methodErrorHandler func(resp *azcore.Response) error
@@ -312,6 +316,34 @@ type pollingTrackerDelete struct {
 	pollingTrackerBase
 }
 
+// done queries the service to see if the operation has completed.
+func (pt *pollingTrackerDelete) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+	if pt.hasTerminated() {
+		return true, pt.pollingError()
+	}
+	if err := pt.pollForStatus(ctx, p); err != nil {
+		pt.Err = err
+		return false, err
+	}
+	if err := pt.checkForErrors(); err != nil {
+		pt.Err = err
+		return pt.hasTerminated(), err
+	}
+	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
+		pt.Err = err
+		return false, err
+	}
+	if err := pt.initPollingMethod(); err != nil {
+		pt.Err = err
+		return false, err
+	}
+	if err := pt.updatePollingMethod(); err != nil {
+		pt.Err = err
+		return false, err
+	}
+	return pt.hasTerminated(), pt.pollingError()
+}
+
 func (pt *pollingTrackerDelete) updatePollingMethod() error {
 	// for 201 the Location header is required
 	if pt.resp.StatusCode == http.StatusCreated {
@@ -366,6 +398,29 @@ func (pt pollingTrackerDelete) provisioningStateApplicable() bool {
 
 type pollingTrackerPatch struct {
 	pollingTrackerBase
+}
+
+// done queries the service to see if the operation has completed.
+func (pt *pollingTrackerPatch) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+	if pt.hasTerminated() {
+		return true, pt.pollingError()
+	}
+	if err := pt.pollForStatus(ctx, p); err != nil {
+		return false, err
+	}
+	if err := pt.checkForErrors(); err != nil {
+		return pt.hasTerminated(), err
+	}
+	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return pt.hasTerminated(), pt.pollingError()
 }
 
 func (pt *pollingTrackerPatch) updatePollingMethod() error {
@@ -426,6 +481,29 @@ type pollingTrackerPost struct {
 	pollingTrackerBase
 }
 
+// done queries the service to see if the operation has completed.
+func (pt *pollingTrackerPost) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+	if pt.hasTerminated() {
+		return true, pt.pollingError()
+	}
+	if err := pt.pollForStatus(ctx, p); err != nil {
+		return false, err
+	}
+	if err := pt.checkForErrors(); err != nil {
+		return pt.hasTerminated(), err
+	}
+	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return pt.hasTerminated(), pt.pollingError()
+}
+
 func (pt *pollingTrackerPost) updatePollingMethod() error {
 	// 201 requires Location header
 	if pt.resp.StatusCode == http.StatusCreated {
@@ -480,6 +558,29 @@ func (pt pollingTrackerPost) provisioningStateApplicable() bool {
 
 type pollingTrackerPut struct {
 	pollingTrackerBase
+}
+
+// done queries the service to see if the operation has completed.
+func (pt *pollingTrackerPut) done(ctx context.Context, p azcore.Pipeline) (done bool, err error) {
+	if pt.hasTerminated() {
+		return true, pt.pollingError()
+	}
+	if err := pt.pollForStatus(ctx, p); err != nil {
+		return false, err
+	}
+	if err := pt.checkForErrors(); err != nil {
+		return pt.hasTerminated(), err
+	}
+	if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
+		return false, err
+	}
+	if err := pt.initPollingMethod(); err != nil {
+		return false, err
+	}
+	if err := pt.updatePollingMethod(); err != nil {
+		return false, err
+	}
+	return pt.hasTerminated(), pt.pollingError()
 }
 
 func (pt *pollingTrackerPut) updatePollingMethod() error {
