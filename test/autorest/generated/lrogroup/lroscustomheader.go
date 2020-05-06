@@ -48,7 +48,7 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.post202Retry200HandleError)
+	pt, err := createPollingTracker("lrOSCustomHeaderPost202Retry200Poller", resp, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 }
 
 func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPost202Retry200Poller(token string) (LrOSCustomHeaderPost202Retry200Poller, error) {
-	pt, err := resumePollingTracker(token, client.post202Retry200HandleError)
+	pt, err := resumePollingTracker("lrOSCustomHeaderPost202Retry200Poller", token, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.postAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSCustomHeaderPostAsyncRetrySucceededPoller", resp, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 }
 
 func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPostAsyncRetrySucceededPoller(token string) (LrOSCustomHeaderPostAsyncRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.postAsyncRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSCustomHeaderPostAsyncRetrySucceededPoller", token, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.put201CreatingSucceeded200HandleError)
+	pt, err := createPollingTracker("lrOSCustomHeaderPut201CreatingSucceeded200Poller", resp, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +206,7 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 }
 
 func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPut201CreatingSucceeded200Poller(token string) (LrOSCustomHeaderPut201CreatingSucceeded200Poller, error) {
-	pt, err := resumePollingTracker(token, client.put201CreatingSucceeded200HandleError)
+	pt, err := resumePollingTracker("lrOSCustomHeaderPut201CreatingSucceeded200Poller", token, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +256,7 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker(resp, client.putAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("lrOSCustomHeaderPutAsyncRetrySucceededPoller", resp, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -267,7 +267,7 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 }
 
 func (client *lrOSCustomHeaderOperations) ResumeLrOSCustomHeaderPutAsyncRetrySucceededPoller(token string) (LrOSCustomHeaderPutAsyncRetrySucceededPoller, error) {
-	pt, err := resumePollingTracker(token, client.putAsyncRetrySucceededHandleError)
+	pt, err := resumePollingTracker("lrOSCustomHeaderPutAsyncRetrySucceededPoller", token, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}

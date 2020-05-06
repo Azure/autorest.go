@@ -284,7 +284,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    text += `\tpt, err := createPollingTracker(resp, client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := createPollingTracker("${op.language.go!.pollerType.name}", resp, client.${info.protocolNaming.errorMethod})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
@@ -919,7 +919,7 @@ function addResumePollerMethod(op: Operation, clientName: string): string {
   const pollerName = pascalCase(op.language.go!.pollerType.name);
   const info = <OperationNaming>op.language.go!;
   let text = `func (client *${clientName}) Resume${pollerName}(token string) (${pollerName}, error) {\n`;
-  text += `\tpt, err := resumePollingTracker(token, client.${info.protocolNaming.errorMethod})\n`;
+  text += `\tpt, err := resumePollingTracker("${op.language.go!.pollerType.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;

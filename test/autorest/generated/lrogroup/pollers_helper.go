@@ -92,6 +92,9 @@ type pollingTrackerBase struct {
 	// resp is the last response, either from the submission of the LRO or from polling
 	resp *azcore.Response
 
+	// PollerType is the name of the type of poller that is created
+	PollerType string `json:"pollerType"`
+
 	// errorHandler is the method to invoke to unmarshall an error response
 	errorHandler methodErrorHandler
 
@@ -554,17 +557,17 @@ func (pt pollingTrackerPut) provisioningStateApplicable() bool {
 }
 
 // creates a polling tracker based on the verb of the original request
-func createPollingTracker(resp *azcore.Response, errorHandler methodErrorHandler) (pollingTracker, error) {
+func createPollingTracker(pollerType string, resp *azcore.Response, errorHandler methodErrorHandler) (pollingTracker, error) {
 	var pt pollingTracker
 	switch strings.ToUpper(resp.Request.Method) {
 	case http.MethodDelete:
-		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
 	case http.MethodPatch:
-		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
 	case http.MethodPost:
-		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
 	case http.MethodPut:
-		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
 	default:
 		return nil, fmt.Errorf("unsupported HTTP method %s", resp.Request.Method)
 	}
@@ -578,12 +581,15 @@ func createPollingTracker(resp *azcore.Response, errorHandler methodErrorHandler
 }
 
 // creates a polling tracker from a resume token
-func resumePollingTracker(token string, errorHandler methodErrorHandler) (pollingTracker, error) {
+func resumePollingTracker(pollerType string, token string, errorHandler methodErrorHandler) (pollingTracker, error) {
 	// unmarshal into JSON object to determine the tracker type
 	obj := map[string]interface{}{}
 	err := json.Unmarshal([]byte(token), &obj)
 	if err != nil {
 		return nil, err
+	}
+	if obj["pollerType"] != pollerType {
+		return nil, fmt.Errorf("cannot resume from this poller type")
 	}
 	if obj["method"] == nil {
 		return nil, fmt.Errorf("token is missing 'method' property")
