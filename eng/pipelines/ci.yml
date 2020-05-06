@@ -102,5 +102,5 @@ jobs:
             cd src
             npm version --no-git-tag-version $currentVersion
             npm pack;
-            npx publish-release --token $(github-token) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Preview version of Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
+            npx publish-release --token $(package-write-token) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Preview version of Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
           displayName: 'Publish Dev Release'
