@@ -39,16 +39,14 @@ func TestLROSADSBeginPost202Retry200(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
 }
 
 func TestLROSADSBeginDelete202RetryInvalidHeader(t *testing.T) {
@@ -101,16 +99,14 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -138,16 +134,14 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
@@ -212,16 +206,14 @@ func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
 }
 
 func TestLROSADSBeginPost202RetryInvalidHeader(t *testing.T) {
@@ -249,16 +241,14 @@ func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -286,16 +276,14 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
@@ -336,33 +324,11 @@ func TestLROSADSBeginPostNonRetry400(t *testing.T) {
 }
 
 func TestLROSADSBeginPut200InvalidJSON(t *testing.T) {
-	t.Skip("need to check response handling in the poller")
 	op := getLrosaDsOperations(t)
-	poller, err := op.BeginPut200InvalidJSON(context.Background(), nil)
-	if err != nil {
-		t.Fatal("expected an error but did not receive one")
-	}
-	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
-	poller, err = op.ResumeLrosaDsPut200InvalidJsonPoller(rt)
-	if err != nil {
-		t.Fatal(err)
-	}
-	for poller.Poll(context.Background()) {
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err := poller.Response()
+	_, err := op.BeginPut200InvalidJSON(context.Background(), nil)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
@@ -382,16 +348,14 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -533,16 +497,14 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 	for poller.Poll(context.Background()) {
 		time.Sleep(200 * time.Millisecond)
 	}
-	resp, err := poller.Response()
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Response()
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
-	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
+	_, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 400)
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {

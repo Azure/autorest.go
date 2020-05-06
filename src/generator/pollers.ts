@@ -57,15 +57,14 @@ type ${poller.name} struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *${poller.name}) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *${poller.name}) Response() (*${responseType}, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -109,29 +108,6 @@ func (p *${poller.name}) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *${poller.name}) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 `;
   }
   return text;
@@ -161,7 +137,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
   text += imports.text();
   // TODO separate this into manageable chunks of text by section of functionality
   text += `
-	  const (
+		const (
 		headerAsyncOperation = "Azure-AsyncOperation"
 		headerLocation       = "Location"
 	)
@@ -229,8 +205,8 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// returns the cached HTTP response after a call to pollForStatus(), can be nil
 		latestResponse() *azcore.Response
 	}
-  
-  type methodErrorHandler func(resp *azcore.Response) error
+	
+	type methodErrorHandler func(resp *azcore.Response) error
 
 	type pollingTrackerBase struct {
 		// resp is the last response, either from the submission of the LRO or from polling
@@ -264,11 +240,35 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		Err error \`json:"error,omitempty"\`
 	}
 	
+	// done queries the service to see if the operation has completed.
+	func lroPollDone(ctx context.Context, p azcore.Pipeline, pt pollingTracker) bool {
+		if pt.hasTerminated() {
+			return true
+		}
+		if err := pt.pollForStatus(ctx, p); err != nil {
+			return true
+		}
+		if err := pt.checkForErrors(); err != nil {
+			return true
+		}
+		if err := pt.updatePollingState(pt.provisioningStateApplicable()); err != nil {
+			return true
+		}
+		if err := pt.initPollingMethod(); err != nil {
+			return true
+		}
+		if err := pt.updatePollingMethod(); err != nil {
+			return true
+		}
+		return pt.hasTerminated()
+	}
+
 	func (pt *pollingTrackerBase) initializeState() error {
 		// determine the initial polling state based on response body and/or HTTP status
 		// code.  this is applicable to the initial LRO response, not polling responses!
 		pt.Method = pt.resp.Request.Method
 		if err := pt.updateRawBody(); err != nil {
+			pt.Err = err
 			return err
 		}
 		switch pt.resp.StatusCode {
@@ -317,14 +317,16 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			defer pt.resp.Body.Close()
 			b, err := ioutil.ReadAll(pt.resp.Body)
 			if err != nil {
-				return errors.New("failed to read response body")
+				pt.Err = err
+				return pt.Err
 			}
 			// observed in 204 responses over HTTP/2.0; the content length is -1 but body is empty
 			if len(b) == 0 {
 				return nil
 			}
 			if err = json.Unmarshal(b, &pt.rawBody); err != nil {
-				return errors.New("failed to unmarshal response body")
+				pt.Err = err
+				return pt.Err
 			}
 		}
 		return nil
@@ -333,13 +335,15 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	func (pt *pollingTrackerBase) pollForStatus(ctx context.Context, client azcore.Pipeline) error {
 		u, err := url.Parse(pt.URI)
 		if err != nil {
+					pt.Err = err
 			return err
 		}
 		req := azcore.NewRequest(http.MethodGet, *u)
 		resp, err := client.Do(ctx, req)
 		pt.resp = resp
 		if err != nil {
-			return errors.New("failed to send HTTP request")
+			pt.Err = err
+			return pt.Err
 		}
 		if pt.resp.HasStatusCode(pollingCodes[:]...) {
 			// reset the service error on success case
@@ -373,7 +377,8 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 					pt.State = operationSucceeded
 				}
 			} else {
-				return errors.New("the response from the async operation has an invalid status code")
+				pt.Err = fmt.Errorf("the response from the async operation has an invalid status code: %d", pt.resp.StatusCode)
+				return pt.Err
 			}
 		}
 		// if the operation has failed update the error state
@@ -424,10 +429,12 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// for Azure-AsyncOperations the response body cannot be nil or empty
 		if pt.Pm == pollingAsyncOperation {
 			if pt.resp.Body == nil || pt.resp.ContentLength == 0 {
-				return errors.New("for Azure-AsyncOperation response body cannot be nil")
+						pt.Err = errors.New("for Azure-AsyncOperation response body cannot be nil")
+				return pt.Err
 			}
 			if pt.rawBody["status"] == nil {
-				return errors.New("missing status property in Azure-AsyncOperation response body")
+						pt.Err = errors.New("missing status property in Azure-AsyncOperation response body")
+				return pt.Err
 			}
 		}
 		return nil
@@ -436,6 +443,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	// default initialization of polling URL/method.  each verb tracker will update this as required.
 	func (pt *pollingTrackerBase) initPollingMethod() error {
 		if ao, err := getURLFromAsyncOpHeader(pt.resp); err != nil {
+			pt.Err = err
 			return err
 		} else if ao != "" {
 			pt.URI = ao
@@ -443,6 +451,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			return nil
 		}
 		if lh, err := getURLFromLocationHeader(pt.resp); err != nil {
+					pt.Err = err
 			return err
 		} else if lh != "" {
 			pt.URI = lh
@@ -458,14 +467,16 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	type pollingTrackerDelete struct {
 		pollingTrackerBase
 	}
-	
+
 	func (pt *pollingTrackerDelete) updatePollingMethod() error {
 		// for 201 the Location header is required
 		if pt.resp.StatusCode == http.StatusCreated {
 			if lh, err := getURLFromLocationHeader(pt.resp); err != nil {
+						pt.Err = err
 				return err
 			} else if lh == "" {
-				return errors.New("missing Location header in 201 response")
+						pt.Err = errors.New("missing Location header in 201 response")
+				return pt.Err
 			} else {
 				pt.URI = lh
 			}
@@ -476,6 +487,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		if pt.resp.StatusCode == http.StatusAccepted {
 			ao, err := getURLFromAsyncOpHeader(pt.resp)
 			if err != nil {
+						pt.Err = err
 				return err
 			} else if ao != "" {
 				pt.URI = ao
@@ -484,6 +496,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			// if the Location header is invalid and we already have a polling URL
 			// then we don't care if the Location header URL is malformed.
 			if lh, err := getURLFromLocationHeader(pt.resp); err != nil && pt.URI == "" {
+						pt.Err = err
 				return err
 			} else if lh != "" {
 				if ao == "" {
@@ -495,7 +508,8 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			}
 			// make sure a polling URL was found
 			if pt.URI == "" {
-				return errors.New("didn't get any suitable polling URLs in 202 response")
+						pt.Err = errors.New("didn't get any suitable polling URLs in 202 response")
+				return pt.Err
 			}
 		}
 		return nil
@@ -514,7 +528,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	type pollingTrackerPatch struct {
 		pollingTrackerBase
 	}
-	
+
 	func (pt *pollingTrackerPatch) updatePollingMethod() error {
 		// by default we can use the original URL for polling and final GET
 		if pt.URI == "" {
@@ -529,6 +543,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// for 201 it's permissible for no headers to be returned
 		if pt.resp.StatusCode == http.StatusCreated {
 			if ao, err := getURLFromAsyncOpHeader(pt.resp); err != nil {
+						pt.Err = err
 				return err
 			} else if ao != "" {
 				pt.URI = ao
@@ -540,6 +555,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		if pt.resp.StatusCode == http.StatusAccepted {
 			ao, err := getURLFromAsyncOpHeader(pt.resp)
 			if err != nil {
+						pt.Err = err
 				return err
 			} else if ao != "" {
 				pt.URI = ao
@@ -547,9 +563,11 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			}
 			if ao == "" {
 				if lh, err := getURLFromLocationHeader(pt.resp); err != nil {
+						 pt.Err = err
 					return err
 				} else if lh == "" {
-					return errors.New("didn't get any suitable polling URLs in 202 response")
+								pt.Err = errors.New("didn't get any suitable polling URLs in 202 response")
+					return pt.Err
 				} else {
 					pt.URI = lh
 					pt.Pm = pollingLocation
@@ -577,9 +595,11 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// 201 requires Location header
 		if pt.resp.StatusCode == http.StatusCreated {
 			if lh, err := getURLFromLocationHeader(pt.resp); err != nil {
+						pt.Err = err
 				return err
 			} else if lh == "" {
-				return errors.New("missing Location header in 201 response")
+						pt.Err = errors.New("missing Location header in 201 response")
+				return pt.Err
 			} else {
 				pt.URI = lh
 				pt.FinalGetURI = lh
@@ -590,6 +610,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		if pt.resp.StatusCode == http.StatusAccepted {
 			ao, err := getURLFromAsyncOpHeader(pt.resp)
 			if err != nil {
+						pt.Err = err
 				return err
 			} else if ao != "" {
 				pt.URI = ao
@@ -598,6 +619,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			// if the Location header is invalid and we already have a polling URL
 			// then we don't care if the Location header URL is malformed.
 			if lh, err := getURLFromLocationHeader(pt.resp); err != nil && pt.URI == "" {
+						pt.Err = err
 				return err
 			} else if lh != "" {
 				if ao == "" {
@@ -609,7 +631,8 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			}
 			// make sure a polling URL was found
 			if pt.URI == "" {
-				return errors.New("didn't get any suitable polling URLs in 202 response")
+						pt.Err = errors.New("didn't get any suitable polling URLs in 202 response")
+				return pt.Err
 			}
 		}
 		return nil
@@ -628,7 +651,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	type pollingTrackerPut struct {
 		pollingTrackerBase
 	}
-	
+
 	func (pt *pollingTrackerPut) updatePollingMethod() error {
 		// by default we can use the original URL for polling and final GET
 		if pt.URI == "" {
@@ -643,6 +666,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		// for 201 it's permissible for no headers to be returned
 		if pt.resp.StatusCode == http.StatusCreated {
 			if ao, err := getURLFromAsyncOpHeader(pt.resp); err != nil {
+						pt.Err = err
 				return err
 			} else if ao != "" {
 				pt.URI = ao
@@ -653,6 +677,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 		if pt.resp.StatusCode == http.StatusAccepted {
 			ao, err := getURLFromAsyncOpHeader(pt.resp)
 			if err != nil {
+						pt.Err = err
 				return err
 			} else if ao != "" {
 				pt.URI = ao
@@ -661,6 +686,7 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			// if the Location header is invalid and we already have a polling URL
 			// then we don't care if the Location header URL is malformed.
 			if lh, err := getURLFromLocationHeader(pt.resp); err != nil && pt.URI == "" {
+						pt.Err = err
 				return err
 			} else if lh != "" {
 				if ao == "" {
@@ -670,7 +696,8 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 			}
 			// make sure a polling URL was found
 			if pt.URI == "" {
-				return errors.New("didn't get any suitable polling URLs in 202 response")
+						pt.Err = errors.New("didn't get any suitable polling URLs in 202 response")
+				return pt.Err
 			}
 		}
 		return nil
@@ -679,19 +706,23 @@ export async function generatePollersHelper(session: Session<CodeModel>): Promis
 	func (pt pollingTrackerPut) checkForErrors() error {
 		err := pt.baseCheckForErrors()
 		if err != nil {
+					pt.Err = err
 			return err
 		}
 		// if there are no LRO headers then the body cannot be empty
 		ao, err := getURLFromAsyncOpHeader(pt.resp)
 		if err != nil {
+			pt.Err = err
 			return err
 		}
 		lh, err := getURLFromLocationHeader(pt.resp)
 		if err != nil {
+			pt.Err = err
 			return err
 		}
 		if ao == "" && lh == "" && len(pt.rawBody) == 0 {
-			return errors.New("the response did not contain a body")
+			pt.Err = errors.New("the response did not contain a body")
+			return pt.Err
 		}
 		return nil
 	}
@@ -808,7 +839,7 @@ func resumePollingTracker(pollerType string, token string, errorHandler methodEr
 		// pollingUnknown indicates an unknown polling method and is the default value.
 		pollingUnknown pollingMethodType = ""
 	)
-  `;
+	`;
   return text;
 }
 

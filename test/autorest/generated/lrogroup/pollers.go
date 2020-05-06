@@ -31,15 +31,14 @@ type lrOSCustomHeaderPost202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPost202Retry200Poller) Response() (*LrOSCustomHeaderPost202Retry200Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -83,29 +82,6 @@ func (p *lrOSCustomHeaderPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSCustomHeaderPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSCustomHeaderPostAsyncRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -123,15 +99,14 @@ type lrOSCustomHeaderPostAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) Response() (*LrOSCustomHeaderPostAsyncRetrySucceededResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -175,29 +150,6 @@ func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) response() *azcore.Respo
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSCustomHeaderPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
 type LrOSCustomHeaderPut201CreatingSucceeded200Poller interface {
 	Poll(context.Context) bool
@@ -215,15 +167,14 @@ type lrOSCustomHeaderPut201CreatingSucceeded200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -267,29 +218,6 @@ func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSCustomHeaderPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSCustomHeaderPutAsyncRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -307,15 +235,14 @@ type lrOSCustomHeaderPutAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -359,29 +286,6 @@ func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) response() *azcore.Respon
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSCustomHeaderPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDelete202NoRetry204Poller provides polling facilities until the operation completes
 type LrOSDelete202NoRetry204Poller interface {
 	Poll(context.Context) bool
@@ -399,15 +303,14 @@ type lrOSDelete202NoRetry204Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDelete202NoRetry204Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDelete202NoRetry204Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -451,29 +354,6 @@ func (p *lrOSDelete202NoRetry204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDelete202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDelete202Retry200Poller provides polling facilities until the operation completes
 type LrOSDelete202Retry200Poller interface {
 	Poll(context.Context) bool
@@ -491,15 +371,14 @@ type lrOSDelete202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDelete202Retry200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDelete202Retry200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -543,29 +422,6 @@ func (p *lrOSDelete202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDelete204SucceededPoller provides polling facilities until the operation completes
 type LrOSDelete204SucceededPoller interface {
 	Poll(context.Context) bool
@@ -583,15 +439,14 @@ type lrOSDelete204SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDelete204SucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDelete204SucceededPoller) Response() (*http.Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -635,29 +490,6 @@ func (p *lrOSDelete204SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncNoHeaderInRetryPoller interface {
 	Poll(context.Context) bool
@@ -675,15 +507,14 @@ type lrOSDeleteAsyncNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) Response() (*LrOSDeleteAsyncNoHeaderInRetryResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -727,29 +558,6 @@ func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncNoRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -767,15 +575,14 @@ type lrOSDeleteAsyncNoRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncNoRetrySucceededPoller) Response() (*LrOSDeleteAsyncNoRetrySucceededResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -819,29 +626,6 @@ func (p *lrOSDeleteAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteAsyncRetryFailedPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncRetryFailedPoller interface {
 	Poll(context.Context) bool
@@ -859,15 +643,14 @@ type lrOSDeleteAsyncRetryFailedPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncRetryFailedPoller) Response() (*LrOSDeleteAsyncRetryFailedResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -911,29 +694,6 @@ func (p *lrOSDeleteAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -951,15 +711,14 @@ type lrOSDeleteAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncRetrySucceededPoller) Response() (*LrOSDeleteAsyncRetrySucceededResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1003,29 +762,6 @@ func (p *lrOSDeleteAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteAsyncRetrycanceledPoller provides polling facilities until the operation completes
 type LrOSDeleteAsyncRetrycanceledPoller interface {
 	Poll(context.Context) bool
@@ -1043,15 +779,14 @@ type lrOSDeleteAsyncRetrycanceledPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteAsyncRetrycanceledPoller) Response() (*LrOSDeleteAsyncRetrycanceledResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1095,29 +830,6 @@ func (p *lrOSDeleteAsyncRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSDeleteNoHeaderInRetryPoller interface {
 	Poll(context.Context) bool
@@ -1135,15 +847,14 @@ type lrOSDeleteNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteNoHeaderInRetryPoller) Response() (*LrOSDeleteNoHeaderInRetryResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1187,29 +898,6 @@ func (p *lrOSDeleteNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
 type LrOSDeleteProvisioning202Accepted200SucceededPoller interface {
 	Poll(context.Context) bool
@@ -1227,15 +915,14 @@ type lrOSDeleteProvisioning202Accepted200SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1279,29 +966,6 @@ func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) response() *azcore
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation completes
 type LrOSDeleteProvisioning202DeletingFailed200Poller interface {
 	Poll(context.Context) bool
@@ -1319,15 +983,14 @@ type lrOSDeleteProvisioning202DeletingFailed200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1371,29 +1034,6 @@ func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteProvisioning202DeletingFailed200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSDeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation completes
 type LrOSDeleteProvisioning202Deletingcanceled200Poller interface {
 	Poll(context.Context) bool
@@ -1411,15 +1051,14 @@ type lrOSDeleteProvisioning202Deletingcanceled200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1463,29 +1102,6 @@ func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) response() *azcore.
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSDeleteProvisioning202Deletingcanceled200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPost200WithPayloadPoller provides polling facilities until the operation completes
 type LrOSPost200WithPayloadPoller interface {
 	Poll(context.Context) bool
@@ -1503,15 +1119,14 @@ type lrOSPost200WithPayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPost200WithPayloadPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPost200WithPayloadPoller) Response() (*SkuResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1555,29 +1170,6 @@ func (p *lrOSPost200WithPayloadPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPost200WithPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPost202NoRetry204Poller provides polling facilities until the operation completes
 type LrOSPost202NoRetry204Poller interface {
 	Poll(context.Context) bool
@@ -1595,15 +1187,14 @@ type lrOSPost202NoRetry204Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPost202NoRetry204Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPost202NoRetry204Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1647,29 +1238,6 @@ func (p *lrOSPost202NoRetry204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPost202NoRetry204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPost202Retry200Poller provides polling facilities until the operation completes
 type LrOSPost202Retry200Poller interface {
 	Poll(context.Context) bool
@@ -1687,15 +1255,14 @@ type lrOSPost202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPost202Retry200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPost202Retry200Poller) Response() (*LrOSPost202Retry200Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1739,29 +1306,6 @@ func (p *lrOSPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPostAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPostAsyncNoRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -1779,15 +1323,14 @@ type lrOSPostAsyncNoRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1831,29 +1374,6 @@ func (p *lrOSPostAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPostAsyncRetryFailedPoller provides polling facilities until the operation completes
 type LrOSPostAsyncRetryFailedPoller interface {
 	Poll(context.Context) bool
@@ -1871,15 +1391,14 @@ type lrOSPostAsyncRetryFailedPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncRetryFailedPoller) Response() (*LrOSPostAsyncRetryFailedResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -1923,29 +1442,6 @@ func (p *lrOSPostAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPostAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPostAsyncRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -1963,15 +1459,14 @@ type lrOSPostAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2015,29 +1510,6 @@ func (p *lrOSPostAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPostAsyncRetrycanceledPoller provides polling facilities until the operation completes
 type LrOSPostAsyncRetrycanceledPoller interface {
 	Poll(context.Context) bool
@@ -2055,15 +1527,14 @@ type lrOSPostAsyncRetrycanceledPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostAsyncRetrycanceledPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostAsyncRetrycanceledPoller) Response() (*LrOSPostAsyncRetrycanceledResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2107,29 +1578,6 @@ func (p *lrOSPostAsyncRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPostAsyncRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation completes
 type LrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller interface {
 	Poll(context.Context) bool
@@ -2147,15 +1595,14 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2199,29 +1646,6 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) response() *azco
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation completes
 type LrOSPostDoubleHeadersFinalAzureHeaderGetPoller interface {
 	Poll(context.Context) bool
@@ -2239,15 +1663,14 @@ type lrOSPostDoubleHeadersFinalAzureHeaderGetPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2291,29 +1714,6 @@ func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) response() *azcore.Resp
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPostDoubleHeadersFinalAzureHeaderGetPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation completes
 type LrOSPostDoubleHeadersFinalLocationGetPoller interface {
 	Poll(context.Context) bool
@@ -2331,15 +1731,14 @@ type lrOSPostDoubleHeadersFinalLocationGetPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2383,29 +1782,6 @@ func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) response() *azcore.Respons
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPostDoubleHeadersFinalLocationGetPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPut200Acceptedcanceled200Poller provides polling facilities until the operation completes
 type LrOSPut200Acceptedcanceled200Poller interface {
 	Poll(context.Context) bool
@@ -2423,15 +1799,14 @@ type lrOSPut200Acceptedcanceled200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200Acceptedcanceled200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200Acceptedcanceled200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2475,29 +1850,6 @@ func (p *lrOSPut200Acceptedcanceled200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPut200Acceptedcanceled200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPut200SucceededNoStatePoller provides polling facilities until the operation completes
 type LrOSPut200SucceededNoStatePoller interface {
 	Poll(context.Context) bool
@@ -2515,15 +1867,14 @@ type lrOSPut200SucceededNoStatePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200SucceededNoStatePoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200SucceededNoStatePoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2567,29 +1918,6 @@ func (p *lrOSPut200SucceededNoStatePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPut200SucceededNoStatePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPut200SucceededPoller provides polling facilities until the operation completes
 type LrOSPut200SucceededPoller interface {
 	Poll(context.Context) bool
@@ -2607,15 +1935,14 @@ type lrOSPut200SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200SucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200SucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2659,29 +1986,6 @@ func (p *lrOSPut200SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPut200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPut200UpdatingSucceeded204Poller provides polling facilities until the operation completes
 type LrOSPut200UpdatingSucceeded204Poller interface {
 	Poll(context.Context) bool
@@ -2699,15 +2003,14 @@ type lrOSPut200UpdatingSucceeded204Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut200UpdatingSucceeded204Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2751,29 +2054,6 @@ func (p *lrOSPut200UpdatingSucceeded204Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPut200UpdatingSucceeded204Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPut201CreatingFailed200Poller provides polling facilities until the operation completes
 type LrOSPut201CreatingFailed200Poller interface {
 	Poll(context.Context) bool
@@ -2791,15 +2071,14 @@ type lrOSPut201CreatingFailed200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut201CreatingFailed200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut201CreatingFailed200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2843,29 +2122,6 @@ func (p *lrOSPut201CreatingFailed200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPut201CreatingFailed200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
 type LrOSPut201CreatingSucceeded200Poller interface {
 	Poll(context.Context) bool
@@ -2883,15 +2139,14 @@ type lrOSPut201CreatingSucceeded200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -2935,29 +2190,6 @@ func (p *lrOSPut201CreatingSucceeded200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPut202Retry200Poller provides polling facilities until the operation completes
 type LrOSPut202Retry200Poller interface {
 	Poll(context.Context) bool
@@ -2975,15 +2207,14 @@ type lrOSPut202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPut202Retry200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPut202Retry200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3027,29 +2258,6 @@ func (p *lrOSPut202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPut202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutAsyncNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSPutAsyncNoHeaderInRetryPoller interface {
 	Poll(context.Context) bool
@@ -3067,15 +2275,14 @@ type lrOSPutAsyncNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3119,29 +2326,6 @@ func (p *lrOSPutAsyncNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutAsyncNoRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPutAsyncNoRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -3159,15 +2343,14 @@ type lrOSPutAsyncNoRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNoRetrySucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3211,29 +2394,6 @@ func (p *lrOSPutAsyncNoRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNoRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutAsyncNoRetrycanceledPoller provides polling facilities until the operation completes
 type LrOSPutAsyncNoRetrycanceledPoller interface {
 	Poll(context.Context) bool
@@ -3251,15 +2411,14 @@ type lrOSPutAsyncNoRetrycanceledPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNoRetrycanceledPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3303,29 +2462,6 @@ func (p *lrOSPutAsyncNoRetrycanceledPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNoRetrycanceledPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutAsyncNonResourcePoller provides polling facilities until the operation completes
 type LrOSPutAsyncNonResourcePoller interface {
 	Poll(context.Context) bool
@@ -3343,15 +2479,14 @@ type lrOSPutAsyncNonResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncNonResourcePoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncNonResourcePoller) Response() (*SkuResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3395,29 +2530,6 @@ func (p *lrOSPutAsyncNonResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncNonResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutAsyncRetryFailedPoller provides polling facilities until the operation completes
 type LrOSPutAsyncRetryFailedPoller interface {
 	Poll(context.Context) bool
@@ -3435,15 +2547,14 @@ type lrOSPutAsyncRetryFailedPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncRetryFailedPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncRetryFailedPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3487,29 +2598,6 @@ func (p *lrOSPutAsyncRetryFailedPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncRetryFailedPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutAsyncRetrySucceededPoller provides polling facilities until the operation completes
 type LrOSPutAsyncRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -3527,15 +2615,14 @@ type lrOSPutAsyncRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncRetrySucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3579,29 +2666,6 @@ func (p *lrOSPutAsyncRetrySucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutAsyncSubResourcePoller provides polling facilities until the operation completes
 type LrOSPutAsyncSubResourcePoller interface {
 	Poll(context.Context) bool
@@ -3619,15 +2683,14 @@ type lrOSPutAsyncSubResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutAsyncSubResourcePoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutAsyncSubResourcePoller) Response() (*SubProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3671,29 +2734,6 @@ func (p *lrOSPutAsyncSubResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutAsyncSubResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutNoHeaderInRetryPoller provides polling facilities until the operation completes
 type LrOSPutNoHeaderInRetryPoller interface {
 	Poll(context.Context) bool
@@ -3711,15 +2751,14 @@ type lrOSPutNoHeaderInRetryPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutNoHeaderInRetryPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutNoHeaderInRetryPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3763,29 +2802,6 @@ func (p *lrOSPutNoHeaderInRetryPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutNoHeaderInRetryPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutNonResourcePoller provides polling facilities until the operation completes
 type LrOSPutNonResourcePoller interface {
 	Poll(context.Context) bool
@@ -3803,15 +2819,14 @@ type lrOSPutNonResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutNonResourcePoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutNonResourcePoller) Response() (*SkuResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3855,29 +2870,6 @@ func (p *lrOSPutNonResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutNonResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrOSPutSubResourcePoller provides polling facilities until the operation completes
 type LrOSPutSubResourcePoller interface {
 	Poll(context.Context) bool
@@ -3895,15 +2887,14 @@ type lrOSPutSubResourcePoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrOSPutSubResourcePoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrOSPutSubResourcePoller) Response() (*SubProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -3947,29 +2938,6 @@ func (p *lrOSPutSubResourcePoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrOSPutSubResourcePoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LroRetrysDelete202Retry200Poller provides polling facilities until the operation completes
 type LroRetrysDelete202Retry200Poller interface {
 	Poll(context.Context) bool
@@ -3987,15 +2955,14 @@ type lroRetrysDelete202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysDelete202Retry200Poller) Response() (*LroRetrysDelete202Retry200Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4039,29 +3006,6 @@ func (p *lroRetrysDelete202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lroRetrysDelete202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LroRetrysDeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
 type LroRetrysDeleteAsyncRelativeRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -4079,15 +3023,14 @@ type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4131,29 +3074,6 @@ func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LroRetrysDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation completes
 type LroRetrysDeleteProvisioning202Accepted200SucceededPoller interface {
 	Poll(context.Context) bool
@@ -4171,15 +3091,14 @@ type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4223,29 +3142,6 @@ func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) response() *a
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LroRetrysPost202Retry200Poller provides polling facilities until the operation completes
 type LroRetrysPost202Retry200Poller interface {
 	Poll(context.Context) bool
@@ -4263,15 +3159,14 @@ type lroRetrysPost202Retry200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPost202Retry200Poller) Response() (*LroRetrysPost202Retry200Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4315,29 +3210,6 @@ func (p *lroRetrysPost202Retry200Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lroRetrysPost202Retry200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LroRetrysPostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
 type LroRetrysPostAsyncRelativeRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -4355,15 +3227,14 @@ type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Response() (*LroRetrysPostAsyncRelativeRetrySucceededResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4407,29 +3278,6 @@ func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) response() *azcore.Resp
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LroRetrysPut201CreatingSucceeded200Poller provides polling facilities until the operation completes
 type LroRetrysPut201CreatingSucceeded200Poller interface {
 	Poll(context.Context) bool
@@ -4447,15 +3295,14 @@ type lroRetrysPut201CreatingSucceeded200Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPut201CreatingSucceeded200Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4499,29 +3346,6 @@ func (p *lroRetrysPut201CreatingSucceeded200Poller) response() *azcore.Response 
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lroRetrysPut201CreatingSucceeded200Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LroRetrysPutAsyncRelativeRetrySucceededPoller provides polling facilities until the operation completes
 type LroRetrysPutAsyncRelativeRetrySucceededPoller interface {
 	Poll(context.Context) bool
@@ -4539,15 +3363,14 @@ type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4591,29 +3414,6 @@ func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) response() *azcore.Respo
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDelete202NonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsDelete202NonRetry400Poller interface {
 	Poll(context.Context) bool
@@ -4631,15 +3431,14 @@ type lrosaDsDelete202NonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDelete202NonRetry400Poller) Response() (*LrosaDsDelete202NonRetry400Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4683,29 +3482,6 @@ func (p *lrosaDsDelete202NonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDelete202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDelete202RetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsDelete202RetryInvalidHeaderPoller interface {
 	Poll(context.Context) bool
@@ -4723,15 +3499,14 @@ type lrosaDsDelete202RetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Response() (*LrosaDsDelete202RetryInvalidHeaderResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4775,29 +3550,6 @@ func (p *lrosaDsDelete202RetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDelete202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDelete204SucceededPoller provides polling facilities until the operation completes
 type LrosaDsDelete204SucceededPoller interface {
 	Poll(context.Context) bool
@@ -4815,15 +3567,14 @@ type lrosaDsDelete204SucceededPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDelete204SucceededPoller) Response() (*http.Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4867,29 +3618,6 @@ func (p *lrosaDsDelete204SucceededPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDelete204SucceededPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDeleteAsyncRelativeRetry400Poller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetry400Poller interface {
 	Poll(context.Context) bool
@@ -4907,15 +3635,14 @@ type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Response() (*LrosaDsDeleteAsyncRelativeRetry400Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -4959,29 +3686,6 @@ func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller interface {
 	Poll(context.Context) bool
@@ -4999,15 +3703,14 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5051,29 +3754,6 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetryInvalidJsonPollingPoller interface {
 	Poll(context.Context) bool
@@ -5091,15 +3771,14 @@ type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5143,29 +3822,6 @@ func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) response() *az
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
 type LrosaDsDeleteAsyncRelativeRetryNoStatusPoller interface {
 	Poll(context.Context) bool
@@ -5183,15 +3839,14 @@ type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Response() (*LrosaDsDeleteAsyncRelativeRetryNoStatusResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5235,29 +3890,6 @@ func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) response() *azcore.Respo
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsDeleteNonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsDeleteNonRetry400Poller interface {
 	Poll(context.Context) bool
@@ -5275,15 +3907,14 @@ type lrosaDsDeleteNonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsDeleteNonRetry400Poller) Response() (*LrosaDsDeleteNonRetry400Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5327,29 +3958,6 @@ func (p *lrosaDsDeleteNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsDeleteNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPost202NoLocationPoller provides polling facilities until the operation completes
 type LrosaDsPost202NoLocationPoller interface {
 	Poll(context.Context) bool
@@ -5367,15 +3975,14 @@ type lrosaDsPost202NoLocationPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPost202NoLocationPoller) Response() (*LrosaDsPost202NoLocationResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5419,29 +4026,6 @@ func (p *lrosaDsPost202NoLocationPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPost202NoLocationPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPost202NonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPost202NonRetry400Poller interface {
 	Poll(context.Context) bool
@@ -5459,15 +4043,14 @@ type lrosaDsPost202NonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPost202NonRetry400Poller) Response() (*LrosaDsPost202NonRetry400Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5511,29 +4094,6 @@ func (p *lrosaDsPost202NonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPost202NonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPost202RetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsPost202RetryInvalidHeaderPoller interface {
 	Poll(context.Context) bool
@@ -5551,15 +4111,14 @@ type lrosaDsPost202RetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPost202RetryInvalidHeaderPoller) Response() (*LrosaDsPost202RetryInvalidHeaderResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5603,29 +4162,6 @@ func (p *lrosaDsPost202RetryInvalidHeaderPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPost202RetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPostAsyncRelativeRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetry400Poller interface {
 	Poll(context.Context) bool
@@ -5643,15 +4179,14 @@ type lrosaDsPostAsyncRelativeRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetry400Poller) Response() (*LrosaDsPostAsyncRelativeRetry400Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5695,29 +4230,6 @@ func (p *lrosaDsPostAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetryInvalidHeaderPoller interface {
 	Poll(context.Context) bool
@@ -5735,15 +4247,14 @@ type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5787,29 +4298,6 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Re
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetryInvalidJsonPollingPoller interface {
 	Poll(context.Context) bool
@@ -5827,15 +4315,14 @@ type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5879,29 +4366,6 @@ func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) response() *azco
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation completes
 type LrosaDsPostAsyncRelativeRetryNoPayloadPoller interface {
 	Poll(context.Context) bool
@@ -5919,15 +4383,14 @@ type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Response() (*LrosaDsPostAsyncRelativeRetryNoPayloadResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -5971,29 +4434,6 @@ func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) response() *azcore.Respon
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPostNonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPostNonRetry400Poller interface {
 	Poll(context.Context) bool
@@ -6011,15 +4451,14 @@ type lrosaDsPostNonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPostNonRetry400Poller) Response() (*LrosaDsPostNonRetry400Response, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6063,29 +4502,6 @@ func (p *lrosaDsPostNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPostNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPut200InvalidJsonPoller provides polling facilities until the operation completes
 type LrosaDsPut200InvalidJsonPoller interface {
 	Poll(context.Context) bool
@@ -6103,15 +4519,14 @@ type lrosaDsPut200InvalidJSONPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPut200InvalidJSONPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6155,29 +4570,6 @@ func (p *lrosaDsPut200InvalidJSONPoller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPut200InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutAsyncRelativeRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetry400Poller interface {
 	Poll(context.Context) bool
@@ -6195,15 +4587,14 @@ type lrosaDsPutAsyncRelativeRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetry400Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6247,29 +4638,6 @@ func (p *lrosaDsPutAsyncRelativeRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryInvalidHeaderPoller interface {
 	Poll(context.Context) bool
@@ -6287,15 +4655,14 @@ type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6339,29 +4706,6 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) response() *azcore.Res
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryInvalidJsonPollingPoller interface {
 	Poll(context.Context) bool
@@ -6379,15 +4723,14 @@ type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6431,29 +4774,6 @@ func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) response() *azcor
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller interface {
 	Poll(context.Context) bool
@@ -6471,15 +4791,14 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6523,29 +4842,6 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) response() *azcore.R
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation completes
 type LrosaDsPutAsyncRelativeRetryNoStatusPoller interface {
 	Poll(context.Context) bool
@@ -6563,15 +4859,14 @@ type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6615,29 +4910,6 @@ func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) response() *azcore.Response
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutError201NoProvisioningStatePayloadPoller provides polling facilities until the operation completes
 type LrosaDsPutError201NoProvisioningStatePayloadPoller interface {
 	Poll(context.Context) bool
@@ -6655,15 +4927,14 @@ type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6707,29 +4978,6 @@ func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) response() *azcore.
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutNonRetry201Creating400InvalidJsonPoller provides polling facilities until the operation completes
 type LrosaDsPutNonRetry201Creating400InvalidJsonPoller interface {
 	Poll(context.Context) bool
@@ -6747,15 +4995,14 @@ type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6799,29 +5046,6 @@ func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) response() *azcore.R
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutNonRetry201Creating400Poller provides polling facilities until the operation completes
 type LrosaDsPutNonRetry201Creating400Poller interface {
 	Poll(context.Context) bool
@@ -6839,15 +5063,14 @@ type lrosaDsPutNonRetry201Creating400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutNonRetry201Creating400Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6891,29 +5114,6 @@ func (p *lrosaDsPutNonRetry201Creating400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
 }
 
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutNonRetry201Creating400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
-}
-
 // LrosaDsPutNonRetry400Poller provides polling facilities until the operation completes
 type LrosaDsPutNonRetry400Poller interface {
 	Poll(context.Context) bool
@@ -6931,15 +5131,14 @@ type lrosaDsPutNonRetry400Poller struct {
 
 // Poll returns false if there was an error or polling has reached a terminal state
 func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) bool {
-	done, err := p.done(ctx)
-	if err != nil {
-		return false
-	}
-	return !done
+	return !lroPollDone(ctx, p.client.p, p.pt)
 }
 
 // Response returns the latest response that is stored from the latest polling operation
 func (p *lrosaDsPutNonRetry400Poller) Response() (*ProductResponse, error) {
+	if p.pt.pollingError() != nil {
+		return nil, p.pt.pollingError()
+	}
 	resp := p.response()
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
@@ -6981,27 +5180,4 @@ func (p *lrosaDsPutNonRetry400Poller) Wait(ctx context.Context, pollingInterval 
 // response returns the last HTTP response.
 func (p *lrosaDsPutNonRetry400Poller) response() *azcore.Response {
 	return p.pt.latestResponse()
-}
-
-// done queries the service to see if the operation has completed.
-func (p *lrosaDsPutNonRetry400Poller) done(ctx context.Context) (done bool, err error) {
-	if p.pt.hasTerminated() {
-		return true, p.pt.pollingError()
-	}
-	if err := p.pt.pollForStatus(ctx, p.client.p); err != nil {
-		return false, err
-	}
-	if err := p.pt.checkForErrors(); err != nil {
-		return p.pt.hasTerminated(), err
-	}
-	if err := p.pt.updatePollingState(p.pt.provisioningStateApplicable()); err != nil {
-		return false, err
-	}
-	if err := p.pt.initPollingMethod(); err != nil {
-		return false, err
-	}
-	if err := p.pt.updatePollingMethod(); err != nil {
-		return false, err
-	}
-	return p.pt.hasTerminated(), p.pt.pollingError()
 }
