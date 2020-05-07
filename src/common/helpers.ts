@@ -32,9 +32,7 @@ export function isSchemaResponse(resp?: Response): resp is SchemaResponse {
 
 export interface PagerInfo {
   name: string;
-  schema: Schema;
-  client: string;
-  nextLink: string;
+  op: Operation;
 }
 
 // returns true if the operation is pageable
@@ -44,9 +42,7 @@ export function isPageableOperation(op: Operation): boolean {
 
 export interface PollerInfo {
   name: string;
-  operationName: string;
-  schema: Schema;
-  client: string;
+  op: Operation;
 }
 
 // returns true if the operation is a long-running operation

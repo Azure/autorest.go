@@ -17,7 +17,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	vanillaReport, err := vanillaClient.Operations().GetReport(context.Background(), nil)
+	vanillaReport, err := vanillaClient.AutoRestReportServiceOperations().GetReport(context.Background(), nil)
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +25,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	azureReport, err := azureClient.Operations("").GetReport(context.Background(), nil)
+	azureReport, err := azureClient.AutoRestReportServiceForAzureOperations("").GetReport(context.Background(), nil)
 	if err != nil {
 		panic(err)
 	}

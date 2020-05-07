@@ -67,17 +67,22 @@ export async function namer(session: Session<CodeModel>) {
 
   // pascal-case and capitzalize acronym operation groups and their operations
   for (const group of values(model.operationGroups)) {
-    const details = <Language>group.language.go;
-    details.name = capitalizeAcronyms(pascalCase(details.name));
-    // we don't call GetEscapedReservedName here since any operation group that uses a reserved word will have 'Operations' attached to it
-    details.clientName = `${details.name}Operations`;
-    // this sets Operations as the default name for operation groups that don't specify a group name
-    if (length(details.name) === 0) {
-      details.name = `Operations`;
+    const groupDetails = <Language>group.language.go;
+    // use the swagger title as the default name for operation groups that don't specify a group name
+    if (groupDetails.name.length === 0) {
+      groupDetails.name = session.model.info.title;
+    }
+    groupDetails.name = capitalizeAcronyms(pascalCase(groupDetails.name));
+    groupDetails.clientName = `${groupDetails.name}Operations`;
+    if (groupDetails.name === 'Operations') {
+      // if the group name is 'Operations' don't name it 'OperationsOperations'
+      groupDetails.clientName = groupDetails.name;
     }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
+      // add the client name to the operation as it's needed all over the place
+      details.clientName = camelCase(groupDetails.clientName);
       if (isLROOperation(op)) {
         op.language.go!.methodPrefix = 'Begin';
       }

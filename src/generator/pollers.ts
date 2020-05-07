@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { pascalCase } from '@azure-tools/codegen';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PollerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
@@ -34,10 +34,11 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const pollerInterface = pascalCase(poller.name);
     let responseType = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
-    if (poller.schema === undefined) {
+    const schemaResponse = <SchemaResponse>poller.op.responses![0];
+    if (schemaResponse.schema === undefined) {
       responseType = 'http.Response';
     } else {
-      responseType = poller.schema.language.go!.responseType.name;
+      responseType = schemaResponse.schema.language.go!.responseType.name;
       rawResponse = '.RawResponse';
     }
     text += `// ${pollerInterface} provides polling facilities until the operation completes
@@ -50,7 +51,7 @@ type ${pollerInterface} interface {
 
 type ${poller.name} struct {
 	// the client for making the request
-	client *${poller.client}
+	client *${poller.op.language.go!.clientName}
 	// polling tracker
 	pt pollingTracker
 }
@@ -69,7 +70,7 @@ func (p *${poller.name}) Response() (*${responseType}, error) {
 	if resp == nil {
 		return nil, errors.New("did not find a response on the poller")
 	}
-	result, err := p.client.${poller.operationName}HandleResponse(resp)
+	result, err := p.client.${poller.op.language.go!.protocolNaming.responseMethod}(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (p *${poller.name}) ResumeToken() (string, error) {
 // duration specified in the retry-after header, if the header is not specified then the pollingInterval that
 // is specified will be used to wait between polling requests. 
 func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error) {
-	for p.Poll(context.Background()) {
+	for p.Poll(ctx) {
 		if delay := p.response().RetryAfter(); delay > 0 {
 			time.Sleep(delay)
 		} else {

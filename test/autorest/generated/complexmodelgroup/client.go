@@ -71,7 +71,7 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	return &Client{u: u, p: p}, nil
 }
 
-// Operations returns the Operations associated with this client.
-func (client *Client) Operations() Operations {
-	return &operations{Client: client}
+// ComplexModelClientOperations returns the ComplexModelClientOperations associated with this client.
+func (client *Client) ComplexModelClientOperations() ComplexModelClientOperations {
+	return &complexModelClientOperations{Client: client}
 }

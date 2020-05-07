@@ -10,6 +10,18 @@ import (
 	"net/http"
 )
 
+// AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTest.PostWithConstantInBody
+// method.
+type AutoRestValidationTestPostWithConstantInBodyOptions struct {
+	Body *Product
+}
+
+// AutoRestValidationTestValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfBody
+// method.
+type AutoRestValidationTestValidationOfBodyOptions struct {
+	Body *Product
+}
+
 // The product documentation.
 type ChildProduct struct {
 	// Constant string
@@ -49,16 +61,6 @@ func (e Error) Error() string {
 		msg = "missing error info"
 	}
 	return msg
-}
-
-// OperationsPostWithConstantInBodyOptions contains the optional parameters for the Operations.PostWithConstantInBody method.
-type OperationsPostWithConstantInBodyOptions struct {
-	Body *Product
-}
-
-// OperationsValidationOfBodyOptions contains the optional parameters for the Operations.ValidationOfBody method.
-type OperationsValidationOfBodyOptions struct {
-	Body *Product
 }
 
 // The product documentation.

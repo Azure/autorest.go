@@ -10,6 +10,21 @@ import (
 	"net/http"
 )
 
+// AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportService.GetOptionalReport
+// method.
+type AutoRestReportServiceGetOptionalReportOptions struct {
+	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators
+	// that run all tests several times, can distinguish the generated reports.
+	Qualifier *string
+}
+
+// AutoRestReportServiceGetReportOptions contains the optional parameters for the AutoRestReportService.GetReport method.
+type AutoRestReportServiceGetReportOptions struct {
+	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators
+	// that run all tests several times, can distinguish the generated reports.
+	Qualifier *string
+}
+
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
@@ -36,18 +51,4 @@ type MapOfInt32Response struct {
 
 	// Dictionary of <integer>
 	Value *map[string]int32
-}
-
-// OperationsGetOptionalReportOptions contains the optional parameters for the Operations.GetOptionalReport method.
-type OperationsGetOptionalReportOptions struct {
-	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators
-	// that run all tests several times, can distinguish the generated reports.
-	Qualifier *string
-}
-
-// OperationsGetReportOptions contains the optional parameters for the Operations.GetReport method.
-type OperationsGetReportOptions struct {
-	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators
-	// that run all tests several times, can distinguish the generated reports.
-	Qualifier *string
 }

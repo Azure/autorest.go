@@ -5,7 +5,7 @@
 
 import { Session } from '@azure-tools/autorest-extension-base';
 import { camelCase } from '@azure-tools/codegen';
-import { CodeModel } from '@azure-tools/codemodel';
+import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
@@ -28,12 +28,13 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   pagers.sort((a: PagerInfo, b: PagerInfo) => { return sortAscending(a.name, b.name) });
   for (const pager of values(pagers)) {
     const pagerType = camelCase(pager.name);
-    const responseType = pager.schema.language.go!.responseType.name;
-    const resultType = pager.schema.language.go!.name;
+    const schemaResponse = <SchemaResponse>pager.op.responses![0];
+    const responseType = schemaResponse.schema.language.go!.responseType.name;
+    const resultType = schemaResponse.schema.language.go!.name;
     let resultTypeName = resultType;
-    if (pager.schema.serialization?.xml?.name) {
+    if (schemaResponse.schema.serialization?.xml?.name) {
       // xml can specifiy its own name, prefer that if available
-      resultTypeName = pager.schema.serialization.xml.name;
+      resultTypeName = schemaResponse.schema.serialization.xml.name;
     }
     const responderType = `${camelCase(resultType)}HandleResponse`;
     const advanceType = `${camelCase(resultType)}AdvancePage`;
@@ -56,7 +57,7 @@ type ${advanceType} func(*${responseType}) (*azcore.Request, error)
 
 type ${pagerType} struct {
 	// the client for making the request
-	client *${pager.client}
+	client *${pager.op.language.go!.clientName}
 	// contains the pending request
 	request *azcore.Request
 	// callback for handling the HTTP response
@@ -75,7 +76,7 @@ func (p *${pagerType}) Err() error {
 
 func (p *${pagerType}) NextPage(ctx context.Context) bool {
 	if p.current != nil {
-		if p.current.${resultTypeName}.${pager.nextLink} == nil || len(*p.current.${resultTypeName}.${pager.nextLink}) == 0 {
+		if p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName} == nil || len(*p.current.${resultTypeName}.${pager.op.language.go!.paging.nextLinkName}) == 0 {
 			return false
 		}
 		req, err := p.advancer(p.current)

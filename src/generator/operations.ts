@@ -307,6 +307,8 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\trequest: req,\n`;
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
+    const schemaResponse = <SchemaResponse>pager.op.responses![0];
+    const nextLink = pager.op.language.go!.paging.nextLinkName;
     if (op.language.go!.paging.member) {
       // find the location of the nextLink param
       const nextLinkOpParams = getMethodParameters(op.language.go!.paging.nextLinkOperation);
@@ -314,7 +316,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       for (let i = 0; i < nextLinkOpParams.length; ++i) {
         if (nextLinkOpParams[i].schema.type === SchemaType.String && nextLinkOpParams[i].language.go!.name.startsWith('next')) {
           // found it
-          reqParams.splice(i, 0, `*resp.${pager.schema.language.go!.name}.${pager.nextLink}`);
+          reqParams.splice(i, 0, `*resp.${schemaResponse.schema.language.go!.name}.${nextLink}`);
           found = true;
           break;
         }
@@ -322,24 +324,24 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       if (!found) {
         throw console.error(`failed to find nextLink parameter for operation ${op.language.go!.paging.nextLinkOperation.language.go!.name}`);
       }
-      text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\tadvancer: func(resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
       text += `\t\t\treturn client.${camelCase(op.language.go!.paging.member)}CreateRequest(${reqParams.join(', ')})\n`;
       text += '\t\t},\n';
     } else {
       imports.add('fmt');
       imports.add('net/url');
-      let resultTypeName = pager.schema.language.go!.name;
-      if (pager.schema.serialization?.xml?.name) {
+      let resultTypeName = schemaResponse.schema.language.go!.name;
+      if (schemaResponse.schema.serialization?.xml?.name) {
         // xml can specifiy its own name, prefer that if available
-        resultTypeName = pager.schema.serialization.xml.name;
+        resultTypeName = schemaResponse.schema.serialization.xml.name;
       }
-      text += `\t\tadvancer: func(resp *${pager.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
-      text += `\t\t\tu, err := url.Parse(*resp.${resultTypeName}.${pager.nextLink})\n`;
+      text += `\t\tadvancer: func(resp *${schemaResponse.schema.language.go!.responseType.name}) (*azcore.Request, error) {\n`;
+      text += `\t\t\tu, err := url.Parse(*resp.${resultTypeName}.${nextLink})\n`;
       text += `\t\t\tif err != nil {\n`;
-      text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${pager.nextLink}: %w", err)\n`;
+      text += `\t\t\t\treturn nil, fmt.Errorf("invalid ${nextLink}: %w", err)\n`;
       text += `\t\t\t}\n`;
       text += `\t\t\tif u.Scheme == "" {\n`;
-      text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${pager.nextLink} %s", *resp.${resultTypeName}.${pager.nextLink})\n`;
+      text += `\t\t\t\treturn nil, fmt.Errorf("no scheme detected in ${nextLink} %s", *resp.${resultTypeName}.${nextLink})\n`;
       text += `\t\t\t}\n`;
       text += `\t\t\treturn azcore.NewRequest(http.MethodGet, *u), nil\n`;
       text += `\t\t},\n`;
