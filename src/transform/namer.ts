@@ -70,13 +70,13 @@ export async function namer(session: Session<CodeModel>) {
     const groupDetails = <Language>group.language.go;
     // use the swagger title as the default name for operation groups that don't specify a group name
     if (groupDetails.name.length === 0) {
-      groupDetails.name = pascalCase(session.model.info.title);
+      groupDetails.name = session.model.info.title;
     }
     groupDetails.name = capitalizeAcronyms(pascalCase(groupDetails.name));
     groupDetails.clientName = `${groupDetails.name}Operations`;
     if (groupDetails.name === 'Operations') {
       // if the group name is 'Operations' don't name it 'OperationsOperations'
-      groupDetails.clientName = groupDetails.clientName;
+      groupDetails.clientName = groupDetails.name;
     }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;

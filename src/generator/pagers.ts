@@ -10,7 +10,6 @@ import { values } from '@azure-tools/linq';
 import { PagerInfo } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
-import { open } from 'fs';
 
 // Creates the content in pagers.go
 export async function generatePagers(session: Session<CodeModel>): Promise<string> {
