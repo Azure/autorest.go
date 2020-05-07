@@ -114,7 +114,7 @@ export async function generateClient(session: Session<CodeModel>): Promise<strin
     }
     text += `// ${group.language.go!.clientName} returns the ${group.language.go!.clientName} associated with this client.\n`;
     text += `func (client *Client) ${group.language.go!.clientName}(${methodParams.join(', ')}) ${group.language.go!.clientName} {\n`;
-    text += `\treturn &${camelCase(group.language.go!.clientName)}{${clientLiterals.join(', ')}}\n`;
+    text += `\treturn &${group.operations[0].language.go!.clientName}{${clientLiterals.join(', ')}}\n`;
     text += '}\n\n';
   }
 

@@ -473,9 +473,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     // create a new one, add to global list and assign to method
     const pager = {
       name: name,
-      schema: (<SchemaResponse>firstResp).schema,
-      client: camelCase(group.language.go!.clientName),
-      nextLink: op.language.go!.paging.nextLinkName,
+      op: op,
     };
     pagers.push(pager);
     op.language.go!.pageableType = pager;
@@ -490,9 +488,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     // create a new one, add to global list and assign to method
     const poller = {
       name: name,
-      operationName: camelCase(op.language.go!.name),
-      schema: (<SchemaResponse>firstResp).schema,
-      client: camelCase(group.language.go!.clientName),
+      op: op,
     };
     const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
     pollers.push(poller);

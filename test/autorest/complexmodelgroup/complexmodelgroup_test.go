@@ -9,12 +9,12 @@ import (
 	"testing"
 )
 
-func getOperations(t *testing.T) complexmodelgroup.Operations {
+func getOperations(t *testing.T) complexmodelgroup.ComplexModelClientOperations {
 	client, err := complexmodelgroup.NewDefaultClient(nil)
 	if err != nil {
 		t.Fatalf("failed to create complex client: %v", err)
 	}
-	return client.Operations()
+	return client.ComplexModelClientOperations()
 }
 
 func TestCreate(t *testing.T) {

@@ -71,7 +71,7 @@ func NewClientWithPipeline(endpoint string, p azcore.Pipeline) (*Client, error) 
 	return &Client{u: u, p: p}, nil
 }
 
-// Operations returns the Operations associated with this client.
-func (client *Client) Operations() Operations {
-	return &operations{Client: client}
+// AutoRestReportServiceOperations returns the AutoRestReportServiceOperations associated with this client.
+func (client *Client) AutoRestReportServiceOperations() AutoRestReportServiceOperations {
+	return &autoRestReportServiceOperations{Client: client}
 }
