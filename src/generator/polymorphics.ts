@@ -23,26 +23,29 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
   const discriminators = <Array<ObjectSchema>>session.model.language.go!.discriminators;
   discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminator, b.language.go!.discriminator) });
   for (const disc of values(discriminators)) {
-    // this is the root discriminator (FishType in the test server)
-    const rootDisc = disc.language.go!.discriminator;
-
     // this is used to track any sub-hierarchies (SalmonType, SharkType in the test server)
     const roots = new Array<ObjectSchema>();
     roots.push(disc);
 
-    // constant definition
-    // only generate one set from the root as it contains all possible values
-    text += 'const (\n';
-    // TODO: sort
+    if (disc.language.go!.discriminatorEnumNeeded) {
+      // constant definition
+      // only generate one set from the root as it contains all possible values
+      text += 'const (\n';
+      // TODO: sort
+      for (const val of values(disc.discriminator!.all)) {
+        const objSchema = <ObjectSchema>val;
+        text += `\t${objSchema.language.go!.discriminatorEnum} = "${objSchema.discriminatorValue!}"\n`;
+      }
+      text += ')\n\n';
+    }
+
+    // add sub-hierarchies
     for (const val of values(disc.discriminator!.all)) {
       const objSchema = <ObjectSchema>val;
-      text += `\t${objSchema.language.go!.discriminatorEnum} = "${objSchema.discriminatorValue!}"\n`;
       if (objSchema.discriminator) {
-        // add sub-hierarchy
         roots.push(objSchema);
       }
     }
-    text += ')\n\n';
 
     // generate unmarshallers for each discriminator
     for (const root of values(roots)) {
@@ -57,7 +60,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
       text += `\tswitch m["${root.discriminator!.property.serializedName}"] {\n`;
       for (const val of values(root.discriminator!.all)) {
         const objSchema = <ObjectSchema>val;
-        text += `\tcase ${camelCase(rootDisc)}${pascalCase(objSchema.discriminatorValue!)}:\n`;
+        text += `\tcase ${val.language.go!.discriminatorEnum}:\n`;
         text += `\t\tb = &${val.language.go!.name}{}\n`;
       }
       text += '\tdefault:\n';

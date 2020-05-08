@@ -60,7 +60,7 @@ func (client *pagingOperations) GetMultiplePages(pagingGetMultiplePagesOptions *
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
@@ -117,7 +117,7 @@ func (client *pagingOperations) GetMultiplePagesFailure() (ProductResultPager, e
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesFailureHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
@@ -165,7 +165,7 @@ func (client *pagingOperations) GetMultiplePagesFailureURI() (ProductResultPager
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesFailureUriHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
@@ -213,7 +213,7 @@ func (client *pagingOperations) GetMultiplePagesFragmentNextLink(apiVersion stri
 		return nil, err
 	}
 	return &odataProductResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesFragmentNextLinkHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
@@ -258,7 +258,7 @@ func (client *pagingOperations) GetMultiplePagesFragmentWithGroupingNextLink(cus
 		return nil, err
 	}
 	return &odataProductResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
@@ -339,7 +339,7 @@ func (client *pagingOperations) GetMultiplePagesRetryFirst() (ProductResultPager
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesRetryFirstHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
@@ -387,7 +387,7 @@ func (client *pagingOperations) GetMultiplePagesRetrySecond() (ProductResultPage
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesRetrySecondHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
@@ -435,7 +435,7 @@ func (client *pagingOperations) GetMultiplePagesWithOffset(pagingGetMultiplePage
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getMultiplePagesWithOffsetHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
@@ -493,7 +493,7 @@ func (client *pagingOperations) GetNoItemNamePages() (ProductResultValuePager, e
 		return nil, err
 	}
 	return &productResultValuePager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getNoItemNamePagesHandleResponse,
 		advancer: func(resp *ProductResultValueResponse) (*azcore.Request, error) {
@@ -583,7 +583,7 @@ func (client *pagingOperations) GetOdataMultiplePages(pagingGetOdataMultiplePage
 		return nil, err
 	}
 	return &odataProductResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getOdataMultiplePagesHandleResponse,
 		advancer: func(resp *OdataProductResultResponse) (*azcore.Request, error) {
@@ -640,7 +640,7 @@ func (client *pagingOperations) GetSinglePages() (ProductResultPager, error) {
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getSinglePagesHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {
@@ -688,7 +688,7 @@ func (client *pagingOperations) GetSinglePagesFailure() (ProductResultPager, err
 		return nil, err
 	}
 	return &productResultPager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.getSinglePagesFailureHandleResponse,
 		advancer: func(resp *ProductResultResponse) (*azcore.Request, error) {

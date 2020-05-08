@@ -314,7 +314,7 @@ func (client *serviceOperations) ListContainersSegment(serviceListContainersSegm
 		return nil, err
 	}
 	return &listContainersSegmentResponsePager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.listContainersSegmentHandleResponse,
 		advancer: func(resp *ListContainersSegmentResponseResponse) (*azcore.Request, error) {

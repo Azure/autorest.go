@@ -36,19 +36,19 @@ func TestGetValid(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Length:   to.Float32Ptr(1),
 		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishType{
+		Siblings: &[]complexgroup.FishClassification{
 			&complexgroup.Shark{
 				Age:      to.Int32Ptr(6),
 				Birthday: &sharkBday,
 				Fishtype: to.StringPtr("shark"),
 				Length:   to.Float32Ptr(20),
-				Siblings: &[]complexgroup.FishType{
+				Siblings: &[]complexgroup.FishClassification{
 					&complexgroup.Salmon{
 						Fishtype: to.StringPtr("salmon"),
 						Iswild:   to.BoolPtr(true),
 						Length:   to.Float32Ptr(2),
 						Location: to.StringPtr("atlantic"),
-						Siblings: &[]complexgroup.FishType{
+						Siblings: &[]complexgroup.FishClassification{
 							&complexgroup.Shark{
 								Age:      to.Int32Ptr(6),
 								Birthday: &sharkBday,
@@ -73,7 +73,7 @@ func TestGetValid(t *testing.T) {
 						Fishtype: to.StringPtr("sawshark"),
 						Length:   to.Float32Ptr(10),
 						Picture:  &[]byte{255, 255, 255, 255, 254},
-						Siblings: &[]complexgroup.FishType{},
+						Siblings: &[]complexgroup.FishClassification{},
 						Species:  to.StringPtr("dangerous"),
 					},
 				},
@@ -85,7 +85,7 @@ func TestGetValid(t *testing.T) {
 				Fishtype: to.StringPtr("sawshark"),
 				Length:   to.Float32Ptr(10),
 				Picture:  &[]byte{255, 255, 255, 255, 254},
-				Siblings: &[]complexgroup.FishType{},
+				Siblings: &[]complexgroup.FishClassification{},
 				Species:  to.StringPtr("dangerous"),
 			},
 		},
@@ -103,19 +103,19 @@ func TestPutValid(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Length:   to.Float32Ptr(1),
 		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishType{
+		Siblings: &[]complexgroup.FishClassification{
 			&complexgroup.Shark{
 				Age:      to.Int32Ptr(6),
 				Birthday: &sharkBday,
 				Fishtype: to.StringPtr("shark"),
 				Length:   to.Float32Ptr(20),
-				Siblings: &[]complexgroup.FishType{
+				Siblings: &[]complexgroup.FishClassification{
 					&complexgroup.Salmon{
 						Fishtype: to.StringPtr("salmon"),
 						Iswild:   to.BoolPtr(true),
 						Length:   to.Float32Ptr(2),
 						Location: to.StringPtr("atlantic"),
-						Siblings: &[]complexgroup.FishType{
+						Siblings: &[]complexgroup.FishClassification{
 							&complexgroup.Shark{
 								Age:      to.Int32Ptr(6),
 								Birthday: &sharkBday,
@@ -140,7 +140,7 @@ func TestPutValid(t *testing.T) {
 						Fishtype: to.StringPtr("sawshark"),
 						Length:   to.Float32Ptr(10),
 						Picture:  &[]byte{255, 255, 255, 255, 254},
-						Siblings: &[]complexgroup.FishType{},
+						Siblings: &[]complexgroup.FishClassification{},
 						Species:  to.StringPtr("dangerous"),
 					},
 				},
@@ -152,7 +152,7 @@ func TestPutValid(t *testing.T) {
 				Fishtype: to.StringPtr("sawshark"),
 				Length:   to.Float32Ptr(10),
 				Picture:  &[]byte{255, 255, 255, 255, 254},
-				Siblings: &[]complexgroup.FishType{},
+				Siblings: &[]complexgroup.FishClassification{},
 				Species:  to.StringPtr("dangerous"),
 			},
 		},

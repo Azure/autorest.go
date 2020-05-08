@@ -303,7 +303,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   text += `\t}\n`;
   if (isPageableOperation(op)) {
     text += `\treturn &${camelCase(op.language.go!.pageableType.name)}{\n`;
-    text += `\t\tclient: client,\n`;
+    text += `\t\tpipeline: client.p,\n`;
     text += `\t\trequest: req,\n`;
     text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
     const pager = <PagerInfo>op.language.go!.pageableType;
