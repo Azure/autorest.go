@@ -28,8 +28,8 @@ type odataProductResultHandleResponse func(*azcore.Response) (*OdataProductResul
 type odataProductResultAdvancePage func(*OdataProductResultResponse) (*azcore.Request, error)
 
 type odataProductResultPager struct {
-	// the client for making the request
-	client *pagingOperations
+	// the pipeline for making the request
+	pipeline azcore.Pipeline
 	// contains the pending request
 	request *azcore.Request
 	// callback for handling the HTTP response
@@ -58,7 +58,7 @@ func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
 		}
 		p.request = req
 	}
-	resp, err := p.client.p.Do(ctx, p.request)
+	resp, err := p.pipeline.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false
@@ -94,8 +94,8 @@ type productResultHandleResponse func(*azcore.Response) (*ProductResultResponse,
 type productResultAdvancePage func(*ProductResultResponse) (*azcore.Request, error)
 
 type productResultPager struct {
-	// the client for making the request
-	client *pagingOperations
+	// the pipeline for making the request
+	pipeline azcore.Pipeline
 	// contains the pending request
 	request *azcore.Request
 	// callback for handling the HTTP response
@@ -124,7 +124,7 @@ func (p *productResultPager) NextPage(ctx context.Context) bool {
 		}
 		p.request = req
 	}
-	resp, err := p.client.p.Do(ctx, p.request)
+	resp, err := p.pipeline.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false
@@ -160,8 +160,8 @@ type productResultValueHandleResponse func(*azcore.Response) (*ProductResultValu
 type productResultValueAdvancePage func(*ProductResultValueResponse) (*azcore.Request, error)
 
 type productResultValuePager struct {
-	// the client for making the request
-	client *pagingOperations
+	// the pipeline for making the request
+	pipeline azcore.Pipeline
 	// contains the pending request
 	request *azcore.Request
 	// callback for handling the HTTP response
@@ -190,7 +190,7 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 		}
 		p.request = req
 	}
-	resp, err := p.client.p.Do(ctx, p.request)
+	resp, err := p.pipeline.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false

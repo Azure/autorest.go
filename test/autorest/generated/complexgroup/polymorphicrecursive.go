@@ -16,7 +16,7 @@ type PolymorphicrecursiveOperations interface {
 	// GetValid - Get complex types that are polymorphic and have recursive references
 	GetValid(ctx context.Context) (*FishResponse, error)
 	// PutValid - Put complex types that are polymorphic and have recursive references
-	PutValid(ctx context.Context, complexBody FishType) (*http.Response, error)
+	PutValid(ctx context.Context, complexBody FishClassification) (*http.Response, error)
 }
 
 // polymorphicrecursiveOperations implements the PolymorphicrecursiveOperations interface.
@@ -71,7 +71,7 @@ func (client *polymorphicrecursiveOperations) getValidHandleError(resp *azcore.R
 }
 
 // PutValid - Put complex types that are polymorphic and have recursive references
-func (client *polymorphicrecursiveOperations) PutValid(ctx context.Context, complexBody FishType) (*http.Response, error) {
+func (client *polymorphicrecursiveOperations) PutValid(ctx context.Context, complexBody FishClassification) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(complexBody)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (client *polymorphicrecursiveOperations) PutValid(ctx context.Context, comp
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *polymorphicrecursiveOperations) putValidCreateRequest(complexBody FishType) (*azcore.Request, error) {
+func (client *polymorphicrecursiveOperations) putValidCreateRequest(complexBody FishClassification) (*azcore.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
 	u, err := client.u.Parse(urlPath)
 	if err != nil {

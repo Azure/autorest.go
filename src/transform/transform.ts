@@ -5,10 +5,10 @@
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, codeModelSchema, ChoiceValue, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
-import { namer, removePrefix } from './namer';
+import { createPolymorphicInterfaceName, namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -636,11 +636,17 @@ function annotateDiscriminatedTypes(obj: ObjectSchema): ObjectSchema | undefined
   }
   // create the interface type name based on the current root
   const rootType = root.language.go!.discriminator;
-  recursiveAnnotateDiscriminatedTypes(root, rootType, rootType);
+  // use pre-defined enum values if available
+  const choices = getChoices(root);
+  if (!choices) {
+    // mark that we need to generate our own enum type
+    root.language.go!.discriminatorEnumNeeded = true;
+  }
+  recursiveAnnotateDiscriminatedTypes(root, rootType, rootType, choices);
   return root;
 }
 
-function recursiveAnnotateDiscriminatedTypes(obj: ObjectSchema, rootInterface: string, currentInterface: string) {
+function recursiveAnnotateDiscriminatedTypes(obj: ObjectSchema, rootInterface: string, currentInterface: string, choices: Array<ChoiceValue> | undefined) {
   if (!obj.language.go!.polymorphicInterfaces) {
     obj.language.go!.polymorphicInterfaces = new Array<string>();
   }
@@ -656,9 +662,34 @@ function recursiveAnnotateDiscriminatedTypes(obj: ObjectSchema, rootInterface: s
     if (childSchema.discriminator && childSchema.discriminator.all) {
       // case #2 - intermediate root
       childSchema.language.go!.discriminatorParent = currentInterface;
-      recursiveAnnotateDiscriminatedTypes(childSchema, rootInterface, `${childSchema.language.go!.name}Type`);
+      recursiveAnnotateDiscriminatedTypes(childSchema, rootInterface, createPolymorphicInterfaceName(childSchema.language.go!.name), choices);
     }
-    // add the internal enum name for this sub-type
-    childSchema.language.go!.discriminatorEnum = `${camelCase(rootInterface)}${pascalCase(childSchema.discriminatorValue!)}`;
+    if (choices) {
+      // find the choice value that matches the current type's discriminator
+      let found = false;
+      for (const choice of values(choices)) {
+        if (choice.value === childSchema.discriminatorValue) {
+          childSchema.language.go!.discriminatorEnum = choice.language.go!.name;
+          childSchema.language.go!.discriminatorRealEnum = true;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        throw console.error(`failed to find discriminator choice value for type ${childSchema.language.go!.name}`);
+      }
+    } else {
+      // add the internal enum name for this sub-type
+      childSchema.language.go!.discriminatorEnum = `${camelCase(rootInterface)}${pascalCase(childSchema.discriminatorValue!)}`;
+    }
   }
+}
+
+function getChoices(obj: ObjectSchema): Array<ChoiceValue> | undefined {
+  if (obj.discriminator?.property.schema.type === SchemaType.Choice) {
+    return (<ChoiceSchema>obj.discriminator!.property.schema).choices;
+  } else if (obj.discriminator?.property.schema.type === SchemaType.SealedChoice) {
+    return (<SealedChoiceSchema>obj.discriminator!.property.schema).choices;
+  }
+  return undefined;
 }

@@ -191,7 +191,12 @@ class StructDef {
       // find the discriminator property
       for (const prop of values(this.Properties)) {
         if (prop.isDiscriminator) {
-          text += `\t${receiver}.${prop.language.go!.name} = strptr(${this.Language.discriminatorEnum})\n`;
+          text += `\t${receiver}.${prop.language.go!.name} = `;
+          if (this.Language.discriminatorRealEnum) {
+            text += `${this.Language.discriminatorEnum}.ToPtr()\n`;
+          } else {
+            text += `strptr(${this.Language.discriminatorEnum})\n`;
+          }
           break;
         }
       }

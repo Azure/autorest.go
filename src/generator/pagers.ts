@@ -56,8 +56,8 @@ type ${responderType} func(*azcore.Response) (*${responseType}, error)
 type ${advanceType} func(*${responseType}) (*azcore.Request, error)
 
 type ${pagerType} struct {
-	// the client for making the request
-	client *${pager.op.language.go!.clientName}
+	// the pipeline for making the request
+	pipeline azcore.Pipeline
 	// contains the pending request
 	request *azcore.Request
 	// callback for handling the HTTP response
@@ -86,7 +86,7 @@ func (p *${pagerType}) NextPage(ctx context.Context) bool {
 		}
 		p.request = req
 	}
-	resp, err := p.client.p.Do(ctx, p.request)
+	resp, err := p.pipeline.Do(ctx, p.request)
 	if err != nil {
 		p.err = err
 		return false

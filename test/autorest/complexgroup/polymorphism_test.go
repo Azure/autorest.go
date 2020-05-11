@@ -41,7 +41,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Length:   to.Float32Ptr(1),
 		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishType{
+		Siblings: &[]complexgroup.FishClassification{
 			&complexgroup.Shark{
 				Age:      to.Int32Ptr(6),
 				Birthday: &sharkBday,
@@ -79,7 +79,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, result.DotFishMarket, &complexgroup.DotFishMarket{
-		Fishes: &[]complexgroup.DotFishType{
+		Fishes: &[]complexgroup.DotFishClassification{
 			&complexgroup.DotSalmon{
 				FishType: to.StringPtr("DotSalmon"),
 				Location: to.StringPtr("australia"),
@@ -130,7 +130,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, result.DotFishMarket, &complexgroup.DotFishMarket{
-		Fishes: &[]complexgroup.DotFishType{
+		Fishes: &[]complexgroup.DotFishClassification{
 			&complexgroup.DotFish{
 				Species: to.StringPtr("king"),
 			},
@@ -195,7 +195,7 @@ func TestPolymorphismGetValid(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Length:   to.Float32Ptr(1),
 		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishType{
+		Siblings: &[]complexgroup.FishClassification{
 			&complexgroup.Shark{
 				Age:      to.Int32Ptr(6),
 				Birthday: &sharkBday,
@@ -240,7 +240,7 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Length:   to.Float32Ptr(1),
 		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishType{
+		Siblings: &[]complexgroup.FishClassification{
 			&complexgroup.Shark{
 				Age:      to.Int32Ptr(6),
 				Birthday: &sharkBday,
@@ -281,7 +281,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Length:   to.Float32Ptr(1),
 		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishType{
+		Siblings: &[]complexgroup.FishClassification{
 			&complexgroup.Shark{
 				Age:      to.Int32Ptr(6),
 				Birthday: &sharkBday,

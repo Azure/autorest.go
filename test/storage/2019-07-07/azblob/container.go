@@ -785,7 +785,7 @@ func (client *containerOperations) ListBlobFlatSegment(containerListBlobFlatSegm
 		return nil, err
 	}
 	return &listBlobsFlatSegmentResponsePager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.listBlobFlatSegmentHandleResponse,
 		advancer: func(resp *ListBlobsFlatSegmentResponseResponse) (*azcore.Request, error) {
@@ -875,7 +875,7 @@ func (client *containerOperations) ListBlobHierarchySegment(delimiter string, co
 		return nil, err
 	}
 	return &listBlobsHierarchySegmentResponsePager{
-		client:    client,
+		pipeline:  client.p,
 		request:   req,
 		responder: client.listBlobHierarchySegmentHandleResponse,
 		advancer: func(resp *ListBlobsHierarchySegmentResponseResponse) (*azcore.Request, error) {

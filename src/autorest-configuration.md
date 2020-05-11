@@ -10,7 +10,7 @@ AutoRest needs the below config to pick this up as a plug-in - see https://githu
 
 ``` yaml !isLoaded('@autorest/remodeler') 
 use-extension:
-  "@autorest/modelerfour" : "4.13.348" 
+  "@autorest/modelerfour" : "4.13.351" 
 
 # will use highest 4.0.x 
 ```
