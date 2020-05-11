@@ -619,19 +619,23 @@ function annotateDiscriminatedTypes(obj: ObjectSchema): ObjectSchema | undefined
   let root = obj;
   while (true) {
     if (!root.parents) {
+      // simple case, no parent types
       break;
     }
     for (const parent of values(root.parents?.immediate)) {
       // there can be parents that aren't part of the hierarchy.
       // e.g. if type Foo is in a DictionaryOfFoo, then one of
       // Foo's parents will be DictionaryOfFoo which we ignore.
-      if (isObjectSchema(parent)) {
+      if (isObjectSchema(parent) && parent.discriminator) {
         root = parent;
       }
     }
-    // fail-safe to prevent infinite loop due to a bug somewhere...
     if (root === obj) {
-      throw console.error(`failed to find parent of discriminated type ${obj.language.go!.name}`);
+      // we hit this case if the parent isn't a discriminator.
+      // consider the case of BaseDiscriminatedType that includes
+      // a parent BaseProperties (in xms-error-responses.json),
+      // or the DictionaryOfFoo case above
+      break;
     }
   }
   // create the interface type name based on the current root
