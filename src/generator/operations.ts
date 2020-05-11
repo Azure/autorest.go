@@ -812,6 +812,9 @@ function formatStatusCodes(statusCodes: Array<string>): string {
       case '404':
         asHTTPStatus.push('http.StatusNotFound');
         break;
+      case '409':
+        asHTTPStatus.push('http.StatusConflict');
+        break;
       default:
         throw console.error(`unhandled status code ${rawCode}`);
     }
