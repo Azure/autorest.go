@@ -13,17 +13,17 @@ import (
 )
 
 type CloudError struct {
-	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 func (e CloudError) Error() string {
 	msg := ""
-	if e.Code != nil {
-		msg += fmt.Sprintf("Code: %v\n", *e.Code)
-	}
 	if e.Message != nil {
 		msg += fmt.Sprintf("Message: %v\n", *e.Message)
+	}
+	if e.Status != nil {
+		msg += fmt.Sprintf("Status: %v\n", *e.Status)
 	}
 	if msg == "" {
 		msg = "missing error info"
