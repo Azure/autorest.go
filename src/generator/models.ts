@@ -144,7 +144,7 @@ class StructDef {
         tag = '';
       }
       let pointer = '*';
-      if (prop.schema.language.go!.discriminator) {
+      if (prop.schema.language.go!.discriminator || prop.schema.language.go!.funcType) {
         // pointer-to-interface introduces very clunky code
         pointer = '';
       }
@@ -182,7 +182,7 @@ class StructDef {
     const receiver = this.Language.name[0].toLowerCase();
     let formatSig = 'JSON() ([]byte, error)';
     if (this.Language.marshallingFormat === 'xml') {
-      formatSig = 'XML(e *xml.Encoder, start xml.StartElement) error'
+      formatSig = 'XML(e *xml.Encoder, start xml.StartElement) error';
     }
     let text = `func (${receiver} ${this.Language.name}) Marshal${formatSig} {\n`;
     if (this.Language.xmlWrapperName) {
@@ -404,7 +404,11 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
     imports.add('fmt');
   }
   if (lang.responseType) {
-    imports.add("net/http");
+    imports.add('net/http');
+  }
+  if (lang.needsTimeAndContext) {
+    imports.add('time');
+    imports.add('context');
   }
   if (lang.needsDateTimeMarshalling) {
     imports.add('encoding/' + lang.marshallingFormat);

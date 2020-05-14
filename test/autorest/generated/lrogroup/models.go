@@ -6,27 +6,41 @@
 package lrogroup
 
 import (
+	"context"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 type CloudError struct {
+	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
 }
 
 func (e CloudError) Error() string {
 	msg := ""
+	if e.Code != nil {
+		msg += fmt.Sprintf("Code: %v\n", *e.Code)
+	}
 	if e.Message != nil {
 		msg += fmt.Sprintf("Message: %v\n", *e.Message)
-	}
-	if e.Status != nil {
-		msg += fmt.Sprintf("Status: %v\n", *e.Status)
 	}
 	if msg == "" {
 		msg = "missing error info"
 	}
 	return msg
+}
+
+// HTTPResponse contains the HTTP response from the call to the service endpoint
+type HTTPResponse struct {
+	// GetPoller will return an initialized poller
+	GetPoller func() HttpPoller
+
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // LrOSCustomHeaderPost202Retry200Options contains the optional parameters for the LrOSCustomHeader.Post202Retry200 method.
@@ -35,38 +49,11 @@ type LrOSCustomHeaderPost202Retry200Options struct {
 	Product *Product
 }
 
-// LrOSCustomHeaderPost202Retry200Response contains the response from method LrOSCustomHeader.Post202Retry200.
-type LrOSCustomHeaderPost202Retry200Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LrOSCustomHeaderPostAsyncRetrySucceededOptions contains the optional parameters for the LrOSCustomHeader.PostAsyncRetrySucceeded
 // method.
 type LrOSCustomHeaderPostAsyncRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
-}
-
-// LrOSCustomHeaderPostAsyncRetrySucceededResponse contains the response from method LrOSCustomHeader.PostAsyncRetrySucceeded.
-type LrOSCustomHeaderPostAsyncRetrySucceededResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LrOSCustomHeaderPut201CreatingSucceeded200Options contains the optional parameters for the LrOSCustomHeader.Put201CreatingSucceeded200
@@ -83,84 +70,6 @@ type LrOSCustomHeaderPutAsyncRetrySucceededOptions struct {
 	Product *Product
 }
 
-// LrOSDeleteAsyncNoHeaderInRetryResponse contains the response from method LrOS.DeleteAsyncNoHeaderInRetry.
-type LrOSDeleteAsyncNoHeaderInRetryResponse struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LrOSDeleteAsyncNoRetrySucceededResponse contains the response from method LrOS.DeleteAsyncNoRetrySucceeded.
-type LrOSDeleteAsyncNoRetrySucceededResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrOSDeleteAsyncRetryFailedResponse contains the response from method LrOS.DeleteAsyncRetryFailed.
-type LrOSDeleteAsyncRetryFailedResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrOSDeleteAsyncRetrySucceededResponse contains the response from method LrOS.DeleteAsyncRetrySucceeded.
-type LrOSDeleteAsyncRetrySucceededResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrOSDeleteAsyncRetrycanceledResponse contains the response from method LrOS.DeleteAsyncRetrycanceled.
-type LrOSDeleteAsyncRetrycanceledResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrOSDeleteNoHeaderInRetryResponse contains the response from method LrOS.DeleteNoHeaderInRetry.
-type LrOSDeleteNoHeaderInRetryResponse struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LrOSPost202NoRetry204Options contains the optional parameters for the LrOS.Post202NoRetry204 method.
 type LrOSPost202NoRetry204Options struct {
 	// Product to put
@@ -171,18 +80,6 @@ type LrOSPost202NoRetry204Options struct {
 type LrOSPost202Retry200Options struct {
 	// Product to put
 	Product *Product
-}
-
-// LrOSPost202Retry200Response contains the response from method LrOS.Post202Retry200.
-type LrOSPost202Retry200Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LrOSPostAsyncNoRetrySucceededOptions contains the optional parameters for the LrOS.PostAsyncNoRetrySucceeded method.
@@ -197,21 +94,6 @@ type LrOSPostAsyncRetryFailedOptions struct {
 	Product *Product
 }
 
-// LrOSPostAsyncRetryFailedResponse contains the response from method LrOS.PostAsyncRetryFailed.
-type LrOSPostAsyncRetryFailedResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LrOSPostAsyncRetrySucceededOptions contains the optional parameters for the LrOS.PostAsyncRetrySucceeded method.
 type LrOSPostAsyncRetrySucceededOptions struct {
 	// Product to put
@@ -222,21 +104,6 @@ type LrOSPostAsyncRetrySucceededOptions struct {
 type LrOSPostAsyncRetrycanceledOptions struct {
 	// Product to put
 	Product *Product
-}
-
-// LrOSPostAsyncRetrycanceledResponse contains the response from method LrOS.PostAsyncRetrycanceled.
-type LrOSPostAsyncRetrycanceledResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LrOSPut200Acceptedcanceled200Options contains the optional parameters for the LrOS.Put200Acceptedcanceled200 method.
@@ -341,49 +208,10 @@ type LrOSPutSubResourceOptions struct {
 	Product *SubProduct
 }
 
-// LroRetrysDelete202Retry200Response contains the response from method LroRetrys.Delete202Retry200.
-type LroRetrysDelete202Retry200Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LroRetrysDeleteAsyncRelativeRetrySucceededResponse contains the response from method LroRetrys.DeleteAsyncRelativeRetrySucceeded.
-type LroRetrysDeleteAsyncRelativeRetrySucceededResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LroRetrysPost202Retry200Options contains the optional parameters for the LroRetrys.Post202Retry200 method.
 type LroRetrysPost202Retry200Options struct {
 	// Product to put
 	Product *Product
-}
-
-// LroRetrysPost202Retry200Response contains the response from method LroRetrys.Post202Retry200.
-type LroRetrysPost202Retry200Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LroRetrysPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LroRetrys.PostAsyncRelativeRetrySucceeded
@@ -391,21 +219,6 @@ type LroRetrysPost202Retry200Response struct {
 type LroRetrysPostAsyncRelativeRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
-}
-
-// LroRetrysPostAsyncRelativeRetrySucceededResponse contains the response from method LroRetrys.PostAsyncRelativeRetrySucceeded.
-type LroRetrysPostAsyncRelativeRetrySucceededResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LroRetrysPut201CreatingSucceeded200Options contains the optional parameters for the LroRetrys.Put201CreatingSucceeded200
@@ -422,118 +235,10 @@ type LroRetrysPutAsyncRelativeRetrySucceededOptions struct {
 	Product *Product
 }
 
-// LrosaDsDelete202NonRetry400Response contains the response from method LrosaDs.Delete202NonRetry400.
-type LrosaDsDelete202NonRetry400Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrosaDsDelete202RetryInvalidHeaderResponse contains the response from method LrosaDs.Delete202RetryInvalidHeader.
-type LrosaDsDelete202RetryInvalidHeaderResponse struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrosaDsDeleteAsyncRelativeRetry400Response contains the response from method LrosaDs.DeleteAsyncRelativeRetry400.
-type LrosaDsDeleteAsyncRelativeRetry400Response struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse contains the response from method LrosaDs.DeleteAsyncRelativeRetryInvalidHeader.
-type LrosaDsDeleteAsyncRelativeRetryInvalidHeaderResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LrosaDs.DeleteAsyncRelativeRetryInvalidJSONPolling.
-type LrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrosaDsDeleteAsyncRelativeRetryNoStatusResponse contains the response from method LrosaDs.DeleteAsyncRelativeRetryNoStatus.
-type LrosaDsDeleteAsyncRelativeRetryNoStatusResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
-// LrosaDsDeleteNonRetry400Response contains the response from method LrosaDs.DeleteNonRetry400.
-type LrosaDsDeleteNonRetry400Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LrosaDsPost202NoLocationOptions contains the optional parameters for the LrosaDs.Post202NoLocation method.
 type LrosaDsPost202NoLocationOptions struct {
 	// Product to put
 	Product *Product
-}
-
-// LrosaDsPost202NoLocationResponse contains the response from method LrosaDs.Post202NoLocation.
-type LrosaDsPost202NoLocationResponse struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LrosaDsPost202NonRetry400Options contains the optional parameters for the LrosaDs.Post202NonRetry400 method.
@@ -542,55 +247,16 @@ type LrosaDsPost202NonRetry400Options struct {
 	Product *Product
 }
 
-// LrosaDsPost202NonRetry400Response contains the response from method LrosaDs.Post202NonRetry400.
-type LrosaDsPost202NonRetry400Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LrosaDsPost202RetryInvalidHeaderOptions contains the optional parameters for the LrosaDs.Post202RetryInvalidHeader method.
 type LrosaDsPost202RetryInvalidHeaderOptions struct {
 	// Product to put
 	Product *Product
 }
 
-// LrosaDsPost202RetryInvalidHeaderResponse contains the response from method LrosaDs.Post202RetryInvalidHeader.
-type LrosaDsPost202RetryInvalidHeaderResponse struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LrosaDsPostAsyncRelativeRetry400Options contains the optional parameters for the LrosaDs.PostAsyncRelativeRetry400 method.
 type LrosaDsPostAsyncRelativeRetry400Options struct {
 	// Product to put
 	Product *Product
-}
-
-// LrosaDsPostAsyncRelativeRetry400Response contains the response from method LrosaDs.PostAsyncRelativeRetry400.
-type LrosaDsPostAsyncRelativeRetry400Response struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LrosaDs.PostAsyncRelativeRetryInvalidHeader
@@ -600,41 +266,11 @@ type LrosaDsPostAsyncRelativeRetryInvalidHeaderOptions struct {
 	Product *Product
 }
 
-// LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse contains the response from method LrosaDs.PostAsyncRelativeRetryInvalidHeader.
-type LrosaDsPostAsyncRelativeRetryInvalidHeaderResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LrosaDs.PostAsyncRelativeRetryInvalidJSONPolling
 // method.
 type LrosaDsPostAsyncRelativeRetryInvalidJSONPollingOptions struct {
 	// Product to put
 	Product *Product
-}
-
-// LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LrosaDs.PostAsyncRelativeRetryInvalidJSONPolling.
-type LrosaDsPostAsyncRelativeRetryInvalidJSONPollingResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LrosaDsPostAsyncRelativeRetryNoPayloadOptions contains the optional parameters for the LrosaDs.PostAsyncRelativeRetryNoPayload
@@ -644,37 +280,10 @@ type LrosaDsPostAsyncRelativeRetryNoPayloadOptions struct {
 	Product *Product
 }
 
-// LrosaDsPostAsyncRelativeRetryNoPayloadResponse contains the response from method LrosaDs.PostAsyncRelativeRetryNoPayload.
-type LrosaDsPostAsyncRelativeRetryNoPayloadResponse struct {
-	// AzureAsyncOperation contains the information returned from the Azure-AsyncOperation header response.
-	AzureAsyncOperation *string
-
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
-}
-
 // LrosaDsPostNonRetry400Options contains the optional parameters for the LrosaDs.PostNonRetry400 method.
 type LrosaDsPostNonRetry400Options struct {
 	// Product to put
 	Product *Product
-}
-
-// LrosaDsPostNonRetry400Response contains the response from method LrosaDs.PostNonRetry400.
-type LrosaDsPostNonRetry400Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// RetryAfter contains the information returned from the Retry-After header response.
-	RetryAfter *int32
 }
 
 // LrosaDsPut200InvalidJSONOptions contains the optional parameters for the LrosaDs.Put200InvalidJSON method.
@@ -783,7 +392,12 @@ type ProductProperties struct {
 
 // ProductResponse is the response envelope for operations that return a Product type.
 type ProductResponse struct {
-	Product *Product
+	// GetPoller will return an initialized poller
+	GetPoller func() ProductPoller
+
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResponse, error)
+	Product       *Product
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -813,6 +427,12 @@ type Sku struct {
 
 // SkuResponse is the response envelope for operations that return a Sku type.
 type SkuResponse struct {
+	// GetPoller will return an initialized poller
+	GetPoller func() SkuPoller
+
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SkuResponse, error)
+
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 	Sku         *Sku
@@ -831,6 +451,12 @@ type SubProductProperties struct {
 
 // SubProductResponse is the response envelope for operations that return a SubProduct type.
 type SubProductResponse struct {
+	// GetPoller will return an initialized poller
+	GetPoller func() SubProductPoller
+
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SubProductResponse, error)
+
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 	SubProduct  *SubProduct

@@ -207,3 +207,4 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 func (p *productResultValuePager) PageResponse() *ProductResultValueResponse {
 	return p.current
 }
+

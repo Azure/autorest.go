@@ -9,21 +9,21 @@ package paginggroup
 type OperationResultStatus string
 
 const (
-	OperationResultStatusAccepted  OperationResultStatus = "Accepted"
-	OperationResultStatusCanceled  OperationResultStatus = "canceled"
-	OperationResultStatusCreated   OperationResultStatus = "Created"
-	OperationResultStatusCreating  OperationResultStatus = "Creating"
-	OperationResultStatusDeleted   OperationResultStatus = "Deleted"
-	OperationResultStatusDeleting  OperationResultStatus = "Deleting"
-	OperationResultStatusFailed    OperationResultStatus = "Failed"
-	OperationResultStatusOk        OperationResultStatus = "OK"
+	OperationResultStatusAccepted OperationResultStatus = "Accepted"
+	OperationResultStatusCanceled OperationResultStatus = "canceled"
+	OperationResultStatusCreated OperationResultStatus = "Created"
+	OperationResultStatusCreating OperationResultStatus = "Creating"
+	OperationResultStatusDeleted OperationResultStatus = "Deleted"
+	OperationResultStatusDeleting OperationResultStatus = "Deleting"
+	OperationResultStatusFailed OperationResultStatus = "Failed"
+	OperationResultStatusOk OperationResultStatus = "OK"
 	OperationResultStatusSucceeded OperationResultStatus = "Succeeded"
-	OperationResultStatusUpdated   OperationResultStatus = "Updated"
-	OperationResultStatusUpdating  OperationResultStatus = "Updating"
+	OperationResultStatusUpdated OperationResultStatus = "Updated"
+	OperationResultStatusUpdating OperationResultStatus = "Updating"
 )
 
 func PossibleOperationResultStatusValues() []OperationResultStatus {
-	return []OperationResultStatus{
+	return []OperationResultStatus{	
 		OperationResultStatusAccepted,
 		OperationResultStatusCanceled,
 		OperationResultStatusCreated,
@@ -41,3 +41,4 @@ func PossibleOperationResultStatusValues() []OperationResultStatus {
 func (c OperationResultStatus) ToPtr() *OperationResultStatus {
 	return &c
 }
+

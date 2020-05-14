@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { pascalCase } from '@azure-tools/codegen';
-import { CodeModel, SchemaResponse } from '@azure-tools/codemodel';
+import { camelCase, pascalCase } from '@azure-tools/codegen';
+import { CodeModel, SchemaResponse, Operation } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
-import { PollerInfo } from '../common/helpers';
+import { PollerInfo, isSchemaResponse } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
@@ -26,8 +26,8 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('time');
   imports.add('errors');
   imports.add('encoding/json');
-  text += imports.text();
-
+  imports.add('net/url');
+  let bodyText = '';
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   for (const poller of values(pollers)) {
@@ -35,46 +35,82 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     let responseType = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
+    let unmarshalResponse = 'nil';
+    if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
+      unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`
+    }
     if (schemaResponse.schema === undefined) {
       responseType = 'http.Response';
     } else {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       rawResponse = '.RawResponse';
     }
-    text += `// ${pollerInterface} provides polling facilities until the operation completes
+    let pollerType = '';
+    let firstResp = poller.op.responses![0];
+    if (!isSchemaResponse(firstResp)) {
+      pollerType = 'nil';
+    } else {
+      pollerType = (<SchemaResponse>firstResp).schema.language.go!.responseType.value;
+    }
+    bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
-	Poll(context.Context) bool
-	Response() (*${responseType}, error)
+	Done() bool
+	Poll(ctx context.Context) (*http.Response, error)
+	FinalResponse(ctx context.Context) (*${responseType}, error)
 	ResumeToken() (string, error)
-	Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error)
 }
 
 type ${poller.name} struct {
 	// the client for making the request
-	client *${poller.op.language.go!.clientName}
+	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
 }
 
-// Poll returns false if there was an error or polling has reached a terminal state
-func (p *${poller.name}) Poll(ctx context.Context) bool {
-	return !lroPollDone(ctx, p.client.p, p.pt)
+// Done returns true if there was an error or polling has reached a terminal state
+func (p *${poller.name}) Done() bool {
+	return p.pt.hasTerminated()
 }
 
-// Response returns the latest response that is stored from the latest polling operation
-func (p *${poller.name}) Response() (*${responseType}, error) {
-	if p.pt.pollingError() != nil {
-		return nil, p.pt.pollingError()
+// Poll will send poll the service endpoint and return an http.Response or error received from the service
+func (p *${poller.name}) Poll(ctx context.Context) (*http.Response, error) {
+	if lroPollDone(ctx, p.pipeline, p.pt) {
+		return p.pt.latestResponse().Response, p.pt.pollingError()
 	}
-	resp := p.response()
-	if resp == nil {
-		return nil, errors.New("did not find a response on the poller")
+	return nil, p.pt.pollingError()
+}
+
+func (p *${poller.name}) FinalResponse(ctx context.Context) (*${responseType}, error) {
+	if p.pt.finalGetURL() == "" {
+		// we can end up in this situation if the async operation returns a 200
+		// with no polling URLs.  in that case return the response which should
+		// contain the JSON payload (only do this for successful terminal cases).
+		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
+			result, err := ${poller.name}HandleResponse(lr, p.pipeline)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, errors.New("missing URL for retrieving result")
 	}
-	result, err := p.client.${poller.op.language.go!.protocolNaming.responseMethod}(resp)
+	u, err := url.Parse(p.pt.finalGetURL())
 	if err != nil {
 		return nil, err
 	}
-	return result, nil
+	req := azcore.NewRequest(http.MethodGet, *u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := p.pipeline.Do(ctx, req)
+	if err == nil && resp.Body != nil {
+		result, err := ${poller.name}HandleResponse(resp, p.pipeline)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	return nil, err
 }
 
 // ResumeToken generates the string token that can be used with the Resume${pascalCase(poller.name)} method
@@ -90,27 +126,64 @@ func (p *${poller.name}) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-// Wait will continue to poll until a terminal state is reached or an error is encountered. Wait will use the 
-// duration specified in the retry-after header, if the header is not specified then the pollingInterval that
-// is specified will be used to wait between polling requests. 
-func (p *${poller.name}) Wait(ctx context.Context, pollingInterval time.Duration) (*${responseType}, error) {
-	for p.Poll(ctx) {
-		if delay := p.response().RetryAfter(); delay > 0 {
-			time.Sleep(delay)
-		} else {
-			time.Sleep(pollingInterval)
-		}
+func ${poller.name}HandleResponse(resp *azcore.Response, p azcore.Pipeline) (*${responseType}, error) {
+	pt, err := createPollingTracker("ProductPoller", resp, ${poller.name}HandleError)
+	if err != nil {
+		return nil, err
 	}
-	return p.Response()
+	result := &${responseType}{
+		RawResponse: resp.Response,
+		GetPoller: func() ${pollerInterface} {
+			return &${poller.name}{
+				pipeline: p,
+				pt:     pt,
+			}
+		},
+	}
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*${responseType}, error) {
+		p := result.GetPoller().(*${poller.name})
+		for !p.Done() {
+			resp, err := p.Poll(ctx)
+			if err != nil {
+				return nil, err
+			}
+			if delay := azcore.RetryAfter(resp); delay > 0 {
+				time.Sleep(delay)
+			} else {
+				time.Sleep(frequency)
+			}
+		}
+    return p.FinalResponse(ctx)
+	}
+	return result, ${unmarshalResponse}
 }
 
-// response returns the last HTTP response.
-func (p *${poller.name}) response() *azcore.Response {
-	return p.pt.latestResponse()
-}
-
+${createPollerErrHandler(poller.name, poller.op, imports)}
 `;
   }
+  text += imports.text();
+  text += bodyText;
+  return text;
+}
+
+function createPollerErrHandler(name: string, op: Operation, imports: ImportManager): string {
+  let text = `// ${name} handles the error response.\n`;
+  text += `func ${name}HandleError(resp *azcore.Response) error {\n`;
+  // if the response doesn't define a 'default' section return a generic error
+  // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
+  if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
+    imports.add('errors');
+    text += `\treturn errors.New(resp.Status)\n`;
+  } else {
+    const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
+    const errFormat = <string>schemaError.language.go!.marshallingFormat;
+    text += `\terr := ${schemaError.language.go!.name}{}\n`;
+    text += `\tif err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err); err != nil {\n`;
+    text += `\t\treturn err\n`;
+    text += `\t}\n`;
+    text += '\treturn err\n';
+  }
+  text += '}\n\n';
   return text;
 }
 

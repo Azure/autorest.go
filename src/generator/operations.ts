@@ -288,13 +288,16 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
+    text += `\tpoller:= &${op.language.go!.pollerType.name}{\n`;
+    text += `\tpt: pt,\n`;
+    text += `\tpipeline: client.p,\n`;
+    text += `\t}\n`;
+    text += `\treturn poller.FinalResponse(ctx)\n`;
     // closing braces
-    text += `\treturn &${op.language.go!.pollerType.name}{\n`;
-    text += `\t\tpt: pt,\n`;
-    text += `\t\tclient: client,\n`;
-    text += `\t}, nil\n`;
     text += '}\n\n';
-    text += addResumePollerMethod(op, clientName);
+    if (op.language.go!.pollerType.declareResume) {
+      text += addResumePollerMethod(op, clientName);
+    }
     return text;
   }
   text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
@@ -579,6 +582,9 @@ function isArrayOfRFC1123(schema: Schema): boolean {
 }
 
 function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
+  if (isLROOperation(op)) {
+    return '';
+  }
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
@@ -607,12 +613,9 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       }
     }
   }
-  // LROs will skip this check since the status code is checked by the poller
-  if (!isLROOperation(op)) {
-    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
-    text += '\t}\n';
-  }
+  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+  text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+  text += '\t}\n';
   if (!isSchemaResponse(firstResp)) {
     // no response body, return the *http.Response
     text += `\treturn resp.Response, nil\n`;
@@ -746,9 +749,10 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     const returns = generateReturnsInfo(op, false);
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
-    if (isLROOperation(op) && !op.extensions!['x-ms-pageable']) {
-      interfaceText += `\t// Resume${pascalCase(op.language.go!.pollerType.name)} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
-      interfaceText += `\tResume${pascalCase(op.language.go!.pollerType.name)}(id string) (${pascalCase(op.language.go!.pollerType.name)}, error)\n`;
+    if (isLROOperation(op) && !op.extensions!['x-ms-pageable'] && op.language.go!.pollerType.declareResume) {
+      const pollerName = pascalCase(op.language.go!.pollerType.name);
+      interfaceText += `\t// Resume${pollerName} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
+      interfaceText += `\tResume${pollerName}(id string) (${pollerName}, error)\n`;
     }
   }
   interfaceText += '}\n\n';
@@ -912,10 +916,10 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   // must check pageable first as all pageable operations are also schema responses
   if (!forHandler && isPageableOperation(op)) {
     returnType = op.language.go!.pageableType.name;
-  } else if (!forHandler && isLROOperation(op)) {
-    returnType = pascalCase(op.language.go!.pollerType.name);
   } else if (isSchemaResponse(firstResp)) {
     returnType = '*' + firstResp.schema.language.go!.responseType.name;
+  } else if (!forHandler && isLROOperation(op)) {
+    returnType = '*HTTPResponse';
   }
   return [returnType, 'error'];
 }
@@ -929,7 +933,7 @@ function addResumePollerMethod(op: Operation, clientName: string): string {
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
   text += `\treturn &${op.language.go!.pollerType.name}{\n`;
-  text += `\t\tclient: client,\n`;
+  text += `\t\tpipeline: client.p,\n`;
   text += '\t\tpt: pt,\n'
   text += `\t}, nil\n`;
   text += `}\n`;
