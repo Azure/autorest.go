@@ -37,7 +37,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
-      unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`
+      unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
     }
     if (schemaResponse.schema === undefined) {
       responseType = 'http.Response';
@@ -46,7 +46,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       rawResponse = '.RawResponse';
     }
     let pollerType = '';
-    let firstResp = poller.op.responses![0];
+    const firstResp = poller.op.responses![0];
     if (!isSchemaResponse(firstResp)) {
       pollerType = 'nil';
     } else {
