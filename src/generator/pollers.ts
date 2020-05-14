@@ -45,13 +45,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       responseType = schemaResponse.schema.language.go!.responseType.name;
       rawResponse = '.RawResponse';
     }
-    let pollerType = '';
-    const firstResp = poller.op.responses![0];
-    if (!isSchemaResponse(firstResp)) {
-      pollerType = 'nil';
-    } else {
-      pollerType = (<SchemaResponse>firstResp).schema.language.go!.responseType.value;
-    }
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
 	Done() bool
