@@ -57,7 +57,7 @@ export async function namer(session: Session<CodeModel>) {
     details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Model');
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
-      details.discriminator = createPolymorphicInterfaceName(details.name);
+      details.discriminatorInterface = createPolymorphicInterfaceName(details.name);
     }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;

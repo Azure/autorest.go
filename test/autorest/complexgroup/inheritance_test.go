@@ -28,44 +28,60 @@ func TestInheritanceGetValid(t *testing.T) {
 		t.Fatalf("GetValid: %v", err)
 	}
 	helpers.DeepEqualOrFatal(t, result.Siamese, &complexgroup.Siamese{
-		Breed: to.StringPtr("persian"),
-		Color: to.StringPtr("green"),
-		Hates: &[]complexgroup.Dog{
-			{
-				Food: to.StringPtr("tomato"),
-				ID:   to.Int32Ptr(1),
-				Name: to.StringPtr("Potato"),
+		Cat: complexgroup.Cat{
+			Pet: complexgroup.Pet{
+				ID:   to.Int32Ptr(2),
+				Name: to.StringPtr("Siameeee"),
 			},
-			{
-				Food: to.StringPtr("french fries"),
-				ID:   to.Int32Ptr(-1),
-				Name: to.StringPtr("Tomato"),
+			Color: to.StringPtr("green"),
+			Hates: &[]complexgroup.Dog{
+				{
+					Pet: complexgroup.Pet{
+						ID:   to.Int32Ptr(1),
+						Name: to.StringPtr("Potato"),
+					},
+					Food: to.StringPtr("tomato"),
+				},
+				{
+					Pet: complexgroup.Pet{
+						ID:   to.Int32Ptr(-1),
+						Name: to.StringPtr("Tomato"),
+					},
+					Food: to.StringPtr("french fries"),
+				},
 			},
 		},
-		ID:   to.Int32Ptr(2),
-		Name: to.StringPtr("Siameeee"),
+		Breed: to.StringPtr("persian"),
 	})
 }
 
 func TestInheritancePutValid(t *testing.T) {
 	client := getInheritanceOperations(t)
 	result, err := client.PutValid(context.Background(), complexgroup.Siamese{
-		Breed: to.StringPtr("persian"),
-		Color: to.StringPtr("green"),
-		Hates: &[]complexgroup.Dog{
-			{
-				Food: to.StringPtr("tomato"),
-				ID:   to.Int32Ptr(1),
-				Name: to.StringPtr("Potato"),
+		Cat: complexgroup.Cat{
+			Pet: complexgroup.Pet{
+				ID:   to.Int32Ptr(2),
+				Name: to.StringPtr("Siameeee"),
 			},
-			{
-				Food: to.StringPtr("french fries"),
-				ID:   to.Int32Ptr(-1),
-				Name: to.StringPtr("Tomato"),
+			Color: to.StringPtr("green"),
+			Hates: &[]complexgroup.Dog{
+				{
+					Pet: complexgroup.Pet{
+						ID:   to.Int32Ptr(1),
+						Name: to.StringPtr("Potato"),
+					},
+					Food: to.StringPtr("tomato"),
+				},
+				{
+					Pet: complexgroup.Pet{
+						ID:   to.Int32Ptr(-1),
+						Name: to.StringPtr("Tomato"),
+					},
+					Food: to.StringPtr("french fries"),
+				},
 			},
 		},
-		ID:   to.Int32Ptr(2),
-		Name: to.StringPtr("Siameeee"),
+		Breed: to.StringPtr("persian"),
 	})
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)

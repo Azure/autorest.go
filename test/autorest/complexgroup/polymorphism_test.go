@@ -36,39 +36,56 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 	goblinBday := time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	helpers.DeepEqualOrFatal(t, salmon, &complexgroup.SmartSalmon{
+	expectedFish := complexgroup.Fish{
 		Fishtype: to.StringPtr("smart_salmon"),
-		Iswild:   to.BoolPtr(true),
 		Length:   to.Float32Ptr(1),
-		Location: to.StringPtr("alaska"),
 		Siblings: &[]complexgroup.FishClassification{
 			&complexgroup.Shark{
+				Fish: complexgroup.Fish{
+					Fishtype: to.StringPtr("shark"),
+					Length:   to.Float32Ptr(20),
+					Species:  to.StringPtr("predator")},
 				Age:      to.Int32Ptr(6),
 				Birthday: &sharkBday,
-				Fishtype: to.StringPtr("shark"),
-				Length:   to.Float32Ptr(20),
-				Species:  to.StringPtr("predator"),
 			},
 			&complexgroup.Sawshark{
-				Age:      to.Int32Ptr(105),
-				Birthday: &sawBday,
-				Fishtype: to.StringPtr("sawshark"),
-				Length:   to.Float32Ptr(10),
-				Picture:  &[]byte{255, 255, 255, 255, 254},
-				Species:  to.StringPtr("dangerous"),
+				Shark: complexgroup.Shark{
+					Fish: complexgroup.Fish{
+						Fishtype: to.StringPtr("sawshark"),
+						Length:   to.Float32Ptr(10),
+						Species:  to.StringPtr("dangerous"),
+					},
+					Age:      to.Int32Ptr(105),
+					Birthday: &sawBday,
+				},
+				Picture: &[]byte{255, 255, 255, 255, 254},
 			},
 			&complexgroup.Goblinshark{
-				Age:      to.Int32Ptr(1),
-				Birthday: &goblinBday,
-				Color:    complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
-				Fishtype: to.StringPtr("goblin"),
-				Jawsize:  to.Int32Ptr(5),
-				Length:   to.Float32Ptr(30),
-				Species:  to.StringPtr("scary"),
+				Shark: complexgroup.Shark{
+					Fish: complexgroup.Fish{
+						Fishtype: to.StringPtr("goblin"),
+						Length:   to.Float32Ptr(30),
+						Species:  to.StringPtr("scary"),
+					},
+					Age:      to.Int32Ptr(1),
+					Birthday: &goblinBday,
+				},
+				Color:   complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
+				Jawsize: to.Int32Ptr(5),
 			},
 		},
 		Species: to.StringPtr("king"),
+	}
+	expectedSalmon := complexgroup.Salmon{
+		Fish:     expectedFish,
+		Iswild:   to.BoolPtr(true),
+		Location: to.StringPtr("alaska"),
+	}
+	helpers.DeepEqualOrFatal(t, salmon, &complexgroup.SmartSalmon{
+		Salmon: expectedSalmon,
 	})
+	helpers.DeepEqualOrFatal(t, result.Salmon.GetSalmon(), &expectedSalmon)
+	helpers.DeepEqualOrFatal(t, result.Salmon.GetFish(), &expectedFish)
 }
 
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type specified on the wire.
@@ -81,43 +98,55 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 	helpers.DeepEqualOrFatal(t, result.DotFishMarket, &complexgroup.DotFishMarket{
 		Fishes: &[]complexgroup.DotFishClassification{
 			&complexgroup.DotSalmon{
-				FishType: to.StringPtr("DotSalmon"),
+				DotFish: complexgroup.DotFish{
+					FishType: to.StringPtr("DotSalmon"),
+					Species:  to.StringPtr("king"),
+				},
 				Location: to.StringPtr("australia"),
 				Iswild:   to.BoolPtr(false),
-				Species:  to.StringPtr("king"),
 			},
 			&complexgroup.DotSalmon{
-				FishType: to.StringPtr("DotSalmon"),
+				DotFish: complexgroup.DotFish{
+					FishType: to.StringPtr("DotSalmon"),
+					Species:  to.StringPtr("king"),
+				},
 				Location: to.StringPtr("canada"),
 				Iswild:   to.BoolPtr(true),
-				Species:  to.StringPtr("king"),
 			},
 		},
 		Salmons: &[]complexgroup.DotSalmon{
 			{
-				FishType: to.StringPtr("DotSalmon"),
+				DotFish: complexgroup.DotFish{
+					FishType: to.StringPtr("DotSalmon"),
+					Species:  to.StringPtr("king"),
+				},
 				Location: to.StringPtr("sweden"),
 				Iswild:   to.BoolPtr(false),
-				Species:  to.StringPtr("king"),
 			},
 			{
-				FishType: to.StringPtr("DotSalmon"),
+				DotFish: complexgroup.DotFish{
+					FishType: to.StringPtr("DotSalmon"),
+					Species:  to.StringPtr("king"),
+				},
 				Location: to.StringPtr("atlantic"),
 				Iswild:   to.BoolPtr(true),
-				Species:  to.StringPtr("king"),
 			},
 		},
 		SampleFish: &complexgroup.DotSalmon{
-			FishType: to.StringPtr("DotSalmon"),
+			DotFish: complexgroup.DotFish{
+				FishType: to.StringPtr("DotSalmon"),
+				Species:  to.StringPtr("king"),
+			},
 			Location: to.StringPtr("australia"),
 			Iswild:   to.BoolPtr(false),
-			Species:  to.StringPtr("king"),
 		},
 		SampleSalmon: &complexgroup.DotSalmon{
-			FishType: to.StringPtr("DotSalmon"),
+			DotFish: complexgroup.DotFish{
+				FishType: to.StringPtr("DotSalmon"),
+				Species:  to.StringPtr("king"),
+			},
 			Location: to.StringPtr("sweden"),
 			Iswild:   to.BoolPtr(false),
-			Species:  to.StringPtr("king"),
 		},
 	})
 }
@@ -140,23 +169,29 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 		},
 		Salmons: &[]complexgroup.DotSalmon{
 			{
+				DotFish: complexgroup.DotFish{
+					Species: to.StringPtr("king"),
+				},
 				Location: to.StringPtr("sweden"),
 				Iswild:   to.BoolPtr(false),
-				Species:  to.StringPtr("king"),
 			},
 			{
+				DotFish: complexgroup.DotFish{
+					Species: to.StringPtr("king"),
+				},
 				Location: to.StringPtr("atlantic"),
 				Iswild:   to.BoolPtr(true),
-				Species:  to.StringPtr("king"),
 			},
 		},
 		SampleFish: &complexgroup.DotFish{
 			Species: to.StringPtr("king"),
 		},
 		SampleSalmon: &complexgroup.DotSalmon{
+			DotFish: complexgroup.DotFish{
+				Species: to.StringPtr("king"),
+			},
 			Location: to.StringPtr("sweden"),
 			Iswild:   to.BoolPtr(false),
-			Species:  to.StringPtr("king"),
 		},
 	})
 }
@@ -169,10 +204,12 @@ func TestPolymorphismGetDotSyntax(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.DeepEqualOrFatal(t, result.DotFish, &complexgroup.DotSalmon{
-		FishType: to.StringPtr("DotSalmon"),
+		DotFish: complexgroup.DotFish{
+			FishType: to.StringPtr("DotSalmon"),
+			Species:  to.StringPtr("king"),
+		},
 		Location: to.StringPtr("sweden"),
 		Iswild:   to.BoolPtr(true),
-		Species:  to.StringPtr("king"),
 	})
 }
 
@@ -191,37 +228,49 @@ func TestPolymorphismGetValid(t *testing.T) {
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
 	helpers.DeepEqualOrFatal(t, salmon, &complexgroup.Salmon{
-		Fishtype: to.StringPtr("salmon"),
-		Iswild:   to.BoolPtr(true),
-		Length:   to.Float32Ptr(1),
-		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishClassification{
-			&complexgroup.Shark{
-				Age:      to.Int32Ptr(6),
-				Birthday: &sharkBday,
-				Fishtype: to.StringPtr("shark"),
-				Length:   to.Float32Ptr(20),
-				Species:  to.StringPtr("predator"),
+		Fish: complexgroup.Fish{
+			Fishtype: to.StringPtr("salmon"),
+			Length:   to.Float32Ptr(1),
+			Siblings: &[]complexgroup.FishClassification{
+				&complexgroup.Shark{
+					Fish: complexgroup.Fish{
+						Fishtype: to.StringPtr("shark"),
+						Length:   to.Float32Ptr(20),
+						Species:  to.StringPtr("predator"),
+					},
+					Age:      to.Int32Ptr(6),
+					Birthday: &sharkBday,
+				},
+				&complexgroup.Sawshark{
+					Shark: complexgroup.Shark{
+						Fish: complexgroup.Fish{
+							Fishtype: to.StringPtr("sawshark"),
+							Length:   to.Float32Ptr(10),
+							Species:  to.StringPtr("dangerous"),
+						},
+						Age:      to.Int32Ptr(105),
+						Birthday: &sawBday,
+					},
+					Picture: &[]byte{255, 255, 255, 255, 254},
+				},
+				&complexgroup.Goblinshark{
+					Shark: complexgroup.Shark{
+						Fish: complexgroup.Fish{
+							Fishtype: to.StringPtr("goblin"),
+							Length:   to.Float32Ptr(30),
+							Species:  to.StringPtr("scary"),
+						},
+						Age:      to.Int32Ptr(1),
+						Birthday: &goblinBday,
+					},
+					Color:   complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
+					Jawsize: to.Int32Ptr(5),
+				},
 			},
-			&complexgroup.Sawshark{
-				Age:      to.Int32Ptr(105),
-				Birthday: &sawBday,
-				Fishtype: to.StringPtr("sawshark"),
-				Length:   to.Float32Ptr(10),
-				Picture:  &[]byte{255, 255, 255, 255, 254},
-				Species:  to.StringPtr("dangerous"),
-			},
-			&complexgroup.Goblinshark{
-				Age:      to.Int32Ptr(1),
-				Birthday: &goblinBday,
-				Color:    complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
-				Fishtype: to.StringPtr("goblin"),
-				Jawsize:  to.Int32Ptr(5),
-				Length:   to.Float32Ptr(30),
-				Species:  to.StringPtr("scary"),
-			},
+			Species: to.StringPtr("king"),
 		},
-		Species: to.StringPtr("king"),
+		Iswild:   to.BoolPtr(true),
+		Location: to.StringPtr("alaska"),
 	})
 }
 
@@ -237,33 +286,45 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
 	result, err := client.PutMissingDiscriminator(context.Background(), &complexgroup.Salmon{
-		Iswild:   to.BoolPtr(true),
-		Length:   to.Float32Ptr(1),
-		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishClassification{
-			&complexgroup.Shark{
-				Age:      to.Int32Ptr(6),
-				Birthday: &sharkBday,
-				Length:   to.Float32Ptr(20),
-				Species:  to.StringPtr("predator"),
+		Fish: complexgroup.Fish{
+			Length: to.Float32Ptr(1),
+			Siblings: &[]complexgroup.FishClassification{
+				&complexgroup.Shark{
+					Fish: complexgroup.Fish{
+						Length:  to.Float32Ptr(20),
+						Species: to.StringPtr("predator"),
+					},
+					Age:      to.Int32Ptr(6),
+					Birthday: &sharkBday,
+				},
+				&complexgroup.Sawshark{
+					Shark: complexgroup.Shark{
+						Fish: complexgroup.Fish{
+							Length:  to.Float32Ptr(10),
+							Species: to.StringPtr("dangerous"),
+						},
+						Age:      to.Int32Ptr(105),
+						Birthday: &sawBday,
+					},
+					Picture: &[]byte{255, 255, 255, 255, 254},
+				},
+				&complexgroup.Goblinshark{
+					Shark: complexgroup.Shark{
+						Fish: complexgroup.Fish{
+							Length:  to.Float32Ptr(30),
+							Species: to.StringPtr("scary"),
+						},
+						Age:      to.Int32Ptr(1),
+						Birthday: &goblinBday,
+					},
+					Color:   complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
+					Jawsize: to.Int32Ptr(5),
+				},
 			},
-			&complexgroup.Sawshark{
-				Age:      to.Int32Ptr(105),
-				Birthday: &sawBday,
-				Length:   to.Float32Ptr(10),
-				Picture:  &[]byte{255, 255, 255, 255, 254},
-				Species:  to.StringPtr("dangerous"),
-			},
-			&complexgroup.Goblinshark{
-				Age:      to.Int32Ptr(1),
-				Birthday: &goblinBday,
-				Color:    complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
-				Jawsize:  to.Int32Ptr(5),
-				Length:   to.Float32Ptr(30),
-				Species:  to.StringPtr("scary"),
-			},
+			Species: to.StringPtr("king"),
 		},
-		Species: to.StringPtr("king"),
+		Iswild:   to.BoolPtr(true),
+		Location: to.StringPtr("alaska"),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -278,33 +339,45 @@ func TestPolymorphismPutValid(t *testing.T) {
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
 	resp, err := client.PutValid(context.Background(), &complexgroup.Salmon{
-		Iswild:   to.BoolPtr(true),
-		Length:   to.Float32Ptr(1),
-		Location: to.StringPtr("alaska"),
-		Siblings: &[]complexgroup.FishClassification{
-			&complexgroup.Shark{
-				Age:      to.Int32Ptr(6),
-				Birthday: &sharkBday,
-				Length:   to.Float32Ptr(20),
-				Species:  to.StringPtr("predator"),
+		Fish: complexgroup.Fish{
+			Length: to.Float32Ptr(1),
+			Siblings: &[]complexgroup.FishClassification{
+				&complexgroup.Shark{
+					Fish: complexgroup.Fish{
+						Length:  to.Float32Ptr(20),
+						Species: to.StringPtr("predator"),
+					},
+					Age:      to.Int32Ptr(6),
+					Birthday: &sharkBday,
+				},
+				&complexgroup.Sawshark{
+					Shark: complexgroup.Shark{
+						Fish: complexgroup.Fish{
+							Length:  to.Float32Ptr(10),
+							Species: to.StringPtr("dangerous"),
+						},
+						Age:      to.Int32Ptr(105),
+						Birthday: &sawBday,
+					},
+					Picture: &[]byte{255, 255, 255, 255, 254},
+				},
+				&complexgroup.Goblinshark{
+					Shark: complexgroup.Shark{
+						Fish: complexgroup.Fish{
+							Length:  to.Float32Ptr(30),
+							Species: to.StringPtr("scary"),
+						},
+						Age:      to.Int32Ptr(1),
+						Birthday: &goblinBday,
+					},
+					Color:   complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
+					Jawsize: to.Int32Ptr(5),
+				},
 			},
-			&complexgroup.Sawshark{
-				Age:      to.Int32Ptr(105),
-				Birthday: &sawBday,
-				Length:   to.Float32Ptr(10),
-				Picture:  &[]byte{255, 255, 255, 255, 254},
-				Species:  to.StringPtr("dangerous"),
-			},
-			&complexgroup.Goblinshark{
-				Age:      to.Int32Ptr(1),
-				Birthday: &goblinBday,
-				Color:    complexgroup.GoblinSharkColor("pinkish-gray").ToPtr(),
-				Jawsize:  to.Int32Ptr(5),
-				Length:   to.Float32Ptr(30),
-				Species:  to.StringPtr("scary"),
-			},
+			Species: to.StringPtr("king"),
 		},
-		Species: to.StringPtr("king"),
+		Iswild:   to.BoolPtr(true),
+		Location: to.StringPtr("alaska"),
 	})
 	if err != nil {
 		t.Fatal(err)

@@ -7,7 +7,6 @@ import { Session } from '@azure-tools/autorest-extension-base';
 import { comment } from '@azure-tools/codegen';
 import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType } from '@azure-tools/codemodel';
 
-
 // returns the common source-file preamble (license comment, package name etc)
 export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
   const headerText = comment(await session.getValue('header-text', 'MISSING LICENSE HEADER'), '// ');
@@ -70,8 +69,8 @@ export function substituteDiscriminator(schema: Schema): string {
       const dictElem = <Schema>dictSchema.elementType;
       return `map[string]${substituteDiscriminator(dictElem)}`;
     case SchemaType.Object:
-      if (schema.language.go!.discriminator) {
-        return schema.language.go!.discriminator;
+      if (schema.language.go!.discriminatorInterface) {
+        return schema.language.go!.discriminatorInterface;
       }
       return schema.language.go!.name;
     default:
