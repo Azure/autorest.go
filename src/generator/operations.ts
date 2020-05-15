@@ -269,6 +269,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
+    imports.add('time');
     // TODO remove LRO for pageable responses NYI
     if (op.extensions!['x-ms-pageable']) {
       text += `\treturn nil, nil`;
@@ -284,15 +285,42 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
+    if (!op.responses) {
+      text += '\tresult := &HttpResponse{\n';
+      text += '\t\tresult.RawResponse: resp\n';
+      text += '\t}\n';
+    } else {
+      text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+    }
     text += `\tpt, err := createPollingTracker("${op.language.go!.pollerType.name}", resp, client.${info.protocolNaming.errorMethod})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    text += `\tpoller:= &${op.language.go!.pollerType.name}{\n`;
-    text += `\tpt: pt,\n`;
-    text += `\tpipeline: client.p,\n`;
+    text += `\tresult.GetPoller = func() ${pascalCase(op.language.go!.pollerType.name)} {\n`;
+    text += `\t\treturn &${op.language.go!.pollerType.name}{\n`;
+    text += `\t\t\tpt: pt,\n`;
+    text += `\t\t\tpipeline: client.p,\n`;
+    text += `\t\t}\n`;
     text += `\t}\n`;
-    text += `\treturn poller.FinalResponse(ctx)\n`;
+    text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
+    text += `\tp:= result.GetPoller().(*${op.language.go!.pollerType.name})\n`;
+    text += `\tfor !p.Done() {\n`;
+    text += `\tresp, err:= p.Poll(ctx)\n`;
+    text += `\tif err != nil {\n`;
+    text += `\treturn nil, err\n`;
+    text += `\t}\n`;
+    text += `\tif delay := azcore.RetryAfter(resp); delay > 0 {\n`;
+    text += `\ttime.Sleep(delay)\n`;
+    text += `\t} else {\n`;
+    text += `\ttime.Sleep(frequency)\n`;
+    text += `\t}\n`;
+    text += `\t}\n`;
+    text += `\treturn p.FinalResponse(ctx)\n`;
+    text += `\t}\n`;
+    text += `\treturn result, nil\n`;
     // closing braces
     text += '}\n\n';
     if (op.language.go!.pollerType.declareResume) {
@@ -582,9 +610,6 @@ function isArrayOfRFC1123(schema: Schema): boolean {
 }
 
 function createProtocolResponse(client: string, op: Operation, imports: ImportManager): string {
-  if (isLROOperation(op)) {
-    return '';
-  }
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.responseMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
@@ -599,24 +624,33 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   // this is to support operations that specify multiple response codes
   // that return the same schema (or no schema).
   // TODO: handle response codes with different schemas
-  let statusCodes = new Array<string>();
-  statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
-  for (let i = 1; i < op.responses.length; ++i) {
-    if (!isSchemaResponse(firstResp) && !isSchemaResponse(op.responses[i])) {
-      // both responses return no schema, append status codes
-      statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
-    } else if (isSchemaResponse(firstResp) && isSchemaResponse(op.responses[i])) {
-      // both responses return a schema, ensure they're the same
-      if ((<SchemaResponse>firstResp).schema === (<SchemaResponse>op.responses[i]).schema) {
-        // same schemas, append status codes
+  if (!isLROOperation(op)) {
+    let statusCodes = new Array<string>();
+    statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
+    for (let i = 1; i < op.responses.length; ++i) {
+      if (!isSchemaResponse(firstResp) && !isSchemaResponse(op.responses[i])) {
+        // both responses return no schema, append status codes
         statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
+      } else if (isSchemaResponse(firstResp) && isSchemaResponse(op.responses[i])) {
+        // both responses return a schema, ensure they're the same
+        if ((<SchemaResponse>firstResp).schema === (<SchemaResponse>op.responses[i]).schema) {
+          // same schemas, append status codes
+          statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
+        }
       }
     }
+    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+  } else {
+    text += '\tif !resp.HasStatusCode(pollingCodes[:]...) {\n';
   }
-  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
   text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
   text += '\t}\n';
   if (!isSchemaResponse(firstResp)) {
+    if (isLROOperation(op)) {
+      text += '\treturn &HttpResponse{RawResponse: resp.Response}, nil\n';
+      text += '}\n\n';
+      return text;
+    }
     // no response body, return the *http.Response
     text += `\treturn resp.Response, nil\n`;
     text += '}\n\n';
@@ -918,8 +952,8 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
     returnType = op.language.go!.pageableType.name;
   } else if (isSchemaResponse(firstResp)) {
     returnType = '*' + firstResp.schema.language.go!.responseType.name;
-  } else if (!forHandler && isLROOperation(op)) {
-    returnType = '*HTTPResponse';
+  } else if (isLROOperation(op)) {
+    returnType = '*HttpResponse';
   }
   return [returnType, 'error'];
 }

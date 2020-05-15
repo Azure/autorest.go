@@ -6,6 +6,7 @@ package lrogrouptest
 import (
 	"context"
 	"generatortests/autorest/generated/lrogroup"
+	"generatortests/helpers"
 	"net/http"
 	"net/http/cookiejar"
 	"testing"
@@ -53,43 +54,47 @@ func httpClientWithCookieJar() azcore.Transport {
 // 	}
 // }
 
-// func TestLROBeginDelete202NoRetry204(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	resp, err := op.Delete202NoRetry204(context.Background())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller := resp.GetPoller()
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeProductPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for !poller.Done() {
-// 		_, err := poller.Poll(context.Background())
-// 		if err != nil {
-// 			t.Fatal(err)
-// 		}
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err = poller.FinalResponse(context.Background())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-// 	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-// 	_, err = poller.ResumeToken()
-// 	if err == nil {
-// 		t.Fatal("did not receive an error but was expecting one")
-// 	}
-// }
+func TestLROBeginDelete202NoRetry204(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.Delete202NoRetry204(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.GetPoller()
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumeProductPoller(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for !poller.Done() {
+		_, err := poller.Poll(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		}
+		time.Sleep(200 * time.Millisecond)
+	}
+	resp, err = poller.FinalResponse(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
+	resp1, err := op.Delete202NoRetry204(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("did not receive an error but was expecting one")
+	}
+}
 
 // func TestLROBeginDelete202Retry200(t *testing.T) {
 // 	op := getLROSOperations(t)

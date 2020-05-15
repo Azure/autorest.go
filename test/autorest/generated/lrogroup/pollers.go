@@ -12,14 +12,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 // HttpPoller provides polling facilities until the operation completes
 type HttpPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*HTTPResponse, error)
+	FinalResponse(ctx context.Context) (*HttpResponse, error)
 	ResumeToken() (string, error)
 }
 
@@ -43,7 +42,7 @@ func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return nil, p.pt.pollingError()
 }
 
-func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
+func (p *httpPoller) FinalResponse(ctx context.Context) (*HttpResponse, error) {
 	if p.pt.finalGetURL() == "" {
 		// we can end up in this situation if the async operation returns a 200
 		// with no polling URLs.  in that case return the response which should
@@ -89,35 +88,8 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func httpPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*HTTPResponse, error) {
-	pt, err := createPollingTracker("ProductPoller", resp, httpPollerHandleError)
-	if err != nil {
-		return nil, err
-	}
-	result := &HTTPResponse{
-		RawResponse: resp.Response,
-		GetPoller: func() HttpPoller {
-			return &httpPoller{
-				pipeline: p,
-				pt:       pt,
-			}
-		},
-	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
-	}
+func httpPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*HttpResponse, error) {
+	result := &HttpResponse{RawResponse: resp.Response}
 	return result, nil
 }
 
@@ -205,34 +177,7 @@ func (p *productPoller) ResumeToken() (string, error) {
 }
 
 func productPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*ProductResponse, error) {
-	pt, err := createPollingTracker("ProductPoller", resp, productPollerHandleError)
-	if err != nil {
-		return nil, err
-	}
-	result := &ProductResponse{
-		RawResponse: resp.Response,
-		GetPoller: func() ProductPoller {
-			return &productPoller{
-				pipeline: p,
-				pt:       pt,
-			}
-		},
-	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
-	}
+	result := &ProductResponse{RawResponse: resp.Response}
 	return result, resp.UnmarshalAsJSON(&result.Product)
 }
 
@@ -320,34 +265,7 @@ func (p *skuPoller) ResumeToken() (string, error) {
 }
 
 func skuPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*SkuResponse, error) {
-	pt, err := createPollingTracker("ProductPoller", resp, skuPollerHandleError)
-	if err != nil {
-		return nil, err
-	}
-	result := &SkuResponse{
-		RawResponse: resp.Response,
-		GetPoller: func() SkuPoller {
-			return &skuPoller{
-				pipeline: p,
-				pt:       pt,
-			}
-		},
-	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
-		p := result.GetPoller().(*skuPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
-	}
+	result := &SkuResponse{RawResponse: resp.Response}
 	return result, resp.UnmarshalAsJSON(&result.Sku)
 }
 
@@ -435,34 +353,7 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 }
 
 func subProductPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*SubProductResponse, error) {
-	pt, err := createPollingTracker("ProductPoller", resp, subProductPollerHandleError)
-	if err != nil {
-		return nil, err
-	}
-	result := &SubProductResponse{
-		RawResponse: resp.Response,
-		GetPoller: func() SubProductPoller {
-			return &subProductPoller{
-				pipeline: p,
-				pt:       pt,
-			}
-		},
-	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
-		p := result.GetPoller().(*subProductPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
-	}
+	result := &SubProductResponse{RawResponse: resp.Response}
 	return result, resp.UnmarshalAsJSON(&result.SubProduct)
 }
 

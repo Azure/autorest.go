@@ -23,7 +23,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
-  imports.add('time');
   imports.add('errors');
   imports.add('encoding/json');
   imports.add('net/url');
@@ -32,16 +31,14 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   for (const poller of values(pollers)) {
     const pollerInterface = pascalCase(poller.name);
-    let responseType = '';
+    let responseType = 'HttpResponse';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
     }
-    if (schemaResponse.schema === undefined) {
-      responseType = 'http.Response';
-    } else {
+    if (isSchemaResponse(schemaResponse)) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       rawResponse = '.RawResponse';
     }
@@ -120,34 +117,7 @@ func (p *${poller.name}) ResumeToken() (string, error) {
 }
 
 func ${poller.name}HandleResponse(resp *azcore.Response, p azcore.Pipeline) (*${responseType}, error) {
-	pt, err := createPollingTracker("ProductPoller", resp, ${poller.name}HandleError)
-	if err != nil {
-		return nil, err
-	}
-	result := &${responseType}{
-		RawResponse: resp.Response,
-		GetPoller: func() ${pollerInterface} {
-			return &${poller.name}{
-				pipeline: p,
-				pt:     pt,
-			}
-		},
-	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*${responseType}, error) {
-		p := result.GetPoller().(*${poller.name})
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-    return p.FinalResponse(ctx)
-	}
+	result := &${responseType}{RawResponse: resp.Response}
 	return result, ${unmarshalResponse}
 }
 

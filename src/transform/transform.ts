@@ -399,11 +399,11 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     // the response doesn't return a model.  if it returns
     // headers then create a model that contains them.
     if (isLROOperation(op)) {
-      const name = 'HTTPResponse';
+      const name = 'HttpResponse';
       const description = `${name} contains the HTTP response from the call to the service endpoint`;
       const object = new ObjectSchema(name, description);
       object.language.go = object.language.default;
-      const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)', 'TODO'));
+      const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HttpResponse, error)', 'TODO'));
       const getPoller = newProperty('GetPoller', 'GetPoller will return an initialized poller', newObject('func() HttpPoller', 'TODO'));
       pollUntilDone.schema.language.go!.funcType = true;
       getPoller.schema.language.go!.funcType = true;

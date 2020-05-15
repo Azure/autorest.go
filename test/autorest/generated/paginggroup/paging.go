@@ -14,6 +14,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // PagingOperations contains the methods for the Paging group.
@@ -319,6 +320,15 @@ func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultip
 		req.Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesLroOptions.Timeout), 10))
 	}
 	return req, nil
+}
+
+// getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
+func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+	if !resp.HasStatusCode(pollingCodes[:]...) {
+		return nil, client.getMultiplePagesLroHandleError(resp)
+	}
+	result := ProductResultResponse{RawResponse: resp.Response}
+	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }
 
 // getMultiplePagesLroHandleError handles the GetMultiplePagesLro error response.
