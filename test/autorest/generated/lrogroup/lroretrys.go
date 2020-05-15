@@ -14,20 +14,20 @@ import (
 
 // LroRetrysOperations contains the methods for the LroRetrys group.
 type LroRetrysOperations interface {
-	// Delete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-	Delete202Retry200(ctx context.Context) (*HttpResponse, error)
-	// DeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	DeleteAsyncRelativeRetrySucceeded(ctx context.Context) (*HttpResponse, error)
-	// DeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a  202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-	DeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductResponse, error)
-	// Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-	Post202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (*HttpResponse, error)
-	// PostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	PostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*HttpResponse, error)
-	// Put201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-	Put201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (*ProductResponse, error)
-	// PutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	PutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*ProductResponse, error)
+	// BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
+	BeginDelete202Retry200(ctx context.Context) (*HttpResponse, error)
+	// BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context) (*HttpResponse, error)
+	// BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a  202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
+	BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductResponse, error)
+	// BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
+	BeginPost202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (*HttpResponse, error)
+	// BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*HttpResponse, error)
+	// BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
+	BeginPut201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (*ProductResponse, error)
+	// BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
+	BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*ProductResponse, error)
 }
 
 // lroRetrysOperations implements the LroRetrysOperations interface.
@@ -36,7 +36,7 @@ type lroRetrysOperations struct {
 }
 
 // Delete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *lroRetrysOperations) Delete202Retry200(ctx context.Context) (*HttpResponse, error) {
+func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (*HttpResponse, error) {
 	req, err := client.delete202Retry200CreateRequest()
 	if err != nil {
 		return nil, err
@@ -107,7 +107,7 @@ func (client *lroRetrysOperations) delete202Retry200HandleError(resp *azcore.Res
 }
 
 // DeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lroRetrysOperations) DeleteAsyncRelativeRetrySucceeded(ctx context.Context) (*HttpResponse, error) {
+func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context) (*HttpResponse, error) {
 	req, err := client.deleteAsyncRelativeRetrySucceededCreateRequest()
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededHandleError(
 }
 
 // DeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a  202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *lroRetrysOperations) DeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductResponse, error) {
+func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductResponse, error) {
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest()
 	if err != nil {
 		return nil, err
@@ -250,7 +250,7 @@ func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHand
 }
 
 // Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-func (client *lroRetrysOperations) Post202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (*HttpResponse, error) {
+func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lroRetrysPost202Retry200Options *LroRetrysPost202Retry200Options) (*HttpResponse, error) {
 	req, err := client.post202Retry200CreateRequest(lroRetrysPost202Retry200Options)
 	if err != nil {
 		return nil, err
@@ -324,7 +324,7 @@ func (client *lroRetrysOperations) post202Retry200HandleError(resp *azcore.Respo
 }
 
 // PostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lroRetrysOperations) PostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*HttpResponse, error) {
+func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPostAsyncRelativeRetrySucceededOptions *LroRetrysPostAsyncRelativeRetrySucceededOptions) (*HttpResponse, error) {
 	req, err := client.postAsyncRelativeRetrySucceededCreateRequest(lroRetrysPostAsyncRelativeRetrySucceededOptions)
 	if err != nil {
 		return nil, err
@@ -398,7 +398,7 @@ func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededHandleError(re
 }
 
 // Put201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-func (client *lroRetrysOperations) Put201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (*ProductResponse, error) {
+func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.Context, lroRetrysPut201CreatingSucceeded200Options *LroRetrysPut201CreatingSucceeded200Options) (*ProductResponse, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(lroRetrysPut201CreatingSucceeded200Options)
 	if err != nil {
 		return nil, err
@@ -473,7 +473,7 @@ func (client *lroRetrysOperations) put201CreatingSucceeded200HandleError(resp *a
 }
 
 // PutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lroRetrysOperations) PutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*ProductResponse, error) {
+func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, lroRetrysPutAsyncRelativeRetrySucceededOptions *LroRetrysPutAsyncRelativeRetrySucceededOptions) (*ProductResponse, error) {
 	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(lroRetrysPutAsyncRelativeRetrySucceededOptions)
 	if err != nil {
 		return nil, err

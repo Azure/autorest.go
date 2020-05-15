@@ -56,7 +56,7 @@ func httpClientWithCookieJar() azcore.Transport {
 
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	op := getLROSOperations(t)
-	resp, err := op.Delete202NoRetry204(context.Background())
+	resp, err := op.BeginDelete202NoRetry204(context.Background())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -81,7 +81,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-	resp1, err := op.Delete202NoRetry204(context.Background())
+	resp1, err := op.BeginDelete202NoRetry204(context.Background())
 	if err != nil {
 		t.Fatal(err)
 	}

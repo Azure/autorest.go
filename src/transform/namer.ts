@@ -83,6 +83,9 @@ export async function namer(session: Session<CodeModel>) {
       details.name = getEscapedReservedName(capitalizeAcronyms(pascalCase(details.name)), 'Method');
       // add the client name to the operation as it's needed all over the place
       details.clientName = camelCase(groupDetails.clientName);
+      if (isLROOperation(op)) {
+        op.language.go!.methodPrefix = 'Begin';
+      }
       for (const param of values(aggregateParameters(op))) {
         const paramDetails = <Language>param.language.go;
         paramDetails.name = getEscapedReservedName(removePrefix(camelCase(paramDetails.name), 'XMS'), 'Parameter');
