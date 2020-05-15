@@ -624,7 +624,8 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   // this is to support operations that specify multiple response codes
   // that return the same schema (or no schema).
   // TODO: handle response codes with different schemas
-  if (!isLROOperation(op)) {
+  // TODO: remove pageable LRO exception
+  if (!isLROOperation(op) || op.extensions!['x-ms-pageable']) {
     let statusCodes = new Array<string>();
     statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
     for (let i = 1; i < op.responses.length; ++i) {
