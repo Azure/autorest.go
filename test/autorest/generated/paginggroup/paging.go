@@ -324,7 +324,7 @@ func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultip
 
 // getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
 func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.getMultiplePagesLroHandleError(resp)
 	}
 	result := ProductResultResponse{RawResponse: resp.Response}
