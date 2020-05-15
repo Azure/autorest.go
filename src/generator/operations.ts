@@ -269,13 +269,13 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
   }
   // TODO Exception for Pageable LRO operations NYI
   if (isLROOperation(op)) {
-    imports.add('time');
     // TODO remove LRO for pageable responses NYI
     if (op.extensions!['x-ms-pageable']) {
       text += `\treturn nil, nil`;
       text += '}\n\n';
       return text;
     }
+    imports.add('time');
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
