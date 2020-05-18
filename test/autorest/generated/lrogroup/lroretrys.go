@@ -91,7 +91,7 @@ func (client *lroRetrysOperations) delete202Retry200CreateRequest() (*azcore.Req
 
 // delete202Retry200HandleResponse handles the Delete202Retry200 response.
 func (client *lroRetrysOperations) delete202Retry200HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.delete202Retry200HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -162,7 +162,7 @@ func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededCreateReques
 
 // deleteAsyncRelativeRetrySucceededHandleResponse handles the DeleteAsyncRelativeRetrySucceeded response.
 func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.deleteAsyncRelativeRetrySucceededHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -233,7 +233,7 @@ func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededCrea
 
 // deleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
 func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
 		return nil, client.deleteProvisioning202Accepted200SucceededHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -308,7 +308,7 @@ func (client *lroRetrysOperations) post202Retry200CreateRequest(lroRetrysPost202
 
 // post202Retry200HandleResponse handles the Post202Retry200 response.
 func (client *lroRetrysOperations) post202Retry200HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.post202Retry200HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -382,7 +382,7 @@ func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededCreateRequest(
 
 // postAsyncRelativeRetrySucceededHandleResponse handles the PostAsyncRelativeRetrySucceeded response.
 func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.postAsyncRelativeRetrySucceededHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -456,7 +456,7 @@ func (client *lroRetrysOperations) put201CreatingSucceeded200CreateRequest(lroRe
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *lroRetrysOperations) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.put201CreatingSucceeded200HandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -531,7 +531,7 @@ func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededCreateRequest(l
 
 // putAsyncRelativeRetrySucceededHandleResponse handles the PutAsyncRelativeRetrySucceeded response.
 func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.putAsyncRelativeRetrySucceededHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}

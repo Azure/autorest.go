@@ -129,7 +129,7 @@ func (client *lrosaDsOperations) delete202NonRetry400CreateRequest() (*azcore.Re
 
 // delete202NonRetry400HandleResponse handles the Delete202NonRetry400 response.
 func (client *lrosaDsOperations) delete202NonRetry400HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.delete202NonRetry400HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -200,7 +200,7 @@ func (client *lrosaDsOperations) delete202RetryInvalidHeaderCreateRequest() (*az
 
 // delete202RetryInvalidHeaderHandleResponse handles the Delete202RetryInvalidHeader response.
 func (client *lrosaDsOperations) delete202RetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.delete202RetryInvalidHeaderHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -271,7 +271,7 @@ func (client *lrosaDsOperations) delete204SucceededCreateRequest() (*azcore.Requ
 
 // delete204SucceededHandleResponse handles the Delete204Succeeded response.
 func (client *lrosaDsOperations) delete204SucceededHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusNoContent) {
 		return nil, client.delete204SucceededHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -342,7 +342,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetry400CreateRequest() (*az
 
 // deleteAsyncRelativeRetry400HandleResponse handles the DeleteAsyncRelativeRetry400 response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.deleteAsyncRelativeRetry400HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -413,7 +413,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidHeaderCreateRequ
 
 // deleteAsyncRelativeRetryInvalidHeaderHandleResponse handles the DeleteAsyncRelativeRetryInvalidHeader response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.deleteAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -484,7 +484,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidJsonPollingCreat
 
 // deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse handles the DeleteAsyncRelativeRetryInvalidJSONPolling response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.deleteAsyncRelativeRetryInvalidJsonPollingHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -555,7 +555,7 @@ func (client *lrosaDsOperations) deleteAsyncRelativeRetryNoStatusCreateRequest()
 
 // deleteAsyncRelativeRetryNoStatusHandleResponse handles the DeleteAsyncRelativeRetryNoStatus response.
 func (client *lrosaDsOperations) deleteAsyncRelativeRetryNoStatusHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.deleteAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -626,7 +626,7 @@ func (client *lrosaDsOperations) deleteNonRetry400CreateRequest() (*azcore.Reque
 
 // deleteNonRetry400HandleResponse handles the DeleteNonRetry400 response.
 func (client *lrosaDsOperations) deleteNonRetry400HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.deleteNonRetry400HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -700,7 +700,7 @@ func (client *lrosaDsOperations) post202NoLocationCreateRequest(lrosaDsPost202No
 
 // post202NoLocationHandleResponse handles the Post202NoLocation response.
 func (client *lrosaDsOperations) post202NoLocationHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.post202NoLocationHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -774,7 +774,7 @@ func (client *lrosaDsOperations) post202NonRetry400CreateRequest(lrosaDsPost202N
 
 // post202NonRetry400HandleResponse handles the Post202NonRetry400 response.
 func (client *lrosaDsOperations) post202NonRetry400HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.post202NonRetry400HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -848,7 +848,7 @@ func (client *lrosaDsOperations) post202RetryInvalidHeaderCreateRequest(lrosaDsP
 
 // post202RetryInvalidHeaderHandleResponse handles the Post202RetryInvalidHeader response.
 func (client *lrosaDsOperations) post202RetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.post202RetryInvalidHeaderHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -922,7 +922,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetry400CreateRequest(lrosaDsP
 
 // postAsyncRelativeRetry400HandleResponse handles the PostAsyncRelativeRetry400 response.
 func (client *lrosaDsOperations) postAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.postAsyncRelativeRetry400HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -996,7 +996,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidHeaderCreateReques
 
 // postAsyncRelativeRetryInvalidHeaderHandleResponse handles the PostAsyncRelativeRetryInvalidHeader response.
 func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.postAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -1070,7 +1070,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidJsonPollingCreateR
 
 // postAsyncRelativeRetryInvalidJsonPollingHandleResponse handles the PostAsyncRelativeRetryInvalidJSONPolling response.
 func (client *lrosaDsOperations) postAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.postAsyncRelativeRetryInvalidJsonPollingHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -1144,7 +1144,7 @@ func (client *lrosaDsOperations) postAsyncRelativeRetryNoPayloadCreateRequest(lr
 
 // postAsyncRelativeRetryNoPayloadHandleResponse handles the PostAsyncRelativeRetryNoPayload response.
 func (client *lrosaDsOperations) postAsyncRelativeRetryNoPayloadHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.postAsyncRelativeRetryNoPayloadHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -1218,7 +1218,7 @@ func (client *lrosaDsOperations) postNonRetry400CreateRequest(lrosaDsPostNonRetr
 
 // postNonRetry400HandleResponse handles the PostNonRetry400 response.
 func (client *lrosaDsOperations) postNonRetry400HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.postNonRetry400HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -1292,7 +1292,7 @@ func (client *lrosaDsOperations) put200InvalidJsonCreateRequest(lrosaDsPut200Inv
 
 // put200InvalidJsonHandleResponse handles the Put200InvalidJSON response.
 func (client *lrosaDsOperations) put200InvalidJsonHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
 		return nil, client.put200InvalidJsonHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1367,7 +1367,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetry400CreateRequest(lrosaDsPu
 
 // putAsyncRelativeRetry400HandleResponse handles the PutAsyncRelativeRetry400 response.
 func (client *lrosaDsOperations) putAsyncRelativeRetry400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.putAsyncRelativeRetry400HandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1442,7 +1442,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidHeaderCreateRequest
 
 // putAsyncRelativeRetryInvalidHeaderHandleResponse handles the PutAsyncRelativeRetryInvalidHeader response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidHeaderHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.putAsyncRelativeRetryInvalidHeaderHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1517,7 +1517,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidJsonPollingCreateRe
 
 // putAsyncRelativeRetryInvalidJsonPollingHandleResponse handles the PutAsyncRelativeRetryInvalidJSONPolling response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryInvalidJsonPollingHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.putAsyncRelativeRetryInvalidJsonPollingHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1592,7 +1592,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusCreateRequest(lros
 
 // putAsyncRelativeRetryNoStatusHandleResponse handles the PutAsyncRelativeRetryNoStatus response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.putAsyncRelativeRetryNoStatusHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1667,7 +1667,7 @@ func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusPayloadCreateReque
 
 // putAsyncRelativeRetryNoStatusPayloadHandleResponse handles the PutAsyncRelativeRetryNoStatusPayload response.
 func (client *lrosaDsOperations) putAsyncRelativeRetryNoStatusPayloadHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.putAsyncRelativeRetryNoStatusPayloadHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1742,7 +1742,7 @@ func (client *lrosaDsOperations) putError201NoProvisioningStatePayloadCreateRequ
 
 // putError201NoProvisioningStatePayloadHandleResponse handles the PutError201NoProvisioningStatePayload response.
 func (client *lrosaDsOperations) putError201NoProvisioningStatePayloadHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.putError201NoProvisioningStatePayloadHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1817,7 +1817,7 @@ func (client *lrosaDsOperations) putNonRetry201Creating400CreateRequest(lrosaDsP
 
 // putNonRetry201Creating400HandleResponse handles the PutNonRetry201Creating400 response.
 func (client *lrosaDsOperations) putNonRetry201Creating400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.putNonRetry201Creating400HandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1892,7 +1892,7 @@ func (client *lrosaDsOperations) putNonRetry201Creating400InvalidJsonCreateReque
 
 // putNonRetry201Creating400InvalidJsonHandleResponse handles the PutNonRetry201Creating400InvalidJSON response.
 func (client *lrosaDsOperations) putNonRetry201Creating400InvalidJsonHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.putNonRetry201Creating400InvalidJsonHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -1967,7 +1967,7 @@ func (client *lrosaDsOperations) putNonRetry400CreateRequest(lrosaDsPutNonRetry4
 
 // putNonRetry400HandleResponse handles the PutNonRetry400 response.
 func (client *lrosaDsOperations) putNonRetry400HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.putNonRetry400HandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}

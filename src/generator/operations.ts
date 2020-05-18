@@ -625,25 +625,23 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   // that return the same schema (or no schema).
   // TODO: handle response codes with different schemas
   // TODO: remove pageable LRO exception
-  if (!isLROOperation(op) || op.extensions!['x-ms-pageable']) {
-    let statusCodes = new Array<string>();
-    statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
-    for (let i = 1; i < op.responses.length; ++i) {
-      if (!isSchemaResponse(firstResp) && !isSchemaResponse(op.responses[i])) {
-        // both responses return no schema, append status codes
+  let statusCodes = new Array<string>();
+  statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
+  for (let i = 1; i < op.responses.length; ++i) {
+    if (!isSchemaResponse(firstResp) && !isSchemaResponse(op.responses[i])) {
+      // both responses return no schema, append status codes
+      statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
+    } else if (isSchemaResponse(firstResp) && isSchemaResponse(op.responses[i])) {
+      // both responses return a schema, ensure they're the same
+      if ((<SchemaResponse>firstResp).schema === (<SchemaResponse>op.responses[i]).schema) {
+        // same schemas, append status codes
         statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
-      } else if (isSchemaResponse(firstResp) && isSchemaResponse(op.responses[i])) {
-        // both responses return a schema, ensure they're the same
-        if ((<SchemaResponse>firstResp).schema === (<SchemaResponse>op.responses[i]).schema) {
-          // same schemas, append status codes
-          statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
-        }
       }
+    } else if (isLROOperation(op)) {
+      statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
     }
-    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-  } else {
-    text += '\tif !resp.HasStatusCode(pollingCodes[:]...) {\n';
   }
+  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
   text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
   text += '\t}\n';
   if (!isSchemaResponse(firstResp)) {

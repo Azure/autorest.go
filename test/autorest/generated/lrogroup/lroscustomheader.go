@@ -88,7 +88,7 @@ func (client *lrOSCustomHeaderOperations) post202Retry200CreateRequest(lrOSCusto
 
 // post202Retry200HandleResponse handles the Post202Retry200 response.
 func (client *lrOSCustomHeaderOperations) post202Retry200HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.post202Retry200HandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -162,7 +162,7 @@ func (client *lrOSCustomHeaderOperations) postAsyncRetrySucceededCreateRequest(l
 
 // postAsyncRetrySucceededHandleResponse handles the PostAsyncRetrySucceeded response.
 func (client *lrOSCustomHeaderOperations) postAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusAccepted) {
 		return nil, client.postAsyncRetrySucceededHandleError(resp)
 	}
 	return &HTTPResponse{RawResponse: resp.Response}, nil
@@ -236,7 +236,7 @@ func (client *lrOSCustomHeaderOperations) put201CreatingSucceeded200CreateReques
 
 // put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
 func (client *lrOSCustomHeaderOperations) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
 		return nil, client.put201CreatingSucceeded200HandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
@@ -311,7 +311,7 @@ func (client *lrOSCustomHeaderOperations) putAsyncRetrySucceededCreateRequest(lr
 
 // putAsyncRetrySucceededHandleResponse handles the PutAsyncRetrySucceeded response.
 func (client *lrOSCustomHeaderOperations) putAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
-	if !resp.HasStatusCode(pollingCodes[:]...) {
+	if !resp.HasStatusCode(http.StatusOK) {
 		return nil, client.putAsyncRetrySucceededHandleError(resp)
 	}
 	result := ProductResponse{RawResponse: resp.Response}
