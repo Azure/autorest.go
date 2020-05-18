@@ -295,7 +295,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
     }
-    text += `\tpt, err := createPollingTracker("${op.language.go!.pollerType.name}", resp, client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := createPollingTracker("${op.language.go!.pollerType.name}", resp, ${camelCase(op.language.go!.pollerType.name)}HandleError)\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
