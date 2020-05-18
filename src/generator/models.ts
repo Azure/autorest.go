@@ -382,6 +382,11 @@ function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: Struc
 }
 
 function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+  // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
+  // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
+  if (!structDef.Properties || structDef.Properties.length === 0) {
+    return;
+  }
   const typeName = structDef.Language.name;
   const receiver = typeName[0].toLowerCase();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
@@ -421,11 +426,7 @@ function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: Str
     unmarshaller += '\treturn nil\n';
   }
   unmarshaller += '}\n\n';
-  // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
-  // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
-  if (structDef.Properties && structDef.Properties.length > 0) {
-    structDef.Methods.push({ name: 'UnmarshalJSON', text: unmarshaller });
-  }
+  structDef.Methods.push({ name: 'UnmarshalJSON', text: unmarshaller });
 }
 
 function generateMarshaller(structDef: StructDef) {
