@@ -399,12 +399,12 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     // the response doesn't return a model.  if it returns
     // headers then create a model that contains them.
     if (isLROOperation(op)) {
-      const name = 'HttpResponse';
+      const name = 'HTTPResponse';
       const description = `${name} contains the HTTP response from the call to the service endpoint`;
       const object = new ObjectSchema(name, description);
       object.language.go = object.language.default;
-      const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HttpResponse, error)', 'TODO'));
-      const getPoller = newProperty('GetPoller', 'GetPoller will return an initialized poller', newObject('func() HttpPoller', 'TODO'));
+      const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)', 'TODO'));
+      const getPoller = newProperty('GetPoller', 'GetPoller will return an initialized poller', newObject('func() HTTPPoller', 'TODO'));
       pollUntilDone.schema.language.go!.funcType = true;
       getPoller.schema.language.go!.funcType = true;
       object.language.go!.properties = [
@@ -526,14 +526,14 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     if (codeModel.language.go!.pollerTypes === undefined) {
       codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
     }
-    let type = 'Http';
+    let type = 'HTTP';
     if (isSchemaResponse(firstResp)) {
       type = firstResp.schema.language.go!.responseType.value;
     }
     if (type == undefined) {
-      type = 'Http';
+      type = 'HTTP';
     }
-    const name = `${camelCase(type)}Poller`;
+    const name = `${type}Poller`;
     const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
     for (const poller of values(pollers)) {
       if (poller.name === name) {

@@ -19,21 +19,21 @@ type LrOSOperations interface {
 	// BeginDelete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginDelete202Retry200(ctx context.Context) (*ProductResponse, error)
 	// BeginDelete204Succeeded - Long running delete succeeds and returns right away
-	BeginDelete204Succeeded(ctx context.Context) (*HttpResponse, error)
-	// ResumeHttpPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
-	ResumeHttpPoller(id string) (HttpPoller, error)
+	BeginDelete204Succeeded(ctx context.Context) (*HTTPResponse, error)
+	// ResumeHTTPPoller - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.
+	ResumeHTTPPoller(id string) (HTTPPoller, error)
 	// BeginDeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
-	BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (*HttpResponse, error)
+	BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (*HTTPResponse, error)
 	// BeginDeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) (*HttpResponse, error)
+	BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) (*HTTPResponse, error)
 	// BeginDeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginDeleteAsyncRetryFailed(ctx context.Context) (*HttpResponse, error)
+	BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTTPResponse, error)
 	// BeginDeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*HttpResponse, error)
+	BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*HTTPResponse, error)
 	// BeginDeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginDeleteAsyncRetrycanceled(ctx context.Context) (*HttpResponse, error)
+	BeginDeleteAsyncRetrycanceled(ctx context.Context) (*HTTPResponse, error)
 	// BeginDeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent calls to operation status do not contain location header.
-	BeginDeleteNoHeaderInRetry(ctx context.Context) (*HttpResponse, error)
+	BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTPResponse, error)
 	// BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Accepted’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 	BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context) (*ProductResponse, error)
 	// BeginDeleteProvisioning202DeletingFailed200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Failed’
@@ -45,15 +45,15 @@ type LrOSOperations interface {
 	// BeginPost202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204 with noresponse body after success
 	BeginPost202NoRetry204(ctx context.Context, lrOSPost202NoRetry204Options *LrOSPost202NoRetry204Options) (*ProductResponse, error)
 	// BeginPost202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-	BeginPost202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*HttpResponse, error)
+	BeginPost202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*HTTPResponse, error)
 	// BeginPostAsyncNoRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncNoRetrySucceeded(ctx context.Context, lrOSPostAsyncNoRetrySucceededOptions *LrOSPostAsyncNoRetrySucceededOptions) (*ProductResponse, error)
 	// BeginPostAsyncRetryFailed - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginPostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*HttpResponse, error)
+	BeginPostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*HTTPResponse, error)
 	// BeginPostAsyncRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 	BeginPostAsyncRetrySucceeded(ctx context.Context, lrOSPostAsyncRetrySucceededOptions *LrOSPostAsyncRetrySucceededOptions) (*ProductResponse, error)
 	// BeginPostAsyncRetrycanceled - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-	BeginPostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*HttpResponse, error)
+	BeginPostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*HTTPResponse, error)
 	// BeginPostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 	BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.Context) (*ProductResponse, error)
 	// BeginPostDoubleHeadersFinalAzureHeaderGetDefault - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object if you support initial Autorest behavior.
@@ -122,7 +122,7 @@ func (client *lrOSOperations) BeginDelete202NoRetry204(ctx context.Context) (*Pr
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.delete202NoRetry204HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.delete202NoRetry204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +194,7 @@ func (client *lrOSOperations) BeginDelete202Retry200(ctx context.Context) (*Prod
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.delete202Retry200HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.delete202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -252,7 +252,7 @@ func (client *lrOSOperations) delete202Retry200HandleError(resp *azcore.Response
 }
 
 // Delete204Succeeded - Long running delete succeeds and returns right away
-func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (*HTTPResponse, error) {
 	req, err := client.delete204SucceededCreateRequest()
 	if err != nil {
 		return nil, err
@@ -266,17 +266,17 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (*Htt
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.delete204SucceededHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -294,8 +294,8 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (*Htt
 	return result, nil
 }
 
-func (client *lrOSOperations) ResumeHttpPoller(token string) (HttpPoller, error) {
-	pt, err := resumePollingTracker("httpPoller", token, client.delete204SucceededHandleError)
+func (client *lrOSOperations) ResumeHTTPPoller(token string) (HTTPPoller, error) {
+	pt, err := resumePollingTracker("HTTPPoller", token, client.delete204SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -317,11 +317,11 @@ func (client *lrOSOperations) delete204SucceededCreateRequest() (*azcore.Request
 }
 
 // delete204SucceededHandleResponse handles the Delete204Succeeded response.
-func (client *lrOSOperations) delete204SucceededHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) delete204SucceededHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.delete204SucceededHandleError(resp)
 	}
-	result := HttpResponse{RawResponse: resp.Response}
+	result := HTTPResponse{RawResponse: resp.Response}
 	return &result, nil
 }
 
@@ -335,7 +335,7 @@ func (client *lrOSOperations) delete204SucceededHandleError(resp *azcore.Respons
 }
 
 // DeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
-func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context) (*HTTPResponse, error) {
 	req, err := client.deleteAsyncNoHeaderInRetryCreateRequest()
 	if err != nil {
 		return nil, err
@@ -349,17 +349,17 @@ func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.deleteAsyncNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.deleteAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -389,11 +389,11 @@ func (client *lrOSOperations) deleteAsyncNoHeaderInRetryCreateRequest() (*azcore
 }
 
 // deleteAsyncNoHeaderInRetryHandleResponse handles the DeleteAsyncNoHeaderInRetry response.
-func (client *lrOSOperations) deleteAsyncNoHeaderInRetryHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) deleteAsyncNoHeaderInRetryHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.deleteAsyncNoHeaderInRetryHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteAsyncNoHeaderInRetryHandleError handles the DeleteAsyncNoHeaderInRetry error response.
@@ -406,7 +406,7 @@ func (client *lrOSOperations) deleteAsyncNoHeaderInRetryHandleError(resp *azcore
 }
 
 // DeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context) (*HTTPResponse, error) {
 	req, err := client.deleteAsyncNoRetrySucceededCreateRequest()
 	if err != nil {
 		return nil, err
@@ -420,17 +420,17 @@ func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.deleteAsyncNoRetrySucceededHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.deleteAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -460,11 +460,11 @@ func (client *lrOSOperations) deleteAsyncNoRetrySucceededCreateRequest() (*azcor
 }
 
 // deleteAsyncNoRetrySucceededHandleResponse handles the DeleteAsyncNoRetrySucceeded response.
-func (client *lrOSOperations) deleteAsyncNoRetrySucceededHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) deleteAsyncNoRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.deleteAsyncNoRetrySucceededHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteAsyncNoRetrySucceededHandleError handles the DeleteAsyncNoRetrySucceeded error response.
@@ -477,7 +477,7 @@ func (client *lrOSOperations) deleteAsyncNoRetrySucceededHandleError(resp *azcor
 }
 
 // DeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (*HTTPResponse, error) {
 	req, err := client.deleteAsyncRetryFailedCreateRequest()
 	if err != nil {
 		return nil, err
@@ -491,17 +491,17 @@ func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.deleteAsyncRetryFailedHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.deleteAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -531,11 +531,11 @@ func (client *lrOSOperations) deleteAsyncRetryFailedCreateRequest() (*azcore.Req
 }
 
 // deleteAsyncRetryFailedHandleResponse handles the DeleteAsyncRetryFailed response.
-func (client *lrOSOperations) deleteAsyncRetryFailedHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) deleteAsyncRetryFailedHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.deleteAsyncRetryFailedHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteAsyncRetryFailedHandleError handles the DeleteAsyncRetryFailed error response.
@@ -548,7 +548,7 @@ func (client *lrOSOperations) deleteAsyncRetryFailedHandleError(resp *azcore.Res
 }
 
 // DeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context) (*HTTPResponse, error) {
 	req, err := client.deleteAsyncRetrySucceededCreateRequest()
 	if err != nil {
 		return nil, err
@@ -562,17 +562,17 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.deleteAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.deleteAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -602,11 +602,11 @@ func (client *lrOSOperations) deleteAsyncRetrySucceededCreateRequest() (*azcore.
 }
 
 // deleteAsyncRetrySucceededHandleResponse handles the DeleteAsyncRetrySucceeded response.
-func (client *lrOSOperations) deleteAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) deleteAsyncRetrySucceededHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.deleteAsyncRetrySucceededHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteAsyncRetrySucceededHandleError handles the DeleteAsyncRetrySucceeded error response.
@@ -619,7 +619,7 @@ func (client *lrOSOperations) deleteAsyncRetrySucceededHandleError(resp *azcore.
 }
 
 // DeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context) (*HTTPResponse, error) {
 	req, err := client.deleteAsyncRetrycanceledCreateRequest()
 	if err != nil {
 		return nil, err
@@ -633,17 +633,17 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context)
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.deleteAsyncRetrycanceledHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.deleteAsyncRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -673,11 +673,11 @@ func (client *lrOSOperations) deleteAsyncRetrycanceledCreateRequest() (*azcore.R
 }
 
 // deleteAsyncRetrycanceledHandleResponse handles the DeleteAsyncRetrycanceled response.
-func (client *lrOSOperations) deleteAsyncRetrycanceledHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) deleteAsyncRetrycanceledHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.deleteAsyncRetrycanceledHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteAsyncRetrycanceledHandleError handles the DeleteAsyncRetrycanceled error response.
@@ -690,7 +690,7 @@ func (client *lrOSOperations) deleteAsyncRetrycanceledHandleError(resp *azcore.R
 }
 
 // DeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent calls to operation status do not contain location header.
-func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (*HTTPResponse, error) {
 	req, err := client.deleteNoHeaderInRetryCreateRequest()
 	if err != nil {
 		return nil, err
@@ -704,17 +704,17 @@ func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.deleteNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.deleteNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -744,11 +744,11 @@ func (client *lrOSOperations) deleteNoHeaderInRetryCreateRequest() (*azcore.Requ
 }
 
 // deleteNoHeaderInRetryHandleResponse handles the DeleteNoHeaderInRetry response.
-func (client *lrOSOperations) deleteNoHeaderInRetryHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) deleteNoHeaderInRetryHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.deleteNoHeaderInRetryHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteNoHeaderInRetryHandleError handles the DeleteNoHeaderInRetry error response.
@@ -775,7 +775,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Accepted200Succeeded(ctx
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -847,7 +847,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202DeletingFailed200(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.deleteProvisioning202DeletingFailed200HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.deleteProvisioning202DeletingFailed200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -919,7 +919,7 @@ func (client *lrOSOperations) BeginDeleteProvisioning202Deletingcanceled200(ctx 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.deleteProvisioning202Deletingcanceled200HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.deleteProvisioning202Deletingcanceled200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -991,7 +991,7 @@ func (client *lrOSOperations) BeginPost200WithPayload(ctx context.Context) (*Sku
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("skuPoller", resp, client.post200WithPayloadHandleError)
+	pt, err := createPollingTracker("SkuPoller", resp, client.post200WithPayloadHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1063,7 +1063,7 @@ func (client *lrOSOperations) BeginPost202NoRetry204(ctx context.Context, lrOSPo
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.post202NoRetry204HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.post202NoRetry204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1124,7 +1124,7 @@ func (client *lrOSOperations) post202NoRetry204HandleError(resp *azcore.Response
 }
 
 // Post202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
-func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost202Retry200Options *LrOSPost202Retry200Options) (*HTTPResponse, error) {
 	req, err := client.post202Retry200CreateRequest(lrOSPost202Retry200Options)
 	if err != nil {
 		return nil, err
@@ -1138,17 +1138,17 @@ func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.post202Retry200HandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -1181,11 +1181,11 @@ func (client *lrOSOperations) post202Retry200CreateRequest(lrOSPost202Retry200Op
 }
 
 // post202Retry200HandleResponse handles the Post202Retry200 response.
-func (client *lrOSOperations) post202Retry200HandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) post202Retry200HandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.post202Retry200HandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // post202Retry200HandleError handles the Post202Retry200 error response.
@@ -1212,7 +1212,7 @@ func (client *lrOSOperations) BeginPostAsyncNoRetrySucceeded(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.postAsyncNoRetrySucceededHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.postAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1273,7 +1273,7 @@ func (client *lrOSOperations) postAsyncNoRetrySucceededHandleError(resp *azcore.
 }
 
 // PostAsyncRetryFailed - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrOSPostAsyncRetryFailedOptions *LrOSPostAsyncRetryFailedOptions) (*HTTPResponse, error) {
 	req, err := client.postAsyncRetryFailedCreateRequest(lrOSPostAsyncRetryFailedOptions)
 	if err != nil {
 		return nil, err
@@ -1287,17 +1287,17 @@ func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrO
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.postAsyncRetryFailedHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.postAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -1330,11 +1330,11 @@ func (client *lrOSOperations) postAsyncRetryFailedCreateRequest(lrOSPostAsyncRet
 }
 
 // postAsyncRetryFailedHandleResponse handles the PostAsyncRetryFailed response.
-func (client *lrOSOperations) postAsyncRetryFailedHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) postAsyncRetryFailedHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.postAsyncRetryFailedHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // postAsyncRetryFailedHandleError handles the PostAsyncRetryFailed error response.
@@ -1361,7 +1361,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrySucceeded(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.postAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1422,7 +1422,7 @@ func (client *lrOSOperations) postAsyncRetrySucceededHandleError(resp *azcore.Re
 }
 
 // PostAsyncRetrycanceled - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*HttpResponse, error) {
+func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, lrOSPostAsyncRetrycanceledOptions *LrOSPostAsyncRetrycanceledOptions) (*HTTPResponse, error) {
 	req, err := client.postAsyncRetrycanceledCreateRequest(lrOSPostAsyncRetrycanceledOptions)
 	if err != nil {
 		return nil, err
@@ -1436,17 +1436,17 @@ func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("httpPoller", resp, client.postAsyncRetrycanceledHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.postAsyncRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HttpPoller {
+	result.GetPoller = func() HTTPPoller {
 		return &httpPoller{
 			pt:       pt,
 			pipeline: client.p,
 		}
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HttpResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		p := result.GetPoller().(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
@@ -1479,11 +1479,11 @@ func (client *lrOSOperations) postAsyncRetrycanceledCreateRequest(lrOSPostAsyncR
 }
 
 // postAsyncRetrycanceledHandleResponse handles the PostAsyncRetrycanceled response.
-func (client *lrOSOperations) postAsyncRetrycanceledHandleResponse(resp *azcore.Response) (*HttpResponse, error) {
+func (client *lrOSOperations) postAsyncRetrycanceledHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	if !resp.HasStatusCode(pollingCodes[:]...) {
 		return nil, client.postAsyncRetrycanceledHandleError(resp)
 	}
-	return &HttpResponse{RawResponse: resp.Response}, nil
+	return &HTTPResponse{RawResponse: resp.Response}, nil
 }
 
 // postAsyncRetrycanceledHandleError handles the PostAsyncRetrycanceled error response.
@@ -1510,7 +1510,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1582,7 +1582,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(c
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1654,7 +1654,7 @@ func (client *lrOSOperations) BeginPostDoubleHeadersFinalLocationGet(ctx context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.postDoubleHeadersFinalLocationGetHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.postDoubleHeadersFinalLocationGetHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1726,7 +1726,7 @@ func (client *lrOSOperations) BeginPut200Acceptedcanceled200(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.put200Acceptedcanceled200HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put200Acceptedcanceled200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1801,7 +1801,7 @@ func (client *lrOSOperations) BeginPut200Succeeded(ctx context.Context, lrOSPut2
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.put200SucceededHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1830,7 +1830,7 @@ func (client *lrOSOperations) BeginPut200Succeeded(ctx context.Context, lrOSPut2
 }
 
 func (client *lrOSOperations) ResumeProductPoller(token string) (ProductPoller, error) {
-	pt, err := resumePollingTracker("productPoller", token, client.put200SucceededHandleError)
+	pt, err := resumePollingTracker("ProductPoller", token, client.put200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1887,7 +1887,7 @@ func (client *lrOSOperations) BeginPut200SucceededNoState(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.put200SucceededNoStateHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put200SucceededNoStateHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -1962,7 +1962,7 @@ func (client *lrOSOperations) BeginPut200UpdatingSucceeded204(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.put200UpdatingSucceeded204HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put200UpdatingSucceeded204HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2037,7 +2037,7 @@ func (client *lrOSOperations) BeginPut201CreatingFailed200(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.put201CreatingFailed200HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put201CreatingFailed200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2112,7 +2112,7 @@ func (client *lrOSOperations) BeginPut201CreatingSucceeded200(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.put201CreatingSucceeded200HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2187,7 +2187,7 @@ func (client *lrOSOperations) BeginPut202Retry200(ctx context.Context, lrOSPut20
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.put202Retry200HandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2262,7 +2262,7 @@ func (client *lrOSOperations) BeginPutAsyncNoHeaderInRetry(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.putAsyncNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.putAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2337,7 +2337,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrySucceeded(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.putAsyncNoRetrySucceededHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.putAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2412,7 +2412,7 @@ func (client *lrOSOperations) BeginPutAsyncNoRetrycanceled(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.putAsyncNoRetrycanceledHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.putAsyncNoRetrycanceledHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2487,7 +2487,7 @@ func (client *lrOSOperations) BeginPutAsyncNonResource(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("skuPoller", resp, client.putAsyncNonResourceHandleError)
+	pt, err := createPollingTracker("SkuPoller", resp, client.putAsyncNonResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2562,7 +2562,7 @@ func (client *lrOSOperations) BeginPutAsyncRetryFailed(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.putAsyncRetryFailedHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.putAsyncRetryFailedHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2637,7 +2637,7 @@ func (client *lrOSOperations) BeginPutAsyncRetrySucceeded(ctx context.Context, l
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.putAsyncRetrySucceededHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2712,7 +2712,7 @@ func (client *lrOSOperations) BeginPutAsyncSubResource(ctx context.Context, lrOS
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("subProductPoller", resp, client.putAsyncSubResourceHandleError)
+	pt, err := createPollingTracker("SubProductPoller", resp, client.putAsyncSubResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2787,7 +2787,7 @@ func (client *lrOSOperations) BeginPutNoHeaderInRetry(ctx context.Context, lrOSP
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("productPoller", resp, client.putNoHeaderInRetryHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.putNoHeaderInRetryHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2862,7 +2862,7 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("skuPoller", resp, client.putNonResourceHandleError)
+	pt, err := createPollingTracker("SkuPoller", resp, client.putNonResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2891,7 +2891,7 @@ func (client *lrOSOperations) BeginPutNonResource(ctx context.Context, lrOSPutNo
 }
 
 func (client *lrOSOperations) ResumeSkuPoller(token string) (SkuPoller, error) {
-	pt, err := resumePollingTracker("skuPoller", token, client.putNonResourceHandleError)
+	pt, err := resumePollingTracker("SkuPoller", token, client.putNonResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2948,7 +2948,7 @@ func (client *lrOSOperations) BeginPutSubResource(ctx context.Context, lrOSPutSu
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("subProductPoller", resp, client.putSubResourceHandleError)
+	pt, err := createPollingTracker("SubProductPoller", resp, client.putSubResourceHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -2977,7 +2977,7 @@ func (client *lrOSOperations) BeginPutSubResource(ctx context.Context, lrOSPutSu
 }
 
 func (client *lrOSOperations) ResumeSubProductPoller(token string) (SubProductPoller, error) {
-	pt, err := resumePollingTracker("subProductPoller", token, client.putSubResourceHandleError)
+	pt, err := resumePollingTracker("SubProductPoller", token, client.putSubResourceHandleError)
 	if err != nil {
 		return nil, err
 	}

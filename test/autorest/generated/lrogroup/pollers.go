@@ -14,11 +14,11 @@ import (
 	"net/url"
 )
 
-// HttpPoller provides polling facilities until the operation completes
-type HttpPoller interface {
+// HTTPPoller provides polling facilities until the operation completes
+type HTTPPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*HttpResponse, error)
+	FinalResponse(ctx context.Context) (*HTTPResponse, error)
 	ResumeToken() (string, error)
 }
 
@@ -42,7 +42,7 @@ func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return nil, p.pt.pollingError()
 }
 
-func (p *httpPoller) FinalResponse(ctx context.Context) (*HttpResponse, error) {
+func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
 	if p.pt.finalGetURL() == "" {
 		// we can end up in this situation if the async operation returns a 200
 		// with no polling URLs.  in that case return the response which should
@@ -75,7 +75,7 @@ func (p *httpPoller) FinalResponse(ctx context.Context) (*HttpResponse, error) {
 	return nil, err
 }
 
-// ResumeToken generates the string token that can be used with the ResumeHttpPoller method
+// ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
 // on the client to create a new poller from the data held in the current poller type
 func (p *httpPoller) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
@@ -88,8 +88,8 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func httpPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*HttpResponse, error) {
-	result := &HttpResponse{RawResponse: resp.Response}
+func httpPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*HTTPResponse, error) {
+	result := &HTTPResponse{RawResponse: resp.Response}
 	return result, nil
 }
 

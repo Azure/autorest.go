@@ -31,13 +31,13 @@ func (e CloudError) Error() string {
 	return msg
 }
 
-// HttpResponse contains the HTTP response from the call to the service endpoint
-type HttpResponse struct {
+// HTTPResponse contains the HTTP response from the call to the service endpoint
+type HTTPResponse struct {
 	// GetPoller will return an initialized poller
-	GetPoller func() HttpPoller
+	GetPoller func() HTTPPoller
 
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*HttpResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

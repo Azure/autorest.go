@@ -30,8 +30,9 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   for (const poller of values(pollers)) {
-    const pollerInterface = pascalCase(poller.name);
-    let responseType = 'HttpResponse';
+    const pollerInterface = poller.name;
+    const pollerName = camelCase(poller.name);
+    let responseType = 'HTTPResponse';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
@@ -50,7 +51,7 @@ type ${pollerInterface} interface {
 	ResumeToken() (string, error)
 }
 
-type ${poller.name} struct {
+type ${pollerName} struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	// polling tracker
@@ -58,25 +59,25 @@ type ${poller.name} struct {
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
-func (p *${poller.name}) Done() bool {
+func (p *${pollerName}) Done() bool {
 	return p.pt.hasTerminated()
 }
 
 // Poll will send poll the service endpoint and return an http.Response or error received from the service
-func (p *${poller.name}) Poll(ctx context.Context) (*http.Response, error) {
+func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {
 	if lroPollDone(ctx, p.pipeline, p.pt) {
 		return p.pt.latestResponse().Response, p.pt.pollingError()
 	}
 	return nil, p.pt.pollingError()
 }
 
-func (p *${poller.name}) FinalResponse(ctx context.Context) (*${responseType}, error) {
+func (p *${pollerName}) FinalResponse(ctx context.Context) (*${responseType}, error) {
 	if p.pt.finalGetURL() == "" {
 		// we can end up in this situation if the async operation returns a 200
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := ${poller.name}HandleResponse(lr, p.pipeline)
+			result, err := ${pollerName}HandleResponse(lr, p.pipeline)
 			if err != nil {
 				return nil, err
 			}
@@ -94,7 +95,7 @@ func (p *${poller.name}) FinalResponse(ctx context.Context) (*${responseType}, e
 	}
 	resp, err := p.pipeline.Do(ctx, req)
 	if err == nil && resp.Body != nil {
-		result, err := ${poller.name}HandleResponse(resp, p.pipeline)
+		result, err := ${pollerName}HandleResponse(resp, p.pipeline)
 		if err != nil {
 			return nil, err
 		}
@@ -103,9 +104,9 @@ func (p *${poller.name}) FinalResponse(ctx context.Context) (*${responseType}, e
 	return nil, err
 }
 
-// ResumeToken generates the string token that can be used with the Resume${pascalCase(poller.name)} method
+// ResumeToken generates the string token that can be used with the Resume${pollerInterface} method
 // on the client to create a new poller from the data held in the current poller type
-func (p *${poller.name}) ResumeToken() (string, error) {
+func (p *${pollerName}) ResumeToken() (string, error) {
 	if p.pt.hasTerminated() {
 		return "", errors.New("cannot create a ResumeToken from a poller in a terminal state")
 	}
@@ -116,12 +117,12 @@ func (p *${poller.name}) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func ${poller.name}HandleResponse(resp *azcore.Response, p azcore.Pipeline) (*${responseType}, error) {
+func ${pollerName}HandleResponse(resp *azcore.Response, p azcore.Pipeline) (*${responseType}, error) {
 	result := &${responseType}{RawResponse: resp.Response}
 	return result, ${unmarshalResponse}
 }
 
-${createPollerErrHandler(poller.name, poller.op, imports)}
+${createPollerErrHandler(pollerName, poller.op, imports)}
 `;
   }
   text += imports.text();

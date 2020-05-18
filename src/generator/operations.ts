@@ -286,7 +286,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
     if (!op.responses) {
-      text += '\tresult := &HttpResponse{\n';
+      text += '\tresult := &HTTPResponse{\n';
       text += '\t\tresult.RawResponse: resp\n';
       text += '\t}\n';
     } else {
@@ -299,14 +299,14 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    text += `\tresult.GetPoller = func() ${pascalCase(op.language.go!.pollerType.name)} {\n`;
-    text += `\t\treturn &${op.language.go!.pollerType.name}{\n`;
+    text += `\tresult.GetPoller = func() ${op.language.go!.pollerType.name} {\n`;
+    text += `\t\treturn &${camelCase(op.language.go!.pollerType.name)}{\n`;
     text += `\t\t\tpt: pt,\n`;
     text += `\t\t\tpipeline: client.p,\n`;
     text += `\t\t}\n`;
     text += `\t}\n`;
     text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
-    text += `\tp:= result.GetPoller().(*${op.language.go!.pollerType.name})\n`;
+    text += `\tp:= result.GetPoller().(*${camelCase(op.language.go!.pollerType.name)})\n`;
     text += `\tfor !p.Done() {\n`;
     text += `\tresp, err:= p.Poll(ctx)\n`;
     text += `\tif err != nil {\n`;
@@ -648,7 +648,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   text += '\t}\n';
   if (!isSchemaResponse(firstResp)) {
     if (isLROOperation(op)) {
-      text += '\treturn &HttpResponse{RawResponse: resp.Response}, nil\n';
+      text += '\treturn &HTTPResponse{RawResponse: resp.Response}, nil\n';
       text += '}\n\n';
       return text;
     }
@@ -785,9 +785,8 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
     if (isLROOperation(op) && !op.extensions!['x-ms-pageable'] && op.language.go!.pollerType.declareResume) {
-      const pollerName = pascalCase(op.language.go!.pollerType.name);
-      interfaceText += `\t// Resume${pollerName} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
-      interfaceText += `\tResume${pollerName}(id string) (${pollerName}, error)\n`;
+      interfaceText += `\t// Resume${op.language.go!.pollerType.name} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
+      interfaceText += `\tResume${op.language.go!.pollerType.name}(id string) (${op.language.go!.pollerType.name}, error)\n`;
     }
   }
   interfaceText += '}\n\n';
@@ -954,20 +953,19 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   } else if (isSchemaResponse(firstResp)) {
     returnType = '*' + firstResp.schema.language.go!.responseType.name;
   } else if (isLROOperation(op)) {
-    returnType = '*HttpResponse';
+    returnType = '*HTTPResponse';
   }
   return [returnType, 'error'];
 }
 
 function addResumePollerMethod(op: Operation, clientName: string): string {
-  const pollerName = pascalCase(op.language.go!.pollerType.name);
   const info = <OperationNaming>op.language.go!;
-  let text = `func (client *${clientName}) Resume${pollerName}(token string) (${pollerName}, error) {\n`;
+  let text = `func (client *${clientName}) Resume${op.language.go!.pollerType.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
   text += `\tpt, err := resumePollingTracker("${op.language.go!.pollerType.name}", token, client.${info.protocolNaming.errorMethod})\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  text += `\treturn &${op.language.go!.pollerType.name}{\n`;
+  text += `\treturn &${camelCase(op.language.go!.pollerType.name)}{\n`;
   text += `\t\tpipeline: client.p,\n`;
   text += '\t\tpt: pt,\n'
   text += `\t}, nil\n`;
