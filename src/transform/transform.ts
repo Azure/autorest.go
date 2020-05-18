@@ -484,7 +484,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
     }
     if (isLROOperation(op)) {
-      firstResp.schema.language.go!.needsTimeAndContext = true;
+      firstResp.schema.language.go!.isLRO = true;
       let prop = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject(`func(ctx context.Context, frequency time.Duration) (*${firstResp.schema.language.go!.responseType.name}, error)`, 'TODO'));
       prop.schema.language.go!.funcType = true;
       (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);

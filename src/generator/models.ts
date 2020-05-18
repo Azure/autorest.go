@@ -406,7 +406,7 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
   if (lang.responseType) {
     imports.add('net/http');
   }
-  if (lang.needsTimeAndContext) {
+  if (lang.isLRO) {
     imports.add('time');
     imports.add('context');
   }
