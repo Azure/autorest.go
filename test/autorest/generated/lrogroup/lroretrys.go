@@ -50,7 +50,7 @@ func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("HTTPPoller", resp, httpPollerHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.delete202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +121,7 @@ func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx co
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("HTTPPoller", resp, httpPollerHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.deleteAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +192,7 @@ func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeede
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ProductPoller", resp, productPollerHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lro
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("HTTPPoller", resp, httpPollerHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.post202Retry200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -338,7 +338,7 @@ func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("HTTPPoller", resp, httpPollerHandleError)
+	pt, err := createPollingTracker("HTTPPoller", resp, client.postAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -412,7 +412,7 @@ func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ProductPoller", resp, productPollerHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return nil, err
 	}
@@ -487,7 +487,7 @@ func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	pt, err := createPollingTracker("ProductPoller", resp, productPollerHandleError)
+	pt, err := createPollingTracker("ProductPoller", resp, client.putAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return nil, err
 	}

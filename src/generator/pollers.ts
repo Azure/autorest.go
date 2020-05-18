@@ -122,7 +122,6 @@ func ${pollerName}HandleResponse(resp *azcore.Response, p azcore.Pipeline) (*${r
 	return result, ${unmarshalResponse}
 }
 
-${createPollerErrHandler(pollerName, poller.op, imports)}
 `;
   }
   text += imports.text();
@@ -130,26 +129,6 @@ ${createPollerErrHandler(pollerName, poller.op, imports)}
   return text;
 }
 
-function createPollerErrHandler(name: string, op: Operation, imports: ImportManager): string {
-  let text = `// ${name} handles the error response.\n`;
-  text += `func ${name}HandleError(resp *azcore.Response) error {\n`;
-  // if the response doesn't define a 'default' section return a generic error
-  // TODO: can be multiple exceptions when x-ms-error-response is in use (rare)
-  if (!op.exceptions || op.exceptions[0].language.go!.genericError) {
-    imports.add('errors');
-    text += `\treturn errors.New(resp.Status)\n`;
-  } else {
-    const schemaError = (<SchemaResponse>op.exceptions![0]).schema;
-    const errFormat = <string>schemaError.language.go!.marshallingFormat;
-    text += `\terr := ${schemaError.language.go!.name}{}\n`;
-    text += `\tif err := resp.UnmarshalAs${errFormat.toUpperCase()}(&err); err != nil {\n`;
-    text += `\t\treturn err\n`;
-    text += `\t}\n`;
-    text += '\treturn err\n';
-  }
-  text += '}\n\n';
-  return text;
-}
 
 // Creates the content in pollers_helper.go
 export async function generatePollersHelper(session: Session<CodeModel>): Promise<string> {

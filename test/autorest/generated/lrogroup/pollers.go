@@ -93,15 +93,6 @@ func httpPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*HTTPRe
 	return result, nil
 }
 
-// httpPoller handles the error response.
-func httpPollerHandleError(resp *azcore.Response) error {
-	err := CloudError{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return err
-}
-
 // ProductPoller provides polling facilities until the operation completes
 type ProductPoller interface {
 	Done() bool
@@ -179,15 +170,6 @@ func (p *productPoller) ResumeToken() (string, error) {
 func productPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*ProductResponse, error) {
 	result := &ProductResponse{RawResponse: resp.Response}
 	return result, resp.UnmarshalAsJSON(&result.Product)
-}
-
-// productPoller handles the error response.
-func productPollerHandleError(resp *azcore.Response) error {
-	err := CloudError{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return err
 }
 
 // SkuPoller provides polling facilities until the operation completes
@@ -269,15 +251,6 @@ func skuPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*SkuResp
 	return result, resp.UnmarshalAsJSON(&result.Sku)
 }
 
-// skuPoller handles the error response.
-func skuPollerHandleError(resp *azcore.Response) error {
-	err := CloudError{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return err
-}
-
 // SubProductPoller provides polling facilities until the operation completes
 type SubProductPoller interface {
 	Done() bool
@@ -355,13 +328,4 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 func subProductPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*SubProductResponse, error) {
 	result := &SubProductResponse{RawResponse: resp.Response}
 	return result, resp.UnmarshalAsJSON(&result.SubProduct)
-}
-
-// subProductPoller handles the error response.
-func subProductPollerHandleError(resp *azcore.Response) error {
-	err := CloudError{}
-	if err := resp.UnmarshalAsJSON(&err); err != nil {
-		return err
-	}
-	return err
 }
