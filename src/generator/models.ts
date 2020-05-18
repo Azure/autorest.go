@@ -304,14 +304,17 @@ function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
   let unmarshaller = `func (${receiver} *${structDef.Language.name}) UnmarshalJSON(data []byte) error {\n`;
   // add a custom unmarshaller to the response envelope
   // find the discriminated type field
-  let field = 'FIND';
-  let type = 'FIND';
+  let field = '';
+  let type = '';
   for (const prop of values(structDef.Properties)) {
     if (prop.isDiscriminator) {
       field = prop.language.go!.name;
       type = prop.schema.language.go!.discriminatorInterface;
       break;
     }
+  }
+  if (field === '' || type === '') {
+    throw console.error(`failed to the discriminated type field for response envelope ${structDef.Language.name}`);
   }
   unmarshaller += `\tt, err := unmarshal${type}(data)\n`;
   unmarshaller += '\tif err != nil {\n';
