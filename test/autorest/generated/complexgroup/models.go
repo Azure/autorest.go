@@ -810,7 +810,7 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 		objectMap["age"] = s.Age
 	}
 	if s.Birthday != nil {
-		objectMap["birthday"] = s.Birthday
+		objectMap["birthday"] = (*timeRFC3339)(s.Birthday)
 	}
 	return json.Marshal(objectMap)
 }
@@ -847,7 +847,7 @@ func (s Shark) marshalInternal(discValue string) map[string]interface{} {
 		objectMap["age"] = s.Age
 	}
 	if s.Birthday != nil {
-		objectMap["birthday"] = s.Birthday
+		objectMap["birthday"] = (*timeRFC3339)(s.Birthday)
 	}
 	return objectMap
 }

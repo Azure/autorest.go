@@ -345,8 +345,11 @@ function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, p
       marshalInteral += `\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
     } else {
       marshalInteral += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
-      // TODO: custom time marshalling
-      marshalInteral += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+      if (prop.schema.language.go!.internalTimeType) {
+        marshalInteral += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
+      } else {
+        marshalInteral += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+      }
       marshalInteral += `\t}\n`;
     }
   }
@@ -363,7 +366,11 @@ function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: Struc
   marshaller += `\tobjectMap := ${receiver}.${parentType!.language.go!.name}.marshalInternal(${obj.discriminatorValue})\n`;
   for (const prop of values(structDef.Properties)) {
     marshaller += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
-    marshaller += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+    if (prop.schema.language.go!.internalTimeType) {
+      marshaller += `\t\tobjectMap["${prop.serializedName}"] = (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})\n`;
+    } else {
+      marshaller += `\t\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+    }
     marshaller += `\t}\n`;
   }
   marshaller += '\treturn json.Marshal(objectMap)\n';
