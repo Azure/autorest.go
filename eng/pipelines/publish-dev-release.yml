@@ -5,7 +5,6 @@ variables:
   NodeVersion: '12.x'
   goTestPath: '$(system.defaultWorkingDirectory)/test'
   GOBIN: '$(system.defaultWorkingDirectory)/bin/go'
-  GOROOT: '/usr/local/go1.14'
 
 pool:
   vmImage: 'ubuntu-18.04'
@@ -33,10 +32,11 @@ steps:
       git diff --staged -w 1>&2
     displayName: 'Regenerate Autorest Tests'
     failOnStderr: true
-  - script: |
-      set -e
-      echo '##vso[task.prependpath]$(GOROOT)/bin'
-    displayName: 'Create Go Workspace'
+
+  - task: GoTool@0
+    inputs:
+      version: '1.14'
+    displayName: "Select Go Version"
 
   - script: |
       set -e

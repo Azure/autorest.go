@@ -5,10 +5,10 @@
 
 import { camelCase, KnownMediaType, pascalCase, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@azure-tools/autorest-extension-base';
-import { ObjectSchema, ArraySchema, codeModelSchema, ChoiceValue, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
+import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema } from '@azure-tools/codemodel';
 import { items, values } from '@azure-tools/linq';
 import { aggregateParameters, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
-import { createPolymorphicInterfaceName, namer, removePrefix } from './namer';
+import { namer, removePrefix } from './namer';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
@@ -38,14 +38,21 @@ async function process(session: Session<CodeModel>) {
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
     if (obj.discriminator) {
-      const discriminator = annotateDiscriminatedTypes(obj);
-      if (discriminator) {
-        // discriminators will contain the root type of each discriminated type hierarchy
-        if (!session.model.language.go!.discriminators) {
-          session.model.language.go!.discriminators = new Array<ObjectSchema>();
+      // discriminators will contain the root type of each discriminated type hierarchy
+      if (!session.model.language.go!.discriminators) {
+        session.model.language.go!.discriminators = new Array<ObjectSchema>();
+      }
+      const defs = <Array<ObjectSchema>>session.model.language.go!.discriminators;
+      const rootDiscriminator = getRootDiscriminator(obj);
+      if (defs.indexOf(rootDiscriminator) < 0) {
+        rootDiscriminator.language.go!.rootDiscriminator = true;
+        defs.push(rootDiscriminator);
+        // fix up discriminator value to use the enum type if available
+        const discriminatorEnums = getDiscriminatorEnums(rootDiscriminator);
+        // for each child type in the hierarchy, fix up the discriminator value
+        for (const child of values(rootDiscriminator.children?.all)) {
+          (<ObjectSchema>child).discriminatorValue = getEnumForDiscriminatorValue((<ObjectSchema>child).discriminatorValue!, discriminatorEnums);
         }
-        const defs = <Array<ObjectSchema>>session.model.language.go!.discriminators;
-        defs.push(discriminator);
       }
     }
     for (const prop of values(obj.properties)) {
@@ -675,26 +682,14 @@ function generateResponseTypeName(schema: Schema): Language {
   }
 }
 
-function annotateDiscriminatedTypes(obj: ObjectSchema): ObjectSchema | undefined {
-  if (obj.language.go!.polymorphicInterfaces !== undefined) {
-    // this hierarchy of discriminated types has already been processed
-    return;
-  }
-  // we have a type in the hierarchy of polymorphic types, it can be one of three things
-  // 1. root - no parent types, only child types
-  // 2. intermediate root - has a parent and also has children (salmon in the test server)
-  // 3. child - has parent and no children
-  //
-  // for cases #1 and #2 we need to generate an interface type, and for
-  // case #2 the generated interface must also contain the parent interface
-  // for case #3 all that's required is to generate the marker method on
-  // the child type(s) for the applicable interface.
+function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {
+  // discriminators can be a root or an "intermediate" root (Salmon in the test server)
 
   // walk to the root
   let root = obj;
   while (true) {
     if (!root.parents) {
-      // simple case, no parent types
+      // simple case, already at the root
       break;
     }
     for (const parent of values(root.parents?.immediate)) {
@@ -702,6 +697,7 @@ function annotateDiscriminatedTypes(obj: ObjectSchema): ObjectSchema | undefined
       // e.g. if type Foo is in a DictionaryOfFoo, then one of
       // Foo's parents will be DictionaryOfFoo which we ignore.
       if (isObjectSchema(parent) && parent.discriminator) {
+        root.language.go!.discriminatorParent = parent.language.go!.discriminatorInterface;
         root = parent;
       }
     }
@@ -713,62 +709,29 @@ function annotateDiscriminatedTypes(obj: ObjectSchema): ObjectSchema | undefined
       break;
     }
   }
-  // create the interface type name based on the current root
-  const rootType = root.language.go!.discriminator;
-  // use pre-defined enum values if available
-  const choices = getChoices(root);
-  if (!choices) {
-    // mark that we need to generate our own enum type
-    root.language.go!.discriminatorEnumNeeded = true;
-  }
-  recursiveAnnotateDiscriminatedTypes(root, rootType, rootType, choices);
   return root;
 }
 
-function recursiveAnnotateDiscriminatedTypes(obj: ObjectSchema, rootInterface: string, currentInterface: string, choices: Array<ChoiceValue> | undefined) {
-  if (!obj.language.go!.polymorphicInterfaces) {
-    obj.language.go!.polymorphicInterfaces = new Array<string>();
-  }
-  const interfaces = <Array<string>>obj.language.go!.polymorphicInterfaces;
-  interfaces.push(currentInterface);
-  // now walk all the children, annotating them with the interface
-  for (const child of values(obj.discriminator?.immediate)) {
-    const childSchema = <ObjectSchema>child;
-    if (!childSchema.language.go!.polymorphicInterfaces) {
-      // copy parent's interfaces
-      childSchema.language.go!.polymorphicInterfaces = [...<Array<string>>obj.language.go!.polymorphicInterfaces];
-    }
-    if (childSchema.discriminator && childSchema.discriminator.all) {
-      // case #2 - intermediate root
-      childSchema.language.go!.discriminatorParent = currentInterface;
-      recursiveAnnotateDiscriminatedTypes(childSchema, rootInterface, createPolymorphicInterfaceName(childSchema.language.go!.name), choices);
-    }
-    if (choices) {
-      // find the choice value that matches the current type's discriminator
-      let found = false;
-      for (const choice of values(choices)) {
-        if (choice.value === childSchema.discriminatorValue) {
-          childSchema.language.go!.discriminatorEnum = choice.language.go!.name;
-          childSchema.language.go!.discriminatorRealEnum = true;
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        throw console.error(`failed to find discriminator choice value for type ${childSchema.language.go!.name}`);
-      }
-    } else {
-      // add the internal enum name for this sub-type
-      childSchema.language.go!.discriminatorEnum = `${camelCase(rootInterface)}${pascalCase(childSchema.discriminatorValue!)}`;
-    }
-  }
-}
-
-function getChoices(obj: ObjectSchema): Array<ChoiceValue> | undefined {
+// returns the set of enum values used for discriminators
+function getDiscriminatorEnums(obj: ObjectSchema): Array<ChoiceValue> | undefined {
   if (obj.discriminator?.property.schema.type === SchemaType.Choice) {
     return (<ChoiceSchema>obj.discriminator!.property.schema).choices;
   } else if (obj.discriminator?.property.schema.type === SchemaType.SealedChoice) {
     return (<SealedChoiceSchema>obj.discriminator!.property.schema).choices;
   }
   return undefined;
+}
+
+// returns the enum name for the specified discriminator value
+function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValue> | undefined): string {
+  if (!enums) {
+    return `"${discValue}"`;
+  }
+  // find the choice value that matches the current type's discriminator
+  for (const enm of values(enums)) {
+    if (enm.value === discValue) {
+      return enm.language.go!.name;
+    }
+  }
+  throw console.error(`failed to find discriminator enum value for ${discValue}`);
 }

@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@azure-tools/autorest-extension-base';
-import { camelCase, pascalCase } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, sortAscending } from './helpers';
@@ -21,23 +20,11 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
   imports.add('encoding/json');
   text += imports.text();
   const discriminators = <Array<ObjectSchema>>session.model.language.go!.discriminators;
-  discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminator, b.language.go!.discriminator) });
+  discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminatorInterface, b.language.go!.discriminatorInterface) });
   for (const disc of values(discriminators)) {
     // this is used to track any sub-hierarchies (SalmonType, SharkType in the test server)
     const roots = new Array<ObjectSchema>();
     roots.push(disc);
-
-    if (disc.language.go!.discriminatorEnumNeeded) {
-      // constant definition
-      // only generate one set from the root as it contains all possible values
-      text += 'const (\n';
-      // TODO: sort
-      for (const val of values(disc.discriminator!.all)) {
-        const objSchema = <ObjectSchema>val;
-        text += `\t${objSchema.language.go!.discriminatorEnum} = "${objSchema.discriminatorValue!}"\n`;
-      }
-      text += ')\n\n';
-    }
 
     // add sub-hierarchies
     for (const val of values(disc.discriminator!.all)) {
@@ -49,7 +36,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
 
     // generate unmarshallers for each discriminator
     for (const root of values(roots)) {
-      const discName = root.language.go!.discriminator;
+      const discName = root.language.go!.discriminatorInterface;
       // scalar unmarshaller
       text += `func unmarshal${discName}(body []byte) (${discName}, error) {\n`;
       text += '\tvar m map[string]interface{}\n';
@@ -60,7 +47,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
       text += `\tswitch m["${root.discriminator!.property.serializedName}"] {\n`;
       for (const val of values(root.discriminator!.all)) {
         const objSchema = <ObjectSchema>val;
-        text += `\tcase ${val.language.go!.discriminatorEnum}:\n`;
+        text += `\tcase ${objSchema.discriminatorValue}:\n`;
         text += `\t\tb = &${val.language.go!.name}{}\n`;
       }
       text += '\tdefault:\n';

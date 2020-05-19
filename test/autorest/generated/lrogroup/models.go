@@ -368,21 +368,8 @@ type OperationResultError struct {
 }
 
 type Product struct {
-	// Resource Id
-	ID *string `json:"id,omitempty"`
-
-	// Resource Location
-	Location *string `json:"location,omitempty"`
-
-	// Resource Name
-	Name       *string            `json:"name,omitempty"`
+	Resource
 	Properties *ProductProperties `json:"properties,omitempty"`
-
-	// Dictionary of <string>
-	Tags *map[string]string `json:"tags,omitempty"`
-
-	// Resource Type
-	Type *string `json:"type,omitempty"`
 }
 
 type ProductProperties struct {
@@ -439,8 +426,7 @@ type SkuResponse struct {
 }
 
 type SubProduct struct {
-	// Sub Resource Id
-	ID         *string               `json:"id,omitempty"`
+	SubResource
 	Properties *SubProductProperties `json:"properties,omitempty"`
 }
 
