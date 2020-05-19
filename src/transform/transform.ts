@@ -555,7 +555,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       }
     }
     // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-    // const name = `${camelCase(group.language.go!.name)}${op.language.go!.name}Poller`;
     // create a new one, add to global list and assign to method
     const poller = {
       name: name,
