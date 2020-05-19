@@ -673,7 +673,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   }
   let target = `result.${schemaResponse.schema.language.go!.responseType.value}`;
   // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response type, not the field
-  if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminator) {
+  if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
     target = 'result';
   }
   text += `\treturn &result, resp.UnmarshalAs${mediaType}(&${target})\n`;

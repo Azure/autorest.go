@@ -7,10 +7,6 @@ package complexgroup
 
 import "encoding/json"
 
-const (
-	dotFishClassificationDotSalmon = "DotSalmon"
-)
-
 func unmarshalDotFishClassification(body []byte) (DotFishClassification, error) {
 	var m map[string]interface{}
 	if err := json.Unmarshal(body, &m); err != nil {
@@ -18,7 +14,7 @@ func unmarshalDotFishClassification(body []byte) (DotFishClassification, error) 
 	}
 	var b DotFishClassification
 	switch m["fish.type"] {
-	case dotFishClassificationDotSalmon:
+	case "DotSalmon":
 		b = &DotSalmon{}
 	default:
 		b = &DotFish{}
@@ -42,15 +38,6 @@ func unmarshalDotFishClassificationArray(body []byte) (*[]DotFishClassification,
 	return &fArray, nil
 }
 
-const (
-	fishClassificationCookiecuttershark = "cookiecuttershark"
-	fishClassificationGoblin            = "goblin"
-	fishClassificationSalmon            = "salmon"
-	fishClassificationSawshark          = "sawshark"
-	fishClassificationShark             = "shark"
-	fishClassificationSmartSalmon       = "smart_salmon"
-)
-
 func unmarshalFishClassification(body []byte) (FishClassification, error) {
 	var m map[string]interface{}
 	if err := json.Unmarshal(body, &m); err != nil {
@@ -58,17 +45,17 @@ func unmarshalFishClassification(body []byte) (FishClassification, error) {
 	}
 	var b FishClassification
 	switch m["fishtype"] {
-	case fishClassificationCookiecuttershark:
+	case "cookiecuttershark":
 		b = &Cookiecuttershark{}
-	case fishClassificationGoblin:
+	case "goblin":
 		b = &Goblinshark{}
-	case fishClassificationSalmon:
+	case "salmon":
 		b = &Salmon{}
-	case fishClassificationSawshark:
+	case "sawshark":
 		b = &Sawshark{}
-	case fishClassificationShark:
+	case "shark":
 		b = &Shark{}
-	case fishClassificationSmartSalmon:
+	case "smart_salmon":
 		b = &SmartSalmon{}
 	default:
 		b = &Fish{}
@@ -99,7 +86,7 @@ func unmarshalSalmonClassification(body []byte) (SalmonClassification, error) {
 	}
 	var b SalmonClassification
 	switch m["fishtype"] {
-	case fishClassificationSmartSalmon:
+	case "smart_salmon":
 		b = &SmartSalmon{}
 	default:
 		b = &Salmon{}
@@ -130,11 +117,11 @@ func unmarshalSharkClassification(body []byte) (SharkClassification, error) {
 	}
 	var b SharkClassification
 	switch m["fishtype"] {
-	case fishClassificationCookiecuttershark:
+	case "cookiecuttershark":
 		b = &Cookiecuttershark{}
-	case fishClassificationGoblin:
+	case "goblin":
 		b = &Goblinshark{}
-	case fishClassificationSawshark:
+	case "sawshark":
 		b = &Sawshark{}
 	default:
 		b = &Shark{}
@@ -158,10 +145,6 @@ func unmarshalSharkClassificationArray(body []byte) (*[]SharkClassification, err
 	return &fArray, nil
 }
 
-const (
-	myBaseTypeClassificationKind1 = "Kind1"
-)
-
 func unmarshalMyBaseTypeClassification(body []byte) (MyBaseTypeClassification, error) {
 	var m map[string]interface{}
 	if err := json.Unmarshal(body, &m); err != nil {
@@ -169,7 +152,7 @@ func unmarshalMyBaseTypeClassification(body []byte) (MyBaseTypeClassification, e
 	}
 	var b MyBaseTypeClassification
 	switch m["kind"] {
-	case myBaseTypeClassificationKind1:
+	case "Kind1":
 		b = &MyDerivedType{}
 	default:
 		b = &MyBaseType{}
