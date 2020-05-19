@@ -43,7 +43,6 @@ export function isPageableOperation(op: Operation): boolean {
 export interface PollerInfo {
   name: string;
   responseType: string;
-  declareResume: boolean;
   op: Operation;
 }
 

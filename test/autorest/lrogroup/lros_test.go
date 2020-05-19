@@ -65,7 +65,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	poller, err = op.ResumeProductPoller(rt)
+	poller, err = op.ResumeDelete202NoRetry204(rt)
 	if err != nil {
 		t.Fatal(err)
 	}

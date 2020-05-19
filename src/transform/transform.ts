@@ -548,7 +548,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         const tempPoller = {
           name: poller.name,
           responseType: poller.responseType,
-          declareResume: false,
           op: op,
         };
         op.language.go!.pollerType = tempPoller;
@@ -561,7 +560,6 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     const poller = {
       name: name,
       responseType: type,
-      declareResume: true,
       op: op,
     };
     pollers.push(poller);

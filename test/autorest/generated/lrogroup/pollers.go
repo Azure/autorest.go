@@ -22,11 +22,15 @@ type HTTPPoller interface {
 	ResumeToken() (string, error)
 }
 
+type httpResponseHandleResponse func(*azcore.Response) (*HTTPResponse, error)
+
 type httpPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
+	// use the response handler to check for accepted status codes
+	response httpResponseHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -48,7 +52,7 @@ func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := httpPollerHandleResponse(lr, p.pipeline)
+			result, err := p.response(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -65,14 +69,10 @@ func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
 		return nil, err
 	}
 	resp, err := p.pipeline.Do(ctx, req)
-	if err == nil && resp.Body != nil {
-		result, err := httpPollerHandleResponse(resp, p.pipeline)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+	return p.response(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
@@ -88,11 +88,6 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func httpPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*HTTPResponse, error) {
-	result := &HTTPResponse{RawResponse: resp.Response}
-	return result, nil
-}
-
 // ProductPoller provides polling facilities until the operation completes
 type ProductPoller interface {
 	Done() bool
@@ -101,11 +96,15 @@ type ProductPoller interface {
 	ResumeToken() (string, error)
 }
 
+type productHandleResponse func(*azcore.Response) (*ProductResponse, error)
+
 type productPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
+	// use the response handler to check for accepted status codes
+	response productHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -127,7 +126,7 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := productPollerHandleResponse(lr, p.pipeline)
+			result, err := p.response(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -144,14 +143,10 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 		return nil, err
 	}
 	resp, err := p.pipeline.Do(ctx, req)
-	if err == nil && resp.Body != nil {
-		result, err := productPollerHandleResponse(resp, p.pipeline)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+	return p.response(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductPoller method
@@ -167,11 +162,6 @@ func (p *productPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func productPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*ProductResponse, error) {
-	result := &ProductResponse{RawResponse: resp.Response}
-	return result, resp.UnmarshalAsJSON(&result.Product)
-}
-
 // SkuPoller provides polling facilities until the operation completes
 type SkuPoller interface {
 	Done() bool
@@ -180,11 +170,15 @@ type SkuPoller interface {
 	ResumeToken() (string, error)
 }
 
+type skuHandleResponse func(*azcore.Response) (*SkuResponse, error)
+
 type skuPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
+	// use the response handler to check for accepted status codes
+	response skuHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -206,7 +200,7 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := skuPollerHandleResponse(lr, p.pipeline)
+			result, err := p.response(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -223,14 +217,10 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 		return nil, err
 	}
 	resp, err := p.pipeline.Do(ctx, req)
-	if err == nil && resp.Body != nil {
-		result, err := skuPollerHandleResponse(resp, p.pipeline)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+	return p.response(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSkuPoller method
@@ -246,11 +236,6 @@ func (p *skuPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func skuPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*SkuResponse, error) {
-	result := &SkuResponse{RawResponse: resp.Response}
-	return result, resp.UnmarshalAsJSON(&result.Sku)
-}
-
 // SubProductPoller provides polling facilities until the operation completes
 type SubProductPoller interface {
 	Done() bool
@@ -259,11 +244,15 @@ type SubProductPoller interface {
 	ResumeToken() (string, error)
 }
 
+type subProductHandleResponse func(*azcore.Response) (*SubProductResponse, error)
+
 type subProductPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
+	// use the response handler to check for accepted status codes
+	response subProductHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -285,7 +274,7 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := subProductPollerHandleResponse(lr, p.pipeline)
+			result, err := p.response(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -302,14 +291,10 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 		return nil, err
 	}
 	resp, err := p.pipeline.Do(ctx, req)
-	if err == nil && resp.Body != nil {
-		result, err := subProductPollerHandleResponse(resp, p.pipeline)
-		if err != nil {
-			return nil, err
-		}
-		return result, nil
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+	return p.response(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSubProductPoller method
@@ -323,9 +308,4 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 		return "", err
 	}
 	return string(js), nil
-}
-
-func subProductPollerHandleResponse(resp *azcore.Response, p azcore.Pipeline) (*SubProductResponse, error) {
-	result := &SubProductResponse{RawResponse: resp.Response}
-	return result, resp.UnmarshalAsJSON(&result.SubProduct)
 }
