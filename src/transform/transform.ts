@@ -411,7 +411,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       const object = new ObjectSchema(name, description);
       object.language.go = object.language.default;
       const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)', 'TODO'));
-      const getPoller = newProperty('GetPoller', 'GetPoller will return an initialized poller', newObject('func() HTTPPoller', 'TODO'));
+      const getPoller = newProperty('Poller', 'Poller contains an initialized poller', newObject('HTTPPoller', 'TODO'));
       pollUntilDone.schema.language.go!.funcType = true;
       getPoller.schema.language.go!.funcType = true;
       object.language.go!.properties = [
@@ -495,7 +495,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       let prop = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject(`func(ctx context.Context, frequency time.Duration) (*${firstResp.schema.language.go!.responseType.name}, error)`, 'TODO'));
       prop.schema.language.go!.funcType = true;
       (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
-      prop = newProperty('GetPoller', 'GetPoller will return an initialized poller', newObject(`func() ${firstResp.schema.language.go!.responseType.value}Poller`, 'TODO'));
+      prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${firstResp.schema.language.go!.responseType.value}Poller`, 'TODO'));
       prop.schema.language.go!.funcType = true;
       (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
     }

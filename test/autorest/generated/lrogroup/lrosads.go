@@ -144,15 +144,13 @@ func (client *lrosaDsOperations) BeginDelete202NonRetry400(ctx context.Context) 
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.delete202NonRetry400HandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.delete202NonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -228,15 +226,13 @@ func (client *lrosaDsOperations) BeginDelete202RetryInvalidHeader(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.delete202RetryInvalidHeaderHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.delete202RetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -312,15 +308,13 @@ func (client *lrosaDsOperations) BeginDelete204Succeeded(ctx context.Context) (*
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.delete204SucceededHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.delete204SucceededHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -396,15 +390,13 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetry400(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.deleteAsyncRelativeRetry400HandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.deleteAsyncRelativeRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -480,15 +472,13 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx 
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.deleteAsyncRelativeRetryInvalidHeaderHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.deleteAsyncRelativeRetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -564,15 +554,13 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidJSONPolling
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -648,15 +636,13 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryNoStatus(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.deleteAsyncRelativeRetryNoStatusHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.deleteAsyncRelativeRetryNoStatusHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -732,15 +718,13 @@ func (client *lrosaDsOperations) BeginDeleteNonRetry400(ctx context.Context) (*H
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.deleteNonRetry400HandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.deleteNonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -816,15 +800,13 @@ func (client *lrosaDsOperations) BeginPost202NoLocation(ctx context.Context, lro
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.post202NoLocationHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.post202NoLocationHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -903,15 +885,13 @@ func (client *lrosaDsOperations) BeginPost202NonRetry400(ctx context.Context, lr
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.post202NonRetry400HandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.post202NonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -990,15 +970,13 @@ func (client *lrosaDsOperations) BeginPost202RetryInvalidHeader(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.post202RetryInvalidHeaderHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.post202RetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1077,15 +1055,13 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetry400(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.postAsyncRelativeRetry400HandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.postAsyncRelativeRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1164,15 +1140,13 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidHeader(ctx co
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.postAsyncRelativeRetryInvalidHeaderHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.postAsyncRelativeRetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1251,15 +1225,13 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidJSONPolling(c
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.postAsyncRelativeRetryInvalidJsonPollingHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.postAsyncRelativeRetryInvalidJsonPollingHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1338,15 +1310,13 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryNoPayload(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.postAsyncRelativeRetryNoPayloadHandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.postAsyncRelativeRetryNoPayloadHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1425,15 +1395,13 @@ func (client *lrosaDsOperations) BeginPostNonRetry400(ctx context.Context, lrosa
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() HTTPPoller {
-		return &httpPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.postNonRetry400HandleResponse,
-		}
+	result.Poller = &httpPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.postNonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.GetPoller().(*httpPoller)
+		p := result.Poller.(*httpPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1512,15 +1480,13 @@ func (client *lrosaDsOperations) BeginPut200InvalidJSON(ctx context.Context, lro
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.put200InvalidJsonHandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.put200InvalidJsonHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1600,15 +1566,13 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetry400(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putAsyncRelativeRetry400HandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putAsyncRelativeRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1688,15 +1652,13 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidHeader(ctx con
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putAsyncRelativeRetryInvalidHeaderHandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putAsyncRelativeRetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1776,15 +1738,13 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidJSONPolling(ct
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putAsyncRelativeRetryInvalidJsonPollingHandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putAsyncRelativeRetryInvalidJsonPollingHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1864,15 +1824,13 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatus(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putAsyncRelativeRetryNoStatusHandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putAsyncRelativeRetryNoStatusHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -1952,15 +1910,13 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatusPayload(ctx c
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putAsyncRelativeRetryNoStatusPayloadHandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putAsyncRelativeRetryNoStatusPayloadHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -2040,15 +1996,13 @@ func (client *lrosaDsOperations) BeginPutError201NoProvisioningStatePayload(ctx 
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putError201NoProvisioningStatePayloadHandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putError201NoProvisioningStatePayloadHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -2128,15 +2082,13 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putNonRetry201Creating400HandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putNonRetry201Creating400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -2216,15 +2168,13 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400InvalidJSON(ctx c
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putNonRetry201Creating400InvalidJsonHandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putNonRetry201Creating400InvalidJsonHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {
@@ -2304,15 +2254,13 @@ func (client *lrosaDsOperations) BeginPutNonRetry400(ctx context.Context, lrosaD
 	if err != nil {
 		return nil, err
 	}
-	result.GetPoller = func() ProductPoller {
-		return &productPoller{
-			pt:       pt,
-			pipeline: client.p,
-			response: client.putNonRetry400HandleResponse,
-		}
+	result.Poller = &productPoller{
+		pt:       pt,
+		pipeline: client.p,
+		response: client.putNonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.GetPoller().(*productPoller)
+		p := result.Poller.(*productPoller)
 		for !p.Done() {
 			resp, err := p.Poll(ctx)
 			if err != nil {

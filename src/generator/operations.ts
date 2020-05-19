@@ -299,15 +299,13 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    text += `\tresult.GetPoller = func() ${op.language.go!.pollerType.name} {\n`;
-    text += `\t\treturn &${camelCase(op.language.go!.pollerType.name)}{\n`;
+    text += `\tresult.Poller = &${camelCase(op.language.go!.pollerType.name)}{\n`;
     text += `\t\t\tpt: pt,\n`;
     text += `\t\t\tpipeline: client.p,\n`;
     text += `\t\t\tresponse: client.${info.protocolNaming.responseMethod},\n`;
-    text += `\t\t}\n`;
     text += `\t}\n`;
     text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
-    text += `\tp:= result.GetPoller().(*${camelCase(op.language.go!.pollerType.name)})\n`;
+    text += `\tp:= result.Poller.(*${camelCase(op.language.go!.pollerType.name)})\n`;
     text += `\tfor !p.Done() {\n`;
     text += `\tresp, err:= p.Poll(ctx)\n`;
     text += `\tif err != nil {\n`;

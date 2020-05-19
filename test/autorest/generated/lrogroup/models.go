@@ -33,11 +33,11 @@ func (e CloudError) Error() string {
 
 // HTTPResponse contains the HTTP response from the call to the service endpoint
 type HTTPResponse struct {
-	// GetPoller will return an initialized poller
-	GetPoller func() HTTPPoller
-
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)
+
+	// Poller contains an initialized poller
+	Poller HTTPPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -379,12 +379,12 @@ type ProductProperties struct {
 
 // ProductResponse is the response envelope for operations that return a Product type.
 type ProductResponse struct {
-	// GetPoller will return an initialized poller
-	GetPoller func() ProductPoller
-
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*ProductResponse, error)
-	Product       *Product
+
+	// Poller contains an initialized poller
+	Poller  ProductPoller
+	Product *Product
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -414,11 +414,11 @@ type Sku struct {
 
 // SkuResponse is the response envelope for operations that return a Sku type.
 type SkuResponse struct {
-	// GetPoller will return an initialized poller
-	GetPoller func() SkuPoller
-
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SkuResponse, error)
+
+	// Poller contains an initialized poller
+	Poller SkuPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -437,11 +437,11 @@ type SubProductProperties struct {
 
 // SubProductResponse is the response envelope for operations that return a SubProduct type.
 type SubProductResponse struct {
-	// GetPoller will return an initialized poller
-	GetPoller func() SubProductPoller
-
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
 	PollUntilDone func(ctx context.Context, frequency time.Duration) (*SubProductResponse, error)
+
+	// Poller contains an initialized poller
+	Poller SubProductPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
