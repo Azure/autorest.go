@@ -412,8 +412,8 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       object.language.go = object.language.default;
       const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)', 'TODO'));
       const getPoller = newProperty('Poller', 'Poller contains an initialized poller', newObject('HTTPPoller', 'TODO'));
-      pollUntilDone.schema.language.go!.funcType = true;
-      getPoller.schema.language.go!.funcType = true;
+      pollUntilDone.schema.language.go!.lroPointerException = true;
+      getPoller.schema.language.go!.lroPointerException = true;
       object.language.go!.properties = [
         newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response')),
         pollUntilDone,
@@ -493,10 +493,10 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     if (isLROOperation(op)) {
       firstResp.schema.language.go!.isLRO = true;
       let prop = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject(`func(ctx context.Context, frequency time.Duration) (*${firstResp.schema.language.go!.responseType.name}, error)`, 'TODO'));
-      prop.schema.language.go!.funcType = true;
+      prop.schema.language.go!.lroPointerException = true;
       (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
       prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${firstResp.schema.language.go!.responseType.value}Poller`, 'TODO'));
-      prop.schema.language.go!.funcType = true;
+      prop.schema.language.go!.lroPointerException = true;
       (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
     }
     if (!responseExists(codeModel, firstResp.schema.language.go!.name)) {

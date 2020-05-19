@@ -156,7 +156,7 @@ class StructDef {
         tag = '';
       }
       let pointer = '*';
-      if (prop.schema.language.go!.discriminatorInterface || prop.schema.language.go!.funcType) {
+      if (prop.schema.language.go!.discriminatorInterface || prop.schema.language.go!.lroPointerException) {
         // pointer-to-interface introduces very clunky code
         pointer = '';
       }
