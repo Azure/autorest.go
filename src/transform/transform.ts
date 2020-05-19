@@ -533,12 +533,11 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     if (codeModel.language.go!.pollerTypes === undefined) {
       codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
     }
+    // Determine the type of poller that needs to be added based on whether a schema is specified in the response
+    // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
     let type = 'HTTP';
-    if (isSchemaResponse(firstResp)) {
+    if (isSchemaResponse(firstResp) && firstResp.schema.language.go!.responseType.value) {
       type = firstResp.schema.language.go!.responseType.value;
-    }
-    if (type == undefined) {
-      type = 'HTTP';
     }
     const name = `${type}Poller`;
     const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
