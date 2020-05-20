@@ -69,31 +69,11 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-	resp1, err := op.BeginDelete202NoRetry204(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-	_, err = poller.ResumeToken()
-	if err == nil {
-		t.Fatal("did not receive an error but was expecting one")
-	}
 }
 
 func TestLROBeginDelete202Retry200(t *testing.T) {
@@ -111,23 +91,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp1, err := op.BeginDelete202Retry200(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -145,23 +109,7 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-	resp1, err := op.BeginDelete204Succeeded(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -184,23 +132,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-	resp1, err := op.BeginDeleteAsyncNoHeaderInRetry(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -222,23 +154,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
-	resp1, err := op.BeginDeleteAsyncNoRetrySucceeded(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -261,23 +177,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
-	resp1, err := op.BeginDeleteAsyncRetryFailed(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -299,23 +199,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
-	resp1, err := op.BeginDeleteAsyncRetrySucceeded(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -338,23 +222,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp1, err := op.BeginDeleteAsyncRetrycanceled(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -376,23 +244,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
-	resp1, err := op.BeginDeleteNoHeaderInRetry(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -414,23 +266,7 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp1, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -452,22 +288,7 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err == nil {
-			t.Fatal("expected an error but did not receive one")
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp1, err := op.BeginDeleteProvisioning202DeletingFailed200(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -488,22 +309,7 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err == nil {
-			t.Fatal("expected an error but did not receive one")
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp1, err := op.BeginDeleteProvisioning202Deletingcanceled200(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -524,23 +330,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp1, err := op.BeginPost200WithPayload(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -562,23 +352,7 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
-	resp1, err := op.BeginPost202NoRetry204(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -600,23 +374,7 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for !poller.Done() {
-		_, err := poller.Poll(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
-	resp, err = poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-	resp1, err := op.BeginPost202Retry200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	resp, err = resp1.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
