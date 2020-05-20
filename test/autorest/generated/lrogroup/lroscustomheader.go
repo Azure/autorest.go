@@ -59,7 +59,6 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 	result.Poller = &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
-		response: client.post202Retry200HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
@@ -75,7 +74,6 @@ func (client *lrOSCustomHeaderOperations) ResumePost202Retry200(token string) (H
 	return &httpPoller{
 		pipeline: client.p,
 		pt:       pt,
-		response: client.post202Retry200HandleResponse,
 	}, nil
 }
 
@@ -132,7 +130,6 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 	result.Poller = &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
-		response: client.postAsyncRetrySucceededHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
@@ -148,7 +145,6 @@ func (client *lrOSCustomHeaderOperations) ResumePostAsyncRetrySucceeded(token st
 	return &httpPoller{
 		pipeline: client.p,
 		pt:       pt,
-		response: client.postAsyncRetrySucceededHandleResponse,
 	}, nil
 }
 
@@ -205,7 +201,6 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 	result.Poller = &productPoller{
 		pt:       pt,
 		pipeline: client.p,
-		response: client.put201CreatingSucceeded200HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
 		return productPollerPollUntilDone(ctx, result.Poller, frequency)
@@ -221,7 +216,6 @@ func (client *lrOSCustomHeaderOperations) ResumePut201CreatingSucceeded200(token
 	return &productPoller{
 		pipeline: client.p,
 		pt:       pt,
-		response: client.put201CreatingSucceeded200HandleResponse,
 	}, nil
 }
 
@@ -279,7 +273,6 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 	result.Poller = &productPoller{
 		pt:       pt,
 		pipeline: client.p,
-		response: client.putAsyncRetrySucceededHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
 		return productPollerPollUntilDone(ctx, result.Poller, frequency)
@@ -295,7 +288,6 @@ func (client *lrOSCustomHeaderOperations) ResumePutAsyncRetrySucceeded(token str
 	return &productPoller{
 		pipeline: client.p,
 		pt:       pt,
-		response: client.putAsyncRetrySucceededHandleResponse,
 	}, nil
 }
 

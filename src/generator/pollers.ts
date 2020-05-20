@@ -34,18 +34,26 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const pollerInterface = poller.name;
     const pollerName = camelCase(poller.name);
     let responseType = 'HTTPResponse';
-    let responseHandler = 'httpHandleResponse';
+    let statusNoContentCheck = '';
+    const responseHandlerName = `${pollerName}HandleResponse`;
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
+      statusNoContentCheck = `if (resp.HasStatusCode(http.StatusNoContent)) {
+    return &result, nil
+  }`;
     }
     if (isSchemaResponse(schemaResponse)) {
-      responseHandler = `${camelCase(schemaResponse.schema.language.go!.name)}HandleResponse`;
       responseType = schemaResponse.schema.language.go!.responseType.name;
       rawResponse = '.RawResponse';
     }
+    const responseHandler = `func ${responseHandlerName}(resp *azcore.Response) (*${responseType}, error) {
+  result := ${responseType}{RawResponse: resp.Response}
+  ${statusNoContentCheck}
+	return &result, ${unmarshalResponse}
+}`;
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
 	Done() bool
@@ -61,8 +69,6 @@ type ${pollerName} struct {
 	pipeline azcore.Pipeline
 	// polling tracker
   pt pollingTracker
-  // use the response handler to check for accepted status codes
-	response ${responseHandler}
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -84,7 +90,7 @@ func (p *${pollerName}) FinalResponse(ctx context.Context) (*${responseType}, er
     // with no polling URLs.  in that case return the response which should
     // contain the JSON payload (only do this for successful terminal cases).
     if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-      result, err := p.response(lr)
+      result, err := ${responseHandlerName}(lr)
       if err != nil {
         return nil, err
       }
@@ -104,7 +110,7 @@ func (p *${pollerName}) FinalResponse(ctx context.Context) (*${responseType}, er
 	if err != nil {
 		return nil, err
 	}
-	return p.response(resp)
+	return ${responseHandlerName}(resp)
 }
 
 // ResumeToken generates the string token that can be used with the Resume${pollerInterface} method
@@ -134,6 +140,8 @@ func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequ
     }
     return p.FinalResponse(ctx)
 }
+
+${responseHandler}
 
 `;
   }

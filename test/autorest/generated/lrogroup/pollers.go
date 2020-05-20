@@ -30,8 +30,6 @@ type httpPoller struct {
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
-	// use the response handler to check for accepted status codes
-	response httpResponseHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -53,7 +51,7 @@ func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.response(lr)
+			result, err := httpPollerHandleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -73,7 +71,7 @@ func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return p.response(resp)
+	return httpPollerHandleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
@@ -104,6 +102,12 @@ func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.D
 	return p.FinalResponse(ctx)
 }
 
+func httpPollerHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
+	result := HTTPResponse{RawResponse: resp.Response}
+
+	return &result, nil
+}
+
 // ProductPoller provides polling facilities until the operation completes
 type ProductPoller interface {
 	Done() bool
@@ -119,8 +123,6 @@ type productPoller struct {
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
-	// use the response handler to check for accepted status codes
-	response productHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -142,7 +144,7 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.response(lr)
+			result, err := productPollerHandleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -162,7 +164,7 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 	if err != nil {
 		return nil, err
 	}
-	return p.response(resp)
+	return productPollerHandleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductPoller method
@@ -193,6 +195,14 @@ func productPollerPollUntilDone(ctx context.Context, p ProductPoller, frequency 
 	return p.FinalResponse(ctx)
 }
 
+func productPollerHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+	result := ProductResponse{RawResponse: resp.Response}
+	if resp.HasStatusCode(http.StatusNoContent) {
+		return &result, nil
+	}
+	return &result, resp.UnmarshalAsJSON(&result.Product)
+}
+
 // SkuPoller provides polling facilities until the operation completes
 type SkuPoller interface {
 	Done() bool
@@ -208,8 +218,6 @@ type skuPoller struct {
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
-	// use the response handler to check for accepted status codes
-	response skuHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -231,7 +239,7 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.response(lr)
+			result, err := skuPollerHandleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -251,7 +259,7 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return p.response(resp)
+	return skuPollerHandleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSkuPoller method
@@ -282,6 +290,14 @@ func skuPollerPollUntilDone(ctx context.Context, p SkuPoller, frequency time.Dur
 	return p.FinalResponse(ctx)
 }
 
+func skuPollerHandleResponse(resp *azcore.Response) (*SkuResponse, error) {
+	result := SkuResponse{RawResponse: resp.Response}
+	if resp.HasStatusCode(http.StatusNoContent) {
+		return &result, nil
+	}
+	return &result, resp.UnmarshalAsJSON(&result.Sku)
+}
+
 // SubProductPoller provides polling facilities until the operation completes
 type SubProductPoller interface {
 	Done() bool
@@ -297,8 +313,6 @@ type subProductPoller struct {
 	pipeline azcore.Pipeline
 	// polling tracker
 	pt pollingTracker
-	// use the response handler to check for accepted status codes
-	response subProductHandleResponse
 }
 
 // Done returns true if there was an error or polling has reached a terminal state
@@ -320,7 +334,7 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.response(lr)
+			result, err := subProductPollerHandleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -340,7 +354,7 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 	if err != nil {
 		return nil, err
 	}
-	return p.response(resp)
+	return subProductPollerHandleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSubProductPoller method
@@ -369,4 +383,12 @@ func subProductPollerPollUntilDone(ctx context.Context, p SubProductPoller, freq
 		}
 	}
 	return p.FinalResponse(ctx)
+}
+
+func subProductPollerHandleResponse(resp *azcore.Response) (*SubProductResponse, error) {
+	result := SubProductResponse{RawResponse: resp.Response}
+	if resp.HasStatusCode(http.StatusNoContent) {
+		return &result, nil
+	}
+	return &result, resp.UnmarshalAsJSON(&result.SubProduct)
 }
