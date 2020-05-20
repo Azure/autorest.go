@@ -35,13 +35,13 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const pollerName = camelCase(poller.name);
     let responseType = 'HTTPResponse';
     let statusNoContentCheck = '';
-    const responseHandlerName = `${pollerName}HandleResponse`;
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
-      statusNoContentCheck = `if (resp.HasStatusCode(http.StatusNoContent)) {
+      statusNoContentCheck = `
+      if (resp.HasStatusCode(http.StatusNoContent)) {
     return &result, nil
   }`;
     }
@@ -49,9 +49,11 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       responseType = schemaResponse.schema.language.go!.responseType.name;
       rawResponse = '.RawResponse';
     }
-    const responseHandler = `func ${responseHandlerName}(resp *azcore.Response) (*${responseType}, error) {
-  result := ${responseType}{RawResponse: resp.Response}
-  ${statusNoContentCheck}
+    const responseHandler = `func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
+  result := ${responseType}{RawResponse: resp.Response}${statusNoContentCheck}
+  if !resp.HasStatusCode(pollingCodes[:]...) {
+    return nil, p.pt.handleError(resp)
+  }
 	return &result, ${unmarshalResponse}
 }`;
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
@@ -61,8 +63,6 @@ type ${pollerInterface} interface {
 	FinalResponse(ctx context.Context) (*${responseType}, error)
 	ResumeToken() (string, error)
 }
-
-type ${camelCase(schemaResponse.schema.language.go!.name)}HandleResponse func(*azcore.Response) (*${responseType}, error)
 
 type ${pollerName} struct {
 	// the client for making the request
@@ -90,7 +90,7 @@ func (p *${pollerName}) FinalResponse(ctx context.Context) (*${responseType}, er
     // with no polling URLs.  in that case return the response which should
     // contain the JSON payload (only do this for successful terminal cases).
     if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-      result, err := ${responseHandlerName}(lr)
+      result, err := p.handleResponse(lr)
       if err != nil {
         return nil, err
       }
@@ -110,7 +110,7 @@ func (p *${pollerName}) FinalResponse(ctx context.Context) (*${responseType}, er
 	if err != nil {
 		return nil, err
 	}
-	return ${responseHandlerName}(resp)
+	return p.handleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the Resume${pollerInterface} method
@@ -242,6 +242,9 @@ type pollingTracker interface {
 
   // returns the cached HTTP response after a call to pollForStatus(), can be nil
   latestResponse() *azcore.Response
+
+  // converts an *azcore.Response to an error
+  handleError(resp *azcore.Response) error
 }
 
 type methodErrorHandler func(resp *azcore.Response) error
@@ -499,7 +502,11 @@ type pollingTrackerBase struct {
 		// it's ok if we didn't find a polling header, this will be handled elsewhere
 		return nil
 	}
-	
+  
+  func (pt *pollingTrackerBase) handleError(resp *azcore.Response) error {
+    return pt.errorHandler(resp)
+  }
+
 	// DELETE
 	
 	type pollingTrackerDelete struct {

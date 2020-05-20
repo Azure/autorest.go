@@ -84,6 +84,9 @@ type pollingTracker interface {
 
 	// returns the cached HTTP response after a call to pollForStatus(), can be nil
 	latestResponse() *azcore.Response
+
+	// converts an *azcore.Response to an error
+	handleError(resp *azcore.Response) error
 }
 
 type methodErrorHandler func(resp *azcore.Response) error
@@ -340,6 +343,10 @@ func (pt *pollingTrackerBase) initPollingMethod() error {
 	}
 	// it's ok if we didn't find a polling header, this will be handled elsewhere
 	return nil
+}
+
+func (pt *pollingTrackerBase) handleError(resp *azcore.Response) error {
+	return pt.errorHandler(resp)
 }
 
 // DELETE

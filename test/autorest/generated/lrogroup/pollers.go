@@ -23,8 +23,6 @@ type HTTPPoller interface {
 	ResumeToken() (string, error)
 }
 
-type httpResponseHandleResponse func(*azcore.Response) (*HTTPResponse, error)
-
 type httpPoller struct {
 	// the client for making the request
 	pipeline azcore.Pipeline
@@ -51,7 +49,7 @@ func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := httpPollerHandleResponse(lr)
+			result, err := p.handleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -71,7 +69,7 @@ func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return httpPollerHandleResponse(resp)
+	return p.handleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method
@@ -102,9 +100,11 @@ func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.D
 	return p.FinalResponse(ctx)
 }
 
-func httpPollerHandleResponse(resp *azcore.Response) (*HTTPResponse, error) {
+func (p *httpPoller) handleResponse(resp *azcore.Response) (*HTTPResponse, error) {
 	result := HTTPResponse{RawResponse: resp.Response}
-
+	if !resp.HasStatusCode(pollingCodes[:]...) {
+		return nil, p.pt.handleError(resp)
+	}
 	return &result, nil
 }
 
@@ -115,8 +115,6 @@ type ProductPoller interface {
 	FinalResponse(ctx context.Context) (*ProductResponse, error)
 	ResumeToken() (string, error)
 }
-
-type productHandleResponse func(*azcore.Response) (*ProductResponse, error)
 
 type productPoller struct {
 	// the client for making the request
@@ -144,7 +142,7 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := productPollerHandleResponse(lr)
+			result, err := p.handleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -164,7 +162,7 @@ func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, er
 	if err != nil {
 		return nil, err
 	}
-	return productPollerHandleResponse(resp)
+	return p.handleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeProductPoller method
@@ -195,10 +193,13 @@ func productPollerPollUntilDone(ctx context.Context, p ProductPoller, frequency 
 	return p.FinalResponse(ctx)
 }
 
-func productPollerHandleResponse(resp *azcore.Response) (*ProductResponse, error) {
+func (p *productPoller) handleResponse(resp *azcore.Response) (*ProductResponse, error) {
 	result := ProductResponse{RawResponse: resp.Response}
 	if resp.HasStatusCode(http.StatusNoContent) {
 		return &result, nil
+	}
+	if !resp.HasStatusCode(pollingCodes[:]...) {
+		return nil, p.pt.handleError(resp)
 	}
 	return &result, resp.UnmarshalAsJSON(&result.Product)
 }
@@ -210,8 +211,6 @@ type SkuPoller interface {
 	FinalResponse(ctx context.Context) (*SkuResponse, error)
 	ResumeToken() (string, error)
 }
-
-type skuHandleResponse func(*azcore.Response) (*SkuResponse, error)
 
 type skuPoller struct {
 	// the client for making the request
@@ -239,7 +238,7 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := skuPollerHandleResponse(lr)
+			result, err := p.handleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -259,7 +258,7 @@ func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return skuPollerHandleResponse(resp)
+	return p.handleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSkuPoller method
@@ -290,10 +289,13 @@ func skuPollerPollUntilDone(ctx context.Context, p SkuPoller, frequency time.Dur
 	return p.FinalResponse(ctx)
 }
 
-func skuPollerHandleResponse(resp *azcore.Response) (*SkuResponse, error) {
+func (p *skuPoller) handleResponse(resp *azcore.Response) (*SkuResponse, error) {
 	result := SkuResponse{RawResponse: resp.Response}
 	if resp.HasStatusCode(http.StatusNoContent) {
 		return &result, nil
+	}
+	if !resp.HasStatusCode(pollingCodes[:]...) {
+		return nil, p.pt.handleError(resp)
 	}
 	return &result, resp.UnmarshalAsJSON(&result.Sku)
 }
@@ -305,8 +307,6 @@ type SubProductPoller interface {
 	FinalResponse(ctx context.Context) (*SubProductResponse, error)
 	ResumeToken() (string, error)
 }
-
-type subProductHandleResponse func(*azcore.Response) (*SubProductResponse, error)
 
 type subProductPoller struct {
 	// the client for making the request
@@ -334,7 +334,7 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 		// with no polling URLs.  in that case return the response which should
 		// contain the JSON payload (only do this for successful terminal cases).
 		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := subProductPollerHandleResponse(lr)
+			result, err := p.handleResponse(lr)
 			if err != nil {
 				return nil, err
 			}
@@ -354,7 +354,7 @@ func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductRespon
 	if err != nil {
 		return nil, err
 	}
-	return subProductPollerHandleResponse(resp)
+	return p.handleResponse(resp)
 }
 
 // ResumeToken generates the string token that can be used with the ResumeSubProductPoller method
@@ -385,10 +385,13 @@ func subProductPollerPollUntilDone(ctx context.Context, p SubProductPoller, freq
 	return p.FinalResponse(ctx)
 }
 
-func subProductPollerHandleResponse(resp *azcore.Response) (*SubProductResponse, error) {
+func (p *subProductPoller) handleResponse(resp *azcore.Response) (*SubProductResponse, error) {
 	result := SubProductResponse{RawResponse: resp.Response}
 	if resp.HasStatusCode(http.StatusNoContent) {
 		return &result, nil
+	}
+	if !resp.HasStatusCode(pollingCodes[:]...) {
+		return nil, p.pt.handleError(resp)
 	}
 	return &result, resp.UnmarshalAsJSON(&result.SubProduct)
 }
