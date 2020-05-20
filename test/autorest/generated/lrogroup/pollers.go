@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 // HTTPPoller provides polling facilities until the operation completes
@@ -88,6 +89,21 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
+func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.Duration) (*HTTPResponse, error) {
+	for !p.Done() {
+		resp, err := p.Poll(ctx)
+		if err != nil {
+			return nil, err
+		}
+		if delay := azcore.RetryAfter(resp); delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(frequency)
+		}
+	}
+	return p.FinalResponse(ctx)
+}
+
 // ProductPoller provides polling facilities until the operation completes
 type ProductPoller interface {
 	Done() bool
@@ -160,6 +176,21 @@ func (p *productPoller) ResumeToken() (string, error) {
 		return "", err
 	}
 	return string(js), nil
+}
+
+func productPollerPollUntilDone(ctx context.Context, p ProductPoller, frequency time.Duration) (*ProductResponse, error) {
+	for !p.Done() {
+		resp, err := p.Poll(ctx)
+		if err != nil {
+			return nil, err
+		}
+		if delay := azcore.RetryAfter(resp); delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(frequency)
+		}
+	}
+	return p.FinalResponse(ctx)
 }
 
 // SkuPoller provides polling facilities until the operation completes
@@ -236,6 +267,21 @@ func (p *skuPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
+func skuPollerPollUntilDone(ctx context.Context, p SkuPoller, frequency time.Duration) (*SkuResponse, error) {
+	for !p.Done() {
+		resp, err := p.Poll(ctx)
+		if err != nil {
+			return nil, err
+		}
+		if delay := azcore.RetryAfter(resp); delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(frequency)
+		}
+	}
+	return p.FinalResponse(ctx)
+}
+
 // SubProductPoller provides polling facilities until the operation completes
 type SubProductPoller interface {
 	Done() bool
@@ -308,4 +354,19 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 		return "", err
 	}
 	return string(js), nil
+}
+
+func subProductPollerPollUntilDone(ctx context.Context, p SubProductPoller, frequency time.Duration) (*SubProductResponse, error) {
+	for !p.Done() {
+		resp, err := p.Poll(ctx)
+		if err != nil {
+			return nil, err
+		}
+		if delay := azcore.RetryAfter(resp); delay > 0 {
+			time.Sleep(delay)
+		} else {
+			time.Sleep(frequency)
+		}
+	}
+	return p.FinalResponse(ctx)
 }

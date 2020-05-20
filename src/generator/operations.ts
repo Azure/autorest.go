@@ -305,19 +305,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\t\t\tresponse: client.${info.protocolNaming.responseMethod},\n`;
     text += `\t}\n`;
     text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
-    text += `\tp:= result.Poller.(*${camelCase(op.language.go!.pollerType.name)})\n`;
-    text += `\tfor !p.Done() {\n`;
-    text += `\tresp, err:= p.Poll(ctx)\n`;
-    text += `\tif err != nil {\n`;
-    text += `\treturn nil, err\n`;
-    text += `\t}\n`;
-    text += `\tif delay := azcore.RetryAfter(resp); delay > 0 {\n`;
-    text += `\ttime.Sleep(delay)\n`;
-    text += `\t} else {\n`;
-    text += `\ttime.Sleep(frequency)\n`;
-    text += `\t}\n`;
-    text += `\t}\n`;
-    text += `\treturn p.FinalResponse(ctx)\n`;
+    text += `\t\treturn ${camelCase(op.language.go!.pollerType.name)}PollUntilDone(ctx, result.Poller, frequency)\n`;
     text += `\t}\n`;
     text += `\treturn result, nil\n`;
     // closing braces

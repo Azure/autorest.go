@@ -62,19 +62,7 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 		response: client.post202Retry200HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -147,19 +135,7 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 		response: client.postAsyncRetrySucceededHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -232,19 +208,7 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 		response: client.put201CreatingSucceeded200HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -318,19 +282,7 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 		response: client.putAsyncRetrySucceededHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }

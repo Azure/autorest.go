@@ -150,19 +150,7 @@ func (client *lrosaDsOperations) BeginDelete202NonRetry400(ctx context.Context) 
 		response: client.delete202NonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -232,19 +220,7 @@ func (client *lrosaDsOperations) BeginDelete202RetryInvalidHeader(ctx context.Co
 		response: client.delete202RetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -314,19 +290,7 @@ func (client *lrosaDsOperations) BeginDelete204Succeeded(ctx context.Context) (*
 		response: client.delete204SucceededHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -396,19 +360,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetry400(ctx context.Co
 		response: client.deleteAsyncRelativeRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -478,19 +430,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx 
 		response: client.deleteAsyncRelativeRetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -560,19 +500,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryInvalidJSONPolling
 		response: client.deleteAsyncRelativeRetryInvalidJsonPollingHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -642,19 +570,7 @@ func (client *lrosaDsOperations) BeginDeleteAsyncRelativeRetryNoStatus(ctx conte
 		response: client.deleteAsyncRelativeRetryNoStatusHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -724,19 +640,7 @@ func (client *lrosaDsOperations) BeginDeleteNonRetry400(ctx context.Context) (*H
 		response: client.deleteNonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -806,19 +710,7 @@ func (client *lrosaDsOperations) BeginPost202NoLocation(ctx context.Context, lro
 		response: client.post202NoLocationHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -891,19 +783,7 @@ func (client *lrosaDsOperations) BeginPost202NonRetry400(ctx context.Context, lr
 		response: client.post202NonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -976,19 +856,7 @@ func (client *lrosaDsOperations) BeginPost202RetryInvalidHeader(ctx context.Cont
 		response: client.post202RetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1061,19 +929,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetry400(ctx context.Cont
 		response: client.postAsyncRelativeRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1146,19 +1002,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidHeader(ctx co
 		response: client.postAsyncRelativeRetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1231,19 +1075,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryInvalidJSONPolling(c
 		response: client.postAsyncRelativeRetryInvalidJsonPollingHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1316,19 +1148,7 @@ func (client *lrosaDsOperations) BeginPostAsyncRelativeRetryNoPayload(ctx contex
 		response: client.postAsyncRelativeRetryNoPayloadHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1401,19 +1221,7 @@ func (client *lrosaDsOperations) BeginPostNonRetry400(ctx context.Context, lrosa
 		response: client.postNonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
-		p := result.Poller.(*httpPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1486,19 +1294,7 @@ func (client *lrosaDsOperations) BeginPut200InvalidJSON(ctx context.Context, lro
 		response: client.put200InvalidJsonHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1572,19 +1368,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetry400(ctx context.Conte
 		response: client.putAsyncRelativeRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1658,19 +1442,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidHeader(ctx con
 		response: client.putAsyncRelativeRetryInvalidHeaderHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1744,19 +1516,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryInvalidJSONPolling(ct
 		response: client.putAsyncRelativeRetryInvalidJsonPollingHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1830,19 +1590,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatus(ctx context.
 		response: client.putAsyncRelativeRetryNoStatusHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -1916,19 +1664,7 @@ func (client *lrosaDsOperations) BeginPutAsyncRelativeRetryNoStatusPayload(ctx c
 		response: client.putAsyncRelativeRetryNoStatusPayloadHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -2002,19 +1738,7 @@ func (client *lrosaDsOperations) BeginPutError201NoProvisioningStatePayload(ctx 
 		response: client.putError201NoProvisioningStatePayloadHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -2088,19 +1812,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400(ctx context.Cont
 		response: client.putNonRetry201Creating400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -2174,19 +1886,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry201Creating400InvalidJSON(ctx c
 		response: client.putNonRetry201Creating400InvalidJsonHandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }
@@ -2260,19 +1960,7 @@ func (client *lrosaDsOperations) BeginPutNonRetry400(ctx context.Context, lrosaD
 		response: client.putNonRetry400HandleResponse,
 	}
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		p := result.Poller.(*productPoller)
-		for !p.Done() {
-			resp, err := p.Poll(ctx)
-			if err != nil {
-				return nil, err
-			}
-			if delay := azcore.RetryAfter(resp); delay > 0 {
-				time.Sleep(delay)
-			} else {
-				time.Sleep(frequency)
-			}
-		}
-		return p.FinalResponse(ctx)
+		return productPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
 }

@@ -26,6 +26,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   imports.add('errors');
   imports.add('encoding/json');
   imports.add('net/url');
+  imports.add('time');
   let bodyText = '';
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
@@ -117,6 +118,21 @@ func (p *${pollerName}) ResumeToken() (string, error) {
     return "", err
   }
   return string(js), nil
+}
+
+func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequency time.Duration) (*${responseType}, error) {
+    for !p.Done() {
+        resp, err := p.Poll(ctx)
+        if err != nil {
+            return nil, err
+        }
+        if delay := azcore.RetryAfter(resp); delay > 0 {
+            time.Sleep(delay)
+        } else {
+            time.Sleep(frequency)
+        }
+    }
+    return p.FinalResponse(ctx)
 }
 
 `;
