@@ -323,6 +323,9 @@ func (client *pagingOperations) getMultiplePagesLroCreateRequest(pagingGetMultip
 
 // getMultiplePagesLroHandleResponse handles the GetMultiplePagesLro response.
 func (client *pagingOperations) getMultiplePagesLroHandleResponse(resp *azcore.Response) (*ProductResultResponse, error) {
+	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+		return nil, client.getMultiplePagesLroHandleError(resp)
+	}
 	result := ProductResultResponse{RawResponse: resp.Response}
 	return &result, resp.UnmarshalAsJSON(&result.ProductResult)
 }

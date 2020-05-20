@@ -275,6 +275,7 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       text += '}\n\n';
       return text;
     }
+    imports.add('time');
     text += `\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams.join(', ')})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
@@ -284,15 +285,30 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
+    if (!op.responses) {
+      text += '\tresult := &HTTPResponse{\n';
+      text += '\t\tresult.RawResponse: resp\n';
+      text += '\t}\n';
+    } else {
+      text += `\tresult, err := client.${info.protocolNaming.responseMethod}(resp)\n`;
+      text += `\tif err != nil {\n`;
+      text += `\t\treturn nil, err\n`;
+      text += `\t}\n`;
+    }
     text += `\tpt, err := createPollingTracker("${op.language.go!.pollerType.name}", resp, client.${info.protocolNaming.errorMethod})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
+    text += `\tresult.Poller = &${camelCase(op.language.go!.pollerType.name)}{\n`;
+    text += `\t\t\tpt: pt,\n`;
+    text += `\t\t\tpipeline: client.p,\n`;
+    text += `\t\t\tresponse: client.${info.protocolNaming.responseMethod},\n`;
+    text += `\t}\n`;
+    text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
+    text += `\t\treturn ${camelCase(op.language.go!.pollerType.name)}PollUntilDone(ctx, result.Poller, frequency)\n`;
+    text += `\t}\n`;
+    text += `\treturn result, nil\n`;
     // closing braces
-    text += `\treturn &${op.language.go!.pollerType.name}{\n`;
-    text += `\t\tpt: pt,\n`;
-    text += `\t\tclient: client,\n`;
-    text += `\t}, nil\n`;
     text += '}\n\n';
     text += addResumePollerMethod(op, clientName);
     return text;
@@ -593,6 +609,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
   // this is to support operations that specify multiple response codes
   // that return the same schema (or no schema).
   // TODO: handle response codes with different schemas
+  // TODO: remove pageable LRO exception
   let statusCodes = new Array<string>();
   statusCodes = statusCodes.concat(firstResp.protocol.http?.statusCodes);
   for (let i = 1; i < op.responses.length; ++i) {
@@ -605,15 +622,22 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
         // same schemas, append status codes
         statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
       }
+    } else if (isLROOperation(op)) {
+      statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
     }
   }
-  // LROs will skip this check since the status code is checked by the poller
-  if (!isLROOperation(op)) {
-    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
-    text += '\t}\n';
+  if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
+    statusCodes = statusCodes.concat('204');
   }
+  text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+  text += `\t\treturn nil, client.${info.protocolNaming.errorMethod}(resp)\n`;
+  text += '\t}\n';
   if (!isSchemaResponse(firstResp)) {
+    if (isLROOperation(op)) {
+      text += '\treturn &HTTPResponse{RawResponse: resp.Response}, nil\n';
+      text += '}\n\n';
+      return text;
+    }
     // no response body, return the *http.Response
     text += `\treturn resp.Response, nil\n`;
     text += '}\n\n';
@@ -747,8 +771,8 @@ function createInterfaceDefinition(group: OperationGroup, imports: ImportManager
     interfaceText += `\t${opName}(${getAPIParametersSig(op, imports)}) (${returns.join(', ')})\n`;
     // Add resume LRO poller method for each Begin poller method
     if (isLROOperation(op) && !op.extensions!['x-ms-pageable']) {
-      interfaceText += `\t// Resume${pascalCase(op.language.go!.pollerType.name)} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
-      interfaceText += `\tResume${pascalCase(op.language.go!.pollerType.name)}(id string) (${pascalCase(op.language.go!.pollerType.name)}, error)\n`;
+      interfaceText += `\t// Resume${op.language.go!.name} - Used to create a new instance of this poller from the resume token of a previous instance of this poller type.\n`;
+      interfaceText += `\tResume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error)\n`;
     }
   }
   interfaceText += '}\n\n';
@@ -912,26 +936,26 @@ function generateReturnsInfo(op: Operation, forHandler: boolean): string[] {
   // must check pageable first as all pageable operations are also schema responses
   if (!forHandler && isPageableOperation(op)) {
     returnType = op.language.go!.pageableType.name;
-  } else if (!forHandler && isLROOperation(op)) {
-    returnType = pascalCase(op.language.go!.pollerType.name);
   } else if (isSchemaResponse(firstResp)) {
     returnType = '*' + firstResp.schema.language.go!.responseType.name;
+  } else if (isLROOperation(op)) {
+    returnType = '*HTTPResponse';
   }
   return [returnType, 'error'];
 }
 
 function addResumePollerMethod(op: Operation, clientName: string): string {
-  const pollerName = pascalCase(op.language.go!.pollerType.name);
   const info = <OperationNaming>op.language.go!;
-  let text = `func (client *${clientName}) Resume${pollerName}(token string) (${pollerName}, error) {\n`;
+  let text = `func (client *${clientName}) Resume${op.language.go!.name}(token string) (${op.language.go!.pollerType.name}, error) {\n`;
   text += `\tpt, err := resumePollingTracker("${op.language.go!.pollerType.name}", token, client.${info.protocolNaming.errorMethod})\n`;
-  text += `\tif err != nil {\n`;
-  text += `\t\treturn nil, err\n`;
-  text += `\t}\n`;
-  text += `\treturn &${op.language.go!.pollerType.name}{\n`;
-  text += `\t\tclient: client,\n`;
-  text += '\t\tpt: pt,\n'
-  text += `\t}, nil\n`;
-  text += `}\n`;
+  text += '\tif err != nil {\n';
+  text += '\t\treturn nil, err\n';
+  text += '\t}\n';
+  text += `\treturn &${camelCase(op.language.go!.pollerType.name)}{\n`;
+  text += '\t\tpipeline: client.p,\n';
+  text += '\t\tpt: pt,\n';
+  text += `\t\tresponse: client.${info.protocolNaming.responseMethod},\n`;
+  text += '\t}, nil\n';
+  text += '}\n';
   return text;
 }

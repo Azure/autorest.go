@@ -405,7 +405,34 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
   if (!isSchemaResponse(firstResp)) {
     // the response doesn't return a model.  if it returns
     // headers then create a model that contains them.
-    if (headers.size > 0) {
+    if (isLROOperation(op)) {
+      const name = 'HTTPResponse';
+      const description = `${name} contains the HTTP response from the call to the service endpoint`;
+      const object = new ObjectSchema(name, description);
+      object.language.go = object.language.default;
+      const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)', 'TODO'));
+      const getPoller = newProperty('Poller', 'Poller contains an initialized poller', newObject('HTTPPoller', 'TODO'));
+      pollUntilDone.schema.language.go!.lroPointerException = true;
+      getPoller.schema.language.go!.lroPointerException = true;
+      object.language.go!.properties = [
+        newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response')),
+        pollUntilDone,
+        getPoller
+      ];
+      // mark as a response type
+      object.language.go!.responseType = {
+        name: name,
+        description: description,
+        responseType: true,
+      };
+      if (!responseExists(codeModel, object.language.go!.responseType.name)) {
+        // add this response schema to the global list of response
+        const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+        responseSchemas.push(object);
+        // attach it to the response
+        (<SchemaResponse>firstResp).schema = object;
+      }
+    } else if (headers.size > 0) {
       const name = `${group.language.go!.name}${op.language.go!.name}Response`;
       const description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
       const object = new ObjectSchema(name, description);
@@ -424,14 +451,19 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
         description: description,
         responseType: true,
       }
-      // add this response schema to the global list of response
-      const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-      responseSchemas.push(object);
-      // attach it to the response
-      (<SchemaResponse>firstResp).schema = object;
+      if (!responseExists(codeModel, object.language.go!.responseType.name)) {
+        // add this response schema to the global list of response
+        const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+        responseSchemas.push(object);
+        // attach it to the response
+        (<SchemaResponse>firstResp).schema = object;
+      }
     }
   } else if (!responseTypeCreated(codeModel, firstResp.schema)) {
     firstResp.schema.language.go!.responseType = generateResponseTypeName(firstResp.schema);
+    if (isLROOperation(op)) {
+      firstResp.schema.language.go!.responseType.name = `${firstResp.schema.language.go!.responseType.name}`;
+    }
     firstResp.schema.language.go!.properties = [
       newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'TODO'))
     ];
@@ -458,9 +490,20 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       prop.language.go!.fromHeader = item.value.header;
       (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
     }
-    // add this response schema to the global list of response
-    const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
-    responseSchemas.push(firstResp.schema);
+    if (isLROOperation(op)) {
+      firstResp.schema.language.go!.isLRO = true;
+      let prop = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject(`func(ctx context.Context, frequency time.Duration) (*${firstResp.schema.language.go!.responseType.name}, error)`, 'TODO'));
+      prop.schema.language.go!.lroPointerException = true;
+      (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
+      prop = newProperty('Poller', 'Poller contains an initialized poller', newObject(`${firstResp.schema.language.go!.responseType.value}Poller`, 'TODO'));
+      prop.schema.language.go!.lroPointerException = true;
+      (<Array<Property>>firstResp.schema.language.go!.properties).push(prop);
+    }
+    if (!responseExists(codeModel, firstResp.schema.language.go!.name)) {
+      // add this response schema to the global list of response
+      const responseSchemas = <Array<Schema>>codeModel.language.go!.responseSchemas;
+      responseSchemas.push(firstResp.schema);
+    }
   }
   // create pageable type info
   if (isPageableOperation(op)) {
@@ -490,17 +533,45 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
     if (codeModel.language.go!.pollerTypes === undefined) {
       codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
     }
+    // Determine the type of poller that needs to be added based on whether a schema is specified in the response
+    // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
+    let type = 'HTTP';
+    if (isSchemaResponse(firstResp) && firstResp.schema.language.go!.responseType.value) {
+      type = firstResp.schema.language.go!.responseType.value;
+    }
+    const name = `${type}Poller`;
+    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
+    for (const poller of values(pollers)) {
+      if (poller.name === name) {
+        // found a match, hook it up to the method
+        const tempPoller = {
+          name: poller.name,
+          responseType: poller.responseType,
+          op: op,
+        };
+        op.language.go!.pollerType = tempPoller;
+        return;
+      }
+    }
     // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-    const name = `${camelCase(group.language.go!.name)}${op.language.go!.name}Poller`;
     // create a new one, add to global list and assign to method
     const poller = {
       name: name,
+      responseType: type,
       op: op,
     };
-    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
     pollers.push(poller);
     op.language.go!.pollerType = poller;
   }
+}
+
+function responseExists(codeModel: CodeModel, name: string): boolean {
+  for (const resp of codeModel.language.go!.responseSchemas) {
+    if (resp.language.go!.name === name) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function newObject(name: string, desc: string): ObjectSchema {

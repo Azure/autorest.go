@@ -156,7 +156,7 @@ class StructDef {
         tag = '';
       }
       let pointer = '*';
-      if (prop.schema.language.go!.discriminatorInterface) {
+      if (prop.schema.language.go!.discriminatorInterface || prop.schema.language.go!.lroPointerException) {
         // pointer-to-interface introduces very clunky code
         pointer = '';
       }
@@ -268,7 +268,11 @@ function generateStruct(lang: Language, props?: Property[]): StructDef {
     imports.add('fmt');
   }
   if (lang.responseType) {
-    imports.add("net/http");
+    imports.add('net/http');
+  }
+  if (lang.isLRO) {
+    imports.add('time');
+    imports.add('context');
   }
   if (lang.needsDateTimeMarshalling) {
     imports.add('encoding/' + lang.marshallingFormat);
@@ -435,7 +439,7 @@ function generateMarshaller(structDef: StructDef) {
   let formatSig = 'JSON() ([]byte, error)';
   let methodName = 'MarshalJSON';
   if (structDef.Language.marshallingFormat === 'xml') {
-    formatSig = 'XML(e *xml.Encoder, start xml.StartElement) error'
+    formatSig = 'XML(e *xml.Encoder, start xml.StartElement) error';
     methodName = 'MarshalXML';
   }
   let text = `func (${receiver} ${structDef.Language.name}) Marshal${formatSig} {\n`;

@@ -42,6 +42,7 @@ export function isPageableOperation(op: Operation): boolean {
 
 export interface PollerInfo {
   name: string;
+  responseType: string;
   op: Operation;
 }
 
