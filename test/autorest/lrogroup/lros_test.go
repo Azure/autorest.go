@@ -12,6 +12,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
+
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
@@ -335,6 +337,10 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, resp.Sku, &lrogroup.Sku{
+		ID:   to.StringPtr("1"),
+		Name: to.StringPtr("product"),
+	})
 }
 
 func TestLROBeginPost202NoRetry204(t *testing.T) {
