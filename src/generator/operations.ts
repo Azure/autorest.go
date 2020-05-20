@@ -626,7 +626,7 @@ function createProtocolResponse(client: string, op: Operation, imports: ImportMa
       statusCodes = statusCodes.concat(op.responses[i].protocol.http?.statusCodes);
     }
   }
-  if (isLROOperation(op) && statusCodes.find(element => element == '204') == undefined) {
+  if (isLROOperation(op) && statusCodes.find(element => element === '204') === undefined) {
     statusCodes = statusCodes.concat('204');
   }
   text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
