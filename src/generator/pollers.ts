@@ -137,7 +137,7 @@ func (p *${pollerName}) ResumeToken() (string, error) {
   return string(js), nil
 }
 
-func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequency time.Duration) ${pollUntilDoneResponse} {
+func (p *${pollerName}) pollUntilDone(ctx context.Context, frequency time.Duration) ${pollUntilDoneResponse} {
     for {
         resp, err := p.Poll(ctx)
         if err != nil {

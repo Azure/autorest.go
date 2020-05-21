@@ -60,7 +60,7 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.Duration) (*http.Response, error) {
+func (p *httpPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -148,7 +148,7 @@ func (p *productPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func productPollerPollUntilDone(ctx context.Context, p ProductPoller, frequency time.Duration) (*ProductResponse, error) {
+func (p *productPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -247,7 +247,7 @@ func (p *skuPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func skuPollerPollUntilDone(ctx context.Context, p SkuPoller, frequency time.Duration) (*SkuResponse, error) {
+func (p *skuPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SkuResponse, error) {
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -346,7 +346,7 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func subProductPollerPollUntilDone(ctx context.Context, p SubProductPoller, frequency time.Duration) (*SubProductResponse, error) {
+func (p *subProductPoller) pollUntilDone(ctx context.Context, frequency time.Duration) (*SubProductResponse, error) {
 	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {

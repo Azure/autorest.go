@@ -68,12 +68,13 @@ func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &httpPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -136,12 +137,13 @@ func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx co
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &httpPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -204,12 +206,13 @@ func (client *lroRetrysOperations) BeginDeleteProvisioning202Accepted200Succeede
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &productPoller{
+	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		return productPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -273,12 +276,13 @@ func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lro
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &httpPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -344,12 +348,13 @@ func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &httpPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -415,12 +420,13 @@ func (client *lroRetrysOperations) BeginPut201CreatingSucceeded200(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &productPoller{
+	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		return productPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -487,12 +493,13 @@ func (client *lroRetrysOperations) BeginPutAsyncRelativeRetrySucceeded(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &productPoller{
+	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		return productPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }

@@ -56,12 +56,13 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &httpPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -127,12 +128,13 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &httpPoller{
+	poller := &httpPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
-		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -198,12 +200,13 @@ func (client *lrOSCustomHeaderOperations) BeginPut201CreatingSucceeded200(ctx co
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &productPoller{
+	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		return productPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -270,12 +273,13 @@ func (client *lrOSCustomHeaderOperations) BeginPutAsyncRetrySucceeded(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	result.Poller = &productPoller{
+	poller := &productPoller{
 		pt:       pt,
 		pipeline: client.p,
 	}
+	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*ProductResponse, error) {
-		return productPollerPollUntilDone(ctx, result.Poller, frequency)
+		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }

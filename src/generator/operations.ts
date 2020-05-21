@@ -299,17 +299,18 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
-    text += `\tresult.Poller = &${camelCase(op.language.go!.pollerType.name)}{\n`;
+    text += `\tpoller := &${camelCase(op.language.go!.pollerType.name)}{\n`;
     text += `\t\t\tpt: pt,\n`;
     text += `\t\t\tpipeline: client.p,\n`;
     text += `\t}\n`;
+    text += '\tresult.Poller = poller\n';
     // http pollers will simply return an *http.Response
     if (op.language.go!.pollerType.name === 'HTTPPoller') {
       text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {\n`;
     } else {
       text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration)(*${op.language.go!.pollerType.responseType}Response, error) {\n`;
     }
-    text += `\t\treturn ${camelCase(op.language.go!.pollerType.name)}PollUntilDone(ctx, result.Poller, frequency)\n`;
+    text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
     text += `\t}\n`;
     text += `\treturn result, nil\n`;
     // closing braces
