@@ -41,7 +41,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     }`;
     let pollUntilDoneResponse = '(*http.Response, error)';
     let pollUntilDoneReturn = 'p.FinalResponse(), nil';
-    let statusNoContentCheck = ''; // used to know whether to check for a StatusNoContent in response handler
+    let handleResponse = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
@@ -51,12 +51,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       rawResponse = '.RawResponse';
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
-      // if there is a schema but we receive a status no content then simple return the raw response and no error since
-      // status no content is an acceptable terminal state
-      statusNoContentCheck = `
-      if (resp.HasStatusCode(http.StatusNoContent)) {
-        return &result, nil
-      }`;
       // for operations that do return a model add a final response method that handles the final get URL scenario
       finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {
@@ -87,6 +81,18 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
         }
         return p.handleResponse(resp)
       }`;
+      handleResponse = `
+      func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
+        result := ${responseType}{RawResponse: resp.Response}
+        if (resp.HasStatusCode(http.StatusNoContent)) {
+          return &result, nil
+        }
+        if !resp.HasStatusCode(pollingCodes[:]...) {
+          return nil, p.pt.handleError(resp)
+        }
+        return &result, ${unmarshalResponse}
+      }
+      `;
     }
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
@@ -132,10 +138,13 @@ func (p *${pollerName}) ResumeToken() (string, error) {
 }
 
 func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequency time.Duration) ${pollUntilDoneResponse} {
-    for !p.Done() {
+    for {
         resp, err := p.Poll(ctx)
         if err != nil {
             return nil, err
+        }
+        if p.Done() {
+          break
         }
         if delay := azcore.RetryAfter(resp); delay > 0 {
             time.Sleep(delay)
@@ -145,15 +154,7 @@ func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequ
     }
     return ${pollUntilDoneReturn}
 }
-
-func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
-  result := ${responseType}{RawResponse: resp.Response}${statusNoContentCheck}
-  if !resp.HasStatusCode(pollingCodes[:]...) {
-    return nil, p.pt.handleError(resp)
-  }
-	return &result, ${unmarshalResponse}
-}
-
+${handleResponse}
 `;
   }
   text += imports.text();

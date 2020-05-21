@@ -61,10 +61,13 @@ func (p *httpPoller) ResumeToken() (string, error) {
 }
 
 func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.Duration) (*http.Response, error) {
-	for !p.Done() {
+	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
+		}
+		if p.Done() {
+			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
 			time.Sleep(delay)
@@ -73,14 +76,6 @@ func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.D
 		}
 	}
 	return p.FinalResponse(), nil
-}
-
-func (p *httpPoller) handleResponse(resp *azcore.Response) (*HTTPResponse, error) {
-	result := HTTPResponse{RawResponse: resp.Response}
-	if !resp.HasStatusCode(pollingCodes[:]...) {
-		return nil, p.pt.handleError(resp)
-	}
-	return &result, nil
 }
 
 // ProductPoller provides polling facilities until the operation completes
@@ -154,10 +149,13 @@ func (p *productPoller) ResumeToken() (string, error) {
 }
 
 func productPollerPollUntilDone(ctx context.Context, p ProductPoller, frequency time.Duration) (*ProductResponse, error) {
-	for !p.Done() {
+	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
+		}
+		if p.Done() {
+			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
 			time.Sleep(delay)
@@ -250,10 +248,13 @@ func (p *skuPoller) ResumeToken() (string, error) {
 }
 
 func skuPollerPollUntilDone(ctx context.Context, p SkuPoller, frequency time.Duration) (*SkuResponse, error) {
-	for !p.Done() {
+	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
+		}
+		if p.Done() {
+			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
 			time.Sleep(delay)
@@ -346,10 +347,13 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 }
 
 func subProductPollerPollUntilDone(ctx context.Context, p SubProductPoller, frequency time.Duration) (*SubProductResponse, error) {
-	for !p.Done() {
+	for {
 		resp, err := p.Poll(ctx)
 		if err != nil {
 			return nil, err
+		}
+		if p.Done() {
+			break
 		}
 		if delay := azcore.RetryAfter(resp); delay > 0 {
 			time.Sleep(delay)
