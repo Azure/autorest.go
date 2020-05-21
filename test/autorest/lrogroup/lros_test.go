@@ -39,22 +39,23 @@ func httpClientWithCookieJar() azcore.Transport {
 	})
 }
 
-// func TestLROResumeWrongPoller(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	resp, err := op.Delete202NoRetry204(context.Background())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller := resp.GetPoller()
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	_, err = op.ResumeProductPoller(rt)
-// 	if err == nil {
-// 		t.Fatal("expected an error but did not find receive one")
-// 	}
-// }
+func TestLROResumeWrongPoller(t *testing.T) {
+	// TODO discuss what sort of check we want with the new design to avoid resuming from the wrong poller type
+	op := getLROSOperations(t)
+	resp, err := op.BeginDelete202NoRetry204(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = op.ResumePost200WithPayload(rt)
+	if err == nil {
+		t.Fatal("expected an error but did not find receive one")
+	}
+}
 
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	op := getLROSOperations(t)
@@ -71,7 +72,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -93,7 +94,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -111,7 +112,7 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -134,7 +135,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -156,7 +157,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -179,7 +180,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -201,7 +202,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -224,7 +225,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -246,7 +247,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -268,7 +269,7 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -290,7 +291,7 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -311,7 +312,7 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -332,7 +333,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -358,7 +359,7 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -380,706 +381,665 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
 	if err != nil {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res, 200)
 }
 
-// func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPostAsyncNoRetrySucceeded(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPostAsyncNoRetrySucceededPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPostAsyncNoRetrySucceeded(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePostAsyncNoRetrySucceeded(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	})
+}
 
-// func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
-// 	t.Skip("CloudError unmarshalling fails")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPostAsyncRetryFailed(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPostAsyncRetryFailedPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
+	t.Skip("CloudError unmarshalling fails")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPostAsyncRetryFailed(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePostAsyncRetryFailed(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
+	}
+}
 
-// func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPostAsyncRetrySucceeded(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPostAsyncRetrySucceededPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPostAsyncRetrySucceeded(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePostAsyncRetrySucceeded(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	})
+}
 
-// func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
-// 	t.Skip("CloudError unmarshalling failed")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPostAsyncRetrycanceled(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPostAsyncRetrycanceledPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
+	t.Skip("CloudError unmarshalling failed")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPostAsyncRetrycanceled(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePostAsyncRetrycanceled(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
+	}
+}
 
-// func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPostDoubleHeadersFinalAzureHeaderGet(context.Background())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPostDoubleHeadersFinalAzureHeaderGetPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
+	t.Skip("need to fix poller implementation, must not do a final get on location in this case")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGet(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePostDoubleHeadersFinalAzureHeaderGet(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	})
+}
 
-// func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPostDoubleHeadersFinalAzureHeaderGetDefault(context.Background())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPostDoubleHeadersFinalAzureHeaderGetDefaultPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGetDefault(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePostDoubleHeadersFinalAzureHeaderGetDefault(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	})
+}
 
-// func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPostDoubleHeadersFinalLocationGet(context.Background())
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPostDoubleHeadersFinalLocationGetPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPostDoubleHeadersFinalLocationGet(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePostDoubleHeadersFinalLocationGet(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	})
+}
 
-// func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
-// 	t.Skip("missing error info returned for error")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPut200Acceptedcanceled200(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPut200Acceptedcanceled200Poller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
+	t.Skip("missing error info returned for error")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPut200Acceptedcanceled200(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePut200Acceptedcanceled200(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err == nil {
+		t.Fatal("Expected an error but did not receive one")
+	}
+}
 
-// func TestLROBeginPut200Succeeded(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPut200Succeeded(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	_, err = poller.ResumeToken()
-// 	if err == nil {
-// 		t.Fatal("expected an error but did not receive one")
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPut200Succeeded(t *testing.T) {
+	t.Skip("problem with poller code")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPut200Succeeded(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("Expected an error but did not receive one")
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	})
+}
 
-// func TestLROBeginPut200SucceededNoState(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPut200SucceededNoState(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	_, err = poller.ResumeToken()
-// 	if err == nil {
-// 		t.Fatal("expected an error but did not receive one")
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPut200SucceededNoState(t *testing.T) {
+	t.Skip("problem with the poller")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPut200SucceededNoState(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	_, err = poller.ResumeToken()
+	if err == nil {
+		t.Fatal("Expected an error but did not receive one")
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	})
+}
 
-// func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPut200UpdatingSucceeded204(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPut200UpdatingSucceeded204Poller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+// TODO check if this test should actually be returning a 200 or a 204
+func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPut200UpdatingSucceeded204(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePut200UpdatingSucceeded204(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPut201CreatingFailed200(t *testing.T) {
-// 	t.Skip("missing error info message returned for error")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPut201CreatingFailed200(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPut201CreatingFailed200Poller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPut201CreatingFailed200(t *testing.T) {
+	t.Skip("missing error info message returned for error")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPut201CreatingFailed200(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePut201CreatingFailed200(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
+	}
+}
 
-// func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPut201CreatingSucceeded200(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPut201CreatingSucceeded200Poller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePut201CreatingSucceeded200(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPut202Retry200(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPut202Retry200(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPut202Retry200Poller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPut202Retry200(t *testing.T) {
+	t.Skip("problem with the poller")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPut202Retry200(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePut202Retry200(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutAsyncNoHeaderInRetryPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutAsyncNoHeaderInRetry(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutAsyncNoRetrySucceededPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutAsyncNoRetrySucceeded(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
-// 	t.Skip("CloudError unmarshalling failed")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutAsyncNoRetrycanceled(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutAsyncNoRetrycanceledPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
+	t.Skip("CloudError unmarshalling failed")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutAsyncNoRetrycanceled(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutAsyncNoRetrycanceled(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
+	}
+}
 
-// func TestLROBeginPutAsyncNonResource(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutAsyncNonResource(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutAsyncNonResourcePoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutAsyncNonResource(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutAsyncNonResource(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutAsyncNonResource(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Sku, &lrogroup.Sku{
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("sku"),
+	})
+}
 
-// func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
-// 	t.Skip("CloudError unmarshalling failed")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutAsyncRetryFailed(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutAsyncRetryFailedPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
+	t.Skip("CloudError unmarshalling failed")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutAsyncRetryFailed(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutAsyncRetryFailed(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err == nil {
+		t.Fatal("expected an error but did not receive one")
+	}
+}
 
-// func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutAsyncRetrySucceeded(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutAsyncRetrySucceededPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutAsyncRetrySucceeded(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutAsyncRetrySucceeded(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPutAsyncSubResource(t *testing.T) {
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutAsyncSubResource(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutAsyncSubResourcePoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutAsyncSubResource(t *testing.T) {
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutAsyncSubResource(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutAsyncSubResource(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.SubProduct, &lrogroup.SubProduct{
+		SubResource: lrogroup.SubResource{
+			ID: to.StringPtr("100"),
+		},
+		Properties: &lrogroup.SubProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
-// 	t.Skip("The test needs to fix some underlying problems with the poller returning an error")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutNoHeaderInRetry(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutNoHeaderInRetryPoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
+	t.Skip("problem with the poller")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutNoHeaderInRetry(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutNoHeaderInRetry(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
+		Resource: lrogroup.Resource{
+			ID: to.StringPtr("100"),
+		},
+		Properties: &lrogroup.ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
 
-// func TestLROBeginPutNonResource(t *testing.T) {
-// 	t.Skip("The test needs to fix some underlying problems with the poller returning an error")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutNonResource(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutNonResourcePoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutNonResource(t *testing.T) {
+	t.Skip("The test needs to fix some underlying problems with the poller returning an error")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutNonResource(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutNonResource(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.Sku, &lrogroup.Sku{
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("sku"),
+	})
+}
 
-// func TestLROBeginPutSubResource(t *testing.T) {
-// 	t.Skip("The test needs to fix some underlying problems with the poller returning an error")
-// 	op := getLROSOperations(t)
-// 	poller, err := op.BeginPutSubResource(context.Background(), nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	rt, err := poller.ResumeToken()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	poller, err = op.ResumeLrOSPutSubResourcePoller(rt)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	for poller.Poll(context.Background()) {
-// 		time.Sleep(200 * time.Millisecond)
-// 	}
-// 	resp, err := poller.Response()
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
-// 	resp, err = poller.Wait(context.Background(), time.Duration(1)*time.Second)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
-// }
+func TestLROBeginPutSubResource(t *testing.T) {
+	t.Skip("The test needs to fix some underlying problems with the poller returning an error")
+	op := getLROSOperations(t)
+	resp, err := op.BeginPutSubResource(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller := resp.Poller
+	rt, err := poller.ResumeToken()
+	if err != nil {
+		t.Fatal(err)
+	}
+	poller, err = op.ResumePutSubResource(rt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Millisecond)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers.VerifyStatusCode(t, res.RawResponse, 200)
+	helpers.DeepEqualOrFatal(t, res.SubProduct, &lrogroup.SubProduct{
+		SubResource: lrogroup.SubResource{
+			ID: to.StringPtr("100"),
+		},
+		Properties: &lrogroup.SubProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	})
+}
