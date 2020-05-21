@@ -34,7 +34,7 @@ func (e CloudError) Error() string {
 // HTTPResponse contains the HTTP response from the call to the service endpoint
 type HTTPResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
 
 	// Poller contains an initialized poller
 	Poller HTTPPoller
