@@ -388,7 +388,7 @@ if (modelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAddit
 
         // NotDone returns true if the page enumeration should be started or is not yet complete.
         func (page @Model.Name) NotDone() bool {
-        return !page.@(modelPageType.ResultFieldName).IsEmpty()
+        return page.@(modelPageType.ResultFieldName).@(modelPageType.NextLink) != nil || !page.@(modelPageType.ResultFieldName).IsEmpty()
         }
 
         // Response returns the raw server response from the last page request.
