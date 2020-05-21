@@ -19,7 +19,7 @@ import (
 type HTTPPoller interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*HTTPResponse, error)
+	FinalResponse() *http.Response
 	ResumeToken() (string, error)
 }
 
@@ -43,33 +43,8 @@ func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return nil, p.pt.pollingError()
 }
 
-func (p *httpPoller) FinalResponse(ctx context.Context) (*HTTPResponse, error) {
-	if p.pt.finalGetURL() == "" {
-		// we can end up in this situation if the async operation returns a 200
-		// with no polling URLs.  in that case return the response which should
-		// contain the JSON payload (only do this for successful terminal cases).
-		if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-			result, err := p.handleResponse(lr)
-			if err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-		return nil, errors.New("missing URL for retrieving result")
-	}
-	u, err := url.Parse(p.pt.finalGetURL())
-	if err != nil {
-		return nil, err
-	}
-	req := azcore.NewRequest(http.MethodGet, *u)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := p.pipeline.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return p.handleResponse(resp)
+func (p *httpPoller) FinalResponse() *http.Response {
+	return p.pt.latestResponse().Response
 }
 
 // ResumeToken generates the string token that can be used with the ResumeHTTPPoller method

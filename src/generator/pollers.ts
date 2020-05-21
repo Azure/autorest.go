@@ -34,33 +34,61 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const pollerInterface = poller.name;
     const pollerName = camelCase(poller.name);
     let responseType = 'HTTPResponse';
+    // HTTP Pollers do not need to perform the final get request since they do not return a model
+    let finalResponseDeclaration = 'FinalResponse() *http.Response';
+    let finalResponse = `FinalResponse() *http.Response {
+      return p.pt.latestResponse().Response;
+    }`;
     let statusNoContentCheck = '';
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
-      unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
-      statusNoContentCheck = `
-      if (resp.HasStatusCode(http.StatusNoContent)) {
-    return &result, nil
-  }`;
-    }
-    if (isSchemaResponse(schemaResponse)) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
       rawResponse = '.RawResponse';
+      unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
+      // if there is a schema but we receive a status no content then simple return the raw response and no error since
+      // status no content is an acceptable terminal state
+      statusNoContentCheck = `
+      if (resp.HasStatusCode(http.StatusNoContent)) {
+        return &result, nil
+      }`;
+      // for operations that do return a model add a final response method that handles the final get URL scenario
+      finalResponseDeclaration = `FinalResponse(ctx context.Context) (*${responseType}, error)`;
+      finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {
+        if p.pt.finalGetURL() == "" {
+          // we can end up in this situation if the async operation returns a 200
+          // with no polling URLs.  in that case return the response which should
+          // contain the JSON payload (only do this for successful terminal cases).
+          if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
+            result, err := p.handleResponse(lr)
+            if err != nil {
+              return nil, err
+            }
+            return result, nil
+          }
+          return nil, errors.New("missing URL for retrieving result")
+        }
+        u, err := url.Parse(p.pt.finalGetURL())
+        if err != nil {
+          return nil, err
+        }
+        req := azcore.NewRequest(http.MethodGet, *u)
+        if err != nil {
+          return nil, err
+        }
+        resp, err := p.pipeline.Do(ctx, req)
+        if err != nil {
+          return nil, err
+        }
+        return p.handleResponse(resp)
+      }`;
     }
-    const responseHandler = `func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
-  result := ${responseType}{RawResponse: resp.Response}${statusNoContentCheck}
-  if !resp.HasStatusCode(pollingCodes[:]...) {
-    return nil, p.pt.handleError(resp)
-  }
-	return &result, ${unmarshalResponse}
-}`;
     bodyText += `// ${pollerInterface} provides polling facilities until the operation completes
 type ${pollerInterface} interface {
 	Done() bool
 	Poll(ctx context.Context) (*http.Response, error)
-	FinalResponse(ctx context.Context) (*${responseType}, error)
+	${finalResponseDeclaration}
 	ResumeToken() (string, error)
 }
 
@@ -84,34 +112,7 @@ func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {
   return nil, p.pt.pollingError()
 }
 
-func (p *${pollerName}) FinalResponse(ctx context.Context) (*${responseType}, error) {
-  if p.pt.finalGetURL() == "" {
-    // we can end up in this situation if the async operation returns a 200
-    // with no polling URLs.  in that case return the response which should
-    // contain the JSON payload (only do this for successful terminal cases).
-    if lr := p.pt.latestResponse(); lr != nil && p.pt.hasSucceeded() {
-      result, err := p.handleResponse(lr)
-      if err != nil {
-        return nil, err
-      }
-      return result, nil
-    }
-    return nil, errors.New("missing URL for retrieving result")
-  }
-  u, err := url.Parse(p.pt.finalGetURL())
-  if err != nil {
-    return nil, err
-  }
-  req := azcore.NewRequest(http.MethodGet, *u)
-  if err != nil {
-    return nil, err
-  }
-  resp, err := p.pipeline.Do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return p.handleResponse(resp)
-}
+func (p *${pollerName}) ${finalResponse}
 
 // ResumeToken generates the string token that can be used with the Resume${pollerInterface} method
 // on the client to create a new poller from the data held in the current poller type
@@ -141,7 +142,13 @@ func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequ
     return p.FinalResponse(ctx)
 }
 
-${responseHandler}
+func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {
+  result := ${responseType}{RawResponse: resp.Response}${statusNoContentCheck}
+  if !resp.HasStatusCode(pollingCodes[:]...) {
+    return nil, p.pt.handleError(resp)
+  }
+	return &result, ${unmarshalResponse}
+}
 
 `;
   }
