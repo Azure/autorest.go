@@ -704,7 +704,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 
 func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := getLROSOperations(t)
-	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), nil)
+	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &lrogroup.LrOSPut201CreatingSucceeded200Options{Product: &lrogroup.Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -736,7 +736,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 func TestLROBeginPut202Retry200(t *testing.T) {
 	t.Skip("problem with the poller")
 	op := getLROSOperations(t)
-	resp, err := op.BeginPut202Retry200(context.Background(), nil)
+	resp, err := op.BeginPut202Retry200(context.Background(), &lrogroup.LrOSPut202Retry200Options{Product: &lrogroup.Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -767,7 +767,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	op := getLROSOperations(t)
-	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), nil)
+	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &lrogroup.LrOSPutAsyncNoHeaderInRetryOptions{Product: &lrogroup.Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -798,7 +798,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	op := getLROSOperations(t)
-	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), nil)
+	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &lrogroup.LrOSPutAsyncNoRetrySucceededOptions{Product: &lrogroup.Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -843,10 +843,19 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
+	if res != nil {
+		t.Fatal("expected a nil response with the error")
+	}
+	// var cloudErr lrogroup.CloudError
+	// if !errors.As(err, &cloudErr) {
+	// 	t.Fatal("expected a CloudError but did not receive one")
+	// } else {
+	// 	helpers.DeepEqualOrFatal(t, cloudErr, lrogroup.CloudError{})
+	// }
 }
 
 func TestLROBeginPutAsyncNonResource(t *testing.T) {
