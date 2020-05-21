@@ -72,7 +72,7 @@ func (client *lroRetrysOperations) BeginDelete202Retry200(ctx context.Context) (
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -140,7 +140,7 @@ func (client *lroRetrysOperations) BeginDeleteAsyncRelativeRetrySucceeded(ctx co
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -277,7 +277,7 @@ func (client *lroRetrysOperations) BeginPost202Retry200(ctx context.Context, lro
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -348,7 +348,7 @@ func (client *lroRetrysOperations) BeginPostAsyncRelativeRetrySucceeded(ctx cont
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil

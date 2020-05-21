@@ -410,7 +410,7 @@ function createResponseType(codeModel: CodeModel, group: OperationGroup, op: Ope
       const description = `${name} contains the HTTP response from the call to the service endpoint`;
       const object = new ObjectSchema(name, description);
       object.language.go = object.language.default;
-      const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error)', 'TODO'));
+      const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received', newObject('func(ctx context.Context, frequency time.Duration) (*http.Response, error)', 'TODO'));
       const getPoller = newProperty('Poller', 'Poller contains an initialized poller', newObject('HTTPPoller', 'TODO'));
       pollUntilDone.schema.language.go!.lroPointerException = true;
       getPoller.schema.language.go!.lroPointerException = true;

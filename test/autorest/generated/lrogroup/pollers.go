@@ -60,7 +60,7 @@ func (p *httpPoller) ResumeToken() (string, error) {
 	return string(js), nil
 }
 
-func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.Duration) (*HTTPResponse, error) {
+func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.Duration) (*http.Response, error) {
 	for !p.Done() {
 		resp, err := p.Poll(ctx)
 		if err != nil {
@@ -72,7 +72,7 @@ func httpPollerPollUntilDone(ctx context.Context, p HTTPPoller, frequency time.D
 			time.Sleep(frequency)
 		}
 	}
-	return p.FinalResponse(ctx)
+	return p.FinalResponse(), nil
 }
 
 func (p *httpPoller) handleResponse(resp *azcore.Response) (*HTTPResponse, error) {

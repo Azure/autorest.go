@@ -111,11 +111,11 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
+	helpers.VerifyStatusCode(t, res, 204)
 }
 
 func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
@@ -134,11 +134,11 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 204)
+	helpers.VerifyStatusCode(t, res, 204)
 }
 
 func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
@@ -156,11 +156,11 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
+	helpers.VerifyStatusCode(t, res, 200)
 }
 
 func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
@@ -179,11 +179,11 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
+	helpers.VerifyStatusCode(t, res, 200)
 }
 
 func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
@@ -201,11 +201,11 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
+	helpers.VerifyStatusCode(t, res, 200)
 }
 
 func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
@@ -224,11 +224,11 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	helpers.VerifyStatusCode(t, res, 200)
 }
 
 func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
@@ -246,11 +246,11 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 202)
+	helpers.VerifyStatusCode(t, res, 204)
 }
 
 func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
@@ -380,11 +380,11 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
+	res, err := resp.PollUntilDone(context.Background(), time.Duration(1)*time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	helpers.VerifyStatusCode(t, resp.RawResponse, 200)
+	helpers.VerifyStatusCode(t, res, 200)
 }
 
 // func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {

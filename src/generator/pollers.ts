@@ -36,15 +36,19 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     let responseType = 'HTTPResponse';
     // HTTP Pollers do not need to perform the final get request since they do not return a model
     let finalResponseDeclaration = 'FinalResponse() *http.Response';
-    let finalResponse = `FinalResponse() *http.Response {
+    let finalResponse = `${finalResponseDeclaration} {
       return p.pt.latestResponse().Response;
     }`;
-    let statusNoContentCheck = '';
+    let pollUntilDoneResponse = '(*http.Response, error)';
+    let pollUntilDoneReturn = 'p.FinalResponse(), nil';
+    let statusNoContentCheck = ''; // used to know whether to check for a StatusNoContent in response handler
     let rawResponse = ''; // used to access the raw response field on response envelopes
     const schemaResponse = <SchemaResponse>poller.op.responses![0];
     let unmarshalResponse = 'nil';
     if (isSchemaResponse(schemaResponse) && schemaResponse.schema.language.go!.responseType.value != undefined) {
       responseType = schemaResponse.schema.language.go!.responseType.name;
+      pollUntilDoneResponse = `(*${responseType}, error)`;
+      pollUntilDoneReturn = 'p.FinalResponse(ctx)';
       rawResponse = '.RawResponse';
       unmarshalResponse = `resp.UnmarshalAsJSON(&result.${schemaResponse.schema.language.go!.responseType.value})`;
       // if there is a schema but we receive a status no content then simple return the raw response and no error since
@@ -127,7 +131,7 @@ func (p *${pollerName}) ResumeToken() (string, error) {
   return string(js), nil
 }
 
-func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequency time.Duration) (*${responseType}, error) {
+func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequency time.Duration) ${pollUntilDoneResponse} {
     for !p.Done() {
         resp, err := p.Poll(ctx)
         if err != nil {
@@ -139,7 +143,7 @@ func ${pollerName}PollUntilDone(ctx context.Context, p ${pollerInterface}, frequ
             time.Sleep(frequency)
         }
     }
-    return p.FinalResponse(ctx)
+    return ${pollUntilDoneReturn}
 }
 
 func (p *${pollerName}) handleResponse(resp *azcore.Response) (*${responseType}, error) {

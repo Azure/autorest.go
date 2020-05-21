@@ -338,7 +338,7 @@ func (client *lrOSOperations) BeginDelete204Succeeded(ctx context.Context) (*HTT
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -407,7 +407,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoHeaderInRetry(ctx context.Contex
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -475,7 +475,7 @@ func (client *lrOSOperations) BeginDeleteAsyncNoRetrySucceeded(ctx context.Conte
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -543,7 +543,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetryFailed(ctx context.Context) (
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -611,7 +611,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrySucceeded(ctx context.Context
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -679,7 +679,7 @@ func (client *lrOSOperations) BeginDeleteAsyncRetrycanceled(ctx context.Context)
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -747,7 +747,7 @@ func (client *lrOSOperations) BeginDeleteNoHeaderInRetry(ctx context.Context) (*
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -1163,7 +1163,7 @@ func (client *lrOSOperations) BeginPost202Retry200(ctx context.Context, lrOSPost
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -1306,7 +1306,7 @@ func (client *lrOSOperations) BeginPostAsyncRetryFailed(ctx context.Context, lrO
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -1449,7 +1449,7 @@ func (client *lrOSOperations) BeginPostAsyncRetrycanceled(ctx context.Context, l
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil

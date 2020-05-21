@@ -60,7 +60,7 @@ func (client *lrOSCustomHeaderOperations) BeginPost202Retry200(ctx context.Conte
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
@@ -131,7 +131,7 @@ func (client *lrOSCustomHeaderOperations) BeginPostAsyncRetrySucceeded(ctx conte
 		pt:       pt,
 		pipeline: client.p,
 	}
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*HTTPResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
 		return httpPollerPollUntilDone(ctx, result.Poller, frequency)
 	}
 	return result, nil
