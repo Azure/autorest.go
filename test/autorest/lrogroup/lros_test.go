@@ -40,7 +40,6 @@ func httpClientWithCookieJar() azcore.Transport {
 }
 
 func TestLROResumeWrongPoller(t *testing.T) {
-	// TODO discuss what sort of check we want with the new design to avoid resuming from the wrong poller type
 	op := getLROSOperations(t)
 	resp, err := op.BeginDelete202NoRetry204(context.Background())
 	if err != nil {
