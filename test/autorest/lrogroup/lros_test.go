@@ -51,9 +51,12 @@ func TestLROResumeWrongPoller(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = op.ResumePost200WithPayload(rt)
+	diffPoller, err := op.ResumePost200WithPayload(rt)
 	if err == nil {
 		t.Fatal("expected an error but did not find receive one")
+	}
+	if diffPoller != nil {
+		t.Fatal("expected a nil poller from the resume operation")
 	}
 }
 
