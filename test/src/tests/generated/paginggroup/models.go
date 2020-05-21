@@ -8,11 +8,12 @@ package paginggroup
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
 	"github.com/Azure/go-autorest/tracing"
-	"net/http"
 )
 
 // The package's fully qualified name.
@@ -174,7 +175,7 @@ func (page *OdataProductResultPage) Next() error {
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.
 func (page OdataProductResultPage) NotDone() bool {
-	return !page.opr.IsEmpty()
+	return page.opr.OdataNextLink != nil || !page.opr.IsEmpty()
 }
 
 // Response returns the raw server response from the last page request.
@@ -393,7 +394,7 @@ func (page *ProductResultPage) Next() error {
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.
 func (page ProductResultPage) NotDone() bool {
-	return !page.pr.IsEmpty()
+	return page.pr.NextLink != nil || !page.pr.IsEmpty()
 }
 
 // Response returns the raw server response from the last page request.
@@ -537,7 +538,7 @@ func (page *ProductResultValuePage) Next() error {
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.
 func (page ProductResultValuePage) NotDone() bool {
-	return !page.prv.IsEmpty()
+	return page.prv.NextLink != nil || !page.prv.IsEmpty()
 }
 
 // Response returns the raw server response from the last page request.
