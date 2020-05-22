@@ -109,7 +109,6 @@ func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
 func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
-	// this will override what is in the FinalGetURI
 	err := p.pt.setFinalState()
 	if err != nil {
 		return nil, err
@@ -215,7 +214,6 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
-	// this will override what is in the FinalGetURI
 	err := p.pt.setFinalState()
 	if err != nil {
 		return nil, err
@@ -321,7 +319,6 @@ func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
 func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
 	// checking if there was a FinalStateVia configuration to re-route the final GET
 	// request to the value specified in the FinalStateVia property on the poller
-	// this will override what is in the FinalGetURI
 	err := p.pt.setFinalState()
 	if err != nil {
 		return nil, err

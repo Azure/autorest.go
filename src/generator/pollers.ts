@@ -56,7 +56,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
       finalResponse = `FinalResponse(ctx context.Context) (*${responseType}, error) {
         // checking if there was a FinalStateVia configuration to re-route the final GET
         // request to the value specified in the FinalStateVia property on the poller
-        // this will override what is in the FinalGetURI
         err := p.pt.setFinalState()
         if err != nil {
           return nil, err
