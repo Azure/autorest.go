@@ -130,7 +130,7 @@ type pollingTrackerBase struct {
 	FinalStateVia string `json:"finalStateVia"`
 
 	// the original request URL of the initial request for the polling operation
-	OriginalURI string `json: "originalURI"`
+	OriginalURI string `json:"originalURI"`
 
 	// used to hold an error object returned from the service
 	Err error `json:"error,omitempty"`
