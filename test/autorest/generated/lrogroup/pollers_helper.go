@@ -87,6 +87,12 @@ type pollingTracker interface {
 
 	// converts an *azcore.Response to an error
 	handleError(resp *azcore.Response) error
+
+	// returns the desired configuration for the final GET URI that overrides the value set in the finalGetURL
+	finalStateVia() string
+
+	// sets the FinalGetURI to the value pointed to in FinalStateVia
+	setFinalState() error
 }
 
 type methodErrorHandler func(resp *azcore.Response) error
@@ -118,6 +124,13 @@ type pollingTrackerBase struct {
 
 	// the URL to GET for the final result
 	FinalGetURI string `json:"resultURI"`
+
+	// stores the name of the header that the final get should be performed on,
+	//can be empty which will go to default behavior
+	FinalStateVia string `json:"finalStateVia"`
+
+	// the original request URL of the initial request for the polling operation
+	OriginalURI string `json: "originalURI"`
 
 	// used to hold an error object returned from the service
 	Err error `json:"error,omitempty"`
@@ -347,6 +360,32 @@ func (pt *pollingTrackerBase) initPollingMethod() error {
 
 func (pt *pollingTrackerBase) handleError(resp *azcore.Response) error {
 	return pt.errorHandler(resp)
+}
+
+func (pt *pollingTrackerBase) finalStateVia() string {
+	return pt.FinalStateVia
+}
+
+func (pt *pollingTrackerBase) setFinalState() error {
+	if len(pt.FinalStateVia) == 0 {
+		return nil
+	}
+	if pt.FinalStateVia == "azure-async-operation" {
+		ao, err := getURLFromAsyncOpHeader(pt.latestResponse())
+		if err != nil {
+			return err
+		}
+		pt.FinalGetURI = ao
+	} else if pt.FinalStateVia == "location" {
+		lh, err := getURLFromLocationHeader(pt.latestResponse())
+		if err != nil {
+			return err
+		}
+		pt.FinalGetURI = lh
+	} else if pt.FinalStateVia == "original-uri" {
+		pt.FinalGetURI = pt.OriginalURI
+	}
+	return nil
 }
 
 // DELETE
@@ -619,17 +658,17 @@ func (pt pollingTrackerPut) provisioningStateApplicable() bool {
 }
 
 // creates a polling tracker based on the verb of the original request
-func createPollingTracker(pollerType string, resp *azcore.Response, errorHandler methodErrorHandler) (pollingTracker, error) {
+func createPollingTracker(pollerType string, finalState string, resp *azcore.Response, errorHandler methodErrorHandler) (pollingTracker, error) {
 	var pt pollingTracker
 	switch strings.ToUpper(resp.Request.Method) {
 	case http.MethodDelete:
-		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerDelete{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, FinalStateVia: finalState, OriginalURI: resp.Request.URL.String(), resp: resp, errorHandler: errorHandler}}
 	case http.MethodPatch:
-		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerPatch{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, FinalStateVia: finalState, OriginalURI: resp.Request.URL.String(), resp: resp, errorHandler: errorHandler}}
 	case http.MethodPost:
-		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerPost{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, FinalStateVia: finalState, OriginalURI: resp.Request.URL.String(), resp: resp, errorHandler: errorHandler}}
 	case http.MethodPut:
-		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, resp: resp, errorHandler: errorHandler}}
+		pt = &pollingTrackerPut{pollingTrackerBase: pollingTrackerBase{PollerType: pollerType, FinalStateVia: finalState, OriginalURI: resp.Request.URL.String(), resp: resp, errorHandler: errorHandler}}
 	default:
 		return nil, fmt.Errorf("unsupported HTTP method %s", resp.Request.Method)
 	}

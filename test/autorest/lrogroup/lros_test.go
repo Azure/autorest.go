@@ -491,7 +491,6 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 }
 
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
-	t.Skip("need to fix poller implementation, must not do a final get on location in this case")
 	op := getLROSOperations(t)
 	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGet(context.Background())
 	if err != nil {
@@ -513,8 +512,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
 	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
 		Resource: lrogroup.Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
+			ID: to.StringPtr("100"),
 		},
 	})
 }
@@ -567,12 +565,7 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 		t.Fatal(err)
 	}
 	helpers.VerifyStatusCode(t, res.RawResponse, 200)
-	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{
-		Resource: lrogroup.Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
-	})
+	helpers.DeepEqualOrFatal(t, res.Product, &lrogroup.Product{})
 }
 
 func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {

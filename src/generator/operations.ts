@@ -295,7 +295,13 @@ function generateOperation(clientName: string, op: Operation, imports: ImportMan
       text += `\t\treturn nil, err\n`;
       text += `\t}\n`;
     }
-    text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", resp, client.${info.protocolNaming.errorMethod})\n`;
+    // LRO operation might have a special configuration set in x-ms-long-running-operation-options
+    // which indicates a specific url to perform the final Get operation on
+    let finalState = '';
+    if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
+      finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
+    }
+    text += `\tpt, err := createPollingTracker("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
     text += `\tif err != nil {\n`;
     text += `\t\treturn nil, err\n`;
     text += `\t}\n`;
