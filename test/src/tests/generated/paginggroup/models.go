@@ -174,7 +174,7 @@ func (page *OdataProductResultPage) Next() error {
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.
 func (page OdataProductResultPage) NotDone() bool {
-	return page.opr.OdataNextLink != nil && len(*page.opr.OdataNextLink) != 0
+	return (page.opr.OdataNextLink != nil && len(*page.opr.OdataNextLink) != 0)  || !page.opr.IsEmpty()
 }
 
 // Response returns the raw server response from the last page request.
@@ -393,7 +393,7 @@ func (page *ProductResultPage) Next() error {
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.
 func (page ProductResultPage) NotDone() bool {
-	return page.pr.NextLink != nil && len(*page.pr.NextLink) == 0
+	return (page.pr.NextLink != nil && len(*page.pr.NextLink) == 0) || !page.pr.IsEmpty()
 }
 
 // Response returns the raw server response from the last page request.
@@ -537,7 +537,7 @@ func (page *ProductResultValuePage) Next() error {
 
 // NotDone returns true if the page enumeration should be started or is not yet complete.
 func (page ProductResultValuePage) NotDone() bool {
-	return page.prv.NextLink != nil && len(*page.prv.NextLink) != 0
+	return (page.prv.NextLink != nil && len(*page.prv.NextLink) != 0) || !page.prv.IsEmpty()
 }
 
 // Response returns the raw server response from the last page request.
