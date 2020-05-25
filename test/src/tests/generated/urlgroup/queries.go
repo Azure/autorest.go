@@ -1352,7 +1352,7 @@ func (client QueriesClient) FloatScientificNegative(ctx context.Context) (result
 // FloatScientificNegativePreparer prepares the FloatScientificNegative request.
 func (client QueriesClient) FloatScientificNegativePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"floatQuery": autorest.Encode("query", -1.034E-20),
+		"floatQuery": autorest.Encode("query", -1.034e-20),
 	}
 
 	preparer := autorest.CreatePreparer(
@@ -1417,7 +1417,7 @@ func (client QueriesClient) FloatScientificPositive(ctx context.Context) (result
 // FloatScientificPositivePreparer prepares the FloatScientificPositive request.
 func (client QueriesClient) FloatScientificPositivePreparer(ctx context.Context) (*http.Request, error) {
 	queryParameters := map[string]interface{}{
-		"floatQuery": autorest.Encode("query", 1.034E+20),
+		"floatQuery": autorest.Encode("query", 1.034e+20),
 	}
 
 	preparer := autorest.CreatePreparer(
