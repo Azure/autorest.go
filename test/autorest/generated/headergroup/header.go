@@ -119,7 +119,7 @@ func (client *headerOperations) customRequestIdHandleResponse(resp *azcore.Respo
 
 // customRequestIdHandleError handles the CustomRequestID error response.
 func (client *headerOperations) customRequestIdHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -166,7 +166,7 @@ func (client *headerOperations) paramBoolHandleResponse(resp *azcore.Response) (
 
 // paramBoolHandleError handles the ParamBool error response.
 func (client *headerOperations) paramBoolHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -213,7 +213,7 @@ func (client *headerOperations) paramByteHandleResponse(resp *azcore.Response) (
 
 // paramByteHandleError handles the ParamByte error response.
 func (client *headerOperations) paramByteHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -260,7 +260,7 @@ func (client *headerOperations) paramDateHandleResponse(resp *azcore.Response) (
 
 // paramDateHandleError handles the ParamDate error response.
 func (client *headerOperations) paramDateHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -307,7 +307,7 @@ func (client *headerOperations) paramDatetimeHandleResponse(resp *azcore.Respons
 
 // paramDatetimeHandleError handles the ParamDatetime error response.
 func (client *headerOperations) paramDatetimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -356,7 +356,7 @@ func (client *headerOperations) paramDatetimeRfc1123HandleResponse(resp *azcore.
 
 // paramDatetimeRfc1123HandleError handles the ParamDatetimeRFC1123 error response.
 func (client *headerOperations) paramDatetimeRfc1123HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -403,7 +403,7 @@ func (client *headerOperations) paramDoubleHandleResponse(resp *azcore.Response)
 
 // paramDoubleHandleError handles the ParamDouble error response.
 func (client *headerOperations) paramDoubleHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -450,7 +450,7 @@ func (client *headerOperations) paramDurationHandleResponse(resp *azcore.Respons
 
 // paramDurationHandleError handles the ParamDuration error response.
 func (client *headerOperations) paramDurationHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -499,7 +499,7 @@ func (client *headerOperations) paramEnumHandleResponse(resp *azcore.Response) (
 
 // paramEnumHandleError handles the ParamEnum error response.
 func (client *headerOperations) paramEnumHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -545,7 +545,7 @@ func (client *headerOperations) paramExistingKeyHandleResponse(resp *azcore.Resp
 
 // paramExistingKeyHandleError handles the ParamExistingKey error response.
 func (client *headerOperations) paramExistingKeyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -592,7 +592,7 @@ func (client *headerOperations) paramFloatHandleResponse(resp *azcore.Response) 
 
 // paramFloatHandleError handles the ParamFloat error response.
 func (client *headerOperations) paramFloatHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -639,7 +639,7 @@ func (client *headerOperations) paramIntegerHandleResponse(resp *azcore.Response
 
 // paramIntegerHandleError handles the ParamInteger error response.
 func (client *headerOperations) paramIntegerHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -686,7 +686,7 @@ func (client *headerOperations) paramLongHandleResponse(resp *azcore.Response) (
 
 // paramLongHandleError handles the ParamLong error response.
 func (client *headerOperations) paramLongHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -732,7 +732,7 @@ func (client *headerOperations) paramProtectedKeyHandleResponse(resp *azcore.Res
 
 // paramProtectedKeyHandleError handles the ParamProtectedKey error response.
 func (client *headerOperations) paramProtectedKeyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -781,7 +781,7 @@ func (client *headerOperations) paramStringHandleResponse(resp *azcore.Response)
 
 // paramStringHandleError handles the ParamString error response.
 func (client *headerOperations) paramStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -835,7 +835,7 @@ func (client *headerOperations) responseBoolHandleResponse(resp *azcore.Response
 
 // responseBoolHandleError handles the ResponseBool error response.
 func (client *headerOperations) responseBoolHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -889,7 +889,7 @@ func (client *headerOperations) responseByteHandleResponse(resp *azcore.Response
 
 // responseByteHandleError handles the ResponseByte error response.
 func (client *headerOperations) responseByteHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -943,7 +943,7 @@ func (client *headerOperations) responseDateHandleResponse(resp *azcore.Response
 
 // responseDateHandleError handles the ResponseDate error response.
 func (client *headerOperations) responseDateHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -997,7 +997,7 @@ func (client *headerOperations) responseDatetimeHandleResponse(resp *azcore.Resp
 
 // responseDatetimeHandleError handles the ResponseDatetime error response.
 func (client *headerOperations) responseDatetimeHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1051,7 +1051,7 @@ func (client *headerOperations) responseDatetimeRfc1123HandleResponse(resp *azco
 
 // responseDatetimeRfc1123HandleError handles the ResponseDatetimeRFC1123 error response.
 func (client *headerOperations) responseDatetimeRfc1123HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1105,7 +1105,7 @@ func (client *headerOperations) responseDoubleHandleResponse(resp *azcore.Respon
 
 // responseDoubleHandleError handles the ResponseDouble error response.
 func (client *headerOperations) responseDoubleHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1159,7 +1159,7 @@ func (client *headerOperations) responseDurationHandleResponse(resp *azcore.Resp
 
 // responseDurationHandleError handles the ResponseDuration error response.
 func (client *headerOperations) responseDurationHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1209,7 +1209,7 @@ func (client *headerOperations) responseEnumHandleResponse(resp *azcore.Response
 
 // responseEnumHandleError handles the ResponseEnum error response.
 func (client *headerOperations) responseEnumHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1258,7 +1258,7 @@ func (client *headerOperations) responseExistingKeyHandleResponse(resp *azcore.R
 
 // responseExistingKeyHandleError handles the ResponseExistingKey error response.
 func (client *headerOperations) responseExistingKeyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1313,7 +1313,7 @@ func (client *headerOperations) responseFloatHandleResponse(resp *azcore.Respons
 
 // responseFloatHandleError handles the ResponseFloat error response.
 func (client *headerOperations) responseFloatHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1368,7 +1368,7 @@ func (client *headerOperations) responseIntegerHandleResponse(resp *azcore.Respo
 
 // responseIntegerHandleError handles the ResponseInteger error response.
 func (client *headerOperations) responseIntegerHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1422,7 +1422,7 @@ func (client *headerOperations) responseLongHandleResponse(resp *azcore.Response
 
 // responseLongHandleError handles the ResponseLong error response.
 func (client *headerOperations) responseLongHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1471,7 +1471,7 @@ func (client *headerOperations) responseProtectedKeyHandleResponse(resp *azcore.
 
 // responseProtectedKeyHandleError handles the ResponseProtectedKey error response.
 func (client *headerOperations) responseProtectedKeyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -1521,7 +1521,7 @@ func (client *headerOperations) responseStringHandleResponse(resp *azcore.Respon
 
 // responseStringHandleError handles the ResponseString error response.
 func (client *headerOperations) responseStringHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

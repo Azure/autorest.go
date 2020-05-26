@@ -150,7 +150,7 @@ func (client *directoryOperations) createHandleResponse(resp *azcore.Response) (
 
 // createHandleError handles the Create error response.
 func (client *directoryOperations) createHandleError(resp *azcore.Response) error {
-	err := DataLakeStorageError{}
+	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -239,7 +239,7 @@ func (client *directoryOperations) deleteHandleResponse(resp *azcore.Response) (
 
 // deleteHandleError handles the Delete error response.
 func (client *directoryOperations) deleteHandleError(resp *azcore.Response) error {
-	err := DataLakeStorageError{}
+	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -344,7 +344,7 @@ func (client *directoryOperations) getAccessControlHandleResponse(resp *azcore.R
 
 // getAccessControlHandleError handles the GetAccessControl error response.
 func (client *directoryOperations) getAccessControlHandleError(resp *azcore.Response) error {
-	err := DataLakeStorageError{}
+	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -492,7 +492,7 @@ func (client *directoryOperations) renameHandleResponse(resp *azcore.Response) (
 
 // renameHandleError handles the Rename error response.
 func (client *directoryOperations) renameHandleError(resp *azcore.Response) error {
-	err := DataLakeStorageError{}
+	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -594,7 +594,7 @@ func (client *directoryOperations) setAccessControlHandleResponse(resp *azcore.R
 
 // setAccessControlHandleError handles the SetAccessControl error response.
 func (client *directoryOperations) setAccessControlHandleError(resp *azcore.Response) error {
-	err := DataLakeStorageError{}
+	var err DataLakeStorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}

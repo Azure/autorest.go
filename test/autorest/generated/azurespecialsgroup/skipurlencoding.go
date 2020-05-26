@@ -74,7 +74,7 @@ func (client *skipUrlEncodingOperations) getMethodPathValidHandleResponse(resp *
 
 // getMethodPathValidHandleError handles the GetMethodPathValid error response.
 func (client *skipUrlEncodingOperations) getMethodPathValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -124,7 +124,7 @@ func (client *skipUrlEncodingOperations) getMethodQueryNullHandleResponse(resp *
 
 // getMethodQueryNullHandleError handles the GetMethodQueryNull error response.
 func (client *skipUrlEncodingOperations) getMethodQueryNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -172,7 +172,7 @@ func (client *skipUrlEncodingOperations) getMethodQueryValidHandleResponse(resp 
 
 // getMethodQueryValidHandleError handles the GetMethodQueryValid error response.
 func (client *skipUrlEncodingOperations) getMethodQueryValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -220,7 +220,7 @@ func (client *skipUrlEncodingOperations) getPathQueryValidHandleResponse(resp *a
 
 // getPathQueryValidHandleError handles the GetPathQueryValid error response.
 func (client *skipUrlEncodingOperations) getPathQueryValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -266,7 +266,7 @@ func (client *skipUrlEncodingOperations) getPathValidHandleResponse(resp *azcore
 
 // getPathValidHandleError handles the GetPathValid error response.
 func (client *skipUrlEncodingOperations) getPathValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -312,7 +312,7 @@ func (client *skipUrlEncodingOperations) getSwaggerPathValidHandleResponse(resp 
 
 // getSwaggerPathValidHandleError handles the GetSwaggerPathValid error response.
 func (client *skipUrlEncodingOperations) getSwaggerPathValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -360,7 +360,7 @@ func (client *skipUrlEncodingOperations) getSwaggerQueryValidHandleResponse(resp
 
 // getSwaggerQueryValidHandleError handles the GetSwaggerQueryValid error response.
 func (client *skipUrlEncodingOperations) getSwaggerQueryValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

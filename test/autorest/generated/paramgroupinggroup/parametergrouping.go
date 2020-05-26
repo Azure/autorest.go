@@ -83,7 +83,7 @@ func (client *parameterGroupingOperations) postMultiParamGroupsHandleResponse(re
 
 // postMultiParamGroupsHandleError handles the PostMultiParamGroups error response.
 func (client *parameterGroupingOperations) postMultiParamGroupsHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -136,7 +136,7 @@ func (client *parameterGroupingOperations) postOptionalHandleResponse(resp *azco
 
 // postOptionalHandleError handles the PostOptional error response.
 func (client *parameterGroupingOperations) postOptionalHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -190,7 +190,7 @@ func (client *parameterGroupingOperations) postRequiredHandleResponse(resp *azco
 
 // postRequiredHandleError handles the PostRequired error response.
 func (client *parameterGroupingOperations) postRequiredHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -243,7 +243,7 @@ func (client *parameterGroupingOperations) postSharedParameterGroupObjectHandleR
 
 // postSharedParameterGroupObjectHandleError handles the PostSharedParameterGroupObject error response.
 func (client *parameterGroupingOperations) postSharedParameterGroupObjectHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

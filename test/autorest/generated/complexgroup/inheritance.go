@@ -63,7 +63,7 @@ func (client *inheritanceOperations) getValidHandleResponse(resp *azcore.Respons
 
 // getValidHandleError handles the GetValid error response.
 func (client *inheritanceOperations) getValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -108,7 +108,7 @@ func (client *inheritanceOperations) putValidHandleResponse(resp *azcore.Respons
 
 // putValidHandleError handles the PutValid error response.
 func (client *inheritanceOperations) putValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

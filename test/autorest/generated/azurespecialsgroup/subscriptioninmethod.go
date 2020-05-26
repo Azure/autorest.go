@@ -69,7 +69,7 @@ func (client *subscriptionInMethodOperations) postMethodLocalNullHandleResponse(
 
 // postMethodLocalNullHandleError handles the PostMethodLocalNull error response.
 func (client *subscriptionInMethodOperations) postMethodLocalNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (client *subscriptionInMethodOperations) postMethodLocalValidHandleResponse
 
 // postMethodLocalValidHandleError handles the PostMethodLocalValid error response.
 func (client *subscriptionInMethodOperations) postMethodLocalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -161,7 +161,7 @@ func (client *subscriptionInMethodOperations) postPathLocalValidHandleResponse(r
 
 // postPathLocalValidHandleError handles the PostPathLocalValid error response.
 func (client *subscriptionInMethodOperations) postPathLocalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -207,7 +207,7 @@ func (client *subscriptionInMethodOperations) postSwaggerLocalValidHandleRespons
 
 // postSwaggerLocalValidHandleError handles the PostSwaggerLocalValid error response.
 func (client *subscriptionInMethodOperations) postSwaggerLocalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

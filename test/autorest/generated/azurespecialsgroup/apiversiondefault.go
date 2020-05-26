@@ -69,7 +69,7 @@ func (client *apiVersionDefaultOperations) getMethodGlobalNotProvidedValidHandle
 
 // getMethodGlobalNotProvidedValidHandleError handles the GetMethodGlobalNotProvidedValid error response.
 func (client *apiVersionDefaultOperations) getMethodGlobalNotProvidedValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ func (client *apiVersionDefaultOperations) getMethodGlobalValidHandleResponse(re
 
 // getMethodGlobalValidHandleError handles the GetMethodGlobalValid error response.
 func (client *apiVersionDefaultOperations) getMethodGlobalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -165,7 +165,7 @@ func (client *apiVersionDefaultOperations) getPathGlobalValidHandleResponse(resp
 
 // getPathGlobalValidHandleError handles the GetPathGlobalValid error response.
 func (client *apiVersionDefaultOperations) getPathGlobalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -213,7 +213,7 @@ func (client *apiVersionDefaultOperations) getSwaggerGlobalValidHandleResponse(r
 
 // getSwaggerGlobalValidHandleError handles the GetSwaggerGlobalValid error response.
 func (client *apiVersionDefaultOperations) getSwaggerGlobalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

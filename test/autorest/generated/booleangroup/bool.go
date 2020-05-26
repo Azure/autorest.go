@@ -71,7 +71,7 @@ func (client *boolOperations) getFalseHandleResponse(resp *azcore.Response) (*Bo
 
 // getFalseHandleError handles the GetFalse error response.
 func (client *boolOperations) getFalseHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ func (client *boolOperations) getInvalidHandleResponse(resp *azcore.Response) (*
 
 // getInvalidHandleError handles the GetInvalid error response.
 func (client *boolOperations) getInvalidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -163,7 +163,7 @@ func (client *boolOperations) getNullHandleResponse(resp *azcore.Response) (*Boo
 
 // getNullHandleError handles the GetNull error response.
 func (client *boolOperations) getNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -209,7 +209,7 @@ func (client *boolOperations) getTrueHandleResponse(resp *azcore.Response) (*Boo
 
 // getTrueHandleError handles the GetTrue error response.
 func (client *boolOperations) getTrueHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -254,7 +254,7 @@ func (client *boolOperations) putFalseHandleResponse(resp *azcore.Response) (*ht
 
 // putFalseHandleError handles the PutFalse error response.
 func (client *boolOperations) putFalseHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -299,7 +299,7 @@ func (client *boolOperations) putTrueHandleResponse(resp *azcore.Response) (*htt
 
 // putTrueHandleError handles the PutTrue error response.
 func (client *boolOperations) putTrueHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

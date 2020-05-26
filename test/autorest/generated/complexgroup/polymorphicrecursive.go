@@ -63,7 +63,7 @@ func (client *polymorphicrecursiveOperations) getValidHandleResponse(resp *azcor
 
 // getValidHandleError handles the GetValid error response.
 func (client *polymorphicrecursiveOperations) getValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -108,7 +108,7 @@ func (client *polymorphicrecursiveOperations) putValidHandleResponse(resp *azcor
 
 // putValidHandleError handles the PutValid error response.
 func (client *polymorphicrecursiveOperations) putValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

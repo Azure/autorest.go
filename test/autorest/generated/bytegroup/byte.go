@@ -69,7 +69,7 @@ func (client *byteOperations) getEmptyHandleResponse(resp *azcore.Response) (*By
 
 // getEmptyHandleError handles the GetEmpty error response.
 func (client *byteOperations) getEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (client *byteOperations) getInvalidHandleResponse(resp *azcore.Response) (*
 
 // getInvalidHandleError handles the GetInvalid error response.
 func (client *byteOperations) getInvalidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -161,7 +161,7 @@ func (client *byteOperations) getNonAsciiHandleResponse(resp *azcore.Response) (
 
 // getNonAsciiHandleError handles the GetNonASCII error response.
 func (client *byteOperations) getNonAsciiHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -207,7 +207,7 @@ func (client *byteOperations) getNullHandleResponse(resp *azcore.Response) (*Byt
 
 // getNullHandleError handles the GetNull error response.
 func (client *byteOperations) getNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -252,7 +252,7 @@ func (client *byteOperations) putNonAsciiHandleResponse(resp *azcore.Response) (
 
 // putNonAsciiHandleError handles the PutNonASCII error response.
 func (client *byteOperations) putNonAsciiHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

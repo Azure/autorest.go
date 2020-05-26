@@ -71,7 +71,7 @@ func (client *apiVersionLocalOperations) getMethodLocalNullHandleResponse(resp *
 
 // getMethodLocalNullHandleError handles the GetMethodLocalNull error response.
 func (client *apiVersionLocalOperations) getMethodLocalNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -119,7 +119,7 @@ func (client *apiVersionLocalOperations) getMethodLocalValidHandleResponse(resp 
 
 // getMethodLocalValidHandleError handles the GetMethodLocalValid error response.
 func (client *apiVersionLocalOperations) getMethodLocalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -167,7 +167,7 @@ func (client *apiVersionLocalOperations) getPathLocalValidHandleResponse(resp *a
 
 // getPathLocalValidHandleError handles the GetPathLocalValid error response.
 func (client *apiVersionLocalOperations) getPathLocalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -215,7 +215,7 @@ func (client *apiVersionLocalOperations) getSwaggerLocalValidHandleResponse(resp
 
 // getSwaggerLocalValidHandleError handles the GetSwaggerLocalValid error response.
 func (client *apiVersionLocalOperations) getSwaggerLocalValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

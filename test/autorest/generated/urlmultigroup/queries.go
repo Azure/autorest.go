@@ -70,7 +70,7 @@ func (client *queriesOperations) arrayStringMultiEmptyHandleResponse(resp *azcor
 
 // arrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
 func (client *queriesOperations) arrayStringMultiEmptyHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -120,7 +120,7 @@ func (client *queriesOperations) arrayStringMultiNullHandleResponse(resp *azcore
 
 // arrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
 func (client *queriesOperations) arrayStringMultiNullHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -170,7 +170,7 @@ func (client *queriesOperations) arrayStringMultiValidHandleResponse(resp *azcor
 
 // arrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
 func (client *queriesOperations) arrayStringMultiValidHandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

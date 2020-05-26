@@ -63,7 +63,7 @@ func (client *httpServerFailureOperations) delete505HandleResponse(resp *azcore.
 
 // delete505HandleError handles the Delete505 error response.
 func (client *httpServerFailureOperations) delete505HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -105,7 +105,7 @@ func (client *httpServerFailureOperations) get501HandleResponse(resp *azcore.Res
 
 // get501HandleError handles the Get501 error response.
 func (client *httpServerFailureOperations) get501HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -147,7 +147,7 @@ func (client *httpServerFailureOperations) head501HandleResponse(resp *azcore.Re
 
 // head501HandleError handles the Head501 error response.
 func (client *httpServerFailureOperations) head501HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -189,7 +189,7 @@ func (client *httpServerFailureOperations) post505HandleResponse(resp *azcore.Re
 
 // post505HandleError handles the Post505 error response.
 func (client *httpServerFailureOperations) post505HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

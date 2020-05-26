@@ -237,7 +237,8 @@ function generateStructs(objects?: ObjectSchema[]): StructDef[] {
       text += '\treturn msg\n';
       text += '}\n\n';
       structDef.Methods.push({ name: 'Error', text: text });
-    } else if (obj.discriminator) {
+    }
+    if (obj.discriminator) {
       // only need to generate interface method and internal marshaller for discriminators (Fish, Salmon, Shark)
       generateDiscriminatorMethods(obj, structDef, parentType!);
       // the root type doesn't get a marshaller as callers don't instantiate instances of it
@@ -337,6 +338,10 @@ function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, p
   const interfaceMethod = `Get${typeName}`;
   const method = `func (${receiver} *${typeName}) ${interfaceMethod}() *${typeName} { return ${receiver} }\n\n`;
   structDef.Methods.push({ name: interfaceMethod, text: method });
+  if (obj.language.go!.errorType || obj.language.go!.childErrorType) {
+    // errors don't need custom marshallers
+    return;
+  }
   // generate internal marshaller method
   const paramType = obj.discriminator!.property.schema.language.go!.name;
   const paramName = 'discValue';
@@ -366,6 +371,11 @@ function generateDiscriminatorMethods(obj: ObjectSchema, structDef: StructDef, p
 }
 
 function generateDiscriminatedTypeMarshaller(obj: ObjectSchema, structDef: StructDef, parentType: ObjectSchema) {
+  if (obj.language.go!.errorType || obj.language.go!.childErrorType) {
+    // errors don't need custom marshallers
+    return;
+  }
+  imports.add('encoding/json');
   const typeName = structDef.Language.name;
   const receiver = typeName[0].toLowerCase();
   // generate marshaller method
@@ -391,6 +401,7 @@ function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: Str
   if (!structDef.Properties || structDef.Properties.length === 0) {
     return;
   }
+  imports.add('encoding/json');
   const typeName = structDef.Language.name;
   const receiver = typeName[0].toLowerCase();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
@@ -424,7 +435,7 @@ function generateDiscriminatedTypeUnmarshaller(obj: ObjectSchema, structDef: Str
   unmarshaller += '\t\t\treturn err\n';
   unmarshaller += '\t\t}\n';
   unmarshaller += '\t}\n';
-  if (!obj.language.go!.rootDiscriminator && parentType) {
+  if (parentType) {
     unmarshaller += `\treturn json.Unmarshal(data, &${receiver}.${parentType.language.go!.name})\n`;
   } else {
     unmarshaller += '\treturn nil\n';

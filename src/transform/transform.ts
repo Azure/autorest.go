@@ -53,6 +53,10 @@ async function process(session: Session<CodeModel>) {
         for (const child of values(rootDiscriminator.children?.all)) {
           (<ObjectSchema>child).discriminatorValue = getEnumForDiscriminatorValue((<ObjectSchema>child).discriminatorValue!, discriminatorEnums);
         }
+        // add the error interface as the parent interface for discriminated types that are also errors
+        if (rootDiscriminator.language.go!.errorType) {
+          rootDiscriminator.language.go!.discriminatorParent = 'error';
+        }
       }
     }
     for (const prop of values(obj.properties)) {
@@ -341,9 +345,19 @@ function processOperationResponses(session: Session<CodeModel>) {
               prop.language.go!.name = 'Inner' + prop.language.go!.name;
             }
           }
+          for (const child of values(schemaError.children?.all)) {
+            // annotate all child error types.  note that errorType has special
+            // significance which is why we use childErrorType instead.
+            child.language.go!.childErrorType = true;
+          }
+          if (schemaError.discriminator) {
+            // if the error is a discriminator we need to create an internal wrapper type
+            schemaError.language.go!.internalErrorType = camelCase(schemaError.language.go!.name);
+          }
+        } else {
+          schemaError.language.go!.name = schemaTypeToGoType(session.model, schemaError, true);
         }
         schemaError.language.go!.errorType = true;
-        schemaError.language.go!.constructorName = `new${schemaError.language.go!.name}`;
         recursiveAddMarshallingFormat(schemaError, marshallingFormat);
       }
       // recursively add the marshalling format to the responses if applicable

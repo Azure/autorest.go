@@ -76,7 +76,7 @@ func (client *httpRetryOperations) delete503HandleResponse(resp *azcore.Response
 
 // delete503HandleError handles the Delete503 error response.
 func (client *httpRetryOperations) delete503HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func (client *httpRetryOperations) get502HandleResponse(resp *azcore.Response) (
 
 // get502HandleError handles the Get502 error response.
 func (client *httpRetryOperations) get502HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -166,7 +166,7 @@ func (client *httpRetryOperations) head408HandleResponse(resp *azcore.Response) 
 
 // head408HandleError handles the Head408 error response.
 func (client *httpRetryOperations) head408HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -212,7 +212,7 @@ func (client *httpRetryOperations) options502HandleResponse(resp *azcore.Respons
 
 // options502HandleError handles the Options502 error response.
 func (client *httpRetryOperations) options502HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -257,7 +257,7 @@ func (client *httpRetryOperations) patch500HandleResponse(resp *azcore.Response)
 
 // patch500HandleError handles the Patch500 error response.
 func (client *httpRetryOperations) patch500HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -302,7 +302,7 @@ func (client *httpRetryOperations) patch504HandleResponse(resp *azcore.Response)
 
 // patch504HandleError handles the Patch504 error response.
 func (client *httpRetryOperations) patch504HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -347,7 +347,7 @@ func (client *httpRetryOperations) post503HandleResponse(resp *azcore.Response) 
 
 // post503HandleError handles the Post503 error response.
 func (client *httpRetryOperations) post503HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -392,7 +392,7 @@ func (client *httpRetryOperations) put500HandleResponse(resp *azcore.Response) (
 
 // put500HandleError handles the Put500 error response.
 func (client *httpRetryOperations) put500HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -437,7 +437,7 @@ func (client *httpRetryOperations) put504HandleResponse(resp *azcore.Response) (
 
 // put504HandleError handles the Put504 error response.
 func (client *httpRetryOperations) put504HandleError(resp *azcore.Response) error {
-	err := Error{}
+	var err Error
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

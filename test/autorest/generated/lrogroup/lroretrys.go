@@ -111,7 +111,7 @@ func (client *lroRetrysOperations) delete202Retry200HandleResponse(resp *azcore.
 
 // delete202Retry200HandleError handles the Delete202Retry200 error response.
 func (client *lroRetrysOperations) delete202Retry200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -180,7 +180,7 @@ func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededHandleRespon
 
 // deleteAsyncRelativeRetrySucceededHandleError handles the DeleteAsyncRelativeRetrySucceeded error response.
 func (client *lroRetrysOperations) deleteAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -250,7 +250,7 @@ func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHand
 
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
 func (client *lroRetrysOperations) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -322,7 +322,7 @@ func (client *lroRetrysOperations) post202Retry200HandleResponse(resp *azcore.Re
 
 // post202Retry200HandleError handles the Post202Retry200 error response.
 func (client *lroRetrysOperations) post202Retry200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -394,7 +394,7 @@ func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededHandleResponse
 
 // postAsyncRelativeRetrySucceededHandleError handles the PostAsyncRelativeRetrySucceeded error response.
 func (client *lroRetrysOperations) postAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -467,7 +467,7 @@ func (client *lroRetrysOperations) put201CreatingSucceeded200HandleResponse(resp
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *lroRetrysOperations) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}
@@ -540,7 +540,7 @@ func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededHandleResponse(
 
 // putAsyncRelativeRetrySucceededHandleError handles the PutAsyncRelativeRetrySucceeded error response.
 func (client *lroRetrysOperations) putAsyncRelativeRetrySucceededHandleError(resp *azcore.Response) error {
-	err := CloudError{}
+	var err CloudError
 	if err := resp.UnmarshalAsJSON(&err); err != nil {
 		return err
 	}

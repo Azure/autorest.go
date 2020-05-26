@@ -142,7 +142,7 @@ func (client *containerOperations) acquireLeaseHandleResponse(resp *azcore.Respo
 
 // acquireLeaseHandleError handles the AcquireLease error response.
 func (client *containerOperations) acquireLeaseHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -239,7 +239,7 @@ func (client *containerOperations) breakLeaseHandleResponse(resp *azcore.Respons
 
 // breakLeaseHandleError handles the BreakLease error response.
 func (client *containerOperations) breakLeaseHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -330,7 +330,7 @@ func (client *containerOperations) changeLeaseHandleResponse(resp *azcore.Respon
 
 // changeLeaseHandleError handles the ChangeLease error response.
 func (client *containerOperations) changeLeaseHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -420,7 +420,7 @@ func (client *containerOperations) createHandleResponse(resp *azcore.Response) (
 
 // createHandleError handles the Create error response.
 func (client *containerOperations) createHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -497,7 +497,7 @@ func (client *containerOperations) deleteHandleResponse(resp *azcore.Response) (
 
 // deleteHandleError handles the Delete error response.
 func (client *containerOperations) deleteHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -582,7 +582,7 @@ func (client *containerOperations) getAccessPolicyHandleResponse(resp *azcore.Re
 
 // getAccessPolicyHandleError handles the GetAccessPolicy error response.
 func (client *containerOperations) getAccessPolicyHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -651,7 +651,7 @@ func (client *containerOperations) getAccountInfoHandleResponse(resp *azcore.Res
 
 // getAccountInfoHandleError handles the GetAccountInfo error response.
 func (client *containerOperations) getAccountInfoHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -771,7 +771,7 @@ func (client *containerOperations) getPropertiesHandleResponse(resp *azcore.Resp
 
 // getPropertiesHandleError handles the GetProperties error response.
 func (client *containerOperations) getPropertiesHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -861,7 +861,7 @@ func (client *containerOperations) listBlobFlatSegmentHandleResponse(resp *azcor
 
 // listBlobFlatSegmentHandleError handles the ListBlobFlatSegment error response.
 func (client *containerOperations) listBlobFlatSegmentHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -952,7 +952,7 @@ func (client *containerOperations) listBlobHierarchySegmentHandleResponse(resp *
 
 // listBlobHierarchySegmentHandleError handles the ListBlobHierarchySegment error response.
 func (client *containerOperations) listBlobHierarchySegmentHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1039,7 +1039,7 @@ func (client *containerOperations) releaseLeaseHandleResponse(resp *azcore.Respo
 
 // releaseLeaseHandleError handles the ReleaseLease error response.
 func (client *containerOperations) releaseLeaseHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1129,7 +1129,7 @@ func (client *containerOperations) renewLeaseHandleResponse(resp *azcore.Respons
 
 // renewLeaseHandleError handles the RenewLease error response.
 func (client *containerOperations) renewLeaseHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1227,7 +1227,7 @@ func (client *containerOperations) setAccessPolicyHandleResponse(resp *azcore.Re
 
 // setAccessPolicyHandleError handles the SetAccessPolicy error response.
 func (client *containerOperations) setAccessPolicyHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -1315,7 +1315,7 @@ func (client *containerOperations) setMetadataHandleResponse(resp *azcore.Respon
 
 // setMetadataHandleError handles the SetMetadata error response.
 func (client *containerOperations) setMetadataHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}

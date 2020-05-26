@@ -100,7 +100,7 @@ func (client *serviceOperations) getAccountInfoHandleResponse(resp *azcore.Respo
 
 // getAccountInfoHandleError handles the GetAccountInfo error response.
 func (client *serviceOperations) getAccountInfoHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -162,7 +162,7 @@ func (client *serviceOperations) getPropertiesHandleResponse(resp *azcore.Respon
 
 // getPropertiesHandleError handles the GetProperties error response.
 func (client *serviceOperations) getPropertiesHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -231,7 +231,7 @@ func (client *serviceOperations) getStatisticsHandleResponse(resp *azcore.Respon
 
 // getStatisticsHandleError handles the GetStatistics error response.
 func (client *serviceOperations) getStatisticsHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -300,7 +300,7 @@ func (client *serviceOperations) getUserDelegationKeyHandleResponse(resp *azcore
 
 // getUserDelegationKeyHandleError handles the GetUserDelegationKey error response.
 func (client *serviceOperations) getUserDelegationKeyHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -376,7 +376,7 @@ func (client *serviceOperations) listContainersSegmentHandleResponse(resp *azcor
 
 // listContainersSegmentHandleError handles the ListContainersSegment error response.
 func (client *serviceOperations) listContainersSegmentHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -438,7 +438,7 @@ func (client *serviceOperations) setPropertiesHandleResponse(resp *azcore.Respon
 
 // setPropertiesHandleError handles the SetProperties error response.
 func (client *serviceOperations) setPropertiesHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
@@ -502,7 +502,7 @@ func (client *serviceOperations) submitBatchHandleResponse(resp *azcore.Response
 
 // submitBatchHandleError handles the SubmitBatch error response.
 func (client *serviceOperations) submitBatchHandleError(resp *azcore.Response) error {
-	err := StorageError{}
+	var err StorageError
 	if err := resp.UnmarshalAsXML(&err); err != nil {
 		return err
 	}
