@@ -353,7 +353,7 @@ type pollingTrackerBase struct {
 		return pt.initPollingMethod()
 	}
 	
-	func (pt pollingTrackerBase) getProvisioningState() *string {
+	func (pt *pollingTrackerBase) getProvisioningState() *string {
 		if pt.rawBody != nil && pt.rawBody["properties"] != nil {
 			p := pt.rawBody["properties"].(map[string]interface{})
 			if ps := p["provisioningState"]; ps != nil {
@@ -441,44 +441,44 @@ type pollingTrackerBase struct {
 		return nil
 	}
 	
-	func (pt pollingTrackerBase) pollingError() error {
+	func (pt *pollingTrackerBase) pollingError() error {
 		return pt.Err
 	}
 	
-	func (pt pollingTrackerBase) pollingMethod() pollingMethodType {
+	func (pt *pollingTrackerBase) pollingMethod() pollingMethodType {
 		return pt.Pm
 	}
 	
-	func (pt pollingTrackerBase) pollingStatus() string {
+	func (pt *pollingTrackerBase) pollingStatus() string {
 		return pt.State
 	}
 	
-	func (pt pollingTrackerBase) pollingURL() string {
+	func (pt *pollingTrackerBase) pollingURL() string {
 		return pt.URI
 	}
 	
-	func (pt pollingTrackerBase) finalGetURL() string {
+	func (pt *pollingTrackerBase) finalGetURL() string {
 		return pt.FinalGetURI
 	}
 	
-	func (pt pollingTrackerBase) hasTerminated() bool {
+	func (pt *pollingTrackerBase) hasTerminated() bool {
 		return strings.EqualFold(pt.State, operationCanceled) || strings.EqualFold(pt.State, operationFailed) || strings.EqualFold(pt.State, operationSucceeded)
 	}
 	
-	func (pt pollingTrackerBase) hasFailed() bool {
+	func (pt *pollingTrackerBase) hasFailed() bool {
 		return strings.EqualFold(pt.State, operationCanceled) || strings.EqualFold(pt.State, operationFailed)
 	}
 	
-	func (pt pollingTrackerBase) hasSucceeded() bool {
+	func (pt *pollingTrackerBase) hasSucceeded() bool {
 		return strings.EqualFold(pt.State, operationSucceeded)
 	}
 	
-	func (pt pollingTrackerBase) latestResponse() *azcore.Response {
+	func (pt *pollingTrackerBase) latestResponse() *azcore.Response {
 		return pt.resp
 	}
 	
 	// error checking common to all trackers
-	func (pt pollingTrackerBase) baseCheckForErrors() error {
+	func (pt *pollingTrackerBase) baseCheckForErrors() error {
 		// for Azure-AsyncOperations the response body cannot be nil or empty
 		if pt.Pm == pollingAsyncOperation {
 			if pt.resp.Body == nil || pt.resp.ContentLength == 0 {
@@ -572,11 +572,11 @@ type pollingTrackerBase struct {
 		return nil
 	}
 	
-	func (pt pollingTrackerDelete) checkForErrors() error {
+	func (pt *pollingTrackerDelete) checkForErrors() error {
 		return pt.baseCheckForErrors()
 	}
 	
-	func (pt pollingTrackerDelete) provisioningStateApplicable() bool {
+	func (pt *pollingTrackerDelete) provisioningStateApplicable() bool {
 		return pt.resp.StatusCode == http.StatusOK || pt.resp.StatusCode == http.StatusNoContent
 	}
 	
@@ -634,11 +634,11 @@ type pollingTrackerBase struct {
 		return nil
 	}
 	
-	func (pt pollingTrackerPatch) checkForErrors() error {
+	func (pt *pollingTrackerPatch) checkForErrors() error {
 		return pt.baseCheckForErrors()
 	}
 	
-	func (pt pollingTrackerPatch) provisioningStateApplicable() bool {
+	func (pt *pollingTrackerPatch) provisioningStateApplicable() bool {
 		return pt.resp.StatusCode == http.StatusOK || pt.resp.StatusCode == http.StatusCreated
 	}
 	
@@ -695,11 +695,11 @@ type pollingTrackerBase struct {
 		return nil
 	}
 	
-	func (pt pollingTrackerPost) checkForErrors() error {
+	func (pt *pollingTrackerPost) checkForErrors() error {
 		return pt.baseCheckForErrors()
 	}
 	
-	func (pt pollingTrackerPost) provisioningStateApplicable() bool {
+	func (pt *pollingTrackerPost) provisioningStateApplicable() bool {
 		return pt.resp.StatusCode == http.StatusOK || pt.resp.StatusCode == http.StatusNoContent
 	}
 	
@@ -760,7 +760,7 @@ type pollingTrackerBase struct {
 		return nil
 	}
 	
-	func (pt pollingTrackerPut) checkForErrors() error {
+	func (pt *pollingTrackerPut) checkForErrors() error {
 		err := pt.baseCheckForErrors()
 		if err != nil {
 					pt.Err = err
@@ -784,7 +784,7 @@ type pollingTrackerBase struct {
 		return nil
 	}
 	
-	func (pt pollingTrackerPut) provisioningStateApplicable() bool {
+	func (pt *pollingTrackerPut) provisioningStateApplicable() bool {
 		return pt.resp.StatusCode == http.StatusOK || pt.resp.StatusCode == http.StatusCreated
 	}
 	

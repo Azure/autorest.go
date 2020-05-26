@@ -132,7 +132,6 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
-	t.Skip("broken poller scenario")
 	op := getLrosaDsOperations(t)
 	resp, err := op.BeginDeleteAsyncRelativeRetryNoStatus(context.Background())
 	if err != nil {
@@ -261,7 +260,6 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
-	t.Skip("problem in poller")
 	op := getLrosaDsOperations(t)
 	resp, err := op.BeginPostAsyncRelativeRetryNoPayload(context.Background(), nil)
 	if err != nil {
@@ -358,7 +356,6 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
-	t.Skip("problem with poller")
 	op := getLrosaDsOperations(t)
 	resp, err := op.BeginPutAsyncRelativeRetryNoStatus(context.Background(), nil)
 	if err != nil {
@@ -383,7 +380,6 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
-	t.Skip("problem with poller")
 	op := getLrosaDsOperations(t)
 	resp, err := op.BeginPutAsyncRelativeRetryNoStatusPayload(context.Background(), nil)
 	if err != nil {
@@ -408,7 +404,6 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 }
 
 func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
-	t.Skip("problem with poller")
 	op := getLrosaDsOperations(t)
 	resp, err := op.BeginPutError201NoProvisioningStatePayload(context.Background(), nil)
 	if err != nil {
