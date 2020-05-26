@@ -107,6 +107,12 @@ func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *productPoller) FinalResponse(ctx context.Context) (*ProductResponse, error) {
+	// checking if there was a FinalStateVia configuration to re-route the final GET
+	// request to the value specified in the FinalStateVia property on the poller
+	err := p.pt.setFinalState()
+	if err != nil {
+		return nil, err
+	}
 	if p.pt.finalGetURL() == "" {
 		// we can end up in this situation if the async operation returns a 200
 		// with no polling URLs.  in that case return the response which should
@@ -206,6 +212,12 @@ func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *skuPoller) FinalResponse(ctx context.Context) (*SkuResponse, error) {
+	// checking if there was a FinalStateVia configuration to re-route the final GET
+	// request to the value specified in the FinalStateVia property on the poller
+	err := p.pt.setFinalState()
+	if err != nil {
+		return nil, err
+	}
 	if p.pt.finalGetURL() == "" {
 		// we can end up in this situation if the async operation returns a 200
 		// with no polling URLs.  in that case return the response which should
@@ -305,6 +317,12 @@ func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
 }
 
 func (p *subProductPoller) FinalResponse(ctx context.Context) (*SubProductResponse, error) {
+	// checking if there was a FinalStateVia configuration to re-route the final GET
+	// request to the value specified in the FinalStateVia property on the poller
+	err := p.pt.setFinalState()
+	if err != nil {
+		return nil, err
+	}
 	if p.pt.finalGetURL() == "" {
 		// we can end up in this situation if the async operation returns a 200
 		// with no polling URLs.  in that case return the response which should
